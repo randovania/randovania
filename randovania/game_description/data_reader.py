@@ -21,7 +21,6 @@ from randovania.game_description.resources.search import (
     find_resource_info_with_long_name
 )
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -30,7 +29,7 @@ from randovania.game_description.world.dock import (
 )
 from randovania.game_description.world.node import (
     GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
-    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
+    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 )
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
@@ -41,11 +40,13 @@ X = TypeVar('X')
 Y = TypeVar('Y')
 
 
-def read_dict(data: Dict[str, Y], item_reader: Callable[[str,Y], X]) -> List[X]:
+def read_dict(data: Dict[str, Y], item_reader: Callable[[str, Y], X]) -> List[X]:
     return [item_reader(name, item) for name, item in data.items()]
+
 
 def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
     return [item_reader(item) for item in data]
+
 
 def read_resource_info(name: str, data: Dict, resource_type: ResourceType) -> SimpleResourceInfo:
     return SimpleResourceInfo(data["long_name"],
@@ -82,7 +83,7 @@ def read_resource_reductions_dict(data: List[Dict], db: ResourceDatabase,
                                   ) -> Dict[SimpleResourceInfo, List[DamageReduction]]:
     return {
         db.get_by_type_and_index(ResourceType.DAMAGE, item["name"]): read_damage_reductions(item["reductions"],
-                                                                                             db.item)
+                                                                                            db.item)
         for item in data
     }
 
@@ -163,32 +164,43 @@ def read_resource_gain_tuple(data: List[Dict], database: "ResourceDatabase") -> 
 
 # Dock Weakness
 
-def read_dock_weakness(item: Dict, resource_database: ResourceDatabase, dock_type: DockType) -> DockWeakness:
-    return DockWeakness(item["index"],
-                        item["name"],
+def read_dock_weakness(name: str, item: dict, resource_database: ResourceDatabase) -> DockWeakness:
+    return DockWeakness(name,
                         DockLockType(item["lock_type"]),
-                        read_requirement(item["requirement"], resource_database),
-                        dock_type)
+                        frozendict(item["extra"]),
+                        read_requirement(item["requirement"], resource_database))
 
 
-def read_dock_weakness_database(data: Dict,
+def read_dock_type(name: str, data: dict) -> DockType:
+    return DockType(
+        short_name=name,
+        long_name=data["name"],
+        extra=frozendict(data["extra"]),
+    )
+
+
+def read_dock_weakness_database(data: dict,
                                 resource_database: ResourceDatabase,
                                 ) -> DockWeaknessDatabase:
-    door_types = read_array(data["door"], lambda item: read_dock_weakness(item, resource_database, DockType.DOOR))
-    portal_types = read_array(data["portal"], lambda item: read_dock_weakness(item, resource_database, DockType.PORTAL))
-    morph_ball_types = read_array(data["morph_ball"], lambda item: read_dock_weakness(item, resource_database,
-                                                                                      DockType.MORPH_BALL_DOOR))
+
+    dock_types = read_dict(data["types"], read_dock_type)
+    weaknesses: dict[DockType, dict[str, DockWeakness]] = {}
+
+    for dock_type, type_data in zip(dock_types, data["types"].values()):
+        weaknesses[dock_type] = {
+            weak_name: read_dock_weakness(weak_name, weak_data, resource_database)
+            for weak_name, weak_data in type_data["items"].items()
+        }
+
+    default_dock_type = [dock_type for dock_type in dock_types
+                         if dock_type.short_name == data["default_weakness"]["type"]][0]
+    default_dock_weakness = weaknesses[default_dock_type][data["default_weakness"]["name"]]
 
     return DockWeaknessDatabase(
-        door=door_types,
-        morph_ball=morph_ball_types,
-        other=[
-            DockWeakness(0, "Open Passage", DockLockType.FRONT_ALWAYS_BACK_FREE,
-                         Requirement.trivial(), DockType.OTHER),
-            DockWeakness(1, "Not Determined", DockLockType.FRONT_ALWAYS_BACK_FREE,
-                         Requirement.impossible(), DockType.OTHER),
-        ],
-        portal=portal_types)
+        dock_types=dock_types,
+        weaknesses=weaknesses,
+        default_weakness=(default_dock_type, default_dock_weakness),
+    )
 
 
 def location_from_json(location: Dict[str, float]) -> NodeLocation:
@@ -247,9 +259,10 @@ class WorldReader:
                 return DockNode(
                     **generic_args,
                     default_connection=NodeIdentifier.from_json(data["destination"]),
-                    default_dock_weakness=self.dock_weakness_database.get_by_type_and_index(
-                        DockType(data["dock_type"]),
-                        data["dock_weakness_index"],
+                    dock_type=self.dock_weakness_database.find_type(data["dock_type"]),
+                    default_dock_weakness=self.dock_weakness_database.get_by_weakness(
+                        data["dock_type"],
+                        data["dock_weakness"],
                     ))
 
             elif node_type == "pickup":
@@ -273,11 +286,10 @@ class WorldReader:
                     event=self.resource_database.get_by_type_and_index(ResourceType.EVENT, data["event_name"])
                 )
 
-            elif node_type == "translator_gate":
-                return TranslatorGateNode(
+            elif node_type == "configurable_node":
+                return ConfigurableNode(
                     **generic_args,
-                    gate=TranslatorGate(data["gate_index"]),
-                    scan_visor=self._get_scan_visor(),
+                    self_identifier=NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
                 )
 
             elif node_type == "logbook":

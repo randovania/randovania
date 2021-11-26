@@ -30,11 +30,19 @@ def _read_item_database_in_path(path: Path, game: RandovaniaGame) -> item_databa
 
     return item_database.read_database(item_database_data, game)
 
+def _write_item_database_in_path(item_db: item_database.ItemDatabase, path: Path):
+    data = item_database.write_database(item_db)
+    with path.joinpath("item-database.json").open("w") as database_file:
+        json.dump(data, database_file, indent=4)
+
 
 @functools.lru_cache()
 def item_database_for_game(game: RandovaniaGame):
     return _read_item_database_in_path(game.data_path.joinpath("item_database"),
                                        game)
+
+def write_item_database_for_game(item_db: item_database, game: RandovaniaGame):
+    _write_item_database_in_path(item_db, game.data_path.joinpath("item_database"))
 
 
 @functools.lru_cache()

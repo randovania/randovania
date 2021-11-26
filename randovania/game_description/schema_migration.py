@@ -1,11 +1,13 @@
-from typing import Callable, Optional, Union
-from randovania.game_description.resources.resource_type import ResourceType
+from typing import Callable, Union
+
 from randovania.game_description import migration_data
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 
-CURRENT_DATABASE_VERSION = 4
+CURRENT_DATABASE_VERSION = 6
 CURRENT_ITEMDB_VERSION = 2
+
 
 def _migrate_v1(data: dict) -> dict:
     game = RandovaniaGame(data["game"])
@@ -72,6 +74,7 @@ def _migrate_v1(data: dict) -> dict:
 
     return data
 
+
 def _migrate_v2(data: dict) -> dict:
     should_keep_index = data["game"] in {"prime1", "prime2", "prime3"}
 
@@ -105,6 +108,7 @@ def _migrate_v2(data: dict) -> dict:
 
     return data
 
+
 def _migrate_v3(data: dict) -> dict:
     game = RandovaniaGame(data["game"])
     db = data["resource_database"]
@@ -126,7 +130,7 @@ def _migrate_v3(data: dict) -> dict:
         for red in reduction["reductions"]:
             red["name"] = find_resource(ResourceType.ITEM, red.pop("index"))
         return reduction
-    
+
     db["damage_reductions"] = [migrate_reduction(red) for red in db["damage_reductions"]]
 
     def migrate_requirement(requirement: dict) -> dict:
@@ -137,22 +141,23 @@ def _migrate_v3(data: dict) -> dict:
             data["name"] = find_resource(data["type"], data.pop("index"))
         elif requirement["type"] != "template":
             data["items"] = [migrate_requirement(req) for req in data["items"]]
-        
+
         return {
             "type": requirement["type"],
             "data": data
         }
-    
-    db["requirement_template"] = {k: migrate_requirement(v) for k,v in db["requirement_template"].items()}
+
+    db["requirement_template"] = {k: migrate_requirement(v) for k, v in db["requirement_template"].items()}
     data["victory_condition"] = migrate_requirement(data["victory_condition"])
-    
+
     for key, state in data["initial_states"].items():
         data["initial_states"][key] = [{
             "resource_type": migration_data.get_resource_type_from_index(resource["resource_type"]).value,
-            "resource_name": find_resource(migration_data.get_resource_type_from_index(resource["resource_type"]), resource.pop("resource_index")),
+            "resource_name": find_resource(migration_data.get_resource_type_from_index(resource["resource_type"]),
+                                           resource.pop("resource_index")),
             "amount": resource["amount"]
         } for resource in state]
-    
+
     minimal = data["minimal_logic"]
     if minimal is not None:
         minimal["items_to_exclude"] = [{
@@ -171,12 +176,12 @@ def _migrate_v3(data: dict) -> dict:
     for dock_type in data["dock_weakness_database"].values():
         for dock in dock_type:
             dock["requirement"] = migrate_requirement(dock["requirement"])
-    
+
     for world in data["worlds"]:
         for area in world["areas"].values():
             for node in area["nodes"].values():
-                node["connections"] = {k: migrate_requirement(v) for k,v in node["connections"].items()}
-                
+                node["connections"] = {k: migrate_requirement(v) for k, v in node["connections"].items()}
+
                 node_type = node["node_type"]
                 if node_type == "event":
                     node["event_name"] = find_resource(ResourceType.EVENT, node.pop("event_index"))
@@ -187,7 +192,7 @@ def _migrate_v3(data: dict) -> dict:
                         node["extra"]["translator"] = find_resource(ResourceType.ITEM, node.pop("lore_extra"))
                     if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
                         node["extra"]["hint_index"] = node.pop("lore_extra")
-                
+
                 if node_type == "player_ship":
                     node["is_unlocked"] = migrate_requirement(node["is_unlocked"])
 
@@ -206,35 +211,150 @@ def _migrate_v3(data: dict) -> dict:
                 resource["extra"] = {}
             resource.pop("index")
         db[name] = new_res_list
-    
+
     return data
+
+
+def _migrate_v4(data: dict) -> dict:
+    for world in data["worlds"]:
+        areas: dict[str, dict] = world["areas"]
+        for area_name, area in areas.items():
+            nodes: dict[str, dict] = area["nodes"]
+            for node_name, node in nodes.items():
+                if node["node_type"] == "translator_gate":
+                    node["node_type"] = "configurable_node"
+                    node["extra"]["gate_index"] = node.pop("gate_index")
+
+    return data
+
+
+def _migrate_v5(data: dict) -> dict:
+    dock_db: dict[str, list[dict]] = data["dock_weakness_database"]
+
+    dock_type_names = {
+        "door": "Door",
+        "morph_ball": "Morph Ball Door",
+        "portal": "Portal",
+    }
+
+    def convert_weakness(weakness):
+        return {
+            "lock_type": weakness["lock_type"],
+            "extra": {},
+            "requirement": weakness["requirement"],
+        }
+
+    data["dock_weakness_database"] = {
+        "types": {
+            short_name: {
+                "name": dock_type_names[short_name],
+                "extra": {},
+                "items": {
+                    weakness["name"]: convert_weakness(weakness)
+                    for weakness in items
+                }
+            }
+            for short_name, items in dock_db.items()
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined",
+        }
+    }
+    data["dock_weakness_database"]["types"]["other"] = {
+        "name": "Other",
+        "extra": {},
+        "items": {
+            "Open Passage": {
+                "lock_type": 0,
+                "extra": {},
+                "requirement": {
+                    "type": "and",
+                    "data": {
+                        "comment": None,
+                        "items": []
+                    }
+                }
+            },
+            "Not Determined": {
+                "lock_type": 0,
+                "extra": {},
+                "requirement": {
+                    "type": "or",
+                    "data": {
+                        "comment": None,
+                        "items": []
+                    }
+                }
+            },
+        }
+    }
+
+    dock_type_id_to_name = {
+        0: "door",
+        1: "morph_ball",
+        2: "other",
+        3: "portal",
+    }
+    weakness_id_to_name = {
+        short_name: {
+            item["index"]: item["name"]
+            for item in items
+        }
+        for short_name, items in dock_db.items()
+    }
+    weakness_id_to_name["other"] = {
+        0: "Open Passage",
+        1: "Not Determined",
+    }
+
+    for world in data["worlds"]:
+        areas: dict[str, dict] = world["areas"]
+        for area_name, area in areas.items():
+            nodes: dict[str, dict] = area["nodes"]
+            for node_name, node in nodes.items():
+                if node["node_type"] == "dock":
+                    node["dock_type"] = dock_type_id_to_name[node["dock_type"]]
+                    node["dock_weakness"] = weakness_id_to_name[node["dock_type"]][node.pop("dock_weakness_index")]
+
+    return data
+
 
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
     3: _migrate_v3,
+    4: _migrate_v4,
+    5: _migrate_v5,
 }
+
 
 def _migrate_item_v1(data: dict) -> dict:
     game = RandovaniaGame(data["game"])
     for item in data["items"].values():
-        item["progression"] = [migration_data.get_resource_name_from_index(game, progression, ResourceType.ITEM) for progression in item["progression"]]
+        item["progression"] = [migration_data.get_resource_name_from_index(game, progression, ResourceType.ITEM) for
+                               progression in item["progression"]]
         ammo = item.get("ammo")
         if ammo is not None:
-            item["ammo"] = [migration_data.get_resource_name_from_index(game, ammo, ResourceType.ITEM) for ammo in item["ammo"]]
+            item["ammo"] = [migration_data.get_resource_name_from_index(game, ammo, ResourceType.ITEM) for ammo in
+                            item["ammo"]]
     for ammo in data["ammo"].values():
-        ammo["items"] = [migration_data.get_resource_name_from_index(game, item, ResourceType.ITEM) for item in ammo["items"]]
+        ammo["items"] = [migration_data.get_resource_name_from_index(game, item, ResourceType.ITEM) for item in
+                         ammo["items"]]
         unlock = ammo.get("unlocked_by")
         if unlock is not None:
-            ammo["unlocked_by"] = migration_data.get_resource_name_from_index(game, ammo["unlocked_by"], ResourceType.ITEM)
+            ammo["unlocked_by"] = migration_data.get_resource_name_from_index(game, ammo["unlocked_by"],
+                                                                              ResourceType.ITEM)
         temporary = ammo.get("temporary")
         if temporary is not None:
             ammo["temporary"] = migration_data.get_resource_name_from_index(game, ammo["temporary"], ResourceType.ITEM)
     return data
 
+
 _ITEM_MIGRATIONS = {
     1: _migrate_item_v1
 }
+
 
 def _migrate_to_current(data: dict, version: int, migrations: dict[int, Callable[[dict], dict]]) -> dict:
     schema_version = data.get("schema_version", 1)
@@ -247,8 +367,10 @@ def _migrate_to_current(data: dict, version: int, migrations: dict[int, Callable
 
     return data
 
+
 def migrate_to_current(data: dict):
     return _migrate_to_current(data, CURRENT_DATABASE_VERSION, _MIGRATIONS)
+
 
 def migrate_items_to_current(data: dict):
     return _migrate_to_current(data, CURRENT_ITEMDB_VERSION, _ITEM_MIGRATIONS)

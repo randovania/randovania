@@ -3,8 +3,9 @@ import dataclasses
 from dataclasses import dataclass
 from typing import Dict, Tuple, Iterator, Optional
 
-from randovania.game_description.assignment import PickupAssignment, GateAssignment, PickupTarget
+from randovania.game_description.assignment import PickupAssignment, NodeConfigurationAssignment, PickupTarget
 from randovania.game_description.hint import Hint
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import CurrentResources
@@ -13,7 +14,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
-ElevatorConnection = Dict[NodeIdentifier, Optional[AreaIdentifier]]
+ElevatorConnection = dict[NodeIdentifier, Optional[AreaIdentifier]]
 
 
 @dataclass(frozen=True)
@@ -25,12 +26,12 @@ class GamePatches:
     player_index: int
     pickup_assignment: PickupAssignment
     elevator_connection: ElevatorConnection
-    dock_connection: Dict[NodeIdentifier, Optional[NodeIdentifier]]
-    dock_weakness: Dict[NodeIdentifier, DockWeakness]
-    translator_gates: GateAssignment
+    dock_connection: dict[NodeIdentifier, Optional[NodeIdentifier]]
+    dock_weakness: dict[NodeIdentifier, DockWeakness]
+    configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: CurrentResources
     starting_location: AreaIdentifier
-    hints: Dict[LogbookAsset, Hint]
+    hints: dict[LogbookAsset, Hint]
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupTarget]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
@@ -45,15 +46,14 @@ class GamePatches:
         items: Iterator[Tuple[PickupIndex, PickupTarget]] = assignment.items()
         return self.assign_new_pickups(items)
 
-    def assign_gate_assignment(self, assignment: GateAssignment) -> "GamePatches":
-        new_translator_gates = copy.copy(self.translator_gates)
+    def assign_node_configuration(self, assignment: NodeConfigurationAssignment) -> "GamePatches":
+        new_configurable = copy.copy(self.configurable_nodes)
 
-        for gate, translator in assignment.items():
-            assert gate not in new_translator_gates
-            assert gate.resource_type == ResourceType.GATE_INDEX
-            new_translator_gates[gate] = translator
+        for identifier, requirement in assignment.items():
+            assert identifier not in new_configurable
+            new_configurable[identifier] = requirement
 
-        return dataclasses.replace(self, translator_gates=new_translator_gates)
+        return dataclasses.replace(self, configurable_nodes=new_configurable)
 
     def assign_starting_location(self, location: AreaIdentifier) -> "GamePatches":
         return dataclasses.replace(self, starting_location=location)

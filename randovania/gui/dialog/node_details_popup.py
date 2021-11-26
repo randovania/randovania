@@ -1,3 +1,4 @@
+import dataclasses
 import json
 import logging
 import traceback
@@ -10,12 +11,11 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockType
 from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
+    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 from randovania.game_description.world.world import World
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
@@ -47,7 +47,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             PickupNode: self.tab_pickup,
             TeleporterNode: self.tab_teleporter,
             EventNode: self.tab_event,
-            TranslatorGateNode: self.tab_translator_gate,
+            ConfigurableNode: self.tab_translator_gate,
             LogbookNode: self.tab_logbook,
             PlayerShipNode: self.tab_player_ship,
         }
@@ -57,8 +57,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         for i, node_type in enumerate(self._type_to_tab.keys()):
             self.node_type_combo.setItemData(i, node_type)
 
-        for i, enum in enumerate(enum_lib.iterate_enum(DockType)):
-            self.dock_type_combo.setItemData(i, enum)
+        self.dock_type_combo.clear()
+        for i, dock_type in enumerate(game.dock_weakness_database.dock_types):
+            self.dock_type_combo.addItem(dock_type.long_name, userData=dock_type)
+        refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
 
         for world in sorted(game.world_list.worlds, key=lambda x: x.name):
             self.dock_connection_world_combo.addItem(world.name, userData=world)
@@ -72,8 +74,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.event_resource_combo.addItem("No events in database", None)
             self.event_resource_combo.setEnabled(False)
 
-        for i, enum in enumerate(enum_lib.iterate_enum(LoreType)):
-            self.lore_type_combo.setItemData(i, enum)
+        for i, dock_type in enumerate(enum_lib.iterate_enum(LoreType)):
+            self.lore_type_combo.setItemData(i, dock_type)
         refresh_if_needed(self.lore_type_combo, self.on_lore_type_combo)
 
         self.set_unlocked_by(Requirement.trivial())
@@ -128,7 +130,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.fill_for_event(node)
             return self.tab_event
 
-        elif isinstance(node, TranslatorGateNode):
+        elif isinstance(node, ConfigurableNode):
             self.fill_for_translator_gate(node)
             return self.tab_translator_gate
 
@@ -156,7 +158,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.dock_connection_node_combo.setCurrentIndex(self.dock_connection_node_combo.findData(other_node))
 
         # Dock Weakness
-        self.dock_type_combo.setCurrentIndex(self.dock_type_combo.findData(node.default_dock_weakness.dock_type))
+        self.dock_type_combo.setCurrentIndex(self.dock_type_combo.findData(node.dock_type))
         refresh_if_needed(self.dock_type_combo, self.on_dock_type_combo)
         self.dock_weakness_combo.setCurrentIndex(self.dock_weakness_combo.findData(node.default_dock_weakness))
 
@@ -180,8 +182,8 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     def fill_for_event(self, node: EventNode):
         self.event_resource_combo.setCurrentIndex(self.event_resource_combo.findData(node.event))
 
-    def fill_for_translator_gate(self, node: TranslatorGateNode):
-        self.translator_gate_spin.setValue(node.gate.index)
+    def fill_for_translator_gate(self, node: ConfigurableNode):
+        pass
 
     def fill_for_logbook_node(self, node: LogbookNode):
         self.logbook_string_asset_id_edit.setText(hex(node.string_asset_id).upper())
@@ -305,6 +307,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             return DockNode(
                 name, heal, location, description, extra, index,
                 self.game.world_list.identifier_for_node(connection_node),
+                self.dock_type_combo.currentData(),
                 self.dock_weakness_combo.currentData(),
             )
 
@@ -338,11 +341,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 event,
             )
 
-        elif node_type == TranslatorGateNode:
-            return TranslatorGateNode(
+        elif node_type == ConfigurableNode:
+            identifier = self.game.world_list.identifier_for_node(self.node)
+            return ConfigurableNode(
                 name, heal, location, description, extra, index,
-                TranslatorGate(self.translator_gate_spin.value()),
-                self._get_scan_visor()
+                dataclasses.replace(identifier, node_name=name),
             )
 
         elif node_type == LogbookNode:

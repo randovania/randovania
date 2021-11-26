@@ -5,10 +5,10 @@ from typing import Optional
 from PySide2.QtWidgets import QMessageBox, QDialog, QLabel, QRadioButton
 
 from randovania.games.game import RandovaniaGame
-from randovania.patching.patcher import Patcher
 from randovania.gui.generated.game_input_dialog_ui import Ui_GameInputDialog
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common.options import Options
+from randovania.patching.patcher import Patcher
 
 _VALID_GAME_TEXT = "(internal game copy)"
 
@@ -83,7 +83,13 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             self.input_file_edit.setText(str(per_game.input_path))
 
         if per_game.output_directory is not None:
-            self.output_file_edit.setText(str(per_game.output_directory.joinpath("{}.{}".format(self.default_output_name, self._selected_output_format))))
+            if self._selected_output_format:
+                new_name = "{}.{}".format(self.default_output_name, self._selected_output_format)
+            else:
+                new_name = self.default_output_name
+
+            output_path = per_game.output_directory.joinpath(new_name)
+            self.output_file_edit.setText(str(output_path))
 
         self._validate_input_file()
         self._validate_output_file()
@@ -94,8 +100,10 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
                 options.auto_save_spoiler = self.auto_save_spoiler
 
             per_game = options.options_for_game(self._game)
-            per_game_changes = {"output_directory": self.output_file.parent}
-            per_game_changes["output_format"] = self._selected_output_format
+            per_game_changes = {
+                "output_directory": self.output_file.parent,
+                "output_format": self._selected_output_format,
+            }
             if self._prompt_input_file:
                 per_game_changes["input_path"] = self.input_file
 
@@ -133,7 +141,12 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     # Input file
     def _validate_input_file(self):
         if self._prompt_input_file:
-            has_error = not self.input_file.is_file()
+            if self._selected_output_format:
+                has_error = not self.input_file.is_file()
+            elif self.input_file_edit.text():
+                has_error = not self.input_file.is_dir()
+            else:
+                has_error = True
         else:
             has_error = self.input_file_edit.text() != _VALID_GAME_TEXT
 
@@ -143,10 +156,14 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     def _on_input_file_button(self):
         if self._prompt_input_file:
             existing_file = None
-            if self.input_file.is_file():
-                existing_file = self.input_file
-            elif self.input_file_edit.text() and self.input_file.parent.is_dir():
-                existing_file = self.input_file.parent
+            if self._selected_output_format:
+                if self.input_file.is_file():
+                    existing_file = self.input_file
+                elif self.input_file_edit.text() and self.input_file.parent.is_dir():
+                    existing_file = self.input_file.parent
+            else:
+                if self.input_file.is_dir():
+                    existing_file = self.input_file
 
             input_file = common_qt_lib.prompt_user_for_vanilla_input_file(self, self.patcher.valid_input_file_types,
                                                                           existing_file=existing_file)
@@ -160,13 +177,22 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     # Output File
     def _validate_output_file(self):
         output_file = self.output_file
-        has_error = output_file.is_dir() or not output_file.parent.is_dir()
+        if self._selected_output_format:
+            has_error = output_file.is_dir() or not output_file.parent.is_dir()
+        elif self.input_file_edit.text():
+            has_error = not output_file.is_dir()
+        else:
+            has_error = True
 
         common_qt_lib.set_error_border_stylesheet(self.output_file_edit, has_error)
         self._update_accept_button()
 
     def _on_output_file_button(self):
-        suggested_name = "{}.{}".format(self.default_output_name, self._selected_output_format)
+        if self._selected_output_format:
+            suggested_name = "{}.{}".format(self.default_output_name, self._selected_output_format)
+        else:
+            suggested_name = self.default_output_name
+
         if self.output_file_edit.text() and self.output_file.parent.is_dir():
             suggested_name = str(self.output_file.parent.joinpath(suggested_name))
 

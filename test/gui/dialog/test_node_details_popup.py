@@ -1,7 +1,7 @@
 import pytest
 
 from randovania.game_description.world.node import GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    TranslatorGateNode, LogbookNode, PlayerShipNode
+    ConfigurableNode, LogbookNode, PlayerShipNode
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
 
 
@@ -11,7 +11,7 @@ from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
     PickupNode,
     TeleporterNode,
     EventNode,
-    TranslatorGateNode,
+    ConfigurableNode,
     LogbookNode,
 ])
 def test_unchanged_create_new_node_echoes(skip_qtbot, echoes_game_description, node_type):

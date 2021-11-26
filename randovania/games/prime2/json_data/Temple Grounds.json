@@ -285,8 +285,8 @@
                         "area_name": "Service Access",
                         "node_name": "Door to Landing Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -310,8 +310,8 @@
                         "area_name": "Hive Access Tunnel",
                         "node_name": "Door to Landing Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -454,8 +454,8 @@
                         "area_name": "Landing Site",
                         "node_name": "Door to Service Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Path of Honor": {
                             "type": "and",
@@ -539,8 +539,8 @@
                         "area_name": "Path of Honor",
                         "node_name": "Door to Service Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Landing Site": {
                             "type": "and",
@@ -564,8 +564,8 @@
                         "area_name": "Meeting Grounds",
                         "node_name": "Morph Ball Door to Service Access"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Door to Landing Site": {
                             "type": "and",
@@ -826,8 +826,8 @@
                         "area_name": "Path of Honor",
                         "node_name": "Morph Ball Door to Service Access"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Door to Landing Site": {
                             "type": "and",
@@ -1007,8 +1007,8 @@
                         "area_name": "Meeting Grounds",
                         "node_name": "Door to Service Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Door to Landing Site": {
                             "type": "and",
@@ -1095,8 +1095,8 @@
                         "area_name": "Landing Site",
                         "node_name": "Door to Hive Access Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Dock to Hive Chamber A": {
                             "type": "and",
@@ -1127,8 +1127,8 @@
                         "area_name": "Hive Transport Area",
                         "node_name": "Door to Hive Access Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Translator Gate": {
                             "type": "and",
@@ -1152,17 +1152,20 @@
                         "area_name": "Hive Chamber A",
                         "node_name": "Dock to Hive Access Tunnel"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 0,
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
                     "connections": {}
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 0,
+                    "extra": {
+                        "gate_index": 0,
+                        "vanilla_actual": "Violet",
+                        "vanilla_color": "Violet"
+                    },
                     "connections": {
                         "Door to Landing Site": {
                             "type": "and",
@@ -1203,8 +1206,8 @@
                         "area_name": "Hall of Honored Dead",
                         "node_name": "Morph Ball Door to Path of Honor"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Morph Ball Door to Service Access": {
                             "type": "resource",
@@ -1230,8 +1233,8 @@
                         "area_name": "Service Access",
                         "node_name": "Door to Path of Honor"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Hall of Honored Dead": {
                             "type": "or",
@@ -1300,8 +1303,8 @@
                         "area_name": "Hall of Honored Dead",
                         "node_name": "Door to Path of Honor"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 12,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
                     "connections": {
                         "Door to Service Access": {
                             "type": "and",
@@ -1325,8 +1328,8 @@
                         "area_name": "Service Access",
                         "node_name": "Morph Ball Door to Path of Honor"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Morph Ball Door to Hall of Honored Dead": {
                             "type": "resource",
@@ -1362,8 +1365,8 @@
                         "area_name": "Service Access",
                         "node_name": "Morph Ball Door to Meeting Grounds"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Bottom of Halfpipe": {
                             "type": "resource",
@@ -1389,8 +1392,8 @@
                         "area_name": "Hall of Eyes",
                         "node_name": "Door to Meeting Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Bottom of Halfpipe": {
                             "type": "and",
@@ -1414,8 +1417,8 @@
                         "area_name": "Service Access",
                         "node_name": "Door to Meeting Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Bottom of Halfpipe": {
                             "type": "and",
@@ -1439,8 +1442,8 @@
                         "area_name": "Temple Transport C",
                         "node_name": "Door to Meeting Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Translator Gate": {
                             "type": "and",
@@ -1630,12 +1633,15 @@
                     }
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 1,
+                    "extra": {
+                        "gate_index": 1,
+                        "vanilla_actual": "Violet",
+                        "vanilla_color": "Amber"
+                    },
                     "connections": {
                         "Door to Temple Transport C": {
                             "type": "and",
@@ -1696,8 +1702,8 @@
                         "area_name": "Industrial Site",
                         "node_name": "Door to Hive Transport Area"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Top of Elevator": {
                             "type": "and",
@@ -1721,8 +1727,8 @@
                         "area_name": "Hive Access Tunnel",
                         "node_name": "Door to Hive Transport Area"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Translator Gate": {
                             "type": "and",
@@ -1746,8 +1752,8 @@
                         "area_name": "Hive Chamber C",
                         "node_name": "Door to Hive Transport Area"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Top of Elevator": {
                             "type": "resource",
@@ -1793,12 +1799,15 @@
                     }
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 2,
+                    "extra": {
+                        "gate_index": 2,
+                        "vanilla_actual": "Violet",
+                        "vanilla_color": "Violet"
+                    },
                     "connections": {
                         "Door to Hive Access Tunnel": {
                             "type": "and",
@@ -1839,8 +1848,8 @@
                         "area_name": "Hive Access Tunnel",
                         "node_name": "Dock to Hive Chamber A"
                     },
-                    "dock_type": 2,
-                    "dock_weakness_index": 0,
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
                     "connections": {
                         "Door to Hive Tunnel": {
                             "type": "resource",
@@ -1884,8 +1893,8 @@
                         "area_name": "Hive Tunnel",
                         "node_name": "Door to Hive Chamber A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "and",
@@ -1991,8 +2000,8 @@
                         "area_name": "Path of Honor",
                         "node_name": "Door to Hall of Honored Dead"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 12,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
                     "connections": {
                         "Morph Ball Door to Path of Honor": {
                             "type": "or",
@@ -2236,8 +2245,8 @@
                         "area_name": "Path of Honor",
                         "node_name": "Morph Ball Door to Hall of Honored Dead"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Door to Path of Honor": {
                             "type": "and",
@@ -2289,8 +2298,8 @@
                         "area_name": "Path of Eyes",
                         "node_name": "Door to Hall of Eyes"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Portal to Base Access": {
                             "type": "and",
@@ -2314,8 +2323,8 @@
                         "area_name": "Meeting Grounds",
                         "node_name": "Door to Hall of Eyes"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Base Access": {
                             "type": "or",
@@ -2384,8 +2393,8 @@
                         "area_name": "Base Access",
                         "node_name": "Portal to Hall of Eyes"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 1,
+                    "dock_type": "portal",
+                    "dock_weakness": "Dark Portal",
                     "connections": {
                         "Door to Path of Eyes": {
                             "type": "and",
@@ -2426,8 +2435,8 @@
                         "area_name": "Meeting Grounds",
                         "node_name": "Door to Temple Transport C"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Elevator to Great Temple - Temple Transport C": {
                             "type": "resource",
@@ -2488,8 +2497,8 @@
                         "area_name": "Agon Transport Access",
                         "node_name": "Door to Industrial Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Translator Gate": {
                             "type": "and",
@@ -2520,8 +2529,8 @@
                         "area_name": "Collapsed Tunnel",
                         "node_name": "Door to Industrial Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Front of Crate Terminal": {
                             "type": "and",
@@ -2554,8 +2563,8 @@
                         "area_name": "Hive Transport Area",
                         "node_name": "Door to Industrial Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Event - Gate": {
                             "type": "and",
@@ -3604,12 +3613,15 @@
                     }
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 3,
+                    "extra": {
+                        "gate_index": 3,
+                        "vanilla_actual": "Violet",
+                        "vanilla_color": "Violet"
+                    },
                     "connections": {
                         "Door to Agon Transport Access": {
                             "type": "and",
@@ -3687,8 +3699,8 @@
                         "area_name": "Hive Save Station",
                         "node_name": "Door to Hive Chamber C"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Hive Transport Area": {
                             "type": "and",
@@ -3721,8 +3733,8 @@
                         "area_name": "Hive Transport Area",
                         "node_name": "Door to Hive Chamber C"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Hive Save Station": {
                             "type": "and",
@@ -3755,8 +3767,8 @@
                         "area_name": "Hive Chamber B",
                         "node_name": "Morph Ball Door to Hive Chamber C"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Door to Hive Save Station": {
                             "type": "resource",
@@ -3801,8 +3813,8 @@
                         "area_name": "Command Chamber",
                         "node_name": "Door to Hive Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Hive Chamber A": {
                             "type": "resource",
@@ -3861,8 +3873,8 @@
                         "area_name": "Hive Chamber A",
                         "node_name": "Door to Hive Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Command Chamber": {
                             "type": "resource",
@@ -3929,8 +3941,8 @@
                         "area_name": "War Ritual Grounds",
                         "node_name": "Door to Base Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Portal to Hall of Eyes": {
                             "type": "and",
@@ -4080,8 +4092,8 @@
                         "area_name": "Abandoned Base",
                         "node_name": "Door to Base Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Hall of Eyes": {
                             "type": "resource",
@@ -4107,8 +4119,8 @@
                         "area_name": "Hall of Eyes",
                         "node_name": "Portal to Base Access"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 2,
+                    "dock_type": "portal",
+                    "dock_weakness": "Light Portal",
                     "connections": {
                         "Door to War Ritual Grounds": {
                             "type": "or",
@@ -4182,8 +4194,8 @@
                         "area_name": "Windchamber Gateway",
                         "node_name": "Door to Path of Eyes"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Front of Center Door": {
                             "type": "resource",
@@ -4209,8 +4221,8 @@
                         "area_name": "Abandoned Base",
                         "node_name": "Portal to Path of Eyes"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 3,
+                    "dock_type": "portal",
+                    "dock_weakness": "No Return Portal",
                     "connections": {
                         "Door to Hall of Eyes": {
                             "type": "and",
@@ -4234,8 +4246,8 @@
                         "area_name": "Hall of Eyes",
                         "node_name": "Door to Path of Eyes"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Front of Translator Gate": {
                             "type": "and",
@@ -4420,8 +4432,8 @@
                         "area_name": "Torvus Transport Access",
                         "node_name": "Door to Path of Eyes"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Translator Gate": {
                             "type": "and",
@@ -4661,12 +4673,15 @@
                     }
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 4,
+                    "extra": {
+                        "gate_index": 4,
+                        "vanilla_actual": "Amber",
+                        "vanilla_color": "Amber"
+                    },
                     "connections": {
                         "Door to Torvus Transport Access": {
                             "type": "and",
@@ -4901,8 +4916,8 @@
                         "area_name": "Transport to Agon Wastes",
                         "node_name": "Door to Agon Transport Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Industrial Site": {
                             "type": "and",
@@ -4926,8 +4941,8 @@
                         "area_name": "Industrial Site",
                         "node_name": "Door to Agon Transport Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Transport to Agon Wastes": {
                             "type": "and",
@@ -4961,8 +4976,8 @@
                         "area_name": "Temple Assembly Site",
                         "node_name": "Door to Collapsed Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Industrial Site": {
                             "type": "resource",
@@ -4988,8 +5003,8 @@
                         "area_name": "Industrial Site",
                         "node_name": "Door to Collapsed Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Temple Assembly Site": {
                             "type": "resource",
@@ -5025,8 +5040,8 @@
                         "area_name": "Hive Chamber C",
                         "node_name": "Morph Ball Door to Hive Chamber B"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Door to Hive Storage": {
                             "type": "resource",
@@ -5095,8 +5110,8 @@
                         "area_name": "Hive Storage",
                         "node_name": "Door to Hive Chamber B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Morph Ball Door to Hive Chamber C": {
                             "type": "resource",
@@ -5168,8 +5183,8 @@
                         "area_name": "Hive Chamber C",
                         "node_name": "Door to Hive Save Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -5203,8 +5218,8 @@
                         "area_name": "Hive Storage",
                         "node_name": "Door to Command Chamber"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Hive Tunnel": {
                             "type": "resource",
@@ -5230,8 +5245,8 @@
                         "area_name": "Hive Tunnel",
                         "node_name": "Door to Command Chamber"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Hive Storage": {
                             "type": "resource",
@@ -5326,8 +5341,8 @@
                         "area_name": "Shrine Access",
                         "node_name": "Door to War Ritual Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "or",
@@ -5387,8 +5402,8 @@
                         "area_name": "Base Access",
                         "node_name": "Door to War Ritual Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "or",
@@ -5699,8 +5714,8 @@
                         "area_name": "Path of Eyes",
                         "node_name": "Portal from Abandoned Base"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 2,
+                    "dock_type": "portal",
+                    "dock_weakness": "Light Portal",
                     "connections": {
                         "Door to Base Access": {
                             "type": "resource",
@@ -5726,8 +5741,8 @@
                         "area_name": "Base Access",
                         "node_name": "Door to Abandoned Base"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Path of Eyes": {
                             "type": "or",
@@ -6096,8 +6111,8 @@
                         "area_name": "Path of Eyes",
                         "node_name": "Door to Windchamber Gateway"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Door to Grand Windchamber": {
                             "type": "or",
@@ -6135,8 +6150,8 @@
                         "area_name": "Grand Windchamber",
                         "node_name": "Door to Windchamber Gateway"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 7,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Bomb Blast Shield",
                     "connections": {
                         "Door to Path of Eyes": {
                             "type": "or",
@@ -6546,8 +6561,8 @@
                         "area_name": "Path of Eyes",
                         "node_name": "Door to Torvus Transport Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Transport to Torvus Bog": {
                             "type": "and",
@@ -6571,8 +6586,8 @@
                         "area_name": "Transport to Torvus Bog",
                         "node_name": "Door to Torvus Transport Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Path of Eyes": {
                             "type": "and",
@@ -6606,8 +6621,8 @@
                         "area_name": "Agon Transport Access",
                         "node_name": "Door to Transport to Agon Wastes"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "resource",
@@ -6722,8 +6737,8 @@
                         "area_name": "Storage Cavern B",
                         "node_name": "Door to Temple Assembly Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -6747,8 +6762,8 @@
                         "area_name": "Plain of Dark Worship",
                         "node_name": "Portal to Temple Assembly Site"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 1,
+                    "dock_type": "portal",
+                    "dock_weakness": "Dark Portal",
                     "connections": {
                         "Room Center": {
                             "type": "or",
@@ -6803,8 +6818,8 @@
                         "area_name": "Temple Transport B",
                         "node_name": "Door to Temple Assembly Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Translator Gate": {
                             "type": "and",
@@ -6828,8 +6843,8 @@
                         "area_name": "Dynamo Chamber",
                         "node_name": "Door to Temple Assembly Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -6853,8 +6868,8 @@
                         "area_name": "Collapsed Tunnel",
                         "node_name": "Door to Temple Assembly Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -7253,12 +7268,15 @@
                     }
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 5,
+                    "extra": {
+                        "gate_index": 5,
+                        "vanilla_actual": "Violet",
+                        "vanilla_color": "Violet"
+                    },
                     "connections": {
                         "Door to Temple Transport B": {
                             "type": "and",
@@ -7299,8 +7317,8 @@
                         "area_name": "Hive Chamber B",
                         "node_name": "Door to Hive Storage"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Command Chamber": {
                             "type": "and",
@@ -7324,8 +7342,8 @@
                         "area_name": "Command Chamber",
                         "node_name": "Door to Hive Storage"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Hive Chamber B": {
                             "type": "and",
@@ -7359,8 +7377,8 @@
                         "area_name": "War Ritual Grounds",
                         "node_name": "Door to Shrine Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Safe Zone": {
                             "type": "and",
@@ -7463,8 +7481,8 @@
                         "area_name": "Defiled Shrine",
                         "node_name": "Door to Shrine Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Safe Zone": {
                             "type": "resource",
@@ -7490,8 +7508,8 @@
                         "area_name": "Gateway Access",
                         "node_name": "Door to Shrine Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 6,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)",
                     "connections": {
                         "Safe Zone": {
                             "type": "resource",
@@ -7762,8 +7780,8 @@
                         "area_name": "Windchamber Tunnel",
                         "node_name": "Door to Grand Windchamber"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Windchamber Gateway": {
                             "type": "or",
@@ -8132,8 +8150,8 @@
                         "area_name": "Ing Windchamber",
                         "node_name": "Portal to Grand Windchamber"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 1,
+                    "dock_type": "portal",
+                    "dock_weakness": "Dark Portal",
                     "connections": {
                         "Door to Windchamber Gateway": {
                             "type": "and",
@@ -8157,8 +8175,8 @@
                         "area_name": "Windchamber Gateway",
                         "node_name": "Door to Grand Windchamber"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 7,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Bomb Blast Shield",
                     "connections": {
                         "Door to Windchamber Tunnel": {
                             "type": "or",
@@ -8516,8 +8534,8 @@
                         "area_name": "Torvus Transport Access",
                         "node_name": "Door to Transport to Torvus Bog"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Elevator to Torvus Bog - Transport to Temple Grounds": {
                             "type": "resource",
@@ -8578,8 +8596,8 @@
                         "area_name": "Communication Area",
                         "node_name": "Door to Dynamo Chamber"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Temple Assembly Site": {
                             "type": "and",
@@ -8725,8 +8743,8 @@
                         "area_name": "Temple Assembly Site",
                         "node_name": "Door to Dynamo Chamber"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Communication Area": {
                             "type": "and",
@@ -9056,8 +9074,8 @@
                         "area_name": "Temple Assembly Site",
                         "node_name": "Door to Temple Transport B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Elevator to Great Temple - Temple Transport B": {
                             "type": "resource",
@@ -9118,8 +9136,8 @@
                         "area_name": "Temple Assembly Site",
                         "node_name": "Door to Storage Cavern B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Pickup (Energy Tank)": {
                             "type": "and",
@@ -9171,8 +9189,8 @@
                         "area_name": "Lake Access",
                         "node_name": "Door to Plain of Dark Worship"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 6,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)",
                     "connections": {
                         "Portal to Temple Assembly Site": {
                             "type": "resource",
@@ -9198,8 +9216,8 @@
                         "area_name": "Temple Assembly Site",
                         "node_name": "Portal to Plain of Dark Worship"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 2,
+                    "dock_type": "portal",
+                    "dock_weakness": "Light Portal",
                     "connections": {
                         "Door to Lake Access": {
                             "type": "or",
@@ -9681,8 +9699,8 @@
                         "area_name": "Shrine Access",
                         "node_name": "Door to Defiled Shrine"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Safe Zone (Ship Location)": {
                             "type": "or",
@@ -9998,8 +10016,8 @@
                         "area_name": "Sky Temple Gateway",
                         "node_name": "Door to Gateway Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "resource",
@@ -10025,8 +10043,8 @@
                         "area_name": "Shrine Access",
                         "node_name": "Door to Gateway Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "resource",
@@ -10254,8 +10272,8 @@
                         "area_name": "GFMC Compound",
                         "node_name": "Door to Windchamber Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 7,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Bomb Blast Shield",
                     "connections": {
                         "Door to Grand Windchamber": {
                             "type": "resource",
@@ -10281,8 +10299,8 @@
                         "area_name": "Grand Windchamber",
                         "node_name": "Door to Windchamber Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to GFMC Compound": {
                             "type": "resource",
@@ -10318,8 +10336,8 @@
                         "area_name": "Grand Windchamber",
                         "node_name": "Portal to Ing Windchamber"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 2,
+                    "dock_type": "portal",
+                    "dock_weakness": "Light Portal",
                     "connections": {
                         "Event - Ing Windchamber Blue Seeker Lock": {
                             "type": "and",
@@ -10554,8 +10572,8 @@
                         "area_name": "Dynamo Chamber",
                         "node_name": "Door to Communication Area"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Trooper Security Station": {
                             "type": "and",
@@ -10640,8 +10658,8 @@
                         "area_name": "Storage Cavern A",
                         "node_name": "Door to Communication Area"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Next to Pickup": {
                             "type": "and",
@@ -10665,8 +10683,8 @@
                         "area_name": "Trooper Security Station",
                         "node_name": "Door to Communication Area"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Dynamo Chamber": {
                             "type": "and",
@@ -10866,8 +10884,8 @@
                         "area_name": "Accursed Lake",
                         "node_name": "Door to Lake Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Plain of Dark Worship": {
                             "type": "resource",
@@ -10893,8 +10911,8 @@
                         "area_name": "Plain of Dark Worship",
                         "node_name": "Door to Lake Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Door to Accursed Lake": {
                             "type": "resource",
@@ -10930,8 +10948,8 @@
                         "area_name": "Gateway Access",
                         "node_name": "Door to Sky Temple Gateway"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Spawn Point/Front of Teleporter": {
                             "type": "or",
@@ -11414,8 +11432,8 @@
                         "area_name": "Windchamber Tunnel",
                         "node_name": "Door to GFMC Compound"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 7,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Bomb Blast Shield",
                     "connections": {
                         "Door to Sacred Bridge": {
                             "type": "resource",
@@ -11448,8 +11466,8 @@
                         "area_name": "Sacred Bridge",
                         "node_name": "Door to GFMC Compound"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Windchamber Tunnel": {
                             "type": "resource",
@@ -11512,8 +11530,8 @@
                         "area_name": "Trooper Security Station",
                         "node_name": "Door to GFMC Compound"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Event - GFMC Compound Trooper Cutscene": {
                             "type": "and",
@@ -11563,8 +11581,8 @@
                         "area_name": "Fortress Transport Access",
                         "node_name": "Door to GFMC Compound"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -12018,12 +12036,15 @@
                     }
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 6,
+                    "extra": {
+                        "gate_index": 6,
+                        "vanilla_actual": "Violet",
+                        "vanilla_color": "Emerald"
+                    },
                     "connections": {
                         "Door to Fortress Transport Access": {
                             "type": "and",
@@ -12064,8 +12085,8 @@
                         "area_name": "Communication Area",
                         "node_name": "Door to Storage Cavern A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Keybearer Corpse (D-Isl)": {
                             "type": "and",
@@ -12119,8 +12140,8 @@
                         "area_name": "GFMC Compound",
                         "node_name": "Door to Trooper Security Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Communication Area": {
                             "type": "and",
@@ -12216,8 +12237,8 @@
                         "area_name": "Communication Area",
                         "node_name": "Door to Trooper Security Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to GFMC Compound": {
                             "type": "and",
@@ -12425,8 +12446,8 @@
                         "area_name": "Lake Access",
                         "node_name": "Door to Accursed Lake"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Spawn Point": {
                             "type": "resource",
@@ -13171,8 +13192,8 @@
                         "area_name": "Transport to Sanctuary Fortress",
                         "node_name": "Door to Fortress Transport Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to GFMC Compound": {
                             "type": "and",
@@ -13203,8 +13224,8 @@
                         "area_name": "GFMC Compound",
                         "node_name": "Door to Fortress Transport Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Transport to Sanctuary Fortress": {
                             "type": "and",
@@ -13285,8 +13306,8 @@
                         "area_name": "GFMC Compound",
                         "node_name": "Door to Sacred Bridge"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Sacred Path": {
                             "type": "or",
@@ -13406,8 +13427,8 @@
                         "area_name": "Sacred Path",
                         "node_name": "Door to Sacred Bridge"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to GFMC Compound": {
                             "type": "resource",
@@ -13495,8 +13516,8 @@
                         "area_name": "Fortress Transport Access",
                         "node_name": "Door to Transport to Sanctuary Fortress"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Elevator to Sanctuary Fortress - Transport to Temple Grounds": {
                             "type": "resource",
@@ -13557,8 +13578,8 @@
                         "area_name": "Profane Path",
                         "node_name": "Portal to Sacred Path"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 1,
+                    "dock_type": "portal",
+                    "dock_weakness": "Dark Portal",
                     "connections": {
                         "Door to Sacred Bridge": {
                             "type": "and",
@@ -13589,8 +13610,8 @@
                         "area_name": "Sacred Bridge",
                         "node_name": "Door to Sacred Path"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Temple Transport A": {
                             "type": "or",
@@ -13783,8 +13804,8 @@
                         "area_name": "Temple Transport A",
                         "node_name": "Door to Sacred Path"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Profane Path": {
                             "type": "or",
@@ -13961,8 +13982,8 @@
                         "area_name": "Sacred Path",
                         "node_name": "Door to Temple Transport A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Elevator to Great Temple - Temple Transport A": {
                             "type": "resource",
@@ -14023,8 +14044,8 @@
                         "area_name": "Phazon Pit",
                         "node_name": "Door to Profane Path"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Sacred Path": {
                             "type": "or",
@@ -14251,8 +14272,8 @@
                         "area_name": "Sacred Path",
                         "node_name": "Portal to Profane Path"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 2,
+                    "dock_type": "portal",
+                    "dock_weakness": "Light Portal",
                     "connections": {
                         "Door to Phazon Pit": {
                             "type": "resource",
@@ -14654,8 +14675,8 @@
                         "area_name": "Profane Path",
                         "node_name": "Door to Phazon Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Phazon Grounds": {
                             "type": "or",
@@ -14882,8 +14903,8 @@
                         "area_name": "Phazon Grounds",
                         "node_name": "Door to Phazon Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Profane Path": {
                             "type": "or",
@@ -15005,8 +15026,8 @@
                         "area_name": "Phazon Pit",
                         "node_name": "Door to Phazon Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Reliquary Access": {
                             "type": "or",
@@ -15272,8 +15293,8 @@
                         "area_name": "Reliquary Access",
                         "node_name": "Door to Phazon Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 13,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)",
                     "connections": {
                         "Door to Phazon Pit": {
                             "type": "or",
@@ -15612,8 +15633,8 @@
                         "area_name": "Phazon Grounds",
                         "node_name": "Door to Reliquary Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 6,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)",
                     "connections": {
                         "Door to Reliquary Grounds": {
                             "type": "or",
@@ -15814,8 +15835,8 @@
                         "area_name": "Reliquary Grounds",
                         "node_name": "Door to Reliquary Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Phazon Grounds": {
                             "type": "or",
@@ -16078,8 +16099,8 @@
                         "area_name": "Reliquary Access",
                         "node_name": "Door to Reliquary Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Ing Reliquary": {
                             "type": "or",
@@ -16367,8 +16388,8 @@
                         "area_name": "Ing Reliquary",
                         "node_name": "Door to Reliquary Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Reliquary Access": {
                             "type": "or",
@@ -16549,8 +16570,8 @@
                         "area_name": "Reliquary Grounds",
                         "node_name": "Door to Ing Reliquary"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Sky Temple Key 7)": {
                             "type": "and",

@@ -5,6 +5,7 @@ import typing
 from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO, List, Any
+from randovania.game_description import default_database
 
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
@@ -165,6 +166,7 @@ def refresh_all_logic(args):
 
     gd_per_game = {}
     path_per_game = {}
+    idb_per_game = {}
 
     for game in iterate_enum(RandovaniaGame):
         logging.info("Reading %s", game.long_name)
@@ -172,6 +174,9 @@ def refresh_all_logic(args):
         path_per_game[game] = path
         gd = data_reader.decode_data(data)
         gd_per_game[game] = gd
+
+        idb = default_database.item_database_for_game(game)
+        idb_per_game[game] = idb
 
     should_stop = False
     if args.integrity_check:
@@ -193,6 +198,9 @@ def refresh_all_logic(args):
         data_writer.write_as_split_files(new_data, path)
         path.with_suffix("").mkdir(parents=True, exist_ok=True)
         pretty_print.write_human_readable_game(gd, path.with_suffix(""))
+
+        default_database.write_item_database_for_game(idb_per_game[game], game)
+
 
 
 def refresh_all_command(sub_parsers):

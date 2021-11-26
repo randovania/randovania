@@ -1,59 +1,92 @@
 {
-    "game": "super_metroid",
+    "schema_version": 2,
     "item_categories": {
         "beam": {
             "long_name": "Beams",
-            "hint_details": [ "a ", "beam" ],
+            "hint_details": [
+                "a ",
+                "beam"
+            ],
             "is_major": true
         },
         "missile": {
             "long_name": "Missile",
-            "hint_details": [ "a ", "missile system" ],
+            "hint_details": [
+                "a ",
+                "missile system"
+            ],
             "is_major": true
         },
         "morph_ball": {
             "long_name": "Morph Ball",
-            "hint_details": [ "a ", "morph ball system" ],
+            "hint_details": [
+                "a ",
+                "morph ball system"
+            ],
             "is_major": true
         },
         "movement": {
             "long_name": "Movement",
-            "hint_details": [ "a ", "movement system" ],
+            "hint_details": [
+                "a ",
+                "movement system"
+            ],
             "is_major": true
         },
         "visor": {
             "long_name": "Visors",
-            "hint_details": [ "a ", "visor" ],
+            "hint_details": [
+                "a ",
+                "visor"
+            ],
             "is_major": true
         },
         "suit": {
             "long_name": "Suits",
-            "hint_details": [ "a ", "suit" ],
+            "hint_details": [
+                "a ",
+                "suit"
+            ],
             "is_major": true
         },
         "energy_tank": {
             "long_name": "Energy Tanks",
-            "hint_details": [ "an ", "Energy Tank" ],
+            "hint_details": [
+                "an ",
+                "Energy Tank"
+            ],
             "is_major": false
         },
         "morph_ball_related": {
             "long_name": "",
-            "hint_details": [ "a ", "morph ball-related upgrade" ],
+            "hint_details": [
+                "a ",
+                "morph ball-related upgrade"
+            ],
             "is_major": false
         },
         "beam_related": {
             "long_name": "",
-            "hint_details": [ "a ", "beam-related upgrade" ],
+            "hint_details": [
+                "a ",
+                "beam-related upgrade"
+            ],
             "is_major": false
         },
         "missile_related": {
             "long_name": "",
-            "hint_details": [ "a ", "missile-related upgrade" ],
+            "hint_details": [
+                "a ",
+                "missile-related upgrade"
+            ],
             "is_major": false
         },
         "life_support": {
             "long_name": "",
-            "hint_details": [ "a ", "life support system" ],
+            "hint_details": [
+                "a ",
+                "life support system"
+            ],
             "is_major": false
         }
     },
@@ -62,7 +95,12 @@
             "item_category": "beam",
             "broad_category": "beam_related",
             "model_name": "Charge Beam",
-            "progression": [0],
+            "progression": [
+                "Charge"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -70,7 +108,12 @@
             "item_category": "beam",
             "broad_category": "beam_related",
             "model_name": "Ice Beam",
-            "progression": [1],
+            "progression": [
+                "Ice"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -78,7 +121,12 @@
             "item_category": "beam",
             "broad_category": "beam_related",
             "model_name": "Wave Beam",
-            "progression": [2],
+            "progression": [
+                "Wave"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -86,7 +134,12 @@
             "item_category": "beam",
             "broad_category": "beam_related",
             "model_name": "Spazer Beam",
-            "progression": [3],
+            "progression": [
+                "Spazer"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -94,18 +147,25 @@
             "item_category": "beam",
             "broad_category": "beam_related",
             "model_name": "Plasma Beam",
-            "progression": [4],
+            "progression": [
+                "Plasma"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
-
         "Missile Launcher": {
             "item_category": "missile",
             "broad_category": "missile",
             "model_name": "Missile",
             "progression": [],
-            "ammo": [5],
+            "ammo": [
+                "Missile"
+            ],
             "unlocks_ammo": true,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -114,8 +174,11 @@
             "broad_category": "missile",
             "model_name": "Super Missile",
             "progression": [],
-            "ammo": [6],
+            "ammo": [
+                "Supers"
+            ],
             "unlocks_ammo": true,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -124,17 +187,24 @@
             "broad_category": "morph_ball_related",
             "model_name": "Power Bomb",
             "progression": [],
-            "ammo": [7],
+            "ammo": [
+                "PowerBomb"
+            ],
             "unlocks_ammo": true,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
-
         "Grapple Beam": {
             "item_category": "movement",
             "broad_category": "movement",
             "model_name": "Grapple Beam",
-            "progression": [8],
+            "progression": [
+                "Grapple"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -142,16 +212,25 @@
             "item_category": "visor",
             "broad_category": "visor",
             "model_name": "X-Ray Scope",
-            "progression": [9],
+            "progression": [
+                "X-Ray"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
-
         "Varia Suit": {
             "item_category": "suit",
             "broad_category": "life_support",
             "model_name": "Varia Suit",
-            "progression": [10],
+            "progression": [
+                "Varia"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -159,16 +238,25 @@
             "item_category": "suit",
             "broad_category": "life_support",
             "model_name": "Gravity Suit",
-            "progression": [11],
+            "progression": [
+                "Gravity"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
-
         "Morph Ball": {
             "item_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "Morph Ball",
-            "progression": [12],
+            "progression": [
+                "Morph"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -176,7 +264,12 @@
             "item_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "Morph Ball Bomb",
-            "progression": [13],
+            "progression": [
+                "Bombs"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -184,17 +277,25 @@
             "item_category": "morph_ball",
             "broad_category": "morph_ball_related",
             "model_name": "Spring Ball",
-            "progression": [14],
+            "progression": [
+                "SpringBall"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
-
-
         "Screw Attack": {
             "item_category": "movement",
             "broad_category": "movement",
             "model_name": "Screw Attack",
-            "progression": [15],
+            "progression": [
+                "ScrewAttack"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -202,7 +303,12 @@
             "item_category": "movement",
             "broad_category": "movement",
             "model_name": "Hi-Jump Boots",
-            "progression": [16],
+            "progression": [
+                "HiJump"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -210,7 +316,12 @@
             "item_category": "movement",
             "broad_category": "movement",
             "model_name": "Space Jump",
-            "progression": [17],
+            "progression": [
+                "SpaceJump"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -218,16 +329,25 @@
             "item_category": "movement",
             "broad_category": "movement",
             "model_name": "Speed Booster",
-            "progression": [18],
+            "progression": [
+                "SpeedBooster"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
-
         "Energy Tank": {
             "item_category": "energy_tank",
             "broad_category": "life_support",
             "model_name": "Energy Tank",
-            "progression": [19],
+            "progression": [
+                "ETank"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         },
@@ -235,7 +355,12 @@
             "item_category": "energy_tank",
             "broad_category": "life_support",
             "model_name": "Reserve Tank",
-            "progression": [20],
+            "progression": [
+                "Reserves"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "required": false,
             "probability_offset": 0,
             "probability_multiplier": 1
         }
@@ -243,17 +368,23 @@
     "ammo": {
         "Missile Expansion": {
             "model_name": "Missile",
-            "items": [5],
+            "items": [
+                "Missile"
+            ],
             "broad_category": "missile_related"
         },
         "Super Missile Expansion": {
             "model_name": "Super Missile",
-            "items": [6],
+            "items": [
+                "Supers"
+            ],
             "broad_category": "missile_related"
         },
         "Power Bomb Expansion": {
             "model_name": "Power Bomb",
-            "items": [7],
+            "items": [
+                "PowerBomb"
+            ],
             "broad_category": "morph_ball_related"
         }
     },

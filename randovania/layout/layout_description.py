@@ -28,7 +28,7 @@ def _shareable_hash_words() -> Dict[RandovaniaGame, typing.List[str]]:
         }
 
 
-CURRENT_DESCRIPTION_SCHEMA_VERSION = 5
+CURRENT_DESCRIPTION_SCHEMA_VERSION = 6
 
 
 def migrate_description(json_dict: dict) -> dict:
@@ -82,6 +82,84 @@ def migrate_description(json_dict: dict) -> dict:
                         RandovaniaGame.METROID_PRIME_ECHOES,  # only echoes has this at the moment
                         hint["precision"]["relative"]["area_location"]
                     )
+
+        version += 1
+
+    if version == 5:
+        gate_mapping = {'Hive Access Tunnel': 'Temple Grounds/Hive Access Tunnel/Translator Gate',
+                        'Meeting Grounds': 'Temple Grounds/Meeting Grounds/Translator Gate',
+                        'Hive Transport Area': 'Temple Grounds/Hive Transport Area/Translator Gate',
+                        'Industrial Site': 'Temple Grounds/Industrial Site/Translator Gate',
+                        'Path of Eyes': 'Temple Grounds/Path of Eyes/Translator Gate',
+                        'Temple Assembly Site': 'Temple Grounds/Temple Assembly Site/Translator Gate',
+                        'GFMC Compound': 'Temple Grounds/GFMC Compound/Translator Gate',
+                        'Temple Sanctuary (to Sanctuary)': 'Great Temple/Temple Sanctuary/Transport A Translator Gate',
+                        'Temple Sanctuary (to Agon)': 'Great Temple/Temple Sanctuary/Transport B Translator Gate',
+                        'Temple Sanctuary (to Torvus)': 'Great Temple/Temple Sanctuary/Transport C Translator Gate',
+                        'Mining Plaza': 'Agon Wastes/Mining Plaza/Translator Gate',
+                        'Mining Station A': 'Agon Wastes/Mining Station A/Translator Gate',
+                        'Great Bridge': 'Torvus Bog/Great Bridge/Translator Gate',
+                        'Torvus Temple Gate': 'Torvus Bog/Torvus Temple/Translator Gate',
+                        'Torvus Temple Elevator': 'Torvus Bog/Torvus Temple/Elevator Translator Scan',
+                        'Reactor Core': 'Sanctuary Fortress/Reactor Core/Translator Gate',
+                        'Sanctuary Temple': 'Sanctuary Fortress/Sanctuary Temple/Translator Gate'}
+        item_mapping = {
+            "Scan Visor": "Scan",
+            "Violet Translator": "Violet",
+            "Amber Translator": "Amber",
+            "Emerald Translator": "Emerald",
+            "Cobalt Translator": "Cobalt",
+        }
+        dark_world_mapping = {
+            "Dark Agon Wastes": "Agon Wastes",
+            "Dark Torvus Bog": "Torvus Bog",
+            "Ing Hive": "Sanctuary Fortress",
+            "Sky Temple": "Great Temple",
+            "Sky Temple Grounds": "Temple Grounds",
+        }
+
+        def fix_dark_world(name: str):
+            world, rest = name.split("/", 1)
+            return f"{dark_world_mapping.get(world, world)}/{rest}"
+
+        def add_teleporter_node(name):
+            return migration_data.get_teleporter_area_to_node_mapping()[name]
+
+        for game in json_dict["game_modifications"]:
+            game["starting_location"] = fix_dark_world(game["starting_location"])
+            game["teleporters"] = {
+                add_teleporter_node(fix_dark_world(source)): fix_dark_world(destination)
+                for source, destination in game.pop("elevators").items()
+            }
+            game["configurable_nodes"] = {
+                gate_mapping[gate]: {
+                    "type": "and",
+                    "data": {
+                        "comment": None,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Scan",
+                                    "amount": 1,
+                                    "negate": None
+                                }
+                            },
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": item_mapping[item],
+                                    "amount": 1,
+                                    "negate": None
+                                }
+                            }
+                        ]
+                    }
+                }
+                for gate, item in game.pop("translators").items()
+            }
 
         version += 1
 

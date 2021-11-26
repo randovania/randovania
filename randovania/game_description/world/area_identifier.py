@@ -17,16 +17,24 @@ class AreaIdentifier:
             "area_name": self.area_name,
         }
 
-    @property
-    def as_tuple(self) -> tuple[str, str]:
-        return self.world_name, self.area_name
-
     @classmethod
     def from_json(cls, value: dict) -> "AreaIdentifier":
         try:
             return cls(value["world_name"], value["area_name"])
         except Exception:
             raise
+
+    @property
+    def as_tuple(self) -> tuple[str, str]:
+        return self.world_name, self.area_name
+
+    @property
+    def as_string(self) -> str:
+        return "{}/{}".format(self.world_name, self.area_name)
+
+    @classmethod
+    def from_string(cls, value: str) -> "AreaIdentifier":
+        return cls(*value.split("/", 1))
 
     def __repr__(self):
         return "world {}/area {}".format(self.world_name, self.area_name)

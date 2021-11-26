@@ -26,8 +26,8 @@
                         "area_name": "Plaza Access",
                         "node_name": "Door to Transport to Temple Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Elevator to Temple Grounds - Transport to Agon Wastes": {
                             "type": "resource",
@@ -88,8 +88,8 @@
                         "area_name": "Transport to Temple Grounds",
                         "node_name": "Door to Plaza Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mining Plaza": {
                             "type": "and",
@@ -113,8 +113,8 @@
                         "area_name": "Mining Plaza",
                         "node_name": "Door to Plaza Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Transport to Temple Grounds": {
                             "type": "and",
@@ -148,8 +148,8 @@
                         "area_name": "Transit Station",
                         "node_name": "Door to Mining Plaza"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {}
                 },
                 "Portal from Duelling Range": {
@@ -165,8 +165,8 @@
                         "area_name": "Duelling Range",
                         "node_name": "Portal to Mining Plaza"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 3,
+                    "dock_type": "portal",
+                    "dock_weakness": "No Return Portal",
                     "connections": {
                         "Door to Transit Station": {
                             "type": "and",
@@ -190,8 +190,8 @@
                         "area_name": "Agon Map Station",
                         "node_name": "Morph Ball Door to Mining Plaza"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Translator Gate": {
                             "type": "and",
@@ -285,8 +285,8 @@
                         "area_name": "Save Station A",
                         "node_name": "Door to Mining Plaza"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Plaza Access": {
                             "type": "and",
@@ -310,8 +310,8 @@
                         "area_name": "Mining Station Access",
                         "node_name": "Door to Mining Plaza"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Plaza Access": {
                             "type": "and",
@@ -415,8 +415,8 @@
                         "area_name": "Plaza Access",
                         "node_name": "Door to Mining Plaza"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Save Station A": {
                             "type": "and",
@@ -561,12 +561,15 @@
                     }
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 10,
+                    "extra": {
+                        "gate_index": 10,
+                        "vanilla_actual": "Amber",
+                        "vanilla_color": "Amber"
+                    },
                     "connections": {
                         "Morph Ball Door to Agon Map Station": {
                             "type": "and",
@@ -701,8 +704,8 @@
                         "area_name": "Mining Plaza",
                         "node_name": "Morph Ball Door to Agon Map Station"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Map Station": {
                             "type": "resource",
@@ -756,8 +759,8 @@
                         "area_name": "Mining Plaza",
                         "node_name": "Door to Transit Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mining Station B": {
                             "type": "and",
@@ -843,8 +846,8 @@
                         "area_name": "Mining Station B",
                         "node_name": "Door to Transit Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mining Plaza": {
                             "type": "and",
@@ -965,8 +968,8 @@
                         "area_name": "Transport Center",
                         "node_name": "Door to Save Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -992,8 +995,8 @@
                         "area_name": "Mining Plaza",
                         "node_name": "Door to Save Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -1027,8 +1030,8 @@
                         "area_name": "Mining Station A",
                         "node_name": "Door to Mining Station Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mining Plaza": {
                             "type": "resource",
@@ -1054,8 +1057,8 @@
                         "area_name": "Mining Plaza",
                         "node_name": "Door to Mining Station Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mining Station A": {
                             "type": "resource",
@@ -1154,8 +1157,8 @@
                         "area_name": "Junction Site",
                         "node_name": "Door to Duelling Range"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Save Station 2": {
                             "type": "or",
@@ -1308,8 +1311,8 @@
                         "area_name": "Dark Transit Station",
                         "node_name": "Door to Duelling Range"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Mining Plaza": {
                             "type": "resource",
@@ -1335,8 +1338,8 @@
                         "area_name": "Save Station 2",
                         "node_name": "Door to Duelling Range"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Ing Cache 4": {
                             "type": "and",
@@ -1425,8 +1428,8 @@
                         "area_name": "Ing Cache 4",
                         "node_name": "Door to Duelling Range"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Save Station 2": {
                             "type": "and",
@@ -1524,8 +1527,8 @@
                         "area_name": "Mining Plaza",
                         "node_name": "Portal from Duelling Range"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 2,
+                    "dock_type": "portal",
+                    "dock_weakness": "Light Portal",
                     "connections": {
                         "Door to Dark Transit Station": {
                             "type": "and",
@@ -1717,8 +1720,8 @@
                         "area_name": "Storage A",
                         "node_name": "Door to Mining Station B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -1761,8 +1764,8 @@
                         "area_name": "Transit Station",
                         "node_name": "Door to Mining Station B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Trial Grounds": {
                             "type": "and",
@@ -1846,8 +1849,8 @@
                         "area_name": "Mine Shaft",
                         "node_name": "Door to Mining Station B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 12,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -1871,8 +1874,8 @@
                         "area_name": "Trial Grounds",
                         "node_name": "Portal to Mining Station B"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 1,
+                    "dock_type": "portal",
+                    "dock_weakness": "Dark Portal",
                     "connections": {
                         "Room Center": {
                             "type": "resource",
@@ -2701,8 +2704,8 @@
                         "area_name": "Crossroads",
                         "node_name": "Portal from Transport Center"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 1,
+                    "dock_type": "portal",
+                    "dock_weakness": "Dark Portal",
                     "connections": {
                         "Door to Transport to Torvus Bog": {
                             "type": "or",
@@ -2790,8 +2793,8 @@
                         "area_name": "Save Station A",
                         "node_name": "Door to Transport Center"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Bottom of Halfpipe": {
                             "type": "resource",
@@ -2817,8 +2820,8 @@
                         "area_name": "Transport to Torvus Bog",
                         "node_name": "Door to Transport Center"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 12,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
                     "connections": {
                         "Portal to Crossroads": {
                             "type": "and",
@@ -2914,8 +2917,8 @@
                         "area_name": "Portal Terminal",
                         "node_name": "Door to Transport Center"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Bottom of Halfpipe": {
                             "type": "and",
@@ -3182,8 +3185,8 @@
                         "area_name": "Temple Access",
                         "node_name": "Door to Mining Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -3207,8 +3210,8 @@
                         "area_name": "Sand Cache",
                         "node_name": "Door to Mining Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Translator Gate": {
                             "type": "and",
@@ -3232,8 +3235,8 @@
                         "area_name": "Central Station Access",
                         "node_name": "Door to Mining Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Room Center": {
                             "type": "or",
@@ -3353,8 +3356,8 @@
                         "area_name": "Mining Station Access",
                         "node_name": "Door to Mining Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -3378,8 +3381,8 @@
                         "area_name": "Portal Access A",
                         "node_name": "Door to Mining Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -3814,12 +3817,15 @@
                     }
                 },
                 "Translator Gate": {
-                    "node_type": "translator_gate",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
-                    "gate_index": 11,
+                    "extra": {
+                        "gate_index": 11,
+                        "vanilla_actual": "Amber",
+                        "vanilla_color": "Amber"
+                    },
                     "connections": {
                         "Door to Sand Cache": {
                             "type": "and",
@@ -4000,8 +4006,8 @@
                         "area_name": "Duelling Range",
                         "node_name": "Door to Dark Transit Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Safe Zone (Duelling Range Side)": {
                             "type": "resource",
@@ -4027,8 +4033,8 @@
                         "area_name": "Trial Grounds",
                         "node_name": "Door to Dark Transit Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Safe Zone (Trial Grounds Side)": {
                             "type": "resource",
@@ -4360,8 +4366,8 @@
                         "area_name": "Duelling Range",
                         "node_name": "Door to Save Station 2"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -4387,8 +4393,8 @@
                         "area_name": "Crossroads",
                         "node_name": "Door to Save Station 2"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Safe Zone (Crossroads Side)": {
                             "type": "resource",
@@ -4506,8 +4512,8 @@
                         "area_name": "Duelling Range",
                         "node_name": "Door to Ing Cache 4"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "and",
@@ -4580,8 +4586,8 @@
                         "area_name": "Duelling Range",
                         "node_name": "Door to Junction Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "and",
@@ -4624,8 +4630,8 @@
                         "area_name": "Judgment Pit",
                         "node_name": "Door to Junction Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "and",
@@ -4820,8 +4826,8 @@
                         "area_name": "Mining Station B",
                         "node_name": "Door to Storage A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "and",
@@ -4873,8 +4879,8 @@
                         "area_name": "Agon Temple",
                         "node_name": "Door to Mine Shaft"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Mining Station B": {
                             "type": "resource",
@@ -4926,8 +4932,8 @@
                         "area_name": "Mining Station B",
                         "node_name": "Door to Mine Shaft"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 12,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)",
                     "connections": {
                         "Door to Agon Temple": {
                             "type": "and",
@@ -5034,8 +5040,8 @@
                         "area_name": "Dark Transit Station",
                         "node_name": "Door to Trial Grounds"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Mining Station B": {
                             "type": "or",
@@ -5150,8 +5156,8 @@
                         "area_name": "Mining Station B",
                         "node_name": "Portal to Trial Grounds"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 2,
+                    "dock_type": "portal",
+                    "dock_weakness": "Light Portal",
                     "connections": {
                         "Door to Dark Transit Station": {
                             "type": "or",
@@ -5753,8 +5759,8 @@
                         "area_name": "Portal Access A",
                         "node_name": "Door to Portal Terminal"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -5778,8 +5784,8 @@
                         "area_name": "Transport Center",
                         "node_name": "Door to Portal Terminal"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Room Center": {
                             "type": "or",
@@ -5882,8 +5888,8 @@
                         "area_name": "Portal Site",
                         "node_name": "Portal to Portal Terminal"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 0,
+                    "dock_type": "portal",
+                    "dock_weakness": "Scan Portal",
                     "connections": {
                         "Room Center": {
                             "type": "and",
@@ -6107,8 +6113,8 @@
                         "area_name": "Transport Center",
                         "node_name": "Door to Transport to Torvus Bog"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 11,
+                    "dock_type": "door",
+                    "dock_weakness": "Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)",
                     "connections": {
                         "Elevator to Torvus Bog - Transport to Agon Wastes": {
                             "type": "resource",
@@ -6169,8 +6175,8 @@
                         "area_name": "Transport Center",
                         "node_name": "Portal to Crossroads"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 3,
+                    "dock_type": "portal",
+                    "dock_weakness": "No Return Portal",
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "and",
@@ -6203,8 +6209,8 @@
                         "area_name": "Portal Site",
                         "node_name": "Door to Crossroads"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "or",
@@ -6285,8 +6291,8 @@
                         "area_name": "Save Station 2",
                         "node_name": "Door to Crossroads"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "or",
@@ -6830,8 +6836,8 @@
                         "area_name": "Agon Temple",
                         "node_name": "Door to Temple Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mining Station A": {
                             "type": "and",
@@ -6855,8 +6861,8 @@
                         "area_name": "Mining Station A",
                         "node_name": "Door to Temple Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Agon Temple": {
                             "type": "and",
@@ -6890,8 +6896,8 @@
                         "area_name": "Mining Station A",
                         "node_name": "Door to Central Station Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Central Mining Station": {
                             "type": "and",
@@ -6915,8 +6921,8 @@
                         "area_name": "Central Mining Station",
                         "node_name": "Door to Central Station Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Mining Station A": {
                             "type": "or",
@@ -7080,8 +7086,8 @@
                         "area_name": "Mining Station A",
                         "node_name": "Door to Sand Cache"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "and",
@@ -7133,8 +7139,8 @@
                         "area_name": "Portal Terminal",
                         "node_name": "Door to Portal Access A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mining Station A": {
                             "type": "resource",
@@ -7169,8 +7175,8 @@
                         "area_name": "Mining Station A",
                         "node_name": "Door to Portal Access A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Portal Terminal": {
                             "type": "resource",
@@ -7226,8 +7232,8 @@
                         "area_name": "Dark Agon Temple Access",
                         "node_name": "Door to Judgment Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Save Station 1": {
                             "type": "or",
@@ -7440,8 +7446,8 @@
                         "area_name": "Save Station 1",
                         "node_name": "Door to Judgment Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Dark Agon Temple Access": {
                             "type": "and",
@@ -7881,8 +7887,8 @@
                         "area_name": "Warrior's Walk",
                         "node_name": "Door to Judgment Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Door to Dark Agon Temple Access": {
                             "type": "and",
@@ -8167,8 +8173,8 @@
                         "area_name": "Portal Access",
                         "node_name": "Door to Judgment Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Dark Agon Temple Access": {
                             "type": "and",
@@ -8445,8 +8451,8 @@
                         "area_name": "Junction Site",
                         "node_name": "Door to Judgment Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "or",
@@ -8768,8 +8774,8 @@
                         "area_name": "Mine Shaft",
                         "node_name": "Door to Agon Temple"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Temple Access": {
                             "type": "or",
@@ -8853,8 +8859,8 @@
                         "area_name": "Temple Access",
                         "node_name": "Door to Agon Temple"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mine Shaft": {
                             "type": "or",
@@ -9087,8 +9093,8 @@
                         "area_name": "Controller Access",
                         "node_name": "Door to Agon Temple"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Mine Shaft": {
                             "type": "and",
@@ -9329,8 +9335,8 @@
                         "area_name": "Sandcanyon",
                         "node_name": "Door to Agon Temple"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Temple Access": {
                             "type": "and",
@@ -9975,8 +9981,8 @@
                         "area_name": "Dark Agon Temple",
                         "node_name": "Door to Trial Tunnel"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Dark Agon Key 1)": {
                             "type": "and",
@@ -10028,8 +10034,8 @@
                         "area_name": "Crossroads",
                         "node_name": "Door to Portal Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Event - Portal Site Cutscene": {
                             "type": "and",
@@ -10210,8 +10216,8 @@
                         "area_name": "Portal Access",
                         "node_name": "Door to Portal Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Event - Portal Site Cutscene": {
                             "type": "resource",
@@ -10254,8 +10260,8 @@
                         "area_name": "Portal Terminal",
                         "node_name": "Portal to Portal Site"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 0,
+                    "dock_type": "portal",
+                    "dock_weakness": "Scan Portal",
                     "connections": {
                         "Event - Portal Site Cutscene": {
                             "type": "resource",
@@ -10931,8 +10937,8 @@
                         "area_name": "Command Center Access",
                         "node_name": "Door to Central Mining Station (Top)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Central Station Access": {
                             "type": "resource",
@@ -11116,8 +11122,8 @@
                         "area_name": "Central Station Access",
                         "node_name": "Door to Central Mining Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Command Center Access (Top)": {
                             "type": "and",
@@ -11342,8 +11348,8 @@
                         "area_name": "Command Center Access",
                         "node_name": "Door to Central Mining Station (Bottom)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Central Station Access": {
                             "type": "resource",
@@ -11609,8 +11615,8 @@
                         "area_name": "Judgment Pit",
                         "node_name": "Door to Dark Agon Temple Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Dark Agon Temple": {
                             "type": "or",
@@ -11691,8 +11697,8 @@
                         "area_name": "Dark Agon Temple",
                         "node_name": "Door to Dark Agon Temple Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Judgment Pit": {
                             "type": "or",
@@ -11757,8 +11763,8 @@
                         "area_name": "Judgment Pit",
                         "node_name": "Door to Warrior's Walk"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Safe Zone (Battleground Side)": {
                             "type": "and",
@@ -11847,8 +11853,8 @@
                         "area_name": "Battleground",
                         "node_name": "Door to Warrior's Walk"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Safe Zone (Battleground Side)": {
                             "type": "resource",
@@ -12384,8 +12390,8 @@
                         "area_name": "Judgment Pit",
                         "node_name": "Door to Save Station 1"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -12421,8 +12427,8 @@
                         "area_name": "Judgment Pit",
                         "node_name": "Door to Portal Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Portal Site": {
                             "type": "or",
@@ -12529,8 +12535,8 @@
                         "area_name": "Portal Site",
                         "node_name": "Door to Portal Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Judgment Pit": {
                             "type": "or",
@@ -12668,8 +12674,8 @@
                         "area_name": "Agon Energy Controller",
                         "node_name": "Door to Controller Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Agon Temple": {
                             "type": "or",
@@ -12741,8 +12747,8 @@
                         "area_name": "Agon Temple",
                         "node_name": "Door to Controller Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Agon Energy Controller": {
                             "type": "or",
@@ -12824,8 +12830,8 @@
                         "area_name": "Ventilation Area A",
                         "node_name": "Door to Sandcanyon"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Agon Temple": {
                             "type": "resource",
@@ -12938,8 +12944,8 @@
                         "area_name": "Agon Temple",
                         "node_name": "Door to Sandcanyon"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Ventilation Area A": {
                             "type": "resource",
@@ -13166,8 +13172,8 @@
                         "area_name": "Dark Agon Temple Access",
                         "node_name": "Door to Dark Agon Temple"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Trial Tunnel": {
                             "type": "or",
@@ -13466,8 +13472,8 @@
                         "area_name": "Dark Controller Access",
                         "node_name": "Door to Dark Agon Temple"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Safe Zone (Behind Key Gate)": {
                             "type": "or",
@@ -13522,8 +13528,8 @@
                         "area_name": "Trial Tunnel",
                         "node_name": "Door to Dark Agon Temple"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Dark Agon Temple Access": {
                             "type": "or",
@@ -14549,8 +14555,8 @@
                         "area_name": "Command Center",
                         "node_name": "Door to Command Center Access (Bottom)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Central Mining Station (Bottom)": {
                             "type": "and",
@@ -14574,8 +14580,8 @@
                         "area_name": "Central Mining Station",
                         "node_name": "Door to Command Center Access (Top)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Command Center (Top)": {
                             "type": "and",
@@ -14599,8 +14605,8 @@
                         "area_name": "Command Center",
                         "node_name": "Morph Ball Door to Command Center Access"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Door to Central Mining Station (Bottom)": {
                             "type": "and",
@@ -14822,8 +14828,8 @@
                         "area_name": "Central Mining Station",
                         "node_name": "Door to Command Center Access (Bottom)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Command Center (Bottom)": {
                             "type": "and",
@@ -14971,8 +14977,8 @@
                         "area_name": "Command Center",
                         "node_name": "Door to Command Center Access (Top)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Central Mining Station (Top)": {
                             "type": "and",
@@ -15151,8 +15157,8 @@
                         "area_name": "Double Path",
                         "node_name": "Door to Battleground (Top)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Pickup (Dark Agon Key 3)": {
                             "type": "or",
@@ -15419,8 +15425,8 @@
                         "area_name": "Double Path",
                         "node_name": "Door to Battleground (Bottom)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Pickup (Dark Agon Key 3)": {
                             "type": "or",
@@ -15501,8 +15507,8 @@
                         "area_name": "Warrior's Walk",
                         "node_name": "Door to Battleground"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Pickup (Dark Agon Key 3)": {
                             "type": "and",
@@ -16201,8 +16207,8 @@
                         "area_name": "Controller Access",
                         "node_name": "Door to Agon Energy Controller"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Teleport to Sanctuary Fortress - Sanctuary Energy Controller": {
                             "type": "resource",
@@ -16426,8 +16432,8 @@
                         "area_name": "Transport to Sanctuary Fortress",
                         "node_name": "Door to Ventilation Area A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 7,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Bomb Blast Shield",
                     "connections": {
                         "Door to Main Reactor": {
                             "type": "resource",
@@ -16453,8 +16459,8 @@
                         "area_name": "Sandcanyon",
                         "node_name": "Door to Ventilation Area A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Main Reactor": {
                             "type": "resource",
@@ -16480,8 +16486,8 @@
                         "area_name": "Main Reactor",
                         "node_name": "Door to Ventilation Area A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Transport to Sanctuary Fortress": {
                             "type": "and",
@@ -16587,8 +16593,8 @@
                         "area_name": "Dark Agon Temple",
                         "node_name": "Door to Dark Controller Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Dark Agon Energy Controller": {
                             "type": "and",
@@ -16677,8 +16683,8 @@
                         "area_name": "Dark Agon Energy Controller",
                         "node_name": "Door to Dark Controller Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Dark Agon Temple": {
                             "type": "and",
@@ -16777,8 +16783,8 @@
                         "area_name": "Command Center Access",
                         "node_name": "Door to Command Center (Top)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Security Station B (First)": {
                             "type": "and",
@@ -16809,8 +16815,8 @@
                         "area_name": "Command Center Access",
                         "node_name": "Morph Ball Door to Command Center"
                     },
-                    "dock_type": 1,
-                    "dock_weakness_index": 0,
+                    "dock_type": "morph_ball",
+                    "dock_weakness": "Morph Ball Door",
                     "connections": {
                         "Door to Command Center Access (Bottom)": {
                             "type": "and",
@@ -16888,8 +16894,8 @@
                         "area_name": "Security Station B",
                         "node_name": "Door to Command Center (First)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Command Center Access (Top)": {
                             "type": "and",
@@ -16913,8 +16919,8 @@
                         "area_name": "Biostorage Access",
                         "node_name": "Door to Command Center"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Command Center Access (Bottom)": {
                             "type": "or",
@@ -16957,8 +16963,8 @@
                         "area_name": "Command Center Access",
                         "node_name": "Door to Command Center (Bottom)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Command Center Access (Top)": {
                             "type": "and",
@@ -17114,8 +17120,8 @@
                         "area_name": "Doomed Entry",
                         "node_name": "Portal from Command Center"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 1,
+                    "dock_type": "portal",
+                    "dock_weakness": "Dark Portal",
                     "connections": {
                         "Door to Command Center Access (Bottom)": {
                             "type": "and",
@@ -17139,8 +17145,8 @@
                         "area_name": "Security Station B",
                         "node_name": "Door to Command Center (Second)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Event - Command Center Gate Opened": {
                             "type": "resource",
@@ -17230,8 +17236,8 @@
                         "area_name": "Battleground",
                         "node_name": "Door to Double Path (Bottom)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Doomed Entry (Bottom)": {
                             "type": "and",
@@ -17381,8 +17387,8 @@
                         "area_name": "Battleground",
                         "node_name": "Door to Double Path (Top)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Doomed Entry (Top)": {
                             "type": "or",
@@ -17437,8 +17443,8 @@
                         "area_name": "Doomed Entry",
                         "node_name": "Door to Double Path (Top)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Battleground (Top)": {
                             "type": "or",
@@ -17493,8 +17499,8 @@
                         "area_name": "Doomed Entry",
                         "node_name": "Door to Double Path (Bottom)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Battleground (Bottom)": {
                             "type": "and",
@@ -17637,8 +17643,8 @@
                         "area_name": "Ventilation Area A",
                         "node_name": "Door to Transport to Sanctuary Fortress"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 7,
+                    "dock_type": "door",
+                    "dock_weakness": "Power Bomb Blast Shield",
                     "connections": {
                         "Elevator to Sanctuary Fortress - Transport to Agon Wastes": {
                             "type": "resource",
@@ -17699,8 +17705,8 @@
                         "area_name": "Dark Oasis",
                         "node_name": "Portal to Main Reactor"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 3,
+                    "dock_type": "portal",
+                    "dock_weakness": "No Return Portal",
                     "connections": {
                         "Door to Sand Processing": {
                             "type": "and",
@@ -17724,8 +17730,8 @@
                         "area_name": "Ventilation Area A",
                         "node_name": "Door to Main Reactor"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Storage D": {
                             "type": "and",
@@ -17829,8 +17835,8 @@
                         "area_name": "Sand Processing",
                         "node_name": "Door to Main Reactor"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Security Station B": {
                             "type": "and",
@@ -17854,8 +17860,8 @@
                         "area_name": "Storage D",
                         "node_name": "Door to Main Reactor"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Ventilation Area A": {
                             "type": "and",
@@ -17952,8 +17958,8 @@
                         "area_name": "Security Station B",
                         "node_name": "Door to Main Reactor"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Sand Processing": {
                             "type": "resource",
@@ -18663,8 +18669,8 @@
                         "area_name": "Dark Controller Access",
                         "node_name": "Door to Dark Agon Energy Controller"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Event - Dark Agon Energy Taken": {
                             "type": "resource",
@@ -18761,8 +18767,8 @@
                         "area_name": "Command Center",
                         "node_name": "Door to Biostorage Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Biostorage Station": {
                             "type": "and",
@@ -18786,8 +18792,8 @@
                         "area_name": "Biostorage Station",
                         "node_name": "Door to Biostorage Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Command Center": {
                             "type": "and",
@@ -18821,8 +18827,8 @@
                         "area_name": "Command Center",
                         "node_name": "Door to Security Station B (Second)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Command Center (First)": {
                             "type": "resource",
@@ -18848,8 +18854,8 @@
                         "area_name": "Main Reactor",
                         "node_name": "Door to Security Station B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Command Center (First)": {
                             "type": "and",
@@ -18896,8 +18902,8 @@
                         "area_name": "Command Center",
                         "node_name": "Door to Security Station B (First)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Command Center (Second)": {
                             "type": "resource",
@@ -19011,8 +19017,8 @@
                         "area_name": "Double Path",
                         "node_name": "Door to Doomed Entry (Bottom)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Portal from Command Center": {
                             "type": "or",
@@ -19242,8 +19248,8 @@
                         "area_name": "Command Center",
                         "node_name": "Portal to Doomed Entry"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 3,
+                    "dock_type": "portal",
+                    "dock_weakness": "No Return Portal",
                     "connections": {
                         "Door to Double Path (Bottom)": {
                             "type": "and",
@@ -19375,8 +19381,8 @@
                         "area_name": "Double Path",
                         "node_name": "Door to Doomed Entry (Top)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Next to Key": {
                             "type": "or",
@@ -19431,8 +19437,8 @@
                         "area_name": "Oasis Access",
                         "node_name": "Door to Doomed Entry"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Portal from Command Center": {
                             "type": "or",
@@ -19551,8 +19557,8 @@
                         "area_name": "Feeding Pit Access",
                         "node_name": "Door to Doomed Entry"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Double Path (Bottom)": {
                             "type": "or",
@@ -20211,8 +20217,8 @@
                         "area_name": "Main Reactor",
                         "node_name": "Door to Sand Processing"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Bottom of Halfpipe": {
                             "type": "or",
@@ -20267,8 +20273,8 @@
                         "area_name": "Save Station C",
                         "node_name": "Door to Sand Processing"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Event - Main Reactor Reloaded via Sand Processing": {
                             "type": "resource",
@@ -20885,8 +20891,8 @@
                         "area_name": "Main Reactor",
                         "node_name": "Door to Storage D"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Pickup (Dark Beam)": {
                             "type": "or",
@@ -20961,8 +20967,8 @@
                         "area_name": "Main Reactor",
                         "node_name": "Portal from Dark Oasis"
                     },
-                    "dock_type": 3,
-                    "dock_weakness_index": 2,
+                    "dock_type": "portal",
+                    "dock_weakness": "Light Portal",
                     "connections": {
                         "Door to Hall of Stairs": {
                             "type": "and",
@@ -21029,8 +21035,8 @@
                         "area_name": "Hall of Stairs",
                         "node_name": "Door to Dark Oasis"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Main Reactor": {
                             "type": "resource",
@@ -21056,8 +21062,8 @@
                         "area_name": "Oasis Access",
                         "node_name": "Door to Dark Oasis"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Portal to Main Reactor": {
                             "type": "or",
@@ -21286,8 +21292,8 @@
                         "area_name": "Ing Cache 3",
                         "node_name": "Door to Dark Oasis"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Oasis Access": {
                             "type": "or",
@@ -21531,8 +21537,8 @@
                         "area_name": "Security Station A",
                         "node_name": "Door to Biostorage Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Top Level": {
                             "type": "and",
@@ -21556,8 +21562,8 @@
                         "area_name": "Biostorage Access",
                         "node_name": "Door to Biostorage Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Top Level": {
                             "type": "or",
@@ -21652,8 +21658,8 @@
                         "area_name": "Storage B",
                         "node_name": "Door to Biostorage Station"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Top Level": {
                             "type": "and",
@@ -21717,8 +21723,8 @@
                         "area_name": "Feeding Pit",
                         "node_name": "Door to Feeding Pit Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Doomed Entry": {
                             "type": "and",
@@ -21831,8 +21837,8 @@
                         "area_name": "Doomed Entry",
                         "node_name": "Door to Feeding Pit Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Feeding Pit": {
                             "type": "or",
@@ -22067,8 +22073,8 @@
                         "area_name": "Dark Oasis",
                         "node_name": "Door to Oasis Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "or",
@@ -22136,8 +22142,8 @@
                         "area_name": "Doomed Entry",
                         "node_name": "Door to Oasis Access"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Central Safe Zone": {
                             "type": "resource",
@@ -22265,8 +22271,8 @@
                         "area_name": "Sand Processing",
                         "node_name": "Door to Save Station C"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -22290,8 +22296,8 @@
                         "area_name": "Ventilation Area B",
                         "node_name": "Door to Save Station C"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Save Station": {
                             "type": "and",
@@ -22325,8 +22331,8 @@
                         "area_name": "Save Station 3",
                         "node_name": "Door to Hall of Stairs"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Safe Zone (Under Lift Crystal)": {
                             "type": "or",
@@ -22381,8 +22387,8 @@
                         "area_name": "Dark Oasis",
                         "node_name": "Door to Hall of Stairs"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Safe Zone (Under Lift Crystal)": {
                             "type": "or",
@@ -22811,8 +22817,8 @@
                         "area_name": "Dark Oasis",
                         "node_name": "Door to Ing Cache 3"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Ammo Station": {
                             "type": "resource",
@@ -22864,8 +22870,8 @@
                         "area_name": "Biostorage Station",
                         "node_name": "Door to Security Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Bioenergy Production": {
                             "type": "or",
@@ -22937,8 +22943,8 @@
                         "area_name": "Bioenergy Production",
                         "node_name": "Door to Security Station A"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Biostorage Station": {
                             "type": "or",
@@ -23020,8 +23026,8 @@
                         "area_name": "Biostorage Station",
                         "node_name": "Door to Storage B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "and",
@@ -23073,8 +23079,8 @@
                         "area_name": "Feeding Pit Access",
                         "node_name": "Door to Feeding Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Door to Ing Cache 1": {
                             "type": "or",
@@ -23576,8 +23582,8 @@
                         "area_name": "Ing Cache 1",
                         "node_name": "Door to Feeding Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "door",
+                    "dock_weakness": "Dark Door",
                     "connections": {
                         "Door to Feeding Pit Access": {
                             "type": "or",
@@ -23632,8 +23638,8 @@
                         "area_name": "Watering Hole",
                         "node_name": "Door to Feeding Pit"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Feeding Pit Access": {
                             "type": "or",
@@ -23863,8 +23869,8 @@
                         "area_name": "Save Station C",
                         "node_name": "Door to Ventilation Area B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Bioenergy Production": {
                             "type": "and",
@@ -23907,8 +23913,8 @@
                         "area_name": "Bioenergy Production",
                         "node_name": "Door to Ventilation Area B"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Save Station C": {
                             "type": "or",
@@ -24043,8 +24049,8 @@
                         "area_name": "Bitter Well",
                         "node_name": "Door to Save Station 3"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -24070,8 +24076,8 @@
                         "area_name": "Hall of Stairs",
                         "node_name": "Door to Save Station 3"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Save Station": {
                             "type": "resource",
@@ -24107,8 +24113,8 @@
                         "area_name": "Storage C",
                         "node_name": "Door to Bioenergy Production"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Door to Security Station A": {
                             "type": "and",
@@ -24140,8 +24146,8 @@
                         "area_name": "Security Station A",
                         "node_name": "Door to Bioenergy Production"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Storage C": {
                             "type": "or",
@@ -24784,8 +24790,8 @@
                         "area_name": "Ventilation Area B",
                         "node_name": "Door to Bioenergy Production"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Security Station A": {
                             "type": "and",
@@ -24849,8 +24855,8 @@
                         "area_name": "Phazon Site",
                         "node_name": "Door to Watering Hole"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Feeding Pit": {
                             "type": "or",
@@ -24949,8 +24955,8 @@
                         "area_name": "Feeding Pit",
                         "node_name": "Door to Watering Hole"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 4,
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Blast Shield",
                     "connections": {
                         "Door to Phazon Site": {
                             "type": "or",
@@ -25059,8 +25065,8 @@
                         "area_name": "Feeding Pit",
                         "node_name": "Door to Ing Cache 1"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "door",
+                    "dock_weakness": "Light Door",
                     "connections": {
                         "Event - Agon Wastes Ing Cache 1 Pickup": {
                             "type": "and",
@@ -25171,8 +25177,8 @@
                         "area_name": "Phazon Site",
                         "node_name": "Door to Bitter Well"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Save Station 3": {
                             "type": "and",
@@ -25224,8 +25230,8 @@
                         "area_name": "Save Station 3",
                         "node_name": "Door to Bitter Well"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Phazon Site": {
                             "type": "and",
@@ -25338,8 +25344,8 @@
                         "area_name": "Bioenergy Production",
                         "node_name": "Door to Storage C"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 5,
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Blast Shield",
                     "connections": {
                         "Pickup (Missile)": {
                             "type": "and",
@@ -25391,8 +25397,8 @@
                         "area_name": "Watering Hole",
                         "node_name": "Door to Phazon Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Safe Zone (Watering Hole Side)": {
                             "type": "and",
@@ -25435,8 +25441,8 @@
                         "area_name": "Bitter Well",
                         "node_name": "Door to Phazon Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
                     "connections": {
                         "Safe Zone (Elevator)": {
                             "type": "resource",
@@ -25462,8 +25468,8 @@
                         "area_name": "Ing Cache 2",
                         "node_name": "Door to Phazon Site"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Annihilator Door",
                     "connections": {
                         "Safe Zone (Elevator)": {
                             "type": "or",
@@ -26241,8 +26247,8 @@
                         "area_name": "Phazon Site",
                         "node_name": "Door to Ing Cache 2"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "door",
+                    "dock_weakness": "Annihilator Door",
                     "connections": {
                         "Pickup (Sonic Boom)": {
                             "type": "resource",

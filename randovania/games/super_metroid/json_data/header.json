@@ -1,5 +1,5 @@
 {
-    "schema_version": 4,
+    "schema_version": 6,
     "game": "super_metroid",
     "resource_database": {
         "items": {
@@ -269,239 +269,269 @@
         }
     },
     "dock_weakness_database": {
-        "door": [
-            {
-                "index": 0,
-                "name": "Normal Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            },
-            {
-                "index": 1,
-                "name": "Missile Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Missile",
-                                    "amount": 5,
-                                    "negate": false
-                                }
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
-                        ]
+                        }
+                    },
+                    "Missile Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missile",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "Super Missile Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Supers",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Power Bomb Door": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "PowerBomb",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Permanently Locked": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Locked until Draygon Defeated": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event3",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Kraid Defeated": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event1",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Wrecked Ship Powered": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event5",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Golden Torizo Defeated": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event12",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Metal Pirates Defeated": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event13",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Ridley Defeated": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event4",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Metroid Room 1 Cleared": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event14",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Metroid Room 2 Cleared": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event15",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Metroid Room 3 Cleared": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event16",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    },
+                    "Locked until Metroid Room 4 Cleared": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event17",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 2,
-                "name": "Super Missile Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Supers",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
+            "portal": {
+                "name": "Portal",
+                "extra": {},
+                "items": {}
             },
-            {
-                "index": 3,
-                "name": "Power Bomb Door",
-                "lock_type": 1,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "PowerBomb",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 8,
-                "name": "Permanently Locked",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "or",
-                    "data": {
-                        "comment": null,
-                        "items": []
-                    }
-                }
-            },
-            {
-                "index": 9,
-                "name": "Locked until Draygon Defeated",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event3",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 10,
-                "name": "Locked until Kraid Defeated",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event1",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 11,
-                "name": "Locked until Wrecked Ship Powered",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event5",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 12,
-                "name": "Locked until Golden Torizo Defeated",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event12",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 13,
-                "name": "Locked until Metal Pirates Defeated",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event13",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 14,
-                "name": "Locked until Ridley Defeated",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event4",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 15,
-                "name": "Locked until Metroid Room 1 Cleared",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event14",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 16,
-                "name": "Locked until Metroid Room 2 Cleared",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event15",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 17,
-                "name": "Locked until Metroid Room 3 Cleared",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event16",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            },
-            {
-                "index": 18,
-                "name": "Locked until Metroid Room 4 Cleared",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event17",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            }
-        ],
-        "portal": [],
-        "morph_ball": [
-            {
-                "index": 0,
+            "morph_ball": {
                 "name": "Morph Ball Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "resource",
-                    "data": {
-                        "type": "items",
-                        "name": "Morph",
-                        "amount": 1,
-                        "negate": false
+                "extra": {},
+                "items": {
+                    "Morph Ball Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                }
+            },
+            "other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             }
-        ]
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        }
     },
     "worlds": [
         "Upper Zebes.json",

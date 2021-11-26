@@ -9,7 +9,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockType
 from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, EventNode, \
-    TranslatorGateNode, \
+    ConfigurableNode, \
     LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -97,8 +97,8 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
     elif isinstance(node, EventNode):
         return f"Event {node.event.long_name}"
 
-    elif isinstance(node, TranslatorGateNode):
-        return f"Translator Gate ({node.gate})"
+    elif isinstance(node, ConfigurableNode):
+        return f"Configurable Node"
 
     elif isinstance(node, LogbookNode):
         message = ""
@@ -150,10 +150,15 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             output.write("      {}{}\n".format("    " * level, text))
 
     output.write("\n====================\nDock Weaknesses\n")
-    for dock_type in iterate_enum(DockType):
-        output.write(f"\n> {dock_type}")
+    for dock_type in game.dock_weakness_database.dock_types:
+        output.write(f"\n> {dock_type.long_name}")
+        for extra_name, extra_field in dock_type.extra.items():
+            output.write("\n* Extra - {}: {}".format(extra_name, extra_field))
+
         for weakness in game.dock_weakness_database.get_by_type(dock_type):
-            output.write(f"\n  * ({weakness.index}) {weakness.name}; Lock type: {weakness.lock_type.name}\n")
+            output.write(f"\n  * {weakness.name}; Lock type: {weakness.lock_type.name}\n")
+            for extra_name, extra_field in weakness.extra.items():
+                output.write("\n      Extra - {}: {}".format(extra_name, extra_field))
             for level, text in pretty_print_requirement(weakness.requirement):
                 output.write("      {}{}\n".format("    " * level, text))
 

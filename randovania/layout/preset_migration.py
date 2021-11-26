@@ -10,11 +10,10 @@ import aiofiles
 import slugify
 
 from randovania.game_description import migration_data
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.layout.preset import Preset
 
-CURRENT_PRESET_VERSION = 15
+CURRENT_PRESET_VERSION = 16
 
 
 class InvalidPreset(Exception):
@@ -461,6 +460,36 @@ def _migrate_v14(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v15(preset: dict) -> dict:
+    gate_mapping = {'Temple Grounds/Hive Access Tunnel/Translator Gate': 0,
+                    'Temple Grounds/Meeting Grounds/Translator Gate': 1,
+                    'Temple Grounds/Hive Transport Area/Translator Gate': 2,
+                    'Temple Grounds/Industrial Site/Translator Gate': 3,
+                    'Temple Grounds/Path of Eyes/Translator Gate': 4,
+                    'Temple Grounds/Temple Assembly Site/Translator Gate': 5,
+                    'Temple Grounds/GFMC Compound/Translator Gate': 6,
+                    'Great Temple/Temple Sanctuary/Transport A Translator Gate': 9,
+                    'Great Temple/Temple Sanctuary/Transport B Translator Gate': 7,
+                    'Great Temple/Temple Sanctuary/Transport C Translator Gate': 8,
+                    'Agon Wastes/Mining Plaza/Translator Gate': 10,
+                    'Agon Wastes/Mining Station A/Translator Gate': 11,
+                    'Torvus Bog/Great Bridge/Translator Gate': 12,
+                    'Torvus Bog/Torvus Temple/Translator Gate': 13,
+                    'Torvus Bog/Torvus Temple/Elevator Translator Scan': 14,
+                    'Sanctuary Fortress/Reactor Core/Translator Gate': 15,
+                    'Sanctuary Fortress/Sanctuary Temple/Translator Gate': 16}
+
+    if preset["game"] == "prime2":
+        translator_configuration = preset["configuration"]["translator_configuration"]
+        old = translator_configuration["translator_requirement"]
+        translator_configuration["translator_requirement"] = {
+            identifier: old[str(gate_index)]
+            for identifier, gate_index in gate_mapping.items()
+        }
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -476,6 +505,7 @@ _MIGRATIONS = {
     12: _migrate_v12,
     13: _migrate_v13,
     14: _migrate_v14,
+    15: _migrate_v15,
 }
 
 

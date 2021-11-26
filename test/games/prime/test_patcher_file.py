@@ -2,19 +2,19 @@ import copy
 import dataclasses
 import json
 from unittest.mock import MagicMock, patch
-from frozendict import frozendict
 
 import pytest
+from frozendict import frozendict
 
 import randovania
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
+from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.resources.translator_gate import TranslatorGate
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
@@ -230,16 +230,28 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
     assert result == expected
 
 
-def test_create_translator_gates_field():
+def test_create_translator_gates_field(echoes_game_description):
+    c = NodeIdentifier.create
+
+    def make_req(item_id: int):
+        return RequirementAnd([
+            ResourceRequirement(
+                ItemResourceInfo("Scan Visor", "Scan", 1, frozendict({"item_id": 9})), 1, False,
+            ),
+            ResourceRequirement(
+                ItemResourceInfo("Other", "Other", 1, frozendict({"item_id": item_id})), 1, False,
+            ),
+        ])
+
     # Setup
     gate_assignment = {
-        TranslatorGate(1): SimpleResourceInfo("LongA", "A", ResourceType.ITEM, frozendict({"item_id": 0})),
-        TranslatorGate(3): SimpleResourceInfo("LongB", "B", ResourceType.ITEM, frozendict({"item_id": 1})),
-        TranslatorGate(4): SimpleResourceInfo("LongA", "A", ResourceType.ITEM, frozendict({"item_id": 0})),
+        c("Temple Grounds", "Meeting Grounds", "Translator Gate"): make_req(0),
+        c("Temple Grounds", "Industrial Site", "Translator Gate"): make_req(1),
+        c("Temple Grounds", "Path of Eyes", "Translator Gate"): make_req(0),
     }
 
     # Run
-    result = claris_patcher_file._create_translator_gates_field(gate_assignment)
+    result = claris_patcher_file._create_translator_gates_field(echoes_game_description, gate_assignment)
 
     # Assert
     assert result == [

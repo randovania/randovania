@@ -1,7 +1,6 @@
 import copy
 import dataclasses
 import json
-import pprint
 from pathlib import Path
 
 import pytest
@@ -253,24 +252,24 @@ def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset,
                             'node_name': 'Elevator to Agon Wastes - Transport to Torvus Bog',
                             'world_name': 'Torvus Bog'}}
         ],
-        "translator_gates": {
-            "0": None,
-            '1': None,
-            '10': None,
-            '11': None,
-            '12': None,
-            '13': None,
-            '14': None,
-            '15': None,
-            '16': None,
-            '2': None,
-            '3': None,
-            '4': None,
-            '5': None,
-            '6': None,
-            '7': None,
-            '8': None,
-            '9': None,
+        "configurable_nodes": {
+            'Agon Wastes/Mining Plaza/Translator Gate': None,
+            'Agon Wastes/Mining Station A/Translator Gate': None,
+            'Great Temple/Temple Sanctuary/Transport A Translator Gate': None,
+            'Great Temple/Temple Sanctuary/Transport B Translator Gate': None,
+            'Great Temple/Temple Sanctuary/Transport C Translator Gate': None,
+            'Sanctuary Fortress/Reactor Core/Translator Gate': None,
+            'Sanctuary Fortress/Sanctuary Temple/Translator Gate': None,
+            'Temple Grounds/GFMC Compound/Translator Gate': None,
+            'Temple Grounds/Hive Access Tunnel/Translator Gate': None,
+            'Temple Grounds/Hive Transport Area/Translator Gate': None,
+            'Temple Grounds/Industrial Site/Translator Gate': None,
+            'Temple Grounds/Meeting Grounds/Translator Gate': None,
+            'Temple Grounds/Path of Eyes/Translator Gate': None,
+            'Temple Grounds/Temple Assembly Site/Translator Gate': None,
+            'Torvus Bog/Great Bridge/Translator Gate': None,
+            'Torvus Bog/Torvus Temple/Elevator Translator Scan': None,
+            'Torvus Bog/Torvus Temple/Translator Gate': None,
         },
         "starting_location": {'world_name': 'Temple Grounds', 'area_name': 'Landing Site'}
     }
@@ -279,7 +278,7 @@ def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset,
         for elevator in state["elevators"]:
             if elevator["teleporter"]["node_name"] == "Elevator to Sanctuary Fortress - Transport to Agon Wastes":
                 elevator["data"] = {'area_name': "Agon Energy Controller", 'world_name': "Agon Wastes"}
-        state["translator_gates"]['0'] = "Violet"
+        state["configurable_nodes"]['Temple Grounds/Hive Access Tunnel/Translator Gate'] = "violet"
     VersionedPreset.with_preset(preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))
     tmp_path.joinpath("state.json").write_text(json.dumps(state), "utf-8")
 
