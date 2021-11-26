@@ -52,3 +52,60 @@ def cs_unexpected_items(configuration: MajorItemsConfiguration) -> list[str]:
         unexpected_items.add("Super Missile Launcher")
     
     return unexpected_items
+
+hash_items = [
+    "None"
+    "Arthur's Key",
+    "Map System",
+    "Santa's Key",
+    "Silver Locket",
+    "Beast Fang",
+    "Life Capsule",
+    "ID Card",
+    "Jellyfish Juice",
+    "Rusty Key",
+    "Gum Key",
+    "Gum Base",
+    "Charcoal",
+    "Explosive",
+    "Puppy",
+    "Life Pot",
+    "Cure-All",
+    "Clinic Key",
+    "Booster 0.8",
+    "Arms Barrier",
+    "Turbocharge",
+    "Curly's Air Tank",
+    "Nikumaru Counter",
+    "Booster 2.0",
+    "Mimiga Mask",
+    "Teleporter Room Key",
+    "Sue's Letter",
+    "Controller",
+    "Broken Sprinkler",
+    "Sprinkler",
+    "Tow Rope",
+    "Clay Figure Medal",
+    "Little Man",
+    "Mushroom Badge",
+    "Ma Pignon",
+    "Curly's Panties",
+    "Alien Medal",
+    "Chaco's Lipstick",
+    "Whimsical Star",
+    "Iron Bond"
+]
+def get_ingame_hash_str(hash_bytes: bytes) -> str:
+    ids = get_ingame_hash(hash_bytes)
+    get_str = lambda x: hash_items[x]
+    return f"{get_str(ids[0])}, {get_str(ids[1])}, {get_str(ids[2])}, {get_str(ids[3])}, {get_str(ids[4])}"
+
+def get_ingame_hash(hash_bytes: bytes) -> list[int]:
+    num = int.from_bytes(hash_bytes, 'big', signed=False)
+    num %= 39**5
+
+    out = list()
+    for i in range(5):
+        out.append((num%39)+1)
+        num //= 39
+    return out

@@ -43,6 +43,9 @@ class GameLayout:
     preset_describer: GamePresetDescriber = GamePresetDescriber()
     """(Optional) Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
+    get_ingame_hash: Callable[[bytes], Optional[str]] = lambda hash: None
+    """(Optional) Takes a layout hash bytes and produces a string representing how the game will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
+
 
 @dataclass(frozen=True)
 class GameGui:
