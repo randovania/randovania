@@ -839,15 +839,22 @@
                     }
                 },
                 "Debug Cat to Labyrinth": {
-                    "node_type": "generic",
+                    "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 181.46299850714436,
-                        "y": 121.44167199829388,
-                        "z": 0
+                        "x": 181.46,
+                        "y": 121.44,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
+                    "destination": {
+                        "world_name": "Labyrinth",
+                        "area_name": "Dark Place",
+                        "node_name": "Debug Cat from Reservoir"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
                     "connections": {
                         "Door to Mimiga Village": {
                             "type": "and",
@@ -870,6 +877,33 @@
                     "extra": {},
                     "pickup_index": 9,
                     "major_location": false,
+                    "connections": {
+                        "Door to Mimiga Village": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Entrance from Main Artery": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 228.27,
+                        "y": 294.1,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Labyrinth",
+                        "area_name": "Main Artery",
+                        "node_name": "Exit to Reservoir"
+                    },
+                    "dock_type": 0,
+                    "dock_weakness_index": 2,
                     "connections": {
                         "Door to Mimiga Village": {
                             "type": "and",
