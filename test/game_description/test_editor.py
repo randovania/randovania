@@ -67,6 +67,20 @@ def test_replace_node(game_editor):
     assert dock_to_landing.default_connection.node_name == "FooBar"
 
 
+def test_replace_node_unknown_node(game_editor):
+    # Setup
+    world_list = game_editor.game.world_list
+    loc = AreaIdentifier("Temple Grounds", "Landing Site")
+    loc2 = AreaIdentifier("Temple Grounds", "Service Access")
+
+    landing_site = world_list.area_by_area_location(loc)
+    dock = world_list.area_by_area_location(loc2).node_with_name("Door to Landing Site")
+
+    # Run
+    with pytest.raises(ValueError, match="Given Door to Landing Site does does not belong to Landing Site."):
+        game_editor.replace_node(landing_site, dock, dock)
+
+
 def test_rename_area(game_editor):
     # Setup
     world_list = game_editor.game.world_list
