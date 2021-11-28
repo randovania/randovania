@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui, QtWidgets, QtCore
+from PySide2 import QtGui, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
@@ -35,6 +35,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     _previous_selected_node: Optional[Node] = None
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
     _edit_popup: Optional[QDialog] = None
+    _warning_dialogs_disabled = False
 
     def __init__(self, data: dict, data_path: Optional[Path], is_internal: bool, edit_mode: bool):
         super().__init__()
@@ -112,6 +113,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.update_edit_mode()
 
+    def set_warning_dialogs_disabled(self, value: bool):
+        self._warning_dialogs_disabled = value
+
     @classmethod
     def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> "DataEditorWindow":
         default_data.read_json_then_binary.cache_clear()
@@ -126,13 +130,20 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         else:
             data = data_writer.write_game_description(self.game_description)
             if data != self._last_data:
-                user_response = QMessageBox.warning(self, "Unsaved changes",
-                                                    "You have unsaved changes. Do you want to close and discard?",
-                                                    QMessageBox.Yes | QMessageBox.No,
-                                                    QMessageBox.No)
-                if user_response == QMessageBox.No:
+                if not self.prompt_unsaved_changes_warning():
                     return event.ignore()
             super().closeEvent(event)
+
+    def prompt_unsaved_changes_warning(self) -> bool:
+        """Return value: True, if user decided to discard"""
+        if self._warning_dialogs_disabled:
+            return True
+
+        user_response = QMessageBox.warning(self, "Unsaved changes",
+                                            "You have unsaved changes. Do you want to close and discard?",
+                                            QMessageBox.Yes | QMessageBox.No,
+                                            QMessageBox.No)
+        return user_response == QMessageBox.Yes
 
     def on_select_world(self):
         self.area_selector_box.clear()
@@ -302,7 +313,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             try:
                 new_node = node_edit_popup.create_new_node()
             except ValueError as e:
-                await async_dialog.warning(self, "Error in new node", str(e))
+                if not self._warning_dialogs_disabled:
+                    await async_dialog.warning(self, "Error in new node", str(e))
                 return
             self.replace_node_with(area, node_edit_popup.node, new_node)
 
@@ -452,23 +464,31 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
         self._save_database(Path(open_result[0]))
 
+    def display_integrity_errors_warning(self, errors: list[str]) -> bool:
+        """Return value: true if ignoring"""
+        if self._warning_dialogs_disabled:
+            return True
+
+        message = "Database has the following errors:\n\n" + "\n".join(errors)
+
+        options = QMessageBox.Ok
+        if self.game_description.game.data.experimental:
+            options = QMessageBox.Yes | QMessageBox.No
+            message += "\n\nIgnore?"
+
+        user_response = QMessageBox.critical(
+            self, "Integrity Check",
+            message,
+            options,
+            QMessageBox.No
+        )
+
+        return user_response == QMessageBox.Yes
+
     def _save_database(self, path: Path) -> bool:
         errors = integrity_check.find_database_errors(self.game_description)
         if errors:
-            message = "Database has the following errors:\n\n" + "\n".join(errors)
-
-            options = QMessageBox.Ok
-            if self.game_description.game.data.experimental:
-                options = QMessageBox.Yes | QMessageBox.No
-                message += "\n\nIgnore?"
-
-            user_response = QMessageBox.critical(
-                self, "Integrity Check",
-                message,
-                options,
-                QMessageBox.No
-            )
-            if user_response != QMessageBox.Yes:
+            if not self.display_integrity_errors_warning(errors):
                 return False
 
         data = data_writer.write_game_description(self.game_description)
@@ -511,9 +531,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         if self.current_area.node_with_name(node_name) is not None:
-            QMessageBox.warning(self,
-                                "New Node",
-                                "A node named '{}' already exists.".format(node_name))
+            if not self._warning_dialogs_disabled:
+                QMessageBox.warning(self,
+                                    "New Node",
+                                    "A node named '{}' already exists.".format(node_name))
             return
 
         self._do_create_node(node_name, location)
@@ -567,7 +588,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_node = self.current_node
 
         if not isinstance(current_node, GenericNode):
-            QMessageBox.warning(self, "Delete Node", "Can only remove Generic Nodes")
+            if not self._warning_dialogs_disabled:
+                QMessageBox.warning(self, "Delete Node", "Can only remove Generic Nodes")
             return
 
         user_response = QMessageBox.warning(
