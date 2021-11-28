@@ -215,14 +215,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
         local_pos -= self.get_area_canvas_offset()
 
         nodes_at_mouse = self._nodes_at_position(local_pos)
-        if len(nodes_at_mouse) == 1:
-            self.SelectNodeRequest.emit(nodes_at_mouse[0])
-        elif len(nodes_at_mouse) > 0:
+        if nodes_at_mouse:
+            if len(nodes_at_mouse) == 1:
+                self.SelectNodeRequest.emit(nodes_at_mouse[0])
             return
 
         areas_at_mouse = self._other_areas_at_position(local_pos)
-        if len(areas_at_mouse) == 1:
-            self.SelectAreaRequest.emit(areas_at_mouse[0])
+        if areas_at_mouse:
+            if len(areas_at_mouse) == 1:
+                self.SelectAreaRequest.emit(areas_at_mouse[0])
+            return
 
     def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
         local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
