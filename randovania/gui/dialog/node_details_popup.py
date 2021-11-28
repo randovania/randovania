@@ -7,6 +7,7 @@ from typing import Optional
 from PySide2 import QtWidgets
 from qasync import asyncSlot
 
+from randovania.game_description import integrity_check
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -83,10 +84,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         # Signals
         self.button_box.accepted.connect(self.try_accept)
         self.button_box.rejected.connect(self.reject)
+        self.name_edit.textEdited.connect(self.on_name_edit)
         self.node_type_combo.currentIndexChanged.connect(self.on_node_type_combo)
         self.dock_connection_world_combo.currentIndexChanged.connect(self.on_dock_connection_world_combo)
         self.dock_connection_area_combo.currentIndexChanged.connect(self.on_dock_connection_area_combo)
         self.dock_type_combo.currentIndexChanged.connect(self.on_dock_type_combo)
+        self.dock_update_name_button.clicked.connect(self.on_dock_update_name_button)
         self.teleporter_destination_world_combo.currentIndexChanged.connect(self.on_teleporter_destination_world_combo)
         self.lore_type_combo.currentIndexChanged.connect(self.on_lore_type_combo)
         self.player_ship_unlocked_button.clicked.connect(self.on_player_ship_unlocked_button)
@@ -109,6 +112,9 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         visible_tab = self._fill_for_type(node)
         self.node_type_combo.setCurrentIndex(self.node_type_combo.findData(tab_to_type[visible_tab]))
         refresh_if_needed(self.node_type_combo, self.on_node_type_combo)
+
+        self.on_name_edit(self.name_edit.text())
+
 
     def _fill_for_type(self, node: Node) -> QtWidgets.QWidget:
         if isinstance(node, GenericNode):
@@ -214,6 +220,16 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         )
 
     # Signals
+    def on_name_edit(self, value: str):
+        has_error = False
+
+        new_node = self.create_new_node()
+        if isinstance(new_node, DockNode):
+            area = self.game.world_list.nodes_to_area(self.node)
+            has_error = not integrity_check.dock_has_correct_name(area, new_node)[0]
+
+        common_qt_lib.set_error_border_stylesheet(self.name_edit, has_error)
+
     def on_node_type_combo(self, _):
         self.tab_widget.setCurrentWidget(self._type_to_tab[self.node_type_combo.currentData()])
 
@@ -242,6 +258,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         for weakness in self.game.dock_weakness_database.get_by_type(self.dock_type_combo.currentData()):
             self.dock_weakness_combo.addItem(weakness.name, weakness)
+
+    def on_dock_update_name_button(self):
+        new_node = self.create_new_node()
+        assert isinstance(new_node, DockNode)
+        expected_name = integrity_check.base_dock_name(new_node)
+        self.name_edit.setText(expected_name)
+        self.on_name_edit(self.name_edit.text())
 
     def on_teleporter_destination_world_combo(self, _):
         world: World = self.teleporter_destination_world_combo.currentData()
