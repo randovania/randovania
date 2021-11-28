@@ -223,7 +223,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     def on_name_edit(self, value: str):
         has_error = False
 
-        new_node = self.create_new_node()
+        try:
+            new_node = self.create_new_node()
+        except ValueError:
+            new_node = None
+
         if isinstance(new_node, DockNode):
             area = self.game.world_list.nodes_to_area(self.node)
             has_error = not integrity_check.dock_has_correct_name(area, new_node)[0]
