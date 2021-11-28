@@ -109,12 +109,14 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.description_edit.setMarkdown(node.description)
         self.extra_edit.setPlainText(json.dumps(node.extra, indent=4))
 
-        visible_tab = self._fill_for_type(node)
-        self.node_type_combo.setCurrentIndex(self.node_type_combo.findData(tab_to_type[visible_tab]))
-        refresh_if_needed(self.node_type_combo, self.on_node_type_combo)
+        try:
+            visible_tab = self._fill_for_type(node)
+            self.node_type_combo.setCurrentIndex(self.node_type_combo.findData(tab_to_type[visible_tab]))
+            refresh_if_needed(self.node_type_combo, self.on_node_type_combo)
+        except Exception:
+            pass
 
         self.on_name_edit(self.name_edit.text())
-
 
     def _fill_for_type(self, node: Node) -> QtWidgets.QWidget:
         if isinstance(node, GenericNode):
@@ -223,7 +225,11 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     def on_name_edit(self, value: str):
         has_error = False
 
-        new_node = self.create_new_node()
+        try:
+            new_node = self.create_new_node()
+        except ValueError:
+            new_node = None
+
         if isinstance(new_node, DockNode):
             area = self.game.world_list.nodes_to_area(self.node)
             has_error = not integrity_check.dock_has_correct_name(area, new_node)[0]
