@@ -461,6 +461,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if await self._execute_edit_dialog(editor):
             self.editor.edit_connections(self.current_area, from_node, target_node, editor.final_requirement)
             self.update_connections()
+            self.area_view_canvas.update()
 
     def _prompt_save_database(self):
         open_result = QFileDialog.getSaveFileName(self, caption="Select a Randovania database path.", filter="*.json")
