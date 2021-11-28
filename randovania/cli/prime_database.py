@@ -531,7 +531,7 @@ def rename_docks_logic(args):
 
                 if not valid_name:
                     expected_name = integrity_check.base_dock_name(node)
-                    docks_to_same_target = integrity_check.docks_with_same_target_area(area, expected_name)
+                    docks_to_same_target = integrity_check.docks_with_same_base_name(area, expected_name)
 
                     if suffix is None:
                         suffix = f" ({docks_to_same_target.index(node) + 1})"

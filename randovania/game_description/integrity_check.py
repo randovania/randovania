@@ -4,6 +4,8 @@ from typing import Iterator, Optional
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock import DockWeakness, DockType
 from randovania.game_description.world.node import EventNode, Node, PickupNode, DockNode, TeleporterNode
 from randovania.game_description.world.world import World
 
@@ -12,15 +14,18 @@ dock_node_re = re.compile(r"(.+?) (to|from) (.+?)( \(.*\))?$")
 dock_node_suffix_re = re.compile(r"(.+?)( \([^()]+?\))$")
 
 
-def base_dock_name(node: DockNode) -> str:
+def base_dock_name_raw(dock_type: DockType, weakness: DockWeakness, connection: AreaIdentifier) -> str:
     expected_connector = "to"
-    if (node.default_dock_weakness.requirement == Requirement.impossible()
-            and node.default_dock_weakness.name != "Not Determined"):
+    if weakness.requirement == Requirement.impossible() and weakness.name != "Not Determined":
         expected_connector = "from"
-    return f"{node.dock_type.long_name} {expected_connector} {node.default_connection.area_name}"
+    return f"{dock_type.long_name} {expected_connector} {connection.area_name}"
 
 
-def docks_with_same_target_area(area: Area, expected_name: str) -> list[DockNode]:
+def base_dock_name(node: DockNode) -> str:
+    return base_dock_name_raw(node.dock_type, node.default_dock_weakness, node.default_connection.area_identifier)
+
+
+def docks_with_same_base_name(area: Area, expected_name: str) -> list[DockNode]:
     return [
         other for other in area.nodes
         if isinstance(other, DockNode) and base_dock_name(other) == expected_name
@@ -35,7 +40,7 @@ def dock_has_correct_name(area: Area, node: DockNode) -> tuple[bool, Optional[st
     :return: bool, True indicates the name is good. string, for a suffix recommendation or None if unknown
     """
     expected_name = base_dock_name(node)
-    docks_to_same_target = docks_with_same_target_area(area, expected_name)
+    docks_to_same_target = docks_with_same_base_name(area, expected_name)
 
     if len(docks_to_same_target) > 1:
         m = dock_node_suffix_re.match(node.name)

@@ -26,6 +26,8 @@ class Editor:
         }
 
     def add_node(self, area: Area, node: Node):
+        if area.node_with_name(node.name) is not None:
+            raise ValueError(f"A node named {node.name} already exists.")
         area.nodes.append(node)
         area.connections[node] = {}
         area.clear_dock_cache()
@@ -44,16 +46,23 @@ class Editor:
         def sub(n: Node):
             return new_node if n == old_node else n
 
+        if old_node not in area.nodes:
+            raise ValueError("Given {} does does not belong to {}{}".format(
+                old_node.name, area.name,
+                ", but the area contains a node with that name."
+                if area.node_with_name(old_node.name) is not None else "."
+            ))
+
+        if old_node.name != new_node.name and area.node_with_name(new_node.name) is not None:
+            raise ValueError(f"A node named {new_node.name} already exists.")
+
         old_identifier = self.game.world_list.identifier_for_node(old_node)
         self.replace_references_to_node_identifier(
             old_identifier,
             dataclasses.replace(old_identifier, node_name=new_node.name)
         )
 
-        area_node_list = area.nodes
-        for i, node in enumerate(area_node_list):
-            if node == old_node:
-                area_node_list[i] = new_node
+        area.nodes[area.nodes.index(old_node)] = new_node
 
         new_connections = {
             sub(source_node): {
@@ -69,6 +78,9 @@ class Editor:
         area.clear_dock_cache()
 
         self.game.world_list.invalidate_node_cache()
+
+    def rename_node(self, area: Area, node: Node, new_name: str):
+        self.replace_node(area, node, dataclasses.replace(node, name=new_name))
 
     def rename_area(self, current_area: Area, new_name: str):
         current_world = self.game.world_list.world_with_area(current_area)

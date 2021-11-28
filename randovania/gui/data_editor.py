@@ -550,16 +550,24 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _create_new_dock(self, location: NodeLocation, target_area: Area):
         current_area = self.current_area
-
-        i = 1
-        while current_area.node_with_name(source_name := f"Door to {target_area.name} ({i})") is not None:
-            i += 1
-
-        i = 1
-        while target_area.node_with_name(target_name := f"Door to {current_area.name} ({i})") is not None:
-            i += 1
+        target_identifier = self.world_list.identifier_for_area(target_area)
+        source_identifier = self.world_list.identifier_for_area(current_area)
 
         dock_weakness = self.game_description.dock_weakness_database.default_weakness
+        source_name_base = integrity_check.base_dock_name_raw(dock_weakness[0], dock_weakness[1], target_identifier)
+        target_name_base = integrity_check.base_dock_name_raw(dock_weakness[0], dock_weakness[1], source_identifier)
+
+        source_count = len(integrity_check.docks_with_same_base_name(current_area, source_name_base))
+        if source_count != len(integrity_check.docks_with_same_base_name(target_area, target_name_base)):
+            raise ValueError(f"Expected {target_area.name} to also have {source_count} "
+                             f"docks with name {target_name_base}")
+
+        if source_count > 0:
+            source_name = f"{source_name_base} ({source_count + 1})"
+            target_name = f"{target_name_base} ({source_count + 1})"
+        else:
+            source_name = source_name_base
+            target_name = target_name_base
 
         self.generic_index += 1
         new_node_this_area = DockNode(
@@ -579,6 +587,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.editor.add_node(current_area, new_node_this_area)
         self.editor.add_node(target_area, new_node_other_area)
+        if source_count == 1:
+            self.editor.rename_node(
+                current_area,
+                current_area.node_with_name(source_name_base),
+                f"{source_name_base} (1)",
+            )
+            self.editor.rename_node(
+                target_area,
+                target_area.node_with_name(target_name_base),
+                f"{target_name_base} (1)",
+            )
         self.on_select_area(new_node_this_area)
 
     def _remove_node(self):
