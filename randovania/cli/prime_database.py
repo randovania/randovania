@@ -1,12 +1,14 @@
 import argparse
+import dataclasses
 import json
 import logging
+import re
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
 from typing import Dict, BinaryIO, Optional, TextIO, List, Any
-from randovania.game_description import default_database
 
+from randovania.game_description import default_database
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.games import default_data, binary_data
@@ -202,7 +204,6 @@ def refresh_all_logic(args):
         default_database.write_item_database_for_game(idb_per_game[game], game)
 
 
-
 def refresh_all_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "refresh-all",
@@ -331,7 +332,6 @@ def list_paths_with_resource_command(sub_parsers):
 
 def render_worlds_graph_logic(args):
     import hashlib
-    import os
     import re
     import graphviz
     from randovania.game_description.world.node import PickupNode, DockNode, TeleporterNode
@@ -504,6 +504,61 @@ def pickups_per_area_command(sub_parsers):
     parser.set_defaults(func=pickups_per_area_command_logic)
 
 
+def rename_docks_logic(args):
+    from randovania.game_description import data_reader
+    from randovania.game_description import data_writer
+    from randovania.game_description import pretty_print
+    from randovania.game_description.editor import Editor
+    from randovania.game_description.world.node import DockNode
+    from randovania.game_description import integrity_check
+
+    game = RandovaniaGame(args.game)
+
+    path, data = default_data.read_json_then_binary(game)
+    gd = data_reader.decode_data(data)
+
+    # Make the changes
+    editor = Editor(gd)
+
+    for world in gd.world_list.worlds:
+        for area in world.areas:
+            for i in range(len(area.nodes)):
+                node = area.nodes[i]
+                if not isinstance(node, DockNode):
+                    continue
+
+                valid_name, suffix = integrity_check.dock_has_correct_name(area, node)
+
+                if not valid_name:
+                    expected_name = integrity_check.base_dock_name(node)
+                    docks_to_same_target = integrity_check.docks_with_same_target_area(area, expected_name)
+
+                    if suffix is None:
+                        suffix = f" ({docks_to_same_target.index(node) + 1})"
+
+                    print(f"In {area.name}, renaming '{node.name}' to '{expected_name}{suffix}'")
+                    editor.replace_node(area, node,
+                                        dataclasses.replace(node, name=f"{expected_name}{suffix}"))
+
+    # Write it back
+    logging.info("Writing database files")
+    new_data = data_writer.write_game_description(gd)
+    data_writer.write_as_split_files(new_data, path)
+
+    logging.info("Writing human readable")
+    path.with_suffix("").mkdir(parents=True, exist_ok=True)
+    pretty_print.write_human_readable_game(gd, path.with_suffix(""))
+
+
+def rename_docks_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "rename-docks",
+        help="Rename nodes to conform with the integrity rules.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )
+    parser.set_defaults(func=rename_docks_logic)
+
+
 def create_subparsers(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "database",
@@ -533,6 +588,7 @@ def create_subparsers(sub_parsers):
     list_paths_with_resource_command(sub_parsers)
     render_worlds_graph(sub_parsers)
     pickups_per_area_command(sub_parsers)
+    rename_docks_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:

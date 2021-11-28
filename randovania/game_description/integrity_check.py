@@ -1,20 +1,55 @@
 import re
-from typing import Iterator
+from typing import Iterator, Optional
 
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockType
 from randovania.game_description.world.node import EventNode, Node, PickupNode, DockNode, TeleporterNode
 from randovania.game_description.world.world import World
-from randovania.game_description.world.world_list import WorldList
-from randovania.lib.enum_lib import iterate_enum
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
+dock_node_re = re.compile(r"(.+?) (to|from) (.+?)( \(.*\))?$")
+dock_node_suffix_re = re.compile(r"(.+?)( \([^()]+?\))$")
+
+
+def base_dock_name(node: DockNode) -> str:
+    expected_connector = "to"
+    if (node.default_dock_weakness.requirement == Requirement.impossible()
+            and node.default_dock_weakness.name != "Not Determined"):
+        expected_connector = "from"
+    return f"{node.dock_type.long_name} {expected_connector} {node.default_connection.area_name}"
+
+
+def docks_with_same_target_area(area: Area, expected_name: str) -> list[DockNode]:
+    return [
+        other for other in area.nodes
+        if isinstance(other, DockNode) and base_dock_name(other) == expected_name
+    ]
+
+
+def dock_has_correct_name(area: Area, node: DockNode) -> tuple[bool, Optional[str]]:
+    """
+
+    :param area:
+    :param node:
+    :return: bool, True indicates the name is good. string, for a suffix recommendation or None if unknown
+    """
+    expected_name = base_dock_name(node)
+    docks_to_same_target = docks_with_same_target_area(area, expected_name)
+
+    if len(docks_to_same_target) > 1:
+        m = dock_node_suffix_re.match(node.name)
+        if m is None:
+            return False, None
+        else:
+            return m.group(1) == expected_name, m.group(2)
+    else:
+        return expected_name == node.name, ""
 
 
 def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
     world_list = game.world_list
-    world = world_list.nodes_to_world(node)
+    area = world_list.nodes_to_area(node)
 
     if isinstance(node, EventNode):
         if not node.name.startswith("Event -"):
@@ -30,16 +65,13 @@ def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
         yield f"'{node.name}' is not a Pickup Node, but naming matches 'Pickup (...)'"
 
     if isinstance(node, DockNode):
-        # dock_type = node.default_dock_weakness.dock_type
-        # expression = dock_type.node_name_prefix + " (to|from) "
-        # m = re.match(expression, node.name)
-        # if m is None and dock_type != DockType.OTHER:
-        #     yield f"'{node.name}' is a Dock Node of type {dock_type}, but name does not match '{expression}'"
-        # else:
-        #     other_area = m.group(1)
-        #     if other_area != node.default_connection.area_name:
-        #         yield (f"'{node.name}' name suggests a connection to {other_area}, but it "
-        #                f"connects to {node.default_connection.area_name}")
+        valid_name, suffix = dock_has_correct_name(area, node)
+        expression_msg = base_dock_name(node)
+        if suffix != "":
+            expression_msg += " (...)"
+
+        if not valid_name:
+            yield f"'{node.name}' should be named '{expression_msg}'"
 
         other_node = None
         try:
