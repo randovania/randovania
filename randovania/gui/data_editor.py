@@ -12,8 +12,10 @@ from qasync import asyncSlot
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
+from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation, EventNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games import default_data
@@ -80,6 +82,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
         self.area_view_canvas.SelectAreaRequest.connect(self.focus_on_area)
         self.area_view_canvas.SelectConnectionsRequest.connect(self.focus_on_connection)
+        self.area_view_canvas.ReplaceConnectionsRequest.connect(self.replace_connection_with)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -106,6 +109,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.resource_editor.setFeatures(self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetClosable)
         self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
         self.points_of_interest_dock.raise_()
+
+        self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
 
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
@@ -308,7 +313,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         area = self.current_area
-        node_edit_popup = NodeDetailsPopup(self.game_description, self.current_node)
+        old_node = self.current_node
+        if old_node not in area.nodes:
+            raise ValueError("Current node is not part of the current area")
+
+        node_edit_popup = NodeDetailsPopup(self.game_description, old_node)
         if await self._execute_edit_dialog(node_edit_popup):
             try:
                 new_node = node_edit_popup.create_new_node()
@@ -334,15 +343,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             msg = f"Unable to describe node: {e}"
 
         if isinstance(node, DockNode):
-            try:
-                other = self.world_list.node_by_identifier(node.default_connection)
-                msg = "{} to <a href=\"node://{}\">{}</a>".format(
-                    node.default_dock_weakness.name,
-                    self.world_list.node_name(other, with_world=True),
-                    self.world_list.node_name(other)
-                )
-            except IndexError:
-                pass
+            msg = "{} to <a href=\"node://{}\">{}</a>".format(
+                node.default_dock_weakness.name,
+                node.default_connection.as_string,
+                node.default_connection.node_name,
+            )
 
         elif isinstance(node, TeleporterNode):
             try:
@@ -442,6 +447,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _swap_selected_connection(self):
         self.focus_on_node(self.current_connection_node)
 
+    def replace_connection_with(self, target_node: Node, requirement: Requirement):
+        current_node = self.current_node
+
+        if requirement == Requirement.impossible():
+            requirement = None
+
+        self.editor.edit_connections(self.current_area, current_node, target_node, requirement)
+        self.update_connections()
+        self.area_view_canvas.update()
+
     @asyncSlot()
     async def _open_edit_connection(self):
         if self._check_for_edit_dialog():
@@ -457,6 +472,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if await self._execute_edit_dialog(editor):
             self.editor.edit_connections(self.current_area, from_node, target_node, editor.final_requirement)
             self.update_connections()
+            self.area_view_canvas.update()
 
     def _prompt_save_database(self):
         open_result = QFileDialog.getSaveFileName(self, caption="Select a Randovania database path.", filter="*.json")
@@ -624,6 +640,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.editor.remove_node(self.current_area, current_node)
         self.on_select_area()
+
+    def _on_resource_changed(self, resource: ResourceInfo):
+        if resource.resource_type == ResourceType.EVENT:
+            for area in self.game_description.world_list.all_areas:
+                for i in range(len(area.nodes)):
+                    node = area.nodes[i]
+                    if not isinstance(node, EventNode):
+                        continue
+
+                    if node.event.short_name == resource.short_name:
+                        self.replace_node_with(area, node, dataclasses.replace(node, event=resource))
 
     def update_edit_mode(self):
         self.rename_area_button.setVisible(self.edit_mode)
