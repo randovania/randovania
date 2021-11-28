@@ -9,7 +9,7 @@ from randovania.game_description.world.world import World
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_re = re.compile(r"(.+?) (to|from) (.+?)( \(.*\))?$")
-dock_node_suffix_re = re.compile(r"(.+?)( \(.*\))$")
+dock_node_suffix_re = re.compile(r"(.+?)( \([^()]+?\))$")
 
 
 def base_dock_name(node: DockNode) -> str:
