@@ -8,7 +8,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
-from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, Requirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
@@ -200,6 +200,35 @@ def add_echoes_default_hints_to_patches(rng: Random,
     return patches
 
 
+def block_assignment_for_configuration(configuration, game: GameDescription, rng: Random,
+                                       ) -> NodeConfigurationAssignment:
+    result = {}
+
+    rsb = game.resource_database
+
+    requirement_for_type = {
+        "POWERBEAM": rsb.requirement_template["Shoot Beam"],
+        "BOMB": rsb.requirement_template["Lay Bomb"],
+        "MISSILE": ResourceRequirement(rsb.get_item("Missiles"), 1, False),
+        "SUPERMISSILE": rsb.requirement_template["Shoot Super Missile"],
+        "POWERBOMB": rsb.requirement_template["Lay Power Bomb"],
+        "SCREWATTACK": ResourceRequirement(rsb.get_item("Screw"), 1, False),
+        "WEIGHT": Requirement.impossible(),
+        "SPEEDBOOST": ResourceRequirement(rsb.get_item("Speed"), 1, False),
+    }
+
+    for node in game.world_list.all_nodes:
+        if not isinstance(node, ConfigurableNode):
+            continue
+
+        result[game.world_list.identifier_for_node(node)] = RequirementAnd([
+            requirement_for_type[block_type]
+            for block_type in node.extra["tile_types"]
+        ]).simplify()
+
+    return result
+
+
 def create_base_patches(configuration: EchoesConfiguration,
                         rng: Random,
                         game: GameDescription,
@@ -218,6 +247,10 @@ def create_base_patches(configuration: EchoesConfiguration,
     if configuration.game == RandovaniaGame.METROID_PRIME_ECHOES:
         patches = patches.assign_node_configuration(
             gate_assignment_for_configuration(configuration, game, rng))
+
+    elif configuration.game == RandovaniaGame.METROID_DREAD:
+        patches = patches.assign_node_configuration(
+            block_assignment_for_configuration(configuration, game, rng))
 
     # Starting Location
     patches = patches.assign_starting_location(
