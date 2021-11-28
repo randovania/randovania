@@ -342,15 +342,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             msg = f"Unable to describe node: {e}"
 
         if isinstance(node, DockNode):
-            try:
-                other = self.world_list.node_by_identifier(node.default_connection)
-                msg = "{} to <a href=\"node://{}\">{}</a>".format(
-                    node.default_dock_weakness.name,
-                    self.world_list.node_name(other, with_world=True),
-                    self.world_list.node_name(other)
-                )
-            except IndexError:
-                pass
+            msg = "{} to <a href=\"node://{}\">{}</a>".format(
+                node.default_dock_weakness.name,
+                node.default_connection.as_string,
+                node.default_connection.node_name,
+            )
 
         elif isinstance(node, TeleporterNode):
             try:
