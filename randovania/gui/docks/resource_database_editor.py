@@ -198,6 +198,8 @@ class TemplateEditor:
 class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
     editor_for_template: dict[str, TemplateEditor]
 
+    ResourceChanged = QtCore.Signal(object)
+
     def __init__(self, parent: QtWidgets.QWidget, db: ResourceDatabase):
         super().__init__(parent)
         self.setupUi(self)
@@ -211,6 +213,9 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         self.tab_version.setModel(ResourceDatabaseGenericModel(db, ResourceType.VERSION))
         self.tab_misc.setModel(ResourceDatabaseGenericModel(db, ResourceType.MISC))
 
+        for tab in self._all_tabs:
+            tab.model().dataChanged.connect(functools.partial(self._on_data_changed, tab.model()))
+
         self.editor_for_template = {}
         for name in db.requirement_template.keys():
             self.create_template_editor(name)
@@ -220,9 +225,20 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
         self.create_new_template_button.clicked.connect(self.create_new_template)
         self.tab_template_layout.addWidget(self.create_new_template_button)
 
+    @property
+    def _all_tabs(self):
+        return [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage,
+                    self.tab_version, self.tab_misc]
+
+    def _on_data_changed(self, model: ResourceDatabaseGenericModel, top_left: QtCore.QModelIndex,
+                         bottom_right: QtCore.QModelIndex, roles):
+        first_row = top_left.row()
+        last_row = bottom_right.row()
+        if first_row == last_row:
+            self.ResourceChanged.emit(self.db.get_by_type(model.resource_type)[first_row])
+
     def set_allow_edits(self, value: bool):
-        for tab in [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage,
-                    self.tab_version, self.tab_misc]:
+        for tab in self._all_tabs:
             tab.model().set_allow_edits(value)
 
         self.create_new_template_button.setVisible(value)

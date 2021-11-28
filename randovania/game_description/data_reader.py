@@ -1,7 +1,7 @@
 import copy
 import json
 from pathlib import Path
-from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional
+from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashable, Any
 
 from frozendict import frozendict
 
@@ -182,7 +182,6 @@ def read_dock_type(name: str, data: dict) -> DockType:
 def read_dock_weakness_database(data: dict,
                                 resource_database: ResourceDatabase,
                                 ) -> DockWeaknessDatabase:
-
     dock_types = read_dict(data["types"], read_dock_type)
     weaknesses: dict[DockType, dict[str, DockWeakness]] = {}
 
@@ -458,12 +457,28 @@ def decode_data(data: Dict) -> GameDescription:
 
 def read_split_file(dir_path: Path):
     with dir_path.joinpath("header.json").open(encoding="utf-8") as meta_file:
-        data = json.load(meta_file)
+        data = read_json_file(meta_file)
 
     worlds = data.pop("worlds")
     data["worlds"] = []
     for world_file_name in worlds:
         with dir_path.joinpath(world_file_name).open(encoding="utf-8") as world_file:
-            data["worlds"].append(json.load(world_file))
+            data["worlds"].append(read_json_file(world_file))
 
     return data
+
+
+def raise_on_duplicate_keys(ordered_pairs: list[tuple[Hashable, Any]]) -> dict:
+    """Raise ValueError if a duplicate key exists in provided ordered list of pairs, otherwise return a dict."""
+    dict_out = {}
+    for key, val in ordered_pairs:
+        if key in dict_out:
+            raise ValueError(f'Duplicate key: {key}')
+        else:
+            dict_out[key] = val
+    return dict_out
+
+
+def read_json_file(file):
+    """json.load, but rejects duplicated keys"""
+    return json.load(file, object_pairs_hook=raise_on_duplicate_keys)
