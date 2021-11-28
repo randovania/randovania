@@ -82,6 +82,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
         self.area_view_canvas.SelectAreaRequest.connect(self.focus_on_area)
         self.area_view_canvas.SelectConnectionsRequest.connect(self.focus_on_connection)
+        self.area_view_canvas.ReplaceConnectionsRequest.connect(self.replace_connection_with)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -445,6 +446,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _swap_selected_connection(self):
         self.focus_on_node(self.current_connection_node)
+
+    def replace_connection_with(self, target_node: Node, requirement: Requirement):
+        current_node = self.current_node
+
+        if requirement == Requirement.impossible():
+            requirement = None
+
+        self.editor.edit_connections(self.current_area, current_node, target_node, requirement)
+        self.update_connections()
+        self.area_view_canvas.update()
 
     @asyncSlot()
     async def _open_edit_connection(self):
