@@ -14,7 +14,8 @@ dock_node_suffix_re = re.compile(r"(.+?)( \(.*\))$")
 
 def base_dock_name(node: DockNode) -> str:
     expected_connector = "to"
-    if node.default_dock_weakness.requirement == Requirement.impossible():
+    if (node.default_dock_weakness.requirement == Requirement.impossible()
+            and node.default_dock_weakness.name != "Not Determined"):
         expected_connector = "from"
     return f"{node.dock_type.long_name} {expected_connector} {node.default_connection.area_name}"
 
