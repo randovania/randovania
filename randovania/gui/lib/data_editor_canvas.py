@@ -6,6 +6,7 @@ from typing import Optional, Type, NamedTuple, Union
 from PySide2 import QtWidgets, QtGui, QtCore
 from PySide2.QtCore import QPointF, QRectF, QSizeF, Signal
 
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     NodeLocation
@@ -72,6 +73,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     SelectNodeRequest = Signal(Node)
     SelectAreaRequest = Signal(Area)
     SelectConnectionsRequest = Signal(Node)
+    ReplaceConnectionsRequest = Signal(Node, Requirement)
     CreateDockRequest = Signal(NodeLocation, Area)
 
     def __init__(self):
@@ -258,6 +260,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
                     )
                 )
                 view_connections.triggered.connect(functools.partial(self.SelectConnectionsRequest.emit, node))
+
+                if self.edit_mode:
+                    a.addSeparator()
+                    a.addAction("Replace connection with Trivial").triggered.connect(functools.partial(
+                        self.ReplaceConnectionsRequest.emit, node, Requirement.trivial(),
+                    ))
+                    a.addAction("Remove connection").triggered.connect(functools.partial(
+                        self.ReplaceConnectionsRequest.emit, node, Requirement.impossible(),
+                    ))
 
                 menu.addMenu(a)
                 has_nearby_node = True
