@@ -109,12 +109,14 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.description_edit.setMarkdown(node.description)
         self.extra_edit.setPlainText(json.dumps(node.extra, indent=4))
 
-        visible_tab = self._fill_for_type(node)
-        self.node_type_combo.setCurrentIndex(self.node_type_combo.findData(tab_to_type[visible_tab]))
-        refresh_if_needed(self.node_type_combo, self.on_node_type_combo)
+        try:
+            visible_tab = self._fill_for_type(node)
+            self.node_type_combo.setCurrentIndex(self.node_type_combo.findData(tab_to_type[visible_tab]))
+            refresh_if_needed(self.node_type_combo, self.on_node_type_combo)
+        except Exception:
+            pass
 
         self.on_name_edit(self.name_edit.text())
-
 
     def _fill_for_type(self, node: Node) -> QtWidgets.QWidget:
         if isinstance(node, GenericNode):
