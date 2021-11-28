@@ -23,11 +23,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Fixed: Magma Pool - Added missing suit or heated runs trick requirement for non-grapple methods of crossing the room
-- Added: Magma Pool - Added standable terrain method to cross the room with a video example
-- Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
-- Changed: Hall of the Elders - Now properly model needing to kill the 1 ghost to leave the room. Chargeless 1 ghost fight combat difficulty reduced to beginner.
 - Fixed: HAT - Updated spawn node
 - Fixed: Quarantine Cave - Properly model when the fight is required and when it is not
+- Added: Magma Pool - Added standable terrain method to cross the room with a video example
+- Added: Main Plaza - Hypermode Dash to get Grapple Ledge
+- Added: Elite Quarters - BSJ to skip scan visor
+- Added: Reactor Core - NSJ Gravityless Bomb Jumps
+- Added: Cargo Freight Lift - NSJ Gravityless Boost or Bombs climbs
+- Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
+- Changed: Hall of the Elders - Now properly model needing to kill the 1 ghost to leave the room. Chargeless 1 ghost fight combat difficulty reduced to beginner.
 
 ### Metroid Prime 2: Echoes
 
