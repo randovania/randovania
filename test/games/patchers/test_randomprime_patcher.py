@@ -913,6 +913,7 @@ def test_create_patch_data(test_files_dir):
             'mainMenuMessage': f'Randovania v{randovania.VERSION}\nNature Gyro Elevator',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
+            'disableItemLoss': True,
             'startingItems': {
                 'bombs': False,
                 'boostBall': False,
