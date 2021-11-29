@@ -29,7 +29,7 @@ class Requirement:
         """
         raise NotImplementedError()
 
-    def simplify(self) -> "Requirement":
+    def simplify(self, *, keep_comments: bool = False) -> "Requirement":
         """
         Creates a new Requirement without some redundant complexities, like:
         - RequirementAnd/RequirementOr of exactly one item
@@ -83,7 +83,7 @@ class RequirementArrayBase(Requirement):
             item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items
         )
 
-    def simplify(self) -> "Requirement":
+    def simplify(self, keep_comments: bool = False) -> "Requirement":
         raise NotImplementedError()
 
     def as_set(self, database: ResourceDatabase) -> "RequirementSet":
@@ -140,12 +140,12 @@ class RequirementAnd(RequirementArrayBase):
             for item in self.items
         )
 
-    def simplify(self) -> Requirement:
-        new_items = _expand_items(self.items, RequirementAnd, Requirement.trivial())
-        if Requirement.impossible() in new_items:
+    def simplify(self, keep_comments: bool = False) -> Requirement:
+        new_items = _expand_items(self.items, RequirementAnd, Requirement.trivial(), keep_comments)
+        if Requirement.impossible() in new_items and _mergeable_array(self, keep_comments):
             return Requirement.impossible()
 
-        if len(new_items) == 1:
+        if len(new_items) == 1 and _mergeable_array(self, keep_comments):
             return new_items[0]
 
         return RequirementAnd(new_items, comment=self.comment)
@@ -182,15 +182,15 @@ class RequirementOr(RequirementArrayBase):
             for item in self.items
         )
 
-    def simplify(self) -> Requirement:
-        new_items = _expand_items(self.items, RequirementOr, Requirement.impossible())
-        if Requirement.trivial() in new_items:
+    def simplify(self, keep_comments: bool = False) -> Requirement:
+        new_items = _expand_items(self.items, RequirementOr, Requirement.impossible(), keep_comments)
+        if Requirement.trivial() in new_items and _mergeable_array(self, keep_comments):
             return Requirement.trivial()
 
         num_and_requirements = 0
         common_requirements = None
         for item in new_items:
-            if isinstance(item, RequirementAnd):
+            if isinstance(item, RequirementAnd) and _mergeable_array(item, keep_comments):
                 num_and_requirements += 1
                 if common_requirements is None:
                     common_requirements = item.items
@@ -207,7 +207,7 @@ class RequirementOr(RequirementArrayBase):
             common_new_or = []
 
             for item in new_items:
-                if isinstance(item, RequirementAnd):
+                if isinstance(item, RequirementAnd) and _mergeable_array(item, keep_comments):
                     assert set(common_requirements) <= set(item.items)
                     simplified_condition = [it for it in item.items if it not in common_requirements]
                     if simplified_condition:
@@ -223,7 +223,7 @@ class RequirementOr(RequirementArrayBase):
         else:
             final_items = new_items
 
-        if len(final_items) == 1:
+        if len(final_items) == 1 and _mergeable_array(self, keep_comments):
             return final_items[0]
 
         return RequirementOr(final_items, comment=self.comment)
@@ -243,9 +243,17 @@ class RequirementOr(RequirementArrayBase):
         return "Impossible"
 
 
+def _mergeable_array(req: Union[RequirementAnd, RequirementOr], keep_comments: bool) -> bool:
+    if keep_comments:
+        return req.comment is None
+    else:
+        return True
+
+
 def _expand_items(items: Tuple[Requirement, ...],
                   cls: Type[Union[RequirementAnd, RequirementOr]],
-                  exclude: Requirement) -> List[Requirement]:
+                  exclude: Requirement,
+                  keep_comments: bool) -> List[Requirement]:
     expanded = []
 
     def _add(_item):
@@ -253,8 +261,8 @@ def _expand_items(items: Tuple[Requirement, ...],
             expanded.append(_item)
 
     for item in items:
-        simplified = item.simplify()
-        if isinstance(simplified, cls):
+        simplified = item.simplify(keep_comments=keep_comments)
+        if isinstance(simplified, cls) and _mergeable_array(simplified, keep_comments):
             for new_item in simplified.items:
                 _add(new_item)
         else:
@@ -304,7 +312,7 @@ class ResourceRequirement(Requirement):
         else:
             return has_amount
 
-    def simplify(self) -> Requirement:
+    def simplify(self, keep_comments: bool = False) -> Requirement:
         return self
 
     def __repr__(self):
@@ -379,7 +387,7 @@ class RequirementTemplate(Requirement):
                            database: ResourceDatabase) -> Requirement:
         return self.template_requirement(database).patch_requirements(static_resources, damage_multiplier, database)
 
-    def simplify(self) -> Requirement:
+    def simplify(self, keep_comments: bool = False) -> Requirement:
         return self
 
     def as_set(self, database: ResourceDatabase) -> "RequirementSet":
