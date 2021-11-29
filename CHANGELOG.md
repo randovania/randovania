@@ -23,7 +23,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Fixed: Magma Pool - Added missing suit or heated runs trick requirement for non-grapple methods of crossing the room
+- Added: New Event - Gravity Chamber Item (Lower)
+- Added: New Trick Category - Infinite Speed
 - Added: Magma Pool - Added standable terrain method to cross the room with a video example
+- Added: Flick BSJ in watery hall OoB
+- Added: NSJ Bombless Lower GTH Climb (Wallboost)
+- Added: NSJ Bombless Quarantine Cave Elevator Spider Skip
+- Added: NSJ Bombless Gravity Chamber Escape (Gravity Wallboost)
+- Added: NSJ Bombless Lower Phen's Edge
+- Added: NSJ Bombless Frozen Pike (Mid-Section)
+- Added: NSJ Bombless Life Grove (Wallboost)
+- Added: NSJ Bombless HOTE Climb (Boost IUJs)
+- Added: NSJ Bombless Elite Control Access (Wallboost)
+- Added: Elite Control Access Item (Damage Boost)
+- Added: Central Dynamo Item w/ Infinite Speed
 - Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
 - Changed: Hall of the Elders - Now properly model needing to kill the 1 ghost to leave the room. Chargeless 1 ghost fight combat difficulty reduced to beginner.
 - Fixed: HAT - Updated spawn node
