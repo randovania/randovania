@@ -8,8 +8,8 @@
         "map_max_y": 119
     },
     "areas": {
-        "collision_camera_000 (H)": {
-            "default_node": "Elevator (elevator_sanctuary_000)",
+        "Transport to Ferenia": {
+            "default_node": "Elevator to Ferenia - Transport to Hanubia",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -39,7 +39,7 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Door to collision_camera_002 (H)": {
+                "Door to Ferenia Shortcut": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -58,14 +58,22 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_002 (H)",
-                        "node_name": "Door to collision_camera_000 (H)"
+                        "area_name": "Ferenia Shortcut",
+                        "node_name": "Door to Transport to Ferenia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Ferenia - Transport to Hanubia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Elevator (elevator_sanctuary_000)": {
+                "Elevator to Ferenia - Transport to Hanubia": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -88,11 +96,19 @@
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ferenia Shortcut": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_001 (H)": {
+        "Transport to Ghavoran": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -123,7 +139,7 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Door to collision_camera_004 (H)": {
+                "Door to Entrance Tall Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -142,12 +158,20 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_004 (H)",
-                        "node_name": "Door to collision_camera_001 (H)"
+                        "area_name": "Entrance Tall Room",
+                        "node_name": "Door to Transport to Ghavoran"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -162,7 +186,22 @@
                         "start_point_actor_name": "StartPoint0",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Entrance Tall Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Elevator (wagontrain_forest_000)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Elevator (wagontrain_forest_000)": {
                     "node_type": "teleporter",
@@ -187,11 +226,19 @@
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_002 (H)": {
+        "Ferenia Shortcut": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -222,7 +269,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door to collision_camera_000 (H)": {
+                "Door to Transport to Ferenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -241,12 +288,55 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_000 (H)",
-                        "node_name": "Door to collision_camera_002 (H)"
+                        "area_name": "Transport to Ferenia",
+                        "node_name": "Door to Ferenia Shortcut"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Event - Breakable (grapplepulloff1x2_000)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s080_shipyard:default:grapplepulloff1x2_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Pickup (item_missiletank)": {
                     "node_type": "pickup",
@@ -263,7 +353,58 @@
                     },
                     "pickup_index": 136,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Dock to collision_camera_009 (H)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2404.15,
+                        "y": -2129.79,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "collision_camera_009 (H)",
+                        "node_name": "Dock to Ferenia Shortcut"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Breakable (grapplepulloff1x2_000)": {
                     "node_type": "event",
@@ -279,7 +420,15 @@
                         "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
                     },
                     "event_name": "s080_shipyard:default:grapplepulloff1x2_000",
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Ferenia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
@@ -297,7 +446,26 @@
                             "POWERBEAM"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 1": {
                     "node_type": "configurable_node",
@@ -315,7 +483,24 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Ferenia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 1": {
                     "node_type": "configurable_node",
@@ -333,7 +518,35 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (item_missiletank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (POWERBEAM)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 2": {
                     "node_type": "configurable_node",
@@ -351,7 +564,35 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (item_missiletank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 4": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 2": {
                     "node_type": "configurable_node",
@@ -369,7 +610,41 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Ferenia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s080_shipyard:default:grapplepulloff1x2_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to collision_camera_009 (H)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 3": {
                     "node_type": "configurable_node",
@@ -387,7 +662,26 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBEAM)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 4": {
                     "node_type": "configurable_node",
@@ -405,11 +699,30 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_009 (H)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_003 (H)": {
+        "Navigation Room": {
             "default_node": "Navigation Room",
             "valid_starting_location": false,
             "extra": {
@@ -440,7 +753,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Door to collision_camera_004 (H)": {
+                "Door to Entrance Tall Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -459,12 +772,20 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_004 (H)",
-                        "node_name": "Door to collision_camera_003 (H)"
+                        "area_name": "Entrance Tall Room",
+                        "node_name": "Door to Navigation Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to collision_camera_009 (H)": {
                     "node_type": "dock",
@@ -486,13 +807,21 @@
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "collision_camera_009 (H)",
-                        "node_name": "Door to collision_camera_003 (H)"
+                        "node_name": "Door to Navigation Room (Bottom)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_009 (H)": {
+                "Door from collision_camera_009 (H)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -512,11 +841,19 @@
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "collision_camera_009 (H)",
-                        "node_name": "Dock to collision_camera_003 (H)"
+                        "node_name": "Door to Navigation Room (Top)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
+                    "connections": {
+                        "Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Navigation Room": {
                     "node_type": "generic",
@@ -533,11 +870,33 @@
                         "start_point_actor_name": "weightactivatedplatform_access_000",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Entrance Tall Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to collision_camera_009 (H)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door from collision_camera_009 (H)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_004 (H)": {
+        "Entrance Tall Room": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -568,7 +927,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Door to collision_camera_001 (H)": {
+                "Door to Transport to Ghavoran": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -587,14 +946,22 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_001 (H)",
-                        "node_name": "Door to collision_camera_004 (H)"
+                        "area_name": "Transport to Ghavoran",
+                        "node_name": "Door to Entrance Tall Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to collision_camera_003 (H)": {
+                "Door to Navigation Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -613,14 +980,40 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_003 (H)",
-                        "node_name": "Door to collision_camera_004 (H)"
+                        "area_name": "Navigation Room",
+                        "node_name": "Door to Entrance Tall Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Ghavoran": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Breakable (block_pbtube)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        "Ammo Recharge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_006 (H)": {
+                "Door to collision_camera_006 (H)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -640,11 +1033,19 @@
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "collision_camera_006 (H)",
-                        "node_name": "Dock to collision_camera_004 (H)"
+                        "node_name": "Door to Entrance Tall Room"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Wave Beam Door",
+                    "connections": {
+                        "Next to Hyper Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Breakable (block_pbtube)": {
                     "node_type": "event",
@@ -660,7 +1061,15 @@
                         "actor_def": "actordef:actors/props/block_pbtube_001/charclasses/block_pbtube_001.bmsad"
                     },
                     "event_name": "s080_shipyard:default:block_pbtube",
-                    "connections": {}
+                    "connections": {
+                        "Inside breakable tube": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Breakable (block_hyperbeam_000)": {
                     "node_type": "event",
@@ -676,7 +1085,284 @@
                         "actor_def": "actordef:actors/props/block_hyperbeam/charclasses/block_hyperbeam.bmsad"
                     },
                     "event_name": "s080_shipyard:default:block_hyperbeam_000",
-                    "connections": {}
+                    "connections": {
+                        "Next to Hyper Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -416.83,
+                        "y": -7355.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Escape Room 3",
+                        "node_name": "Dock to Entrance Tall Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Event - Breakable (block_pbtube)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Escape",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Under Tile Groups at room top": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Escape",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Under Tile Groups at room top": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3352.155887230514,
+                        "y": 2024.5992260917633,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Tile Group (SCREWATTACK)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SPEEDBOOST)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Next to Hyper Block": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5596.04754007739,
+                        "y": 2102.874516307352,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to collision_camera_006 (H)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Event - Breakable (block_hyperbeam_000)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Hyper",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Dock to Ship Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s080_shipyard:default:block_hyperbeam_000",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (SCREWATTACK)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SPEEDBOOST)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Inside breakable tube": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3182.5594250967383,
+                        "y": -949.8618021006077,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Navigation Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Dock to Escape Room 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Under Tile Groups at room top": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s080_shipyard:default:block_pbtube",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Ship Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6574.49,
+                        "y": 2220.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Ship Room",
+                        "node_name": "Dock to Entrance Tall Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Next to Hyper Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s080_shipyard:default:block_hyperbeam_000",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Ammo Recharge": {
                     "node_type": "generic",
@@ -693,7 +1379,15 @@
                         "start_point_actor_name": "ammorecharge_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -708,7 +1402,15 @@
                         "start_point_actor_name": "SP_AccessPoint_10",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Navigation Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK)": {
                     "node_type": "configurable_node",
@@ -726,7 +1428,28 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Event - Breakable (block_pbtube)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        "Next to Hyper Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside breakable tube": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s080_shipyard:default:block_pbtube",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SPEEDBOOST)": {
                     "node_type": "configurable_node",
@@ -744,12 +1467,33 @@
                             "SPEEDBOOST"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Event - Breakable (block_pbtube)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        "Next to Hyper Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Inside breakable tube": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s080_shipyard:default:block_pbtube",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_005 (H)": {
-            "default_node": "Start Point",
+        "Gold Chozo Warrior Arena": {
+            "default_node": "Gold Chozo Fight",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -779,7 +1523,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Dock to collision_camera_006 (H)": {
+                "Door to collision_camera_006 (H)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -799,13 +1543,21 @@
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "collision_camera_006 (H)",
-                        "node_name": "Dock to collision_camera_005 (H)"
+                        "node_name": "Door to Gold Chozo Warrior Arena"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
+                    "connections": {
+                        "Gold Chozo Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: fight requirements",
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to collision_camera_007 (H)": {
+                "Door to Transport to Itorash": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -824,14 +1576,22 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_007 (H)",
-                        "node_name": "Door to collision_camera_005 (H)"
+                        "area_name": "Transport to Itorash",
+                        "node_name": "Door to Gold Chozo Warrior Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Gold Chozo Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Start Point": {
+                "Gold Chozo Fight": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -844,7 +1604,22 @@
                         "start_point_actor_name": "SP_Checkpoint_Dead_CWX_Elite",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to collision_camera_006 (H)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Transport to Itorash": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -879,7 +1654,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Dock to collision_camera_004 (H)": {
+                "Door to Entrance Tall Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -898,14 +1673,50 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_004 (H)",
-                        "node_name": "Dock to collision_camera_006 (H)"
+                        "area_name": "Entrance Tall Room",
+                        "node_name": "Door to collision_camera_006 (H)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
+                    "connections": {
+                        "Event - Breakable (grapplepulloff1x2_001)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s080_shipyard:default:grapplepulloff1x2_001",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_005 (H)": {
+                "Door to Gold Chozo Warrior Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -924,12 +1735,20 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_005 (H)",
-                        "node_name": "Dock to collision_camera_006 (H)"
+                        "area_name": "Gold Chozo Warrior Arena",
+                        "node_name": "Door to collision_camera_006 (H)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Wave Beam Door",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (item_missiletank_000)": {
                     "node_type": "pickup",
@@ -946,7 +1765,17 @@
                     },
                     "pickup_index": 134,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (MISSILE)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Event - Breakable (grapplepulloff1x2_001)": {
                     "node_type": "event",
@@ -962,7 +1791,15 @@
                         "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
                     },
                     "event_name": "s080_shipyard:default:grapplepulloff1x2_001",
-                    "connections": {}
+                    "connections": {
+                        "Door to Entrance Tall Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -977,7 +1814,57 @@
                         "start_point_actor_name": "SP_Checkpoint_EliteChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Entrance Tall Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s080_shipyard:default:grapplepulloff1x2_001",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Gold Chozo Warrior Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Total Recharge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (MISSILE)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Total Recharge": {
                     "node_type": "generic",
@@ -994,7 +1881,15 @@
                         "start_point_actor_name": "weightactivatedplatform_total_001",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (MISSILE)": {
                     "node_type": "configurable_node",
@@ -1012,12 +1907,29 @@
                             "MISSILE"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (item_missiletank_000)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_007 (H)": {
-            "default_node": "Elevator (capsulelaunchershipyard_000)",
+        "Transport to Itorash": {
+            "default_node": "Elevator to Itorash - Main Room",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1047,7 +1959,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to collision_camera_005 (H)": {
+                "Door to Gold Chozo Warrior Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1066,14 +1978,22 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_005 (H)",
-                        "node_name": "Door to collision_camera_007 (H)"
+                        "area_name": "Gold Chozo Warrior Arena",
+                        "node_name": "Door to Transport to Itorash"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Itorash - Main Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Elevator (capsulelaunchershipyard_000)": {
+                "Elevator to Itorash - Main Room": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -1096,12 +2016,20 @@
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Gold Chozo Warrior Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_008 (H)": {
-            "default_node": "Start Point",
+        "Ship Room": {
+            "default_node": "Event - Ship",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1147,8 +2075,8 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Start Point": {
-                    "node_type": "generic",
+                "Event - Ship": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": {
                         "x": -12550.0,
@@ -1160,7 +2088,69 @@
                         "start_point_actor_name": "SP_Checkpoint_Endgame",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "event_name": "Ship",
+                    "connections": {
+                        "Dock to Entrance Tall Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Entrance Tall Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6574.49,
+                        "y": 2220.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Entrance Tall Room",
+                        "node_name": "Dock to Ship Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Event - Ship": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1203,7 +2193,7 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Door to collision_camera_003 (H)": {
+                "Door to Navigation Room (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1222,14 +2212,22 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_003 (H)",
+                        "area_name": "Navigation Room",
                         "node_name": "Door to collision_camera_009 (H)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_010 (H)": {
+                "Door to collision_camera_010 (H)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1249,11 +2247,19 @@
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "collision_camera_010 (H)",
-                        "node_name": "Dock to collision_camera_009 (H)"
+                        "node_name": "Door from collision_camera_009 (H)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Wave Beam Door",
+                    "connections": {
+                        "Start Point 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (item_powerbombtank_000)": {
                     "node_type": "pickup",
@@ -1270,7 +2276,17 @@
                     },
                     "pickup_index": 135,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB SPEEDBOOST)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Door from collision_camera_010 (H)": {
                     "node_type": "dock",
@@ -1296,9 +2312,24 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
-                    "connections": {}
+                    "connections": {
+                        "Start Point 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB SPEEDBOOST)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_003 (H)": {
+                "Door to Navigation Room (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1317,12 +2348,90 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_003 (H)",
+                        "area_name": "Navigation Room",
+                        "node_name": "Door from collision_camera_009 (H)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Wave Beam Door",
+                    "connections": {
+                        "Start Point 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Ferenia Shortcut": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2404.15,
+                        "y": -2129.79,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Ferenia Shortcut",
                         "node_name": "Dock to collision_camera_009 (H)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Start Point 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s080_shipyard:default:grapplepulloff1x2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Breakable (grapplepulloff1x2)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2450.0,
+                        "y": -2050.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "grapplepulloff1x2",
+                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
+                    },
+                    "event_name": "s080_shipyard:default:grapplepulloff1x2",
+                    "connections": {
+                        "Start Point 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point 1": {
                     "node_type": "generic",
@@ -1337,7 +2446,59 @@
                         "start_point_actor_name": "SP_Checkpoint_StrongReaction",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to collision_camera_010 (H)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Ferenia Shortcut": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s080_shipyard:default:grapplepulloff1x2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Breakable (grapplepulloff1x2)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Start Point 2": {
                     "node_type": "generic",
@@ -1352,7 +2513,22 @@
                         "start_point_actor_name": "SP_AccessPoint_10B",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door from collision_camera_010 (H)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Navigation Room (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB)": {
                     "node_type": "configurable_node",
@@ -1370,7 +2546,19 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Navigation Room (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point 1": {
+                            "type": "template",
+                            "data": "Can Slide"
+                        }
+                    }
                 },
                 "Tile Group (BOMB SPEEDBOOST)": {
                     "node_type": "configurable_node",
@@ -1389,7 +2577,24 @@
                             "SPEEDBOOST"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (item_powerbombtank_000)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door from collision_camera_010 (H)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1424,7 +2629,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Dock to collision_camera_009 (H)": {
+                "Door from collision_camera_009 (H)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1444,13 +2649,21 @@
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "collision_camera_009 (H)",
-                        "node_name": "Dock to collision_camera_010 (H)"
+                        "node_name": "Door to collision_camera_010 (H)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
+                    "connections": {
+                        "Dock to E.M.M.I. Zone Entrance (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_011 (H) (dooremmy_000)": {
+                "Dock to E.M.M.I. Zone Entrance (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1465,14 +2678,57 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_011 (H)",
+                        "area_name": "E.M.M.I. Zone Entrance",
                         "node_name": "Dock to collision_camera_010 (H) (dooremmy_000)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
-                    "connections": {}
+                    "connections": {
+                        "Door from collision_camera_009 (H)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Tile Group (BOMB)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_011 (H) (dooremmy_001)": {
+                "Dock to E.M.M.I. Zone Entrance (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1487,12 +2743,29 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_011 (H)",
+                        "area_name": "E.M.M.I. Zone Entrance",
                         "node_name": "Dock to collision_camera_010 (H) (dooremmy_001)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to collision_camera_009 (H)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Tile Group (POWERBOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to collision_camera_009 (H)": {
                     "node_type": "dock",
@@ -1518,7 +2791,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Dock to E.M.M.I. Zone Entrance (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB)": {
                     "node_type": "configurable_node",
@@ -1536,7 +2817,22 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to E.M.M.I. Zone Entrance (Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB)": {
                     "node_type": "configurable_node",
@@ -1554,11 +2850,26 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to E.M.M.I. Zone Entrance (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_011 (H)": {
+        "E.M.M.I. Zone Entrance": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -1605,11 +2916,19 @@
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "collision_camera_010 (H)",
-                        "node_name": "Dock to collision_camera_011 (H) (dooremmy_000)"
+                        "node_name": "Dock to E.M.M.I. Zone Entrance (Bottom)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Dock to collision_camera_010 (H) (dooremmy_001)": {
                     "node_type": "dock",
@@ -1627,13 +2946,21 @@
                     "destination": {
                         "world_name": "Hanubia",
                         "area_name": "collision_camera_010 (H)",
-                        "node_name": "Dock to collision_camera_011 (H) (dooremmy_001)"
+                        "node_name": "Dock to E.M.M.I. Zone Entrance (Top)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_014 (H)": {
+                "Door to Red E.M.M.I Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1652,12 +2979,76 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_014 (H)",
-                        "node_name": "Dock to collision_camera_011 (H)"
+                        "area_name": "Red E.M.M.I Arena",
+                        "node_name": "Door from E.M.M.I. Zone Entrance"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Wave Beam Door",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Central Unit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8409.07,
+                        "y": 284.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Central Unit Room",
+                        "node_name": "Dock to E.M.M.I. Zone Entrance"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (BOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6441.13,
+                        "y": -2392.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Escape Room 3",
+                        "node_name": "Dock to E.M.M.I. Zone Entrance"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Start Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -1672,7 +3063,33 @@
                         "start_point_actor_name": "SP_Checkpoint_PowerBomb",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_010 (H) (dooremmy_000)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Red E.M.M.I Arena": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Dock to Escape Room 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 1": {
                     "node_type": "configurable_node",
@@ -1690,7 +3107,22 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_010 (H) (dooremmy_001)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 2": {
                     "node_type": "configurable_node",
@@ -1708,11 +3140,26 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Central Unit Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_012 (H)": {
+        "Central Unit Room": {
             "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
@@ -1743,6 +3190,60 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
+                "Dock to collision_camera_013 (H)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10413.39,
+                        "y": -5.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "collision_camera_013 (H)",
+                        "node_name": "Dock to Central Unit Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to E.M.M.I. Zone Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8409.07,
+                        "y": 284.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "E.M.M.I. Zone Entrance",
+                        "node_name": "Dock to Central Unit Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
                 "Start Point": {
                     "node_type": "generic",
                     "heal": false,
@@ -1756,7 +3257,105 @@
                         "start_point_actor_name": "centralunitmagmacontroller_000",
                         "start_point_actor_def": "actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_013 (H)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to E.M.M.I. Zone Entrance": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1819,7 +3418,12 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
-                    "connections": {}
+                    "connections": {
+                        "Event - Breakable (block_pbtube_2)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        }
+                    }
                 },
                 "Dock to collision_camera_015 (H) (dooremmy_003)": {
                     "node_type": "dock",
@@ -1841,7 +3445,15 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
-                    "connections": {}
+                    "connections": {
+                        "Dock to Red E.M.M.I Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Breakable (block_pbtube_2)": {
                     "node_type": "event",
@@ -1857,11 +3469,77 @@
                         "actor_def": "actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad"
                     },
                     "event_name": "s080_shipyard:default:block_pbtube_2",
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_015 (H) (dooremmy_002)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Central Unit Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Central Unit Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10413.39,
+                        "y": -5.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Central Unit Room",
+                        "node_name": "Dock to collision_camera_013 (H)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Event - Breakable (block_pbtube_2)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        }
+                    }
+                },
+                "Dock to Red E.M.M.I Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10795.16,
+                        "y": -2147.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Red E.M.M.I Arena",
+                        "node_name": "Dock to collision_camera_013 (H)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Dock to collision_camera_015 (H) (dooremmy_003)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_014 (H)": {
+        "Red E.M.M.I Arena": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -1892,7 +3570,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Dock to collision_camera_011 (H)": {
+                "Door from E.M.M.I. Zone Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1911,12 +3589,90 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_011 (H)",
-                        "node_name": "Dock to collision_camera_014 (H)"
+                        "area_name": "E.M.M.I. Zone Entrance",
+                        "node_name": "Door to Red E.M.M.I Arena"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to collision_camera_013 (H)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10795.16,
+                        "y": -2147.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "collision_camera_013 (H)",
+                        "node_name": "Dock to Red E.M.M.I Arena"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Red Chozo Warrior Fight": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9407.94,
+                        "y": -2420.75,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "HanubiaRedChozo",
+                    "connections": {
+                        "Pickup (Red E.M.M.I.)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Red E.M.M.I.)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9913.64,
+                        "y": -2406.93,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 137,
+                    "major_location": true,
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -1931,7 +3687,33 @@
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door from E.M.M.I. Zone Entrance": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "HanubiaRedChozo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Dock to collision_camera_013 (H)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "HanubiaRedChozo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Red Chozo Warrior Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: fight requirements",
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1990,7 +3772,15 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Dock to collision_camera_013 (H) (dooremmy_003)": {
                     "node_type": "dock",
@@ -2012,7 +3802,49 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
-                    "connections": {}
+                    "connections": {
+                        "Total Recharge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13494.89,
+                        "y": -3894.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Escape Room 2",
+                        "node_name": "Dock to collision_camera_015 (H)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (POWERBOMB) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Total Recharge": {
                     "node_type": "generic",
@@ -2029,7 +3861,15 @@
                         "start_point_actor_name": "weightactivatedplatform_total_000",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_013 (H) (dooremmy_003)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 1": {
                     "node_type": "configurable_node",
@@ -2047,7 +3887,33 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_013 (H) (dooremmy_003)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 2": {
                     "node_type": "configurable_node",
@@ -2065,7 +3931,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_013 (H) (dooremmy_002)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 3": {
                     "node_type": "configurable_node",
@@ -2083,11 +3964,28 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Escape Room 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Escape",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_016 (H)": {
+        "Escape Room 3": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2142,6 +4040,60 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
+                "Dock to E.M.M.I. Zone Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6441.13,
+                        "y": -2392.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "E.M.M.I. Zone Entrance",
+                        "node_name": "Dock to Escape Room 3"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Entrance Tall Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -416.83,
+                        "y": -7355.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Entrance Tall Room",
+                        "node_name": "Dock to Escape Room 3"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 8": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
                 "Tile Group (POWERBOMB) 1": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -2158,7 +4110,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to E.M.M.I. Zone Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 2": {
                     "node_type": "configurable_node",
@@ -2176,7 +4143,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 3": {
                     "node_type": "configurable_node",
@@ -2194,7 +4176,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 1": {
                     "node_type": "configurable_node",
@@ -2212,7 +4209,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 4": {
                     "node_type": "configurable_node",
@@ -2230,7 +4242,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 2": {
                     "node_type": "configurable_node",
@@ -2248,7 +4275,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 5": {
                     "node_type": "configurable_node",
@@ -2266,7 +4308,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 3": {
                     "node_type": "configurable_node",
@@ -2284,7 +4341,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 6": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 6": {
                     "node_type": "configurable_node",
@@ -2302,7 +4374,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 4": {
                     "node_type": "configurable_node",
@@ -2320,7 +4407,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 6": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 5": {
                     "node_type": "configurable_node",
@@ -2338,7 +4440,21 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 4": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Space",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 6": {
+                            "type": "template",
+                            "data": "Use Spin Boost"
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 6": {
                     "node_type": "configurable_node",
@@ -2356,7 +4472,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 7": {
                     "node_type": "configurable_node",
@@ -2374,7 +4505,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 6": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT)": {
                     "node_type": "generic",
@@ -2410,7 +4556,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 8": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 8": {
                     "node_type": "configurable_node",
@@ -2428,7 +4589,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Entrance Tall Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 7": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK WEIGHT)": {
                     "node_type": "generic",
@@ -2451,7 +4627,7 @@
                 }
             }
         },
-        "collision_camera_018 (H)": {
+        "Escape Room 2": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2482,6 +4658,60 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
+                "Dock to Escape Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13471.89,
+                        "y": -5584.52,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Escape Room 1",
+                        "node_name": "Dock to Escape Room 2"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to collision_camera_015 (H)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13494.89,
+                        "y": -3894.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "collision_camera_015 (H)",
+                        "node_name": "Dock to Escape Room 2"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (POWERBOMB) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
                 "Tile Group (POWERBOMB) 1": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -2498,7 +4728,19 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Escape Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 1": {
+                            "type": "template",
+                            "data": "Use Spin Boost"
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 1": {
                     "node_type": "configurable_node",
@@ -2516,7 +4758,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 2": {
                     "node_type": "configurable_node",
@@ -2534,7 +4791,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 2": {
                     "node_type": "configurable_node",
@@ -2552,7 +4824,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 3": {
                     "node_type": "configurable_node",
@@ -2570,7 +4857,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 3": {
                     "node_type": "configurable_node",
@@ -2588,11 +4890,26 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to collision_camera_015 (H)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_019 (H)": {
+        "Escape Room 1": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2623,6 +4940,60 @@
                 "asset_id": "collision_camera_019"
             },
             "nodes": {
+                "Dock to Raven Beak X Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15379.89,
+                        "y": -5314.41,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Raven Beak X Arena",
+                        "node_name": "Dock to Escape Room 1"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (SCREWATTACK)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 13471.89,
+                        "y": -5584.52,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Escape Room 2",
+                        "node_name": "Dock to Escape Room 1"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
                 "Tile Group (SCREWATTACK)": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -2639,7 +5010,22 @@
                             "SCREWATTACK"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Raven Beak X Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 1": {
                     "node_type": "configurable_node",
@@ -2657,7 +5043,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SCREWATTACK)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 2": {
                     "node_type": "configurable_node",
@@ -2675,7 +5076,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Escape Room 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2718,8 +5134,8 @@
                 "asset_id": "collision_camera_020"
             },
             "nodes": {
-                "Escape Checkpoint": {
-                    "node_type": "generic",
+                "Event - Escape Squence": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": {
                         "x": 13500.0,
@@ -2731,12 +5147,32 @@
                         "start_point_actor_name": "SP_Checkpoint_Escape",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "event_name": "Escape",
                     "connections": {
-                        "Raven Beak X Checkpoint": {
-                            "type": "and",
+                        "Tile Group (POWERBOMB)": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2755,7 +5191,34 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Escape Checkpoint": {
+                        "Event - Escape Squence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Escape Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15379.89,
+                        "y": -5314.41,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Escape Room 1",
+                        "node_name": "Dock to Raven Beak X Arena"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (POWERBOMB)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2780,7 +5243,22 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Event - Escape Squence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Escape Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
