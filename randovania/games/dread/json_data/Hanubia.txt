@@ -1,18 +1,20 @@
 ----------------
-collision_camera_000 (H)
+Transport to Ferenia
 Extra - total_boundings: {'x1': 2400.0, 'x2': 4500.0, 'y1': -3700.0, 'y2': -2558.0}
 Extra - polygon: [[4500.0, -2558.0], [2400.0, -2558.0], [2400.0, -3700.0], [4500.0, -3700.0]]
 Extra - asset_id: collision_camera_000
-> Door to collision_camera_002 (H); Heals? False
-  * Power Beam Door to collision_camera_002 (H)/Door to collision_camera_000 (H)
+> Door to Ferenia Shortcut; Heals? False
+  * Power Beam Door to Ferenia Shortcut/Door to Transport to Ferenia
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Elevator to Ferenia - Transport to Hanubia
+      Trivial
 
-> Elevator (elevator_sanctuary_000); Heals? False; Spawn Point
+> Elevator to Ferenia - Transport to Hanubia; Heals? False; Spawn Point
   * Teleporter to Ferenia - collision_camera_028 (F)
   * Extra - actor_name: elevator_sanctuary_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
@@ -20,24 +22,32 @@ Extra - asset_id: collision_camera_000
   * Extra - target_spawn_point: elevator_shipyard_000_platform
   * Extra - start_point_actor_name: elevator_sanctuary_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  > Door to Ferenia Shortcut
+      Trivial
 
 ----------------
-collision_camera_001 (H)
+Transport to Ghavoran
 Extra - total_boundings: {'x1': -14600.0, 'x2': -6400.0, 'y1': -1300.0, 'y2': 800.0}
 Extra - polygon: [[-6400.0, 800.0], [-14600.0, 800.0], [-14600.0, -1300.0], [-6400.0, -1300.0]]
 Extra - asset_id: collision_camera_001
-> Door to collision_camera_004 (H); Heals? False
-  * Power Beam Door to collision_camera_004 (H)/Door to collision_camera_001 (H)
+> Door to Entrance Tall Room; Heals? False
+  * Power Beam Door to Entrance Tall Room/Door to Transport to Ghavoran
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: StartPoint0
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Entrance Tall Room
+      Trivial
+  > Elevator (wagontrain_forest_000)
+      Trivial
 
 > Elevator (wagontrain_forest_000); Heals? False
   * Teleporter to Ghavoran - collision_camera_034 (G)
@@ -47,266 +57,437 @@ Extra - asset_id: collision_camera_001
   * Extra - target_spawn_point: wagontrain_shipyard_000_platform
   * Extra - start_point_actor_name: wagontrain_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+  > Start Point
+      Trivial
 
 ----------------
-collision_camera_002 (H)
+Ferenia Shortcut
 Extra - total_boundings: {'x1': -800.0, 'x2': 2500.0, 'y1': -3700.0, 'y2': -1500.0}
 Extra - polygon: [[2500.0, -1500.0], [-800.0, -1500.0], [-800.0, -3700.0], [2500.0, -3700.0]]
 Extra - asset_id: collision_camera_002
-> Door to collision_camera_000 (H); Heals? False
-  * Power Beam Door to collision_camera_000 (H)/Door to collision_camera_002 (H)
+> Door to Transport to Ferenia; Heals? False
+  * Power Beam Door to Transport to Ferenia/Door to Ferenia Shortcut
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Event - Breakable (grapplepulloff1x2_000)
+      Grapple Beam
+  > Tile Group (BOMB) 1
+      Trivial
+  > Tile Group (SCREWATTACK) 2
+      Morph Ball and After Hanubia - grapplepulloff1x2_000
 
 > Pickup (item_missiletank); Heals? False
   * Pickup 136; Major Location? False
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (SCREWATTACK) 1
+      Trivial
+  > Tile Group (BOMB) 2
+      Morph Ball
+
+> Dock to collision_camera_009 (H); Heals? False
+  * Morph Ball Tunnel to collision_camera_009 (H)/Dock to Ferenia Shortcut
+  > Tile Group (SCREWATTACK) 2
+      Trivial
+  > Tile Group (BOMB) 4
+      Trivial
 
 > Event - Breakable (grapplepulloff1x2_000); Heals? False
   * Event Hanubia - grapplepulloff1x2_000
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Door to Transport to Ferenia
+      Trivial
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_040
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (SCREWATTACK) 1
+      Morph Ball
+  > Tile Group (BOMB) 3
+      Morph Ball
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_039
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
+  > Door to Transport to Ferenia
+      Trivial
+  > Tile Group (BOMB) 3
+      Morph Ball
 
 > Tile Group (SCREWATTACK) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_041
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Pickup (item_missiletank)
+      Morph Ball
+  > Tile Group (POWERBEAM)
+      Morph Ball
+  > Tile Group (BOMB) 2
+      Morph Ball
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_042
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
+  > Pickup (item_missiletank)
+      Morph Ball
+  > Tile Group (SCREWATTACK) 1
+      Morph Ball
+  > Tile Group (BOMB) 4
+      Morph Ball
 
 > Tile Group (SCREWATTACK) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_043
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Door to Transport to Ferenia
+      Morph Ball and After Hanubia - grapplepulloff1x2_000
+  > Dock to collision_camera_009 (H)
+      Trivial
 
 > Tile Group (BOMB) 3; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_036
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (POWERBEAM)
+      Morph Ball
+  > Tile Group (BOMB) 1
+      Morph Ball
 
 > Tile Group (BOMB) 4; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_038
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
+  > Dock to collision_camera_009 (H)
+      Morph Ball
+  > Tile Group (BOMB) 2
+      Morph Ball
 
 ----------------
-collision_camera_003 (H)
+Navigation Room
 Extra - total_boundings: {'x1': -500.0, 'x2': 1600.0, 'y1': -1100.0, 'y2': 42.0}
 Extra - polygon: [[1600.0, 42.0], [-500.0, 42.0], [-500.0, -1100.0], [1600.0, -1100.0]]
 Extra - asset_id: collision_camera_003
-> Door to collision_camera_004 (H); Heals? False
-  * Power Beam Door to collision_camera_004 (H)/Door to collision_camera_003 (H)
+> Door to Entrance Tall Room; Heals? False
+  * Power Beam Door to Entrance Tall Room/Door to Navigation Room
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Navigation Room
+      Trivial
 
 > Door to collision_camera_009 (H); Heals? False
-  * Power Beam Door to collision_camera_009 (H)/Door to collision_camera_003 (H)
+  * Power Beam Door to collision_camera_009 (H)/Door to Navigation Room (Bottom)
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Navigation Room
+      Trivial
 
-> Dock to collision_camera_009 (H); Heals? False
-  * Not Determined to collision_camera_009 (H)/Dock to collision_camera_003 (H)
+> Door from collision_camera_009 (H); Heals? False
+  * Access Closed to collision_camera_009 (H)/Door to Navigation Room (Top)
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  > Navigation Room
+      Trivial
 
 > Navigation Room; Heals? False; Spawn Point
   * Extra - actor_name: accesspoint_000
   * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_access_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
+  > Door to Entrance Tall Room
+      Trivial
+  > Door to collision_camera_009 (H)
+      Trivial
+  > Door from collision_camera_009 (H)
+      Trivial
 
 ----------------
-collision_camera_004 (H)
+Entrance Tall Room
 Extra - total_boundings: {'x1': -6500.0, 'x2': -400.0, 'y1': -7600.0, 'y2': 4200.0}
 Extra - polygon: [[-400.0, 4200.0], [-6500.0, 4200.0], [-6500.0, -7600.0], [-400.0, -7600.0]]
 Extra - asset_id: collision_camera_004
-> Door to collision_camera_001 (H); Heals? False
-  * Power Beam Door to collision_camera_001 (H)/Door to collision_camera_004 (H)
+> Door to Transport to Ghavoran; Heals? False
+  * Power Beam Door to Transport to Ghavoran/Door to Entrance Tall Room
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Navigation Room
+      Trivial
 
-> Door to collision_camera_003 (H); Heals? False
-  * Power Beam Door to collision_camera_003 (H)/Door to collision_camera_004 (H)
+> Door to Navigation Room; Heals? False
+  * Power Beam Door to Navigation Room/Door to Entrance Tall Room
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Transport to Ghavoran
+      Trivial
+  > Event - Breakable (block_pbtube)
+      Lay Power Bomb
+  > Ammo Recharge
+      Trivial
+  > Start Point
+      Trivial
 
-> Dock to collision_camera_006 (H); Heals? False
-  * Not Determined to collision_camera_006 (H)/Dock to collision_camera_004 (H)
+> Door to collision_camera_006 (H); Heals? False
+  * Wave Beam Door to collision_camera_006 (H)/Door to Entrance Tall Room
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Next to Hyper Block
+      Trivial
 
 > Event - Breakable (block_pbtube); Heals? False
   * Event Hanubia - block_pbtube
   * Extra - actor_name: block_pbtube
   * Extra - actor_def: actordef:actors/props/block_pbtube_001/charclasses/block_pbtube_001.bmsad
+  > Inside breakable tube
+      Trivial
 
 > Event - Breakable (block_hyperbeam_000); Heals? False
   * Event Hanubia - block_hyperbeam_000
   * Extra - actor_name: block_hyperbeam_000
   * Extra - actor_def: actordef:actors/props/block_hyperbeam/charclasses/block_hyperbeam.bmsad
+  > Next to Hyper Block
+      Trivial
+
+> Dock to Escape Room 3; Heals? False
+  * Open Passage to Escape Room 3/Dock to Entrance Tall Room
+  > Event - Breakable (block_pbtube)
+      Space Jump and After Escape Sequence and Lay Bomb
+  > Under Tile Groups at room top
+      Space Jump and Speed Booster and After Escape Sequence
+
+> Under Tile Groups at room top; Heals? False
+  > Tile Group (SCREWATTACK)
+      Trivial
+  > Tile Group (SPEEDBOOST)
+      Trivial
+
+> Next to Hyper Block; Heals? False
+  > Door to collision_camera_006 (H)
+      Before Escape Sequence
+  > Event - Breakable (block_hyperbeam_000)
+      Hyper Beam
+  > Dock to Ship Room
+      After Hanubia - block_hyperbeam_000
+  > Tile Group (SCREWATTACK)
+      Trivial
+  > Tile Group (SPEEDBOOST)
+      Trivial
+
+> Inside breakable tube; Heals? False
+  > Door to Navigation Room
+      Before Escape Sequence
+  > Dock to Escape Room 3
+      After Escape Sequence
+  > Under Tile Groups at room top
+      All of the following:
+          After Hanubia - block_pbtube
+          Space Jump or Speed Booster
+
+> Dock to Ship Room; Heals? False
+  * Open Passage to Ship Room/Dock to Entrance Tall Room
+  > Next to Hyper Block
+      After Hanubia - block_hyperbeam_000
 
 > Ammo Recharge; Heals? False
   * Extra - actor_name: ammorecharge_000
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: ammorecharge_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
+  > Door to Navigation Room
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_10
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Navigation Room
+      Trivial
 
 > Tile Group (SCREWATTACK); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_031
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Event - Breakable (block_pbtube)
+      Lay Power Bomb
+  > Next to Hyper Block
+      Trivial
+  > Inside breakable tube
+      After Hanubia - block_pbtube
 
 > Tile Group (SPEEDBOOST); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_032
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Event - Breakable (block_pbtube)
+      Lay Power Bomb
+  > Next to Hyper Block
+      Trivial
+  > Inside breakable tube
+      After Hanubia - block_pbtube
 
 ----------------
-collision_camera_005 (H)
+Gold Chozo Warrior Arena
 Extra - total_boundings: {'x1': 3900.0, 'x2': 6300.0, 'y1': 3169.77001953125, 'y2': 4311.77001953125}
 Extra - polygon: [[6300.0, 4311.77001953125], [3900.0, 4311.77001953125], [3900.0, 3169.77001953125], [6300.0, 3169.77001953125]]
 Extra - asset_id: collision_camera_005
-> Dock to collision_camera_006 (H); Heals? False
-  * Not Determined to collision_camera_006 (H)/Dock to collision_camera_005 (H)
+> Door to collision_camera_006 (H); Heals? False
+  * Power Beam Door to collision_camera_006 (H)/Door to Gold Chozo Warrior Arena
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Gold Chozo Fight
+      Trivial
 
-> Door to collision_camera_007 (H); Heals? False
-  * Power Beam Door to collision_camera_007 (H)/Door to collision_camera_005 (H)
+> Door to Transport to Itorash; Heals? False
+  * Power Beam Door to Transport to Itorash/Door to Gold Chozo Warrior Arena
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Gold Chozo Fight
+      Trivial
 
-> Start Point; Heals? False; Spawn Point
+> Gold Chozo Fight; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_CWX_Elite
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to collision_camera_006 (H)
+      Trivial
+  > Door to Transport to Itorash
+      Trivial
 
 ----------------
 collision_camera_006 (H)
 Extra - total_boundings: {'x1': -500.0, 'x2': 4000.0, 'y1': 1500.0, 'y2': 5100.0}
 Extra - polygon: [[4000.0, 5100.0], [-500.0, 5100.0], [-500.0, 1500.0], [4000.0, 1500.0]]
 Extra - asset_id: collision_camera_006
-> Dock to collision_camera_004 (H); Heals? False
-  * Not Determined to collision_camera_004 (H)/Dock to collision_camera_006 (H)
+> Door to Entrance Tall Room; Heals? False
+  * Power Beam Door to Entrance Tall Room/Door to collision_camera_006 (H)
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Event - Breakable (grapplepulloff1x2_001)
+      Grapple Beam
+  > Start Point
+      Morph Ball and After Hanubia - grapplepulloff1x2_001
 
-> Dock to collision_camera_005 (H); Heals? False
-  * Not Determined to collision_camera_005 (H)/Dock to collision_camera_006 (H)
+> Door to Gold Chozo Warrior Arena; Heals? False
+  * Wave Beam Door to Gold Chozo Warrior Arena/Door to collision_camera_006 (H)
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point
+      Trivial
 
 > Pickup (item_missiletank_000); Heals? False
   * Pickup 134; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (MISSILE)
+      Morph Ball
 
 > Event - Breakable (grapplepulloff1x2_001); Heals? False
   * Event Hanubia - grapplepulloff1x2_001
   * Extra - actor_name: grapplepulloff1x2_001
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Door to Entrance Tall Room
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_EliteChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Entrance Tall Room
+      Morph Ball and After Hanubia - grapplepulloff1x2_001
+  > Door to Gold Chozo Warrior Arena
+      Trivial
+  > Total Recharge
+      Trivial
+  > Tile Group (MISSILE)
+      Morph Ball
 
 > Total Recharge; Heals? True
   * Extra - actor_name: totalrechargestation_001
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total_001
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  > Start Point
+      Trivial
 
 > Tile Group (MISSILE); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_049
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('MISSILE',)
+  > Pickup (item_missiletank_000)
+      Morph Ball
+  > Start Point
+      Trivial
 
 ----------------
-collision_camera_007 (H)
+Transport to Itorash
 Extra - total_boundings: {'x1': 6200.0, 'x2': 8300.0, 'y1': 3100.0, 'y2': 4242.0}
 Extra - polygon: [[8300.0, 4242.0], [6200.0, 4242.0], [6200.0, 3100.0], [8300.0, 3100.0]]
 Extra - asset_id: collision_camera_007
-> Door to collision_camera_005 (H); Heals? False
-  * Power Beam Door to collision_camera_005 (H)/Door to collision_camera_007 (H)
+> Door to Gold Chozo Warrior Arena; Heals? False
+  * Power Beam Door to Gold Chozo Warrior Arena/Door to Transport to Itorash
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Elevator to Itorash - Main Room
+      Trivial
 
-> Elevator (capsulelaunchershipyard_000); Heals? False; Spawn Point
+> Elevator to Itorash - Main Room; Heals? False; Spawn Point
   * Teleporter to Itorash - Main Room
   * Extra - actor_name: capsulelaunchershipyard_000
   * Extra - actor_def: actordef:actors/props/capsulelaunchershipyard/charclasses/capsulelaunchershipyard.bmsad
@@ -314,43 +495,61 @@ Extra - asset_id: collision_camera_007
   * Extra - target_spawn_point: elevator_shipyard_000_platform
   * Extra - start_point_actor_name: elevator_skybase_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  > Door to Gold Chozo Warrior Arena
+      Trivial
 
 ----------------
-collision_camera_008 (H)
+Ship Room
 Extra - total_boundings: {'x1': -19100.0, 'x2': -6400.0, 'y1': 1700.0, 'y2': 9000.0}
 Extra - polygon: [[-7600.0, 9000.0], [-19100.0, 9000.0], [-19100.0, 6400.0], [-12100.0, 5300.0], [-12100.0, 1700.0], [-6400.0, 1700.0], [-6400.0, 4300.0], [-7600.0, 4900.0]]
 Extra - asset_id: collision_camera_008
-> Start Point; Heals? False; Spawn Point
+> Event - Ship; Heals? False; Spawn Point
+  * Event Ship
   * Extra - start_point_actor_name: SP_Checkpoint_Endgame
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to Entrance Tall Room
+      Trivial
+
+> Dock to Entrance Tall Room; Heals? False
+  * Open Passage to Entrance Tall Room/Dock to Ship Room
+  > Event - Ship
+      Any of the following:
+          Use Spin Boost
+          Infinite Bomb Jump (Beginner) and Lay Bomb
 
 ----------------
 collision_camera_009 (H)
 Extra - total_boundings: {'x1': 1500.0, 'x2': 4500.0, 'y1': -2300.0, 'y2': 600.0}
 Extra - polygon: [[4500.0, 600.0], [1500.0, 600.0], [1500.0, -1350.0], [2400.0, -1650.0], [2400.0, -2300.0], [4500.0, -2300.0]]
 Extra - asset_id: collision_camera_009
-> Door to collision_camera_003 (H); Heals? False
-  * Power Beam Door to collision_camera_003 (H)/Door to collision_camera_009 (H)
+> Door to Navigation Room (Bottom); Heals? False
+  * Power Beam Door to Navigation Room/Door to collision_camera_009 (H)
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tile Group (BOMB)
+      Trivial
 
-> Dock to collision_camera_010 (H); Heals? False
-  * Not Determined to collision_camera_010 (H)/Dock to collision_camera_009 (H)
+> Door to collision_camera_010 (H); Heals? False
+  * Wave Beam Door to collision_camera_010 (H)/Door from collision_camera_009 (H)
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 1
+      Trivial
 
 > Pickup (item_powerbombtank_000); Heals? False
   * Pickup 135; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  > Tile Group (BOMB SPEEDBOOST)
+      Morph Ball
 
 > Door from collision_camera_010 (H); Heals? False
   * Access Closed to collision_camera_010 (H)/Door to collision_camera_009 (H)
@@ -360,59 +559,109 @@ Extra - asset_id: collision_camera_009
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 2
+      Trivial
+  > Tile Group (BOMB SPEEDBOOST)
+      Trivial
 
-> Dock to collision_camera_003 (H); Heals? False
-  * Not Determined to collision_camera_003 (H)/Dock to collision_camera_009 (H)
+> Door to Navigation Room (Top); Heals? False
+  * Wave Beam Door to Navigation Room/Door from collision_camera_009 (H)
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  > Start Point 2
+      Trivial
+
+> Dock to Ferenia Shortcut; Heals? False
+  * Morph Ball Tunnel to Ferenia Shortcut/Dock to collision_camera_009 (H)
+  > Start Point 1
+      Morph Ball and After Hanubia - grapplepulloff1x2
+
+> Event - Breakable (grapplepulloff1x2); Heals? False
+  * Event Hanubia - grapplepulloff1x2
+  * Extra - actor_name: grapplepulloff1x2
+  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Start Point 1
+      Trivial
 
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_StrongReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to collision_camera_010 (H)
+      Trivial
+  > Dock to Ferenia Shortcut
+      Morph Ball and After Hanubia - grapplepulloff1x2
+  > Event - Breakable (grapplepulloff1x2)
+      Grapple Beam
+  > Tile Group (BOMB)
+      Morph Ball
 
 > Start Point 2; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_10B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door from collision_camera_010 (H)
+      Trivial
+  > Door to Navigation Room (Top)
+      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
+  > Door to Navigation Room (Bottom)
+      Trivial
+  > Start Point 1
+      Can Slide
 
 > Tile Group (BOMB SPEEDBOOST); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_046
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB', 'SPEEDBOOST')
+  > Pickup (item_powerbombtank_000)
+      Morph Ball
+  > Door from collision_camera_010 (H)
+      Trivial
 
 ----------------
 collision_camera_010 (H)
 Extra - total_boundings: {'x1': 4400.0, 'x2': 6500.0, 'y1': -1800.0, 'y2': 600.0}
 Extra - polygon: [[6500.0, 600.0], [4400.0, 600.0], [4400.0, -1800.0], [6500.0, -1800.0]]
 Extra - asset_id: collision_camera_010
-> Dock to collision_camera_009 (H); Heals? False
-  * Not Determined to collision_camera_009 (H)/Dock to collision_camera_010 (H)
+> Door from collision_camera_009 (H); Heals? False
+  * Access Closed to collision_camera_009 (H)/Door to collision_camera_010 (H)
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to E.M.M.I. Zone Entrance (Bottom)
+      Trivial
 
-> Dock to collision_camera_011 (H) (dooremmy_000); Heals? False
-  * EMMI Door to collision_camera_011 (H)/Dock to collision_camera_010 (H) (dooremmy_000)
+> Dock to E.M.M.I. Zone Entrance (Bottom); Heals? False
+  * EMMI Door to E.M.M.I. Zone Entrance/Dock to collision_camera_010 (H) (dooremmy_000)
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door from collision_camera_009 (H)
+      Before Escape Sequence
+  > Tile Group (BOMB)
+      Any of the following:
+          Use Spin Boost
+          Infinite Bomb Jump (Beginner) and Lay Bomb
 
-> Dock to collision_camera_011 (H) (dooremmy_001); Heals? False
-  * EMMI Door to collision_camera_011 (H)/Dock to collision_camera_010 (H) (dooremmy_001)
+> Dock to E.M.M.I. Zone Entrance (Top); Heals? False
+  * EMMI Door to E.M.M.I. Zone Entrance/Dock to collision_camera_010 (H) (dooremmy_001)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to collision_camera_009 (H)
+      Before Escape Sequence
+  > Tile Group (POWERBOMB)
+      Trivial
 
 > Door to collision_camera_009 (H); Heals? False
   * Power Beam Door to collision_camera_009 (H)/Door from collision_camera_010 (H)
@@ -422,67 +671,126 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to E.M.M.I. Zone Entrance (Top)
+      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_033
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
+  > Dock to E.M.M.I. Zone Entrance (Bottom)
+      Trivial
+  > Tile Group (POWERBOMB)
+      Trivial
 
 > Tile Group (POWERBOMB); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_045
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to E.M.M.I. Zone Entrance (Top)
+      Trivial
+  > Tile Group (BOMB)
+      Trivial
 
 ----------------
-collision_camera_011 (H)
+E.M.M.I. Zone Entrance
 Extra - total_boundings: {'x1': 6400.0, 'x2': 8500.0, 'y1': -2800.0, 'y2': 650.0}
 Extra - polygon: [[8500.0, 650.0], [6400.0, 650.0], [6400.0, -2800.0], [8500.0, -2800.0]]
 Extra - asset_id: collision_camera_011
 > Dock to collision_camera_010 (H) (dooremmy_000); Heals? False
-  * EMMI Door to collision_camera_010 (H)/Dock to collision_camera_011 (H) (dooremmy_000)
+  * EMMI Door to collision_camera_010 (H)/Dock to E.M.M.I. Zone Entrance (Bottom)
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Start Point
+      Trivial
 
 > Dock to collision_camera_010 (H) (dooremmy_001); Heals? False
-  * EMMI Door to collision_camera_010 (H)/Dock to collision_camera_011 (H) (dooremmy_001)
+  * EMMI Door to collision_camera_010 (H)/Dock to E.M.M.I. Zone Entrance (Top)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Tile Group (BOMB) 1
+      Trivial
 
-> Dock to collision_camera_014 (H); Heals? False
-  * Not Determined to collision_camera_014 (H)/Dock to collision_camera_011 (H)
+> Door to Red E.M.M.I Arena; Heals? False
+  * Wave Beam Door to Red E.M.M.I Arena/Door from E.M.M.I. Zone Entrance
   * Extra - actor_name: doorpowerclosed_001
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point
+      Trivial
+
+> Dock to Central Unit Room; Heals? False
+  * Morph Ball Tunnel to Central Unit Room/Dock to E.M.M.I. Zone Entrance
+  > Tile Group (BOMB) 2
+      Trivial
+
+> Dock to Escape Room 3; Heals? False
+  * Open Passage to Escape Room 3/Dock to E.M.M.I. Zone Entrance
+  > Start Point
+      After Escape Sequence
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_PowerBomb
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to collision_camera_010 (H) (dooremmy_000)
+      Trivial
+  > Door to Red E.M.M.I Arena
+      Before Escape Sequence
+  > Dock to Escape Room 3
+      After Escape Sequence
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_047
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
+  > Dock to collision_camera_010 (H) (dooremmy_001)
+      Trivial
+  > Tile Group (BOMB) 2
+      Trivial
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
+  > Dock to Central Unit Room
+      Trivial
+  > Tile Group (BOMB) 1
+      Trivial
 
 ----------------
-collision_camera_012 (H)
+Central Unit Room
 Extra - total_boundings: {'x1': 8400.0, 'x2': 10500.0, 'y1': -900.0, 'y2': 650.0}
 Extra - polygon: [[10500.0, 650.0], [8400.0, 650.0], [8400.0, -900.0], [10500.0, -900.0]]
 Extra - asset_id: collision_camera_012
+> Dock to collision_camera_013 (H); Heals? False
+  * Morph Ball Tunnel to collision_camera_013 (H)/Dock to Central Unit Room
+  > Start Point
+      Trivial
+
+> Dock to E.M.M.I. Zone Entrance; Heals? False
+  * Morph Ball Tunnel to E.M.M.I. Zone Entrance/Dock to Central Unit Room
+  > Start Point
+      Trivial
+
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: centralunitmagmacontroller_000
   * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
+  > Dock to collision_camera_013 (H)
+      Any of the following:
+          Use Spin Boost
+          Infinite Bomb Jump (Beginner) and Lay Bomb
+  > Dock to E.M.M.I. Zone Entrance
+      Any of the following:
+          Space Jump
+          Speed Booster and Speedbooster Conservation (Beginner)
+          Infinite Bomb Jump (Beginner) and Lay Bomb
 
 ----------------
 collision_camera_013 (H)
@@ -493,34 +801,75 @@ Extra - asset_id: collision_camera_013
   * EMMI Door to collision_camera_015 (H)/Dock to collision_camera_013 (H) (dooremmy_002)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Event - Breakable (block_pbtube_2)
+      Lay Power Bomb
 
 > Dock to collision_camera_015 (H) (dooremmy_003); Heals? False
   * EMMI Door to collision_camera_015 (H)/Dock to collision_camera_013 (H) (dooremmy_003)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to Red E.M.M.I Arena
+      Trivial
 
 > Event - Breakable (block_pbtube_2); Heals? False
   * Event Hanubia - block_pbtube_2
   * Extra - actor_name: block_pbtube_2
   * Extra - actor_def: actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad
+  > Dock to collision_camera_015 (H) (dooremmy_002)
+      Trivial
+  > Dock to Central Unit Room
+      Trivial
+
+> Dock to Central Unit Room; Heals? False
+  * Morph Ball Tunnel to Central Unit Room/Dock to collision_camera_013 (H)
+  > Event - Breakable (block_pbtube_2)
+      Lay Power Bomb
+
+> Dock to Red E.M.M.I Arena; Heals? False
+  * Morph Ball Tunnel to Red E.M.M.I Arena/Dock to collision_camera_013 (H)
+  > Dock to collision_camera_015 (H) (dooremmy_003)
+      Trivial
 
 ----------------
-collision_camera_014 (H)
+Red E.M.M.I Arena
 Extra - total_boundings: {'x1': 8400.0, 'x2': 10800.0, 'y1': -2628.360107421875, 'y2': -1486.3599853515625}
 Extra - polygon: [[10800.0, -1486.3599853515625], [8400.0, -1486.3599853515625], [8400.0, -2628.360107421875], [10800.0, -2628.360107421875]]
 Extra - asset_id: collision_camera_014
-> Dock to collision_camera_011 (H); Heals? False
-  * Not Determined to collision_camera_011 (H)/Dock to collision_camera_014 (H)
+> Door from E.M.M.I. Zone Entrance; Heals? False
+  * Access Closed to E.M.M.I. Zone Entrance/Door to Red E.M.M.I Arena
   * Extra - actor_name: doorpowerclosed_001
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point
+      Trivial
+
+> Dock to collision_camera_013 (H); Heals? False
+  * Morph Ball Tunnel to collision_camera_013 (H)/Dock to Red E.M.M.I Arena
+  > Start Point
+      Trivial
+
+> Event - Red Chozo Warrior Fight; Heals? False
+  * Event Hanubia Red Chozo Fight
+  > Pickup (Red E.M.M.I.)
+      Trivial
+
+> Pickup (Red E.M.M.I.); Heals? False
+  * Pickup 137; Major Location? True
+  > Start Point
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door from E.M.M.I. Zone Entrance
+      After Hanubia Red Chozo Fight
+  > Dock to collision_camera_013 (H)
+      After Hanubia Red Chozo Fight
+  > Event - Red Chozo Warrior Fight
+      Trivial
 
 ----------------
 collision_camera_015 (H)
@@ -531,118 +880,207 @@ Extra - asset_id: collision_camera_015
   * EMMI Door to collision_camera_013 (H)/Dock to collision_camera_015 (H) (dooremmy_002)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Tile Group (POWERBOMB) 2
+      Trivial
 
 > Dock to collision_camera_013 (H) (dooremmy_003); Heals? False
   * EMMI Door to collision_camera_013 (H)/Dock to collision_camera_015 (H) (dooremmy_003)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Total Recharge
+      Trivial
+  > Tile Group (POWERBOMB) 1
+      Trivial
+
+> Dock to Escape Room 2; Heals? False
+  * Open Passage to Escape Room 2/Dock to collision_camera_015 (H)
+  > Tile Group (POWERBOMB) 3
+      Trivial
 
 > Total Recharge; Heals? True; Spawn Point
   * Extra - actor_name: totalrechargestation_000
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  > Dock to collision_camera_013 (H) (dooremmy_003)
+      Trivial
 
 > Tile Group (POWERBOMB) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_035
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to collision_camera_013 (H) (dooremmy_003)
+      Before Escape Sequence
+  > Tile Group (POWERBOMB) 2
+      Trivial
+  > Tile Group (POWERBOMB) 3
+      After Escape Sequence
 
 > Tile Group (POWERBOMB) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_037
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to collision_camera_013 (H) (dooremmy_002)
+      Trivial
+  > Tile Group (POWERBOMB) 1
+      Trivial
 
 > Tile Group (POWERBOMB) 3; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to Escape Room 2
+      Trivial
+  > Tile Group (POWERBOMB) 1
+      After Escape Sequence
 
 ----------------
-collision_camera_016 (H)
+Escape Room 3
 Extra - total_boundings: {'x1': -500.0, 'x2': 6500.0, 'y1': -8600.0, 'y2': -1900.0}
 Extra - polygon: [[6500.0, -1900.0], [4400.0, -1900.0], [4400.0, -3800.0], [-500.0, -3900.0], [-500.0, -7600.0], [900.0, -7600.0], [1500.0, -7900.0], [2700.0, -7900.0], [4100.0, -8600.0], [6500.0, -8600.0]]
 Extra - asset_id: collision_camera_016
+> Dock to E.M.M.I. Zone Entrance; Heals? False
+  * Open Passage to E.M.M.I. Zone Entrance/Dock to Escape Room 3
+  > Tile Group (POWERBOMB) 1
+      Trivial
+
+> Dock to Entrance Tall Room; Heals? False
+  * Open Passage to Entrance Tall Room/Dock to Escape Room 3
+  > Tile Group (SCREWATTACK) 8
+      Trivial
+
 > Tile Group (POWERBOMB) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to E.M.M.I. Zone Entrance
+      Trivial
+  > Tile Group (POWERBOMB) 2
+      Trivial
 
 > Tile Group (POWERBOMB) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_013
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (POWERBOMB) 1
+      Trivial
+  > Tile Group (POWERBOMB) 3
+      Trivial
 
 > Tile Group (POWERBOMB) 3; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_014
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (POWERBOMB) 2
+      Trivial
+  > Tile Group (SCREWATTACK) 1
+      Trivial
 
 > Tile Group (SCREWATTACK) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_015
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (POWERBOMB) 3
+      Trivial
+  > Tile Group (POWERBOMB) 4
+      Trivial
 
 > Tile Group (POWERBOMB) 4; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_016
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (SCREWATTACK) 1
+      Trivial
+  > Tile Group (SCREWATTACK) 2
+      Trivial
 
 > Tile Group (SCREWATTACK) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_017
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (POWERBOMB) 4
+      Trivial
+  > Tile Group (POWERBOMB) 5
+      Trivial
 
 > Tile Group (POWERBOMB) 5; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (SCREWATTACK) 2
+      Trivial
+  > Tile Group (SCREWATTACK) 3
+      Trivial
 
 > Tile Group (SCREWATTACK) 3; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_020
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (POWERBOMB) 5
+      Trivial
+  > Tile Group (POWERBOMB) 6
+      Trivial
 
 > Tile Group (POWERBOMB) 6; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_021
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (SCREWATTACK) 3
+      Trivial
+  > Tile Group (SCREWATTACK) 4
+      Trivial
 
 > Tile Group (SCREWATTACK) 4; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_022
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (POWERBOMB) 6
+      Trivial
+  > Tile Group (SCREWATTACK) 5
+      Trivial
 
 > Tile Group (SCREWATTACK) 5; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_023
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (SCREWATTACK) 4
+      Space Jump
+  > Tile Group (SCREWATTACK) 6
+      Use Spin Boost
 
 > Tile Group (SCREWATTACK) 6; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_025
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (SCREWATTACK) 5
+      Trivial
+  > Tile Group (SCREWATTACK) 7
+      Trivial
 
 > Tile Group (SCREWATTACK) 7; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (SCREWATTACK) 6
+      Trivial
+  > Tile Group (POWERBOMB) 7
+      Trivial
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_027
@@ -654,12 +1092,20 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: breakabletilegroup_028
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (SCREWATTACK) 7
+      Trivial
+  > Tile Group (SCREWATTACK) 8
+      Trivial
 
 > Tile Group (SCREWATTACK) 8; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_029
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Dock to Entrance Tall Room
+      Trivial
+  > Tile Group (POWERBOMB) 7
+      Trivial
 
 > Tile Group (SCREWATTACK WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_044
@@ -667,84 +1113,146 @@ Extra - asset_id: collision_camera_016
   * Extra - tile_types: ('SCREWATTACK', 'WEIGHT')
 
 ----------------
-collision_camera_018 (H)
+Escape Room 2
 Extra - total_boundings: {'x1': 11400.0, 'x2': 13500.0, 'y1': -5900.0, 'y2': -3300.0}
 Extra - polygon: [[13500.0, -3300.0], [11400.0, -3300.0], [11400.0, -5900.0], [13500.0, -5900.0]]
 Extra - asset_id: collision_camera_018
+> Dock to Escape Room 1; Heals? False
+  * Open Passage to Escape Room 1/Dock to Escape Room 2
+  > Tile Group (POWERBOMB) 1
+      Trivial
+
+> Dock to collision_camera_015 (H); Heals? False
+  * Open Passage to collision_camera_015 (H)/Dock to Escape Room 2
+  > Tile Group (POWERBOMB) 3
+      Trivial
+
 > Tile Group (POWERBOMB) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_004
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to Escape Room 1
+      Trivial
+  > Tile Group (SCREWATTACK) 1
+      Use Spin Boost
 
 > Tile Group (SCREWATTACK) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_006
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (POWERBOMB) 1
+      Trivial
+  > Tile Group (POWERBOMB) 2
+      Trivial
 
 > Tile Group (POWERBOMB) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_007
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (SCREWATTACK) 1
+      Trivial
+  > Tile Group (SCREWATTACK) 2
+      Trivial
 
 > Tile Group (SCREWATTACK) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_008
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (POWERBOMB) 2
+      Trivial
+  > Tile Group (SCREWATTACK) 3
+      Trivial
 
 > Tile Group (SCREWATTACK) 3; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (SCREWATTACK) 2
+      Trivial
+  > Tile Group (POWERBOMB) 3
+      Trivial
 
 > Tile Group (POWERBOMB) 3; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_010
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to collision_camera_015 (H)
+      Trivial
+  > Tile Group (SCREWATTACK) 3
+      Trivial
 
 ----------------
-collision_camera_019 (H)
+Escape Room 1
 Extra - total_boundings: {'x1': 13400.0, 'x2': 15500.0, 'y1': -6100.0, 'y2': -4200.0}
 Extra - polygon: [[15500.0, -4200.0], [13400.0, -4200.0], [13400.0, -6100.0], [15500.0, -6100.0]]
 Extra - asset_id: collision_camera_019
+> Dock to Raven Beak X Arena; Heals? False
+  * Open Passage to Raven Beak X Arena/Dock to Escape Room 1
+  > Tile Group (SCREWATTACK)
+      Trivial
+
+> Dock to Escape Room 2; Heals? False
+  * Open Passage to Escape Room 2/Dock to Escape Room 1
+  > Tile Group (POWERBOMB) 2
+      Trivial
+
 > Tile Group (SCREWATTACK); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_001
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
+  > Dock to Raven Beak X Arena
+      Trivial
+  > Tile Group (POWERBOMB) 1
+      Trivial
 
 > Tile Group (POWERBOMB) 1; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (SCREWATTACK)
+      Trivial
+  > Tile Group (POWERBOMB) 2
+      Trivial
 
 > Tile Group (POWERBOMB) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_003
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to Escape Room 2
+      Trivial
+  > Tile Group (POWERBOMB) 1
+      Trivial
 
 ----------------
 Raven Beak X Arena
 Extra - total_boundings: {'x1': 11800.0, 'x2': 18600.0, 'y1': -8700.0, 'y2': -4500.0}
 Extra - polygon: [[18600.0, -4500.0], [15400.0, -4500.0], [15400.0, -6100.0], [11800.0, -6100.0], [11800.0, -8700.0], [18600.0, -8700.0]]
 Extra - asset_id: collision_camera_020
-> Escape Checkpoint; Heals? False
+> Event - Escape Squence; Heals? False
+  * Event Escape Sequence
   * Extra - start_point_actor_name: SP_Checkpoint_Escape
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Raven Beak X Checkpoint
-      Trivial
+  > Tile Group (POWERBOMB)
+      Space Jump or Speed Booster
 
 > Raven Beak X Checkpoint; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_CommanderX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Escape Checkpoint
+  > Event - Escape Squence
+      Trivial
+
+> Dock to Escape Room 1; Heals? False
+  * Open Passage to Escape Room 1/Dock to Raven Beak X Arena
+  > Tile Group (POWERBOMB)
       Trivial
 
 > Tile Group (POWERBOMB); Heals? False
@@ -752,6 +1260,10 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_name: breakabletilegroup_000
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Event - Escape Squence
+      Trivial
+  > Dock to Escape Room 1
+      Trivial
 
 ----------------
 collision_camera_1000 (H)
