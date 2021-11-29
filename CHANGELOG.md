@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
+- Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
 
 ### Metroid Prime
 
