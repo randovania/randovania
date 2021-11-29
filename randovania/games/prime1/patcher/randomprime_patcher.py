@@ -1,6 +1,5 @@
 import copy
 import json
-import logging
 import os
 import typing
 from pathlib import Path
@@ -19,17 +18,17 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.patching.patcher import Patcher
-from randovania.patching.prime import all_prime_dol_patches
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
-from randovania.patching.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
-    credits_spoiler
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.lib.status_update_lib import ProgressUpdateCallable
+from randovania.patching.patcher import Patcher
+from randovania.patching.prime import all_prime_dol_patches
+from randovania.patching.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
+    credits_spoiler
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -338,6 +337,8 @@ class RandomprimePatcher(Patcher):
             ctwk_config["morphBallSize"] = 0.3
             ctwk_config["easyLavaEscape"] = True
 
+        # ctwk_config["hudColor"] = [0.1, 0.7, 0.2]
+
         return {
             "seed": description.permalink.seed_number,
             "preferences": {
@@ -352,6 +353,14 @@ class RandomprimePatcher(Patcher):
                 "trilogyDiscPath": None,
                 "quickplay": False,
                 "quiet": False,
+
+                # TODO
+                # "suitColors": {
+                #     "powerDeg": 180,
+                #     "variaDeg": -90,
+                #     "gravityDeg": -90,
+                #     "phazonDeg": -90
+                # }
             },
             "gameConfig": {
                 "startingRoom": _name_for_location(db.world_list, patches.starting_location),
@@ -364,6 +373,7 @@ class RandomprimePatcher(Patcher):
                 "autoEnabledElevators": patches.starting_items.get(scan_visor, 0) == 0,
                 "multiworldDolPatches": True,
 
+                "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": {
                     name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
                     for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
@@ -401,6 +411,9 @@ class RandomprimePatcher(Patcher):
             "tweaks": ctwk_config,
             "levelData": world_data,
             "hasSpoiler": description.permalink.spoiler,
+
+            # TODO
+            # "externAssetsDir": path_to_converted_assets,
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
