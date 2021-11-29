@@ -16,9 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+#### Known Issues:
+- Small Samus doesn't work on NTSC-K
+
 #### Patcher Changes
 
-- Nothing.
+- Added: Support for NTSC-J and NTSC-K (Gamecube).
+- Fixed: Safeguard against blowing past layer limits.
+- Fixed: On Major custscene skip, Elite Quarters now stays locked until the player picks up the item. The hudmemo is now tied to the item rather than the death animation.
+- Fixed: Ruined fountain not always showing the right scan.
+- Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 
 #### Logic Database
 
