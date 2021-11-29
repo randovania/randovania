@@ -1541,14 +1541,12 @@ Extra - asset_id: 1226265714
 > Door to Lake Tunnel; Heals? False; Spawn Point
   * Wave Door to Lake Tunnel/Door to Gravity Chamber
   * Extra - dock_index: 0
-  > Pickup (Gravity Suit)
+  > Event - Gravity Suit
       Gravity Suit or Space Jump Boots or Slope Jump (Beginner)
 
 > Door to Chamber Access; Heals? False
   * Wave Door to Chamber Access/Door to Gravity Chamber
   * Extra - dock_index: 1
-  > Pickup (Gravity Suit)
-      Gravity Suit or Space Jump Boots or Slope Jump (Beginner)
   > Pickup (Missile)
       Any of the following:
           All of the following:
@@ -1557,6 +1555,8 @@ Extra - asset_id: 1226265714
                   Slope Jump (Advanced)
                   Scan Visor and Combat/Scan Dash (Advanced)
           Grapple Beam and Plasma Beam
+  > Event - Gravity Suit
+      Gravity Suit or Space Jump Boots or Slope Jump (Beginner)
 
 > Pickup (Gravity Suit); Heals? False
   * Pickup 54; Major Location? True
@@ -1576,6 +1576,11 @@ Extra - asset_id: 1226265714
 > Pickup (Missile); Heals? False
   * Pickup 55; Major Location? False
   > Door to Chamber Access
+      Trivial
+
+> Event - Gravity Suit; Heals? False
+  * Event Gravity Chamber Item (Lower)
+  > Pickup (Gravity Suit)
       Trivial
 
 ----------------
