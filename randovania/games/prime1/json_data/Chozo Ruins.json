@@ -7796,15 +7796,6 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "SpaceJump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
                                                                     "type": "tricks",
                                                                     "name": "OoB",
                                                                     "amount": 3,
@@ -7827,6 +7818,40 @@
                                                                     "name": "Standable",
                                                                     "amount": 3,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "SpaceJump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": "https://www.youtube.com/watch?v=LdBFCaOFDE4",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "CMovement",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -10363,21 +10388,108 @@
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "or",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "Bombs",
-                                                                                "amount": 1,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "BJ",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": null,
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Bombs",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "BJ",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "and",
+                                                                                        "data": {
+                                                                                            "comment": "https://www.youtube.com/watch?v=e-3y7ykkEwU",
+                                                                                            "items": [
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Boost",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "BSJ",
+                                                                                                        "amount": 4,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Movement",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "items",
+                                                                                                        "name": "Scan",
+                                                                                                        "amount": 1,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Combat",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "Standable",
+                                                                                                        "amount": 2,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "type": "resource",
+                                                                                                    "data": {
+                                                                                                        "type": "tricks",
+                                                                                                        "name": "WallBoost",
+                                                                                                        "amount": 3,
+                                                                                                        "negate": false
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
