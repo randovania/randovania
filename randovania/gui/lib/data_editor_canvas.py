@@ -245,30 +245,36 @@ class DataEditorCanvas(QtWidgets.QWidget):
         areas_at_mouse = self._other_areas_at_position(local_pos)
 
         for area in areas_at_mouse:
-            a = QtWidgets.QMenu(area.name, self)
-            a.addAction("View area").triggered.connect(functools.partial(self.SelectAreaRequest.emit, area))
+            sub_menu = QtWidgets.QMenu(f"Area: {area.name}", self)
+            sub_menu.addAction("View area").triggered.connect(functools.partial(self.SelectAreaRequest.emit, area))
             if self.edit_mode:
-                a.addAction("Create dock here to this area").triggered.connect(
+                sub_menu.addAction("Create dock here to this area").triggered.connect(
                     functools.partial(self.CreateDockRequest.emit, self._next_node_location, area)
                 )
-            menu.addMenu(a)
+            menu.addMenu(sub_menu)
 
         if not areas_at_mouse:
-            a = QtWidgets.QAction("No areas here", self)
-            a.setEnabled(False)
-            menu.addAction(a)
+            sub_menu = QtWidgets.QAction("No areas here", self)
+            sub_menu.setEnabled(False)
+            menu.addAction(sub_menu)
 
         # Nodes Menu
         menu.addSeparator()
         nodes_at_mouse = self._nodes_at_position(local_pos)
+        if self.highlighted_node in nodes_at_mouse:
+            nodes_at_mouse.remove(self.highlighted_node)
+
         for node in nodes_at_mouse:
-            a = QtWidgets.QMenu(node.name, self)
+            if len(nodes_at_mouse) == 1:
+                menu.addAction(node.name).setEnabled(False)
+                sub_menu = menu
+            else:
+                sub_menu = QtWidgets.QMenu(node.name, self)
 
-            highlight_action = a.addAction("Highlight this")
-            highlight_action.setEnabled(self.highlighted_node != node)
-            highlight_action.triggered.connect(functools.partial(self.SelectNodeRequest.emit, node))
-
-            view_connections = a.addAction("View connections to this")
+            sub_menu.addAction("Highlight this").triggered.connect(
+                functools.partial(self.SelectNodeRequest.emit, node)
+            )
+            view_connections = sub_menu.addAction("View connections to this")
             view_connections.setEnabled(
                 (self.edit_mode and self.highlighted_node != node) or (
                     node in self.area.connections.get(self.highlighted_node, {})
@@ -277,20 +283,21 @@ class DataEditorCanvas(QtWidgets.QWidget):
             view_connections.triggered.connect(functools.partial(self.SelectConnectionsRequest.emit, node))
 
             if self.edit_mode:
-                a.addSeparator()
-                a.addAction("Replace connection with Trivial").triggered.connect(functools.partial(
+                sub_menu.addSeparator()
+                sub_menu.addAction("Replace connection with Trivial").triggered.connect(functools.partial(
                     self.ReplaceConnectionsRequest.emit, node, Requirement.trivial(),
                 ))
-                a.addAction("Remove connection").triggered.connect(functools.partial(
+                sub_menu.addAction("Remove connection").triggered.connect(functools.partial(
                     self.ReplaceConnectionsRequest.emit, node, Requirement.impossible(),
                 ))
 
-            menu.addMenu(a)
+            if sub_menu != menu:
+                menu.addMenu(sub_menu)
 
         if not nodes_at_mouse:
-            a = QtWidgets.QAction("No nodes here", self)
-            a.setEnabled(False)
-            menu.addAction(a)
+            sub_menu = QtWidgets.QAction("No other nodes here", self)
+            sub_menu.setEnabled(False)
+            menu.addAction(sub_menu)
 
         # Done
 
