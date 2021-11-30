@@ -249,9 +249,12 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                 find_resource_info_with_long_name(resource_database.item, resource_name)
                 for resource_name in element["resources"]
             ]
+            for resource, label in zip(resources, labels):
+                label.setToolTip(resource.long_name)
+
             self._tracker_elements.append(Element(labels, resources, text_template, minimum_to_check, field_to_check))
-            for l in labels:
-                self.inventory_layout.addWidget(l, element["row"], element["column"])
+            for label in labels:
+                self.inventory_layout.addWidget(label, element["row"], element["column"])
 
         self.inventory_spacer = QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.inventory_layout.addItem(self.inventory_spacer, self.inventory_layout.rowCount(),
