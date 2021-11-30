@@ -491,21 +491,21 @@ def _migrate_v15(preset: dict) -> dict:
 
 
 _MIGRATIONS = {
-    1: _migrate_v1,
-    2: _migrate_v2,
-    3: _migrate_v3,
-    4: _migrate_v4,
-    5: _migrate_v5,
-    6: _migrate_v6,
-    7: _migrate_v7,
-    8: _migrate_v8,
-    9: _migrate_v9,
-    10: _migrate_v10,
-    11: _migrate_v11,
-    12: _migrate_v12,
-    13: _migrate_v13,
-    14: _migrate_v14,
-    15: _migrate_v15,
+    1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
+    2: _migrate_v2,  # v1.2.2-71-g0fbabe91
+    3: _migrate_v3,  # v1.2.2-563-g50f4d07a
+    4: _migrate_v4,  # v1.2.2-832-gec9b8004
+    5: _migrate_v5,  # v2.0.2-15-g1096103d
+    6: _migrate_v6,  # v2.1.2-61-g8bb33489
+    7: _migrate_v7,  # v2.3.0-27-g6b4168b8
+    8: _migrate_v8,  # v2.5.2-39-g3cf0b27d
+    9: _migrate_v9,  # v2.6.1-33-gf0b8ec32
+    10: _migrate_v10,  # v2.6.1-416-g358711ce
+    11: _migrate_v11,  # v2.6.1-494-g086eb8cf
+    12: _migrate_v12,  # v3.0.2-13-gdffb4b9a
+    13: _migrate_v13,  # v3.1.3-122-g9f50c418
+    14: _migrate_v14,  # v3.2.1-44-g11823eac
+    15: _migrate_v15,  # v3.2.1-203-g6e303090
 }
 
 
