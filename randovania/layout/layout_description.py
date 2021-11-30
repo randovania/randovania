@@ -2,7 +2,6 @@ import base64
 import hashlib
 import itertools
 import json
-import re
 import typing
 from dataclasses import dataclass
 from functools import lru_cache
@@ -11,12 +10,11 @@ from random import Random
 from typing import Tuple, Dict
 
 from randovania import get_data_path
-from randovania.game_description import migration_data
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
-from randovania.layout import game_patches_serializer
+from randovania.layout import game_patches_serializer, description_migration
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 
 
 @lru_cache(maxsize=1)
@@ -26,147 +24,6 @@ def _shareable_hash_words() -> Dict[RandovaniaGame, typing.List[str]]:
             RandovaniaGame(key): words
             for key, words in json.load(hash_words_file).items()
         }
-
-
-CURRENT_DESCRIPTION_SCHEMA_VERSION = 6
-
-
-def migrate_description(json_dict: dict) -> dict:
-    if "schema_version" not in json_dict:
-        raise ValueError(f"missing schema_version")
-
-    version = json_dict["schema_version"]
-    if version > CURRENT_DESCRIPTION_SCHEMA_VERSION:
-        raise ValueError(f"Version {version} is newer than latest supported {CURRENT_DESCRIPTION_SCHEMA_VERSION}")
-
-    if version == 1:
-        for game in json_dict["game_modifications"]:
-            for hint in game["hints"].values():
-                if hint.get("precision") is not None:
-                    owner = False
-                    if hint["precision"]["item"] == "owner":
-                        owner = True
-                        hint["precision"]["item"] = "nothing"
-                    hint["precision"]["include_owner"] = owner
-        version += 1
-
-    if version == 2:
-        for game in json_dict["game_modifications"]:
-            for hint in game["hints"].values():
-                precision = hint.get("precision")
-                if precision is not None and precision.get("relative") is not None:
-                    precision["relative"]["distance_offset"] = 0
-                    precision["relative"].pop("precise_distance")
-        version += 1
-
-    if version == 3:
-        target_name_re = re.compile(r"(.*) for Player (\d+)")
-        if len(json_dict["game_modifications"]) > 1:
-            for game in json_dict["game_modifications"]:
-                for area in game["locations"].values():
-                    for location_name, contents in typing.cast(Dict[str, str], area).items():
-                        m = target_name_re.match(contents)
-                        if m is not None:
-                            part_one, part_two = m.group(1, 2)
-                            area[location_name] = f"{part_one} for Player {int(part_two) + 1}"
-        version += 1
-
-    if version == 4:
-        for game in json_dict["game_modifications"]:
-            for world_name, area in game["locations"].items():
-                if world_name == "Torvus Bog" and "Portal Chamber/Pickup (Missile)" in area:
-                    area["Portal Chamber (Light)/Pickup (Missile)"] = area.pop("Portal Chamber/Pickup (Missile)")
-            for hint in game["hints"].values():
-                if hint["hint_type"] == "location" and hint["precision"]["location"] == "relative-to-area":
-                    hint["precision"]["relative"]["area_location"] = migration_data.convert_area_loc_id_to_name(
-                        RandovaniaGame.METROID_PRIME_ECHOES,  # only echoes has this at the moment
-                        hint["precision"]["relative"]["area_location"]
-                    )
-
-        version += 1
-
-    if version == 5:
-        gate_mapping = {'Hive Access Tunnel': 'Temple Grounds/Hive Access Tunnel/Translator Gate',
-                        'Meeting Grounds': 'Temple Grounds/Meeting Grounds/Translator Gate',
-                        'Hive Transport Area': 'Temple Grounds/Hive Transport Area/Translator Gate',
-                        'Industrial Site': 'Temple Grounds/Industrial Site/Translator Gate',
-                        'Path of Eyes': 'Temple Grounds/Path of Eyes/Translator Gate',
-                        'Temple Assembly Site': 'Temple Grounds/Temple Assembly Site/Translator Gate',
-                        'GFMC Compound': 'Temple Grounds/GFMC Compound/Translator Gate',
-                        'Temple Sanctuary (to Sanctuary)': 'Great Temple/Temple Sanctuary/Transport A Translator Gate',
-                        'Temple Sanctuary (to Agon)': 'Great Temple/Temple Sanctuary/Transport B Translator Gate',
-                        'Temple Sanctuary (to Torvus)': 'Great Temple/Temple Sanctuary/Transport C Translator Gate',
-                        'Mining Plaza': 'Agon Wastes/Mining Plaza/Translator Gate',
-                        'Mining Station A': 'Agon Wastes/Mining Station A/Translator Gate',
-                        'Great Bridge': 'Torvus Bog/Great Bridge/Translator Gate',
-                        'Torvus Temple Gate': 'Torvus Bog/Torvus Temple/Translator Gate',
-                        'Torvus Temple Elevator': 'Torvus Bog/Torvus Temple/Elevator Translator Scan',
-                        'Reactor Core': 'Sanctuary Fortress/Reactor Core/Translator Gate',
-                        'Sanctuary Temple': 'Sanctuary Fortress/Sanctuary Temple/Translator Gate'}
-        item_mapping = {
-            "Scan Visor": "Scan",
-            "Violet Translator": "Violet",
-            "Amber Translator": "Amber",
-            "Emerald Translator": "Emerald",
-            "Cobalt Translator": "Cobalt",
-        }
-        dark_world_mapping = {
-            "Dark Agon Wastes": "Agon Wastes",
-            "Dark Torvus Bog": "Torvus Bog",
-            "Ing Hive": "Sanctuary Fortress",
-            "Sky Temple": "Great Temple",
-            "Sky Temple Grounds": "Temple Grounds",
-        }
-
-        def fix_dark_world(name: str):
-            world, rest = name.split("/", 1)
-            return f"{dark_world_mapping.get(world, world)}/{rest}"
-
-        def add_teleporter_node(name):
-            return migration_data.get_teleporter_area_to_node_mapping()[name]
-
-        for game in json_dict["game_modifications"]:
-            game["starting_location"] = fix_dark_world(game["starting_location"])
-            game["teleporters"] = {
-                add_teleporter_node(fix_dark_world(source)): fix_dark_world(destination)
-                for source, destination in game.pop("elevators").items()
-            }
-            game["configurable_nodes"] = {
-                gate_mapping[gate]: {
-                    "type": "and",
-                    "data": {
-                        "comment": None,
-                        "items": [
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": "Scan",
-                                    "amount": 1,
-                                    "negate": None
-                                }
-                            },
-                            {
-                                "type": "resource",
-                                "data": {
-                                    "type": "items",
-                                    "name": item_mapping[item],
-                                    "amount": 1,
-                                    "negate": None
-                                }
-                            }
-                        ]
-                    }
-                }
-                for gate, item in game.pop("translators").items()
-            }
-
-        version += 1
-
-    json_dict["schema_version"] = version
-    if version != CURRENT_DESCRIPTION_SCHEMA_VERSION:
-        raise RuntimeError(f"Description migration did not end at current version")
-    return json_dict
 
 
 @dataclass(frozen=True)
@@ -185,7 +42,7 @@ class LayoutDescription:
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
-        json_dict = migrate_description(json_dict)
+        json_dict = description_migration.convert_to_current_version(json_dict)
 
         has_spoiler = "game_modifications" in json_dict
         if not has_spoiler:
@@ -236,7 +93,7 @@ class LayoutDescription:
     @property
     def as_json(self) -> dict:
         result = {
-            "schema_version": CURRENT_DESCRIPTION_SCHEMA_VERSION,
+            "schema_version": description_migration.CURRENT_VERSION,
             "info": {
                 "version": self.version,
                 "permalink": self.permalink.as_base64_str,
