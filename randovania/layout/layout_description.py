@@ -39,6 +39,7 @@ def migrate_description(json_dict: dict) -> dict:
     if version > CURRENT_DESCRIPTION_SCHEMA_VERSION:
         raise ValueError(f"Version {version} is newer than latest supported {CURRENT_DESCRIPTION_SCHEMA_VERSION}")
 
+    # v2.2.0-6-gbfd37022
     if version == 1:
         for game in json_dict["game_modifications"]:
             for hint in game["hints"].values():
@@ -50,6 +51,7 @@ def migrate_description(json_dict: dict) -> dict:
                     hint["precision"]["include_owner"] = owner
         version += 1
 
+    # v2.4.2-16-g735569fd
     if version == 2:
         for game in json_dict["game_modifications"]:
             for hint in game["hints"].values():
@@ -59,6 +61,7 @@ def migrate_description(json_dict: dict) -> dict:
                     precision["relative"].pop("precise_distance")
         version += 1
 
+    # v2.5.2-183-gbf62a4ef
     if version == 3:
         target_name_re = re.compile(r"(.*) for Player (\d+)")
         if len(json_dict["game_modifications"]) > 1:
@@ -71,6 +74,7 @@ def migrate_description(json_dict: dict) -> dict:
                             area[location_name] = f"{part_one} for Player {int(part_two) + 1}"
         version += 1
 
+    # v3.2.1-40-g94ed9301
     if version == 4:
         for game in json_dict["game_modifications"]:
             for world_name, area in game["locations"].items():
@@ -85,6 +89,7 @@ def migrate_description(json_dict: dict) -> dict:
 
         version += 1
 
+    # v3.2.1-203-g6e303090
     if version == 5:
         gate_mapping = {'Hive Access Tunnel': 'Temple Grounds/Hive Access Tunnel/Translator Gate',
                         'Meeting Grounds': 'Temple Grounds/Meeting Grounds/Translator Gate',
