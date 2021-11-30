@@ -9,7 +9,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
     BinaryGameSessionAuditLog
 from randovania.network_common.session_state import GameSessionState

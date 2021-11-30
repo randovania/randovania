@@ -19,7 +19,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
 from randovania.network_common.binary_formats import BinaryInventory
 from randovania.network_common.error import (WrongPassword, NotAuthorizedForAction, InvalidAction)
