@@ -75,8 +75,9 @@ async def show_tracker(app: QtWidgets.QApplication):
 
 
 def show_data_editor(app: QtWidgets.QApplication, options, game: RandovaniaGame):
-    from randovania.gui.data_editor import DataEditorWindow
-    app.data_editor = DataEditorWindow.open_internal_data(game, True)
+    from randovania.gui import data_editor
+    data_editor.SHOW_WORLD_MIN_MAX_SPINNER = True
+    app.data_editor = data_editor.DataEditorWindow.open_internal_data(game, True)
     app.data_editor.show()
 
 
