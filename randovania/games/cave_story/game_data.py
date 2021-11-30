@@ -1,3 +1,4 @@
+from randovania.games.cave_story.patcher.caver_patcher import CaverPatcher
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
 
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
@@ -41,5 +42,7 @@ game_data: GameData = GameData(
 
     generator=GameGenerator(
         item_pool_creator=lambda results, config, db: None
-    )
+    ),
+
+    patcher=CaverPatcher()
 )
