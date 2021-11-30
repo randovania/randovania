@@ -101,7 +101,7 @@ def get_ingame_hash_str(hash_bytes: bytes) -> str:
         name = hash_items[x]
         path = str(RandovaniaGame.CAVE_STORY.data_path.joinpath("assets", "icon", f"{name}.png"))
         return f"""<img src="{path}" alt="{name}" width="32" height="16">"""
-    return "".join([get_str(ids[i]) for i in range(5)])
+    return "".join([get_str(i) for i in ids])
 
 def get_ingame_hash(hash_bytes: bytes) -> list[int]:
     num = int.from_bytes(hash_bytes, 'big', signed=False)
