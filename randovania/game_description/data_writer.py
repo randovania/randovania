@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import List, TypeVar, Callable, Dict, Tuple, Iterator, Optional
 
-from randovania.game_description import schema_migration
+from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate, RequirementArrayBase
@@ -396,7 +396,7 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
 
 def write_game_description(game: GameDescription) -> dict:
     return {
-        "schema_version": schema_migration.CURRENT_DATABASE_VERSION,
+        "schema_version": game_migration.CURRENT_VERSION,
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
 

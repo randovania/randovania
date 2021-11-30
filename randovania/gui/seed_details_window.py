@@ -30,7 +30,7 @@ from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.patching.prime.patcher_file_lib import item_names
 
 

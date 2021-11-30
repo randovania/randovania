@@ -13,7 +13,7 @@ from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.server.discord.bot import RandovaniaBot
 
 possible_links_re = re.compile(r'([A-Za-z0-9-_]{8,})')

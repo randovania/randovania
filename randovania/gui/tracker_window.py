@@ -39,7 +39,7 @@ from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.preset import Preset
-from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
+from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.patching.prime import elevators
 from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
