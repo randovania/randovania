@@ -9,8 +9,8 @@ import aiofiles
 import slugify
 
 from randovania.games.game import RandovaniaGame
+from randovania.layout import preset_migration
 from randovania.layout.preset import Preset
-from randovania.layout.preset_migration import convert_to_current_version, CURRENT_PRESET_VERSION
 
 
 class InvalidPreset(Exception):
@@ -77,7 +77,9 @@ class VersionedPreset:
     def ensure_converted(self):
         if not self._converted:
             try:
-                self._preset = Preset.from_json_dict(convert_to_current_version(copy.deepcopy(self.data)))
+                self._preset = Preset.from_json_dict(preset_migration.convert_to_current_version(
+                    copy.deepcopy(self.data)
+                ))
             except (ValueError, KeyError, TypeError) as e:
                 self.exception = InvalidPreset(e)
                 raise self.exception from e
@@ -119,7 +121,7 @@ class VersionedPreset:
     def as_json(self) -> dict:
         if self._preset is not None:
             preset_json = {
-                "schema_version": CURRENT_PRESET_VERSION,
+                "schema_version": preset_migration.CURRENT_VERSION,
             }
             preset_json.update(self._preset.as_json)
             return preset_json

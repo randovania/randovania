@@ -4,8 +4,9 @@ from typing import Dict
 
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
+from randovania.lib import migration_lib
 
-CURRENT_PRESET_VERSION = 16
+CURRENT_VERSION = 16
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -496,21 +497,9 @@ _MIGRATIONS = {
 }
 
 
-def _apply_migration(preset: dict, version: int) -> dict:
-    while version < CURRENT_PRESET_VERSION:
-        preset = _MIGRATIONS[version](preset)
-        version += 1
-    return preset
-
-
 def convert_to_current_version(preset: dict) -> dict:
-    schema_version = preset["schema_version"]
-    if schema_version > CURRENT_PRESET_VERSION:
-        raise ValueError(f"Unknown version: {schema_version}")
-
-    if schema_version < CURRENT_PRESET_VERSION:
-        return _apply_migration(preset, schema_version)
-    else:
-        return preset
-
-
+    return migration_lib.migrate_to_version(
+        preset,
+        CURRENT_VERSION,
+        _MIGRATIONS,
+    )
