@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 import logging
 
 from randovania.games.game import RandovaniaGame
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 
 
 def refresh_presets_command_logic(args):
