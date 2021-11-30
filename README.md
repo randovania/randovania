@@ -67,6 +67,7 @@ In order to start Randovania, open:
 Alternatively, install requirements.txt to run tests or server.
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
-### Adding a new game?
+# Documentation
 
-Check the [dedicated guide](docs/NEW_GAME.md).
+- Adding a new game? Check the [dedicated guide](docs/NEW_GAME.md).
+- Changing a data format? Check the [migrations documentation](docs/MIGRATIONS.md).
