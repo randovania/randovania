@@ -2,7 +2,7 @@ import dulwich.repo
 import pytest
 
 from randovania.interface_common import preset_manager
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 
 
 @pytest.mark.asyncio

@@ -1,7 +1,8 @@
 import pytest
 
 from randovania.interface_common import preset_manager
-from randovania.layout.preset_migration import VersionedPreset, CURRENT_PRESET_VERSION
+from randovania.layout.preset_migration import CURRENT_PRESET_VERSION
+from randovania.layout.versioned_preset import VersionedPreset
 
 
 @pytest.mark.asyncio

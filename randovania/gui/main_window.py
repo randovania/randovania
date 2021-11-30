@@ -178,7 +178,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         super().closeEvent(event)
 
     def dragEnterEvent(self, event: QtGui.QDragEnterEvent):
-        from randovania.layout.preset_migration import VersionedPreset
+        from randovania.layout.versioned_preset import VersionedPreset
 
         valid_extensions = [
             LayoutDescription.file_extension(),
@@ -196,7 +196,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
                 return
 
     def dropEvent(self, event: QtGui.QDropEvent):
-        from randovania.layout.preset_migration import VersionedPreset
+        from randovania.layout.versioned_preset import VersionedPreset
 
         for url in event.mimeData().urls():
             path = Path(url.toLocalFile())

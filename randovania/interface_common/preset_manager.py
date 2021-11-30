@@ -12,7 +12,7 @@ import dulwich.repo
 
 import randovania
 from randovania.games.game import RandovaniaGame
-from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
+from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 
 
 def read_preset_list() -> List[Path]:
