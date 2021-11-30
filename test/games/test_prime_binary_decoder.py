@@ -5,11 +5,11 @@ from pathlib import Path
 import pytest
 
 from randovania import get_data_path
-from randovania.game_description import data_reader, schema_migration
+from randovania.game_description import data_reader, game_migration
 from randovania.games import binary_data
 
 sample_data = {
-    "schema_version": schema_migration.CURRENT_DATABASE_VERSION,
+    "schema_version": game_migration.CURRENT_VERSION,
     "game": "prime2",
     "resource_database": {
         "items": {},
@@ -67,7 +67,7 @@ def test_complex_encode(test_files_dir):
     with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
         data = json.load(data_file)
 
-    data = schema_migration.migrate_to_current(data)
+    data = game_migration.migrate_to_current(data)
 
     b = io.BytesIO()
 
@@ -87,7 +87,7 @@ def test_complex_decode(test_files_dir):
     # Assert
     with test_files_dir.joinpath("prime_data_as_json.json").open("r") as data_file:
         saved_data = json.load(data_file)
-    saved_data = schema_migration.migrate_to_current(saved_data)
+    saved_data = game_migration.migrate_to_current(saved_data)
 
     assert decoded_data == saved_data
 

@@ -5,7 +5,7 @@ from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashabl
 
 from frozendict import frozendict
 
-from randovania.game_description import schema_migration
+from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import (
     ResourceRequirement, Requirement, RequirementOr, RequirementAnd, RequirementTemplate
@@ -424,7 +424,7 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
 
 
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
-    data = schema_migration.migrate_to_current(copy.deepcopy(data))
+    data = game_migration.migrate_to_current(copy.deepcopy(data))
 
     game = RandovaniaGame(data["game"])
 
