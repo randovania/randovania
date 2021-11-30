@@ -192,7 +192,7 @@ async def _load_options():
 
     theme.set_dark_theme(options.dark_mode)
 
-    from randovania.layout.preset_migration import VersionedPreset
+    from randovania.layout.versioned_preset import VersionedPreset
     for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
         old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{VersionedPreset.file_extension()}"))
 

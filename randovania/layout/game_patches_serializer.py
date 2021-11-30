@@ -71,6 +71,8 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches, 
     world_list = game.world_list
 
     result = {
+        # This field helps schema migrations, if nothing else
+        "game": game_enum.value,
         "starting_location": patches.starting_location.as_string,
         "starting_items": {
             resource_info.long_name: quantity
@@ -128,6 +130,9 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     :return:
     """
     world_list = game.world_list
+
+    if game_modifications["game"] != game.game.value:
+        raise ValueError(f"Expected '{game.game.value}', got '{game_modifications['game']}'")
 
     initial_pickup_assignment = all_pools[player_index].assignment
 

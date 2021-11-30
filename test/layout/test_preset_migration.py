@@ -1,7 +1,8 @@
 import pytest
 
 from randovania.interface_common import preset_manager
-from randovania.layout.preset_migration import VersionedPreset, CURRENT_PRESET_VERSION
+from randovania.layout import preset_migration
+from randovania.layout.versioned_preset import VersionedPreset
 
 
 @pytest.mark.asyncio
@@ -10,7 +11,7 @@ async def test_migration(test_files_dir):
     assert preset.data["schema_version"] == 1
     assert preset.as_json["schema_version"] == 1
     preset.ensure_converted()
-    assert preset.as_json["schema_version"] == CURRENT_PRESET_VERSION
+    assert preset.as_json["schema_version"] == preset_migration.CURRENT_VERSION
 
 
 @pytest.mark.parametrize("f", [

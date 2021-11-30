@@ -1,6 +1,6 @@
 import json
 import os
-from unittest.mock import MagicMock, ANY
+from unittest.mock import MagicMock, ANY, PropertyMock
 
 import pytest
 
@@ -58,13 +58,17 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
     }
 
 
-def test_create_patch_data(test_files_dir):
+def test_create_patch_data(test_files_dir, mocker):
     # Setup
     file = test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame")
     description = LayoutDescription.from_file(file)
     patcher = RandomprimePatcher()
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
     cosmetic_patches = PrimeCosmeticPatches()
+
+    mocker.patch("randovania.layout.layout_description.LayoutDescription._shareable_hash_bytes",
+                 new_callable=PropertyMock,
+                 return_value=b"\x00\x00\x00\x00\x00")
 
     # Run
     data = patcher.create_patch_data(description, players_config, cosmetic_patches)
@@ -905,12 +909,12 @@ def test_create_patch_data(test_files_dir):
             "backwardsLowerMines": False,
             "phazonEliteWithoutDynamo": True,
 
-            'gameBanner': {'description': 'Seed Hash: Nature Gyro Elevator',
+            'gameBanner': {'description': 'Seed Hash: Putrid Shriekbat Polluted',
                            'gameName': 'Metroid Prime: Randomizer',
-                           'gameNameFull': 'Metroid Prime: Randomizer - MVWV5RZR'},
+                           'gameNameFull': 'Metroid Prime: Randomizer - AAAAAAAA'},
             'heatDamagePerSec': 10.0,
             'itemMaxCapacity': {'Unknown Item 1': 65536},
-            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nNature Gyro Elevator',
+            'mainMenuMessage': f'Randovania v{randovania.VERSION}\nPutrid Shriekbat Polluted',
             'nonvariaHeatDamage': True,
             'staggeredSuitDamage': True,
             'disableItemLoss': True,
