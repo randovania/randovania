@@ -137,9 +137,10 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
                 if isinstance(node, TeleporterNode)
             ]
 
+            self._elevator_source_destination[location] = None
+
             if teleporters_in_target:
                 other_loc = teleporters_in_target[0]
-                self._elevator_source_destination[location] = None
 
                 if other_loc in checks:
                     self.elevators_source_layout.addWidget(checks.pop(other_loc), row, 2)
