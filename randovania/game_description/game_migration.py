@@ -6,7 +6,7 @@ from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_DATABASE_VERSION = 6
+CURRENT_VERSION = 6
 
 
 def _migrate_v1(data: dict) -> dict:
@@ -330,6 +330,4 @@ _MIGRATIONS = {
 
 
 def migrate_to_current(data: dict):
-    return migration_lib.migrate_to_current(data, CURRENT_DATABASE_VERSION, _MIGRATIONS)
-
-
+    return migration_lib.migrate_to_current(data, CURRENT_VERSION, _MIGRATIONS)
