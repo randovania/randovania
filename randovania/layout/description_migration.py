@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 6
+CURRENT_VERSION = 7
 
 
 def _migrate_v1(json_dict: dict) -> dict:
@@ -138,12 +138,31 @@ def _migrate_v5(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v6(json_dict: dict) -> dict:
+    area_name_heuristic = {
+        "Tallon Overworld": "prime1",
+        "Agon Wastes": "prime2",
+        "Bryyo - Fire": "prime3",
+        "Norfair": "super_metroid",
+        "Artaria": "dread",
+    }
+
+    for game in json_dict["game_modifications"]:
+        for area_name, identify_game in area_name_heuristic.items():
+            if area_name in game["locations"]:
+                game["game"] = identify_game
+                break
+
+    return json_dict
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v2.2.0-6-gbfd37022
     2: _migrate_v2,  # v2.4.2-16-g735569fd
     3: _migrate_v3,  # v2.5.2-183-gbf62a4ef
     4: _migrate_v4,  # v3.2.1-40-g94ed9301
     5: _migrate_v5,  # v3.2.1-203-g6e303090
+    6: _migrate_v6,
 }
 
 

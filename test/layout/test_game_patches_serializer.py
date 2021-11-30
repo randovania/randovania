@@ -49,6 +49,7 @@ def _patches_with_data(request, echoes_game_description, echoes_item_database):
     db = game.resource_database
 
     data = {
+        "game": echoes_game_description.game.value,
         "starting_location": "Temple Grounds/Landing Site",
         "starting_items": {},
         "teleporters": {
