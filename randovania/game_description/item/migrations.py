@@ -34,4 +34,4 @@ _MIGRATIONS = {
 
 
 def migrate_current(data: dict):
-    return migration_lib.migrate_to_current(data, CURRENT_VERSION, _MIGRATIONS)
+    return migration_lib.migrate_to_version(data, CURRENT_VERSION, _MIGRATIONS)
