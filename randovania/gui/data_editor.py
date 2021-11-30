@@ -91,6 +91,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
         self.area_view_canvas.CreateDockRequest.connect(self._create_new_dock)
+        self.area_view_canvas.MoveNodeToAreaRequest.connect(self._move_dock_to_area)
         self.area_view_canvas.MoveNodeRequest.connect(self._move_node)
         self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
         self.area_view_canvas.SelectAreaRequest.connect(self.focus_on_area)
@@ -343,7 +344,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def update_selected_node(self):
         node = self.current_node
-        assert node is not None
+        self.node_info_group.setEnabled(node is not None)
+        if node is None:
+            self.node_name_label.setText("<missing node>")
+            self.node_details_label.setText("")
+            self.node_description_label.setText("")
+            self.update_other_node_connection()
+            return
 
         self.node_heals_check.setChecked(node.heal)
         is_default_spawn = self.current_area.default_node == node.name
@@ -392,7 +399,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         :return:
         """
         current_node = self.current_node
-        assert current_node is not None
+        if current_node is None:
+            assert not self.current_area.nodes
 
         # Calculates which node should be selected
         selected_node = None
@@ -437,19 +445,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_node = self.current_node
         current_connection_node = self.current_connection_node
 
-        assert current_node is not None
-        assert current_node != current_connection_node
+        assert current_node != current_connection_node or current_node is None
 
         if self._connections_visualizer is not None:
             self._connections_visualizer.deleteLater()
             self._connections_visualizer = None
 
-        if current_connection_node is None:
-            assert len(self.current_area.nodes) == 1 or not self.edit_mode
+        if current_connection_node is None or current_node is None:
+            assert len(self.current_area.nodes) <= 1 or not self.edit_mode
             return
 
-        requirement = self.current_area.connections[self.current_node].get(self.current_connection_node,
-                                                                           Requirement.impossible())
+        requirement = self.current_area.connections[current_node].get(self.current_connection_node,
+                                                                      Requirement.impossible())
         self._connections_visualizer = ConnectionsVisualizer(
             self.other_node_alternatives_contents,
             self.alternatives_grid_layout,
@@ -629,6 +636,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 f"{target_name_base} (1)",
             )
         self.on_select_area(new_node_this_area)
+
+    def _move_dock_to_area(self, node: Node, new_area: Area):
+        self.editor.move_node_from_area_to_area(self.current_area, new_area, node)
+        self.on_select_area()
 
     def _remove_node(self):
         if self._check_for_edit_dialog():
