@@ -82,6 +82,10 @@ def test_create_patch_data(test_files_dir, mocker):
     # file.write(json.dumps(data))
     # file.close()
 
+    # Ignore the part of the main menu message which has the randovania version in it
+    data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]
+    expected_data["gameConfig"]["mainMenuMessage"] = expected_data["gameConfig"]["mainMenuMessage"].split("\n")[1]
+
     assert data == expected_data
 
 def test_patch_game(mocker, tmp_path):
