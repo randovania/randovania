@@ -8,8 +8,8 @@
         "map_max_y": 92
     },
     "areas": {
-        "collision_camera_000 (C)": {
-            "default_node": "Start Point 2",
+        "Transport to Artaria": {
+            "default_node": "Elevator to Artaria - Transport to Cataris",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -71,7 +71,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_006 (C)",
-                        "node_name": "Door to collision_camera_000 (C)"
+                        "node_name": "Door to Transport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -97,7 +97,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_002 (C)",
-                        "node_name": "Door to collision_camera_000 (C)"
+                        "node_name": "Door to Transport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -151,7 +151,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (LE_Elevator_FromCave)": {
+                "Elevator to Artaria - Transport to Cataris": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -303,7 +303,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door to collision_camera_000 (C)": {
+                "Door to Transport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -322,7 +322,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_000 (C)",
+                        "area_name": "Transport to Artaria",
                         "node_name": "Door to collision_camera_002 (C)"
                     },
                     "dock_type": "door",
@@ -575,7 +575,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Door to collision_camera_000 (C)": {
+                "Door to Transport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -594,14 +594,14 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_000 (C)",
+                        "area_name": "Transport to Artaria",
                         "node_name": "Door to collision_camera_006 (C)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door to collision_camera_015 (C)": {
+                "Door to Teleporter to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -620,7 +620,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_015 (C)",
+                        "area_name": "Teleporter to Artaria",
                         "node_name": "Door to collision_camera_006 (C)"
                     },
                     "dock_type": "door",
@@ -1522,7 +1522,7 @@
                     "dock_weakness": "Access Open",
                     "connections": {}
                 },
-                "Door to collision_camera_015 (C)": {
+                "Door to Teleporter to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1541,7 +1541,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_015 (C)",
+                        "area_name": "Teleporter to Artaria",
                         "node_name": "Door to collision_camera_014 (C)"
                     },
                     "dock_type": "door",
@@ -1569,8 +1569,8 @@
                 }
             }
         },
-        "collision_camera_015 (C)": {
-            "default_node": "Elevator (teleporter_cave_000)",
+        "Teleporter to Artaria": {
+            "default_node": "Teleporter to Artaria - Screw Attack Room",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1636,7 +1636,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_006 (C)",
-                        "node_name": "Door to collision_camera_015 (C)"
+                        "node_name": "Door to Teleporter to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1696,7 +1696,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_014 (C)",
-                        "node_name": "Door to collision_camera_015 (C)"
+                        "node_name": "Door to Teleporter to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -1734,13 +1734,13 @@
                     "event_name": "s020_magma:default:db_dside_mg_004",
                     "connections": {}
                 },
-                "Elevator (teleporter_cave_000)": {
+                "Teleporter to Artaria - Screw Attack Room": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
                         "x": 17950.0,
                         "y": 300.0,
-                        "z": 0.0004879999905824661
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {
@@ -3191,8 +3191,8 @@
                 }
             }
         },
-        "Teleporter to Artaria": {
-            "default_node": "Start Point",
+        "Teleport to Artaria": {
+            "default_node": "Teleporter to Artaria - Teleport to Cataris",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -3254,7 +3254,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_043 (C)",
-                        "node_name": "Door to Teleporter to Artaria"
+                        "node_name": "Door to Teleport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -3280,7 +3280,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_064 (C)",
-                        "node_name": "Door to Teleporter to Artaria"
+                        "node_name": "Door to Teleport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3306,7 +3306,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_058 (C)",
-                        "node_name": "Door to Teleporter to Artaria"
+                        "node_name": "Door to Teleport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3332,7 +3332,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_062 (C)",
-                        "node_name": "Door to Teleporter to Artaria"
+                        "node_name": "Door to Teleport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3371,7 +3371,7 @@
                     "event_name": "s020_magma:default:db_dside_mg_002b_000",
                     "connections": {}
                 },
-                "Teleporter to Artaria - Teleporter to Cataris": {
+                "Teleporter to Artaria - Teleport to Cataris": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -3390,7 +3390,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "Teleporter to Cataris"
+                        "area_name": "Teleport to Cataris"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -3470,8 +3470,8 @@
                 }
             }
         },
-        "collision_camera_026 (C)": {
-            "default_node": "Elevator (teleporter_forest_000)",
+        "Teleporter to Ghavoran": {
+            "default_node": "Teleporter to Ghavoran - Teleporter to Cataris",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -3587,7 +3587,7 @@
                     "event_name": "s020_magma:default:grapplepulloff1x2_001",
                     "connections": {}
                 },
-                "Elevator (teleporter_forest_000)": {
+                "Teleporter to Ghavoran - Teleporter to Cataris": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -3606,7 +3606,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_024 (G)"
+                        "area_name": "Teleporter to Cataris"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -5112,7 +5112,7 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
-                "Door to collision_camera_041 (C)": {
+                "Door to Transport to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5131,7 +5131,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_041 (C)",
+                        "area_name": "Transport to Dairon",
                         "node_name": "Door to collision_camera_040 (C)"
                     },
                     "dock_type": "door",
@@ -5243,8 +5243,8 @@
                 }
             }
         },
-        "collision_camera_041 (C)": {
-            "default_node": "Start Point",
+        "Transport to Dairon": {
+            "default_node": "Elevator to Dairon - Transport to Cataris",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -5294,7 +5294,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_040 (C)",
-                        "node_name": "Door to collision_camera_041 (C)"
+                        "node_name": "Door to Transport to Dairon"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -5315,7 +5315,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (wagontrain_baselab_000)": {
+                "Elevator to Dairon - Transport to Cataris": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -5334,7 +5334,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_043 (D)"
+                        "area_name": "Transport to Cataris"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -5554,7 +5554,7 @@
                 "asset_id": "collision_camera_043"
             },
             "nodes": {
-                "Door to Teleporter to Artaria": {
+                "Door to Teleport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5573,7 +5573,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "Teleporter to Artaria",
+                        "area_name": "Teleport to Artaria",
                         "node_name": "Door to collision_camera_043 (C)"
                     },
                     "dock_type": "door",
@@ -5677,7 +5677,7 @@
                 "asset_id": "collision_camera_044"
             },
             "nodes": {
-                "Dock to collision_camera_051 (C)": {
+                "Dock to Teleport to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5696,7 +5696,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_051 (C)",
+                        "area_name": "Teleport to Dairon",
                         "node_name": "Dock to collision_camera_044 (C)"
                     },
                     "dock_type": "other",
@@ -6568,8 +6568,8 @@
                 }
             }
         },
-        "collision_camera_051 (C)": {
-            "default_node": "Elevator (teleport_baselab_000)",
+        "Teleport to Dairon": {
+            "default_node": "Teleporter to Dairon - Teleport to Cataris",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -6619,7 +6619,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_044 (C)",
-                        "node_name": "Dock to collision_camera_051 (C)"
+                        "node_name": "Dock to Teleport to Dairon"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -6662,7 +6662,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_052 (C)",
-                        "node_name": "Door to collision_camera_051 (C)"
+                        "node_name": "Door to Teleport to Dairon"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -6700,7 +6700,7 @@
                     "event_name": "s020_magma:default:db_dif_mg_001",
                     "connections": {}
                 },
-                "Elevator (teleport_baselab_000)": {
+                "Teleporter to Dairon - Teleport to Cataris": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -6719,7 +6719,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_008 (D)"
+                        "area_name": "Teleport to Cataris"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -6897,7 +6897,7 @@
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door to collision_camera_051 (C)": {
+                "Door to Teleport to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6916,7 +6916,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_051 (C)",
+                        "area_name": "Teleport to Dairon",
                         "node_name": "Door to collision_camera_052 (C)"
                     },
                     "dock_type": "door",
@@ -7330,7 +7330,7 @@
                 "asset_id": "collision_camera_058"
             },
             "nodes": {
-                "Door to Teleporter to Artaria": {
+                "Door to Teleport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7349,7 +7349,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "Teleporter to Artaria",
+                        "area_name": "Teleport to Artaria",
                         "node_name": "Door to collision_camera_058 (C)"
                     },
                     "dock_type": "door",
@@ -7700,7 +7700,7 @@
                 "asset_id": "collision_camera_062"
             },
             "nodes": {
-                "Door to Teleporter to Artaria": {
+                "Door to Teleport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7719,7 +7719,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "Teleporter to Artaria",
+                        "area_name": "Teleport to Artaria",
                         "node_name": "Door to collision_camera_062 (C)"
                     },
                     "dock_type": "door",
@@ -7881,7 +7881,7 @@
                 "asset_id": "collision_camera_064"
             },
             "nodes": {
-                "Door to Teleporter to Artaria": {
+                "Door to Teleport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7900,7 +7900,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "Teleporter to Artaria",
+                        "area_name": "Teleport to Artaria",
                         "node_name": "Door to collision_camera_064 (C)"
                     },
                     "dock_type": "door",

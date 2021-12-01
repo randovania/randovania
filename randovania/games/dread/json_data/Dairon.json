@@ -8,7 +8,7 @@
         "map_max_y": 106
     },
     "areas": {
-        "collision_camera_000 (D)": {
+        "Save Station East": {
             "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
@@ -39,7 +39,7 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Door to collision_camera_001 (D)": {
+                "Door to Teleport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -58,8 +58,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_001 (D)",
-                        "node_name": "Door to collision_camera_000 (D)"
+                        "area_name": "Teleport to Artaria",
+                        "node_name": "Door to Save Station East"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -85,7 +85,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_002 (D)",
-                        "node_name": "Door to collision_camera_000 (D)"
+                        "node_name": "Door to Save Station East"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -110,8 +110,8 @@
                 }
             }
         },
-        "collision_camera_001 (D)": {
-            "default_node": "Elevator (teleport_cave_000)",
+        "Teleport to Artaria": {
+            "default_node": "Teleporter to Artaria - Teleport to Dairon",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -141,7 +141,7 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Door to collision_camera_000 (D)": {
+                "Door to Save Station East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -160,14 +160,14 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_000 (D)",
-                        "node_name": "Door to collision_camera_001 (D)"
+                        "area_name": "Save Station East",
+                        "node_name": "Door to Teleport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door to collision_camera_043 (D)": {
+                "Door to Transport to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -186,8 +186,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_043 (D)",
-                        "node_name": "Door to collision_camera_001 (D)"
+                        "area_name": "Transport to Cataris",
+                        "node_name": "Door to Teleport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -227,7 +227,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (teleport_cave_000)": {
+                "Teleporter to Artaria - Teleport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -246,7 +246,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_008 (A)"
+                        "area_name": "Teleport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -361,7 +361,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door to collision_camera_000 (D)": {
+                "Door to Save Station East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -380,7 +380,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_000 (D)",
+                        "area_name": "Save Station East",
                         "node_name": "Door to collision_camera_002 (D)"
                     },
                     "dock_type": "door",
@@ -449,8 +449,8 @@
                 }
             }
         },
-        "collision_camera_003 (D)": {
-            "default_node": "Elevator (elevator_sanctuary_000)",
+        "East Transport to Ferenia": {
+            "default_node": "Elevator to Ferenia - East Transport to Darion",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -496,13 +496,13 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_005 (D)",
-                        "node_name": "Dock to collision_camera_003 (D)"
+                        "node_name": "Dock to East Transport to Ferenia"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Elevator (elevator_sanctuary_000)": {
+                "Elevator to Ferenia - East Transport to Darion": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -521,7 +521,7 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_000 (F)"
+                        "area_name": "East Transport to Darion"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -787,7 +787,7 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Dock to collision_camera_003 (D)": {
+                "Dock to East Transport to Ferenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -802,7 +802,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_003 (D)",
+                        "area_name": "East Transport to Ferenia",
                         "node_name": "Dock to collision_camera_005 (D)"
                     },
                     "dock_type": "other",
@@ -930,7 +930,7 @@
                     "major_location": true,
                     "connections": {}
                 },
-                "Dock to collision_camera_008 (D)": {
+                "Dock to Teleport to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -949,7 +949,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_008 (D)",
+                        "area_name": "Teleport to Cataris",
                         "node_name": "Dock to collision_camera_006 (D)"
                     },
                     "dock_type": "other",
@@ -1080,7 +1080,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to collision_camera_008 (D)": {
+                "Door to Teleport to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1099,7 +1099,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_008 (D)",
+                        "area_name": "Teleport to Cataris",
                         "node_name": "Door to collision_camera_007 (D)"
                     },
                     "dock_type": "door",
@@ -1141,8 +1141,8 @@
                 }
             }
         },
-        "collision_camera_008 (D)": {
-            "default_node": "Start Point",
+        "Teleport to Cataris": {
+            "default_node": "Teleporter to Cataris - Teleport to Dairon",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1192,7 +1192,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_010 (D)",
-                        "node_name": "Dock to collision_camera_008 (D)"
+                        "node_name": "Dock to Teleport to Cataris"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -1218,7 +1218,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_009 (D)",
-                        "node_name": "Door to collision_camera_008 (D)"
+                        "node_name": "Door to Teleport to Cataris"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1244,7 +1244,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_007 (D)",
-                        "node_name": "Door to collision_camera_008 (D)"
+                        "node_name": "Door to Teleport to Cataris"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1270,7 +1270,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_006 (D)",
-                        "node_name": "Dock to collision_camera_008 (D)"
+                        "node_name": "Dock to Teleport to Cataris"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -1307,7 +1307,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (teleport_magma_000)": {
+                "Teleporter to Cataris - Teleport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -1326,7 +1326,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_051 (C)"
+                        "area_name": "Teleport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -1403,7 +1403,7 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Door to collision_camera_008 (D)": {
+                "Door to Teleport to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1422,7 +1422,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_008 (D)",
+                        "area_name": "Teleport to Cataris",
                         "node_name": "Door to collision_camera_009 (D)"
                     },
                     "dock_type": "door",
@@ -1531,7 +1531,7 @@
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Dock to collision_camera_008 (D)": {
+                "Dock to Teleport to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1550,7 +1550,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_008 (D)",
+                        "area_name": "Teleport to Cataris",
                         "node_name": "Dock to collision_camera_010 (D)"
                     },
                     "dock_type": "other",
@@ -1637,8 +1637,8 @@
                 }
             }
         },
-        "collision_camera_011 (D)": {
-            "default_node": "Elevator (elevator_cave_000)",
+        "Transport to Artaria": {
+            "default_node": "Elevator to Artaria - Transport to Dairon",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1705,7 +1705,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_012 (D)",
-                        "node_name": "Door to collision_camera_011 (D)"
+                        "node_name": "Door to Transport to Artaria"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
@@ -1727,7 +1727,7 @@
                     "event_name": "s030_baselab:default:grapplepulloff1x2_006",
                     "connections": {}
                 },
-                "Elevator (elevator_cave_000)": {
+                "Elevator to Artaria - Transport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -1921,7 +1921,7 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Door to collision_camera_011 (D)": {
+                "Door to Transport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1940,7 +1940,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_011 (D)",
+                        "area_name": "Transport to Artaria",
                         "node_name": "Door from collision_camera_012 (D)"
                     },
                     "dock_type": "door",
@@ -2708,7 +2708,7 @@
                 "asset_id": "collision_camera_017"
             },
             "nodes": {
-                "Dock to collision_camera_019 (D)": {
+                "Dock to West Transport to Ferenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2723,7 +2723,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_019 (D)",
+                        "area_name": "West Transport to Ferenia",
                         "node_name": "Dock to collision_camera_017 (D)"
                     },
                     "dock_type": "other",
@@ -3064,8 +3064,8 @@
                 }
             }
         },
-        "collision_camera_019 (D)": {
-            "default_node": "Start Point",
+        "West Transport to Ferenia": {
+            "default_node": "Elevator to Ferenia - West Transport to Dairon",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -3111,7 +3111,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_017 (D)",
-                        "node_name": "Dock to collision_camera_019 (D)"
+                        "node_name": "Dock to West Transport to Ferenia"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -3137,7 +3137,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_044 (D)",
-                        "node_name": "Door to collision_camera_019 (D) (doorpowerpower_013)"
+                        "node_name": "Door to West Transport to Ferenia (doorpowerpower_013)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3163,13 +3163,13 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_044 (D)",
-                        "node_name": "Door to collision_camera_019 (D) (doorpowerpower_014)"
+                        "node_name": "Door to West Transport to Ferenia (doorpowerpower_014)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Elevator (elevator_sanctuary_001)": {
+                "Elevator to Ferenia - West Transport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -3188,7 +3188,7 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_008 (F)"
+                        "area_name": "West Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -5849,7 +5849,7 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door to collision_camera_046 (D)": {
+                "Door to Upper Transport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5868,7 +5868,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_046 (D)",
+                        "area_name": "Upper Transport to Burenia",
                         "node_name": "Door to collision_camera_039 (D)"
                     },
                     "dock_type": "door",
@@ -6093,7 +6093,7 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door to collision_camera_045 (D)": {
+                "Door to Lower Transport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6112,7 +6112,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_045 (D)",
+                        "area_name": "Lower Transport to Burenia",
                         "node_name": "Door to collision_camera_041 (D)"
                     },
                     "dock_type": "door",
@@ -6259,8 +6259,8 @@
                 }
             }
         },
-        "collision_camera_043 (D)": {
-            "default_node": "Start Point",
+        "Transport to Cataris": {
+            "default_node": "Elevator to Cataris - Transport to Dairon",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -6290,7 +6290,7 @@
                 "asset_id": "collision_camera_043"
             },
             "nodes": {
-                "Door to collision_camera_001 (D)": {
+                "Door to Teleport to Artaria": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6309,8 +6309,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_001 (D)",
-                        "node_name": "Door to collision_camera_043 (D)"
+                        "area_name": "Teleport to Artaria",
+                        "node_name": "Door to Transport to Cataris"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -6331,7 +6331,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (wagontrain_magma_000)": {
+                "Elevator to Cataris - Transport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -6350,7 +6350,7 @@
                     },
                     "destination": {
                         "world_name": "Cataris",
-                        "area_name": "collision_camera_041 (C)"
+                        "area_name": "Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -6389,7 +6389,7 @@
                 "asset_id": "collision_camera_044"
             },
             "nodes": {
-                "Door to collision_camera_019 (D) (doorpowerpower_013)": {
+                "Door to West Transport to Ferenia (doorpowerpower_013)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6408,14 +6408,14 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_019 (D)",
+                        "area_name": "West Transport to Ferenia",
                         "node_name": "Door to collision_camera_044 (D) (doorpowerpower_013)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door to collision_camera_019 (D) (doorpowerpower_014)": {
+                "Door to West Transport to Ferenia (doorpowerpower_014)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6434,7 +6434,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_019 (D)",
+                        "area_name": "West Transport to Ferenia",
                         "node_name": "Door to collision_camera_044 (D) (doorpowerpower_014)"
                     },
                     "dock_type": "door",
@@ -6460,8 +6460,8 @@
                 }
             }
         },
-        "collision_camera_045 (D)": {
-            "default_node": "Start Point",
+        "Lower Transport to Burenia": {
+            "default_node": "Tram to Burenia - Lower Transport to Dairon",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -6511,13 +6511,13 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_041 (D)",
-                        "node_name": "Door to collision_camera_045 (D)"
+                        "node_name": "Door to Lower Transport to Burenia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Elevator (wagontrain_with_portal_aqua_001)": {
+                "Tram to Burenia - Lower Transport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -6536,7 +6536,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "collision_camera_004 (B)"
+                        "area_name": "Lower Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -6559,8 +6559,8 @@
                 }
             }
         },
-        "collision_camera_046 (D)": {
-            "default_node": "Elevator (wagontrain_aqua_000)",
+        "Upper Transport to Burenia": {
+            "default_node": "Tram to Burenia - Upper Transport to Dairon",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -6610,13 +6610,13 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "collision_camera_039 (D)",
-                        "node_name": "Door to collision_camera_046 (D)"
+                        "node_name": "Door to Upper Transport to Burenia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Elevator (wagontrain_aqua_000)": {
+                "Tram to Burenia - Upper Transport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -6635,7 +6635,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "collision_camera_003 (B)"
+                        "area_name": "Upper Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -6643,8 +6643,8 @@
                 }
             }
         },
-        "collision_camera_047 (D)": {
-            "default_node": "Elevator (elevator_forest_000)",
+        "Transport to Ghavoran": {
+            "default_node": "Elevator to Ghavoran - Transport to Dairon",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -6674,7 +6674,7 @@
                 "asset_id": "collision_camera_047"
             },
             "nodes": {
-                "Elevator (elevator_forest_000)": {
+                "Elevator to Ghavoran - Transport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -6693,7 +6693,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_038 (G)"
+                        "area_name": "Transport to Dairon"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
