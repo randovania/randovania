@@ -159,3 +159,19 @@ class Editor:
 
                     if new_node is not None:
                         self.replace_node(area, node, new_node)
+
+    def move_node_from_area_to_area(self, old_area: Area, new_area: Area, node: Node):
+        assert node in old_area.nodes
+
+        if new_area.node_with_name(node.name) is not None:
+            raise ValueError(f"New area {new_area.name} already contains a node named {node.name}")
+
+        old_world = self.game.world_list.world_with_area(old_area)
+        new_world = self.game.world_list.world_with_area(new_area)
+
+        self.remove_node(old_area, node)
+        self.add_node(new_area, node)
+        self.replace_references_to_node_identifier(
+            NodeIdentifier.create(old_world.name, old_area.name, node.name),
+            NodeIdentifier.create(new_world.name, new_area.name, node.name),
+        )
