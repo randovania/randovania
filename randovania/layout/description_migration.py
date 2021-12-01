@@ -148,11 +148,11 @@ def _migrate_v6(json_dict: dict) -> dict:
     }
 
     for game in json_dict["game_modifications"]:
-        for (i, (area_name, identify_game)) in enumerate(area_name_heuristic.items()):
+        for area_name, identify_game in area_name_heuristic.items():
             if area_name in game["locations"]:
                 if identify_game == "prime1":
-                    json_dict["game_modifications"][i]["locations"]["Frigate Orpheon"] = dict()
-                    json_dict["game_modifications"][i]["teleporters"]["Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"] = "Tallon Overworld/Landing Site"
+                    game["locations"]["Frigate Orpheon"] = dict()
+                    game["teleporters"]["Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"] = "Tallon Overworld/Landing Site"
                 game["game"] = identify_game
                 break
     return json_dict

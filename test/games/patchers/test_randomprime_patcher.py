@@ -74,13 +74,11 @@ def test_create_patch_data(test_files_dir, mocker):
     data = patcher.create_patch_data(description, players_config, cosmetic_patches)
 
     # Expected Result
-    file = open(os.path.join("test", "games", "patchers", "randomprime_expected_data.json"), "r")
-    expected_data = json.loads(file.read())
-    file.close()
+    with test_files_dir.joinpath("randomprime_expected_data.json").open("r") as file:
+        expected_data = json.load(file)
 
-    # file = open(os.path.join("test", "games", "patchers", "randomprime_actual_data.json"), "w")
-    # file.write(json.dumps(data))
-    # file.close()
+    # with test_files_dir.joinpath("randomprime_actual_data.json").open("w") as file:
+    #     file.write(json.dumps(data))
 
     # Ignore the part of the main menu message which has the randovania version in it
     data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]
