@@ -19,9 +19,11 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 CSVERSION = 3
 
 class CaverPatcher(Patcher):
+    _busy: bool = False
+
     @property
     def is_busy(self) -> bool:
-        return False # TODO
+        return self._busy
     
     @property
     def export_can_be_aborted(self) -> bool:
@@ -32,20 +34,21 @@ class CaverPatcher(Patcher):
         return False
     
     def has_internal_copy(self, game_files_path: Path) -> bool:
-        version = game_files_path.joinpath("cave_story", "data", "Stage", "_version.txt")
-        return version.exists() and int(version.read_text()) >= CSVERSION
+        return False
     
     def delete_internal_copy(self, game_files_path: Path):
-        gamepath = game_files_path.joinpath("cave_story")
-        if gamepath.exists():
-            shutil.rmtree(gamepath)
+        pass
     
     def default_output_file(self, seed_hash: str) -> str:
         return f"Cave Story Randomizer - {seed_hash}"
     
     @property
+    def requires_input_file(self) -> bool:
+        return False
+
+    @property
     def valid_input_file_types(self) -> list[str]:
-        return [""]
+        return None
     
     @property
     def valid_output_file_types(self) -> list[str]:
