@@ -75,6 +75,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     SelectConnectionsRequest = Signal(Node)
     ReplaceConnectionsRequest = Signal(Node, Requirement)
     CreateDockRequest = Signal(NodeLocation, Area)
+    MoveNodeToAreaRequest = Signal(Node, Area)
 
     def __init__(self):
         super().__init__()
@@ -290,6 +291,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 sub_menu.addAction("Remove connection").triggered.connect(functools.partial(
                     self.ReplaceConnectionsRequest.emit, node, Requirement.impossible(),
                 ))
+                if areas_at_mouse:
+                    move_menu = QtWidgets.QMenu("Move to...", self)
+                    for area in areas_at_mouse:
+                        move_menu.addAction(area.name).triggered.connect(functools.partial(
+                            self.MoveNodeToAreaRequest.emit, node, area,
+                        ))
+                    sub_menu.addMenu(move_menu)
 
             if sub_menu != menu:
                 menu.addMenu(sub_menu)
