@@ -20,6 +20,10 @@ This feature comes with plenty of quality of life functionality for editing the 
 
 ### Metroid Prime
 
+- Start in any (uncrashed) Frigate room
+- 1-way cycles and 1-way anywhere elevators can lead to (uncrashed) Frigate rooms
+- Frigate Escape Sequence teleporter destination can now be shuffled 
+
 #### Known Issues:
 - Small Samus doesn't work on NTSC-K
 
@@ -54,6 +58,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: NSJ Bombless Elite Control Access (Wallboost)
 - Added: Elite Control Access Item (Damage Boost)
 - Added: Central Dynamo Item w/ Infinite Speed
+- Added: Bomb jump to skip grapple in Biotech Research Area 2
+
 - Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
 - Changed: Hall of the Elders - Now properly model needing to kill the 1 ghost to leave the room. Chargeless 1 ghost fight combat difficulty reduced to beginner.
 

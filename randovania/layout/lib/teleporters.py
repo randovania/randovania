@@ -144,8 +144,8 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             result = []
             for identifier in self.editable_teleporters:
                 node = world_list.node_by_identifier(identifier)
-                if isinstance(node, TeleporterNode):
-                    result.append(node.default_connection)
+                if isinstance(node, TeleporterNode) and node.editable:
+                    result.append(identifier)
             return result
         else:
             return []

@@ -2,8 +2,9 @@
 # Used by the prime1 patcher
 RANDOM_PRIME_CUSTOM_NAMES = {
     ("Impact Crater", "Crater Entry Point"): 'Crater Entry Point',  # 2818083
+    ("Impact Crater", "Essence Dead Custscene"): 'Essence Dead Custscene',
 
-    ("Frigate Orpheon", "Exterior Docking Hangar"): 'Exterior Docking Hangar',  # 134218592
+    ("Frigate Orpheon", "Exterior Docking Hangar"): 'Frigate Escape Cutscene',
 
     ("Phendrana Drifts", "Transport to Magmoor Caverns West"): 'Phendrana Drifts North\0(Phendrana Shorelines)',  # 45
     ("Phendrana Drifts", "Transport to Magmoor Caverns South"): 'Phendrana Drifts South\0(Quarantine Cave)',  # 1900634
@@ -60,7 +61,10 @@ UI_CUSTOM_NAMES = {
     ("Tallon Overworld", "Transport to Chozo Ruins East"): "Frigate Crash Site Elevator",
     ("Tallon Overworld", "Transport to Magmoor Caverns East"): "Root Cave Elevator",
     ("Tallon Overworld", "Transport to Chozo Ruins South"): "Lower/North Great Tree Elevator",
-    ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree Elevator"
+    ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree Elevator",
+
+    # Frigate
+    ("Frigate Orpheon", "Exterior Docking Hangar"): 'Frigate Escape Cutscene Teleporter',
 }
 
 # Names for use when "elevator" is implied
@@ -91,5 +95,8 @@ SHORT_UI_CUSTOM_NAMES = {
     ("Tallon Overworld", "Transport to Chozo Ruins East"): "Frigate Crash Site",
     ("Tallon Overworld", "Transport to Magmoor Caverns East"): "Root Cave",
     ("Tallon Overworld", "Transport to Chozo Ruins South"): "Lower/North Great Tree",
-    ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree"
+    ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree",
+
+    # Frigate
+    ("Frigate Orpheon", "Exterior Docking Hangar"): 'Frigate Destroyed',
 }
