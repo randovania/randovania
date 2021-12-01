@@ -11,6 +11,7 @@ class PrimeCosmeticPatches(BaseCosmeticPatches):
     open_map: bool = True
     use_hud_color: bool = False
     hud_color: tuple = (102, 174, 225)
+    suit_color_rotations: tuple = (0, 0, 0, 0)
 
     @classmethod
     def default(cls) -> "PrimeCosmeticPatches":

@@ -344,6 +344,13 @@ class RandomprimePatcher(Patcher):
                 cosmetic_patches.hud_color[2] / 255
             ]
 
+        SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
+        suit_colors = {}
+        for i in range(0,4):
+            hue_rotation = cosmetic_patches.suit_color_rotations[i]
+            if hue_rotation != 0:
+                suit_colors[SUIT_ATTRIBUTES[i]] = hue_rotation - 10 # Small hack to be closer to in-game colors
+
         return {
             "seed": description.permalink.seed_number,
             "preferences": {
@@ -358,14 +365,7 @@ class RandomprimePatcher(Patcher):
                 "trilogyDiscPath": None,
                 "quickplay": False,
                 "quiet": False,
-
-                # TODO
-                # "suitColors": {
-                #     "powerDeg": 180,
-                #     "variaDeg": -90,
-                #     "gravityDeg": -90,
-                #     "phazonDeg": -90
-                # }
+                "suitColors": suit_colors
             },
             "gameConfig": {
                 "startingRoom": _name_for_location(db.world_list, patches.starting_location),
