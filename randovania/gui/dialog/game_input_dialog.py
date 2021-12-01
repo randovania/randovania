@@ -44,8 +44,13 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         self.description_label.setText(description_text)
 
         # Input
-        self.input_file_edit.textChanged.connect(self._validate_input_file)
-        self.input_file_button.clicked.connect(self._on_input_file_button)
+        if patcher.requires_input_file:
+            self.input_file_edit.textChanged.connect(self._validate_input_file)
+            self.input_file_button.clicked.connect(self._on_input_file_button)
+        else:
+            self.input_file_edit.setVisible(False)
+            self.input_file_button.setVisible(False)
+            self.description_label.setVisible(False)
 
         # Output
         self.output_file_edit.textChanged.connect(self._validate_output_file)
@@ -140,15 +145,18 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
 
     # Input file
     def _validate_input_file(self):
-        if self._prompt_input_file:
-            if self._selected_output_format:
-                has_error = not self.input_file.is_file()
-            elif self.input_file_edit.text():
-                has_error = not self.input_file.is_dir()
+        has_error = False
+
+        if self.patcher.requires_input_file:
+            if self._prompt_input_file:
+                if self._selected_output_format:
+                    has_error = not self.input_file.is_file()
+                elif self.input_file_edit.text():
+                    has_error = not self.input_file.is_dir()
+                else:
+                    has_error = True
             else:
-                has_error = True
-        else:
-            has_error = self.input_file_edit.text() != _VALID_GAME_TEXT
+                has_error = self.input_file_edit.text() != _VALID_GAME_TEXT
 
         common_qt_lib.set_error_border_stylesheet(self.input_file_edit, has_error)
         self._update_accept_button()
