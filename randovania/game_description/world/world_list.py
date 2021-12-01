@@ -20,7 +20,6 @@ class WorldList:
 
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
-    _ids_to_area: Dict[AreaIdentifier, Area]
     _nodes: Optional[Tuple[Node, ...]]
     _pickup_index_to_node: Dict[PickupIndex, PickupNode]
 
@@ -34,7 +33,7 @@ class WorldList:
         self._nodes = None
 
     def _refresh_node_cache(self):
-        self._nodes_to_area, self._nodes_to_world, self._ids_to_area = _calculate_nodes_to_area_world(self.worlds)
+        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
         self._nodes = tuple(self._iterate_over_nodes())
         self._pickup_index_to_node = {
             node.pickup_index: node
@@ -254,12 +253,8 @@ class WorldList:
         return world, area
 
     def identifier_for_area(self, area: Area) -> AreaIdentifier:
-        self.ensure_has_node_cache()
-        for world in self.worlds:
-            result = AreaIdentifier(world_name=world.name, area_name=area.name)
-            if result in self._ids_to_area:
-                return result
-        raise RuntimeError(f"Unknown area: {area}")
+        world = self.world_with_area(area)
+        return AreaIdentifier(world_name=world.name, area_name=area.name)
 
     def node_to_area_location(self, node: Node) -> AreaIdentifier:
         return AreaIdentifier(
@@ -280,11 +275,9 @@ class WorldList:
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):
     nodes_to_area = {}
     nodes_to_world = {}
-    ids_to_area = {}
 
     for world in worlds:
         for area in world.areas:
-            ids_to_area[AreaIdentifier(world.name, area.name)] = area
             for node in area.nodes:
                 if node in nodes_to_area:
                     raise ValueError(
@@ -293,4 +286,4 @@ def _calculate_nodes_to_area_world(worlds: Iterable[World]):
                 nodes_to_area[node] = area
                 nodes_to_world[node] = world
 
-    return nodes_to_area, nodes_to_world, ids_to_area
+    return nodes_to_area, nodes_to_world
