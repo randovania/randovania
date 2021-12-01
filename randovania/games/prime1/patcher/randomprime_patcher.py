@@ -337,7 +337,12 @@ class RandomprimePatcher(Patcher):
             ctwk_config["morphBallSize"] = 0.3
             ctwk_config["easyLavaEscape"] = True
 
-        # ctwk_config["hudColor"] = [0.1, 0.7, 0.2]
+        if cosmetic_patches.use_hud_color:
+            ctwk_config["hudColor"] = [
+                cosmetic_patches.hud_color[0] / 255,
+                cosmetic_patches.hud_color[1] / 255,
+                cosmetic_patches.hud_color[2] / 255
+            ]
 
         return {
             "seed": description.permalink.seed_number,
