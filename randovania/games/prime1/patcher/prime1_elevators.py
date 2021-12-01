@@ -2,7 +2,7 @@
 # Used by the prime1 patcher
 RANDOM_PRIME_CUSTOM_NAMES = {
     ("Impact Crater", "Crater Entry Point"): 'Crater Entry Point',  # 2818083
-    ("Impact Crater", "Metroid Prime Lair"): 'Essence Dead Custscene',
+    ("Impact Crater", "Metroid Prime Lair"): 'Essence Dead Cutscene',
 
     ("Frigate Orpheon", "Exterior Docking Hangar"): 'Frigate Escape Cutscene',
 
@@ -68,7 +68,7 @@ UI_CUSTOM_NAMES = {
 
     # Impact Crater
     ("Impact Crater", "Crater Entry Point"): 'Crater Entry Point',
-    ("Impact Crater", "Metroid Prime Lair"): 'Essence Dead Custscene',
+    ("Impact Crater", "Metroid Prime Lair"): 'Essence Dead Cutscene',
 }
 
 # Names for use when "elevator" is implied
