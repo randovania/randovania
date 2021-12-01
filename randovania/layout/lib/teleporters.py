@@ -148,10 +148,10 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
                     # Valid destinations must be valid starting areas
                     area = world_list.nodes_to_area(node)
                     if area.valid_starting_location:
-                        result.append(identifier)
+                        result.append(identifier.area_identifier)
                     # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent on the previous room
                     elif area.name == "Metroid Prime Lair":
-                        result.append(NodeIdentifier.from_string("Impact Crater/Subchamber Five/Dock to Metroid Prime Lair"))
+                        result.append(AreaIdentifier.from_string("Impact Crater/Subchamber Five"))
             return result
         else:
             return []
