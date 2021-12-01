@@ -8,8 +8,8 @@
         "map_max_y": 26
     },
     "areas": {
-        "collision_camera_000 (G)": {
-            "default_node": "Start Point",
+        "Transport to Burenia": {
+            "default_node": "Elevator to Burenia - Transport to Ghavoran",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -59,7 +59,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_003 (G)",
-                        "node_name": "Dock to collision_camera_000 (G)"
+                        "node_name": "Dock to Transport to Burenia"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -85,7 +85,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_001 (G)",
-                        "node_name": "Door to collision_camera_000 (G)"
+                        "node_name": "Door to Transport to Burenia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -106,7 +106,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (elevator_aqua_000)": {
+                "Elevator to Burenia - Transport to Ghavoran": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -125,7 +125,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "collision_camera_006 (B)"
+                        "area_name": "Transport to Ghavoran"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -267,7 +267,7 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Door to collision_camera_000 (G)": {
+                "Door to Transport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -286,7 +286,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_000 (G)",
+                        "area_name": "Transport to Burenia",
                         "node_name": "Door to collision_camera_001 (G)"
                     },
                     "dock_type": "door",
@@ -507,7 +507,7 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Dock to collision_camera_000 (G)": {
+                "Dock to Transport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -526,7 +526,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_000 (G)",
+                        "area_name": "Transport to Burenia",
                         "node_name": "Dock to collision_camera_003 (G)"
                     },
                     "dock_type": "other",
@@ -1147,7 +1147,7 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door to collision_camera_038 (G)": {
+                "Door to Transport to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1166,7 +1166,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_038 (G)",
+                        "area_name": "Transport to Dairon",
                         "node_name": "Door to collision_camera_008 (G)"
                     },
                     "dock_type": "door",
@@ -2819,7 +2819,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Door to collision_camera_039 (G)": {
+                "Door to Above Pulse Radar": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2838,7 +2838,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_039 (G)",
+                        "area_name": "Above Pulse Radar",
                         "node_name": "Door from collision_camera_021 (G)"
                     },
                     "dock_type": "door",
@@ -3241,46 +3241,52 @@
                 }
             }
         },
-        "collision_camera_024 (G)": {
+        "Golzuna Tower": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 4000.0,
                     "x2": 7100.0,
-                    "y1": 870.0,
+                    "y1": 3192.0,
                     "y2": 8400.0
                 },
                 "polygon": [
                     [
                         7100.0,
-                        8400.0
+                        8400.0,
+                        "top right"
+                    ],
+                    [
+                        4760.0,
+                        8400.0,
+                        "top right of elevator"
+                    ],
+                    [
+                        4760.0,
+                        7350.0,
+                        "bottom right of elevator"
                     ],
                     [
                         4000.0,
-                        8400.0
+                        7350.0,
+                        "bottom left of elevator"
                     ],
                     [
                         4000.0,
-                        870.0
-                    ],
-                    [
-                        6400.0,
-                        870.0
-                    ],
-                    [
-                        6400.0,
-                        2000.0
+                        3192.0,
+                        "bot left"
                     ],
                     [
                         7100.0,
-                        2000.0
+                        3192.0,
+                        "bot right"
                     ]
                 ],
                 "asset_id": "collision_camera_024"
             },
             "nodes": {
-                "Door to collision_camera_040 (G)": {
+                "Door to Save Station Top": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3299,80 +3305,11 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_040 (G)",
-                        "node_name": "Door to collision_camera_024 (G)"
+                        "area_name": "Save Station Top",
+                        "node_name": "Door to Golzuna Tower"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
-                },
-                "Dock to collision_camera_025_B (G)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7050.0,
-                        "y": 2900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorpowerpower_014",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001",
-                        "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
-                    },
-                    "destination": {
-                        "world_name": "Ghavoran",
-                        "area_name": "collision_camera_025_B (G)",
-                        "node_name": "Dock to collision_camera_024 (G)"
-                    },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
-                },
-                "Pickup (item_missiletank_004)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6350.0,
-                        "y": 2900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "item_missiletank_004",
-                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
-                    },
-                    "pickup_index": 103,
-                    "major_location": false,
-                    "connections": {}
-                },
-                "Door from collision_camera_025_B (G)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6350.0,
-                        "y": 1700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorclosedpower_002",
-                        "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "destination": {
-                        "world_name": "Ghavoran",
-                        "area_name": "collision_camera_025_B (G)",
-                        "node_name": "Door to collision_camera_024 (G)"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Access Closed",
                     "connections": {}
                 },
                 "Door to collision_camera_036 (G)": {
@@ -3395,27 +3332,10 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_036 (G)",
-                        "node_name": "Door to collision_camera_024 (G)"
+                        "node_name": "Door to Golzuna Tower"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
-                },
-                "Pickup (item_missiletank_007)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6850.0,
-                        "y": 2400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "item_missiletank_007",
-                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
-                    },
-                    "pickup_index": 107,
-                    "major_location": false,
                     "connections": {}
                 },
                 "Door to collision_camera_031 (G)": {
@@ -3438,7 +3358,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_031 (G)",
-                        "node_name": "Door to collision_camera_024 (G)"
+                        "node_name": "Door to Golzuna Tower"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -3459,32 +3379,6 @@
                     },
                     "pickup_index": 112,
                     "major_location": true,
-                    "connections": {}
-                },
-                "Door to collision_camera_039 (G)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4050.0,
-                        "y": 7500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorclosedcharge",
-                        "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "destination": {
-                        "world_name": "Ghavoran",
-                        "area_name": "collision_camera_039 (G)",
-                        "node_name": "Door from collision_camera_024 (G)"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank)": {
@@ -3519,94 +3413,6 @@
                     },
                     "connections": {}
                 },
-                "Elevator (teleporter_aqua_000)": {
-                    "node_type": "teleporter",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5750.0,
-                        "y": 2100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "teleporter_aqua_000",
-                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
-                        "elevator_component": "CTeleporterUsableComponent",
-                        "target_spawn_point": "teleporter_forest_000_platform",
-                        "start_point_actor_name": "teleporter_aqua_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "collision_camera_015 (B)"
-                    },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
-                    "connections": {}
-                },
-                "Elevator (teleporter_magma_000)": {
-                    "node_type": "teleporter",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4450.0,
-                        "y": 7500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "teleporter_magma_000",
-                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
-                        "elevator_component": "CTeleporterUsableComponent",
-                        "target_spawn_point": "teleporter_forest_000_platform",
-                        "start_point_actor_name": "teleporter_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
-                    },
-                    "destination": {
-                        "world_name": "Cataris",
-                        "area_name": "collision_camera_026 (C)"
-                    },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
-                    "connections": {}
-                },
-                "Tile Group (POWERBOMB)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6000.0,
-                        "y": 2000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_001",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBOMB"
-                        ]
-                    },
-                    "connections": {}
-                },
-                "Tile Group (WEIGHT) 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6000.0,
-                        "y": 2800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_002",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "WEIGHT"
-                        ]
-                    },
-                    "connections": {}
-                },
                 "Tile Group (BOMB) 1": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -3622,25 +3428,6 @@
                         "actor_layer": "breakables",
                         "tile_types": [
                             "BOMB"
-                        ]
-                    },
-                    "connections": {}
-                },
-                "Tile Group (SCREWATTACK)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5200.0,
-                        "y": 2800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_013",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SCREWATTACK"
                         ]
                     },
                     "connections": {}
@@ -3818,6 +3605,289 @@
                 }
             }
         },
+        "Teleporter to Cataris": {
+            "default_node": "Teleporter to Cataris",
+            "valid_starting_location": true,
+            "extra": {
+                "total_boundings": {
+                    "x1": 4000.0,
+                    "x2": 4760.0,
+                    "y1": 7400.0,
+                    "y2": 8000.0
+                },
+                "polygon": [
+                    [
+                        4760.0,
+                        8000.0
+                    ],
+                    [
+                        4000.0,
+                        8000.0
+                    ],
+                    [
+                        4000.0,
+                        7400.0
+                    ],
+                    [
+                        4760.0,
+                        7400.0
+                    ]
+                ],
+                "asset_id": "collision_camera_024"
+            },
+            "nodes": {
+                "bot right": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4760.39420935412,
+                        "y": 7400.543429844098,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                },
+                "top right": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4748.802276664192,
+                        "y": 7997.68275179411,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                },
+                "Teleporter to Cataris": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4450.0,
+                        "y": 7500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "teleporter_magma_000",
+                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
+                        "elevator_component": "CTeleporterUsableComponent",
+                        "target_spawn_point": "teleporter_forest_000_platform",
+                        "start_point_actor_name": "teleporter_magma_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Cataris",
+                        "area_name": "Teleporter to Ghavoran"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {}
+                },
+                "Door to Above Pulse Radar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4050.0,
+                        "y": 7500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorclosedcharge",
+                        "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "Above Pulse Radar",
+                        "node_name": "Door from Teleporter to Cataris"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
+                    "connections": {}
+                }
+            }
+        },
+        "Teleport to Burenia": {
+            "default_node": "Teleporter to Burenia - Teleport to Ghavoran",
+            "valid_starting_location": true,
+            "extra": {
+                "total_boundings": {
+                    "x1": 4000.0,
+                    "x2": 7100.0,
+                    "y1": 870.0,
+                    "y2": 3190.0
+                },
+                "polygon": [
+                    [
+                        7100.0,
+                        3190.0
+                    ],
+                    [
+                        4000.0,
+                        3190.0
+                    ],
+                    [
+                        4000.0,
+                        870.0
+                    ],
+                    [
+                        6400.0,
+                        870.0
+                    ],
+                    [
+                        6400.0,
+                        2000.0
+                    ],
+                    [
+                        7100.0,
+                        2000.0
+                    ]
+                ],
+                "asset_id": "collision_camera_024"
+            },
+            "nodes": {
+                "Tile Group (POWERBOMB)": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6000.0,
+                        "y": 2000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_001",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
+                    },
+                    "connections": {}
+                },
+                "Teleporter to Burenia - Teleport to Ghavoran": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5750.0,
+                        "y": 2100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "teleporter_aqua_000",
+                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
+                        "elevator_component": "CTeleporterUsableComponent",
+                        "target_spawn_point": "teleporter_forest_000_platform",
+                        "start_point_actor_name": "teleporter_aqua_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Teleport to Burenia"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {}
+                },
+                "Tile Group (WEIGHT) 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6000.0,
+                        "y": 2800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_002",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
+                    },
+                    "connections": {}
+                },
+                "Tile Group (SCREWATTACK)": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5200.0,
+                        "y": 2800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_013",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
+                    },
+                    "connections": {}
+                },
+                "Dock to collision_camera_025_B (G)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7050.0,
+                        "y": 2900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_014",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001",
+                        "right_shield_def": "actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_025_B (G)",
+                        "node_name": "Dock to Teleport to Burenia"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
+                    "connections": {}
+                },
+                "Door from collision_camera_025_B (G)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6350.0,
+                        "y": 1700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorclosedpower_002",
+                        "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "collision_camera_025_B (G)",
+                        "node_name": "Door to Teleport to Burenia"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
+                    "connections": {}
+                }
+            }
+        },
         "collision_camera_025_B (G)": {
             "default_node": "Start Point",
             "valid_starting_location": true,
@@ -3883,7 +3953,7 @@
                     "dock_weakness": "Access Closed",
                     "connections": {}
                 },
-                "Dock to collision_camera_024 (G)": {
+                "Dock to Teleport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3902,14 +3972,14 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_024 (G)",
+                        "area_name": "Teleport to Burenia",
                         "node_name": "Dock to collision_camera_025_B (G)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door to collision_camera_024 (G)": {
+                "Door to Teleport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3928,7 +3998,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_024 (G)",
+                        "area_name": "Teleport to Burenia",
                         "node_name": "Door from collision_camera_025_B (G)"
                     },
                     "dock_type": "door",
@@ -4023,10 +4093,44 @@
                         ]
                     },
                     "connections": {}
+                },
+                "Pickup (item_missiletank_007)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6850.0,
+                        "y": 2400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "item_missiletank_007",
+                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
+                    },
+                    "pickup_index": 107,
+                    "major_location": false,
+                    "connections": {}
+                },
+                "Pickup (item_missiletank_004)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6350.0,
+                        "y": 2900.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "item_missiletank_004",
+                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
+                    },
+                    "pickup_index": 103,
+                    "major_location": false,
+                    "connections": {}
                 }
             }
         },
-        "collision_camera_026 (G)": {
+        "Golzuna Arena": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -4077,7 +4181,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_033 (G)",
-                        "node_name": "Door from collision_camera_026 (G)"
+                        "node_name": "Door from Golzuna Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -4119,8 +4223,8 @@
                 }
             }
         },
-        "collision_camera_027 (G)": {
-            "default_node": "Elevator (wagontrain_sanctuary_000)",
+        "Transport to Ferenia": {
+            "default_node": "Tram to Ferenia - Transport to Ghavoran",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4150,7 +4254,7 @@
                 "asset_id": "collision_camera_027"
             },
             "nodes": {
-                "Elevator (wagontrain_sanctuary_000)": {
+                "Tram to Ferenia - Transport to Ghavoran": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -4169,7 +4273,7 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_014 (F)"
+                        "area_name": "Transport to Ghavoran"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -4349,7 +4453,7 @@
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door to collision_camera_037 (G)": {
+                "Door to Transport to Elun": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4368,7 +4472,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_037 (G)",
+                        "area_name": "Transport to Elun",
                         "node_name": "Door to collision_camera_029 (G)"
                     },
                     "dock_type": "door",
@@ -4509,7 +4613,7 @@
                 "asset_id": "collision_camera_031"
             },
             "nodes": {
-                "Door to collision_camera_024 (G)": {
+                "Door to Golzuna Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4528,7 +4632,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_024 (G)",
+                        "area_name": "Golzuna Tower",
                         "node_name": "Door to collision_camera_031 (G)"
                     },
                     "dock_type": "door",
@@ -4668,7 +4772,7 @@
                 }
             }
         },
-        "collision_camera_032 (G)": {
+        "Pulse Radar Room": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -4699,11 +4803,11 @@
                 "asset_id": "collision_camera_032"
             },
             "nodes": {
-                "Pickup (powerup_sonar)": {
+                "Pickup (Pulse Radar)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 2978.002685546875,
+                        "x": 2978.0,
                         "y": 5550.0,
                         "z": 0.0
                     },
@@ -4714,7 +4818,15 @@
                     },
                     "pickup_index": 110,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -4729,7 +4841,22 @@
                         "start_point_actor_name": "SP_Checkpoint_SonarObtained",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Pulse Radar)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBEAM) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBEAM) 1": {
                     "node_type": "configurable_node",
@@ -4748,7 +4875,24 @@
                             "POWERBEAM"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (WEIGHT) 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBEAM) 2": {
                     "node_type": "configurable_node",
@@ -4767,26 +4911,15 @@
                             "POWERBEAM"
                         ]
                     },
-                    "connections": {}
-                },
-                "Tile Group (POWERBEAM) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4000.0,
-                        "y": 6200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_029",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "POWERBEAM"
-                        ]
-                    },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (WEIGHT) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT) 1": {
                     "node_type": "generic",
@@ -4805,7 +4938,15 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT) 2": {
                     "node_type": "generic",
@@ -4824,7 +4965,42 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBEAM) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Above Pulse Radar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2225.22,
+                        "y": 6260.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "Above Pulse Radar",
+                        "node_name": "Dock to Pulse Radar Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (WEIGHT) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4876,7 +5052,7 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Door from collision_camera_026 (G)": {
+                "Door from Golzuna Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4895,7 +5071,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_026 (G)",
+                        "area_name": "Golzuna Arena",
                         "node_name": "Door to collision_camera_033 (G)"
                     },
                     "dock_type": "door",
@@ -4928,7 +5104,7 @@
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door from collision_camera_034 (G)": {
+                "Door from Transport to Hanubia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4947,7 +5123,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_034 (G)",
+                        "area_name": "Transport to Hanubia",
                         "node_name": "Door to collision_camera_033 (G)"
                     },
                     "dock_type": "door",
@@ -5051,8 +5227,8 @@
                 }
             }
         },
-        "collision_camera_034 (G)": {
-            "default_node": "Elevator (wagontrain_shipyard_000)",
+        "Transport to Hanubia": {
+            "default_node": "Tram to Hanubia - Transport to Ghavoran",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5102,13 +5278,13 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_033 (G)",
-                        "node_name": "Door from collision_camera_034 (G)"
+                        "node_name": "Door from Transport to Hanubia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Elevator (wagontrain_shipyard_000)": {
+                "Tram to Hanubia - Transport to Ghavoran": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -5225,7 +5401,7 @@
                 "asset_id": "collision_camera_036"
             },
             "nodes": {
-                "Door to collision_camera_024 (G)": {
+                "Door to Golzuna Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5244,7 +5420,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_024 (G)",
+                        "area_name": "Golzuna Tower",
                         "node_name": "Door to collision_camera_036 (G)"
                     },
                     "dock_type": "door",
@@ -5279,8 +5455,8 @@
                 }
             }
         },
-        "collision_camera_037 (G)": {
-            "default_node": "Elevator (wagontrain_quarantine_with_cutscene_000)",
+        "Transport to Elun": {
+            "default_node": "Tram to Elun - Transport to Ghavoran",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5330,7 +5506,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_029 (G)",
-                        "node_name": "Door to collision_camera_037 (G)"
+                        "node_name": "Door to Transport to Elun"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -5353,7 +5529,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (wagontrain_quarantine_with_cutscene_000)": {
+                "Tram to Elun - Transport to Ghavoran": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -5372,7 +5548,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_001 (E)"
+                        "area_name": "Transport to Ghavoran"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -5380,8 +5556,8 @@
                 }
             }
         },
-        "collision_camera_038 (G)": {
-            "default_node": "Elevator (elevator_baselab_000)",
+        "Transport to Dairon": {
+            "default_node": "Elevator to Dairon - Transport to Ghavoran",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -5431,13 +5607,13 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_008 (G)",
-                        "node_name": "Door to collision_camera_038 (G)"
+                        "node_name": "Door to Transport to Dairon"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Elevator (elevator_baselab_000)": {
+                "Elevator to Dairon - Transport to Ghavoran": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -5456,7 +5632,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_047 (D)"
+                        "area_name": "Transport to Ghavoran"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -5464,14 +5640,14 @@
                 }
             }
         },
-        "collision_camera_039 (G)": {
+        "Above Pulse Radar": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 2000.0,
                     "x2": 4100.0,
-                    "y1": 6200.0,
+                    "y1": 6150.0,
                     "y2": 8100.0
                 },
                 "polygon": [
@@ -5485,11 +5661,11 @@
                     ],
                     [
                         2000.0,
-                        6200.0
+                        6150.0
                     ],
                     [
                         4100.0,
-                        6200.0
+                        6150.0
                     ]
                 ],
                 "asset_id": "collision_camera_039"
@@ -5515,7 +5691,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_021 (G)",
-                        "node_name": "Door to collision_camera_039 (G)"
+                        "node_name": "Door to Above Pulse Radar"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
@@ -5538,7 +5714,7 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Door from collision_camera_024 (G)": {
+                "Door from Teleporter to Cataris": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5557,8 +5733,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_024 (G)",
-                        "node_name": "Door to collision_camera_039 (G)"
+                        "area_name": "Teleporter to Cataris",
+                        "node_name": "Door to Above Pulse Radar"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
@@ -5635,10 +5811,48 @@
                         ]
                     },
                     "connections": {}
+                },
+                "Tile Group (POWERBEAM) 3": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4000.0,
+                        "y": 6200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_029",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
+                    },
+                    "connections": {}
+                },
+                "Dock to Pulse Radar Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2225.22,
+                        "y": 6260.29,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "Pulse Radar Room",
+                        "node_name": "Dock to Above Pulse Radar"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {}
                 }
             }
         },
-        "collision_camera_040 (G)": {
+        "Save Station Top": {
             "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
@@ -5669,7 +5883,7 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
-                "Door to collision_camera_024 (G)": {
+                "Door to Golzuna Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5688,8 +5902,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_024 (G)",
-                        "node_name": "Door to collision_camera_040 (G)"
+                        "area_name": "Golzuna Tower",
+                        "node_name": "Door to Save Station Top"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
