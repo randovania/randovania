@@ -1,10 +1,10 @@
 ----------------
-collision_camera_000 (D)
+Save Station East
 Extra - total_boundings: {'x1': 14000.0, 'x2': 16100.0, 'y1': 4600.0, 'y2': 5742.0}
 Extra - polygon: [[16100.0, 5742.0], [14000.0, 5742.0], [14000.0, 4600.0], [16100.0, 4600.0]]
 Extra - asset_id: collision_camera_000
-> Door to collision_camera_001 (D); Heals? False
-  * Power Beam Door to collision_camera_001 (D)/Door to collision_camera_000 (D)
+> Door to Teleport to Artaria; Heals? False
+  * Power Beam Door to Teleport to Artaria/Door to Save Station East
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -13,7 +13,7 @@ Extra - asset_id: collision_camera_000
   * Extra - right_shield_def: None
 
 > Door to collision_camera_002 (D); Heals? False
-  * Power Beam Door to collision_camera_002 (D)/Door to collision_camera_000 (D)
+  * Power Beam Door to collision_camera_002 (D)/Door to Save Station East
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -28,13 +28,13 @@ Extra - asset_id: collision_camera_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
-collision_camera_001 (D)
+Teleport to Artaria
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 16000.0, 'x2': 20500.0, 'y1': 4600.0, 'y2': 8100.0}
 Extra - polygon: [[20500.0, 8100.0], [16000.0, 8100.0], [16000.0, 4600.0], [20500.0, 4600.0]]
 Extra - asset_id: collision_camera_001
-> Door to collision_camera_000 (D); Heals? False
-  * Power Beam Door to collision_camera_000 (D)/Door to collision_camera_001 (D)
+> Door to Save Station East; Heals? False
+  * Power Beam Door to Save Station East/Door to Teleport to Artaria
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -42,8 +42,8 @@ Extra - asset_id: collision_camera_001
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Door to collision_camera_043 (D); Heals? False
-  * Power Beam Door to collision_camera_043 (D)/Door to collision_camera_001 (D)
+> Door to Transport to Cataris; Heals? False
+  * Power Beam Door to Transport to Cataris/Door to Teleport to Artaria
   * Extra - actor_name: doorpowerpower_015
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -62,8 +62,8 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_name: energyrecharge_002_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
 
-> Elevator (teleport_cave_000); Heals? False; Spawn Point
-  * Teleporter to Artaria - collision_camera_008 (A)
+> Teleporter to Artaria - Teleport to Dairon; Heals? False; Spawn Point
+  * Teleporter to Artaria - Teleport to Dairon
   * Extra - actor_name: teleport_cave_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
   * Extra - elevator_component: CTeleporterUsableComponent
@@ -104,8 +104,8 @@ collision_camera_002 (D)
 Extra - total_boundings: {'x1': 12000.0, 'x2': 14100.0, 'y1': 400.0, 'y2': 5700.0}
 Extra - polygon: [[14100.0, 5700.0], [12000.0, 5700.0], [12000.0, 400.0], [14100.0, 400.0]]
 Extra - asset_id: collision_camera_002
-> Door to collision_camera_000 (D); Heals? False
-  * Power Beam Door to collision_camera_000 (D)/Door to collision_camera_002 (D)
+> Door to Save Station East; Heals? False
+  * Power Beam Door to Save Station East/Door to collision_camera_002 (D)
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -132,17 +132,17 @@ Extra - asset_id: collision_camera_002
   * Extra - tile_types: ('BOMB',)
 
 ----------------
-collision_camera_003 (D)
+East Transport to Ferenia
 Extra - total_boundings: {'x1': 12000.0, 'x2': 15300.0, 'y1': 5700.0, 'y2': 8200.0}
 Extra - polygon: [[15300.0, 8200.0], [12000.0, 8200.0], [12000.0, 5700.0], [15300.0, 5700.0]]
 Extra - asset_id: collision_camera_003
 > Dock to collision_camera_005 (D); Heals? False
-  * EMMI Door to collision_camera_005 (D)/Dock to collision_camera_003 (D)
+  * EMMI Door to collision_camera_005 (D)/Dock to East Transport to Ferenia
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Elevator (elevator_sanctuary_000); Heals? False; Spawn Point
-  * Teleporter to Ferenia - collision_camera_000 (F)
+> Elevator to Ferenia - East Transport to Darion; Heals? False; Spawn Point
+  * Teleporter to Ferenia - East Transport to Darion
   * Extra - actor_name: elevator_sanctuary_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
@@ -219,8 +219,8 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Dock to collision_camera_003 (D); Heals? False
-  * EMMI Door to collision_camera_003 (D)/Dock to collision_camera_005 (D)
+> Dock to East Transport to Ferenia; Heals? False
+  * EMMI Door to East Transport to Ferenia/Dock to collision_camera_005 (D)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
@@ -260,8 +260,8 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_name: itemsphere_widebeam
   * Extra - actor_def: actordef:actors/items/itemsphere_widebeam/charclasses/itemsphere_widebeam.bmsad
 
-> Dock to collision_camera_008 (D); Heals? False
-  * Not Determined to collision_camera_008 (D)/Dock to collision_camera_006 (D)
+> Dock to Teleport to Cataris; Heals? False
+  * Not Determined to Teleport to Cataris/Dock to collision_camera_006 (D)
   * Extra - actor_name: doorpowerpower_021
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
@@ -306,8 +306,8 @@ collision_camera_007 (D)
 Extra - total_boundings: {'x1': -2000.0, 'x2': 1100.0, 'y1': 1100.0, 'y2': 2800.0}
 Extra - polygon: [[1100.0, 2800.0], [-2000.0, 2800.0], [-2000.0, 1100.0], [1100.0, 1100.0]]
 Extra - asset_id: collision_camera_007
-> Door to collision_camera_008 (D); Heals? False
-  * Power Beam Door to collision_camera_008 (D)/Door to collision_camera_007 (D)
+> Door to Teleport to Cataris; Heals? False
+  * Power Beam Door to Teleport to Cataris/Door to collision_camera_007 (D)
   * Extra - actor_name: doorpowerpower_020
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -327,13 +327,13 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_def: actordef:actors/props/powergeneratorengine/charclasses/powergeneratorengine.bmsad
 
 ----------------
-collision_camera_008 (D)
+Teleport to Cataris
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 1000.0, 'x2': 4100.0, 'y1': -300.0, 'y2': 3600.0}
 Extra - polygon: [[4100.0, 3600.0], [1000.0, 3600.0], [1000.0, -300.0], [4100.0, -300.0]]
 Extra - asset_id: collision_camera_008
 > Dock to collision_camera_010 (D); Heals? False
-  * Not Determined to collision_camera_010 (D)/Dock to collision_camera_008 (D)
+  * Not Determined to collision_camera_010 (D)/Dock to Teleport to Cataris
   * Extra - actor_name: doorpowerpower_011
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_001
@@ -342,7 +342,7 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_def: None
 
 > Door to collision_camera_009 (D); Heals? False
-  * Power Beam Door to collision_camera_009 (D)/Door to collision_camera_008 (D)
+  * Power Beam Door to collision_camera_009 (D)/Door to Teleport to Cataris
   * Extra - actor_name: doorpowerpower_018
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -351,7 +351,7 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_def: None
 
 > Door to collision_camera_007 (D); Heals? False
-  * Power Beam Door to collision_camera_007 (D)/Door to collision_camera_008 (D)
+  * Power Beam Door to collision_camera_007 (D)/Door to Teleport to Cataris
   * Extra - actor_name: doorpowerpower_020
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -360,7 +360,7 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_def: None
 
 > Dock to collision_camera_006 (D); Heals? False
-  * Not Determined to collision_camera_006 (D)/Dock to collision_camera_008 (D)
+  * Not Determined to collision_camera_006 (D)/Dock to Teleport to Cataris
   * Extra - actor_name: doorpowerpower_021
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
@@ -373,12 +373,12 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: db_dif_b1_001
   * Extra - actor_def: actordef:actors/props/db_dif_b1_001/charclasses/db_dif_b1_001.bmsad
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_AfterDiffusion
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
-> Elevator (teleport_magma_000); Heals? False
-  * Teleporter to Cataris - collision_camera_051 (C)
+> Teleporter to Cataris - Teleport to Dairon; Heals? False; Spawn Point
+  * Teleporter to Cataris - Teleport to Dairon
   * Extra - actor_name: teleport_magma_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
   * Extra - elevator_component: CTeleporterUsableComponent
@@ -405,8 +405,8 @@ collision_camera_009 (D)
 Extra - total_boundings: {'x1': 4000.0, 'x2': 6100.0, 'y1': 600.0, 'y2': 1742.0}
 Extra - polygon: [[6100.0, 1742.0], [4000.0, 1742.0], [4000.0, 600.0], [6100.0, 600.0]]
 Extra - asset_id: collision_camera_009
-> Door to collision_camera_008 (D); Heals? False
-  * Power Beam Door to collision_camera_008 (D)/Door to collision_camera_009 (D)
+> Door to Teleport to Cataris; Heals? False
+  * Power Beam Door to Teleport to Cataris/Door to collision_camera_009 (D)
   * Extra - actor_name: doorpowerpower_018
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -443,8 +443,8 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Dock to collision_camera_008 (D); Heals? False
-  * Not Determined to collision_camera_008 (D)/Dock to collision_camera_010 (D)
+> Dock to Teleport to Cataris; Heals? False
+  * Not Determined to Teleport to Cataris/Dock to collision_camera_010 (D)
   * Extra - actor_name: doorpowerpower_011
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_001
@@ -479,7 +479,7 @@ Extra - asset_id: collision_camera_010
   * Extra - tile_types: ('POWERBEAM',)
 
 ----------------
-collision_camera_011 (D)
+Transport to Artaria
 Extra - total_boundings: {'x1': 12000.0, 'x2': 15300.0, 'y1': -1600.0, 'y2': 500.0}
 Extra - polygon: [[15300.0, 500.0], [12000.0, 500.0], [12000.0, -1600.0], [15300.0, -1600.0]]
 Extra - asset_id: collision_camera_011
@@ -489,7 +489,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
 
 > Door from collision_camera_012 (D); Heals? False
-  * Access Closed to collision_camera_012 (D)/Door to collision_camera_011 (D)
+  * Access Closed to collision_camera_012 (D)/Door to Transport to Artaria
   * Extra - actor_name: doorchargeclosed_001
   * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -502,7 +502,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: grapplepulloff1x2_006
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
 
-> Elevator (elevator_cave_000); Heals? False; Spawn Point
+> Elevator to Artaria - Transport to Dairon; Heals? False; Spawn Point
   * Teleporter to Artaria - Transport to Dairon
   * Extra - actor_name: elevator_cave_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
@@ -561,8 +561,8 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
-> Door to collision_camera_011 (D); Heals? False
-  * Charge Beam Door to collision_camera_011 (D)/Door from collision_camera_012 (D)
+> Door to Transport to Artaria; Heals? False
+  * Charge Beam Door to Transport to Artaria/Door from collision_camera_012 (D)
   * Extra - actor_name: doorchargeclosed_001
   * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -794,8 +794,8 @@ collision_camera_017 (D)
 Extra - total_boundings: {'x1': -3000.0, 'x2': 1100.0, 'y1': 2900.0, 'y2': 6600.0}
 Extra - polygon: [[1100.0, 6600.0], [-3000.0, 6600.0], [-3000.0, 2900.0], [1100.0, 2900.0]]
 Extra - asset_id: collision_camera_017
-> Dock to collision_camera_019 (D); Heals? False
-  * EMMI Door to collision_camera_019 (D)/Dock to collision_camera_017 (D)
+> Dock to West Transport to Ferenia; Heals? False
+  * EMMI Door to West Transport to Ferenia/Dock to collision_camera_017 (D)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
@@ -903,18 +903,18 @@ Extra - asset_id: collision_camera_018
   * Extra - tile_types: ('WEIGHT',)
 
 ----------------
-collision_camera_019 (D)
+West Transport to Ferenia
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 1000.0, 'x2': 3100.0, 'y1': 5600.0, 'y2': 8000.0}
 Extra - polygon: [[3100.0, 8000.0], [1000.0, 8000.0], [1000.0, 5600.0], [3100.0, 5600.0]]
 Extra - asset_id: collision_camera_019
 > Dock to collision_camera_017 (D); Heals? False
-  * EMMI Door to collision_camera_017 (D)/Dock to collision_camera_019 (D)
+  * EMMI Door to collision_camera_017 (D)/Dock to West Transport to Ferenia
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
 > Door to collision_camera_044 (D) (doorpowerpower_013); Heals? False
-  * Power Beam Door to collision_camera_044 (D)/Door to collision_camera_019 (D) (doorpowerpower_013)
+  * Power Beam Door to collision_camera_044 (D)/Door to West Transport to Ferenia (doorpowerpower_013)
   * Extra - actor_name: doorpowerpower_013
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -923,7 +923,7 @@ Extra - asset_id: collision_camera_019
   * Extra - right_shield_def: None
 
 > Door to collision_camera_044 (D) (doorpowerpower_014); Heals? False
-  * Power Beam Door to collision_camera_044 (D)/Door to collision_camera_019 (D) (doorpowerpower_014)
+  * Power Beam Door to collision_camera_044 (D)/Door to West Transport to Ferenia (doorpowerpower_014)
   * Extra - actor_name: doorpowerpower_014
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -931,8 +931,8 @@ Extra - asset_id: collision_camera_019
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Elevator (elevator_sanctuary_001); Heals? False
-  * Teleporter to Ferenia - collision_camera_008 (F)
+> Elevator to Ferenia - West Transport to Dairon; Heals? False; Spawn Point
+  * Teleporter to Ferenia - West Transport to Dairon
   * Extra - actor_name: elevator_sanctuary_001
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent
@@ -940,7 +940,7 @@ Extra - asset_id: collision_camera_019
   * Extra - start_point_actor_name: elevator_sanctuary_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_AfterProfessor
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
@@ -1690,8 +1690,8 @@ Extra - asset_id: collision_camera_039
   * Extra - actor_name: dooremmy_010
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Door to collision_camera_046 (D); Heals? False
-  * Power Beam Door to collision_camera_046 (D)/Door to collision_camera_039 (D)
+> Door to Upper Transport to Burenia; Heals? False
+  * Power Beam Door to Upper Transport to Burenia/Door to collision_camera_039 (D)
   * Extra - actor_name: doorpowerpower_016
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1753,8 +1753,8 @@ Extra - asset_id: collision_camera_041
   * Extra - actor_name: dooremmy_012
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
 
-> Door to collision_camera_045 (D); Heals? False
-  * Power Beam Door to collision_camera_045 (D)/Door to collision_camera_041 (D)
+> Door to Lower Transport to Burenia; Heals? False
+  * Power Beam Door to Lower Transport to Burenia/Door to collision_camera_041 (D)
   * Extra - actor_name: doorpowerpower_017
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1803,13 +1803,13 @@ Extra - asset_id: collision_camera_042
   * Extra - tile_types: ('WEIGHT',)
 
 ----------------
-collision_camera_043 (D)
+Transport to Cataris
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 20400.0, 'x2': 28300.0, 'y1': 4600.0, 'y2': 8100.0}
 Extra - polygon: [[28300.0, 8100.0], [20400.0, 8100.0], [20400.0, 4600.0], [28300.0, 4600.0]]
 Extra - asset_id: collision_camera_043
-> Door to collision_camera_001 (D); Heals? False
-  * Power Beam Door to collision_camera_001 (D)/Door to collision_camera_043 (D)
+> Door to Teleport to Artaria; Heals? False
+  * Power Beam Door to Teleport to Artaria/Door to Transport to Cataris
   * Extra - actor_name: doorpowerpower_015
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1817,12 +1817,12 @@ Extra - asset_id: collision_camera_043
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False
   * Extra - start_point_actor_name: StartPoint0
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
-> Elevator (wagontrain_magma_000); Heals? False
-  * Teleporter to Cataris - collision_camera_041 (C)
+> Elevator to Cataris - Transport to Dairon; Heals? False; Spawn Point
+  * Teleporter to Cataris - Transport to Dairon
   * Extra - actor_name: wagontrain_magma_000
   * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
   * Extra - elevator_component: CTrainUsableComponent
@@ -1835,8 +1835,8 @@ collision_camera_044 (D)
 Extra - total_boundings: {'x1': 3000.0, 'x2': 5100.0, 'y1': 6200.0, 'y2': 7342.0}
 Extra - polygon: [[5100.0, 7342.0], [3000.0, 7342.0], [3000.0, 6200.0], [5100.0, 6200.0]]
 Extra - asset_id: collision_camera_044
-> Door to collision_camera_019 (D) (doorpowerpower_013); Heals? False
-  * Power Beam Door to collision_camera_019 (D)/Door to collision_camera_044 (D) (doorpowerpower_013)
+> Door to West Transport to Ferenia (doorpowerpower_013); Heals? False
+  * Power Beam Door to West Transport to Ferenia/Door to collision_camera_044 (D) (doorpowerpower_013)
   * Extra - actor_name: doorpowerpower_013
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1844,8 +1844,8 @@ Extra - asset_id: collision_camera_044
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Door to collision_camera_019 (D) (doorpowerpower_014); Heals? False
-  * Power Beam Door to collision_camera_019 (D)/Door to collision_camera_044 (D) (doorpowerpower_014)
+> Door to West Transport to Ferenia (doorpowerpower_014); Heals? False
+  * Power Beam Door to West Transport to Ferenia/Door to collision_camera_044 (D) (doorpowerpower_014)
   * Extra - actor_name: doorpowerpower_014
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1860,13 +1860,13 @@ Extra - asset_id: collision_camera_044
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
 
 ----------------
-collision_camera_045 (D)
+Lower Transport to Burenia
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -25100.0, 'x2': -18400.0, 'y1': -9300.0, 'y2': -8158.0}
 Extra - polygon: [[-18400.0, -8158.0], [-25100.0, -8158.0], [-25100.0, -9300.0], [-18400.0, -9300.0]]
 Extra - asset_id: collision_camera_045
 > Door to collision_camera_041 (D); Heals? False
-  * Power Beam Door to collision_camera_041 (D)/Door to collision_camera_045 (D)
+  * Power Beam Door to collision_camera_041 (D)/Door to Lower Transport to Burenia
   * Extra - actor_name: doorpowerpower_017
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1874,8 +1874,8 @@ Extra - asset_id: collision_camera_045
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Elevator (wagontrain_with_portal_aqua_001); Heals? False
-  * Teleporter to Burenia - collision_camera_004 (B)
+> Tram to Burenia - Lower Transport to Dairon; Heals? False; Spawn Point
+  * Teleporter to Burenia - Lower Transport to Dairon
   * Extra - actor_name: wagontrain_with_portal_aqua_001
   * Extra - actor_def: actordef:actors/props/wagontrain_with_portal/charclasses/wagontrain_with_portal.bmsad
   * Extra - elevator_component: CTrainWithPortalUsableComponent
@@ -1883,17 +1883,17 @@ Extra - asset_id: collision_camera_045
   * Extra - start_point_actor_name: wagontrain_aqua_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
 
-> Start Point; Heals? False; Spawn Point
+> Start Point; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_AfterAqua
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 ----------------
-collision_camera_046 (D)
+Upper Transport to Burenia
 Extra - total_boundings: {'x1': -27900.0, 'x2': -19800.0, 'y1': -4200.0, 'y2': -2100.0}
 Extra - polygon: [[-19800.0, -2100.0], [-27900.0, -2100.0], [-27900.0, -4200.0], [-19800.0, -4200.0]]
 Extra - asset_id: collision_camera_046
 > Door to collision_camera_039 (D); Heals? False
-  * Power Beam Door to collision_camera_039 (D)/Door to collision_camera_046 (D)
+  * Power Beam Door to collision_camera_039 (D)/Door to Upper Transport to Burenia
   * Extra - actor_name: doorpowerpower_016
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1901,8 +1901,8 @@ Extra - asset_id: collision_camera_046
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Elevator (wagontrain_aqua_000); Heals? False; Spawn Point
-  * Teleporter to Burenia - collision_camera_003 (B)
+> Tram to Burenia - Upper Transport to Dairon; Heals? False; Spawn Point
+  * Teleporter to Burenia - Upper Transport to Dairon
   * Extra - actor_name: wagontrain_aqua_000
   * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
   * Extra - elevator_component: CTrainUsableComponent
@@ -1911,12 +1911,12 @@ Extra - asset_id: collision_camera_046
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
 
 ----------------
-collision_camera_047 (D)
+Transport to Ghavoran
 Extra - total_boundings: {'x1': -18100.0, 'x2': -16000.0, 'y1': 5026.7099609375, 'y2': 6168.7099609375}
 Extra - polygon: [[-16000.0, 6168.7099609375], [-18100.0, 6168.7099609375], [-18100.0, 5026.7099609375], [-16000.0, 5026.7099609375]]
 Extra - asset_id: collision_camera_047
-> Elevator (elevator_forest_000); Heals? False; Spawn Point
-  * Teleporter to Ghavoran - collision_camera_038 (G)
+> Elevator to Ghavoran - Transport to Dairon; Heals? False; Spawn Point
+  * Teleporter to Ghavoran - Transport to Dairon
   * Extra - actor_name: elevator_forest_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
   * Extra - elevator_component: CElevatorUsableComponent

@@ -28,6 +28,8 @@ from randovania.gui.lib import async_dialog
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 
+SHOW_WORLD_MIN_MAX_SPINNER = False
+
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     edit_mode: bool
@@ -56,17 +58,28 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Horizontal)
         self.splitDockWidget(self.area_view_dock, self.node_info_dock, Qt.Horizontal)
 
-        # self.spin_min_x = QtWidgets.QSpinBox(super().centralWidget())
-        # self.spin_min_y = QtWidgets.QSpinBox(super().centralWidget())
-        # self.spin_max_x = QtWidgets.QSpinBox(super().centralWidget())
-        # self.spin_max_y = QtWidgets.QSpinBox(super().centralWidget())
-        # for i, it in enumerate([self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]):
-        #     it.setMaximum(99999)
-        #     la = QtWidgets.QLabel(super().centralWidget())
-        #     la.setText(["min_x", "min_y", "max_x", "max_y"][i])
-        #     self.gridLayout_2.addWidget(la)
-        #     self.gridLayout_2.addWidget(it)
-        #     it.valueChanged.connect(self._on_image_spin_update)
+        if SHOW_WORLD_MIN_MAX_SPINNER:
+            area_border_body = QtWidgets.QWidget()
+
+            area_border_dock = QtWidgets.QDockWidget(self)
+            area_border_dock.setWidget(area_border_body)
+            area_border_dock.setWindowTitle("World min/max for image")
+
+            layout = QtWidgets.QVBoxLayout(area_border_body)
+            self.spin_min_x = QtWidgets.QSpinBox(area_border_body)
+            self.spin_min_y = QtWidgets.QSpinBox(area_border_body)
+            self.spin_max_x = QtWidgets.QSpinBox(area_border_body)
+            self.spin_max_y = QtWidgets.QSpinBox(area_border_body)
+
+            for i, it in enumerate([self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]):
+                it.setMaximum(99999)
+                la = QtWidgets.QLabel(area_border_body)
+                la.setText(["min_x", "min_y", "max_x", "max_y"][i])
+                layout.addWidget(la)
+                layout.addWidget(it)
+                it.valueChanged.connect(self._on_image_spin_update)
+
+            self.tabifyDockWidget(self.points_of_interest_dock, area_border_dock)
 
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
@@ -78,6 +91,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
         self.area_view_canvas.CreateDockRequest.connect(self._create_new_dock)
+        self.area_view_canvas.MoveNodeToAreaRequest.connect(self._move_dock_to_area)
         self.area_view_canvas.MoveNodeRequest.connect(self._move_node)
         self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
         self.area_view_canvas.SelectAreaRequest.connect(self.focus_on_area)
@@ -161,24 +175,25 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.area_view_canvas.select_world(world)
 
-        # for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
-        #     it.valueChanged.disconnect(self._on_image_spin_update)
-        #
-        # self.spin_min_x.setValue(world.extra["map_min_x"])
-        # self.spin_min_y.setValue(world.extra["map_min_y"])
-        # self.spin_max_x.setValue(world.extra["map_max_x"])
-        # self.spin_max_y.setValue(world.extra["map_max_y"])
-        #
-        # for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
-        #     it.valueChanged.connect(self._on_image_spin_update)
+        if SHOW_WORLD_MIN_MAX_SPINNER:
+            for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
+                it.valueChanged.disconnect(self._on_image_spin_update)
 
-    # def _on_image_spin_update(self):
-    #     world = self.current_world
-    #     world.extra["map_min_x"] = self.spin_min_x.value()
-    #     world.extra["map_min_y"] = self.spin_min_y.value()
-    #     world.extra["map_max_x"] = self.spin_max_x.value()
-    #     world.extra["map_max_y"] = self.spin_max_y.value()
-    #     self.area_view_canvas.select_world(world)
+            self.spin_min_x.setValue(world.extra["map_min_x"])
+            self.spin_min_y.setValue(world.extra["map_min_y"])
+            self.spin_max_x.setValue(world.extra["map_max_x"])
+            self.spin_max_y.setValue(world.extra["map_max_y"])
+
+            for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
+                it.valueChanged.connect(self._on_image_spin_update)
+
+    def _on_image_spin_update(self):
+        w = self.current_world
+        w.extra["map_min_x"] = self.spin_min_x.value()
+        w.extra["map_min_y"] = self.spin_min_y.value()
+        w.extra["map_max_x"] = self.spin_max_x.value()
+        w.extra["map_max_y"] = self.spin_max_y.value()
+        self.area_view_canvas.select_world(w)
 
     def on_select_area(self, select_node: Optional[Node] = None):
         for node in self.radio_button_to_node.keys():
@@ -329,7 +344,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def update_selected_node(self):
         node = self.current_node
-        assert node is not None
+        self.node_info_group.setEnabled(node is not None)
+        if node is None:
+            self.node_name_label.setText("<missing node>")
+            self.node_details_label.setText("")
+            self.node_description_label.setText("")
+            self.update_other_node_connection()
+            return
 
         self.node_heals_check.setChecked(node.heal)
         is_default_spawn = self.current_area.default_node == node.name
@@ -378,7 +399,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         :return:
         """
         current_node = self.current_node
-        assert current_node is not None
+        if current_node is None:
+            assert not self.current_area.nodes
 
         # Calculates which node should be selected
         selected_node = None
@@ -423,19 +445,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_node = self.current_node
         current_connection_node = self.current_connection_node
 
-        assert current_node is not None
-        assert current_node != current_connection_node
+        assert current_node != current_connection_node or current_node is None
 
         if self._connections_visualizer is not None:
             self._connections_visualizer.deleteLater()
             self._connections_visualizer = None
 
-        if current_connection_node is None:
-            assert len(self.current_area.nodes) == 1 or not self.edit_mode
+        if current_connection_node is None or current_node is None:
+            assert len(self.current_area.nodes) <= 1 or not self.edit_mode
             return
 
-        requirement = self.current_area.connections[self.current_node].get(self.current_connection_node,
-                                                                           Requirement.impossible())
+        requirement = self.current_area.connections[current_node].get(self.current_connection_node,
+                                                                      Requirement.impossible())
         self._connections_visualizer = ConnectionsVisualizer(
             self.other_node_alternatives_contents,
             self.alternatives_grid_layout,
@@ -615,6 +636,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                 f"{target_name_base} (1)",
             )
         self.on_select_area(new_node_this_area)
+
+    def _move_dock_to_area(self, node: Node, new_area: Area):
+        self.editor.move_node_from_area_to_area(self.current_area, new_area, node)
+        self.on_select_area()
 
     def _remove_node(self):
         if self._check_for_edit_dialog():
