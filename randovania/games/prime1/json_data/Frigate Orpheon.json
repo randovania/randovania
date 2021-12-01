@@ -6,7 +6,7 @@
     "areas": {
         "Exterior Docking Hangar": {
             "default_node": "Ship Save",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3508802073
             },
@@ -107,14 +107,22 @@
                         "area_name": "Landing Site"
                     },
                     "keep_name_when_vanilla": false,
-                    "editable": false,
-                    "connections": {}
+                    "editable": true,
+                    "connections": {
+                        "Ship Save": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Air Lock": {
             "default_node": "Door to Exterior Docking Hangar",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 123995650
             },
@@ -138,7 +146,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Exterior Docking Hangar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Exterior Docking Hangar": {
                     "node_type": "dock",
@@ -203,17 +219,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event33",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -222,7 +228,7 @@
         },
         "Deck Alpha Access Hall": {
             "default_node": "Door to Air Lock",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1649363258
             },
@@ -275,13 +281,21 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Air Lock": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Deck Alpha Mech Shaft": {
             "default_node": "Door to Connection Elevator to Deck Alpha",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3365346969
             },
@@ -340,7 +354,7 @@
         },
         "Emergency Evacuation Area": {
             "default_node": "Door to Deck Alpha Access Hall",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 551846422
             },
@@ -364,7 +378,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Deck Alpha Access Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Deck Alpha Access Hall": {
                     "node_type": "dock",
@@ -399,7 +421,7 @@
         },
         "Connection Elevator to Deck Alpha": {
             "default_node": "Door to Biotech Research Area 2",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2921253053
             },
@@ -424,8 +446,8 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
-                        "Item Loss (UNIMPLEMENTED)": {
-                            "type": "or",
+                        "Door to Deck Alpha Mech Shaft": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -463,28 +485,12 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {}
-                },
-                "Item Loss (UNIMPLEMENTED)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": null,
-                    "description": "",
-                    "extra": {},
-                    "connections": {
-                        "Door to Deck Alpha Mech Shaft": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
         "Deck Alpha Umbilical Hall": {
             "default_node": "Door to Emergency Evacuation Area",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3995189286
             },
@@ -573,13 +579,57 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Emergency Evacuation Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Power",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
         "Biotech Research Area 2": {
             "default_node": "Door to Main Ventilation Shaft Section F",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3319675910
             },
@@ -626,6 +676,41 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MorphBall",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -657,7 +742,7 @@
         },
         "Map Facility": {
             "default_node": "Door to Deck Alpha Umbilical Hall",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3454403824
             },
@@ -734,6 +819,23 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Map Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -760,6 +862,23 @@
                                     }
                                 ]
                             }
+                        },
+                        "Door to Connection Elevator to Deck Beta": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 }
@@ -767,7 +886,7 @@
         },
         "Main Ventilation Shaft Section F": {
             "default_node": "Door to Main Ventilation Shaft Section E",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 274035036
             },
@@ -826,7 +945,7 @@
         },
         "Connection Elevator to Deck Beta": {
             "default_node": "Door to Map Facility",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 834947875
             },
@@ -889,13 +1008,21 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Map Facility": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Main Ventilation Shaft Section E": {
             "default_node": "Door to Main Ventilation Shaft Section D",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 690871324
             },
@@ -954,7 +1081,7 @@
         },
         "Deck Beta Conduit Hall": {
             "default_node": "Door to Connection Elevator to Deck Beta",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2827042742
             },
@@ -978,7 +1105,25 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Connection Elevator to Deck Beta": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Connection Elevator to Deck Beta": {
                     "node_type": "dock",
@@ -1023,7 +1168,7 @@
         },
         "Main Ventilation Shaft Section D": {
             "default_node": "Door to Main Ventilation Shaft Section C",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1040562396
             },
@@ -1082,7 +1227,7 @@
         },
         "Biotech Research Area 1": {
             "default_node": "Door to Deck Beta Conduit Hall",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2237107796
             },
@@ -1106,7 +1251,32 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Deck Beta Conduit Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Subventilation Shaft Section A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event33",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Door to Deck Beta Conduit Hall": {
                     "node_type": "dock",
@@ -1132,6 +1302,13 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Subventilation Shaft Section A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -1139,7 +1316,7 @@
                                             "type": "events",
                                             "name": "Event33",
                                             "amount": 1,
-                                            "negate": true
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -1205,13 +1382,28 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Deck Beta Security Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Deck Beta Conduit Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Main Ventilation Shaft Section C": {
             "default_node": "Door to Main Ventilation Shaft Section B",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1541179036
             },
@@ -1270,7 +1462,7 @@
         },
         "Deck Beta Security Hall": {
             "default_node": "Door to Biotech Research Area 1",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1237686565
             },
@@ -1294,7 +1486,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Biotech Research Area 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Biotech Research Area 1": {
                     "node_type": "dock",
@@ -1329,7 +1529,7 @@
         },
         "Connection Elevator to Deck Beta (2)": {
             "default_node": "Door to Deck Gamma Monitor Hall",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1859330843
             },
@@ -1398,7 +1598,7 @@
         },
         "Subventilation Shaft Section A": {
             "default_node": "Door to Biotech Research Area 1",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 154468580
             },
@@ -1457,7 +1657,7 @@
         },
         "Main Ventilation Shaft Section B": {
             "default_node": "Door to Main Ventilation Shaft Section A",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1291117148
             },
@@ -1516,7 +1716,7 @@
         },
         "Biohazard Containment": {
             "default_node": "Door to Deck Beta Transit Hall",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3513460432
             },
@@ -1540,7 +1740,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Deck Beta Security Hall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Deck Beta Security Hall": {
                     "node_type": "dock",
@@ -1585,7 +1793,7 @@
         },
         "Deck Gamma Monitor Hall": {
             "default_node": "Door to Reactor Core",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3865556485
             },
@@ -1644,7 +1852,7 @@
         },
         "Subventilation Shaft Section B": {
             "default_node": "Door to Subventilation Shaft Section A",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 3233526410
             },
@@ -1703,7 +1911,7 @@
         },
         "Main Ventilation Shaft Section A": {
             "default_node": "Door to Cargo Freight Lift to Deck Gamma",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1972129564
             },
@@ -1762,7 +1970,7 @@
         },
         "Deck Beta Transit Hall": {
             "default_node": "Door to Biohazard Containment",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 748855907
             },
@@ -1786,7 +1994,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Biohazard Containment": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Biohazard Containment": {
                     "node_type": "dock",
@@ -1821,7 +2037,7 @@
         },
         "Reactor Core": {
             "default_node": "Door to Reactor Core Entrance",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 2269457857
             },
@@ -1897,7 +2113,7 @@
         },
         "Cargo Freight Lift to Deck Gamma": {
             "default_node": "Door to Deck Beta Transit Hall",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1878064482
             },
@@ -2025,7 +2241,7 @@
         },
         "Reactor Core Entrance": {
             "default_node": "Save Station",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "asset_id": 1050775790
             },
