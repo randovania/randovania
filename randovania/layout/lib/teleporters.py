@@ -145,7 +145,13 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
             for identifier in self.editable_teleporters:
                 node = world_list.node_by_identifier(identifier)
                 if isinstance(node, TeleporterNode) and node.editable:
-                    result.append(identifier)
+                    # Valid destinations must be valid starting areas
+                    area = world_list.nodes_to_area(node)
+                    if area.valid_starting_location:
+                        result.append(identifier)
+                    # Hack for Metroid Prime 1, where the scripting for Metroid Prime Lair is dependent on the previous room
+                    elif area.name == "Metroid Prime Lair":
+                        result.append(NodeIdentifier.from_string("Impact Crater/Subchamber Five/Dock to Metroid Prime Lair"))
             return result
         else:
             return []
