@@ -6,6 +6,7 @@ from mock import MagicMock, AsyncMock, call, ANY
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.gui.game_details.game_details_window import GameDetailsWindow
+from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
@@ -85,10 +86,12 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
     window.update_layout_description(description)
 
     # Assert
-    assert len(window.pickup_spoiler_buttons) == 119
-    assert window.pickup_spoiler_show_all_button.text() == "Show All"
-    skip_qtbot.mouseClick(window.pickup_spoiler_show_all_button, QtCore.Qt.LeftButton)
-    assert window.pickup_spoiler_show_all_button.text() == "Hide All"
+    pickup_details_tab = window._game_details_tabs[0]
+    assert isinstance(pickup_details_tab, PickupDetailsTab)
+    assert len(pickup_details_tab.pickup_spoiler_buttons) == 119
+    assert pickup_details_tab.pickup_spoiler_show_all_button.text() == "Show All"
+    skip_qtbot.mouseClick(pickup_details_tab.pickup_spoiler_show_all_button, QtCore.Qt.LeftButton)
+    assert pickup_details_tab.pickup_spoiler_show_all_button.text() == "Hide All"
 
 
 @pytest.mark.asyncio
