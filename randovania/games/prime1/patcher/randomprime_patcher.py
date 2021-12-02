@@ -189,7 +189,7 @@ def _starting_items_value_for(resource_database: ResourceDatabase,
 
 def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
     loc = location.as_tuple
-    if loc in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES:
+    if loc in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES and loc != ("Frigate Orpheon", "Exterior Docking Hangar"):
         return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[loc]
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
@@ -291,6 +291,8 @@ class RandomprimePatcher(Patcher):
                         continue
 
                     identifier = db.world_list.identifier_for_node(node)
+                    print("\n")
+                    print(str(patches.elevator_connection))
                     target = _name_for_location(db.world_list, patches.elevator_connection[identifier])
 
                     source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[(
