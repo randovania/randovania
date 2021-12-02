@@ -103,9 +103,9 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
             estimated_ingame_alpha = 255 - ((color_tuple[0] + color_tuple[1] + color_tuple[2])/3)
             if estimated_ingame_alpha > 150:
                 QMessageBox.warning(self, "Dangerous preset", 
-                    "Be careful, dark colors like this one tend to produce an " \
-                    "almost opaque frame when using Scan Visor.\n" \
-                    "Use at your own risk."
+                    ("Be careful, dark colors like this one tend to produce an "
+                    "almost opaque frame when using Scan Visor.\n"
+                    "Use at your own risk.")
                 )
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, hud_color=color_tuple)
             self._update_color_squares()
