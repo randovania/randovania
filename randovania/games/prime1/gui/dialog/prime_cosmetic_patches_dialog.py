@@ -100,7 +100,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         
         if color.isValid():
             color_tuple = (color.red(), color.green(), color.blue())
-            estimated_ingame_alpha = 255 - ((color_tuple[0] + color_tuple[1] + color_tuple[2])/3)
+            estimated_ingame_alpha = 255 - (sum(color_tuple) / 3)
             if estimated_ingame_alpha > 150:
                 QMessageBox.warning(self, "Dangerous preset", 
                     ("Be careful, dark colors like this one tend to produce an "
