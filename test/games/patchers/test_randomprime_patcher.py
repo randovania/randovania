@@ -64,7 +64,7 @@ def test_create_patch_data(test_files_dir, mocker):
     description = LayoutDescription.from_file(file)
     patcher = RandomprimePatcher()
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
-    cosmetic_patches = PrimeCosmeticPatches()
+    cosmetic_patches = PrimeCosmeticPatches(use_hud_color=True, hud_color=(255,0,0), suit_color_rotations=(0, 40, 350, 12))
 
     mocker.patch("randovania.layout.layout_description.LayoutDescription._shareable_hash_bytes",
                  new_callable=PropertyMock,

@@ -59,7 +59,7 @@
             },
             "Missiles": {
                 "long_name": "Missiles",
-                "max_capacity": 275,
+                "max_capacity": 1,
                 "extra": {}
             },
             "Supers": {
@@ -93,7 +93,9 @@
             "Flash": {
                 "long_name": "Flash Shift",
                 "max_capacity": 1,
-                "extra": {}
+                "extra": {
+                    "item_id": "ITEM_GHOST_AURA"
+                }
             },
             "Pulse": {
                 "long_name": "Pulse Radar",
@@ -151,7 +153,7 @@
             },
             "PBs": {
                 "long_name": "Power Bomb",
-                "max_capacity": 15,
+                "max_capacity": 1,
                 "extra": {
                     "item_id": "ITEM_WEAPON_POWER_BOMB"
                 }
@@ -198,20 +200,35 @@
                     "item_id": "ITEM_ENERGY_TANKS"
                 }
             },
-            "TempMissile": {
-                "long_name": "Temporary Missile",
-                "max_capacity": 999,
-                "extra": {}
+            "MissileAmmo": {
+                "long_name": "Missile Ammo",
+                "max_capacity": 275,
+                "extra": {
+                    "item_id": "ITEM_WEAPON_MISSILE_CURRENT",
+                    "item_capacity_id": "ITEM_WEAPON_MISSILE_MAX"
+                }
             },
-            "TempPB": {
-                "long_name": "Temporary Power Bomb",
-                "max_capacity": 999,
-                "extra": {}
+            "PBAmmo": {
+                "long_name": "Power Bomb Ammo",
+                "max_capacity": 15,
+                "extra": {
+                    "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
+                    "item_capacity_id": "ITEM_WEAPON_POWER_BOMB_MAX"
+                }
             },
             "Slide": {
                 "long_name": "Slide",
                 "max_capacity": 1,
-                "extra": {}
+                "extra": {
+                    "item_id": "ITEM_FLOOR_SLIDE"
+                }
+            },
+            "Metroidnization": {
+                "long_name": "Metroidnization",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": "ITEM_METROIDNIZATION"
+                }
             }
         },
         "events": {
@@ -1462,10 +1479,12 @@
         "events_to_exclude": []
     },
     "victory_condition": {
-        "type": "and",
+        "type": "resource",
         "data": {
-            "comment": null,
-            "items": []
+            "type": "events",
+            "name": "Ship",
+            "amount": 1,
+            "negate": false
         }
     },
     "dock_weakness_database": {

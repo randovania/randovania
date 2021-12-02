@@ -58,7 +58,7 @@ def add_elevator_connections_to_patches(configuration: EchoesConfiguration,
                 rng=rng,
                 elevator_database=elevator_db,
                 target_locations=elevators.valid_targets,
-                replacement=elevators.mode == TeleporterShuffleMode.ONE_WAY_ELEVATOR_REPLACEMENT,
+                replacement=elevators.mode != TeleporterShuffleMode.ONE_WAY_ELEVATOR,
             )
 
         elevator_connection.update(connections)
