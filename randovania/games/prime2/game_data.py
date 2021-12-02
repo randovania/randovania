@@ -10,11 +10,12 @@ def _echoes_gui():
     from randovania.games.prime2.gui.preset_settings import prime2_preset_tabs
     from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.prime2.gui.translator_gate_details_tab import TranslatorGateDetailsTab
 
     return GameGui(
         tab_provider=prime2_preset_tabs,
         cosmetic_dialog=EchoesCosmeticPatchesDialog,
-        spoiler_visualizer=(TeleporterDetailsTab,),
+        spoiler_visualizer=(TeleporterDetailsTab, TranslatorGateDetailsTab),
     )
 
 

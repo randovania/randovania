@@ -5,8 +5,10 @@ from PySide2.QtWidgets import QComboBox
 
 import randovania.games.prime2.patcher.claris_patcher
 from randovania.game_description import default_database
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import ConfigurableNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
 from randovania.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
@@ -23,15 +25,28 @@ def _translator_config(editor: PresetEditor) -> TranslatorConfiguration:
     return config.translator_configuration
 
 
+def gate_data():
+    db = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
+    randomizer_data = randovania.games.prime2.patcher.claris_patcher.decode_randomizer_data()
+
+    gate_index_to_name = {
+        gate["Index"]: gate["Name"]
+        for gate in randomizer_data["TranslatorLocationData"]
+    }
+    identifier_to_gate = {
+        db.world_list.identifier_for_node(node): node.extra["gate_index"]
+        for node in db.world_list.all_nodes
+        if isinstance(node, ConfigurableNode)
+    }
+    return gate_index_to_name, identifier_to_gate
+
+
 class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
     _combo_for_gate: dict[NodeIdentifier, QComboBox]
 
     def __init__(self, editor: PresetEditor):
         super().__init__(editor)
         self.setupUi(self)
-
-        randomizer_data = randovania.games.prime2.patcher.claris_patcher.decode_randomizer_data()
-        db = default_database.game_description_for(editor.game)
 
         self.translators_layout.setAlignment(QtCore.Qt.AlignTop)
         self.translator_randomize_all_button.clicked.connect(self._on_randomize_all_gates_pressed)
@@ -42,15 +57,7 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
 
         self._combo_for_gate = {}
 
-        gate_index_to_name = {
-            gate["Index"]: gate["Name"]
-            for gate in randomizer_data["TranslatorLocationData"]
-        }
-        identifier_to_gate = {
-            db.world_list.identifier_for_node(node): node.extra["gate_index"]
-            for node in db.world_list.all_nodes
-            if isinstance(node, ConfigurableNode)
-        }
+        gate_index_to_name, identifier_to_gate = gate_data()
 
         for i, (identifier, gate_index) in enumerate(sorted(identifier_to_gate.items(), key=lambda it: it[1])):
             label = QtWidgets.QLabel(self.translators_scroll_contents)
