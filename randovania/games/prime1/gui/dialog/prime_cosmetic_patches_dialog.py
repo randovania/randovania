@@ -2,7 +2,7 @@ import dataclasses
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QColor
 
-from PySide2.QtWidgets import QColorDialog, QFrame, QSizePolicy, QWidget
+from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QSizePolicy, QWidget
 
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
@@ -15,7 +15,7 @@ SUIT_DEFAULT_COLORS = [
     [ (50, 50, 50), (20, 20, 20), (230, 70, 50) ] # Phazon
 ]
 
-def hue_rotate_color(original_color, rotation):
+def hue_rotate_color(original_color: tuple[int,int,int], rotation: int):
     color = QColor.fromRgb(*original_color)
     h = color.hue() + rotation
     s = color.saturation()
@@ -43,12 +43,11 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
             self.gravity_suit_color_layout, self.phazon_suit_color_layout
         ]
         self.suit_color_preview_squares = []
-        for i, suit_colors in enumerate(SUIT_DEFAULT_COLORS):
-            color_preview_squares_for_suit = []
-            for color in suit_colors:
-                square = self._add_preview_color_square_to_layout(suit_layouts[i], color)
-                color_preview_squares_for_suit.append(square)
-            self.suit_color_preview_squares.append(color_preview_squares_for_suit)
+        for suit_layout, suit_colors in zip(suit_layouts, SUIT_DEFAULT_COLORS):
+            self.suit_color_preview_squares.append([
+                self._add_preview_color_square_to_layout(suit_layout, color)
+                for color in suit_colors
+            ])
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
@@ -86,15 +85,13 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         return persist
 
     def _persist_suit_color_rotations(self):
-        self._cosmetic_patches = dataclasses.replace(
-            self._cosmetic_patches,
-            **{'suit_color_rotations': (
-                self.power_suit_rotation_field.value(),
-                self.varia_suit_rotation_field.value(),
-                self.gravity_suit_rotation_field.value(),
-                self.phazon_suit_rotation_field.value()
-            )}
+        suit_color_rotations_tuple=(
+            self.power_suit_rotation_field.value(),
+            self.varia_suit_rotation_field.value(),
+            self.gravity_suit_rotation_field.value(),
+            self.phazon_suit_rotation_field.value()
         )
+        self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, suit_color_rotations=suit_color_rotations_tuple)
         self._update_color_squares()
 
     def _open_color_picker(self):
@@ -102,10 +99,8 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         color = QColorDialog.getColor(QColor(*init_color))
         
         if color.isValid():
-            self._cosmetic_patches = dataclasses.replace(
-                self._cosmetic_patches,
-                **{'hud_color': (color.red(), color.green(), color.blue()) }
-            )
+            color_tuple = (color.red(), color.green(), color.blue())
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, hud_color=color_tuple)
             self._update_color_squares()
 
     def _update_color_squares(self):
@@ -119,7 +114,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
                 style = 'background-color: rgb({},{},{})'.format(*color)
                 self.suit_color_preview_squares[i][j].setStyleSheet(style)
 
-    def _add_preview_color_square_to_layout(self, layout, default_color):
+    def _add_preview_color_square_to_layout(self, layout: QLayout, default_color: tuple[int,int,int]):
         color_square = QFrame(self.game_changes_box)
         color_square.setMinimumSize(QSize(22, 22))
         color_square.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
