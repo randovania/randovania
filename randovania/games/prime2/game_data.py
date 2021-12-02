@@ -9,10 +9,12 @@ from randovania.games.prime2.layout.preset_describer import echoes_format_params
 def _echoes_gui():
     from randovania.games.prime2.gui.preset_settings import prime2_preset_tabs
     from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
+    from randovania.gui.teleporter_details_tab import TeleporterDetailsTab
 
     return GameGui(
         tab_provider=prime2_preset_tabs,
         cosmetic_dialog=EchoesCosmeticPatchesDialog,
+        spoiler_visualizer=(TeleporterDetailsTab,),
     )
 
 
