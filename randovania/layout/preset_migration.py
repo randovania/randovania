@@ -501,7 +501,7 @@ _MIGRATIONS = {
     13: _migrate_v13,  # v3.1.3-122-g9f50c418
     14: _migrate_v14,  # v3.2.1-44-g11823eac
     15: _migrate_v15,  # v3.2.1-203-g6e303090
-    16: _migrate_v16,
+    16: _migrate_v16,  # v3.2.1-363-g3a93b533
 }
 
 
