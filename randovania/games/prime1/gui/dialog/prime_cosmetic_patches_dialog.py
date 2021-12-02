@@ -9,10 +9,10 @@ from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCo
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 
 SUIT_DEFAULT_COLORS = [
-    [ (255, 210, 50), (220, 40, 25), (100, 240, 60) ], # Power
-    [ (255, 210, 50), (220, 40, 25), (255, 160, 50), (100, 240, 60) ], # Varia
+    [ (255, 173, 50), (220, 25, 45), (132, 240, 60) ], # Power
+    [ (255, 173, 50), (220, 25, 45), (255, 125, 50), (132, 240, 60) ], # Varia
     [ (170, 170, 145), (70, 25, 50), (40, 20, 90), (140, 240, 240) ], # Gravity
-    [ (50, 50, 50), (20, 20, 20), (230, 70, 50) ] # Phazon
+    [ (50, 50, 50), (20, 20, 20), (230, 50, 62) ] # Phazon
 ]
 
 def hue_rotate_color(original_color: tuple[int,int,int], rotation: int):

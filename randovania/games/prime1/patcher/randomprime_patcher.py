@@ -346,10 +346,9 @@ class RandomprimePatcher(Patcher):
 
         SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
         suit_colors = {}
-        for i in range(0,4):
-            hue_rotation = cosmetic_patches.suit_color_rotations[i]
+        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, cosmetic_patches.suit_color_rotations):
             if hue_rotation != 0:
-                suit_colors[SUIT_ATTRIBUTES[i]] = hue_rotation - 10 # Small hack to be closer to in-game colors
+                suit_colors[attribute] = hue_rotation
 
         return {
             "seed": description.permalink.seed_number,
