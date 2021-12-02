@@ -2,7 +2,7 @@ import dataclasses
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QColor
 
-from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QSizePolicy, QWidget
+from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget
 
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
@@ -100,6 +100,13 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         
         if color.isValid():
             color_tuple = (color.red(), color.green(), color.blue())
+            estimated_ingame_alpha = 255 - ((color_tuple[0] + color_tuple[1] + color_tuple[2])/3)
+            if estimated_ingame_alpha > 150:
+                QMessageBox.warning(self, "Dangerous preset", 
+                    "Be careful, dark colors like this one tend to produce an " \
+                    "almost opaque frame when using Scan Visor.\n" \
+                    "Use at your own risk."
+                )
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, hud_color=color_tuple)
             self._update_color_squares()
 
