@@ -696,7 +696,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Escape Sequence": {
+                        "Boss - Raven Beak": {
                             "type": "and",
                             "data": {
                                 "comment": "TODO: accurate boss requirements incl. Combat tricks",
@@ -723,14 +723,14 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 5032.841598660808,
-                        "y": 2533.2391713747647,
-                        "z": 0
+                        "x": 5032.84,
+                        "y": 2533.24,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Escape Sequence": {
+                        "Pickup (Hyper Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -756,6 +756,50 @@
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {}
+                },
+                "Pickup (Hyper Beam)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4588.75,
+                        "y": 2840.21,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 140,
+                    "major_location": false,
+                    "connections": {
+                        "Pickup (Metroid Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Metroid Suit)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5471.39,
+                        "y": 2823.13,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 141,
+                    "major_location": false,
+                    "connections": {
+                        "Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }
