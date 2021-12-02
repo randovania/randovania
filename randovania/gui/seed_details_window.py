@@ -19,6 +19,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
+from randovania.gui.game_details_tab import GameDetailsTab
 from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
@@ -70,6 +71,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     _pickup_spoiler_current_game: Optional[GameDescription] = None
     _last_percentage: float = 0
     _can_stop_background_process: bool = True
+    _game_details_tabs: list[GameDetailsTab]
 
     def __init__(self, window_manager: Optional[WindowManager], options: Options):
         super().__init__()
@@ -81,6 +83,7 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._pickup_spoiler_world_to_group = {}
         self._options = options
         self._window_manager = window_manager
+        self._game_details_tabs = []
 
         # Ui
         self._tool_button_menu = QMenu(self.tool_button)
@@ -379,7 +382,17 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self.pickup_tab.setEnabled(has_spoiler)
         patches = description.all_patches[current_player]
 
+        for tab in self._game_details_tabs:
+            self.layout_info_tab.removeTab(self.layout_info_tab.indexOf(tab.widget()))
+        self._game_details_tabs.clear()
+
         if has_spoiler:
+            for missing_tab in preset.game.data.gui().spoiler_visualizer:
+                new_tab = missing_tab(self.layout_info_tab, preset.game)
+                new_tab.update_content(preset.configuration, patches)
+                self.layout_info_tab.addTab(new_tab.widget(), f"Spoiler: {new_tab.tab_title()}")
+                self._game_details_tabs.append(new_tab)
+
             pickup_names = {
                 pickup.pickup.name
                 for pickup in patches.pickup_assignment.values()
