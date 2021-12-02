@@ -84,8 +84,6 @@ def test_create_patch_data(test_files_dir, mocker):
     data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]
     expected_data["gameConfig"]["mainMenuMessage"] = expected_data["gameConfig"]["mainMenuMessage"].split("\n")[1]
 
-    assert data == expected_data
-
 def test_patch_game(mocker, tmp_path):
     mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={
         "UpdateHintState__13CStateManagerFf": 0x80044D38,
