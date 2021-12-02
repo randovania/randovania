@@ -71,11 +71,14 @@ class OpenDreadPatcher(Patcher):
         inventory = {
             "ITEM_MAX_LIFE": 99,
             "ITEM_MAX_SPECIAL_ENERGY": 1000,
-            "ITEM_WEAPON_MISSILE_MAX": 15,
-            "ITEM_WEAPON_POWER_BOMB_MAX": 0,
+            # "ITEM_WEAPON_MISSILE_MAX": 15,
+            # "ITEM_WEAPON_POWER_BOMB_MAX": 0,
             "ITEM_METROID_COUNT": 0,
             "ITEM_METROID_TOTAL_COUNT": 40,
-            "ITEM_FLOOR_SLIDE": 1,
+            # "ITEM_FLOOR_SLIDE": 1,
+
+            "ITEM_SPECIAL_ENERGY": 1000,
+            "ITEM_SPECIAL_ENERGY_SCANNING_PULSE": 1000,
         }
         for resource, quantity in patches.starting_items.items():
             try:

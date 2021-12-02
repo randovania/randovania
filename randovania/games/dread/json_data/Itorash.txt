@@ -142,15 +142,25 @@ Extra - total_boundings: {'x1': 3000.0, 'x2': 7100.0, 'y1': 1800.0, 'y2': 4000.0
 Extra - polygon: [[7100.0, 4000.0], [3000.0, 4000.0], [3000.0, 1800.0], [7100.0, 1800.0]]
 Extra - asset_id: collision_camera_004
 > Before Fight; Heals? False; Spawn Point
-  > Escape Sequence
+  > Boss - Raven Beak
       All of the following:
           # TODO: accurate boss requirements incl. Combat tricks
           Wave Beam and Shoot Beam
 
 > Boss - Raven Beak; Heals? False
-  > Escape Sequence
+  > Pickup (Hyper Beam)
       Trivial
 
 > Escape Sequence; Heals? True
   * Teleporter to Hanubia - Raven Beak X Arena
+
+> Pickup (Hyper Beam); Heals? False
+  * Pickup 140; Major Location? False
+  > Pickup (Metroid Suit)
+      Trivial
+
+> Pickup (Metroid Suit); Heals? False
+  * Pickup 141; Major Location? False
+  > Escape Sequence
+      Trivial
 
