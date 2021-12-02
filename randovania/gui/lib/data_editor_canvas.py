@@ -12,6 +12,7 @@ from randovania.game_description.world.node import GenericNode, DockNode, Telepo
     NodeLocation
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
+from randovania.resolver.state import State
 
 _color_for_node: dict[Type[Node], int] = {
     GenericNode: QtGui.Qt.red,
@@ -77,8 +78,11 @@ class DataEditorCanvas(QtWidgets.QWidget):
     CreateDockRequest = Signal(NodeLocation, Area)
     MoveNodeToAreaRequest = Signal(Node, Area)
 
-    def __init__(self):
-        super().__init__()
+    state: Optional[State] = None
+    visible_nodes: Optional[set[Node]] = None
+
+    def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
+        super().__init__(parent)
 
         self._show_all_connections_action = QtWidgets.QAction("Show all node connections", self)
         self._show_all_connections_action.setCheckable(True)
@@ -105,7 +109,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def select_world(self, world: World):
         self.world = world
-        image_path = self.game.data_path.joinpath("assets", "maps", f"{world.name}.png") if self.game is not None else None
+        image_path = self.game.data_path.joinpath("assets", "maps",
+                                                  f"{world.name}.png") if self.game is not None else None
         if image_path is not None and image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
             self.image_bounds = BoundsInt(
@@ -176,6 +181,23 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.highlighted_node = node
         self.update()
 
+    def set_state(self, state: Optional[State]):
+        self.state = state
+        self.highlighted_node = state.node
+        self.update()
+
+    def set_visible_nodes(self, visible_nodes: Optional[set[Node]]):
+        self.visible_nodes = visible_nodes
+        self.update()
+
+    def is_node_visible(self, node: Node) -> bool:
+        return self.visible_nodes is None or node in self.visible_nodes
+
+    def is_connection_visible(self, requirement: Requirement) -> bool:
+        return self.state is None or requirement.satisfied(self.state.resources,
+                                                           self.state.energy,
+                                                           self.state.resource_database)
+
     def _update_scale_variables(self):
         self.border_x = self.rect().width() * 0.05
         self.border_y = self.rect().height() * 0.05
@@ -233,7 +255,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._next_node_location = self.qt_local_to_game_loc(local_pos)
 
         menu = QtWidgets.QMenu(self)
-        menu.addAction(self._show_all_connections_action)
+        if self.highlighted_node is None:
+            menu.addAction(self._show_all_connections_action)
         if self.edit_mode:
             menu.addAction(self._create_node_action)
             menu.addAction(self._move_node_action)
@@ -278,7 +301,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             view_connections = sub_menu.addAction("View connections to this")
             view_connections.setEnabled(
                 (self.edit_mode and self.highlighted_node != node) or (
-                    node in self.area.connections.get(self.highlighted_node, {})
+                        node in self.area.connections.get(self.highlighted_node, {})
                 )
             )
             view_connections.triggered.connect(functools.partial(self.SelectConnectionsRequest.emit, node))
@@ -378,9 +401,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
             if source_node.location is None:
                 return
 
-            for target_node in area.connections[source_node].keys():
+            for target_node, requirement in area.connections[source_node].items():
                 if target_node.location is None:
                     continue
+
+                if not self.is_connection_visible(requirement):
+                    painter.setPen(QtGui.Qt.darkGray)
+                elif source_node == self.highlighted_node or self.state is not None:
+                    painter.setPen(QtGui.Qt.white)
+                else:
+                    painter.setPen(QtGui.Qt.gray)
 
                 source = self.game_loc_to_qt_local(source_node.location)
                 target = self.game_loc_to_qt_local(target_node.location)
@@ -406,23 +436,25 @@ class DataEditorCanvas(QtWidgets.QWidget):
         brush = painter.brush()
         brush.setStyle(QtGui.Qt.BrushStyle.SolidPattern)
         painter.setBrush(brush)
-        painter.setPen(QtGui.Qt.gray)
 
-        if self._show_all_connections_action.isChecked():
+        if self._show_all_connections_action.isChecked() or self.visible_nodes is not None:
             for node in area.nodes:
                 if node != self.highlighted_node:
                     draw_connections_from(node)
 
-        painter.setPen(QtGui.Qt.white)
-
         if self.highlighted_node is not None and self.highlighted_node in area.nodes:
             draw_connections_from(self.highlighted_node)
+
+        painter.setPen(QtGui.Qt.white)
 
         for node in area.nodes:
             if node.location is None:
                 continue
 
-            brush.setColor(_color_for_node.get(type(node), QtGui.Qt.yellow))
+            if self.is_node_visible(node):
+                brush.setColor(_color_for_node.get(type(node), QtGui.Qt.yellow))
+            else:
+                brush.setColor(QtGui.Qt.darkGray)
             painter.setBrush(brush)
 
             p = self.game_loc_to_qt_local(node.location)

@@ -22,6 +22,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, Requirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
+from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
 from randovania.game_description.world.node import Node, ResourceNode, ConfigurableNode, TeleporterNode, DockNode
@@ -134,6 +135,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                                                                      player_pool.game,
                                                                      pool_patches)
         self.logic = Logic(self.game_description, preset.configuration)
+        self.map_canvas.select_game(self.game_description.game)
 
         self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
 
@@ -155,6 +157,17 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.setup_elevators()
         self.setup_translator_gates()
 
+        # Map
+        for world in sorted(self.game_description.world_list.worlds, key=lambda x: x.name):
+            self.map_world_combo.addItem(world.name, userData=world)
+
+        self.on_map_world_combo(0)
+        self.map_world_combo.currentIndexChanged.connect(self.on_map_world_combo)
+        self.map_area_combo.currentIndexChanged.connect(self.on_map_area_combo)
+        self.map_canvas.set_edit_mode(False)
+        self.map_canvas.SelectAreaRequest.connect(self.focus_on_area)
+
+        # Graph Map
         self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
         self.tab_graph_map_layout.addWidget(self.matplot_widget)
         self._world_to_node_positions = {}
@@ -235,6 +248,12 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         self.bulk_change_quantity(quantity_to_change)
         self._add_new_actions(previous_actions)
+
+        world_list = self.game_description.world_list
+        state = self.state_for_current_configuration()
+        self.focus_on_world(world_list.nodes_to_world(state.node))
+        self.focus_on_area(world_list.nodes_to_area(state.node))
+
         return True
 
     def reset(self):
@@ -321,6 +340,23 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         else:
             QtWidgets.QMessageBox.warning(self, "Invalid target",
                                           "Can't find a path to {}. Please select a node.".format(target.text(0)))
+
+    # Map
+
+    def on_map_world_combo(self, _):
+        world: World = self.map_world_combo.currentData()
+        self.map_area_combo.clear()
+        for area in sorted(world.areas, key=lambda x: x.name):
+            self.map_area_combo.addItem(area.name, userData=area)
+
+        self.map_canvas.select_world(world)
+        self.on_map_area_combo(0)
+
+    def on_map_area_combo(self, _):
+        area: Area = self.map_area_combo.currentData()
+        self.map_canvas.select_area(area)
+
+    # Graph Map
 
     def _positions_for_world(self, world: World):
         g = networkx.DiGraph()
@@ -429,6 +465,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     def update_locations_tree_for_reachable_nodes(self):
         state = self.state_for_current_configuration()
         nodes_in_reach = self.current_nodes_in_reach(state)
+
         if self.map_tab_widget.currentWidget() == self.tab_graph_map:
             self.update_matplot_widget(nodes_in_reach)
 
@@ -454,6 +491,13 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
                     area_is_visible = area_is_visible or is_visible
                 self._area_name_to_item[(world.name, area.name)].setHidden(not area_is_visible)
+
+        self.map_canvas.set_state(state)
+        self.map_canvas.set_visible_nodes({
+            node
+            for node in nodes_in_reach
+            if not self._node_to_item[node].isHidden()
+        })
 
         # Persist the current state
         self.persist_current_state()
@@ -806,3 +850,12 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                                                    state.resources)
 
         return state
+
+    # View
+    def focus_on_world(self, world: World):
+        self.map_world_combo.setCurrentIndex(self.map_world_combo.findData(world))
+        self.graph_map_world_combo.setCurrentIndex(self.graph_map_world_combo.findData(world))
+        self.on_map_world_combo(0)
+
+    def focus_on_area(self, area: Area):
+        self.map_area_combo.setCurrentIndex(self.map_area_combo.findData(area))
