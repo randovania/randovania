@@ -2,6 +2,7 @@ from PySide2 import QtWidgets
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -15,5 +16,5 @@ class GameDetailsTab:
     def tab_title(self) -> str:
         raise NotImplementedError()
 
-    def update_content(self, configuration: BaseConfiguration, patches: GamePatches):
+    def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
         raise NotImplementedError()

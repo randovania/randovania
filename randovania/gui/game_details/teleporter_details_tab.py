@@ -6,6 +6,7 @@ from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib.dict_lib import iterate_key_sorted
 from randovania.patching.prime import elevators
@@ -24,7 +25,7 @@ class TeleporterDetailsTab(GameDetailsTab):
             return "Teleporters"
         return "Elevators"
 
-    def update_content(self, configuration: BaseConfiguration, patches: GamePatches):
+    def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Source", "Destination"])
