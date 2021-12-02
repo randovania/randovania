@@ -337,7 +337,18 @@ class RandomprimePatcher(Patcher):
             ctwk_config["morphBallSize"] = 0.3
             ctwk_config["easyLavaEscape"] = True
 
-        # ctwk_config["hudColor"] = [0.1, 0.7, 0.2]
+        if cosmetic_patches.use_hud_color:
+            ctwk_config["hudColor"] = [
+                cosmetic_patches.hud_color[0] / 255,
+                cosmetic_patches.hud_color[1] / 255,
+                cosmetic_patches.hud_color[2] / 255
+            ]
+
+        SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
+        suit_colors = {}
+        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, cosmetic_patches.suit_color_rotations):
+            if hue_rotation != 0:
+                suit_colors[attribute] = hue_rotation
 
         return {
             "seed": description.permalink.seed_number,
@@ -353,14 +364,7 @@ class RandomprimePatcher(Patcher):
                 "trilogyDiscPath": None,
                 "quickplay": False,
                 "quiet": False,
-
-                # TODO
-                # "suitColors": {
-                #     "powerDeg": 180,
-                #     "variaDeg": -90,
-                #     "gravityDeg": -90,
-                #     "phazonDeg": -90
-                # }
+                "suitColors": suit_colors
             },
             "gameConfig": {
                 "startingRoom": _name_for_location(db.world_list, patches.starting_location),
