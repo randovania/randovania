@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
 This feature comes with plenty of quality of life functionality for editing the database. 
 - **Major** - Added: The Logic Database can now have descriptions for nodes.
-- Added: Game Details window can now spoil the elevators, translator gates and hints.
+- Added: Game Details window can now spoil the item order, elevators, translator gates and hints.
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
 - Added: Items now have tooltips in the Auto-Tracker.

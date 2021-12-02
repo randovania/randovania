@@ -272,6 +272,12 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.player_index_combo.setCurrentIndex(0)
         self.player_index_combo.setVisible(description.permalink.player_count > 1)
 
+        if description.permalink.spoiler:
+            action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
+            for item_order in description.item_order:
+                action_list_widget.addItem(item_order)
+            self.layout_info_tab.addTab(action_list_widget, f"Spoiler: Generation Order")
+
         self._update_current_player()
 
     def _update_current_player(self):
