@@ -14,6 +14,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
     from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
     from randovania.games.prime1.gui.preset_settings.prime_goal_tab import PresetPrimeGoal
+    from randovania.games.prime1.gui.preset_settings.prime_hints_tab import PresetPrimeHints
     from randovania.games.prime1.gui.preset_settings.prime_patches_tab import PresetPrimePatches
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
@@ -24,6 +25,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetStartingArea(editor, game_description),
         PresetLogicDamage(editor),
         PresetPrimeGoal(editor),
+        PresetPrimeHints(editor),
         PresetPrimePatches(editor),
         PresetLocationPool(editor, game_description),
         MetroidPresetItemPool(editor),
