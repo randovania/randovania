@@ -19,8 +19,8 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
-from randovania.gui.game_details_tab import GameDetailsTab
-from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
+from randovania.gui.game_details.game_details_tab import GameDetailsTab
+from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
@@ -60,7 +60,7 @@ def _hide_pickup_spoiler(button):
     button.item_is_hidden = True
 
 
-class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMixin):
+class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
     _history_items: List[QRadioButton]
     pickup_spoiler_buttons: List[QPushButton]

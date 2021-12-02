@@ -5,7 +5,7 @@ from PySide2 import QtWidgets
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
-from randovania.gui.game_details_tab import GameDetailsTab
+from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib.dict_lib import iterate_key_sorted
 from randovania.patching.prime import elevators

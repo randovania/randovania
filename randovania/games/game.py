@@ -13,7 +13,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.item_pool import PoolResults
     from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-    from randovania.gui.game_details_tab import GameDetailsTab
+    from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
