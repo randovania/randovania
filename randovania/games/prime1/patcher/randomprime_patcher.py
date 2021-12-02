@@ -23,6 +23,7 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
@@ -323,12 +324,17 @@ class RandomprimePatcher(Patcher):
             db.resource_database.get_item(index)
             for index in prime_items.ARTIFACT_ITEMS
         ]
-        resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-            description.all_patches, players_config, area_namers, False,
-            [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
-            hint_lib.TextColor.PRIME1_ITEM,
-            hint_lib.TextColor.PRIME1_LOCATION,
-        )
+        hint_config = configuration.hints
+        if hint_config.artifacts == ArtifactHintMode.DISABLED:
+            resulting_hints = {art: "{} is lost somewhere on Tallon IV.".format(art.long_name) for art in artifacts}
+        else:
+            resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                description.all_patches, players_config, area_namers,
+                hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
+                [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
+                hint_lib.TextColor.PRIME1_ITEM,
+                hint_lib.TextColor.PRIME1_LOCATION,
+            )
 
         # Tweaks
         ctwk_config = {}

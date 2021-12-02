@@ -6,6 +6,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.layout.lib.teleporters import TeleporterConfiguration
+from randovania.games.prime1.layout.hint_configuration import HintConfiguration
 
 
 class LayoutCutsceneMode(BitPackEnum, Enum):
@@ -18,6 +19,7 @@ class LayoutCutsceneMode(BitPackEnum, Enum):
 @dataclasses.dataclass(frozen=True)
 class PrimeConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
+    hints: HintConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     artifact_target: LayoutArtifactMode
     artifact_minimum_progression: int = dataclasses.field(metadata={"min": 0, "max": 99})
