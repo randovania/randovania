@@ -291,8 +291,6 @@ class RandomprimePatcher(Patcher):
                         continue
 
                     identifier = db.world_list.identifier_for_node(node)
-                    print("\n")
-                    print(str(patches.elevator_connection))
                     target = _name_for_location(db.world_list, patches.elevator_connection[identifier])
 
                     source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[(
