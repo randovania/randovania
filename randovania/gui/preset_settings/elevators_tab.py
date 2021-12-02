@@ -66,6 +66,9 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
             <p>This changes the requirements to <span style=" font-weight:600;">not need the final bosses</span>,
             turning certain items optional such as Plasma Beam.</p></body></html>
             """)
+        elif self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
+            self.skip_final_bosses_check.setVisible(False)
+            self.skip_final_bosses_label.setVisible(False)
 
         elif self.game_enum == RandovaniaGame.METROID_PRIME_CORRUPTION:
             self.elevators_description_label.setText(
