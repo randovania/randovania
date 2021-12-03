@@ -1,3 +1,4 @@
+from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
 from randovania.games.dread.generator.pool_creator import pool_creator
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
@@ -44,6 +45,7 @@ game_data: GameData = GameData(
 
     generator=GameGenerator(
         item_pool_creator=pool_creator,
+        base_patches_factory=DreadBasePatchesFactory()
     ),
 
     patcher=OpenDreadPatcher()

@@ -41,7 +41,7 @@ def run_bootstrap(preset: Preset):
         spoiler=True,
         presets={0: preset},
     )
-    patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game, False, player_index=0)
+    patches = game.game.data.generator.base_patches_factory.create_base_patches(preset.configuration, Random(15000), game, False, player_index=0)
     _, state = game.game.data.generator.bootstrap.logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
@@ -211,7 +211,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
             game=RandovaniaGame.METROID_PRIME_ECHOES,
         )
     )
-    patches = base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,
+    patches = game.game.data.generator.base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,
                                                        False, player_index=0)
     state = game.game.data.generator.bootstrap.calculate_starting_state(game, patches, 100)
     state.resources[item("Combat Visor")] = 1

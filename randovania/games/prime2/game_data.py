@@ -1,4 +1,5 @@
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
+from randovania.games.prime2.generator.base_patches_factory import EchoesBasePatchesFactory
 from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
 from randovania.games.prime2.generator.item_pool.pool_creator import echoes_specific_pool
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -54,7 +55,8 @@ game_data: GameData = GameData(
 
     generator=GameGenerator(
         item_pool_creator=echoes_specific_pool,
-        bootstrap=EchoesBootstrap()
+        bootstrap=EchoesBootstrap(),
+        base_patches_factory=EchoesBasePatchesFactory()
     ),
 
     patcher=ClarisPatcher()

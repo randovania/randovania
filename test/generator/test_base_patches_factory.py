@@ -263,10 +263,10 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is
     assert result.hints == expected
 
 
-@patch("randovania.generator.base_patches_factory.add_echoes_default_hints_to_patches", autospec=True)
-@patch("randovania.generator.base_patches_factory.starting_location_for_configuration", autospec=True)
-@patch("randovania.generator.base_patches_factory.gate_assignment_for_configuration", autospec=True)
-@patch("randovania.generator.base_patches_factory.add_elevator_connections_to_patches", autospec=True)
+@patch("randovania.generator.base_patches_factory.BasePatchesFactory.add_default_hints_to_patches", autospec=True)
+@patch("randovania.generator.base_patches_factory.BasePatchesFactory.starting_location_for_configuration", autospec=True)
+@patch("randovania.generator.base_patches_factory.BasePatchesFactory.configurable_node_assignment", autospec=True)
+@patch("randovania.generator.base_patches_factory.BasePatchesFactory.add_elevator_connections_to_patches", autospec=True)
 def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,
                              mock_starting_location_for_config: MagicMock,
@@ -289,24 +289,26 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     patches.append(patches[-1].assign_node_configuration.return_value)
     patches.append(patches[-1].assign_starting_location.return_value)
 
+    factory = base_patches_factory.BasePatchesFactory()
+
     # Run
-    result = base_patches_factory.create_base_patches(layout_configuration, rng, game, is_multiworld, player_index=0)
+    result = factory.create_base_patches(layout_configuration, rng, game, is_multiworld, player_index=0)
 
     # Assert
     game.create_game_patches.assert_called_once_with()
     mock_replace.assert_called_once_with(game.create_game_patches.return_value, player_index=0)
-    mock_add_elevator_connections_to_patches.assert_called_once_with(layout_configuration, rng, patches[1])
+    mock_add_elevator_connections_to_patches.assert_called_once_with(factory, layout_configuration, rng, patches[1])
 
     # Gate Assignment
-    mock_gate_assignment_for_configuration.assert_called_once_with(layout_configuration, game, rng)
+    mock_gate_assignment_for_configuration.assert_called_once_with(factory, layout_configuration, game, rng)
     patches[2].assign_node_configuration.assert_called_once_with(mock_gate_assignment_for_configuration.return_value)
 
     # Starting Location
-    mock_starting_location_for_config.assert_called_once_with(layout_configuration, game, rng)
+    mock_starting_location_for_config.assert_called_once_with(factory, layout_configuration, game, rng)
     patches[3].assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
     # Hints
-    mock_add_default_hints_to_patches.assert_called_once_with(rng, patches[4], game.world_list, num_joke=2,
+    mock_add_default_hints_to_patches.assert_called_once_with(factory, rng, patches[4], game.world_list, num_joke=2,
                                                               is_multiworld=is_multiworld)
 
     assert result is mock_add_default_hints_to_patches.return_value

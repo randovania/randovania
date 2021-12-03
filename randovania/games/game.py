@@ -8,6 +8,7 @@ from typing import Callable, Iterable, Optional, Type
 
 from randovania import get_file_path
 from randovania.bitpacking.bitpacking import BitPackEnum
+from randovania.generator.base_patches_factory import BasePatchesFactory
 from randovania.resolver.bootstrap import Bootstrap
 
 if typing.TYPE_CHECKING:
@@ -73,6 +74,9 @@ class GameGenerator:
 
     bootstrap: Bootstrap = Bootstrap()
     """(Optional) Modifies the resource database and starting resources before generation."""
+
+    base_patches_factory: BasePatchesFactory = BasePatchesFactory()
+    """(Optional) Creates base patches, such as elevator or configurable node assignments."""
 
 
 @dataclass(frozen=True)
