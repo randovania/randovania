@@ -13,6 +13,7 @@ def _corruption_gui():
     return GameGui(
         tab_provider=prime3_preset_tabs,
         cosmetic_dialog=CorruptionCosmeticPatchesDialog,
+        input_file_text=None,
         progressive_item_gui_tuples=prime3_progressive_items.gui_tuples()
     )
 

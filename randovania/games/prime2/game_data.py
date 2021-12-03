@@ -19,6 +19,7 @@ def _echoes_gui():
     return GameGui(
         tab_provider=prime2_preset_tabs,
         cosmetic_dialog=EchoesCosmeticPatchesDialog,
+        input_file_text=("an ISO file", "the Nintendo Gamecube"),
         progressive_item_gui_tuples=prime2_progressive_items.gui_tuples(),
         spoiler_visualizer=(TeleporterDetailsTab, TranslatorGateDetailsTab, HintDetailsTab),
     )

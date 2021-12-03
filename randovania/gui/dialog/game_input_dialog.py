@@ -36,8 +36,9 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
 
         per_game = options.options_for_game(self._game)
 
-        description_text = "<html><head/><body><p>In order to create the randomized game, an ISO file of {} for the Nintendo Gamecube is necessary.</p>".format(
-            game.long_name)
+        file_format, platform = game.data.gui.input_file_text
+        description_text = "<html><head/><body><p>In order to create the randomized game, {} of {} for {} is necessary.</p>".format(
+            file_format, game.long_name, platform)
         if not patcher.uses_input_file_directly:
             description_text += "<p>After using it once, a copy is kept by Randovania for later use.</p>"
         description_text += "</body></html>"
@@ -48,6 +49,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             self.input_file_edit.textChanged.connect(self._validate_input_file)
             self.input_file_button.clicked.connect(self._on_input_file_button)
         else:
+            self.input_file_label.setVisible(False)
             self.input_file_edit.setVisible(False)
             self.input_file_button.setVisible(False)
             self.description_label.setVisible(False)

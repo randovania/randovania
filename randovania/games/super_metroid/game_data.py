@@ -12,6 +12,7 @@ def _super_metroid_gui():
     return GameGui(
         tab_provider=super_metroid_preset_tabs,
         cosmetic_dialog=BaseCosmeticPatchesDialog,
+        input_file_text=("an SFC/SMC file", "the Super Famicom/SNES"),
     )
 
 
