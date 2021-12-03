@@ -276,7 +276,7 @@
                 "extra": {}
             },
             "eventCore": {
-                "long_name": "Defeated the Core",
+                "long_name": "Defeated Core",
                 "extra": {}
             },
             "eventCurly": {
@@ -287,12 +287,8 @@
                 "long_name": "Built Rocket",
                 "extra": {}
             },
-            "eventBoss": {
-                "long_name": "Generic Event",
-                "extra": {}
-            },
             "eventCurly3": {
-                "long_name": "Picked up Curly",
+                "long_name": "Picked up Curly (Hell)",
                 "extra": {}
             },
             "eventCurly2": {
@@ -373,6 +369,70 @@
             },
             "eventBestEnd": {
                 "long_name": "Best Ending",
+                "extra": {}
+            },
+            "eventEggBarrier": {
+                "long_name": "Lowered Egg Corridor Barrier",
+                "extra": {}
+            },
+            "eventJellies": {
+                "long_name": "Summoned Jellies",
+                "extra": {}
+            },
+            "eventSanta": {
+                "long_name": "Returned Santa's Key",
+                "extra": {}
+            },
+            "eventCureAll": {
+                "long_name": "Delivered Cure-All",
+                "extra": {}
+            },
+            "eventMazeB": {
+                "long_name": "Entered Labyrinth B from Above",
+                "extra": {}
+            },
+            "eventMazeI": {
+                "long_name": "Opened Labyrinth I Door",
+                "extra": {}
+            },
+            "eventCurly4": {
+                "long_name": "Picked up Curly (Core)",
+                "extra": {}
+            },
+            "eventEgg2Teleport": {
+                "long_name": "Used Egg Corridor? Teleporter",
+                "extra": {}
+            },
+            "eventSandMazeTeleport": {
+                "long_name": "Used Labyrinth I Teleporter",
+                "extra": {}
+            },
+            "eventOside": {
+                "long_name": "Entered Outer Wall from above",
+                "extra": {}
+            },
+            "eventToroko2": {
+                "long_name": "Toroko Kidnapped",
+                "extra": {}
+            },
+            "eventHell4": {
+                "long_name": "Entered Passage? from above",
+                "extra": {}
+            },
+            "eventDroll": {
+                "long_name": "Droll Attack",
+                "extra": {}
+            },
+            "eventPuppies": {
+                "long_name": "Returned Puppies",
+                "extra": {}
+            },
+            "eventFireplace": {
+                "long_name": "Entered Grasstown from Fireplace",
+                "extra": {}
+            },
+            "eventPress": {
+                "long_name": "Defeated Heavy Press",
                 "extra": {}
             }
         },
@@ -798,6 +858,79 @@
                                 "type": "items",
                                 "name": "map",
                                 "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Traverse Labyrinth W": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Has Weapon"
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "nemesis",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 5,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "pacifist",
+                                "amount": 4,
                                 "negate": false
                             }
                         }

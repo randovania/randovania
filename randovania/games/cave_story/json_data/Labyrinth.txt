@@ -12,6 +12,10 @@ Extra - map_name: MazeB
       Trivial
   > Teleporter to Arthur's House
       Trivial
+  > Event - Enter Labyrinth B from Above
+      Trivial
+  > Save Point
+      Trivial
 
 > Pickup (Booster Chest); Heals? False; Spawn Point
   * Pickup 17; Major Location? False
@@ -24,8 +28,23 @@ Extra - map_name: MazeB
   > Door to Labyrinth W
       Any of the following:
           Has Flight
-          After Generic Event and Remove Points of No Return
+          After Entered Labyrinth B from Above and Remove Points of No Return
   > Pickup (Booster Chest)
+      Trivial
+
+> Event - Enter Labyrinth B from Above; Heals? False
+  * Event Entered Labyrinth B from Above
+  > Door to Labyrinth W
+      Trivial
+
+> Save Point; Heals? False
+  > Door to Labyrinth W
+      Trivial
+  > Refill
+      Has Flight
+
+> Refill; Heals? True
+  > Save Point
       Trivial
 
 ----------------
@@ -35,7 +54,7 @@ Extra - map_name: MazeS
   * Door to Labyrinth B/Door to Boulder Chamber
   > Event - Balrog 3
       All of the following:
-          After Generic Event
+          After Delivered Cure-All
           Any of the following:
               Can Kill Bosses
               All of the following:
@@ -44,9 +63,11 @@ Extra - map_name: MazeS
                       Missile Launcher ≥ 24
                       Missile Launcher ≥ 15 and Super Missile Launcher
   > Pickup (Boulder Chest)
-      After Generic Event
+      After Defeated Balrog 3
   > Door to Labyrinth M
-      After Generic Event
+      After Defeated Balrog 3
+  > Save Point
+      After Defeated Balrog 3
 
 > Event - Balrog 3; Heals? False
   * Event Generic Event
@@ -64,25 +85,35 @@ Extra - map_name: MazeS
   > Door to Labyrinth B
       Trivial
 
+> Save Point; Heals? False
+  > Door to Labyrinth B
+      Trivial
+
 ----------------
 Labyrinth M
 Extra - map_name: MazeM
 > Door to Boulder Chamber; Heals? False; Spawn Point
   * Door to Boulder Chamber/Door to Labyrinth M
   > Door to Dark Place
-      Trivial
+      Any of the following:
+          Pacifist Strats (Expert) or Has Weapon
+          Pacifist Strats (Advanced) and Has Flight
 
 > Door to Dark Place; Heals? False
   * Door to Dark Place/Door to Labyrinth M
   > Door to Boulder Chamber
-      After Generic Event
+      All of the following:
+          After Defeated Balrog 3
+          Any of the following:
+              Break blocks with Bubbler (Expert) or Has Weapon
+              Pacifist Strats (Advanced) and Has Flight
   > Teleporter to Labyrinth Shop
-      Trivial
+      Pacifist Strats (Beginner) or Has Weapon
 
 > Teleporter to Labyrinth Shop; Heals? False
   * Teleporter to Labyrinth Shop/Teleporter to Labyrinth M
   > Door to Dark Place
-      Trivial
+      Pacifist Strats (Beginner) or Has Weapon
 
 ----------------
 Dark Place
@@ -90,9 +121,11 @@ Extra - map_name: Drain
 > Door to Labyrinth M; Heals? False; Spawn Point
   * Door to Labyrinth M/Door to Dark Place
   > Door to Core
-      After Generic Event
+      After Defeated Balrog 3
   > Exit to Waterway
       Curly's Air Tank
+  > Save Point
+      Trivial
 
 > Door to Core; Heals? False
   * Door to Core/Door to Dark Place
@@ -109,39 +142,44 @@ Extra - map_name: Drain
   > Door to Labyrinth M
       Trivial
 
+> Save Point; Heals? False
+  > Door to Labyrinth M
+      Trivial
+
 ----------------
 Core
 Extra - map_name: Almond
 > Door to Dark Place; Heals? False; Spawn Point
   * Door to Dark Place/Door to Core
-  > Event - Core
-      All of the following:
-          After Generic Event
-          Any of the following:
-              Can Kill Bosses
-              All of the following:
-                  Kill Bosses with Missiles (Expert)
-                  Any of the following:
-                      Missile Launcher ≥ 29
-                      Missile Launcher ≥ 20 and Super Missile Launcher
-  > Pickup (Robot's Arm)
-      Trivial
+  > Inner Room
+      After Defeated Balrog 3 and Has Weapon
 
 > Event - Core; Heals? False
-  * Event Defeated the Core
+  * Event Defeated Core
   > Pickup (Drowned Curly)
       Trivial
 
 > Pickup (Robot's Arm); Heals? False
   * Pickup 19; Major Location? False
   * Extra - event: 0243
-  > Door to Dark Place
-      After Defeated the Core
+  > Inner Room
+      Trivial
 
 > Pickup (Drowned Curly); Heals? False
   * Pickup 20; Major Location? False
   * Extra - event: 1111
+  > Inner Room
+      Trivial
+
+> Inner Room; Heals? False
   > Door to Dark Place
+      After Defeated the Core
+  > Event - Core
+      Any of the following:
+          Can Kill Bosses
+          Missiles ≥ 29 and Missile Launcher and Kill Bosses with Missiles (Expert)
+          Missiles ≥ 20 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
+  > Pickup (Robot's Arm)
       Trivial
 
 ----------------
@@ -150,7 +188,7 @@ Extra - map_name: River
 > Entrance from Dark Place; Heals? False; Spawn Point
   * Entrance to Dark Place/Exit to Waterway
   > Door to Waterway Cabin
-      Curly's Air Tank
+      Curly's Air Tank and Pacifist Strats (Intermediate) and Has Weapon
 
 > Exit to Main Artery; Heals? False
   * Exit to Main Artery/Entrance from Waterway
@@ -166,11 +204,21 @@ Extra - map_name: Pixel
 > Door to Waterway; Heals? False; Spawn Point
   * Door to Waterway/Door to Waterway Cabin
   > Event - Drained Curly
-      After Generic Event
+      After Picked up Curly (Core)
 
 > Event - Drained Curly; Heals? True
   * Event Saved Curly
   > Door to Waterway
+      Trivial
+
+> Save Point; Heals? False
+  > Door to Waterway
+      Trivial
+  > Bed
+      Trivial
+
+> Bed; Heals? True
+  > Save Point
       Trivial
 
 ----------------
@@ -179,9 +227,16 @@ Extra - map_name: Stream
 > Entrance from Waterway; Heals? False; Spawn Point
   * Entrance to Waterway/Exit to Main Artery
   > Exit to Reservoir
-      After Generic Event
+      After Defeated Ironhead
   > Event - Ironhead
-      Can Kill Bosses
+      Any of the following:
+          # Missile counts TBD
+          Can Kill Bosses
+          All of the following:
+              Missiles
+              Any of the following:
+                  Super Missile Launcher and Kill Bosses with Missiles (Beginner)
+                  Missile Launcher and Kill Bosses with Missiles (Intermediate)
 
 > Exit to Reservoir; Heals? False
   * Exit to Reservoir/Entrance from Main Artery
@@ -207,7 +262,7 @@ Extra - map_name: MazeI
       Trivial
 
 > Event - Opened Labyrinth I Door; Heals? False; Spawn Point
-  * Event Generic Event
+  * Event Opened Labyrinth I Door
   > Room Bottom
       Trivial
 
@@ -219,7 +274,7 @@ Extra - map_name: MazeI
 
 > Room Bottom; Heals? False
   > Door to Labyrinth H
-      After Generic Event
+      After Opened Labyrinth I Door
   > Event - Opened Labyrinth I Door
       Any of the following:
           Pacifist Strats (Advanced) or Has Weapon
@@ -228,7 +283,16 @@ Extra - map_name: MazeI
       Any of the following:
           Pacifist Strats (Advanced) or Has Weapon
           Pacifist Strats (Intermediate) and Has Flight
-  > Teleporter to Sand Zone
+  > Save Point
+      Any of the following:
+          Gravity Hopping (Advanced) or Can Break Blocks
+          Bubbler and Break blocks with Bubbler (Beginner)
+          Missiles and Missile Launcher and Super Missile Launcher and Break blocks with Missiles (Beginner)
+  > Hint - Blue Robot (Left)
+      Trivial
+  > Hint - Blue Robot (Right)
+      Trivial
+  > Event - Use Labyrinth I Teleporter
       Trivial
 
 > Entrance from Sand Zone Storehouse; Heals? False
@@ -239,6 +303,23 @@ Extra - map_name: MazeI
 > Teleporter to Sand Zone; Heals? False
   * Teleporter to Sand Zone/Teleporter to Labyrinth I
   > Room Bottom
+      Trivial
+
+> Save Point; Heals? False
+  > Room Bottom
+      Trivial
+
+> Hint - Blue Robot (Left); Heals? False
+  > Room Bottom
+      Trivial
+
+> Hint - Blue Robot (Right); Heals? False
+  > Room Bottom
+      Trivial
+
+> Event - Use Labyrinth I Teleporter; Heals? False
+  * Event Used Labyrinth I Teleporter
+  > Teleporter to Sand Zone
       Trivial
 
 ----------------
@@ -260,53 +341,67 @@ Extra - map_name: MazeW
 > Door to Labyrinth H; Heals? False; Spawn Point
   * Door to Labyrinth H/Door to Labyrinth W
   > Outside Camp
-      Any of the following:
-          Pacifist Strats (Expert) or Has Weapon
-          Nemesis and Pacifist Strats (Intermediate)
-          Pacifist Strats (Advanced) and Normal Damage ≥ 5
+      Traverse Labyrinth W
 
 > Door to Labyrinth Shop; Heals? False
   * Door to Labyrinth Shop/Door to Labyrinth W
   > Outside Camp
-      Trivial
+      Traverse Labyrinth W
 
 > Outside Camp; Heals? False
   > Door to Labyrinth H
-      Trivial
+      Traverse Labyrinth W
   > Door to Labyrinth Shop
-      Trivial
+      Traverse Labyrinth W
   > Door to Camp (Lower)
-      Trivial
+      Traverse Labyrinth W
   > Door to Camp (Upper)
       All of the following:
-          Can Break Blocks
+          Can Break Blocks and Traverse Labyrinth W
           Any of the following:
               Has Flight
-              Damage Boosting (Beginner) and Normal Damage ≥ 8
+              All of the following:
+                  # Damage boost off purple Critter
+                  Damage Boosting (Beginner) and Normal Damage ≥ 8
+              All of the following:
+                  # Damage boost off specific purple Critter hitbox, or flying Gaudi projectile
+                  Damage Boosting (Intermediate) and Normal Damage ≥ 3
   > Door to Clinic Ruins
-      Clinic Key
+      Clinic Key and Traverse Labyrinth W
   > Event - Monster X
-      Can Kill Bosses
+      Any of the following:
+          # Missile counts TBD
+          Can Kill Bosses
+          All of the following:
+              Missile Launcher
+              Any of the following:
+                  Super Missile Launcher and Kill Bosses with Missiles (Beginner)
+                  Missiles and Kill Bosses with Missiles (Intermediate)
 
 > Door to Camp (Lower); Heals? False
   * Door to Camp/Door to Labyrinth W (Lower)
   > Outside Camp
-      Trivial
+      Traverse Labyrinth W
 
 > Door to Camp (Upper); Heals? False
   * Door to Camp/Door to Labyrinth W (Upper)
   > Outside Camp
-      Can Break Blocks
+      Can Break Blocks and Traverse Labyrinth W
 
 > Door to Clinic Ruins; Heals? False
   * Door to Clinic Ruins/Door to Labyrinth W
   > Outside Camp
-      Trivial
+      Traverse Labyrinth W
 
 > Door to Labyrinth B; Heals? False
   * Door to Labyrinth B/Door to Labyrinth W
   > Event - Monster X
-      Can Kill Bosses
+      Any of the following:
+          # Missile counts TBD
+          Can Kill Bosses
+          All of the following:
+              Missiles and Kill Bosses with Missiles (Beginner)
+              Missile Launcher or Super Missile Launcher
 
 > Event - Monster X; Heals? False
   * Event Generic Event
@@ -328,6 +423,8 @@ Extra - map_name: MazeA
       Spur
   > Teleporter to Labyrinth M
       Has Flight
+  > Save Point
+      Trivial
 
 > Pickup (Chaba Chest (Machine Gun)); Heals? False
   * Pickup 23; Major Location? False
@@ -352,6 +449,10 @@ Extra - map_name: MazeA
   > Door to Labyrinth W
       Trivial
 
+> Save Point; Heals? False
+  > Door to Labyrinth W
+      Trivial
+
 ----------------
 Camp
 (Valid Starting Location)
@@ -364,6 +465,8 @@ Extra - map_name: MazeO
       Trivial
   > Event - Cure-All
       Cure-All
+  > Save Point
+      Trivial
 
 > Door to Labyrinth W (Upper); Heals? False
   * Door to Labyrinth W/Door to Camp (Upper)
@@ -379,7 +482,7 @@ Extra - map_name: MazeO
       Trivial
 
 > Event - Cure-All; Heals? True
-  * Event Generic Event
+  * Event Delivered Cure-All
   > Door to Labyrinth W (Lower)
       Trivial
 
@@ -390,6 +493,10 @@ Extra - map_name: MazeO
       Trivial
 
 > Room Spawn; Heals? False; Spawn Point
+  > Door to Labyrinth W (Lower)
+      Trivial
+
+> Save Point; Heals? False
   > Door to Labyrinth W (Lower)
       Trivial
 
@@ -405,7 +512,14 @@ Extra - map_name: MazeD
   * Pickup 28; Major Location? False
   * Extra - event: 0201
   > Event - Puu Black
-      Can Kill Bosses
+      Any of the following:
+          # Missile Counts TBD
+          Can Kill Bosses
+          All of the following:
+              Missiles
+              Any of the following:
+                  Super Missile Launcher and Kill Bosses with Missiles (Beginner)
+                  Missile Launcher and Kill Bosses with Missiles (Intermediate)
 
 > Event - Puu Black; Heals? False
   * Event Generic Event

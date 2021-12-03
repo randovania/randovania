@@ -103,10 +103,24 @@
                             }
                         },
                         "Outside Cthulhu's Abode": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -212,17 +226,45 @@
                             }
                         },
                         "Teleporter to Arthur's House": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Outside Egg Observation Room": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -263,10 +305,24 @@
                     "extra": {},
                     "connections": {
                         "Outside Cthulhu's Abode": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "H/V Trigger to Egg No. 06": {
@@ -294,7 +350,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventEggBarrier",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -418,20 +474,98 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventEggBarrier",
                                 "amount": 1,
                                 "negate": false
                             }
                         },
                         "Event - Igor": {
-                            "type": "template",
-                            "data": "Can Kill Bosses"
+                            "type": "or",
+                            "data": {
+                                "comment": "Missile counts TBD",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "supers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BossMissiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BossMissiles",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Door to Egg No. 00": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventIgor",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -464,7 +598,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventIgor",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -542,6 +676,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -575,6 +716,26 @@
                     "coordinates": {
                         "x": 200.3037409268565,
                         "y": 101.84254606365158,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Egg Corridor (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 216.08080808080808,
+                        "y": 55.56453423120092,
                         "z": 0
                     },
                     "description": "",
@@ -736,7 +897,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Event - Lowered Barrier": {
+                        "Event - Lowered Egg Corridor Barrier": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -747,17 +908,17 @@
                         }
                     }
                 },
-                "Event - Lowered Barrier": {
+                "Event - Lowered Egg Corridor Barrier": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 167.428252372976,
-                        "y": 121.28196538246789,
-                        "z": 0
+                        "x": 167.43,
+                        "y": 121.28,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "eventBoss",
+                    "event_name": "eventEggBarrier",
                     "connections": {
                         "Door to Egg Corridor": {
                             "type": "and",
@@ -852,7 +1013,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Save Point/Refill": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -861,18 +1022,45 @@
                         }
                     }
                 },
-                "Save Point/Refill": {
+                "Save Point": {
                     "node_type": "generic",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
-                        "x": 192.58514796203238,
-                        "y": 153.01395868230037,
-                        "z": 0
+                        "x": 183.4,
+                        "y": 152.67,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "connections": {
                         "Door to Egg Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 198.48260381593715,
+                        "y": 152.35465768799102,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,

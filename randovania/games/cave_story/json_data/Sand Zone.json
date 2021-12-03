@@ -361,22 +361,6 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Puppy (Sleep))": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Exit to Sand Zone Storehouse": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "puppies",
-                                "amount": 5,
-                                "negate": false
-                            }
-                        },
                         "Outside Jenka's House": {
                             "type": "or",
                             "data": {
@@ -475,14 +459,14 @@
                                 ]
                             }
                         },
-                        "Refill (Lower)": {
+                        "Outside Sand Zone Storehouse": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Can Break Blocks"
+                                        "data": "Has Flight"
                                     },
                                     {
                                         "type": "and",
@@ -490,19 +474,14 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SNBubbler",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Has Flight"
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "bubbler",
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -511,68 +490,13 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SNMissiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 2,
+                                            "negate": false
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        "Teleporter to Labyrinth I": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "eventToroko",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "eventBoss",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Remove Points of No Return"
                                     }
                                 ]
                             }
@@ -693,7 +617,7 @@
                     "pickup_index": 61,
                     "major_location": false,
                     "connections": {
-                        "Lower Side": {
+                        "Outside Sand Zone Storehouse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -719,15 +643,7 @@
                     },
                     "dock_type": "exit",
                     "dock_weakness": "Exit",
-                    "connections": {
-                        "Lower Side": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 },
                 "Above Sunstones": {
                     "node_type": "generic",
@@ -2096,7 +2012,7 @@
                 },
                 "Refill (Upper)": {
                     "node_type": "generic",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
                         "x": 3088.877968877968,
                         "y": 669.9426699426699,
@@ -2111,21 +2027,28 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Save Point (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
                 "Refill (Lower)": {
                     "node_type": "generic",
-                    "heal": false,
+                    "heal": true,
                     "coordinates": {
-                        "x": 3350.9582309582306,
-                        "y": 339.7215397215397,
+                        "x": 3324.962243797195,
+                        "y": 377.562028047465,
                         "z": 0
                     },
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Lower Side": {
+                        "Save Point (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2152,7 +2075,143 @@
                     "dock_type": "teleporter",
                     "dock_weakness": "Teleporter",
                     "connections": {
+                        "Outside Sand Zone Storehouse": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Outside Sand Zone Storehouse": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3507.9180151024807,
+                        "y": 294.71413160733556,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
                         "Lower Side": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Flight"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Puppy (Sleep))": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Exit to Sand Zone Storehouse": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventPuppies",
+                                "amount": 5,
+                                "negate": false
+                            }
+                        },
+                        "Refill (Lower)": {
+                            "type": "template",
+                            "data": "Can Break Blocks"
+                        },
+                        "Teleporter to Labyrinth I": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventSandMazeTeleport",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Remove Points of No Return"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Save Point (Lower)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3369.8381877022653,
+                        "y": 387.9180151024812,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Refill (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point (Upper)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2033.92,
+                        "y": 729.67,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Refill (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2235,7 +2294,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventFightCurly",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -2316,7 +2375,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventFightCurly",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -2421,6 +2480,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2471,6 +2537,53 @@
                             }
                         }
                     }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 86.44660194174757,
+                        "y": 103.38295577130529,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Sand Zone Residence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 71.94822006472492,
+                        "y": 103.08090614886731,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2503,7 +2616,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventPuppies",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -2515,6 +2628,13 @@
                                 "name": "puppies",
                                 "amount": 5,
                                 "negate": false
+                            }
+                        },
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2547,13 +2667,33 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 164.33087633087632,
-                        "y": 85.57575757575756,
+                        "x": 164.33,
+                        "y": 85.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventPuppies",
+                    "connections": {
+                        "Door to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 248.34519956850053,
+                        "y": 133.88996763754045,
                         "z": 0
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "eventBoss",
                     "connections": {
                         "Door to Sand Zone": {
                             "type": "and",
@@ -2597,6 +2737,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2614,6 +2761,26 @@
                     },
                     "pickup_index": 66,
                     "major_location": false,
+                    "connections": {
+                        "Door to Sand Zone": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 199.4131607335491,
+                        "y": 73.48004314994606,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Sand Zone": {
                             "type": "and",

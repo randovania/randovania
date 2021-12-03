@@ -103,10 +103,45 @@
                     "dock_weakness": "Door",
                     "connections": {
                         "West Side": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Flight"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -129,7 +164,7 @@
                     "dock_type": "entrance",
                     "dock_weakness": "Entrance",
                     "connections": {
-                        "Area Centre": {
+                        "Event - Entered Grasstown from Chaco Fireplace": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -386,8 +421,8 @@
                         "Door to Santa's House": {
                             "type": "resource",
                             "data": {
-                                "type": "items",
-                                "name": "santaKey",
+                                "type": "events",
+                                "name": "eventSanta",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -407,10 +442,45 @@
                             }
                         },
                         "Door to Chaco's House": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Flight"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Area Centre": {
@@ -612,12 +682,28 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "eventBoss",
+                                            "name": "eventJellies",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Return Santa's Key": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "santaKey",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Hint - Cthulhu (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -822,7 +908,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "events",
-                                                                    "name": "eventBoss",
+                                                                    "name": "eventFireplace",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -847,13 +933,6 @@
                                                                                 "name": "GravHop",
                                                                                 "amount": 5,
                                                                                 "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": []
                                                                             }
                                                                         }
                                                                     ]
@@ -924,52 +1003,13 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Kill Bosses"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Has Flight"
+                                                    "data": "Has Weapon"
                                                 },
                                                 {
                                                     "type": "and",
                                                     "data": {
                                                         "comment": null,
                                                         "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "missiles",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "BossMissiles",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 3,
-                                                                    "negate": false
-                                                                }
-                                                            },
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
@@ -980,12 +1020,41 @@
                                                                 }
                                                             },
                                                             {
-                                                                "type": "resource",
+                                                                "type": "or",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Dboost",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Dboost",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "damage",
+                                                                                            "name": "Damage",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Has Flight"
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -1031,6 +1100,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Hint - Cthulhu (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1062,25 +1138,84 @@
                                         "data": "Has Weapon"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Has Flight"
-                                    },
-                                    {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 3,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Has Flight"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Damage",
+                                                                                "amount": 3,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Dboost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "BossMissiles",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "GravHop",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1128,62 +1263,10 @@
                     "dock_weakness": "Teleporter",
                     "connections": {
                         "West Side": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Has Weapon"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "pacifist",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "pacifist",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Has Flight"
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Damage",
-                                                                    "amount": 6,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1204,6 +1287,88 @@
                     "major_location": false,
                     "connections": {
                         "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Cthulhu (East)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4422.5641025641025,
+                        "y": 105.2915479582145,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "East Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Return Santa's Key": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 248.89,
+                        "y": 169.11,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventSanta",
+                    "connections": {
+                        "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Cthulhu (West)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 253.14339981006648,
+                        "y": 292.4900284900284,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Entered Grasstown from Chaco Fireplace": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2085.14,
+                        "y": 207.97,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventFireplace",
+                    "connections": {
+                        "Area Centre": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1240,10 +1405,12 @@
                     "dock_weakness": "Door",
                     "connections": {
                         "Pickup (Santa)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "eventSanta",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Pickup (Santa's Fireplace)": {
@@ -1255,7 +1422,7 @@
                                 "negate": false
                             }
                         },
-                        "Save Point/Refill": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1312,18 +1479,45 @@
                         }
                     }
                 },
-                "Save Point/Refill": {
+                "Save Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 286.3292383292383,
-                        "y": 119.97379197379198,
-                        "z": 0
+                        "x": 296.59,
+                        "y": 116.03,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "connections": {
                         "Door to Grasstown": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 280.0,
+                        "y": 121.45868945868946,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1372,7 +1566,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventSanta",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1381,12 +1575,12 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventSanta",
                                 "amount": 1,
                                 "negate": false
                             }
                         },
-                        "Save Point/Bed": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1419,12 +1613,12 @@
                     "heal": false,
                     "coordinates": {
                         "x": 168.0,
-                        "y": 150.7027027027027,
-                        "z": 0
+                        "y": 150.7,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "eventBoss",
+                    "event_name": "eventJellies",
                     "connections": {
                         "Door to Grasstown": {
                             "type": "and",
@@ -1437,7 +1631,7 @@
                 },
                 "Pickup (Chaco's Bed, where you two Had A Nap)": {
                     "node_type": "pickup",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
                         "x": 199.64619164619165,
                         "y": 157.12366912366912,
@@ -1459,18 +1653,45 @@
                         }
                     }
                 },
-                "Save Point/Bed": {
+                "Save Point": {
                     "node_type": "generic",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
-                        "x": 119.38411138411139,
-                        "y": 199.77723177723178,
-                        "z": 0
+                        "x": 119.38,
+                        "y": 199.78,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "connections": {
                         "Door to Grasstown": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Bed": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Bed": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 207.88603988603987,
+                        "y": 147.62393162393164,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1522,7 +1743,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "eventBoss",
+                                            "name": "eventFans",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1553,6 +1774,15 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventBalrog2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1574,11 +1804,81 @@
                         "Event - Balrog 2": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Missile counts TBD",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BossMissiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "supers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BossMissiles",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1657,7 +1957,14 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Save Point/Refill": {
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1666,12 +1973,32 @@
                         }
                     }
                 },
-                "Save Point/Refill": {
+                "Save Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 149.1957411957412,
-                        "y": 138.77805077805078,
+                        "x": 149.2,
+                        "y": 138.78,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Grasstown": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 182.35897435897434,
+                        "y": 136.13675213675214,
                         "z": 0
                     },
                     "description": "",
@@ -1788,17 +2115,48 @@
                     "dock_weakness": "Door",
                     "connections": {
                         "Pickup (Execution Chamber)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
-                                        "data": "Has Weapon"
+                                        "data": "Can Break Blocks"
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Can Break Blocks"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SNMissiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missile",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1824,12 +2182,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Has Weapon"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -1886,24 +2239,92 @@
                     "major_location": false,
                     "connections": {
                         "Door to Grasstown": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "eventBoss",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Event - Balfrog": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Missile counts TBD",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BossMissiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "supers",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BossMissiles",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missiles",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missile",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Balfrog": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1955,7 +2376,24 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventKazuma",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Teleporter to Jail No. 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Saved Kazuma": {
                     "node_type": "event",
@@ -1968,19 +2406,42 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventKazuma",
-                    "connections": {}
+                    "connections": {
+                        "Teleporter to Jail No. 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Save Point/Refill": {
+                "Save Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 64.80589680589681,
-                        "y": 86.95167895167896,
-                        "z": 0
+                        "x": 54.72,
+                        "y": 87.64,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
-                    "connections": {}
+                    "connections": {
+                        "Door to Grasstown": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Teleporter to Jail No. 2": {
                     "node_type": "dock",
@@ -2001,6 +2462,37 @@
                     "dock_weakness": "Teleporter",
                     "connections": {
                         "Door to Grasstown": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventKazuma",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Saved Kazuma": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "bomb",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 71.31623931623932,
+                        "y": 88.91168091168095,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,

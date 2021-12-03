@@ -158,11 +158,17 @@ Extra - map_name: Itoh
       Trivial
   > Pickup (Itoh)
       Sue's Letter
+  > Save Point
+      Trivial
 
 > Pickup (Itoh); Heals? False
   * Pickup 49; Major Location? False
   * Extra - event: 0405
   > Door to Plantation
+      Trivial
+
+> Save Point; Heals? False
+  > Door to Outer Wall
       Trivial
 
 ----------------
@@ -172,29 +178,27 @@ Extra - map_name: Hell4
   * Door to Plantation/Door to Passage?
   > Door to Statue Chamber
       Trivial
-  > Door to Corridor
-      After Generic Event
 
 > Door to Statue Chamber; Heals? False
   * Door to Statue Chamber/Door to Passage?
   > Door to Plantation
-      Trivial
+      Before Defeated Undead Core
+  > Door to Corridor
+      After Entered Passage? from above
 
 > Door to Corridor; Heals? False
   * Door to Corridor/Door to Passage?
-  > Door to Plantation
-      After Generic Event
+  > Door to Statue Chamber
+      After Entered Passage? from above and Has Flight
 
 > Entrance from Sacred Grounds - B3; Heals? False; Spawn Point
   * Entrance to Sacred Grounds - B3/Exit to Passage?
-  > Door to Plantation
-      After Generic Event
   > Event - Entered Passage from Above
       Trivial
 
 > Event - Entered Passage from Above; Heals? False
-  * Event Generic Event
-  > Door to Plantation
+  * Event Entered Passage? from above
+  > Door to Corridor
       Trivial
 
 ----------------
@@ -202,6 +206,16 @@ Statue Chamber
 Extra - map_name: Statue
 > Door to Passage?; Heals? False; Spawn Point
   * Door to Passage?/Door to Statue Chamber
+  > Hint - Numahachi 1
+      Trivial
+
+> Hint - Numahachi 1; Heals? False
+  > Hint - Numahachi 2
+      Trivial
+
+> Hint - Numahachi 2; Heals? False
+  > Door to Passage?
+      Trivial
 
 ----------------
 Rest Area
@@ -210,10 +224,16 @@ Extra - map_name: lounge
   * Door to Plantation/Door to Rest Area
   > Pickup (Megane)
       Broken Sprinkler and Mimiga Mask
+  > Bed
+      After Built Rocket
 
 > Pickup (Megane); Heals? False
   * Pickup 50; Major Location? False
   * Extra - event: 0204
+  > Door to Plantation
+      Trivial
+
+> Bed; Heals? True
   > Door to Plantation
       Trivial
 
@@ -226,7 +246,7 @@ Extra - map_name: CentW
       Trivial
 
 > Event - Droll Attack; Heals? False
-  * Event Generic Event
+  * Event Droll Attack
   > Exit to Jail No. 1
       Trivial
 
@@ -236,9 +256,9 @@ Extra - map_name: CentW
   > Event - Droll Attack
       Teleporter Room Key
   > Teleporter to Arthur's House
-      No Teleporter Room Key or After Generic Event
+      No Teleporter Room Key or After Droll Attack
   > Exit to Jail No. 1
-      After Generic Event
+      After Droll Attack
 
 > Teleporter to Arthur's House; Heals? False
   * Teleporter to Arthur's House/Teleporter to Teleporter
@@ -260,6 +280,8 @@ Extra - map_name: Jail1
       Trivial
   > Pickup (Jail No. 1)
       Trivial
+  > Save Point
+      Trivial
 
 > Door to Plantation (Lower); Heals? False
   * Door to Plantation/Door to Jail No. 1 (Lower)
@@ -267,6 +289,10 @@ Extra - map_name: Jail1
 > Pickup (Jail No. 1); Heals? False
   * Pickup 51; Major Location? False
   * Extra - event: 0301
+  > Entrance from Teleporter
+      Trivial
+
+> Save Point; Heals? False
   > Entrance from Teleporter
       Trivial
 
@@ -316,5 +342,11 @@ Extra - map_name: Momo
 
 > Bed; Heals? False
   > Door to Plantation
+      Trivial
+  > Save Point
+      Trivial
+
+> Save Point; Heals? False
+  > Bed
       Trivial
 
