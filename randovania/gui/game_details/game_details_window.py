@@ -1,25 +1,24 @@
-import collections
+import copy
 import copy
 import dataclasses
 import typing
-from functools import partial
-from typing import List, Dict, Optional, Set
+from typing import Dict, Optional, Set
 
 from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QRadioButton, QGroupBox, QHBoxLayout, QLabel, QPushButton, QVBoxLayout, \
-    QApplication, QDialog, QAction, QMenu
+from PySide2.QtWidgets import QApplication, QDialog, QAction, QMenu
 from qasync import asyncSlot
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
-from randovania.gui.generated.seed_details_window_ui import Ui_SeedDetailsWindow
+from randovania.gui.game_details.game_details_tab import GameDetailsTab
+from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
+from randovania.gui.generated.game_details_window_ui import Ui_GameDetailsWindow
 from randovania.gui.lib import async_dialog, common_qt_lib, game_exporter
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.close_event_widget import CloseEventWidget
@@ -31,7 +30,6 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
-from randovania.patching.prime.patcher_file_lib import item_names
 
 
 def _unique(iterable):
@@ -44,25 +42,8 @@ def _unique(iterable):
         yield item
 
 
-def _show_pickup_spoiler(button):
-    target_player = getattr(button, "target_player", None)
-    if target_player is not None:
-        label = f"{button.item_name} for {button.player_names[target_player]}"
-    else:
-        label = button.item_name
-    button.setText(label)
-    button.item_is_hidden = False
-
-
-def _hide_pickup_spoiler(button):
-    button.setText("Hidden")
-    button.item_is_hidden = True
-
-
-class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMixin):
+class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMixin):
     _on_bulk_change: bool = False
-    _history_items: List[QRadioButton]
-    pickup_spoiler_buttons: List[QPushButton]
     layout_description: LayoutDescription
     _options: Options
     _window_manager: Optional[WindowManager]
@@ -70,17 +51,16 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     _pickup_spoiler_current_game: Optional[GameDescription] = None
     _last_percentage: float = 0
     _can_stop_background_process: bool = True
+    _game_details_tabs: list[GameDetailsTab]
 
     def __init__(self, window_manager: Optional[WindowManager], options: Options):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
 
-        self._history_items = []
-        self.pickup_spoiler_buttons = []
-        self._pickup_spoiler_world_to_group = {}
         self._options = options
         self._window_manager = window_manager
+        self._game_details_tabs = []
 
         # Ui
         self._tool_button_menu = QMenu(self.tool_button)
@@ -110,8 +90,6 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._action_copy_permalink.triggered.connect(self._copy_permalink)
         self._action_export_preset.triggered.connect(self._export_preset)
         self._action_view_trick_usages.triggered.connect(self._view_trick_usages)
-        self.pickup_spoiler_pickup_combobox.currentTextChanged.connect(self._on_change_pickup_filter)
-        self.pickup_spoiler_show_all_button.clicked.connect(self._toggle_show_all_pickup_spoiler)
         self.player_index_combo.activated.connect(self._update_current_player)
         self.CloseEvent.connect(self.stop_background_process)
 
@@ -126,6 +104,13 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
     @property
     def current_player_index(self) -> int:
         return self.player_index_combo.currentData()
+
+    @property
+    def players_configuration(self) -> PlayersConfiguration:
+        return PlayersConfiguration(
+            player_index=self.current_player_index,
+            player_names=self._player_names,
+        )
 
     # Operations
     def _copy_permalink(self):
@@ -241,12 +226,8 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
             return
 
         dialog.save_options()
-        players_config = PlayersConfiguration(
-            player_index=self.current_player_index,
-            player_names=self._player_names,
-        )
-
-        patch_data = patcher.create_patch_data(layout, players_config, options.options_for_game(game).cosmetic_patches)
+        patch_data = patcher.create_patch_data(layout, self.players_configuration,
+                                               options.options_for_game(game).cosmetic_patches)
         self._can_stop_background_process = patcher.export_can_be_aborted
         await game_exporter.export_game(
             patcher=patcher,
@@ -264,69 +245,6 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self._window_manager.open_map_tracker(current_preset)
 
     # Layout Visualization
-    def _create_pickup_spoilers(self, game_description: GameDescription):
-        if game_description == self._pickup_spoiler_current_game:
-            return
-
-        for groups in self._pickup_spoiler_world_to_group.values():
-            groups.deleteLater()
-
-        self._pickup_spoiler_current_game = game_description
-        self.pickup_spoiler_show_all_button.currently_show_all = True
-        self.pickup_spoiler_buttons.clear()
-
-        self._pickup_spoiler_world_to_group = {}
-        nodes_in_world = collections.defaultdict(list)
-
-        for world, area, node in game_description.world_list.all_worlds_areas_nodes:
-            if isinstance(node, PickupNode):
-                world_name = world.correct_name(area.in_dark_aether)
-                nodes_in_world[world_name].append((f"{area.name} - {node.name}", node.pickup_index))
-                continue
-
-        for world_name in sorted(nodes_in_world.keys()):
-            group_box = QGroupBox(self.pickup_spoiler_scroll_contents)
-            group_box.setTitle(world_name)
-            vertical_layout = QVBoxLayout(group_box)
-            vertical_layout.setContentsMargins(8, 4, 8, 4)
-            vertical_layout.setSpacing(2)
-            group_box.vertical_layout = vertical_layout
-
-            vertical_layout.horizontal_layouts = []
-            self._pickup_spoiler_world_to_group[world_name] = group_box
-            self.pickup_spoiler_scroll_content_layout.addWidget(group_box)
-
-            for area_name, pickup_index in sorted(nodes_in_world[world_name], key=lambda it: it[0]):
-                horizontal_layout = QHBoxLayout()
-                horizontal_layout.setSpacing(2)
-
-                label = QLabel(group_box)
-                label.setText(area_name)
-                horizontal_layout.addWidget(label)
-                horizontal_layout.label = label
-
-                push_button = QPushButton(group_box)
-                push_button.setFlat(True)
-                push_button.setText("Hidden")
-                push_button.item_is_hidden = True
-                push_button.pickup_index = pickup_index
-                push_button.clicked.connect(partial(self._toggle_pickup_spoiler, push_button))
-                push_button.item_name = "Nothing was Set, ohno"
-                push_button.row = horizontal_layout
-                horizontal_layout.addWidget(push_button)
-                horizontal_layout.button = push_button
-                self.pickup_spoiler_buttons.append(push_button)
-
-                group_box.vertical_layout.addLayout(horizontal_layout)
-                group_box.vertical_layout.horizontal_layouts.append(horizontal_layout)
-
-    def create_history_item(self, node):
-        button = QRadioButton(self.layout_history_content)
-        button.toggled.connect(self.on_select_node)
-        button.setText(node)
-        self.layout_history_content_layout.addWidget(button)
-        self._history_items.append(button)
-        return button
 
     def update_layout_description(self, description: LayoutDescription):
         self.layout_description = description
@@ -354,6 +272,12 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self.player_index_combo.setCurrentIndex(0)
         self.player_index_combo.setVisible(description.permalink.player_count > 1)
 
+        if description.permalink.spoiler:
+            action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
+            for item_order in description.item_order:
+                action_list_widget.addItem(item_order)
+            self.layout_info_tab.addTab(action_list_widget, f"Spoiler: Generation Order")
+
         self._update_current_player()
 
     def _update_current_player(self):
@@ -375,90 +299,21 @@ class SeedDetailsWindow(CloseEventWidget, Ui_SeedDetailsWindow, BackgroundTaskMi
         self.layout_description_right_label.setText(preset_describer.merge_categories(categories[1::2]))
 
         # Game Spoiler
-        has_spoiler = description.permalink.spoiler
-        self.pickup_tab.setEnabled(has_spoiler)
-        patches = description.all_patches[current_player]
+        for tab in self._game_details_tabs:
+            self.layout_info_tab.removeTab(self.layout_info_tab.indexOf(tab.widget()))
+        self._game_details_tabs.clear()
 
-        if has_spoiler:
-            pickup_names = {
-                pickup.pickup.name
-                for pickup in patches.pickup_assignment.values()
-            }
-            game_description = default_database.game_description_for(preset.game)
-            self._create_pickup_spoilers(game_description)
-            starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
+        if description.permalink.spoiler:
+            patches = description.all_patches[current_player]
+            players_config = self.players_configuration
 
-            extra_items = item_names.additional_starting_items(preset.configuration,
-                                                               game_description.resource_database,
-                                                               patches.starting_items)
-
-            self.spoiler_starting_location_label.setText("Starting Location: {}".format(
-                game_description.world_list.area_name(starting_area)
-            ))
-            self.spoiler_starting_items_label.setText("Random Starting Items: {}".format(
-                ", ".join(extra_items)
-                if extra_items else "None"
-            ))
-            self._update_show_all_button_state()
-
-        else:
-            pickup_names = {}
-            self.layout_info_tab.removeTab(self.layout_info_tab.indexOf(self.pickup_tab))
-            self.spoiler_starting_location_label.setText("Starting Location")
-            self.spoiler_starting_items_label.setText("Random Starting Items")
-
-        self.pickup_spoiler_pickup_combobox.clear()
-        self.pickup_spoiler_pickup_combobox.addItem("None")
-        for pickup_name in sorted(pickup_names):
-            self.pickup_spoiler_pickup_combobox.addItem(pickup_name)
-
-        for pickup_button in self.pickup_spoiler_buttons:
-            pickup_target = patches.pickup_assignment.get(pickup_button.pickup_index)
-
-            pickup_button.target_player = None
-            if pickup_target is not None:
-                pickup_button.item_name = pickup_target.pickup.name if has_spoiler else "????"
-                if has_spoiler and description.permalink.player_count > 1:
-                    pickup_button.target_player = pickup_target.player
-                    pickup_button.player_names = self._player_names
-            else:
-                pickup_button.item_name = "Nothing"
-
-            if not pickup_button.item_is_hidden:
-                pickup_button.setText(pickup_button.item_name)
-
-    def _toggle_pickup_spoiler(self, button):
-        if button.item_is_hidden:
-            _show_pickup_spoiler(button)
-        else:
-            _hide_pickup_spoiler(button)
-        self._update_show_all_button_state()
-
-    def _toggle_show_all_pickup_spoiler(self):
-        if self.pickup_spoiler_show_all_button.currently_show_all:
-            action = _show_pickup_spoiler
-        else:
-            action = _hide_pickup_spoiler
-
-        for button in self.pickup_spoiler_buttons:
-            action(button)
-
-        self._update_show_all_button_state()
-
-    def _update_show_all_button_state(self):
-        self.pickup_spoiler_show_all_button.currently_show_all = all(
-            button.item_is_hidden for button in self.pickup_spoiler_buttons
-        )
-        if self.pickup_spoiler_show_all_button.currently_show_all:
-            self.pickup_spoiler_show_all_button.setText(QtCore.QCoreApplication.translate("HistoryWindow", "Show All"))
-        else:
-            self.pickup_spoiler_show_all_button.setText(QtCore.QCoreApplication.translate("HistoryWindow", "Hide All"))
-
-    def _on_change_pickup_filter(self, text):
-        for button in self.pickup_spoiler_buttons:
-            visible = text == "None" or text == button.item_name
-            button.setVisible(visible)
-            button.row.label.setVisible(visible)
+            spoiler_visualizer = list(preset.game.data.gui().spoiler_visualizer)
+            spoiler_visualizer.insert(0, PickupDetailsTab)
+            for missing_tab in spoiler_visualizer:
+                new_tab = missing_tab(self.layout_info_tab, preset.game)
+                new_tab.update_content(preset.configuration, patches, players_config)
+                self.layout_info_tab.addTab(new_tab.widget(), f"Spoiler: {new_tab.tab_title()}")
+                self._game_details_tabs.append(new_tab)
 
     def _open_user_preferences_dialog(self):
         game = self.current_player_game
