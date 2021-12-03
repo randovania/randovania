@@ -1,4 +1,5 @@
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
+from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
 from randovania.games.prime2.generator.item_pool.pool_creator import echoes_specific_pool
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
@@ -17,7 +18,7 @@ def _echoes_gui():
     return GameGui(
         tab_provider=prime2_preset_tabs,
         cosmetic_dialog=EchoesCosmeticPatchesDialog,
-        progressive_item_gui_tuples=prime2_progressive_items.gui_tuples()
+        progressive_item_gui_tuples=prime2_progressive_items.gui_tuples(),
         spoiler_visualizer=(TeleporterDetailsTab, TranslatorGateDetailsTab, HintDetailsTab),
     )
 
@@ -52,7 +53,8 @@ game_data: GameData = GameData(
     gui=_echoes_gui,
 
     generator=GameGenerator(
-        item_pool_creator=echoes_specific_pool
+        item_pool_creator=echoes_specific_pool,
+        bootstrap=EchoesBootstrap()
     ),
 
     patcher=ClarisPatcher()

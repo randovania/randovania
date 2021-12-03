@@ -1,4 +1,5 @@
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
+from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.generator.item_pool.pool_creator import prime1_specific_pool
@@ -45,7 +46,8 @@ game_data: GameData = GameData(
     gui=_prime_gui,
 
     generator=GameGenerator(
-        item_pool_creator=prime1_specific_pool
+        item_pool_creator=prime1_specific_pool,
+        bootstrap=PrimeBootstrap()
     ),
 
     patcher=RandomprimePatcher()
