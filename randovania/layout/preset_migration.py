@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 16
+CURRENT_VERSION = 17
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -477,6 +477,13 @@ def _migrate_v15(preset: dict) -> dict:
 
     return preset
 
+def _migrate_v16(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        art_hints = {"artifacts": "precise"}
+        preset["configuration"]["hints"] = art_hints
+
+    return preset
+
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -494,6 +501,7 @@ _MIGRATIONS = {
     13: _migrate_v13,  # v3.1.3-122-g9f50c418
     14: _migrate_v14,  # v3.2.1-44-g11823eac
     15: _migrate_v15,  # v3.2.1-203-g6e303090
+    16: _migrate_v16,  # v3.2.1-363-g3a93b533
 }
 
 
