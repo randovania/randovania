@@ -17,7 +17,7 @@ def _dread_gui():
     return GameGui(
         tab_provider=dread_preset_tabs,
         cosmetic_dialog=DreadCosmeticPatchesDialog,
-        input_file_text=("an extracted romfs folder", "the Nintendo Switch"),
+        input_file_text=("an extracted RomFS folder", "the Nintendo Switch", "RomFS folder"),
         progressive_item_gui_tuples=progressive_items.gui_tuples()
     )
 
