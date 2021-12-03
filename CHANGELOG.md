@@ -15,6 +15,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
 - Added: Items now have tooltips in the Auto-Tracker.
+- Added: One joke hint.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
 - Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
 - Fixed: Data Editor now properly handles areas without nodes.
@@ -24,6 +25,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Start in any (uncrashed) Frigate room
 - Added: 1-way cycles and 1-way anywhere elevators can lead to (uncrashed) Frigate rooms
 - Added: Essence Death and Frigate Escape Cutscene teleporter destinations can now be shuffled
+- Added: Artifact hints can now be configured to show area and room name, just area name, or nothing at all
+
 
 #### Known Issues:
 - Small Samus doesn't work on NTSC-K
