@@ -8,8 +8,6 @@ from typing import Callable, Iterable, Optional, Type
 
 from randovania import get_file_path
 from randovania.bitpacking.bitpacking import BitPackEnum
-from randovania.generator.base_patches_factory import BasePatchesFactory
-from randovania.resolver.bootstrap import Bootstrap
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -23,6 +21,8 @@ if typing.TYPE_CHECKING:
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
     from randovania.patching.patcher import Patcher
+    from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.resolver.bootstrap import Bootstrap
 
 
 @dataclass(frozen=True)
@@ -75,11 +75,11 @@ class GameGenerator:
     item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]
     """Extends the base item pools with any specific item pools such as Artifacts."""
 
-    bootstrap: Bootstrap = Bootstrap()
-    """(Optional) Modifies the resource database and starting resources before generation."""
+    bootstrap: Bootstrap
+    """Modifies the resource database and starting resources before generation."""
 
-    base_patches_factory: BasePatchesFactory = BasePatchesFactory()
-    """(Optional) Creates base patches, such as elevator or configurable node assignments."""
+    base_patches_factory: BasePatchesFactory
+    """Creates base patches, such as elevator or configurable node assignments."""
 
 
 @dataclass(frozen=True)

@@ -6,6 +6,7 @@ from randovania.games.dread.layout.preset_describer import dread_format_params, 
     dread_unexpected_items
 from randovania.games.dread.patcher.open_dread_patcher import OpenDreadPatcher
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
+from randovania.resolver.bootstrap import Bootstrap
 
 
 def _dread_gui():
@@ -46,7 +47,8 @@ game_data: GameData = GameData(
 
     generator=GameGenerator(
         item_pool_creator=pool_creator,
-        base_patches_factory=DreadBasePatchesFactory()
+        base_patches_factory=DreadBasePatchesFactory(),
+        bootstrap=Bootstrap()
     ),
 
     patcher=OpenDreadPatcher()
