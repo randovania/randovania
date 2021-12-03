@@ -5,7 +5,8 @@ from PySide2 import QtWidgets, QtCore
 from mock import MagicMock, AsyncMock, call, ANY
 
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.gui.seed_details_window import SeedDetailsWindow
+from randovania.gui.game_details.game_details_window import GameDetailsWindow
+from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
@@ -14,7 +15,7 @@ from randovania.games.prime3.layout.corruption_cosmetic_patches import Corruptio
 @pytest.mark.asyncio
 async def test_export_iso(skip_qtbot, mocker):
     # Setup
-    mock_input_dialog = mocker.patch("randovania.gui.seed_details_window.GameInputDialog")
+    mock_input_dialog = mocker.patch("randovania.gui.game_details.game_details_window.GameInputDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.Accepted)
 
@@ -26,7 +27,7 @@ async def test_export_iso(skip_qtbot, mocker):
     patcher = patcher_provider.patcher_for_game.return_value
     patcher.is_busy = False
 
-    window = SeedDetailsWindow(window_manager, options)
+    window = GameDetailsWindow(window_manager, options)
     window.layout_description = MagicMock()
     window._player_names = {}
 
@@ -62,7 +63,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     description.permalink.as_base64_str = "<permalink>"
     description.permalink.spoiler = False
 
-    window = SeedDetailsWindow(None, options)
+    window = GameDetailsWindow(None, options)
     skip_qtbot.addWidget(window)
 
     # Run
@@ -80,15 +81,17 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
 
     # Run
-    window = SeedDetailsWindow(None, MagicMock())
+    window = GameDetailsWindow(None, MagicMock())
     skip_qtbot.addWidget(window)
     window.update_layout_description(description)
 
     # Assert
-    assert len(window.pickup_spoiler_buttons) == 119
-    assert window.pickup_spoiler_show_all_button.text() == "Show All"
-    skip_qtbot.mouseClick(window.pickup_spoiler_show_all_button, QtCore.Qt.LeftButton)
-    assert window.pickup_spoiler_show_all_button.text() == "Hide All"
+    pickup_details_tab = window._game_details_tabs[0]
+    assert isinstance(pickup_details_tab, PickupDetailsTab)
+    assert len(pickup_details_tab.pickup_spoiler_buttons) == 119
+    assert pickup_details_tab.pickup_spoiler_show_all_button.text() == "Show All"
+    skip_qtbot.mouseClick(pickup_details_tab.pickup_spoiler_show_all_button, QtCore.Qt.LeftButton)
+    assert pickup_details_tab.pickup_spoiler_show_all_button.text() == "Hide All"
 
 
 @pytest.mark.asyncio
@@ -98,7 +101,7 @@ async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game
 
     options = MagicMock()
     options.options_for_game.return_value.cosmetic_patches = CorruptionCosmeticPatches()
-    window = SeedDetailsWindow(None, options)
+    window = GameDetailsWindow(None, options)
     window.player_index_combo.addItem("Current", 0)
     skip_qtbot.addWidget(window)
 
