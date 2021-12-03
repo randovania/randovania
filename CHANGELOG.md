@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
 This feature comes with plenty of quality of life functionality for editing the database. 
 - **Major** - Added: The Logic Database can now have descriptions for nodes.
+- Added: Game Details window can now spoil the item order, elevators, translator gates and hints.
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
 - Added: Items now have tooltips in the Auto-Tracker.
@@ -21,20 +22,23 @@ This feature comes with plenty of quality of life functionality for editing the 
 
 ### Metroid Prime
 
-- Start in any (uncrashed) Frigate room
-- 1-way cycles and 1-way anywhere elevators can lead to (uncrashed) Frigate rooms
-- Frigate Escape Sequence teleporter destination can now be shuffled 
+- Added: Start in any (uncrashed) Frigate room
+- Added: 1-way cycles and 1-way anywhere elevators can lead to (uncrashed) Frigate rooms
+- Added: Essence Death and Frigate Escape Cutscene teleporter destinations can now be shuffled
 
 #### Known Issues:
 - Small Samus doesn't work on NTSC-K
 
 #### Patcher Changes
 
-- Added: Support for NTSC-J and NTSC-K (Gamecube).
+- Added: Support for NTSC-U 0-01, NTSC-J and NTSC-K (Gamecube).
+- Added: QoL Game Breaking now fixes several crashes on Frigate Orpheon
+- Added: Option to disable item loss in Frigate (Enabled by default)
 - Fixed: Safeguard against blowing past layer limits.
 - Fixed: On Major custscene skip, Elite Quarters now stays locked until the player picks up the item. The hudmemo is now tied to the item rather than the death animation.
 - Fixed: Ruined fountain not always showing the right scan.
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
+- Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 
 #### Logic Database
 

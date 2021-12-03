@@ -322,8 +322,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.GameDetailsSignal.emit(layout)
 
     def _open_game_details(self, layout: LayoutDescription):
-        from randovania.gui.seed_details_window import SeedDetailsWindow
-        details_window = SeedDetailsWindow(self, self._options)
+        from randovania.gui.game_details.game_details_window import GameDetailsWindow
+        details_window = GameDetailsWindow(self, self._options)
         details_window.update_layout_description(layout)
         details_window.show()
         self.track_window(details_window)

@@ -3,10 +3,11 @@ from typing import Iterator, Optional
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
+from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
-from randovania.game_description.world.node import EventNode, Node, PickupNode, DockNode, TeleporterNode
+from randovania.game_description.world.node import EventNode, Node, PickupNode, DockNode, ResourceNode, TeleporterNode
 from randovania.game_description.world.world import World
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
@@ -122,6 +123,13 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
     for node in area.nodes:
         if isinstance(node, (TeleporterNode, DockNode)) or area.connections[node]:
             continue
+
+        # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
+        if isinstance(node, EventNode):
+            # if this node would satisfy the victory condition, it does not need outgoing connections
+            current = convert_resource_gain_to_current_resources(node.resource_gain_on_collect(None, None, None, None))
+            if game.victory_condition.satisfied(current, 0, game.resource_database):
+                continue
 
         if node in nodes_with_paths_in:
             yield f"{area.name} - '{node.name}': Node has paths in, but no connections out."

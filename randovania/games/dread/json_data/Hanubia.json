@@ -10,7 +10,7 @@
     "areas": {
         "Transport to Ferenia": {
             "default_node": "Elevator to Ferenia - Transport to Hanubia",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 2400.0,
@@ -1930,7 +1930,7 @@
         },
         "Transport to Itorash": {
             "default_node": "Elevator to Itorash - Main Room",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": 6200.0,
@@ -3332,25 +3332,8 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }

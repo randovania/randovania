@@ -9,10 +9,12 @@ from randovania.games.prime1.layout.preset_describer import prime_expected_items
 def _prime_gui():
     from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs
     from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog
+    from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
 
     return GameGui(
         tab_provider=prime1_preset_tabs,
         cosmetic_dialog=PrimeCosmeticPatchesDialog,
+        spoiler_visualizer=(TeleporterDetailsTab,),
     )
 
 

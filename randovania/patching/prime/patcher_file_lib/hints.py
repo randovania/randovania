@@ -5,13 +5,13 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.world.node import LogbookNode
 from randovania.game_description.world.world_list import WorldList
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.patching.prime.patcher_file_lib import hint_lib
 from randovania.patching.prime.patcher_file_lib.hint_formatters import LocationFormatter, GuardianFormatter, \
     TemplatedFormatter, RelativeAreaFormatter
 from randovania.patching.prime.patcher_file_lib.hint_lib import create_simple_logbook_hint
 from randovania.patching.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
 from randovania.patching.prime.patcher_file_lib.item_hints import RelativeItemFormatter
-from randovania.interface_common.players_configuration import PlayersConfiguration
 
 _JOKE_HINTS = [
     # Guidelines for joke hints:
@@ -41,6 +41,25 @@ _JOKE_HINTS = [
 ]
 
 
+def create_location_formatters(
+        area_namer: hint_lib.AreaNamer, world_list: WorldList,
+        patches: GamePatches, players_config: PlayersConfiguration,
+) -> dict[HintLocationPrecision, LocationFormatter]:
+    return {
+        HintLocationPrecision.KEYBEARER: TemplatedFormatter(
+            "The Flying Ing Cache in {node} contains {determiner}{pickup}.", area_namer),
+        HintLocationPrecision.GUARDIAN: GuardianFormatter(),
+        HintLocationPrecision.LIGHT_SUIT_LOCATION: TemplatedFormatter(
+            "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.", area_namer),
+        HintLocationPrecision.DETAILED: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
+                                                           area_namer),
+        HintLocationPrecision.WORLD_ONLY: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
+                                                             area_namer),
+        HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(world_list, patches),
+        HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches, players_config),
+    }
+
+
 def create_hints(all_patches: Dict[int, GamePatches],
                  players_config: PlayersConfiguration,
                  world_list: WorldList,
@@ -61,19 +80,7 @@ def create_hints(all_patches: Dict[int, GamePatches],
     this_area_namer = area_namers[players_config.player_index]
     patches = all_patches[players_config.player_index]
 
-    location_formatters: Dict[HintLocationPrecision, LocationFormatter] = {
-        HintLocationPrecision.KEYBEARER: TemplatedFormatter(
-            "The Flying Ing Cache in {node} contains {determiner}{pickup}.", this_area_namer),
-        HintLocationPrecision.GUARDIAN: GuardianFormatter(),
-        HintLocationPrecision.LIGHT_SUIT_LOCATION: TemplatedFormatter(
-            "U-Mos's reward for returning the Sanctuary energy is {determiner}{pickup}.", this_area_namer),
-        HintLocationPrecision.DETAILED: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
-                                                           this_area_namer),
-        HintLocationPrecision.WORLD_ONLY: TemplatedFormatter("{determiner.title}{pickup} can be found in {node}.",
-                                                             this_area_namer),
-        HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(world_list, patches),
-        HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches, players_config),
-    }
+    location_formatters = create_location_formatters(this_area_namer, world_list, patches, players_config)
 
     hints_for_asset: Dict[int, str] = {}
     for asset, hint in patches.hints.items():
