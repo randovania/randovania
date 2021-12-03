@@ -40,6 +40,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Fixed: Safeguard against blowing past layer limits.
 - Fixed: On Major custscene skip, Elite Quarters now stays locked until the player picks up the item. The hudmemo is now tied to the item rather than the death animation.
 - Fixed: Ruined fountain not always showing the right scan.
+- Fixed: Phazon Suit Small Samus Morph Ball Glow
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 
