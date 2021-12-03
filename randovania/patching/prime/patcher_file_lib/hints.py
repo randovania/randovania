@@ -37,6 +37,7 @@ _JOKE_HINTS = [
     "I wonder how many players will see this message...?",
     "We've been trying to contact you about your ship's extended warranty.",
     "The Scan Visor is useful for gathering information.",
+    "Want to become famous? Buy follo... <Transmission blocked>",
 ]
 
 

@@ -12,6 +12,16 @@ ALL_VERSIONS = [
         message_receiver_string_ref=0x803efb90,
     ),
     Prime1DolVersion(
+        version="0-01",
+        description="GC NTSC 0-01",
+        build_string_address=0x803cc768,
+        build_string=b"!#$MetroidBuildInfo!#$Build v1.093 11/5/2002 19:50:01",
+        sda2_base=0x805b1f00,
+        sda13_base=0x805aeda0,
+        cplayer_vtable=0x803d98c8,
+        message_receiver_string_ref=0x803efd70,
+    ),
+    Prime1DolVersion(
         version="0-02",
         description="GC NTSC 0-02",
         build_string_address=0x803cd648,
