@@ -36,7 +36,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                                skip_final_bosses=skip_final_bosses))
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(
+    result = echoes_game_description.game.data.generator.base_patches_factory.add_elevator_connections_to_patches(
         config,
         Random(0),
         echoes_game_description.create_game_patches())
@@ -122,7 +122,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
         elevator_connection=elevator_connection)
 
     # Run
-    result = base_patches_factory.add_elevator_connections_to_patches(
+    result = echoes_game_description.game.data.generator.base_patches_factory.add_elevator_connections_to_patches(
         layout_configuration,
         Random(0),
         game.create_game_patches(),
@@ -155,7 +155,7 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
     rng = MagicMock()
 
     # Run
-    results = base_patches_factory.gate_assignment_for_configuration(configuration, echoes_game_description, rng)
+    results = echoes_game_description.game.data.generator.base_patches_factory.configurable_node_assignment(configuration, echoes_game_description, rng)
 
     # Assert
     assert list(results.values()) == [
@@ -195,7 +195,7 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
     rng.choice.side_effect = choices * len(translator_configuration.translator_requirement)
 
     # Run
-    results = base_patches_factory.gate_assignment_for_configuration(configuration, echoes_game_description, rng)
+    results = echoes_game_description.game.data.generator.base_patches_factory.configurable_node_assignment(configuration, echoes_game_description, rng)
 
     # Assert
     assert list(results.values()) == requirements[:len(translator_configuration.translator_requirement)]
@@ -255,7 +255,7 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is
     }
 
     # Run
-    result = base_patches_factory.add_echoes_default_hints_to_patches(
+    result = echoes_game_description.game.data.generator.base_patches_factory.add_default_hints_to_patches(
         rng, empty_patches, echoes_game_description.world_list, num_joke=2, is_multiworld=is_multiworld)
 
     # Assert

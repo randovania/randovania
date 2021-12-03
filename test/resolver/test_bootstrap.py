@@ -33,9 +33,9 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     }
 
 
-def test_logic_bootstrap(default_preset, echoes_game_description):
+def test_logic_bootstrap(default_echoes_preset, echoes_game_description):
     new_game, state = echoes_game_description.game.data.generator.bootstrap.logic_bootstrap(
-                                                default_preset.configuration,
+                                                default_echoes_preset.configuration,
                                                 echoes_game_description.make_mutable_copy(),
                                                 echoes_game_description.create_game_patches())
 
