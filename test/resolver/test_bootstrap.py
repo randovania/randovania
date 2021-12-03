@@ -4,7 +4,6 @@ import pytest
 
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.resolver import bootstrap
 
 
 @pytest.mark.parametrize("vanilla_elevators", [False, True])
@@ -20,7 +19,7 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")
 
     # Run
-    result = bootstrap.misc_resources_for_configuration(configuration, echoes_resource_database)
+    result = configuration.game.data.generator.bootstrap.misc_resources_for_configuration(configuration, echoes_resource_database)
     relevant_tricks = {
         trick: result[trick]
         for trick in [gfmc_resource, torvus_resource, great_resource]
@@ -35,7 +34,8 @@ def test_misc_resources_for_configuration(echoes_resource_database,
 
 
 def test_logic_bootstrap(default_preset, echoes_game_description):
-    new_game, state = bootstrap.logic_bootstrap(default_preset.configuration,
+    new_game, state = echoes_game_description.game.data.generator.bootstrap.logic_bootstrap(
+                                                default_preset.configuration,
                                                 echoes_game_description.make_mutable_copy(),
                                                 echoes_game_description.create_game_patches())
 
@@ -58,7 +58,7 @@ def test_prime1_progressive_damage_reduction(prime1_resource_database, expected,
     }
 
     # Run
-    result = bootstrap.prime1_progressive_damage_reduction(prime1_resource_database, current_resources)
+    result = RandovaniaGame.METROID_PRIME.data.generator.bootstrap.prime1_progressive_damage_reduction(prime1_resource_database, current_resources)
 
     # Assert
     assert result == expected
@@ -82,7 +82,7 @@ def test_prime1_absolute_damage_reduction(prime1_resource_database, expected, su
     }
 
     # Run
-    result = bootstrap.prime1_absolute_damage_reduction(prime1_resource_database, current_resources)
+    result = RandovaniaGame.METROID_PRIME.data.generator.bootstrap.prime1_absolute_damage_reduction(prime1_resource_database, current_resources)
 
     # Assert
     assert result == expected

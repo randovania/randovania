@@ -42,7 +42,6 @@ from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterC
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.patching.prime import elevators
-from randovania.resolver.bootstrap import logic_bootstrap
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State, add_pickup_to_state
@@ -131,7 +130,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         player_pool = generator.create_player_pool(Random(0), self.game_configuration, 0, 1)
         pool_patches = player_pool.patches
-        self.game_description, self._initial_state = logic_bootstrap(preset.configuration,
+        self.game_description, self._initial_state = self.game_configuration.game.data.generator.bootstrap.logic_bootstrap(
+                                                                     preset.configuration,
                                                                      player_pool.game,
                                                                      pool_patches)
         self.logic = Logic(self.game_description, preset.configuration)

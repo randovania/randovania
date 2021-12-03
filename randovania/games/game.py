@@ -8,6 +8,7 @@ from typing import Callable, Iterable, Optional, Type
 
 from randovania import get_file_path
 from randovania.bitpacking.bitpacking import BitPackEnum
+from randovania.resolver.bootstrap import Bootstrap
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -69,6 +70,9 @@ class GameGui:
 class GameGenerator:
     item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]
     """Extends the base item pools with any specific item pools such as Artifacts."""
+
+    bootstrap: Bootstrap = Bootstrap()
+    """(Optional) Modifies the resource database and starting resources before generation."""
 
 
 @dataclass(frozen=True)

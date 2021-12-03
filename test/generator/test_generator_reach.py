@@ -30,20 +30,19 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.resolver import bootstrap
 from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 
 def run_bootstrap(preset: Preset):
     game = default_database.game_description_for(preset.game).make_mutable_copy()
-    game.resource_database = bootstrap.patch_resource_database(game.resource_database, preset.configuration)
+    game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database, preset.configuration)
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,
         presets={0: preset},
     )
     patches = base_patches_factory.create_base_patches(preset.configuration, Random(15000), game, False, player_index=0)
-    _, state = bootstrap.logic_bootstrap(preset.configuration, game, patches)
+    _, state = game.game.data.generator.bootstrap.logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
 
@@ -214,7 +213,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
     )
     patches = base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,
                                                        False, player_index=0)
-    state = bootstrap.calculate_starting_state(game, patches, 100)
+    state = game.game.data.generator.bootstrap.calculate_starting_state(game, patches, 100)
     state.resources[item("Combat Visor")] = 1
     state.resources[item("Amber Translator")] = 1
     state.resources[item("Scan Visor")] = 1
