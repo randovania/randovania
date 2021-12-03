@@ -15,6 +15,7 @@ def _prime_gui():
     return GameGui(
         tab_provider=prime1_preset_tabs,
         cosmetic_dialog=PrimeCosmeticPatchesDialog,
+        input_file_text=("an ISO file", "the Nintendo Gamecube"),
         spoiler_visualizer=(TeleporterDetailsTab,),
     )
 
