@@ -25,6 +25,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Start in any (uncrashed) Frigate room
 - Added: 1-way cycles and 1-way anywhere elevators can lead to (uncrashed) Frigate rooms
 - Added: Essence Death and Frigate Escape Cutscene teleporter destinations can now be shuffled
+- Added: Artifact hints can now be configured to show area and room name, just area name, or nothing at all
+
 
 #### Known Issues:
 - Small Samus doesn't work on NTSC-K
