@@ -1,32 +1,36 @@
 from __future__ import annotations
+
+import typing
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import Callable, Dict, Iterable, Optional, Set, Type, TYPE_CHECKING
-from randovania import get_file_path
+from typing import Callable, Iterable, Optional, Type
 
+from randovania import get_file_path
 from randovania.bitpacking.bitpacking import BitPackEnum
 
-if TYPE_CHECKING:
-    from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-    from randovania.layout.base.base_configuration import BaseConfiguration
-    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.item_pool import PoolResults
+    from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+    from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
     from randovania.patching.patcher import Patcher
 
 
 @dataclass(frozen=True)
 class GamePresetDescriber:
-    expected_items: Set[str] = frozenset()
+    expected_items: set[str] = frozenset()
     """Items most presets will start with. Only displayed when shuffled."""
 
-    unexpected_items: Callable[[MajorItemsConfiguration], Set[str]] = lambda config: frozenset()
-    """Items not expected to be shuffled. Includes `expected_items` as well as configurable items such as progressive items."""
+    unexpected_items: Callable[[MajorItemsConfiguration], set[str]] = lambda config: frozenset()
+    """Items not expected to be shuffled.
+    Includes `expected_items` as well as configurable items such as progressive items."""
 
     format_params: Optional[Callable[[BaseConfiguration], None]] = None
     """Function providing any game-specific information to display in presets such as the goal."""
@@ -52,6 +56,8 @@ class GameGui:
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
 
+    spoiler_visualizer: tuple[Type[GameDetailsTab], ...] = tuple()
+
 
 @dataclass(frozen=True)
 class GameGenerator:
@@ -70,9 +76,10 @@ class GameData:
     """Full name, used throughout the GUI where space is not an issue."""
 
     experimental: bool
-    """Controls whether the "Experimental Games" setting must be enabled in order to see the game in Randovania. Default to True until given approval."""
+    """Controls whether the "Experimental Games" setting must be enabled in order to see the game in Randovania.
+    Default to True until given approval."""
 
-    presets: Iterable[Dict[str, str]]
+    presets: Iterable[dict[str, str]]
     """List of at least one dict mapping the key "path" to a path to the given preset."""
 
     layout: GameLayout
