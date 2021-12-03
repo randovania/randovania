@@ -479,7 +479,7 @@ def _migrate_v15(preset: dict) -> dict:
 
 def _migrate_v16(preset: dict) -> dict:
     if preset["game"] == "prime1":
-        art_hints = {"artifact_hints": "precise"}
+        art_hints = {"artifacts": "precise"}
         preset["configuration"]["hints"] = art_hints
 
     return preset
