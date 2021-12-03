@@ -54,6 +54,13 @@ class Patcher(ABC):
         raise NotImplementedError()
 
     @property
+    def requires_input_file(self) -> bool:
+        """
+        Does this patcher require an input file at all? Some patchers may include internal copies.
+        """
+        return True
+
+    @property
     @abstractmethod
     def valid_input_file_types(self) -> List[str]:
         raise NotImplementedError()
