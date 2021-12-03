@@ -8,10 +8,12 @@ from randovania.games.prime3.layout.preset_describer import corruption_format_pa
 def _corruption_gui():
     from randovania.games.prime3.gui.preset_settings import prime3_preset_tabs
     from randovania.games.prime3.gui.dialog.corruption_cosmetic_patches_dialog import CorruptionCosmeticPatchesDialog
+    from randovania.games.prime3.item_database import prime3_progressive_items
 
     return GameGui(
         tab_provider=prime3_preset_tabs,
         cosmetic_dialog=CorruptionCosmeticPatchesDialog,
+        progressive_item_gui_tuples=prime3_progressive_items.gui_tuples()
     )
 
 

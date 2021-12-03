@@ -56,6 +56,9 @@ class GameGui:
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
 
+    progressive_item_gui_tuples: Iterable[tuple[str, tuple[str, ...]]] = frozenset()
+    """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long names replaced by the progressive item."""
+    
     spoiler_visualizer: tuple[Type[GameDetailsTab], ...] = tuple()
 
 
