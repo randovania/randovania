@@ -83,10 +83,10 @@ def show_data_editor(app: QtWidgets.QApplication, options, game: RandovaniaGame)
 
 def show_game_details(app: QtWidgets.QApplication, options, game: Path):
     from randovania.layout.layout_description import LayoutDescription
-    from randovania.gui.seed_details_window import SeedDetailsWindow
+    from randovania.gui.game_details.game_details_window import GameDetailsWindow
 
     layout = LayoutDescription.from_file(game)
-    details_window = SeedDetailsWindow(None, options)
+    details_window = GameDetailsWindow(None, options)
     details_window.update_layout_description(layout)
     logger.info("Displaying game details")
     details_window.show()

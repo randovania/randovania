@@ -30,9 +30,9 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.patching.prime import elevators
-from randovania.patching.prime.patcher_file_lib import sky_temple_key_hint, item_names, pickup_exporter, hints, \
-    hint_lib, \
-    credits_spoiler
+from randovania.patching.prime.patcher_file_lib import (
+    sky_temple_key_hint, item_names, pickup_exporter, hints, credits_spoiler, hint_lib,
+)
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
@@ -172,7 +172,7 @@ def _get_nodes_by_teleporter_id(world_list: WorldList) -> Dict[NodeIdentifier, T
     }
 
 
-def _translator_index_for_requirement(requirement: Requirement) -> int:
+def translator_index_for_requirement(requirement: Requirement) -> int:
     assert isinstance(requirement, RequirementAnd)
     assert 1 <= len(requirement.items) <= 2
 
@@ -201,7 +201,7 @@ def _create_translator_gates_field(game: GameDescription, gate_assignment: NodeC
     return [
         {
             "gate_index": game.world_list.node_by_identifier(identifier).extra["gate_index"],
-            "translator_index": _translator_index_for_requirement(requirement),
+            "translator_index": translator_index_for_requirement(requirement),
         }
         for identifier, requirement in gate_assignment.items()
     ]
