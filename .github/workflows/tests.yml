@@ -101,7 +101,7 @@ jobs:
         if: ${{ !matrix.executable }}
 
       - name: create executable
-        run: python tools/create_release.py
+        run: python -u tools/create_release.py
         if: matrix.executable
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
