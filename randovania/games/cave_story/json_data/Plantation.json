@@ -881,6 +881,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -900,6 +907,26 @@
                     "major_location": false,
                     "connections": {
                         "Door to Plantation": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 279.6989247311828,
+                        "y": 120.0215053763441,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Outer Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -941,15 +968,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Door to Corridor": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "eventBoss",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     }
                 },
@@ -972,10 +990,21 @@
                     "dock_weakness": "Door",
                     "connections": {
                         "Door to Plantation": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "eventCore2",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Door to Corridor": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventHell4",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -998,13 +1027,25 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Door to Plantation": {
-                            "type": "resource",
+                        "Door to Statue Chamber": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "eventBoss",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventHell4",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1027,15 +1068,6 @@
                     "dock_type": "entrance",
                     "dock_weakness": "Entrance",
                     "connections": {
-                        "Door to Plantation": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "eventBoss",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Event - Entered Passage from Above": {
                             "type": "and",
                             "data": {
@@ -1055,9 +1087,9 @@
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "eventBoss",
+                    "event_name": "eventHell4",
                     "connections": {
-                        "Door to Plantation": {
+                        "Door to Corridor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1092,7 +1124,55 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Door",
-                    "connections": {}
+                    "connections": {
+                        "Hint - Numahachi 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Numahachi 1": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280.0,
+                        "y": 114.30107526881721,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Hint - Numahachi 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Numahachi 2": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 278.79569892473114,
+                        "y": 102.55913978494624,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Passage?": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1146,6 +1226,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Bed": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventRocket",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1163,6 +1252,26 @@
                     },
                     "pickup_index": 50,
                     "major_location": false,
+                    "connections": {
+                        "Door to Plantation": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Bed": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 212.9032258064516,
+                        "y": 151.8709677419355,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Plantation": {
                             "type": "and",
@@ -1213,13 +1322,13 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 200.56347256347257,
-                        "y": 105.29729729729729,
-                        "z": 0
+                        "x": 200.56,
+                        "y": 105.3,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "eventBoss",
+                    "event_name": "eventDroll",
                     "connections": {
                         "Exit to Jail No. 1": {
                             "type": "and",
@@ -1277,7 +1386,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "eventBoss",
+                                            "name": "eventDroll",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1289,7 +1398,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventDroll",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1401,6 +1510,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1437,6 +1553,26 @@
                     },
                     "pickup_index": 51,
                     "major_location": false,
+                    "connections": {
+                        "Entrance from Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 390.96774193548384,
+                        "y": 100.86021505376345,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Entrance from Teleporter": {
                             "type": "and",
@@ -1778,6 +1914,33 @@
                     "extra": {},
                     "connections": {
                         "Door to Plantation": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 167.69892473118279,
+                        "y": 55.29032258064518,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Bed": {
                             "type": "and",
                             "data": {
                                 "comment": null,

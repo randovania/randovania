@@ -36,18 +36,25 @@
                         }
                     }
                 },
-                "Save Point/Refill": {
+                "Save Point": {
                     "node_type": "generic",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
-                        "x": 241.44849648112606,
-                        "y": 134.98656429942417,
-                        "z": 0
+                        "x": 247.18,
+                        "y": 135.38,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "connections": {
                         "Room Spawn": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -74,7 +81,27 @@
                                 "items": []
                             }
                         },
-                        "Save Point/Refill": {
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 230.62365591397847,
+                        "y": 138.68817204301075,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -133,7 +160,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Can Break Blocks"
+                                                    "data": "Has Weapon"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -444,7 +471,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "eventBoss",
+                                "name": "eventToroko2",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -714,7 +741,14 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Save Point/Refill": {
+                        "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -723,12 +757,32 @@
                         }
                     }
                 },
-                "Save Point/Refill": {
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 132.89,
+                        "y": 101.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Mimiga Village": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Refill": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
-                        "x": 132.88803582853487,
-                        "y": 101.30774152271275,
+                        "x": 199.01075268817203,
+                        "y": 103.46236559139786,
                         "z": 0
                     },
                     "description": "",
@@ -848,7 +902,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "eventBoss",
+                                            "name": "eventIronhead",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1180,7 +1234,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Ma Pignon is completely immune to Missiles, Super Missiles, and the Blade",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -1359,12 +1413,24 @@
                             }
                         },
                         "Event - Balrog 1": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "eventBoss",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventToroko2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1373,13 +1439,13 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 198.4542546385157,
-                        "y": 106.68202175303904,
-                        "z": 0
+                        "x": 198.45,
+                        "y": 106.68,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "eventBoss",
+                    "event_name": "eventToroko2",
                     "connections": {
                         "Door to Mimiga Village": {
                             "type": "and",
@@ -1500,7 +1566,7 @@
                                 "negate": false
                             }
                         },
-                        "Save Point/Refill": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1560,7 +1626,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "eventBoss",
+                                            "name": "eventEgg2Teleport",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1577,18 +1643,25 @@
                         }
                     }
                 },
-                "Save Point/Refill": {
+                "Save Point": {
                     "node_type": "generic",
-                    "heal": true,
+                    "heal": false,
                     "coordinates": {
-                        "x": 211.16694584031268,
-                        "y": 183.88833054159687,
-                        "z": 0
+                        "x": 199.31,
+                        "y": 186.26,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "connections": {
                         "Main Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1771,6 +1844,26 @@
                     "extra": {},
                     "connections": {
                         "Main Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 215.56989247311827,
+                        "y": 185.05376344086022,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,

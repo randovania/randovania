@@ -19,7 +19,7 @@ Extra - in_dark_aether: False
       Any of the following:
           Pacifist Strats (Advanced) or Has Weapon
           Damage Boosting (Beginner) and Pacifist Strats (Intermediate) and Normal Damage ≥ 10
-  > Teleporter to Arthur's House
+  > Event - Used Egg Corridor? Teleporter
       Trivial
 
 > Area Centre; Heals? False
@@ -66,6 +66,17 @@ Extra - in_dark_aether: False
   * Teleporter to Arthur's House/Teleporter to Egg Corridor?
   > West Side
       Trivial
+  > Hint - Blue Robot
+      Trivial
+
+> Hint - Blue Robot; Heals? False
+  > Teleporter to Arthur's House
+      Trivial
+
+> Event - Used Egg Corridor? Teleporter; Heals? False
+  * Event Used Egg Corridor? Teleporter
+  > Teleporter to Arthur's House
+      Trivial
 
 ----------------
 Cthulhu's Abode?
@@ -99,13 +110,15 @@ Extra - in_dark_aether: False
   * Door to Egg Corridor?/Door to Egg Observation Room? (West)
   > Door to Egg Corridor? (Eastern)
       Trivial
-  > Pickup (Sisters Boss)
-      Trivial
 
 > Door to Egg Corridor? (Eastern); Heals? False
   * Door to Egg Corridor?/Door to Egg Observation Room? (East)
   > Door to Egg Corridor? (Western)
+      After Defeated Sisters or Has Flight
+  > Pickup (Sisters Boss)
       Trivial
+  > Save Point
+      After Defeated Sisters
 
 > Pickup (Sisters Boss); Heals? False
   * Pickup 54; Major Location? False
@@ -128,6 +141,10 @@ Extra - in_dark_aether: False
   > Door to Egg Corridor? (Western)
       Trivial
 
+> Save Point; Heals? False
+  > Door to Egg Corridor? (Eastern)
+      Trivial
+
 ----------------
 Side Room
 Extra - map_name: EgEnd2
@@ -140,6 +157,12 @@ Extra - in_dark_aether: False
 > Save Point/Refill; Heals? False
   > Door to Egg Corridor?
       Trivial
+  > Refill
+      Trivial
+
+> Refill; Heals? True
+  > Save Point/Refill
+      Trivial
 
 ----------------
 Egg No. 00
@@ -147,9 +170,13 @@ Extra - map_name: EggX2
 Extra - in_dark_aether: False
 > Door to Egg Corridor?; Heals? False; Spawn Point
   * Door to Egg Corridor?/Door to Egg No. 00
+  > Door to Outer Wall
+      After Saved Kazuma
 
 > Door to Outer Wall; Heals? False
   * Door to Outer Wall/Door to Egg No. 00
+  > Door to Egg Corridor?
+      Trivial
 
 ----------------
 Outer Wall
@@ -177,7 +204,7 @@ Extra - in_dark_aether: False
 
 > Door to Storehouse; Heals? False
   * Door to Storehouse/Door to Outer Wall
-  > Room Top
+  > Event - Entered Outer Wall from Storehouse
       Trivial
 
 > Room Bottom; Heals? False
@@ -188,9 +215,7 @@ Extra - in_dark_aether: False
   > Outside Clock Room
       Any of the following:
           Has Flight
-          All of the following:
-              Remove Points of No Return
-              Teleporter Room Key or After Saved Kazuma
+          After Entered Outer Wall from above and Remove Points of No Return
   > Event - Bad Ending
       After Defeated the Core and After Saved Kazuma and Enabled Bad Ending
 
@@ -202,11 +227,21 @@ Extra - in_dark_aether: False
 
 > Door to Clock Room; Heals? False
   * Door to Clock Room/Door to Outer Wall
-  > Outside Clock Room
+  > Event - Entered Outer Wall from Clock Room
       Trivial
 
 > Event - Bad Ending; Heals? False
   * Event Bad Ending
+
+> Event - Entered Outer Wall from Storehouse; Heals? False
+  * Event Entered Outer Wall from above
+  > Room Top
+      Trivial
+
+> Event - Entered Outer Wall from Clock Room; Heals? False
+  * Event Entered Outer Wall from above
+  > Outside Clock Room
+      Trivial
 
 ----------------
 Little House
@@ -216,10 +251,16 @@ Extra - in_dark_aether: False
   * Door to Outer Wall/Door to Little House
   > Pickup (Little House)
       Blade and Little Man
+  > Hint - Mrs. Little
+      Trivial
 
 > Pickup (Little House); Heals? False
   * Pickup 55; Major Location? False
   * Extra - event: 0204
+  > Door to Outer Wall
+      Trivial
+
+> Hint - Mrs. Little; Heals? False
   > Door to Outer Wall
       Trivial
 

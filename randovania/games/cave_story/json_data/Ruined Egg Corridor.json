@@ -140,7 +140,7 @@
                                 ]
                             }
                         },
-                        "Teleporter to Arthur's House": {
+                        "Event - Used Egg Corridor? Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -361,6 +361,54 @@
                     "dock_weakness": "Teleporter",
                     "connections": {
                         "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Hint - Blue Robot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Blue Robot": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.38295577130548,
+                        "y": 147.4174757281554,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Used Egg Corridor? Teleporter": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 156.2,
+                        "y": 164.68,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventEgg2Teleport",
+                    "connections": {
+                        "Teleporter to Arthur's House": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -605,13 +653,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Pickup (Sisters Boss)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -634,10 +675,40 @@
                     "dock_weakness": "Door",
                     "connections": {
                         "Door to Egg Corridor? (Western)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventSisters",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Sisters Boss)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Save Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventSisters",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -764,6 +835,26 @@
                             }
                         }
                     }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 168.0,
+                        "y": 54.68817204301078,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Egg Corridor? (Eastern)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -806,14 +897,41 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 190.014742014742,
-                        "y": 152.07862407862407,
+                        "x": 183.70658036677455,
+                        "y": 150.50269687162893,
                         "z": 0
                     },
                     "description": "",
                     "extra": {},
                     "connections": {
                         "Door to Egg Corridor?": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 200.01725997842502,
+                        "y": 152.31499460625673,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Save Point/Refill": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -849,7 +967,17 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Outer Wall": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventKazuma",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Door to Outer Wall": {
                     "node_type": "dock",
@@ -868,7 +996,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Egg Corridor?": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1026,7 +1162,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Room Top": {
+                        "Event - Entered Outer Wall from Storehouse": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1078,29 +1214,12 @@
                                                     "data": "Remove Points of No Return"
                                                 },
                                                 {
-                                                    "type": "or",
+                                                    "type": "resource",
                                                     "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "teleportKey",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "events",
-                                                                    "name": "eventKazuma",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                        "type": "events",
+                                                        "name": "eventOside",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -1191,7 +1310,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Outside Clock Room": {
+                        "Event - Entered Outer Wall from Clock Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1212,6 +1331,48 @@
                     "extra": {},
                     "event_name": "eventBadEnd",
                     "connections": {}
+                },
+                "Event - Entered Outer Wall from Storehouse": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1086.23,
+                        "y": 2779.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventOside",
+                    "connections": {
+                        "Room Top": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Entered Outer Wall from Clock Room": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 246.83,
+                        "y": 972.06,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventOside",
+                    "connections": {
+                        "Outside Clock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1266,6 +1427,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Hint - Mrs. Little": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1283,6 +1451,26 @@
                     },
                     "pickup_index": 55,
                     "major_location": false,
+                    "connections": {
+                        "Door to Outer Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Mrs. Little": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 149.03225806451613,
+                        "y": 103.76344086021504,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Outer Wall": {
                             "type": "and",

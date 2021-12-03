@@ -7,14 +7,20 @@ Extra - map_name: Start
   > Room Spawn
       Trivial
 
-> Save Point/Refill; Heals? True
+> Save Point; Heals? False
   > Room Spawn
+      Trivial
+  > Refill
       Trivial
 
 > Room Spawn; Heals? False
   > Door to First Cave
       Trivial
-  > Save Point/Refill
+  > Save Point
+      Trivial
+
+> Refill; Heals? True
+  > Save Point
       Trivial
 
 ----------------
@@ -29,7 +35,7 @@ Extra - map_name: Cave
           Can Break Blocks
           Any of the following:
               # Kill the Eye Door if Starting in Start Point
-              Disabled Start in Start Point or Can Break Blocks
+              Disabled Start in Start Point or Has Weapon
   > Pickup (First Cave Life Capsule)
       Trivial
 
@@ -93,7 +99,7 @@ Extra - map_name: Mimi
   > Door to Assembly Hall
       Trivial
   > Door to Graveyard
-      After Generic Event
+      After Toroko Kidnapped
   > Door to Shack
       Trivial
   > Door to Arthur's House
@@ -147,10 +153,16 @@ Save Point
 Extra - map_name: MiBox
 > Door to Mimiga Village; Heals? False; Spawn Point
   * Door to Mimiga Village/Door to Save Point
-  > Save Point/Refill
+  > Save Point
+      Trivial
+  > Refill
       Trivial
 
-> Save Point/Refill; Heals? True
+> Save Point; Heals? False
+  > Door to Mimiga Village
+      Trivial
+
+> Refill; Heals? True
   > Door to Mimiga Village
       Trivial
 
@@ -176,7 +188,7 @@ Extra - map_name: Pool
   > Debug Cat to Dark Place
       All of the following:
           # Appears after killing Ironhead with entrance rando disabled
-          After Generic Event and Disabled Entrance Randomizer
+          After Defeated Ironhead and Disabled Entrance Randomizer
   > Pickup (Reservoir)
       Trivial
 
@@ -249,7 +261,9 @@ Extra - map_name: Mapi
   > Event - Ma Pignon
       All of the following:
           Mushroom Badge
-          Bubbler or Fireball or Machine Gun or Nemesis or Polar Star or Snake or Spur
+          Any of the following:
+              # Ma Pignon is completely immune to Missiles, Super Missiles, and the Blade
+              Bubbler or Fireball or Machine Gun or Nemesis or Polar Star or Snake or Spur
 
 > Pickup (Storage? Chest); Heals? False
   * Pickup 41; Major Location? False
@@ -276,10 +290,10 @@ Extra - map_name: Barr
   > Event - Toroko Kidnapped
       Silver Locket
   > Event - Balrog 1
-      After Generic Event
+      After Toroko Kidnapped and Has Weapon
 
 > Event - Toroko Kidnapped; Heals? False
-  * Event Generic Event
+  * Event Toroko Kidnapped
   > Door to Mimiga Village
       Trivial
 
@@ -308,7 +322,7 @@ Extra - map_name: Pens1
       Arthur's Key
   > Pickup (Professor Booster)
       After Defeated the Core
-  > Save Point/Refill
+  > Save Point
       Trivial
   > Teleporter to Egg Corridor
       Trivial
@@ -323,12 +337,14 @@ Extra - map_name: Pens1
   > Teleporter to Egg Corridor?
       Any of the following:
           # Defeat the Core or come in from Egg Corridor?
-          After Generic Event or After Defeated the Core
+          After Defeated the Core or After Used Egg Corridor? Teleporter
   > Room Spawn
       Trivial
 
-> Save Point/Refill; Heals? True
+> Save Point; Heals? False
   > Main Teleporter
+      Trivial
+  > Refill
       Trivial
 
 > Teleporter to Egg Corridor; Heals? False
@@ -363,5 +379,9 @@ Extra - map_name: Pens1
 
 > Room Spawn; Heals? False; Spawn Point
   > Main Teleporter
+      Trivial
+
+> Refill; Heals? True
+  > Save Point
       Trivial
 

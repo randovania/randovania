@@ -20,7 +20,7 @@ Extra - map_name: Eggs
   > Pickup (Basil Spot)
       Trivial
   > Outside Cthulhu's Abode
-      Trivial
+      Pacifist Strats (Beginner) or Has Weapon
 
 > Hint (Blue Robot); Heals? False
   > Teleporter to Arthur's House
@@ -40,9 +40,9 @@ Extra - map_name: Eggs
           Has Flight
           Damage Boosting (Beginner) and Normal Damage ≥ 2
   > Teleporter to Arthur's House
-      Trivial
+      Pacifist Strats (Beginner) or Has Weapon
   > Outside Egg Observation Room
-      Trivial
+      Pacifist Strats (Beginner) or Has Weapon
 
 > Pickup (Cthulhu's Abode); Heals? False
   * Pickup 1; Major Location? False
@@ -52,7 +52,7 @@ Extra - map_name: Eggs
 
 > Outside Egg Observation Room; Heals? False
   > Outside Cthulhu's Abode
-      Trivial
+      Pacifist Strats (Beginner) or Has Weapon
   > H/V Trigger to Egg No. 06
       Trivial
   > Door to Egg Observation Room
@@ -60,7 +60,7 @@ Extra - map_name: Eggs
   > H/V Trigger to Egg No. 01
       Trivial
   > Outside Egg No. 00
-      After Generic Event
+      After Lowered Egg Corridor Barrier
 
 > H/V Trigger to Egg No. 06; Heals? False
   * H/V Trigger to Egg No. 06/Door to Egg Corridor
@@ -84,18 +84,25 @@ Extra - map_name: Eggs
 
 > Outside Egg No. 00; Heals? False
   > Outside Egg Observation Room
-      After Generic Event
+      After Lowered Egg Corridor Barrier
   > Event - Igor
-      Can Kill Bosses
+      Any of the following:
+          # Missile counts TBD
+          Can Kill Bosses
+          All of the following:
+              Missiles
+              Any of the following:
+                  Super Missile Launcher and Kill Bosses with Missiles (Beginner)
+                  Missile Launcher and Kill Bosses with Missiles (Intermediate)
   > Door to Egg No. 00
-      After Generic Event
+      After Defeated Igor
 
 > Door to Egg No. 00; Heals? False
   * Door to Egg No. 00/Door to Egg Corridor
   > Event - Igor
       Can Kill Bosses
   > Outside Egg No. 00
-      After Generic Event
+      After Defeated Igor
   > Door to Side Room
       Trivial
 
@@ -113,6 +120,8 @@ Extra - map_name: Cthu
       Can Break Blocks
   > Hint (Cthulhu)
       Trivial
+  > Save Point
+      Trivial
 
 > Door to Egg Corridor (Upper); Heals? False
   * Door to Egg Corridor/Door to Cthulhu's Abode (Upper)
@@ -120,6 +129,10 @@ Extra - map_name: Cthu
       Can Break Blocks
 
 > Hint (Cthulhu); Heals? False
+  > Door to Egg Corridor (Lower)
+      Trivial
+
+> Save Point; Heals? False
   > Door to Egg Corridor (Lower)
       Trivial
 
@@ -156,11 +169,11 @@ Egg No. 01
 Extra - map_name: Egg1
 > Door to Egg Corridor; Heals? False; Spawn Point
   * Door to Egg Corridor/H/V Trigger to Egg No. 01
-  > Event - Lowered Barrier
+  > Event - Lowered Egg Corridor Barrier
       ID Card
 
-> Event - Lowered Barrier; Heals? False
-  * Event Generic Event
+> Event - Lowered Egg Corridor Barrier; Heals? False
+  * Event Lowered Egg Corridor Barrier
   > Door to Egg Corridor
       Trivial
 
@@ -182,10 +195,16 @@ Side Room
 Extra - map_name: EgEnd1
 > Door to Egg Corridor; Heals? False; Spawn Point
   * Door to Egg Corridor/Door to Side Room
-  > Save Point/Refill
+  > Save Point
       Trivial
 
-> Save Point/Refill; Heals? True
+> Save Point; Heals? False
   > Door to Egg Corridor
+      Trivial
+  > Refill
+      Trivial
+
+> Refill; Heals? True
+  > Save Point
       Trivial
 
