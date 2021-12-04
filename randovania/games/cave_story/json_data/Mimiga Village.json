@@ -27,7 +27,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Room Spawn": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -47,7 +47,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Room Spawn": {
+                        "Door to First Cave": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -74,14 +74,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to First Cave": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Save Point": {
+                        "Event - Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -102,6 +95,27 @@
                     "extra": {},
                     "connections": {
                         "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Start Point": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 167.71,
+                        "y": 134.15,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "startPoint",
+                    "connections": {
+                        "Door to First Cave": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -165,7 +179,7 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "misc",
+                                                        "type": "events",
                                                         "name": "startPoint",
                                                         "amount": 1,
                                                         "negate": true
@@ -1843,7 +1857,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Main Teleporter": {
+                        "Event - Arthur's House": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1864,6 +1878,27 @@
                     "extra": {},
                     "connections": {
                         "Save Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Arthur's House": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 113.26,
+                        "y": 183.89,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "arthursHouse",
+                    "connections": {
+                        "Main Teleporter": {
                             "type": "and",
                             "data": {
                                 "comment": null,

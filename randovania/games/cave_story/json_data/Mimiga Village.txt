@@ -4,23 +4,26 @@ Start Point
 Extra - map_name: Start
 > Door to First Cave; Heals? False; Spawn Point
   * Door to First Cave/Door to Start Point
-  > Room Spawn
+  > Save Point
       Trivial
 
 > Save Point; Heals? False
-  > Room Spawn
+  > Door to First Cave
       Trivial
   > Refill
       Trivial
 
 > Room Spawn; Heals? False
-  > Door to First Cave
-      Trivial
-  > Save Point
+  > Event - Start Point
       Trivial
 
 > Refill; Heals? True
   > Save Point
+      Trivial
+
+> Event - Start Point; Heals? False
+  * Event Start in Start Point
+  > Door to First Cave
       Trivial
 
 ----------------
@@ -35,7 +38,7 @@ Extra - map_name: Cave
           Can Break Blocks
           Any of the following:
               # Kill the Eye Door if Starting in Start Point
-              Disabled Start in Start Point or Has Weapon
+              Before Start in Start Point or Has Weapon
   > Pickup (First Cave Life Capsule)
       Trivial
 
@@ -64,7 +67,7 @@ Extra - map_name: Pole
       Trivial
   > Pickup (Tetsuzou)
       All of the following:
-          After Defeated the Core
+          After Defeated Core
           Polar Star or Spur
 
 > Pickup (Hermit Gunsmith Chest); Heals? False
@@ -321,7 +324,7 @@ Extra - map_name: Pens1
   > Door to Mimiga Village
       Arthur's Key
   > Pickup (Professor Booster)
-      After Defeated the Core
+      After Defeated Core
   > Save Point
       Trivial
   > Teleporter to Egg Corridor
@@ -337,7 +340,7 @@ Extra - map_name: Pens1
   > Teleporter to Egg Corridor?
       Any of the following:
           # Defeat the Core or come in from Egg Corridor?
-          After Defeated the Core or After Used Egg Corridor? Teleporter
+          After Defeated Core or After Used Egg Corridor? Teleporter
   > Room Spawn
       Trivial
 
@@ -378,10 +381,15 @@ Extra - map_name: Pens1
       Trivial
 
 > Room Spawn; Heals? False; Spawn Point
-  > Main Teleporter
+  > Event - Arthur's House
       Trivial
 
 > Refill; Heals? True
   > Save Point
+      Trivial
+
+> Event - Arthur's House; Heals? False
+  * Event Start in Arthur's House
+  > Main Teleporter
       Trivial
 
