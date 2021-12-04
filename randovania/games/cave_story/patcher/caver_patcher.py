@@ -3,6 +3,7 @@ from pathlib import Path
 from random import Random
 from typing import Optional
 import typing
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.game_description import default_database
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
@@ -57,7 +58,9 @@ class CaverPatcher(Patcher):
         if players_config.is_multiworld:
             raise NotImplementedError("Multiworld is not supported for Cave Story")
 
+        configuration: CSConfiguration = description.permalink.get_preset(players_config.player_index).configuration
         patches = description.all_patches[players_config.player_index]
+        db = default_database.resource_database_for(RandovaniaGame.CAVE_STORY)
         game_description = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
         item_database = default_database.item_database_for_game(RandovaniaGame.CAVE_STORY)
         
@@ -90,6 +93,36 @@ class CaverPatcher(Patcher):
             "entrances": entrances.get(mapname, {}),
             "hints": hints.get(mapname, {}),
         } for mapname in mapnames}
+
+        # objective flags
+        starting_script = configuration.objective.script
+        # B2 falling blocks disable flag
+        if configuration.no_blocks:
+            starting_script += "<FL+1351"
+        # rocket skip enabled
+        if configuration.trick_level.level_for_trick(db.get_by_type_and_index(ResourceType.TRICK, "Dboost")).as_num >= 4:
+            starting_script += "<FL+6400"
+        # initialize HP counter to 3HP
+        starting_script += "<FL+4011<FL+4012"
+        # Camp and Labyrinth B CMP mapflags
+        starting_script += "<MP+0040<MP+0043"
+        # Softlock prevention mapflags
+        starting_script += "<MP+0032<MP+0033<MP+0036"
+
+        # TODO: allow any starting location
+
+        # starting location flag and EVE/TRA
+        if game_description.starting_location.area_name == "Start Point":
+            starting_script += "<FL+6200<EVE0091"
+        else:
+            # flags set during first cave in normal gameplay
+            starting_script += "<FL+0301<FL+0302<FL+1641<FL+1642<FL+0320<FL+0321"
+            if game_description.starting_location.area_name == "Arthur's House":
+                starting_script += "<FL+6201<TRA0001:0094:0008:0004"
+            elif game_description.starting_location.area_name == "Camp":
+                starting_script += "<FL+6202<TRA0040:0094:0014:0009"
+        
+        maps["Start"]["pickups"]["0201"] = starting_script
 
         return {
             "maps": maps,
