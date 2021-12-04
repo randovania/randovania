@@ -3,7 +3,6 @@ from unittest.mock import MagicMock
 from randovania.game_description.requirements import RequirementSet, RequirementList, ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.generator.filler import pickup_list
-from randovania.resolver import bootstrap
 
 
 def test_requirement_lists_without_satisfied_resources(echoes_game_description):
@@ -11,7 +10,8 @@ def test_requirement_lists_without_satisfied_resources(echoes_game_description):
     def item(name):
         return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
 
-    state = bootstrap.calculate_starting_state(echoes_game_description,
+    state = echoes_game_description.game.data.generator.bootstrap.calculate_starting_state(
+                                               echoes_game_description,
                                                echoes_game_description.create_game_patches(),
                                                100)
     state.resources[item("Seeker Launcher")] = 1

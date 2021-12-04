@@ -10,7 +10,6 @@ from randovania.generator.filler import retcon
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
-from randovania.resolver.bootstrap import logic_bootstrap
 
 
 @pytest.mark.parametrize("major_mode", [RandomizationMode.FULL, RandomizationMode.MAJOR_MINOR_SPLIT])
@@ -64,7 +63,7 @@ def test_retcon_filler_integration(default_layout_configuration):
     patches = game.create_game_patches()
     available_pickups = game.pickup_database.all_useful_pickups
 
-    new_game, state = logic_bootstrap(layout_configuration, game, patches)
+    new_game, state = game.game.data.generator.bootstrap.logic_bootstrap(layout_configuration, game, patches)
     new_game.patch_requirements(state.resources, layout_configuration.damage_strictness.value)
 
     filler_patches = retcon.retcon_playthrough_filler(new_game,
