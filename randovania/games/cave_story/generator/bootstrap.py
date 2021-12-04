@@ -18,6 +18,8 @@ class CSBootstrap(Bootstrap):
         enabled_resources.add(objectives[configuration.objective])
 
         enabled_resources.add("PONR")
+        print(enabled_resources)
+        return enabled_resources
     
     def version_resources_for_game(self, configuration: CSConfiguration, resource_database: ResourceDatabase) -> CurrentResources:
         return {

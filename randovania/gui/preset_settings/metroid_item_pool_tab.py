@@ -4,10 +4,7 @@ from typing import List
 from PySide2 import QtWidgets
 
 from randovania.game_description import default_database
-from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.games.game import RandovaniaGame
-from randovania.gui.lib import signal_handling
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.gui.preset_settings.pickup_style_widget import PickupStyleWidget
@@ -27,7 +24,6 @@ class MetroidPresetItemPool(PresetItemPool):
         self._energy_tank_item = item_database.major_items["Energy Tank"]
         self._create_energy_tank_box(game_description.resource_database.energy_tank)
         self._create_pickup_style_box(size_policy)
-        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
 
     def on_preset_changed(self, preset: Preset):
         super().on_preset_changed(preset)
@@ -40,10 +36,6 @@ class MetroidPresetItemPool(PresetItemPool):
         energy_tank_state = major_configuration.items_state[self._energy_tank_item]
         self.energy_tank_starting_spinbox.setValue(energy_tank_state.num_included_in_starting_items)
         self.energy_tank_shuffled_spinbox.setValue(energy_tank_state.num_shuffled_pickups)
-
-    def _persist_multi_pickup_placement(self, value: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("multi_pickup_placement", value)
 
     def _create_pickup_style_box(self, size_policy):
         self.pickup_style_widget = PickupStyleWidget(None, self._editor)
