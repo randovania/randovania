@@ -15,6 +15,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
 - Added: Items now have tooltips in the Auto-Tracker.
+- Added: One joke hint.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
 - Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
 - Fixed: Data Editor now properly handles areas without nodes.
@@ -24,6 +25,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Start in any (uncrashed) Frigate room
 - Added: 1-way cycles and 1-way anywhere elevators can lead to (uncrashed) Frigate rooms
 - Added: Essence Death and Frigate Escape Cutscene teleporter destinations can now be shuffled
+- Added: Artifact hints can now be configured to show area and room name, just area name, or nothing at all
+- Added: Cosmetic Option - Select HUD Color
+- Added: Cosmetic Option - Rotate hue of all 4 suit textures and ball glow color
 
 #### Known Issues:
 - Small Samus doesn't work on NTSC-K
@@ -36,6 +40,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Fixed: Safeguard against blowing past layer limits.
 - Fixed: On Major custscene skip, Elite Quarters now stays locked until the player picks up the item. The hudmemo is now tied to the item rather than the death animation.
 - Fixed: Ruined fountain not always showing the right scan.
+- Fixed: Phazon Suit Small Samus Morph Ball Glow
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 
