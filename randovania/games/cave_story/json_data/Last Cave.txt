@@ -3,12 +3,12 @@ Final Cave
 Extra - map_name: Priso1
 Extra - in_dark_aether: False
 > Door to Plantation; Heals? False
-  * Normal Door to Plantation/Door to Final Cave
+  * Door to Plantation/Door to Final Cave
   > Door to Balcony (Pre-Bosses)
       Has Weapon
 
 > Door to Balcony (Pre-Bosses); Heals? False
-  * Normal Door to Balcony (Pre-Bosses)/Door to Final Cave
+  * Door to Balcony (Pre-Bosses)/Door to Final Cave
   > Door to Plantation
       Has Weapon
 
@@ -17,7 +17,7 @@ Last Cave (Hidden)
 Extra - map_name: Priso2
 Extra - in_dark_aether: False
 > Door to Plantation; Heals? False
-  * Normal Door to Plantation/Door to Last Cave (Hidden)
+  * Door to Plantation/Door to Last Cave (Hidden)
   > Event - Red Demon
       Booster 2.0 and Can Kill Bosses
 
@@ -39,7 +39,7 @@ Extra - in_dark_aether: False
       Booster 2.0
 
 > Door to Balcony (Pre-Bosses); Heals? False
-  * Normal Door to Balcony (Pre-Bosses)/Door to Last Cave (Hidden)
+  * Door to Balcony (Pre-Bosses)/Door to Last Cave (Hidden)
   > Event - Red Demon
       Booster 2.0 and Can Kill Bosses
 
@@ -48,20 +48,20 @@ Balcony (Pre-Bosses)
 Extra - map_name: Blcny1
 Extra - in_dark_aether: False
 > Exit to Throne Room; Heals? False
-  * One-Way Exit to Throne Room/Entrance from Balcony (Pre-Bosses)
+  * Exit to Throne Room/Entrance from Balcony (Pre-Bosses)
 
 > Door to Final Cave; Heals? False
-  * Normal Door to Final Cave/Door to Balcony (Pre-Bosses)
+  * Door to Final Cave/Door to Balcony (Pre-Bosses)
   > Door to Prefab Building
       Trivial
 
 > Door to Last Cave (Hidden); Heals? False
-  * Normal Door to Last Cave (Hidden)/Door to Balcony (Pre-Bosses)
+  * Door to Last Cave (Hidden)/Door to Balcony (Pre-Bosses)
   > Door to Prefab Building
       Trivial
 
 > Door to Prefab Building; Heals? False
-  * Normal Door to Prefab Building/Door to Balcony (Pre-Bosses)
+  * Door to Prefab Building/Door to Balcony (Pre-Bosses)
   > Exit to Throne Room
       Trivial
   > Door to Final Cave
@@ -74,7 +74,7 @@ Prefab Building
 Extra - map_name: Prefa1
 Extra - in_dark_aether: False
 > Door to Balcony (Pre-Bosses); Heals? False
-  * Normal Door to Balcony (Pre-Bosses)/Door to Prefab Building
+  * Door to Balcony (Pre-Bosses)/Door to Prefab Building
   > Save Point/Bed
       Trivial
 
@@ -87,20 +87,20 @@ Throne Room
 Extra - map_name: Ring1
 Extra - in_dark_aether: False
 > Event - Misery; Heals? False
-  * Event Generic Event
-  > Entrance to The King's Table
+  * Event Defeated Misery
+  > H/V Trigger to The King's Table
       Trivial
 
 > Entrance from Balcony (Pre-Bosses); Heals? False
-  * One-Way Entrance to Balcony (Pre-Bosses)/Exit to Throne Room
+  * Entrance to Balcony (Pre-Bosses)/Exit to Throne Room
   > Event - Misery
       Can Kill Bosses
 
 > Exit to Balcony (Post-Bosses); Heals? False
-  * One-Way Exit to Balcony (Post-Bosses)/Entrance from Throne Room
+  * Exit to Balcony (Post-Bosses)/Entrance from Throne Room
 
-> Entrance to The King's Table; Heals? False
-  * H/V Trigger to The King's Table/Entrance to Throne Room
+> H/V Trigger to The King's Table; Heals? False
+  * H/V Trigger to The King's Table/H/V Trigger to Throne Room
   > Exit to Balcony (Post-Bosses)
       After Defeated Undead Core
 
@@ -109,18 +109,18 @@ The King's Table
 Extra - map_name: Ring2
 Extra - in_dark_aether: False
 > Event - Doctor; Heals? False
-  * Event Generic Event
-  > Entrance to Black Space
+  * Event Defeated Doctor
+  > H/V Trigger to Black Space
       Trivial
 
-> Entrance to Throne Room; Heals? False
-  * H/V Trigger to Throne Room/Entrance to The King's Table
+> H/V Trigger to Throne Room; Heals? False
+  * H/V Trigger to Throne Room/H/V Trigger to The King's Table
   > Event - Doctor
       Can Kill Bosses
 
-> Entrance to Black Space; Heals? False
-  * H/V Trigger to Black Space/Entrance to The King's Table
-  > Entrance to Throne Room
+> H/V Trigger to Black Space; Heals? False
+  * H/V Trigger to Black Space/H/V Trigger to The King's Table
+  > H/V Trigger to Throne Room
       After Defeated Undead Core
 
 ----------------
@@ -129,11 +129,11 @@ Extra - map_name: Ring3
 Extra - in_dark_aether: False
 > Event - Undead Core; Heals? False
   * Event Defeated Undead Core
-  > Entrance to The King's Table
+  > H/V Trigger to The King's Table
       Trivial
 
-> Entrance to The King's Table; Heals? False
-  * H/V Trigger to The King's Table/Entrance to Black Space
+> H/V Trigger to The King's Table; Heals? False
+  * H/V Trigger to The King's Table/H/V Trigger to Black Space
   > Event - Undead Core
       Can Kill Bosses
 
@@ -145,17 +145,17 @@ Extra - in_dark_aether: False
   * Event Generic Event
 
 > Entrance from Throne Room; Heals? False
-  * One-Way Entrance to Throne Room/Exit to Balcony (Post-Bosses)
+  * Entrance to Throne Room/Exit to Balcony (Post-Bosses)
   > Event - Normal Ending
       Trivial
   > Exit to Prefab House
       Iron Bond
 
 > Exit to Prefab House; Heals? False
-  * One-Way Exit to Prefab House/Entrance from Balcony (Post-Bosses)
+  * Exit to Prefab House/Entrance from Balcony (Post-Bosses)
 
 > Entrance from Prefab House; Heals? False
-  * One-Way Entrance to Prefab House/Exit to Balcony (Post-Bosses)
+  * Entrance to Prefab House/Exit to Balcony (Post-Bosses)
   > Entrance from Throne Room
       Trivial
 
@@ -164,15 +164,15 @@ Prefab House
 Extra - map_name: Prefa2
 Extra - in_dark_aether: False
 > Entrance from Balcony (Post-Bosses); Heals? False
-  * One-Way Entrance to Balcony (Post-Bosses)/Exit to Prefab House
+  * Entrance to Balcony (Post-Bosses)/Exit to Prefab House
   > Save Point
       Trivial
 
 > Exit to Balcony (Post-Bosses); Heals? False
-  * One-Way Exit to Balcony (Post-Bosses)/Entrance from Prefab House
+  * Exit to Balcony (Post-Bosses)/Entrance from Prefab House
 
 > Exit to Sacred Grounds - B1; Heals? False
-  * One-Way Exit to Sacred Grounds - B1/Entrance from Prefab House
+  * Exit to Sacred Grounds - B1/Entrance from Prefab House
 
 > Save Point; Heals? False
   > Exit to Balcony (Post-Bosses)
@@ -185,14 +185,14 @@ Sacred Grounds - B1
 Extra - map_name: Hell1
 Extra - in_dark_aether: False
 > Entrance from Prefab House; Heals? False
-  * One-Way Entrance to Prefab House/Exit to Sacred Grounds - B1
+  * Entrance to Prefab House/Exit to Sacred Grounds - B1
   > Door to Sacred Grounds - B2
       Booster 2.0
   > Pickup (Hell B1 Spot)
       Booster 2.0
 
 > Door to Sacred Grounds - B2; Heals? False
-  * Normal Door to Sacred Grounds - B2/Door to Sacred Grounds - B1
+  * Door to Sacred Grounds - B2/Door to Sacred Grounds - B1
   > Pickup (Hell B1 Spot)
       Booster 2.0
   > Event - Curly
@@ -214,12 +214,12 @@ Sacred Grounds - B2
 Extra - map_name: Hell2
 Extra - in_dark_aether: False
 > Door to Sacred Grounds - B1; Heals? False
-  * Normal Door to Sacred Grounds - B1/Door to Sacred Grounds - B2
-  > Entrance to Sacred Grounds - B3
+  * Door to Sacred Grounds - B1/Door to Sacred Grounds - B2
+  > H/V Trigger to Sacred Grounds - B3
       Has Weapon
 
-> Entrance to Sacred Grounds - B3; Heals? False
-  * H/V Trigger to Sacred Grounds - B3/Entrance to Sacred Grounds - B2
+> H/V Trigger to Sacred Grounds - B3; Heals? False
+  * H/V Trigger to Sacred Grounds - B3/H/V Trigger to Sacred Grounds - B2
   > Door to Sacred Grounds - B1
       Has Weapon
 
@@ -227,8 +227,8 @@ Extra - in_dark_aether: False
 Sacred Grounds - B3
 Extra - map_name: Hell3
 Extra - in_dark_aether: False
-> Entrance to Sacred Grounds - B2; Heals? False
-  * H/V Trigger to Sacred Grounds - B2/Entrance to Sacred Grounds - B3
+> H/V Trigger to Sacred Grounds - B2; Heals? False
+  * H/V Trigger to Sacred Grounds - B2/H/V Trigger to Sacred Grounds - B3
   > Pickup (Hell B3 Chest)
       All of the following:
           Has Weapon
@@ -245,13 +245,13 @@ Extra - in_dark_aether: False
 > Pickup (Hell B3 Chest); Heals? False
   * Pickup 31; Major Location? False
   * Extra - event: 0400
-  > Entrance to Sacred Grounds - B2
+  > H/V Trigger to Sacred Grounds - B2
       Has Flight and Has Weapon
   > Event - Heavy Press
       Can Kill Bosses
 
 > Exit to Passage?; Heals? False
-  * One-Way Exit to Passage?/Entrance from Sacred Grounds - B3
+  * Exit to Passage?/Entrance from Sacred Grounds - B3
 
 > Event - Heavy Press; Heals? False
   * Event Generic Event
@@ -263,19 +263,19 @@ Corridor
 Extra - map_name: Ostep
 Extra - in_dark_aether: False
 > Door to Passage?; Heals? False
-  * Normal Door to Passage?/Door to Corridor
+  * Door to Passage?/Door to Corridor
   > Exit to Seal Chamber
       Trivial
 
 > Exit to Seal Chamber; Heals? False
-  * One-Way Exit to Seal Chamber/Entrance from Corridor
+  * Exit to Seal Chamber/Entrance from Corridor
 
 ----------------
 Seal Chamber
 Extra - map_name: Ballo1
 Extra - in_dark_aether: False
 > Entrance from Corridor; Heals? False
-  * One-Way Entrance to Corridor/Exit to Seal Chamber
+  * Entrance to Corridor/Exit to Seal Chamber
   > Event - Best Ending
       Can Kill Bosses and Has Flight
 

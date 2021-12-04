@@ -27,8 +27,8 @@
                         "area_name": "Plantation",
                         "node_name": "Door to Final Cave"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Door to Balcony (Pre-Bosses)": {
                             "type": "template",
@@ -51,8 +51,8 @@
                         "area_name": "Balcony (Pre-Bosses)",
                         "node_name": "Door to Final Cave"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Door to Plantation": {
                             "type": "template",
@@ -85,8 +85,8 @@
                         "area_name": "Plantation",
                         "node_name": "Door to Last Cave (Hidden)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Event - Red Demon": {
                             "type": "and",
@@ -202,8 +202,8 @@
                         "area_name": "Balcony (Pre-Bosses)",
                         "node_name": "Door to Last Cave (Hidden)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Event - Red Demon": {
                             "type": "and",
@@ -253,8 +253,8 @@
                         "area_name": "Throne Room",
                         "node_name": "Entrance from Balcony (Pre-Bosses)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "exit",
+                    "dock_weakness": "Exit",
                     "connections": {}
                 },
                 "Door to Final Cave": {
@@ -272,8 +272,8 @@
                         "area_name": "Final Cave",
                         "node_name": "Door to Balcony (Pre-Bosses)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Door to Prefab Building": {
                             "type": "and",
@@ -299,8 +299,8 @@
                         "area_name": "Last Cave (Hidden)",
                         "node_name": "Door to Balcony (Pre-Bosses)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Door to Prefab Building": {
                             "type": "and",
@@ -326,8 +326,8 @@
                         "area_name": "Prefab Building",
                         "node_name": "Door to Balcony (Pre-Bosses)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Exit to Throne Room": {
                             "type": "and",
@@ -381,8 +381,8 @@
                         "area_name": "Balcony (Pre-Bosses)",
                         "node_name": "Door to Prefab Building"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Save Point/Bed": {
                             "type": "and",
@@ -435,7 +435,7 @@
                     "extra": {},
                     "event_name": "eventBoss",
                     "connections": {
-                        "Entrance to The King's Table": {
+                        "H/V Trigger to The King's Table": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -459,8 +459,8 @@
                         "area_name": "Balcony (Pre-Bosses)",
                         "node_name": "Exit to Throne Room"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "entrance",
+                    "dock_weakness": "Entrance",
                     "connections": {
                         "Event - Misery": {
                             "type": "template",
@@ -483,11 +483,11 @@
                         "area_name": "Balcony (Post-Bosses)",
                         "node_name": "Entrance from Throne Room"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "exit",
+                    "dock_weakness": "Exit",
                     "connections": {}
                 },
-                "Entrance to The King's Table": {
+                "H/V Trigger to The King's Table": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -500,10 +500,10 @@
                     "destination": {
                         "world_name": "Last Cave",
                         "area_name": "The King's Table",
-                        "node_name": "Entrance to Throne Room"
+                        "node_name": "H/V Trigger to Throne Room"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "trigger",
+                    "dock_weakness": "H/V Trigger",
                     "connections": {
                         "Exit to Balcony (Post-Bosses)": {
                             "type": "resource",
@@ -538,7 +538,7 @@
                     "extra": {},
                     "event_name": "eventBoss",
                     "connections": {
-                        "Entrance to Black Space": {
+                        "H/V Trigger to Black Space": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -547,7 +547,7 @@
                         }
                     }
                 },
-                "Entrance to Throne Room": {
+                "H/V Trigger to Throne Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -560,10 +560,10 @@
                     "destination": {
                         "world_name": "Last Cave",
                         "area_name": "Throne Room",
-                        "node_name": "Entrance to The King's Table"
+                        "node_name": "H/V Trigger to The King's Table"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "trigger",
+                    "dock_weakness": "H/V Trigger",
                     "connections": {
                         "Event - Doctor": {
                             "type": "template",
@@ -571,7 +571,7 @@
                         }
                     }
                 },
-                "Entrance to Black Space": {
+                "H/V Trigger to Black Space": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -584,12 +584,12 @@
                     "destination": {
                         "world_name": "Last Cave",
                         "area_name": "Black Space",
-                        "node_name": "Entrance to The King's Table"
+                        "node_name": "H/V Trigger to The King's Table"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "trigger",
+                    "dock_weakness": "H/V Trigger",
                     "connections": {
-                        "Entrance to Throne Room": {
+                        "H/V Trigger to Throne Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -622,7 +622,7 @@
                     "extra": {},
                     "event_name": "eventCore2",
                     "connections": {
-                        "Entrance to The King's Table": {
+                        "H/V Trigger to The King's Table": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -631,7 +631,7 @@
                         }
                     }
                 },
-                "Entrance to The King's Table": {
+                "H/V Trigger to The King's Table": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -644,10 +644,10 @@
                     "destination": {
                         "world_name": "Last Cave",
                         "area_name": "The King's Table",
-                        "node_name": "Entrance to Black Space"
+                        "node_name": "H/V Trigger to Black Space"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "trigger",
+                    "dock_weakness": "H/V Trigger",
                     "connections": {
                         "Event - Undead Core": {
                             "type": "template",
@@ -693,8 +693,8 @@
                         "area_name": "Throne Room",
                         "node_name": "Exit to Balcony (Post-Bosses)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "entrance",
+                    "dock_weakness": "Entrance",
                     "connections": {
                         "Event - Normal Ending": {
                             "type": "and",
@@ -729,8 +729,8 @@
                         "area_name": "Prefab House",
                         "node_name": "Entrance from Balcony (Post-Bosses)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "exit",
+                    "dock_weakness": "Exit",
                     "connections": {}
                 },
                 "Entrance from Prefab House": {
@@ -748,8 +748,8 @@
                         "area_name": "Prefab House",
                         "node_name": "Exit to Balcony (Post-Bosses)"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "entrance",
+                    "dock_weakness": "Entrance",
                     "connections": {
                         "Entrance from Throne Room": {
                             "type": "and",
@@ -785,8 +785,8 @@
                         "area_name": "Balcony (Post-Bosses)",
                         "node_name": "Exit to Prefab House"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "entrance",
+                    "dock_weakness": "Entrance",
                     "connections": {
                         "Save Point": {
                             "type": "and",
@@ -812,8 +812,8 @@
                         "area_name": "Balcony (Post-Bosses)",
                         "node_name": "Entrance from Prefab House"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "exit",
+                    "dock_weakness": "Exit",
                     "connections": {}
                 },
                 "Exit to Sacred Grounds - B1": {
@@ -831,8 +831,8 @@
                         "area_name": "Sacred Grounds - B1",
                         "node_name": "Entrance from Prefab House"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "exit",
+                    "dock_weakness": "Exit",
                     "connections": {}
                 },
                 "Save Point": {
@@ -887,8 +887,8 @@
                         "area_name": "Prefab House",
                         "node_name": "Exit to Sacred Grounds - B1"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "entrance",
+                    "dock_weakness": "Entrance",
                     "connections": {
                         "Door to Sacred Grounds - B2": {
                             "type": "resource",
@@ -925,8 +925,8 @@
                         "area_name": "Sacred Grounds - B2",
                         "node_name": "Door to Sacred Grounds - B1"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Pickup (Hell B1 Spot)": {
                             "type": "resource",
@@ -1020,16 +1020,16 @@
                         "area_name": "Sacred Grounds - B1",
                         "node_name": "Door to Sacred Grounds - B2"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
-                        "Entrance to Sacred Grounds - B3": {
+                        "H/V Trigger to Sacred Grounds - B3": {
                             "type": "template",
                             "data": "Has Weapon"
                         }
                     }
                 },
-                "Entrance to Sacred Grounds - B3": {
+                "H/V Trigger to Sacred Grounds - B3": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1042,10 +1042,10 @@
                     "destination": {
                         "world_name": "Last Cave",
                         "area_name": "Sacred Grounds - B3",
-                        "node_name": "Entrance to Sacred Grounds - B2"
+                        "node_name": "H/V Trigger to Sacred Grounds - B2"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "trigger",
+                    "dock_weakness": "H/V Trigger",
                     "connections": {
                         "Door to Sacred Grounds - B1": {
                             "type": "template",
@@ -1063,7 +1063,7 @@
                 "in_dark_aether": false
             },
             "nodes": {
-                "Entrance to Sacred Grounds - B2": {
+                "H/V Trigger to Sacred Grounds - B2": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1076,10 +1076,10 @@
                     "destination": {
                         "world_name": "Last Cave",
                         "area_name": "Sacred Grounds - B2",
-                        "node_name": "Entrance to Sacred Grounds - B3"
+                        "node_name": "H/V Trigger to Sacred Grounds - B3"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 1,
+                    "dock_type": "trigger",
+                    "dock_weakness": "H/V Trigger",
                     "connections": {
                         "Pickup (Hell B3 Chest)": {
                             "type": "and",
@@ -1198,7 +1198,7 @@
                     "pickup_index": 31,
                     "major_location": false,
                     "connections": {
-                        "Entrance to Sacred Grounds - B2": {
+                        "H/V Trigger to Sacred Grounds - B2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1235,8 +1235,8 @@
                         "area_name": "Passage?",
                         "node_name": "Entrance from Sacred Grounds - B3"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "exit",
+                    "dock_weakness": "Exit",
                     "connections": {}
                 },
                 "Event - Heavy Press": {
@@ -1285,8 +1285,8 @@
                         "area_name": "Passage?",
                         "node_name": "Door to Corridor"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 0,
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
                     "connections": {
                         "Exit to Seal Chamber": {
                             "type": "and",
@@ -1312,8 +1312,8 @@
                         "area_name": "Seal Chamber",
                         "node_name": "Entrance from Corridor"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 3,
+                    "dock_type": "exit",
+                    "dock_weakness": "Exit",
                     "connections": {}
                 }
             }
@@ -1341,8 +1341,8 @@
                         "area_name": "Corridor",
                         "node_name": "Exit to Seal Chamber"
                     },
-                    "dock_type": 0,
-                    "dock_weakness_index": 2,
+                    "dock_type": "entrance",
+                    "dock_weakness": "Entrance",
                     "connections": {
                         "Event - Best Ending": {
                             "type": "and",
