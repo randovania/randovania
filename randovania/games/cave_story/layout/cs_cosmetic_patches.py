@@ -103,6 +103,10 @@ class CSSong(BitPackDataclass, JsonDataclass):
     @classmethod
     def defaults(cls) -> dict[str, bool]:
         return {song.song_name: song.is_valid and song.source_game == SongGame.CS for song in SONGS.values()}
+    
+    @classmethod
+    def from_name(cls, name: str) -> "CSSong":
+        return next(song for song in SONGS.values() if song.song_name == name)
 
 SONGS = {
     "xxxx": CSSong("XXXX", "0000", SongType.NULL),
