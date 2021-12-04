@@ -35,6 +35,20 @@ class CSObjective(BitPackEnum, Enum):
     @property
     def enters_hell(self) -> bool:
         return self.value >= CSObjective.BEST_ENDING.value
+    
+    @property
+    def script(self) -> str:
+        if self == CSObjective.BAD_ENDING:
+            return "<FL+6003"
+        if self == CSObjective.NORMAL_ENDING:
+            return "<FL+6000"
+        if self == CSObjective.BEST_ENDING:
+            return "<FL+6001"
+        if self == CSObjective.ALL_BOSSES:
+            return "<FL+6002<IT+0005"
+        if self == CSObjective.HUNDRED_PERCENT:
+            return "<FL+6004<IT+0005"
+        raise ValueError(f"No script for objective {self}")
 
 @dataclasses.dataclass(frozen=True)
 class CSConfiguration(BaseConfiguration):
