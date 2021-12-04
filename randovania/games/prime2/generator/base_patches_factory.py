@@ -20,12 +20,12 @@ from randovania.games.prime2.layout.echoes_configuration import \
     EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import \
     LayoutTranslatorRequirement
-from randovania.generator.base_patches_factory import (BasePatchesFactory,
+from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFactory,
                                                        MissingRng)
 from randovania.lib.enum_lib import iterate_enum
 
 
-class EchoesBasePatchesFactory(BasePatchesFactory):
+class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
     def configurable_node_assignment(self, configuration: EchoesConfiguration, game: GameDescription, rng: Random) -> NodeConfigurationAssignment:
         """
         :param configuration:

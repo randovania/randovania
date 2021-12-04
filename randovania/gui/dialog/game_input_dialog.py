@@ -51,7 +51,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             self.input_file_edit.textChanged.connect(self._validate_input_file)
             self.input_file_button.clicked.connect(self._on_input_file_button)
         else:
-            self.input_file_label.setVisible(False)
+            self.input_file_label.setText("Game does not require input files.")
             self.input_file_edit.setVisible(False)
             self.input_file_button.setVisible(False)
             self.description_label.setVisible(False)
