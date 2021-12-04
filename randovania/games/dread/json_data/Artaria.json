@@ -4611,7 +4611,17 @@
                     },
                     "pickup_index": 20,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 4": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Door to Chain Reaction Access": {
                     "node_type": "dock",
@@ -4636,7 +4646,7 @@
                         "node_name": "Door to Teleport to Cataris"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Super Missile Door",
                     "connections": {
                         "Tile Group (BOMB) 4": {
                             "type": "and",
@@ -4957,6 +4967,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Under Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5089,6 +5106,15 @@
                         ]
                     },
                     "connections": {
+                        "Pickup (Missile Tank, Supers-locked)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Door to Chain Reaction Access": {
                             "type": "and",
                             "data": {
@@ -5252,7 +5278,17 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
-                    "connections": {}
+                    "connections": {
+                        "Dock to Chain Reaction Access (Morph Puzzle)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s010_cave:default:PRP_CV_ThermalDevice",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Under Teleporter": {
                     "node_type": "generic",
@@ -6514,10 +6550,24 @@
                     "dock_weakness": "Power Beam Door",
                     "connections": {
                         "Door to Proto EMMI Battle": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArtariaProtoCU",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Tile Group (BOMB)": {
@@ -6613,19 +6663,38 @@
                     "dock_weakness": "Power Beam Door",
                     "connections": {
                         "Door to Melee Tutorial Room (Lower)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Melee Tutorial Room (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "ArtariaProtoCU",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Melee Tutorial Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ArtariaProtoCU",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7981,7 +8050,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Hot Room Hub": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Hot Room Hub": {
                     "node_type": "dock",
@@ -8007,7 +8084,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Thermal Door Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -11961,7 +12046,17 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Room Middle": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Door to Teleport to Cataris": {
                     "node_type": "dock",
@@ -11987,7 +12082,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Super Missile Door",
-                    "connections": {}
+                    "connections": {
+                        "Room Middle": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBEAM) 1": {
                     "node_type": "configurable_node",
@@ -12072,11 +12175,13 @@
                     "dock_type": "other",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
-                        "Door to Teleport to Cataris": {
-                            "type": "and",
+                        "Room Middle": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -12106,6 +12211,42 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Room Middle": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13221.420674405748,
+                        "y": 4269.485903814262,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Chain Reaction Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Teleport to Cataris": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Teleport to Cataris (3)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -13136,6 +13277,13 @@
                     },
                     "connections": {
                         "Door to Map Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to collision_camera_075 (A)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
