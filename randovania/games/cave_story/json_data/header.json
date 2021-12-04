@@ -1,5 +1,5 @@
 {
-    "schema_version": 5,
+    "schema_version": 6,
     "game": "cave_story",
     "resource_database": {
         "items": {
@@ -734,58 +734,142 @@
         }
     },
     "dock_weakness_database": {
-        "door": [
-            {
-                "index": 0,
-                "name": "Normal Door",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 1,
+            "trigger": {
                 "name": "H/V Trigger",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
+                "extra": {},
+                "items": {
+                    "H/V Trigger": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 2,
-                "name": "One-Way Entrance",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
+            "entrance": {
+                "name": "Entrance",
+                "extra": {},
+                "items": {
+                    "Entrance": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             },
-            {
-                "index": 3,
-                "name": "One-Way Exit",
-                "lock_type": 0,
-                "requirement": {
-                    "type": "and",
-                    "data": {
-                        "comment": null,
-                        "items": []
+            "exit": {
+                "name": "Exit",
+                "extra": {},
+                "items": {
+                    "Exit": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            },
+            "teleporter": {
+                "name": "Teleporter",
+                "extra": {},
+                "items": {
+                    "Teleporter": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            },
+            "debug cat": {
+                "name": "Debug Cat",
+                "extra": {},
+                "items": {
+                    "Debug Cat": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            },
+            "other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
                     }
                 }
             }
-        ],
-        "portal": [],
-        "morph_ball": []
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        }
     },
     "worlds": [
         "Mimiga Village.json",
