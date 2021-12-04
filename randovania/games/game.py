@@ -21,6 +21,8 @@ if typing.TYPE_CHECKING:
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
     from randovania.patching.patcher import Patcher
+    from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.resolver.bootstrap import Bootstrap
 
 
 @dataclass(frozen=True)
@@ -47,6 +49,9 @@ class GameLayout:
     preset_describer: GamePresetDescriber = GamePresetDescriber()
     """(Optional) Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
+    get_ingame_hash: Callable[[bytes], Optional[str]] = lambda hash: None
+    """(Optional) Takes a layout hash bytes and produces a string representing how the game will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
+
 
 @dataclass(frozen=True)
 class GameGui:
@@ -56,6 +61,12 @@ class GameGui:
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
 
+    input_file_text: Optional[tuple[str, str, str]]
+    """Two strings used to describe the input file for the game."""
+
+    progressive_item_gui_tuples: Iterable[tuple[str, tuple[str, ...]]] = frozenset()
+    """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long names replaced by the progressive item."""
+
     spoiler_visualizer: tuple[Type[GameDetailsTab], ...] = tuple()
 
 
@@ -63,6 +74,12 @@ class GameGui:
 class GameGenerator:
     item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]
     """Extends the base item pools with any specific item pools such as Artifacts."""
+
+    bootstrap: Bootstrap
+    """Modifies the resource database and starting resources before generation."""
+
+    base_patches_factory: BasePatchesFactory
+    """Creates base patches, such as elevator or configurable node assignments."""
 
 
 @dataclass(frozen=True)

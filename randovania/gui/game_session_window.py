@@ -1114,14 +1114,14 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         membership = self.current_player_membership
         if membership.is_observer:
             return await async_dialog.message_box(self, QtWidgets.QMessageBox.Critical,
-                                                  "Invalid action", "Observers can't generate an ISO.", QMessageBox.Ok)
+                                                  "Invalid action", "Observers can't export a game.", QMessageBox.Ok)
 
         if any(player.player is None for player in self.team_players):
             user_response = await async_dialog.warning(
                 self,
                 "Incomplete Session",
                 ("This session is currently missing a player.\n"
-                 "If you create an ISO right now, all references to that player will use a generic name instead.\n\n"
+                 "If you export your game right now, all references to that player will use a generic name instead.\n\n"
                  "Do you want to proceed?"),
                 QMessageBox.Yes | QMessageBox.No,
                 QMessageBox.No
