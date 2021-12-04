@@ -173,7 +173,7 @@ class CaverMusicShuffle(CaverMusic):
         rng.shuffle(shuffled)
 
         mapping = {
-            song: shuffled[i]
+            song: shuffled[i % len(shuffled)]
             for i, song in enumerate(CSSong.songs_to_shuffle())
         }
         
@@ -186,19 +186,21 @@ class CaverMusicShuffle(CaverMusic):
 
 class CaverMusicRandom(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
+        valid = CSSong.valid_songs(cosmetic.music_rando.song_status)
         return {
             cue: cue.assign_song(
-                rng.choice(CSSong.valid_songs(cosmetic.music_rando.song_status))
+                rng.choice(valid)
             )
             for cue in CaverMusic.CUES
         }
 
 class CaverMusicChaos(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
+        valid = CSSong.valid_songs(cosmetic.music_rando.song_status)
         return {
             cue: cue.assign_songs(
                 {
-                    event: rng.choice(CSSong.valid_songs(cosmetic.music_rando.song_status))
+                    event: rng.choice(valid)
                     for event in cue.events
                 }
             )
