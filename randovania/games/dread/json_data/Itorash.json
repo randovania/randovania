@@ -127,7 +127,7 @@
             }
         },
         "Main Room": {
-            "default_node": "Start Point",
+            "default_node": "Elevator to Hanubia",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -260,7 +260,15 @@
                         "start_point_actor_name": "StartPoint0",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Hanubia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Total Recharge": {
                     "node_type": "generic",
@@ -306,7 +314,7 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_007 (H)"
+                        "area_name": "Transport to Itorash"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -365,6 +373,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -427,6 +442,10 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
+                        "Event - Breakable (block_pbcolumn_000)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
                         "Elevator to Raven Beak Arena": {
                             "type": "and",
                             "data": {
@@ -508,6 +527,48 @@
                                     }
                                 ]
                             }
+                        },
+                        "Tile Group (POWERBOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s090_skybase:default:block_pbcolumn_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -525,7 +586,15 @@
                         "actor_def": "actordef:actors/props/block_pbcolumn/charclasses/block_pbcolumn.bmsad"
                     },
                     "event_name": "s090_skybase:default:block_pbcolumn_000",
-                    "connections": {}
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -540,7 +609,29 @@
                         "start_point_actor_name": "SP_Checkpoint_Commander",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Elevator to Raven Beak Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (WEIGHT)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Elevator to Raven Beak Arena": {
                     "node_type": "teleporter",
@@ -564,7 +655,7 @@
                     "keep_name_when_vanilla": false,
                     "editable": false,
                     "connections": {
-                        "Door to Save Station": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -584,12 +675,24 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 5900.0,
@@ -599,9 +702,25 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_001",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Event - Breakable (block_pbcolumn_000)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -647,7 +766,7 @@
             }
         },
         "Raven Beak Arena": {
-            "default_node": null,
+            "default_node": "Before Fight",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -680,11 +799,15 @@
                 "Before Fight": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 4466.614354467461,
+                        "y": 2250.1255492780915,
+                        "z": 0
+                    },
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Escape Sequence": {
+                        "Boss - Raven Beak": {
                             "type": "and",
                             "data": {
                                 "comment": "TODO: accurate boss requirements incl. Combat tricks",
@@ -710,11 +833,15 @@
                 "Boss - Raven Beak": {
                     "node_type": "generic",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 5032.84,
+                        "y": 2533.24,
+                        "z": 0.0
+                    },
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Escape Sequence": {
+                        "Pickup (Hyper Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -724,12 +851,66 @@
                     }
                 },
                 "Escape Sequence": {
-                    "node_type": "generic",
+                    "node_type": "teleporter",
                     "heal": true,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 5736.34,
+                        "y": 2267.28,
+                        "z": 0.0
+                    },
                     "description": "",
                     "extra": {},
+                    "destination": {
+                        "world_name": "Hanubia",
+                        "area_name": "Raven Beak X Arena"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": false,
                     "connections": {}
+                },
+                "Pickup (Hyper Beam)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4588.75,
+                        "y": 2840.21,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 140,
+                    "major_location": false,
+                    "connections": {
+                        "Pickup (Metroid Suit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Metroid Suit)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5471.39,
+                        "y": 2823.13,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 141,
+                    "major_location": false,
+                    "connections": {
+                        "Escape Sequence": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }

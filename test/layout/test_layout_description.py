@@ -4,8 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from randovania.layout.layout_description import LayoutDescription, CURRENT_DESCRIPTION_SCHEMA_VERSION
+from randovania.layout import description_migration
 from randovania.layout.base.trick_level import LayoutTrickLevel
+from randovania.layout.layout_description import LayoutDescription
 
 
 @pytest.mark.parametrize("value", LayoutTrickLevel)
@@ -21,7 +22,7 @@ def test_load_multiworld(test_files_dir):
 
     # Run
     result = LayoutDescription.from_json_dict(input_data)
-    input_data["schema_version"] = CURRENT_DESCRIPTION_SCHEMA_VERSION
+    input_data["schema_version"] = description_migration.CURRENT_VERSION
 
     # Assert
     as_json = result.as_json

@@ -22,7 +22,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
+from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.layout import preset_describer
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure

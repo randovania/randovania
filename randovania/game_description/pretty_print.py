@@ -1,19 +1,19 @@
 import re
 from pathlib import Path
-from typing import Union, Iterator, Tuple, TextIO
+from typing import Iterator, Tuple, TextIO
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import ResourceRequirement, RequirementAnd, RequirementOr, \
-    RequirementTemplate, Requirement, RequirementArrayBase
+from randovania.game_description.requirements import (
+    ResourceRequirement, RequirementOr, RequirementTemplate, Requirement, RequirementArrayBase
+)
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockType
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, EventNode, \
-    ConfigurableNode, \
-    LogbookNode, LoreType, PlayerShipNode
+from randovania.game_description.world.node import (
+    Node, DockNode, TeleporterNode, PickupNode, EventNode,
+    ConfigurableNode, LogbookNode, LoreType, PlayerShipNode
+)
 from randovania.game_description.world.world_list import WorldList
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.lib.enum_lib import iterate_enum
 
 
 def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
@@ -25,7 +25,7 @@ def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
 
 def pretty_print_requirement_array(requirement: RequirementArrayBase,
                                    level: int) -> Iterator[Tuple[int, str]]:
-    if len(requirement.items) == 1:
+    if len(requirement.items) == 1 and requirement.comment is None:
         yield from pretty_print_requirement(requirement.items[0], level)
         return
 
@@ -119,6 +119,8 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
 
 def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     print_function(area.name)
+    if area.valid_starting_location:
+        print_function("(Valid Starting Location)")
     for extra_name, extra_field in area.extra.items():
         print_function("Extra - {}: {}".format(extra_name, extra_field))
     for i, node in enumerate(area.nodes):
@@ -137,7 +139,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
 
         for target_node, requirement in game.world_list.area_connections_from(node):
             print_function("  > {}".format(target_node.name))
-            for level, text in pretty_print_requirement(requirement.simplify()):
+            for level, text in pretty_print_requirement(requirement.simplify(keep_comments=True)):
                 print_function("      {}{}".format("    " * level, text))
         print_function()
 

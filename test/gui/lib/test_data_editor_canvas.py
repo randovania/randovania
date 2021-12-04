@@ -38,6 +38,24 @@ def test_paintEvent(skip_qtbot, canvas, mocker):
     mock_painter.return_value.drawText.assert_called()
 
 
+def test_mouseDoubleClickEvent_node(skip_qtbot, canvas):
+    event = MagicMock()
+    event.globalPos.return_value = QPoint(532, 319)
+    canvas._update_scale_variables()
+
+    expected_node = canvas.area.node_with_name("Door to collision_camera_001 (A)")
+
+    canvas.SelectNodeRequest = MagicMock()
+    canvas.SelectAreaRequest = MagicMock()
+
+    # Run
+    canvas.mouseDoubleClickEvent(event)
+
+    # Assert
+    canvas.SelectNodeRequest.emit.assert_called_once_with(expected_node)
+    canvas.SelectAreaRequest.emit.assert_not_called()
+
+
 def test_contextMenuEvent(skip_qtbot, canvas, mocker):
     mock_qmenu: MagicMock = mocker.patch("PySide2.QtWidgets.QMenu")
 
@@ -50,6 +68,6 @@ def test_contextMenuEvent(skip_qtbot, canvas, mocker):
 
     # Assert
     mock_qmenu.assert_any_call(canvas)
-    mock_qmenu.assert_any_call('collision_camera_045 (A)', canvas)
+    mock_qmenu.assert_any_call('Area: collision_camera_045 (A)', canvas)
     event.globalPos.assert_has_calls([call(), call()])
     mock_qmenu.return_value.exec_.assert_called_once_with(QPoint(100, 200))

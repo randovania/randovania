@@ -49,8 +49,8 @@
                 }
             }
         },
-        "collision_camera_001 (E)": {
-            "default_node": "Start Point 2",
+        "Transport to Ghavoran": {
+            "default_node": "Tram to Ghavoran - Transport to Elun",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -80,7 +80,7 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Door (doorpowerpower_004)": {
+                "Door to collision_camera_012 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -100,7 +100,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_012 (E)",
-                        "node_name": "Door (doorpowerpower_004)"
+                        "node_name": "Door to Transport to Ghavoran"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -121,7 +121,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (wagontrain_forest_000)": {
+                "Tram to Ghavoran - Transport to Elun": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -140,7 +140,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_037 (G)"
+                        "area_name": "Transport to Elun"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -194,7 +194,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door (doorpowerpower_000)": {
+                "Dock to collision_camera_003 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -214,14 +214,14 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_003 (E)",
-                        "node_name": "Door (doorpowerpower_000)"
+                        "node_name": "Dock to collision_camera_002 (E)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 300.0,
@@ -231,12 +231,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 800.0,
@@ -246,7 +250,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_007",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -283,7 +291,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Door (doorpowerpower_000)": {
+                "Dock to collision_camera_002 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -303,13 +311,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_002 (E)",
-                        "node_name": "Door (doorpowerpower_000)"
+                        "node_name": "Dock to collision_camera_003 (E)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorpowerpower_001)": {
+                "Door to collision_camera_004 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -329,13 +337,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_004 (E)",
-                        "node_name": "Door (doorpowerpower_001)"
+                        "node_name": "Door to collision_camera_003 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_002)": {
+                "Door to collision_camera_005 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -355,7 +363,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_005 (E)",
-                        "node_name": "Door (doorpowerpower_002)"
+                        "node_name": "Door to collision_camera_003 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -378,7 +386,7 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Door (doorpowerpower_003)": {
+                "Dock to collision_camera_006 (E) (doorpowerpower_003)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -398,13 +406,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_006 (E)",
-                        "node_name": "Door (doorpowerpower_003)"
+                        "node_name": "Dock to collision_camera_003 (E) (doorpowerpower_003)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorpowerclosed_000)": {
+                "Dock to collision_camera_006 (E) (doorpowerclosed_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -424,7 +432,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_006 (E)",
-                        "node_name": "Door (doorpowerclosed_000)"
+                        "node_name": "Dock to collision_camera_003 (E) (doorpowerclosed_000)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -479,7 +487,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 1600.0,
@@ -489,12 +497,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_006",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 2600.0,
@@ -504,12 +516,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_008",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 2800.0,
@@ -519,12 +535,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_009",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 2000.0,
@@ -534,7 +554,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_027",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -571,7 +595,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Door (doorpowerpower_001)": {
+                "Door to collision_camera_003 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -591,13 +615,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_003 (E)",
-                        "node_name": "Door (doorpowerpower_001)"
+                        "node_name": "Door to collision_camera_004 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_005)": {
+                "Door to collision_camera_007 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -617,7 +641,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_007 (E)",
-                        "node_name": "Door (doorpowerpower_005)"
+                        "node_name": "Door to collision_camera_004 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -671,7 +695,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door (doorpowerpower_002)": {
+                "Door to collision_camera_003 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -691,13 +715,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_003 (E)",
-                        "node_name": "Door (doorpowerpower_002)"
+                        "node_name": "Door to collision_camera_005 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_006)": {
+                "Dock to collision_camera_007 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -717,13 +741,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_007 (E)",
-                        "node_name": "Door (doorpowerpower_006)"
+                        "node_name": "Dock to collision_camera_005 (E)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorpowerpower_007)": {
+                "Door to collision_camera_008 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -743,14 +767,14 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_008 (E)",
-                        "node_name": "Door (doorpowerpower_007)"
+                        "node_name": "Door to collision_camera_005 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 3600.0,
@@ -760,7 +784,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_005",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -814,7 +842,7 @@
                     "major_location": true,
                     "connections": {}
                 },
-                "Door (doorpowerpower_003)": {
+                "Dock to collision_camera_003 (E) (doorpowerpower_003)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -834,13 +862,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_003 (E)",
-                        "node_name": "Door (doorpowerpower_003)"
+                        "node_name": "Dock to collision_camera_006 (E) (doorpowerpower_003)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorpowerclosed_000)": {
+                "Dock to collision_camera_003 (E) (doorpowerclosed_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -860,7 +888,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_003 (E)",
-                        "node_name": "Door (doorpowerclosed_000)"
+                        "node_name": "Dock to collision_camera_006 (E) (doorpowerclosed_000)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -882,7 +910,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 4100.0,
@@ -892,7 +920,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_001",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -929,7 +961,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door (doorpowerpower_005)": {
+                "Door to collision_camera_004 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -949,13 +981,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_004 (E)",
-                        "node_name": "Door (doorpowerpower_005)"
+                        "node_name": "Door to collision_camera_007 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_006)": {
+                "Dock to collision_camera_005 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -975,7 +1007,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_005 (E)",
-                        "node_name": "Door (doorpowerpower_006)"
+                        "node_name": "Dock to collision_camera_007 (E)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -997,7 +1029,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 7400.0,
@@ -1007,7 +1039,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_003",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1044,7 +1080,7 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door (doorpowerpower_007)": {
+                "Door to collision_camera_005 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1064,7 +1100,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_005 (E)",
-                        "node_name": "Door (doorpowerpower_007)"
+                        "node_name": "Door to collision_camera_008 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1088,7 +1124,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 7200.0,
@@ -1098,12 +1134,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_002",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 5700.0,
@@ -1113,7 +1153,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_004",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1167,6 +1211,22 @@
                     "major_location": false,
                     "connections": {}
                 },
+                "Event - Breakable (grapplepulloff1x2_000)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7650.0,
+                        "y": 650.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "grapplepulloff1x2_000",
+                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
+                    },
+                    "event_name": "s060_quarantine:default:grapplepulloff1x2_000",
+                    "connections": {}
+                },
                 "Life Recharge": {
                     "node_type": "generic",
                     "heal": true,
@@ -1195,7 +1255,12 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_017",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB",
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
@@ -1210,12 +1275,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_018",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 8400.0,
@@ -1225,12 +1294,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_019",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 9400.0,
@@ -1240,12 +1313,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_020",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 8900.0,
@@ -1255,12 +1332,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_021",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 9000.0,
@@ -1270,12 +1351,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_022",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 8200.0,
@@ -1285,12 +1370,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_023",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 8800.0,
@@ -1300,12 +1389,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_024",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 9000.0,
@@ -1315,12 +1408,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_025",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group ()": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 9200.0,
@@ -1330,7 +1427,9 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_026",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": []
                     },
                     "connections": {}
                 }
@@ -1385,7 +1484,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 3700.0,
@@ -1395,7 +1494,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_010",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
@@ -1410,7 +1513,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_011",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
@@ -1425,12 +1532,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_012",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 5700.0,
@@ -1440,12 +1551,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_013",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 6000.0,
@@ -1455,7 +1570,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_014",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
@@ -1470,12 +1589,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_015",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 6400.0,
@@ -1485,7 +1608,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_016",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1522,7 +1649,7 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Door (doorpowerpower_008)": {
+                "Door to collision_camera_012 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1542,7 +1669,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_012 (E)",
-                        "node_name": "Door (doorpowerpower_008)"
+                        "node_name": "Door to collision_camera_011 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1581,7 +1708,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door (doorpowerpower_008)": {
+                "Door to collision_camera_011 (E)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1601,13 +1728,13 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "collision_camera_011 (E)",
-                        "node_name": "Door (doorpowerpower_008)"
+                        "node_name": "Door to collision_camera_012 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_004)": {
+                "Door to Transport to Ghavoran": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1626,8 +1753,8 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_001 (E)",
-                        "node_name": "Door (doorpowerpower_004)"
+                        "area_name": "Transport to Ghavoran",
+                        "node_name": "Door to collision_camera_012 (E)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",

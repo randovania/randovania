@@ -153,7 +153,7 @@ def prompt_user_for_preset_file(window: QtWidgets.QMainWindow, new_file: bool) -
     :param new_file: If it should be an existing file (False) or not.
     :return: A path if the user selected a file, None otherwise
     """
-    from randovania.layout.preset_migration import VersionedPreset
+    from randovania.layout.versioned_preset import VersionedPreset
     return _prompt_user_for_file(window, caption="Select a Randovania Preset file.",
                                  filter=f"Randovania Preset, *.{VersionedPreset.file_extension()};;"
                                         f"All Files (*.*)",

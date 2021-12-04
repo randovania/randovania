@@ -3,6 +3,8 @@ from randovania.games.super_metroid.layout.super_metroid_configuration import Su
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout
 from randovania.games.super_metroid.patcher.super_duper_metroid_patcher import SuperDuperMetroidPatcher
+from randovania.generator.base_patches_factory import BasePatchesFactory
+from randovania.resolver.bootstrap import Bootstrap
 
 
 def _super_metroid_gui():
@@ -12,6 +14,7 @@ def _super_metroid_gui():
     return GameGui(
         tab_provider=super_metroid_preset_tabs,
         cosmetic_dialog=BaseCosmeticPatchesDialog,
+        input_file_text=("an SFC/SMC file", "the Super Famicom/SNES", "SFC/SMC"),
     )
 
 
@@ -34,7 +37,9 @@ game_data: GameData = GameData(
     gui=_super_metroid_gui,
 
     generator=GameGenerator(
-        item_pool_creator=super_metroid_specific_pool
+        item_pool_creator=super_metroid_specific_pool,
+        bootstrap=Bootstrap(),
+        base_patches_factory=BasePatchesFactory()
     ),
 
     patcher=SuperDuperMetroidPatcher()

@@ -7,6 +7,7 @@ from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description.world.area import Area
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
@@ -17,15 +18,16 @@ from randovania.gui.lib.area_list_helper import AreaListHelper
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
-from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList
+from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterTargetList, TeleporterList, \
+    TeleporterConfiguration
 from randovania.lib import enum_lib
 
 
 class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
     _elevator_source_for_location: Dict[NodeIdentifier, QtWidgets.QCheckBox]
     _elevator_source_destination: Dict[NodeIdentifier, Optional[NodeIdentifier]]
-    _elevator_target_for_world: Dict[str, QtWidgets.QCheckBox]
-    _elevator_target_for_area: Dict[int, QtWidgets.QCheckBox]
+    _elevator_target_for_world: dict[str, QtWidgets.QCheckBox]
+    _elevator_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
 
     def __init__(self, editor: PresetEditor, game: GameDescription):
         super().__init__(editor)
@@ -64,6 +66,9 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
             <p>This changes the requirements to <span style=" font-weight:600;">not need the final bosses</span>,
             turning certain items optional such as Plasma Beam.</p></body></html>
             """)
+        elif self.game_enum != RandovaniaGame.METROID_PRIME_ECHOES:
+            self.skip_final_bosses_check.setVisible(False)
+            self.skip_final_bosses_label.setVisible(False)
 
         elif self.game_enum == RandovaniaGame.METROID_PRIME_CORRUPTION:
             self.elevators_description_label.setText(
@@ -85,7 +90,8 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
         return self.game_description.game
 
     def _create_check_for_source_elevator(self, location: NodeIdentifier):
-        name = elevators.get_elevator_or_area_name(self.game_enum, self.game_description.world_list, location.area_location, False)
+        name = elevators.get_elevator_or_area_name(self.game_enum, self.game_description.world_list,
+                                                   location.area_location, True)
 
         check = QtWidgets.QCheckBox(self.elevators_source_group)
         check.setText(name)
@@ -136,14 +142,15 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
                 for node in world_list.area_by_area_location(other_locations[0]).nodes
                 if isinstance(node, TeleporterNode)
             ]
-            assert teleporters_in_target
-            other_loc = teleporters_in_target[0]
 
             self._elevator_source_destination[location] = None
 
-            if other_loc in checks:
-                self.elevators_source_layout.addWidget(checks.pop(other_loc), row, 2)
-                self._elevator_source_destination[location] = other_loc
+            if teleporters_in_target:
+                other_loc = teleporters_in_target[0]
+
+                if other_loc in checks:
+                    self.elevators_source_layout.addWidget(checks.pop(other_loc), row, 2)
+                    self._elevator_source_destination[location] = other_loc
 
             row += 1
 
@@ -176,7 +183,7 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
                 excluded_teleporters=config.excluded_teleporters.ensure_has_location(location, not checked),
             )
 
-    def _on_elevator_target_check_changed(self, world_areas, checked: bool):
+    def _on_elevator_target_check_changed(self, world_areas: list[AreaIdentifier], checked: bool):
         with self._editor as editor:
             config = editor.layout_configuration_elevators
             editor.layout_configuration_elevators = dataclasses.replace(
@@ -186,14 +193,15 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
+        config_elevators: TeleporterConfiguration = config.elevators
 
-        common_qt_lib.set_combo_with_value(self.elevators_combo, config.elevators.mode)
-        can_shuffle_target = config.elevators.mode not in (TeleporterShuffleMode.VANILLA,
+        common_qt_lib.set_combo_with_value(self.elevators_combo, config_elevators.mode)
+        can_shuffle_target = config_elevators.mode not in (TeleporterShuffleMode.VANILLA,
                                                            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
                                                            TeleporterShuffleMode.TWO_WAY_UNCHECKED)
         static_areas = set(
             teleporter
-            for teleporter in config.elevators.static_teleporters.keys()
+            for teleporter in config_elevators.static_teleporters.keys()
         )
 
         for origin, destination in self._elevator_source_destination.items():
@@ -204,8 +212,8 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
             if not can_shuffle_target:
                 is_locked = is_locked or destination in static_areas
 
-            origin_check.setEnabled(not config.elevators.is_vanilla and not is_locked)
-            origin_check.setChecked(origin not in config.elevators.excluded_teleporters.locations and not is_locked)
+            origin_check.setEnabled(not config_elevators.is_vanilla and not is_locked)
+            origin_check.setChecked(origin not in config_elevators.excluded_teleporters.locations and not is_locked)
 
             origin_check.setToolTip("The destination for this teleporter is locked due to other settings."
                                     if is_locked else "")
@@ -217,16 +225,16 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
 
             dest_check.setEnabled(can_shuffle_target and destination not in static_areas)
             if can_shuffle_target:
-                dest_check.setChecked(destination not in config.elevators.excluded_teleporters.locations
+                dest_check.setChecked(destination not in config_elevators.excluded_teleporters.locations
                                       and destination not in static_areas)
             else:
                 dest_check.setChecked(origin_check.isChecked())
 
-        self.elevators_target_group.setEnabled(config.elevators.has_shuffled_target)
-        self.skip_final_bosses_check.setChecked(config.elevators.skip_final_bosses)
-        self.elevators_allow_unvisited_names_check.setChecked(config.elevators.allow_unvisited_room_names)
+        self.elevators_target_group.setEnabled(config_elevators.has_shuffled_target)
+        self.skip_final_bosses_check.setChecked(config_elevators.skip_final_bosses)
+        self.elevators_allow_unvisited_names_check.setChecked(config_elevators.allow_unvisited_room_names)
         self.update_area_list(
-            config.elevators.excluded_targets.locations,
+            config_elevators.excluded_targets.locations,
             True,
             self._elevator_target_for_world,
             self._elevator_target_for_area,

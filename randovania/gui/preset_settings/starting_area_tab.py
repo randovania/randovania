@@ -1,6 +1,7 @@
 from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_starting_area_ui import Ui_PresetStartingArea
 from randovania.gui.lib.area_list_helper import AreaListHelper
@@ -13,7 +14,7 @@ from randovania.layout.preset import Preset
 class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
 
     _starting_location_for_world: dict[str, QtWidgets.QCheckBox]
-    _starting_location_for_area: dict[tuple[str, str], QtWidgets.QCheckBox]
+    _starting_location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
 
     def __init__(self, editor: PresetEditor, game: GameDescription):
         super().__init__(editor)

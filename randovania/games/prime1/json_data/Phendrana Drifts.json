@@ -4169,6 +4169,50 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Dash",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Fight Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
                                 "items": []
                             }
                         }
@@ -4194,7 +4238,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Wave Door",
                     "connections": {
-                        "Door to Quarantine Monitor": {
+                        "Morph Ball Door to Quarantine Monitor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4269,10 +4313,17 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Fight Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
-                "Door to Quarantine Monitor": {
+                "Morph Ball Door to Quarantine Monitor": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4287,7 +4338,7 @@
                     "destination": {
                         "world_name": "Phendrana Drifts",
                         "area_name": "Quarantine Monitor",
-                        "node_name": "Door to Quarantine Cave"
+                        "node_name": "Morph Ball Door to Quarantine Cave"
                     },
                     "dock_type": "morph_ball",
                     "dock_weakness": "Morph Ball Door",
@@ -4369,6 +4420,23 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Fight Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -4380,7 +4448,7 @@
                     "extra": {},
                     "event_name": "Event17",
                     "connections": {
-                        "Pickup (Spider Ball)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4497,15 +4565,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event17",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -4585,7 +4644,7 @@
                                 ]
                             }
                         },
-                        "Door to Quarantine Monitor": {
+                        "Morph Ball Door to Quarantine Monitor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4679,6 +4738,39 @@
                                 ]
                             }
                         },
+                        "Pickup (Spider Ball)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event17",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Fight Trigger": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Fight Trigger": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
                         "Event - Thardus": {
                             "type": "and",
                             "data": {
@@ -4725,6 +4817,15 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 300,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
                                                     "type": "and",
                                                     "data": {
                                                         "comment": null,
@@ -4747,7 +4848,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "items",
-                                                                                "name": "MorphBall",
+                                                                                "name": "Charge",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -4756,7 +4857,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "items",
-                                                                                "name": "Charge",
+                                                                                "name": "MorphBall",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
@@ -4766,17 +4867,25 @@
                                                             }
                                                         ]
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Damage",
-                                                        "amount": 300,
-                                                        "negate": false
-                                                    }
                                                 }
                                             ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Room Center": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event17",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -5019,13 +5128,13 @@
             }
         },
         "Quarantine Monitor": {
-            "default_node": "Door to Quarantine Cave",
+            "default_node": "Morph Ball Door to Quarantine Cave",
             "valid_starting_location": true,
             "extra": {
                 "asset_id": 563191901
             },
             "nodes": {
-                "Door to Quarantine Cave": {
+                "Morph Ball Door to Quarantine Cave": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5040,7 +5149,7 @@
                     "destination": {
                         "world_name": "Phendrana Drifts",
                         "area_name": "Quarantine Cave",
-                        "node_name": "Door to Quarantine Monitor"
+                        "node_name": "Morph Ball Door to Quarantine Monitor"
                     },
                     "dock_type": "morph_ball",
                     "dock_weakness": "Morph Ball Door",
@@ -5073,7 +5182,7 @@
                     "pickup_index": 46,
                     "major_location": false,
                     "connections": {
-                        "Door to Quarantine Cave": {
+                        "Morph Ball Door to Quarantine Cave": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5254,24 +5363,6 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "CBJ",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
                                                                     "type": "tricks",
                                                                     "name": "SJump",
                                                                     "amount": 4,
@@ -5285,6 +5376,66 @@
                                                                     "name": "Standable",
                                                                     "amount": 4,
                                                                     "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Bombs",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "CBJ",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "https://www.youtube.com/watch?v=kpbBzBjYxJk",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Scan",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Dash",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
@@ -6769,6 +6920,101 @@
                                                         "type": "tricks",
                                                         "name": "BJ",
                                                         "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/k7ylvABQ_Oo?t=72",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SJump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "Event49",
+                                                                                "amount": 1,
+                                                                                "negate": true
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "X-Ray",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "events",
+                                                                                "name": "Event49",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Ice",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dash",
+                                                        "amount": 4,
                                                         "negate": false
                                                     }
                                                 }
@@ -10759,6 +11005,120 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/k7ylvABQ_Oo?t=37",
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "GravitySuit",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "MorphBall",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Boost",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "SJump",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "WallBoost",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dash",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SJump",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "LJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -11023,7 +11383,7 @@
                         }
                     }
                 },
-                "Door to Security Cave": {
+                "Morph Ball Door to Security Cave": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11038,7 +11398,7 @@
                     "destination": {
                         "world_name": "Phendrana Drifts",
                         "area_name": "Security Cave",
-                        "node_name": "Door to Phendrana's Edge"
+                        "node_name": "Morph Ball Door to Phendrana's Edge"
                     },
                     "dock_type": "morph_ball",
                     "dock_weakness": "Morph Ball Door",
@@ -11120,7 +11480,7 @@
                                 ]
                             }
                         },
-                        "Door to Security Cave": {
+                        "Morph Ball Door to Security Cave": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11315,7 +11675,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Wave Door",
                     "connections": {
-                        "Pickup (Gravity Suit)": {
+                        "Event - Gravity Suit": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11330,29 +11690,21 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "GravitySuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SJump",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -11380,49 +11732,6 @@
                     "dock_type": "door",
                     "dock_weakness": "Wave Door",
                     "connections": {
-                        "Pickup (Gravity Suit)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "GravitySuit",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Pickup (Missile)": {
                             "type": "or",
                             "data": {
@@ -11516,6 +11825,41 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Gravity Suit": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "GravitySuit",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -11590,34 +11934,94 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "MorphBall",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Bombs",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
                                                                     "name": "GravitySuit",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
                                                             },
                                                             {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Bombs",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "BJ",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "https://www.youtube.com/watch?v=k7ylvABQ_Oo",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Dash",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boost",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "WallBoost",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Standable",
+                                                                                            "amount": 2,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "BJ",
+                                                                    "type": "items",
+                                                                    "name": "MorphBall",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -11643,6 +12047,23 @@
                     "major_location": false,
                     "connections": {
                         "Door to Chamber Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Gravity Suit": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Event49",
+                    "connections": {
+                        "Pickup (Gravity Suit)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11710,13 +12131,13 @@
             }
         },
         "Security Cave": {
-            "default_node": "Door to Phendrana's Edge",
+            "default_node": "Morph Ball Door to Phendrana's Edge",
             "valid_starting_location": true,
             "extra": {
                 "asset_id": 1016369381
             },
             "nodes": {
-                "Door to Phendrana's Edge": {
+                "Morph Ball Door to Phendrana's Edge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11731,7 +12152,7 @@
                     "destination": {
                         "world_name": "Phendrana Drifts",
                         "area_name": "Phendrana's Edge",
-                        "node_name": "Door to Security Cave"
+                        "node_name": "Morph Ball Door to Security Cave"
                     },
                     "dock_type": "morph_ball",
                     "dock_weakness": "Morph Ball Door",
@@ -11764,7 +12185,7 @@
                     "pickup_index": 57,
                     "major_location": false,
                     "connections": {
-                        "Door to Phendrana's Edge": {
+                        "Morph Ball Door to Phendrana's Edge": {
                             "type": "and",
                             "data": {
                                 "comment": null,

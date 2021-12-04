@@ -18,7 +18,7 @@ def read_json_then_binary(game: RandovaniaGame) -> Tuple[Path, dict]:
     json_path = dir_path.joinpath(f"{game.value}.json")
     if json_path.exists():
         with json_path.open("r") as open_file:
-            return json_path, json.load(open_file)
+            return json_path, data_reader.read_json_file(open_file)
 
     binary_path = get_data_path().joinpath("binary_data", f"{game.value}.bin")
     return binary_path, binary_data.decode_file_path(binary_path)

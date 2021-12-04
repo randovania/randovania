@@ -20,7 +20,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
-from randovania.resolver import resolver, bootstrap
+from randovania.resolver import resolver
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration, ImpossibleForSolver
 
 
@@ -36,9 +36,9 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 def create_player_pool(rng: Random, configuration: BaseConfiguration,
                        player_index: int, num_players: int) -> PlayerPool:
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
-    game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
+    game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    base_patches = base_patches_factory.create_base_patches(configuration, rng, game, num_players > 1,
+    base_patches = game.game.data.generator.base_patches_factory.create_base_patches(configuration, rng, game, num_players > 1,
                                                             player_index=player_index)
 
     item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,

@@ -6,12 +6,13 @@ Extra - asset_id: collision_camera_000
 > Placeholder; Heals? False
 
 ----------------
-collision_camera_001 (E)
+Transport to Ghavoran
+(Valid Starting Location)
 Extra - total_boundings: {'x1': -17300.0, 'x2': -11600.0, 'y1': 500.0, 'y2': 1642.0}
 Extra - polygon: [[-11600.0, 1642.0], [-17300.0, 1642.0], [-17300.0, 500.0], [-11600.0, 500.0]]
 Extra - asset_id: collision_camera_001
-> Door (doorpowerpower_004); Heals? False
-  * Power Beam Door to collision_camera_012 (E)/Door (doorpowerpower_004)
+> Door to collision_camera_012 (E); Heals? False
+  * Power Beam Door to collision_camera_012 (E)/Door to Transport to Ghavoran
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -23,8 +24,8 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_name: StartPoint0
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
-> Elevator (wagontrain_forest_000); Heals? False
-  * Teleporter to Ghavoran - collision_camera_037 (G)
+> Tram to Ghavoran - Transport to Elun; Heals? False; Spawn Point
+  * Teleporter to Ghavoran - Transport to Elun
   * Extra - actor_name: wagontrain_forest_000
   * Extra - actor_def: actordef:actors/props/wagontrain/charclasses/wagontrain.bmsad
   * Extra - elevator_component: CTrainUsableComponent
@@ -32,7 +33,7 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_name: wagontrain_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
 
-> Start Point 2; Heals? False; Spawn Point
+> Start Point 2; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_ProfessorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
@@ -41,8 +42,8 @@ collision_camera_002 (E)
 Extra - total_boundings: {'x1': -700.0, 'x2': 1400.0, 'y1': -2100.0, 'y2': 1600.0}
 Extra - polygon: [[1400.0, 1600.0], [-700.0, 1600.0], [-700.0, -2100.0], [1400.0, -2100.0]]
 Extra - asset_id: collision_camera_002
-> Door (doorpowerpower_000); Heals? False
-  * Not Determined to collision_camera_003 (E)/Door (doorpowerpower_000)
+> Dock to collision_camera_003 (E); Heals? False
+  * Not Determined to collision_camera_003 (E)/Dock to collision_camera_002 (E)
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
@@ -51,20 +52,27 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
 
 > Tile Group (BOMB) 1; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_000
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (BOMB) 2; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_007
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 ----------------
 collision_camera_003 (E)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 1300.0, 'x2': 3400.0, 'y1': -2700.0, 'y2': 4000.0}
 Extra - polygon: [[3400.0, 4000.0], [1300.0, 4000.0], [1300.0, -2700.0], [3400.0, -2700.0]]
 Extra - asset_id: collision_camera_003
-> Door (doorpowerpower_000); Heals? False
-  * Not Determined to collision_camera_002 (E)/Door (doorpowerpower_000)
+> Dock to collision_camera_002 (E); Heals? False
+  * Not Determined to collision_camera_002 (E)/Dock to collision_camera_003 (E)
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
@@ -72,8 +80,8 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
 
-> Door (doorpowerpower_001); Heals? False
-  * Power Beam Door to collision_camera_004 (E)/Door (doorpowerpower_001)
+> Door to collision_camera_004 (E); Heals? False
+  * Power Beam Door to collision_camera_004 (E)/Door to collision_camera_003 (E)
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -81,8 +89,8 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Door (doorpowerpower_002); Heals? False
-  * Power Beam Door to collision_camera_005 (E)/Door (doorpowerpower_002)
+> Door to collision_camera_005 (E); Heals? False
+  * Power Beam Door to collision_camera_005 (E)/Door to collision_camera_003 (E)
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -95,8 +103,8 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
 
-> Door (doorpowerpower_003); Heals? False
-  * Not Determined to collision_camera_006 (E)/Door (doorpowerpower_003)
+> Dock to collision_camera_006 (E) (doorpowerpower_003); Heals? False
+  * Not Determined to collision_camera_006 (E)/Dock to collision_camera_003 (E) (doorpowerpower_003)
   * Extra - actor_name: doorpowerpower_003
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
@@ -104,8 +112,8 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
 
-> Door (doorpowerclosed_000); Heals? False
-  * Not Determined to collision_camera_006 (E)/Door (doorpowerclosed_000)
+> Dock to collision_camera_006 (E) (doorpowerclosed_000); Heals? False
+  * Not Determined to collision_camera_006 (E)/Dock to collision_camera_003 (E) (doorpowerclosed_000)
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
@@ -129,28 +137,41 @@ Extra - asset_id: collision_camera_003
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Tile Group (POWERBEAM); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_006
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
 
 > Tile Group (BOMB) 1; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_008
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (BOMB) 2; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (BOMB) 3; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_027
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 ----------------
 collision_camera_004 (E)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 3300.0, 'x2': 5700.0, 'y1': 1569.0, 'y2': 2711.0}
 Extra - polygon: [[5700.0, 2711.0], [3300.0, 2711.0], [3300.0, 1569.0], [5700.0, 1569.0]]
 Extra - asset_id: collision_camera_004
-> Door (doorpowerpower_001); Heals? False
-  * Power Beam Door to collision_camera_003 (E)/Door (doorpowerpower_001)
+> Door to collision_camera_003 (E); Heals? False
+  * Power Beam Door to collision_camera_003 (E)/Door to collision_camera_004 (E)
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -158,8 +179,8 @@ Extra - asset_id: collision_camera_004
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Door (doorpowerpower_005); Heals? False
-  * Power Beam Door to collision_camera_007 (E)/Door (doorpowerpower_005)
+> Door to collision_camera_007 (E); Heals? False
+  * Power Beam Door to collision_camera_007 (E)/Door to collision_camera_004 (E)
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -176,8 +197,8 @@ collision_camera_005 (E)
 Extra - total_boundings: {'x1': 3300.0, 'x2': 5700.0, 'y1': -500.0, 'y2': 1500.0}
 Extra - polygon: [[5700.0, 1500.0], [3300.0, 1500.0], [3300.0, -500.0], [5700.0, -500.0]]
 Extra - asset_id: collision_camera_005
-> Door (doorpowerpower_002); Heals? False
-  * Power Beam Door to collision_camera_003 (E)/Door (doorpowerpower_002)
+> Door to collision_camera_003 (E); Heals? False
+  * Power Beam Door to collision_camera_003 (E)/Door to collision_camera_005 (E)
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -185,8 +206,8 @@ Extra - asset_id: collision_camera_005
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Door (doorpowerpower_006); Heals? False
-  * Not Determined to collision_camera_007 (E)/Door (doorpowerpower_006)
+> Dock to collision_camera_007 (E); Heals? False
+  * Not Determined to collision_camera_007 (E)/Dock to collision_camera_005 (E)
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
@@ -194,8 +215,8 @@ Extra - asset_id: collision_camera_005
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Door (doorpowerpower_007); Heals? False
-  * Power Beam Door to collision_camera_008 (E)/Door (doorpowerpower_007)
+> Door to collision_camera_008 (E); Heals? False
+  * Power Beam Door to collision_camera_008 (E)/Door to collision_camera_005 (E)
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -204,11 +225,15 @@ Extra - asset_id: collision_camera_005
   * Extra - right_shield_def: None
 
 > Tile Group (BOMB); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_005
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 ----------------
 collision_camera_006 (E)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 3400.0, 'x2': 5500.0, 'y1': -2700.0, 'y2': -500.0}
 Extra - polygon: [[5500.0, -500.0], [3400.0, -500.0], [3400.0, -2700.0], [5500.0, -2700.0]]
 Extra - asset_id: collision_camera_006
@@ -217,8 +242,8 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_name: itemsphere_plasmabeam_000
   * Extra - actor_def: actordef:actors/items/itemsphere_plasmabeam/charclasses/itemsphere_plasmabeam.bmsad
 
-> Door (doorpowerpower_003); Heals? False
-  * Not Determined to collision_camera_003 (E)/Door (doorpowerpower_003)
+> Dock to collision_camera_003 (E) (doorpowerpower_003); Heals? False
+  * Not Determined to collision_camera_003 (E)/Dock to collision_camera_006 (E) (doorpowerpower_003)
   * Extra - actor_name: doorpowerpower_003
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
@@ -226,8 +251,8 @@ Extra - asset_id: collision_camera_006
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
 
-> Door (doorpowerclosed_000); Heals? False
-  * Not Determined to collision_camera_003 (E)/Door (doorpowerclosed_000)
+> Dock to collision_camera_003 (E) (doorpowerclosed_000); Heals? False
+  * Not Determined to collision_camera_003 (E)/Dock to collision_camera_006 (E) (doorpowerclosed_000)
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
@@ -240,16 +265,20 @@ Extra - asset_id: collision_camera_006
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Tile Group (POWERBEAM); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_001
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
 
 ----------------
 collision_camera_007 (E)
+(Valid Starting Location)
 Extra - total_boundings: {'x1': 5600.0, 'x2': 7700.0, 'y1': 400.0, 'y2': 2900.0}
 Extra - polygon: [[7700.0, 2900.0], [5600.0, 2900.0], [5600.0, 400.0], [7700.0, 400.0]]
 Extra - asset_id: collision_camera_007
-> Door (doorpowerpower_005); Heals? False
-  * Power Beam Door to collision_camera_004 (E)/Door (doorpowerpower_005)
+> Door to collision_camera_004 (E); Heals? False
+  * Power Beam Door to collision_camera_004 (E)/Door to collision_camera_007 (E)
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -257,8 +286,8 @@ Extra - asset_id: collision_camera_007
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Door (doorpowerpower_006); Heals? False
-  * Not Determined to collision_camera_005 (E)/Door (doorpowerpower_006)
+> Dock to collision_camera_005 (E); Heals? False
+  * Not Determined to collision_camera_005 (E)/Dock to collision_camera_007 (E)
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
@@ -271,16 +300,19 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
 > Tile Group (BOMB); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_003
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 ----------------
 collision_camera_008 (E)
 Extra - total_boundings: {'x1': 5600.0, 'x2': 7700.0, 'y1': -2700.0, 'y2': 500.0}
 Extra - polygon: [[7700.0, 500.0], [5600.0, 500.0], [5600.0, -2700.0], [7700.0, -2700.0]]
 Extra - asset_id: collision_camera_008
-> Door (doorpowerpower_007); Heals? False
-  * Power Beam Door to collision_camera_005 (E)/Door (doorpowerpower_007)
+> Door to collision_camera_005 (E); Heals? False
+  * Power Beam Door to collision_camera_005 (E)/Door to collision_camera_008 (E)
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -294,12 +326,18 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Tile Group (POWERBEAM); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
 
 > Tile Group (SPEEDBOOST); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_004
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('SPEEDBOOST',)
 
 ----------------
 collision_camera_009 (E)
@@ -311,6 +349,11 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
 
+> Event - Breakable (grapplepulloff1x2_000); Heals? False
+  * Event Elun - grapplepulloff1x2_000
+  * Extra - actor_name: grapplepulloff1x2_000
+  * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+
 > Life Recharge; Heals? True; Spawn Point
   * Extra - actor_name: energyrecharge_000
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
@@ -320,42 +363,70 @@ Extra - asset_id: collision_camera_009
 > Tile Group (BOMB WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_017
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB', 'WEIGHT')
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('WEIGHT',)
 
 > Tile Group (POWERBOMB) 1; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_019
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBOMB',)
 
 > Tile Group (POWERBOMB) 2; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_020
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBOMB',)
 
 > Tile Group (BOMB) 1; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_021
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (POWERBEAM); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_022
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
 
 > Tile Group (BOMB) 2; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_023
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (BOMB) 3; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_024
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (BOMB) 4; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_025
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (); Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ()
 
 ----------------
 collision_camera_010 (E)
@@ -368,40 +439,58 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
 
 > Tile Group (BOMB) 1; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_010
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('WEIGHT',)
 
 > Tile Group (WEIGHT) 2; Heals? False
   * Extra - actor_name: breakabletilegroup_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('WEIGHT',)
 
 > Tile Group (BOMB) 2; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_013
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (BOMB) 3; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_014
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 > Tile Group (WEIGHT) 3; Heals? False
   * Extra - actor_name: breakabletilegroup_015
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('WEIGHT',)
 
 > Tile Group (BOMB) 4; Heals? False
+  * Configurable Node
   * Extra - actor_name: breakabletilegroup_016
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
 
 ----------------
 collision_camera_011 (E)
 Extra - total_boundings: {'x1': -9700.0, 'x2': -2500.0, 'y1': 300.0, 'y2': 2300.0}
 Extra - polygon: [[-2500.0, 2300.0], [-9700.0, 2300.0], [-9700.0, 300.0], [-2500.0, 300.0]]
 Extra - asset_id: collision_camera_011
-> Door (doorpowerpower_008); Heals? False
-  * Power Beam Door to collision_camera_012 (E)/Door (doorpowerpower_008)
+> Door to collision_camera_012 (E); Heals? False
+  * Power Beam Door to collision_camera_012 (E)/Door to collision_camera_011 (E)
   * Extra - actor_name: doorpowerpower_008
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -414,8 +503,8 @@ collision_camera_012 (E)
 Extra - total_boundings: {'x1': -11700.0, 'x2': -9600.0, 'y1': 500.0, 'y2': 1642.0}
 Extra - polygon: [[-9600.0, 1642.0], [-11700.0, 1642.0], [-11700.0, 500.0], [-9600.0, 500.0]]
 Extra - asset_id: collision_camera_012
-> Door (doorpowerpower_008); Heals? False
-  * Power Beam Door to collision_camera_011 (E)/Door (doorpowerpower_008)
+> Door to collision_camera_011 (E); Heals? False
+  * Power Beam Door to collision_camera_011 (E)/Door to collision_camera_012 (E)
   * Extra - actor_name: doorpowerpower_008
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -423,8 +512,8 @@ Extra - asset_id: collision_camera_012
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
 
-> Door (doorpowerpower_004); Heals? False
-  * Power Beam Door to collision_camera_001 (E)/Door (doorpowerpower_004)
+> Door to Transport to Ghavoran; Heals? False
+  * Power Beam Door to Transport to Ghavoran/Door to collision_camera_012 (E)
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}

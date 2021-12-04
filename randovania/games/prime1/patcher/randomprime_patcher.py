@@ -1,6 +1,5 @@
 import copy
 import json
-import logging
 import os
 import typing
 from pathlib import Path
@@ -19,17 +18,18 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.patching.patcher import Patcher
-from randovania.patching.prime import all_prime_dol_patches
-from randovania.games.prime1.patcher import prime1_elevators, prime_items
-from randovania.patching.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
-    credits_spoiler
-from randovania.generator.item_pool import pickup_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.layout_description import LayoutDescription
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
+from randovania.games.prime1.patcher import prime1_elevators, prime_items
+from randovania.generator.item_pool import pickup_creator
+from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
+from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
+from randovania.patching.patcher import Patcher
+from randovania.patching.prime import all_prime_dol_patches
+from randovania.patching.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
+    credits_spoiler
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -190,7 +190,7 @@ def _starting_items_value_for(resource_database: ResourceDatabase,
 
 def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
     loc = location.as_tuple
-    if loc in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES:
+    if loc in prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES and loc != ("Frigate Orpheon", "Exterior Docking Hangar"):
         return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[loc]
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
@@ -324,12 +324,17 @@ class RandomprimePatcher(Patcher):
             db.resource_database.get_item(index)
             for index in prime_items.ARTIFACT_ITEMS
         ]
-        resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-            description.all_patches, players_config, area_namers, False,
-            [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
-            hint_lib.TextColor.PRIME1_ITEM,
-            hint_lib.TextColor.PRIME1_LOCATION,
-        )
+        hint_config = configuration.hints
+        if hint_config.artifacts == ArtifactHintMode.DISABLED:
+            resulting_hints = {art: "{} is lost somewhere on Tallon IV.".format(art.long_name) for art in artifacts}
+        else:
+            resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                description.all_patches, players_config, area_namers,
+                hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
+                [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
+                hint_lib.TextColor.PRIME1_ITEM,
+                hint_lib.TextColor.PRIME1_LOCATION,
+            )
 
         # Tweaks
         ctwk_config = {}
@@ -337,6 +342,19 @@ class RandomprimePatcher(Patcher):
             ctwk_config["playerSize"] = 0.3
             ctwk_config["morphBallSize"] = 0.3
             ctwk_config["easyLavaEscape"] = True
+
+        if cosmetic_patches.use_hud_color:
+            ctwk_config["hudColor"] = [
+                cosmetic_patches.hud_color[0] / 255,
+                cosmetic_patches.hud_color[1] / 255,
+                cosmetic_patches.hud_color[2] / 255
+            ]
+
+        SUIT_ATTRIBUTES = ["powerDeg", "variaDeg", "gravityDeg", "phazonDeg"]
+        suit_colors = {}
+        for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, cosmetic_patches.suit_color_rotations):
+            if hue_rotation != 0:
+                suit_colors[attribute] = hue_rotation
 
         return {
             "seed": description.permalink.seed_number,
@@ -352,6 +370,7 @@ class RandomprimePatcher(Patcher):
                 "trilogyDiscPath": None,
                 "quickplay": False,
                 "quiet": False,
+                "suitColors": suit_colors
             },
             "gameConfig": {
                 "startingRoom": _name_for_location(db.world_list, patches.starting_location),
@@ -364,6 +383,7 @@ class RandomprimePatcher(Patcher):
                 "autoEnabledElevators": patches.starting_items.get(scan_visor, 0) == 0,
                 "multiworldDolPatches": True,
 
+                "disableItemLoss": True,  # Item Loss in Frigate
                 "startingItems": {
                     name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
                     for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
@@ -401,6 +421,9 @@ class RandomprimePatcher(Patcher):
             "tweaks": ctwk_config,
             "levelData": world_data,
             "hasSpoiler": description.permalink.spoiler,
+
+            # TODO
+            # "externAssetsDir": path_to_converted_assets,
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,

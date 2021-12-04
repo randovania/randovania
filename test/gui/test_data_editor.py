@@ -69,6 +69,8 @@ def test_create_node_and_save(tmp_path,
     db_path = Path(tmp_path.joinpath("test-game", "game"))
 
     window = DataEditorWindow(echoes_game_data, db_path, True, True)
+    window.set_warning_dialogs_disabled(True)
+
     skip_qtbot.addWidget(window)
 
     # Run

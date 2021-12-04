@@ -8,7 +8,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.binary_data import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
-from randovania.layout.preset_migration import VersionedPreset
+from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.network_common.session_state import GameSessionState
 

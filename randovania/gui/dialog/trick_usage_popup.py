@@ -18,7 +18,6 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.preset import Preset
-from randovania.resolver import bootstrap
 
 
 def _area_requirement_sets(area: Area,
@@ -99,7 +98,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
             return
 
         # Update
-        trick_resources = bootstrap.trick_resources_for_configuration(trick_level, database)
+        trick_resources = self._game_description.game.data.generator.bootstrap.trick_resources_for_configuration(trick_level, database)
 
         lines = []
 
