@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 from random import Random
-import shutil
 from typing import Optional
 import typing
 from randovania.games.game import RandovaniaGame
@@ -15,8 +14,8 @@ from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
+from caver import patcher as caver_patcher
 
-CSVERSION = 3
 
 class CaverPatcher(Patcher):
     _busy: bool = False
@@ -40,7 +39,7 @@ class CaverPatcher(Patcher):
         pass
     
     def default_output_file(self, seed_hash: str) -> str:
-        return f"Cave Story Randomizer - {seed_hash}"
+        return f"Cave Story Randomizer"
     
     @property
     def requires_input_file(self) -> bool:
@@ -55,8 +54,6 @@ class CaverPatcher(Patcher):
         return [""]
     
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration, cosmetic_patches: CSCosmeticPatches) -> dict:
-        preset = description.get_preset(players_config.player_index)
-        configuration = typing.cast(CSConfiguration, preset.configuration)
         patches = description.all_patches[players_config.player_index]
         game_description = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
         item_database = default_database.item_database_for_game(RandovaniaGame.CAVE_STORY)
@@ -80,11 +77,14 @@ class CaverPatcher(Patcher):
 
         entrances = {} # TODO: entrance rando
 
+        hints = {} # TODO
+
         mapnames = pickups.keys() | music.keys() | entrances.keys()
         maps = {mapname: {
             "pickups": pickups.get(mapname, {}),
             "music": music.get(mapname, {}),
-            "entrances": entrances.get(mapname, {})
+            "entrances": entrances.get(mapname, {}),
+            "hints": hints.get(mapname, {}),
         } for mapname in mapnames}
 
         return {
@@ -95,5 +95,6 @@ class CaverPatcher(Patcher):
 
     
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict, internal_copies_path: Path, progress_update: ProgressUpdateCallable):
-        with output_file.joinpath("patcher.json").open("w") as f:
-            json.dump(patch_data, f, indent=4)
+        self._busy = True
+        caver_patcher.patch_files(patch_data, output_file, progress_update)
+        self._busy = False

@@ -150,7 +150,13 @@ class CaverMusic:
         for cue, events in music.shuffle(rng, cosmetic).items():
             if mapping.get(cue.map_name) is None:
                 mapping[cue.map_name] = {}
-            events = {event: song.song_id for event, song in events.items()}
+            events = {
+                event: {
+                    "song_id": song.song_id, 
+                    "original_id": cue.default_song.song_id
+                }
+                for event, song in events.items()
+            }
             mapping[cue.map_name].update(events)
         return mapping
 
