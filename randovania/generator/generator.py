@@ -42,7 +42,9 @@ def create_player_pool(rng: Random, configuration: BaseConfiguration,
                                                             player_index=player_index)
 
     item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,
-                                                                                      game.resource_database)
+                                                                                      game.resource_database,
+                                                                                      base_patches,
+                                                                                      rng)
     target_assignment = {
         index: PickupTarget(pickup, player_index)
         for index, pickup in pickup_assignment.items()
