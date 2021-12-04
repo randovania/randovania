@@ -1108,6 +1108,41 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Bad Ending": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "badEnd",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventKazuma",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventCore",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1142,9 +1177,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 134.27,
-                        "y": 933.47,
-                        "z": 0.0
+                        "x": 134.27135678391952,
+                        "y": 939.899497487437,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {},
@@ -1164,6 +1199,19 @@
                             }
                         }
                     }
+                },
+                "Event - Bad Ending": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 430.15,
+                        "y": 196.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBadEnd",
+                    "connections": {}
                 }
             }
         },

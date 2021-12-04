@@ -63,11 +63,35 @@ Extra - in_dark_aether: False
 > Door to Prefab Building; Heals? False
   * Door to Prefab Building/Door to Balcony (Pre-Bosses)
   > Exit to Throne Room
-      Trivial
+      After Lowered Barrier
   > Door to Final Cave
       No Booster 2.0
   > Door to Last Cave (Hidden)
       Booster 2.0
+  > Event - Lowered Barrier
+      All of the following:
+          # Normal Ending and above
+          After Saved Sue
+          Any of the following:
+              Enabled Normal Ending
+              All of the following:
+                  # Best Ending and above
+                  Booster 2.0 and Iron Bond
+                  Any of the following:
+                      Enabled Best Ending
+                      All of the following:
+                          # All Bosses and above
+                          After Defeated Balfrog and After Defeated Balrog 1 and After Defeated Balrog 2 and After Defeated Balrog 3 and After Defeated the Core and After Defeated Curly and After Defeated Igor and After Defeated Ironhead and After Defeated Ma Pignon and After Defeated Monster X and After Defeated Omega and After Defeated Puu Black and After Defeated Sisters and After Defeated Toroko+
+                          Any of the following:
+                              Enabled All Bosses
+                              All of the following:
+                                  # 100%
+                                  Enabled 100%
+
+> Event - Lowered Barrier; Heals? False
+  * Event Lowered Barrier
+  > Door to Prefab Building
+      Trivial
 
 ----------------
 Prefab Building
@@ -142,14 +166,16 @@ Balcony (Post-Bosses)
 Extra - map_name: Blcny2
 Extra - in_dark_aether: False
 > Event - Normal Ending; Heals? False
-  * Event Generic Event
+  * Event Normal Ending
 
 > Entrance from Throne Room; Heals? False
   * Entrance to Throne Room/Exit to Balcony (Post-Bosses)
   > Event - Normal Ending
-      Trivial
+      After Defeated Undead Core and Enabled Normal Ending
   > Exit to Prefab House
-      Iron Bond
+      All of the following:
+          Iron Bond
+          Enabled All Bosses or Enabled Best Ending or Enabled Entrance Randomizer or Enabled 100%
 
 > Exit to Prefab House; Heals? False
   * Exit to Prefab House/Entrance from Balcony (Post-Bosses)
@@ -277,8 +303,10 @@ Extra - in_dark_aether: False
 > Entrance from Corridor; Heals? False
   * Entrance to Corridor/Exit to Seal Chamber
   > Event - Best Ending
-      Can Kill Bosses and Has Flight
+      All of the following:
+          Can Kill Bosses and Has Flight
+          Enabled All Bosses or Enabled Best Ending or Enabled 100%
 
 > Event - Best Ending; Heals? False
-  * Event Generic Event
+  * Event Best Ending
 
