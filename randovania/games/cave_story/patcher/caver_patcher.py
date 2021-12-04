@@ -54,6 +54,9 @@ class CaverPatcher(Patcher):
         return [""]
     
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration, cosmetic_patches: CSCosmeticPatches) -> dict:
+        if players_config.is_multiworld:
+            raise NotImplementedError("Multiworld is not supported for Cave Story")
+
         patches = description.all_patches[players_config.player_index]
         game_description = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
         item_database = default_database.item_database_for_game(RandovaniaGame.CAVE_STORY)
@@ -64,7 +67,8 @@ class CaverPatcher(Patcher):
         pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
         for index, target in patches.pickup_assignment.items():
             if target.player != players_config.player_index:
-                raise NotImplementedError("Multiworld is not supported for Cave Story")
+                # TODO: will need to figure out what scripts to insert for other player's items
+                pass
             
             node = game_description.world_list.node_from_pickup_index(index)
             area = game_description.world_list.nodes_to_area(node)

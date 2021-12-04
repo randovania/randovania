@@ -47,10 +47,8 @@ class MyChar(BitPackEnum, Enum):
     
     def next_mychar(self, reverse: bool) -> "MyChar":
         upcoming = list(MyChar)
-        if reverse:
-            upcoming.reverse()
-        upcoming = upcoming[upcoming.index(self)+1:]
-        return next((mychar for mychar in upcoming), MyChar.CUSTOM if reverse else MyChar.QUOTE)
+        offset = -1 if reverse else 1
+        return upcoming[(upcoming.index(self) + offset) % len(upcoming)]
         
 
 @unique

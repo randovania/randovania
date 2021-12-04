@@ -18,8 +18,8 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
         self.setupUi(self)
         self._cosmetic_patches = current
 
-        for i in range(4):
-            self.music_type_combo.setItemData(i, list(MusicRandoType)[i])
+        for i, value in enumerate(MusicRandoType):
+            self.music_type_combo.setItemData(i, value)
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
