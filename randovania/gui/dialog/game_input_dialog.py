@@ -191,7 +191,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         output_file = self.output_file
         if self._selected_output_format:
             has_error = output_file.is_dir() or not output_file.parent.is_dir()
-        elif self.input_file_edit.text():
+        elif self.output_file_edit.text():
             has_error = not output_file.is_dir()
         else:
             has_error = True
