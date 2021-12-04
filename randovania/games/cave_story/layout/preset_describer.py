@@ -104,11 +104,13 @@ def get_ingame_hash_str(hash_bytes: bytes) -> str:
     return "".join([get_str(i) for i in ids])
 
 def get_ingame_hash(hash_bytes: bytes) -> list[int]:
+    NUM_HASH_ITEMS = 39
+
     num = int.from_bytes(hash_bytes, 'big', signed=False)
-    num %= 39**5
+    num %= NUM_HASH_ITEMS**5
 
     out = list()
     for i in range(5):
-        out.append((num%39)+1)
-        num //= 39
+        out.append((num%NUM_HASH_ITEMS)+1)
+        num //= NUM_HASH_ITEMS
     return out
