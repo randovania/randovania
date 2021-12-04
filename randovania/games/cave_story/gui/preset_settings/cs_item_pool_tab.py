@@ -14,6 +14,8 @@ class CSPresetItemPool(PresetItemPool):
         super().__init__(editor)
         self._create_puppy_checkbox()
         self.previousObj = CSObjective.NORMAL_ENDING
+
+        self._disable_starting()
     
     def on_preset_changed(self, preset: Preset):
         super().on_preset_changed(preset)
@@ -57,3 +59,11 @@ class CSPresetItemPool(PresetItemPool):
         else:
             explosive_box.setVisible(True)
             explosive_box._update_for_state(MajorItemState(False, 1, 0))
+    
+    def _disable_starting(self):
+        for _, _, widgets in self._boxes_for_category.values():
+            for widget in widgets.values():
+                widget.starting_radio.setEnabled(False)
+                widget.starting_radio.setToolTip("Cave Story currently does not support starting items.")
+        
+        self.random_starting_box.setVisible(False)

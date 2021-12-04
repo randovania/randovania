@@ -111,6 +111,8 @@ class CaverPatcher(Patcher):
         # Softlock prevention mapflags
         starting_script += "<MP+0032<MP+0033<MP+0036"
 
+        # TODO: starting items
+        
         # TODO: allow any starting location
 
         # starting location flag and EVE/TRA
