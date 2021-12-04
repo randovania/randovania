@@ -173,7 +173,7 @@ Extra - map_name: Almond
 
 > Inner Room; Heals? False
   > Door to Dark Place
-      After Defeated the Core
+      After Defeated Core
   > Event - Core
       Any of the following:
           Can Kill Bosses
@@ -460,7 +460,7 @@ Extra - map_name: MazeO
 > Door to Labyrinth W (Lower); Heals? False
   * Door to Labyrinth W/Door to Camp (Lower)
   > Door to Labyrinth W (Upper)
-      Enabled Start in Camp
+      After Start in Camp
   > Pickup (Dr. Gero)
       Trivial
   > Event - Cure-All
@@ -471,7 +471,7 @@ Extra - map_name: MazeO
 > Door to Labyrinth W (Upper); Heals? False
   * Door to Labyrinth W/Door to Camp (Upper)
   > Door to Labyrinth W (Lower)
-      Enabled Start in Camp
+      After Start in Camp
   > Pickup (Camp Chest)
       Trivial
 
@@ -493,10 +493,15 @@ Extra - map_name: MazeO
       Trivial
 
 > Room Spawn; Heals? False; Spawn Point
-  > Door to Labyrinth W (Lower)
+  > Event - Camp
       Trivial
 
 > Save Point; Heals? False
+  > Door to Labyrinth W (Lower)
+      Trivial
+
+> Event - Camp; Heals? False
+  * Event Start in Camp
   > Door to Labyrinth W (Lower)
       Trivial
 

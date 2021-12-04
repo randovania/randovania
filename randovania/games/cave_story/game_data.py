@@ -1,3 +1,6 @@
+from randovania.games.cave_story.generator.base_patches_factory import CSBasePatchesFactory
+from randovania.games.cave_story.generator.bootstrap import CSBootstrap
+from randovania.games.cave_story.generator.pool_creator import pool_creator
 from randovania.games.cave_story.patcher.caver_patcher import CaverPatcher
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
 
@@ -41,7 +44,9 @@ game_data: GameData = GameData(
     gui=_cs_gui,
 
     generator=GameGenerator(
-        item_pool_creator=lambda results, config, db: None
+        item_pool_creator=pool_creator,
+        bootstrap=CSBootstrap(),
+        base_patches_factory=CSBasePatchesFactory()
     ),
 
     patcher=CaverPatcher()

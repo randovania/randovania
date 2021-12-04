@@ -2673,7 +2673,7 @@
                         "Door to Labyrinth W (Upper)": {
                             "type": "resource",
                             "data": {
-                                "type": "misc",
+                                "type": "events",
                                 "name": "camp",
                                 "amount": 1,
                                 "negate": false
@@ -2725,7 +2725,7 @@
                         "Door to Labyrinth W (Lower)": {
                             "type": "resource",
                             "data": {
-                                "type": "misc",
+                                "type": "events",
                                 "name": "camp",
                                 "amount": 1,
                                 "negate": false
@@ -2820,7 +2820,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Labyrinth W (Lower)": {
+                        "Event - Camp": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2839,6 +2839,27 @@
                     },
                     "description": "",
                     "extra": {},
+                    "connections": {
+                        "Door to Labyrinth W (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Camp": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 191.44,
+                        "y": 153.01,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "camp",
                     "connections": {
                         "Door to Labyrinth W (Lower)": {
                             "type": "and",
