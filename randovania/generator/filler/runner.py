@@ -20,7 +20,7 @@ from randovania.generator.filler.filler_library import should_have_hint, UnableT
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.retcon import retcon_playthrough_filler
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.resolver import bootstrap, debug, random_lib
+from randovania.resolver import debug, random_lib
 
 T = TypeVar("T")
 
@@ -344,7 +344,7 @@ async def run_filler(rng: Random,
         rng.shuffle(major_items)
         rng.shuffle(player_expansions[index])
 
-        new_game, state = bootstrap.logic_bootstrap(pool.configuration, pool.game, pool.patches)
+        new_game, state = pool.game.game.data.generator.bootstrap.logic_bootstrap(pool.configuration, pool.game, pool.patches)
 
         major_configuration = pool.configuration.major_items_configuration
         player_states.append(PlayerState(

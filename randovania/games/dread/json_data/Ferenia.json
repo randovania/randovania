@@ -8,8 +8,8 @@
         "map_max_y": 91
     },
     "areas": {
-        "collision_camera_000 (F)": {
-            "default_node": "Start Point",
+        "East Transport to Darion": {
+            "default_node": "Elevator to Dairon - East Transport to Ferenia",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -39,7 +39,7 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Door (doorpowerpower_000)": {
+                "Door to collision_camera_002 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -59,7 +59,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_002 (F)",
-                        "node_name": "Door (doorpowerpower_000)"
+                        "node_name": "Door to East Transport to Darion"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -80,7 +80,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (elevator_baselab_000)": {
+                "Elevator to Dairon - East Transport to Ferenia": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -99,7 +99,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_003 (D)"
+                        "area_name": "East Transport to Ferenia"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -138,7 +138,7 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Door (dooremmy_000)": {
+                "Dock to collision_camera_040 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -154,13 +154,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_040 (F)",
-                        "node_name": "Door (dooremmy_000)"
+                        "node_name": "Dock to collision_camera_001 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorshutter_007)": {
+                "Door to collision_camera_002 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -180,7 +180,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_002 (F)",
-                        "node_name": "Door (doorshutter_007)"
+                        "node_name": "Door to collision_camera_001 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Phase Shift Door",
@@ -219,7 +219,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door (doorpowerpower_000)": {
+                "Door to East Transport to Darion": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -238,8 +238,8 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_000 (F)",
-                        "node_name": "Door (doorpowerpower_000)"
+                        "area_name": "East Transport to Darion",
+                        "node_name": "Door to collision_camera_002 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -262,7 +262,7 @@
                     "major_location": true,
                     "connections": {}
                 },
-                "Door (doorshutter_007)": {
+                "Door to collision_camera_001 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -282,7 +282,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_001 (F)",
-                        "node_name": "Door (doorshutter_007)"
+                        "node_name": "Door to collision_camera_002 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Phase Shift Door",
@@ -316,12 +316,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_052",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -1500.0,
@@ -331,7 +335,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_053",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -380,7 +388,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Door (dooremmy_002)": {
+                "Dock to Teleport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -395,14 +403,14 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_007 (F)",
-                        "node_name": "Door (dooremmy_002)"
+                        "area_name": "Teleport to Burenia",
+                        "node_name": "Dock to collision_camera_003 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_016)": {
+                "Door to collision_camera_021 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -422,13 +430,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_021 (F)",
-                        "node_name": "Door (doorpowerpower_016)"
+                        "node_name": "Door to collision_camera_003 (F) (doorpowerpower_016)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_004)": {
+                "Door from collision_camera_021 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -448,7 +456,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_021 (F)",
-                        "node_name": "Door (doorclosedcharge_004)"
+                        "node_name": "Door to collision_camera_003 (F) (doorclosedcharge_004)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
@@ -487,7 +495,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Door (dooremmy_001)": {
+                "Dock to collision_camera_040 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -503,13 +511,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_040 (F)",
-                        "node_name": "Door (dooremmy_001)"
+                        "node_name": "Dock to collision_camera_004 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_002)": {
+                "Door to collision_camera_005 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -529,7 +537,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_005 (F)",
-                        "node_name": "Door (doorpowerpower_002)"
+                        "node_name": "Door to collision_camera_004 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -568,7 +576,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door (doorpowerpower_002)": {
+                "Door to collision_camera_004 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -588,7 +596,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_004 (F)",
-                        "node_name": "Door (doorpowerpower_002)"
+                        "node_name": "Door to collision_camera_005 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -657,7 +665,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Door (doorpowerpower_003)": {
+                "Door to collision_camera_010 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -677,13 +685,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_010 (F)",
-                        "node_name": "Door (doorpowerpower_003)"
+                        "node_name": "Door to collision_camera_006 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_004)": {
+                "Door to West Transport to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -702,8 +710,8 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_008 (F)",
-                        "node_name": "Door (doorpowerpower_004)"
+                        "area_name": "West Transport to Dairon",
+                        "node_name": "Door to collision_camera_006 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -737,12 +745,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_048",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -13000.0,
@@ -752,12 +764,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_049",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -13300.0,
@@ -767,14 +783,18 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_050",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
             }
         },
-        "collision_camera_007 (F)": {
-            "default_node": "Start Point 2",
+        "Teleport to Burenia": {
+            "default_node": "Teleporter to Burenia - Teleport to Ferenia",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -804,7 +824,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door (doorpowerpower_005)": {
+                "Dock to collision_camera_010 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -824,13 +844,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_010 (F)",
-                        "node_name": "Door (doorpowerpower_005)"
+                        "node_name": "Dock to Teleport to Burenia"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorpowerpower_007)": {
+                "Door to collision_camera_017 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -850,13 +870,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_017 (F)",
-                        "node_name": "Door (doorpowerpower_007)"
+                        "node_name": "Door to Teleport to Burenia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (dooremmy_002)": {
+                "Dock to collision_camera_003 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -872,10 +892,10 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_003 (F)",
-                        "node_name": "Door (dooremmy_002)"
+                        "node_name": "Dock to Teleport to Burenia"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Start Point 1": {
@@ -893,7 +913,7 @@
                     },
                     "connections": {}
                 },
-                "Elevator (teleporter_000)": {
+                "Teleporter to Burenia - Teleport to Ferenia": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -912,7 +932,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "collision_camera_008 (B)"
+                        "area_name": "Teleport to Ferenia"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -935,8 +955,8 @@
                 }
             }
         },
-        "collision_camera_008 (F)": {
-            "default_node": "Elevator (elevator_baselab_001)",
+        "West Transport to Dairon": {
+            "default_node": "Elevator to Dairon - West Transport to Ferenia",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -966,7 +986,7 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door (doorpowerpower_004)": {
+                "Door to collision_camera_006 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -986,13 +1006,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_006 (F)",
-                        "node_name": "Door (doorpowerpower_004)"
+                        "node_name": "Door to West Transport to Dairon"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Elevator (elevator_baselab_001)": {
+                "Elevator to Dairon - West Transport to Ferenia": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -1011,7 +1031,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_019 (D)"
+                        "area_name": "West Transport to Ferenia"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -1050,7 +1070,7 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Door (doorpowerpower_006)": {
+                "Dock to collision_camera_010 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1070,7 +1090,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_010 (F)",
-                        "node_name": "Door (doorpowerpower_006)"
+                        "node_name": "Dock to collision_camera_009 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -1109,8 +1129,24 @@
                     "event_name": "s070_basesanc:default:db_reg_b2_003",
                     "connections": {}
                 },
+                "Event - Breakable (grapplepulloff1x2_003)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18750.0,
+                        "y": -1050.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "grapplepulloff1x2_003",
+                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
+                    },
+                    "event_name": "s070_basesanc:default:grapplepulloff1x2_003",
+                    "connections": {}
+                },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -16600.0,
@@ -1120,12 +1156,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_038",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -18700.0,
@@ -1135,12 +1175,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_042",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -17100.0,
@@ -1150,12 +1194,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_044",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -17800.0,
@@ -1165,12 +1213,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_045",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -17800.0,
@@ -1180,12 +1232,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_046",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -18200.0,
@@ -1195,7 +1251,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_001",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1232,7 +1292,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Door (doorpowerpower_003)": {
+                "Door to collision_camera_006 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1252,13 +1312,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_006 (F)",
-                        "node_name": "Door (doorpowerpower_003)"
+                        "node_name": "Door to collision_camera_010 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_005)": {
+                "Dock to Teleport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1277,14 +1337,14 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_007 (F)",
-                        "node_name": "Door (doorpowerpower_005)"
+                        "area_name": "Teleport to Burenia",
+                        "node_name": "Dock to collision_camera_010 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorpowerpower_006)": {
+                "Dock to collision_camera_009 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1304,14 +1364,14 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_009 (F)",
-                        "node_name": "Door (doorpowerpower_006)"
+                        "node_name": "Dock to collision_camera_010 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14700.0,
@@ -1321,7 +1381,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_047",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1403,12 +1467,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_039",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -15300.0,
@@ -1418,7 +1486,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_040",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
@@ -1433,12 +1505,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_041",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB POWERBOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -13500.0,
@@ -1448,12 +1524,17 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_002",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB",
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -13900.0,
@@ -1463,12 +1544,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_003",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14300.0,
@@ -1478,7 +1563,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_004",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1523,7 +1612,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door (doorpowerpower_011)": {
+                "Door to collision_camera_016 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1543,13 +1632,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_016 (F)",
-                        "node_name": "Door (doorpowerpower_011)"
+                        "node_name": "Door to collision_camera_012 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_012)": {
+                "Door to collision_camera_015 (F) (doorpowerpower_012)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1569,13 +1658,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_015 (F)",
-                        "node_name": "Door (doorpowerpower_012)"
+                        "node_name": "Door to collision_camera_012 (F) (doorpowerpower_012)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorclosedpower_000)": {
+                "Dock to collision_camera_015 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1595,13 +1684,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_015 (F)",
-                        "node_name": "Door (doorclosedpower_000)"
+                        "node_name": "Dock to collision_camera_012 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorpowerpower_013)": {
+                "Door to collision_camera_015 (F) (doorpowerpower_013)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1621,7 +1710,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_015 (F)",
-                        "node_name": "Door (doorpowerpower_013)"
+                        "node_name": "Door to collision_camera_012 (F) (doorpowerpower_013)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1694,7 +1783,7 @@
                     "event_name": "s070_basesanc:default:db_reg_b2_001",
                     "connections": {}
                 },
-                "Door (ev_gatesealed_sanc_000)": {
+                "Dock to Transport to Ghavoran": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1709,8 +1798,8 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_014 (F)",
-                        "node_name": "Door (ev_gatesealed_sanc_000)"
+                        "area_name": "Transport to Ghavoran",
+                        "node_name": "Dock to collision_camera_012 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -1757,7 +1846,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_075",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
@@ -1772,12 +1865,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_008",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14900.0,
@@ -1787,12 +1884,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_024",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -15600.0,
@@ -1802,12 +1903,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_025",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14900.0,
@@ -1817,12 +1922,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_026",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -14200.0,
@@ -1832,12 +1941,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_027",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -13300.0,
@@ -1847,12 +1960,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_029",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -15600.0,
@@ -1862,12 +1979,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_033",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -16300.0,
@@ -1877,12 +1998,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_037",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -12700.0,
@@ -1892,7 +2017,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_030",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -1973,7 +2102,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_034",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
@@ -1988,12 +2121,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_035",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -16900.0,
@@ -2003,14 +2140,18 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_036",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
             }
         },
-        "collision_camera_014 (F)": {
-            "default_node": "Elevator (wagontrain_forest_000)",
+        "Transport to Ghavoran": {
+            "default_node": "Tram to Ghavoran - Transport to Ferenia",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2040,7 +2181,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door (ev_gatesealed_sanc_000)": {
+                "Dock to collision_camera_012 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2056,13 +2197,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_012 (F)",
-                        "node_name": "Door (ev_gatesealed_sanc_000)"
+                        "node_name": "Dock to Transport to Ghavoran"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Elevator (wagontrain_forest_000)": {
+                "Tram to Ghavoran - Transport to Ferenia": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -2081,7 +2222,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_027 (G)"
+                        "area_name": "Transport to Ferenia"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -2120,7 +2261,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Door (doorclosedcharge_000)": {
+                "Door from collision_camera_017 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2140,13 +2281,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_017 (F)",
-                        "node_name": "Door (doorclosedcharge_000)"
+                        "node_name": "Door to collision_camera_015 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
                     "connections": {}
                 },
-                "Door (doorpowerpower_012)": {
+                "Door to collision_camera_012 (F) (doorpowerpower_012)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2166,13 +2307,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_012 (F)",
-                        "node_name": "Door (doorpowerpower_012)"
+                        "node_name": "Door to collision_camera_015 (F) (doorpowerpower_012)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorclosedpower_000)": {
+                "Dock to collision_camera_012 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2192,13 +2333,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_012 (F)",
-                        "node_name": "Door (doorclosedpower_000)"
+                        "node_name": "Dock to collision_camera_015 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorpowerpower_013)": {
+                "Door to collision_camera_012 (F) (doorpowerpower_013)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2218,14 +2359,14 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_012 (F)",
-                        "node_name": "Door (doorpowerpower_013)"
+                        "node_name": "Door to collision_camera_015 (F) (doorpowerpower_013)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -11800.0,
@@ -2235,12 +2376,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_028",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -10800.0,
@@ -2250,7 +2395,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_031",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -2287,7 +2436,7 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Door (doorpowerpower_010)": {
+                "Door to collision_camera_017 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2307,13 +2456,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_017 (F)",
-                        "node_name": "Door (doorpowerpower_010)"
+                        "node_name": "Door to collision_camera_016 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_011)": {
+                "Door to collision_camera_012 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2333,7 +2482,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_012 (F)",
-                        "node_name": "Door (doorpowerpower_011)"
+                        "node_name": "Door to collision_camera_016 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -2389,7 +2538,7 @@
                 "asset_id": "collision_camera_017"
             },
             "nodes": {
-                "Door (doorpowerpower_007)": {
+                "Door to Teleport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2408,14 +2557,14 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_007 (F)",
-                        "node_name": "Door (doorpowerpower_007)"
+                        "area_name": "Teleport to Burenia",
+                        "node_name": "Door to collision_camera_017 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_008)": {
+                "Door to collision_camera_019 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2435,13 +2584,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_019 (F)",
-                        "node_name": "Door (doorpowerpower_008)"
+                        "node_name": "Door to collision_camera_017 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_009)": {
+                "Door to collision_camera_018 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2461,13 +2610,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_018 (F)",
-                        "node_name": "Door (doorpowerpower_009)"
+                        "node_name": "Door to collision_camera_017 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_010)": {
+                "Door to collision_camera_016 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2487,13 +2636,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_016 (F)",
-                        "node_name": "Door (doorpowerpower_010)"
+                        "node_name": "Door to collision_camera_017 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_000)": {
+                "Door to collision_camera_015 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2513,7 +2662,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_015 (F)",
-                        "node_name": "Door (doorclosedcharge_000)"
+                        "node_name": "Door from collision_camera_017 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -2582,7 +2731,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -7600.0,
@@ -2592,7 +2741,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_023",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -2629,7 +2782,7 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Door (doorpowerpower_009)": {
+                "Door to collision_camera_017 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2649,13 +2802,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_017 (F)",
-                        "node_name": "Door (doorpowerpower_009)"
+                        "node_name": "Door to collision_camera_018 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_021)": {
+                "Door to Transport to Hanubia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2674,14 +2827,14 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_028 (F)",
-                        "node_name": "Door (doorpowerpower_021)"
+                        "area_name": "Transport to Hanubia",
+                        "node_name": "Door to collision_camera_018 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower)": {
+                "Dock to collision_camera_030 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2701,13 +2854,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_030 (F)",
-                        "node_name": "Door (doorpowerpower)"
+                        "node_name": "Dock to collision_camera_018 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorchargecharge_000)": {
+                "Door to collision_camera_030 (F) (doorchargecharge_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2727,13 +2880,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_030 (F)",
-                        "node_name": "Door (doorchargecharge_000)"
+                        "node_name": "Door to collision_camera_018 (F) (doorchargecharge_000)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
-                "Door (doorgrapplegrapple_000)": {
+                "Door to collision_camera_030 (F) (doorgrapplegrapple_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2753,10 +2906,26 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_030 (F)",
-                        "node_name": "Door (doorgrapplegrapple_000)"
+                        "node_name": "Door to collision_camera_018 (F) (doorgrapplegrapple_000)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
+                    "connections": {}
+                },
+                "Event - Breakable (grapplepulloff1x2_002)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2950.0,
+                        "y": 3250.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "grapplepulloff1x2_002",
+                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
+                    },
+                    "event_name": "s070_basesanc:default:grapplepulloff1x2_002",
                     "connections": {}
                 },
                 "Life Recharge": {
@@ -2777,7 +2946,7 @@
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -4300.0,
@@ -2787,12 +2956,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_014",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -3000.0,
@@ -2802,12 +2975,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_015",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -3100.0,
@@ -2817,12 +2994,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_066",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -3400.0,
@@ -2832,12 +3013,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_067",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -2800.0,
@@ -2847,7 +3032,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_071",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 }
@@ -2884,7 +3073,7 @@
                 "asset_id": "collision_camera_019"
             },
             "nodes": {
-                "Door (doorpowerpower_008)": {
+                "Door to collision_camera_017 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2904,13 +3093,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_017 (F)",
-                        "node_name": "Door (doorpowerpower_008)"
+                        "node_name": "Door to collision_camera_019 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (dooremmy_003)": {
+                "Dock to collision_camera_021 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2926,10 +3115,26 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_021 (F)",
-                        "node_name": "Door (dooremmy_003)"
+                        "node_name": "Dock to collision_camera_019 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
+                    "connections": {}
+                },
+                "Event - Breakable (grapplepulloff1x2_000)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2550.0,
+                        "y": 2350.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "grapplepulloff1x2_000",
+                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
+                    },
+                    "event_name": "s070_basesanc:default:grapplepulloff1x2_000",
                     "connections": {}
                 },
                 "Start Point": {
@@ -2965,7 +3170,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -2800.0,
@@ -2975,7 +3180,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_019",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
@@ -2990,12 +3199,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_020",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -3400.0,
@@ -3005,7 +3218,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_021",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
@@ -3020,7 +3237,13 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_022",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB",
+                            "SCREWATTACK",
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 }
@@ -3075,7 +3298,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -1200.0,
@@ -3085,12 +3308,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_016",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -1100.0,
@@ -3100,7 +3327,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_017",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 },
@@ -3115,7 +3346,12 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_018",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB",
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 }
@@ -3160,7 +3396,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Door (dooremmy_003)": {
+                "Dock to collision_camera_019 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3176,13 +3412,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_019 (F)",
-                        "node_name": "Door (dooremmy_003)"
+                        "node_name": "Dock to collision_camera_021 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_015)": {
+                "Door to collision_camera_033 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3202,13 +3438,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_033 (F)",
-                        "node_name": "Door (doorpowerpower_015)"
+                        "node_name": "Door to collision_camera_021 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (dooremmy_004)": {
+                "Dock to collision_camera_022 (F) (dooremmy_004)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3224,13 +3460,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_022 (F)",
-                        "node_name": "Door (dooremmy_004)"
+                        "node_name": "Dock to collision_camera_021 (F) (dooremmy_004)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_016)": {
+                "Door to collision_camera_003 (F) (doorpowerpower_016)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3250,13 +3486,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_003 (F)",
-                        "node_name": "Door (doorpowerpower_016)"
+                        "node_name": "Door to collision_camera_021 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (dooremmy_005)": {
+                "Dock to collision_camera_022 (F) (dooremmy_005)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3272,13 +3508,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_022 (F)",
-                        "node_name": "Door (dooremmy_005)"
+                        "node_name": "Dock to collision_camera_021 (F) (dooremmy_005)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_004)": {
+                "Door to collision_camera_003 (F) (doorclosedcharge_004)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3298,7 +3534,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_003 (F)",
-                        "node_name": "Door (doorclosedcharge_004)"
+                        "node_name": "Door from collision_camera_021 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -3337,7 +3573,7 @@
                 "asset_id": "collision_camera_022"
             },
             "nodes": {
-                "Door (dooremmy_004)": {
+                "Dock to collision_camera_021 (F) (dooremmy_004)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3353,13 +3589,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_021 (F)",
-                        "node_name": "Door (dooremmy_004)"
+                        "node_name": "Dock to collision_camera_022 (F) (dooremmy_004)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (dooremmy_005)": {
+                "Dock to collision_camera_021 (F) (dooremmy_005)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3375,13 +3611,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_021 (F)",
-                        "node_name": "Door (dooremmy_005)"
+                        "node_name": "Dock to collision_camera_022 (F) (dooremmy_005)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_019)": {
+                "Door to collision_camera_024 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3401,13 +3637,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_024 (F)",
-                        "node_name": "Door (doorpowerpower_019)"
+                        "node_name": "Door to collision_camera_022 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_020)": {
+                "Door to collision_camera_023 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3427,14 +3663,14 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_023 (F)",
-                        "node_name": "Door (doorpowerpower_020)"
+                        "node_name": "Door to collision_camera_022 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 400.0,
@@ -3444,7 +3680,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_056",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -3481,7 +3721,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Door (doorpowerpower_020)": {
+                "Door to collision_camera_022 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3501,7 +3741,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_022 (F)",
-                        "node_name": "Door (doorpowerpower_020)"
+                        "node_name": "Door to collision_camera_023 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3573,7 +3813,7 @@
                 "asset_id": "collision_camera_024"
             },
             "nodes": {
-                "Door (doorpowerpower_018)": {
+                "Door to collision_camera_025 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3593,13 +3833,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_025 (F)",
-                        "node_name": "Door (doorpowerpower_018)"
+                        "node_name": "Door to collision_camera_024 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_019)": {
+                "Door to collision_camera_022 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3619,13 +3859,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_022 (F)",
-                        "node_name": "Door (doorpowerpower_019)"
+                        "node_name": "Door to collision_camera_024 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_024)": {
+                "Door to collision_camera_041 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3645,7 +3885,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_041 (F)",
-                        "node_name": "Door (doorpowerpower_024)"
+                        "node_name": "Door to collision_camera_024 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3701,7 +3941,7 @@
                 "asset_id": "collision_camera_025"
             },
             "nodes": {
-                "Door (dooremmy_006)": {
+                "Dock to collision_camera_032 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3717,13 +3957,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_032 (F)",
-                        "node_name": "Door (dooremmy_006)"
+                        "node_name": "Dock to collision_camera_025 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_018)": {
+                "Door to collision_camera_024 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3743,13 +3983,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_024 (F)",
-                        "node_name": "Door (doorpowerpower_018)"
+                        "node_name": "Door to collision_camera_025 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_003)": {
+                "Door to collision_camera_041 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3769,7 +4009,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_041 (F)",
-                        "node_name": "Door (doorclosedcharge_003)"
+                        "node_name": "Door from collision_camera_025 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -3793,7 +4033,7 @@
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 8300.0,
@@ -3803,7 +4043,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
@@ -3818,12 +4062,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_059",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (MISSILE)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 7800.0,
@@ -3833,7 +4081,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_060",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "MISSILE"
+                        ]
                     },
                     "connections": {}
                 }
@@ -3887,7 +4139,7 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Door (doorpowerpower_014)": {
+                "Door to collision_camera_027 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3907,7 +4159,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_027 (F)",
-                        "node_name": "Door (doorpowerpower_014)"
+                        "node_name": "Door to collision_camera_026 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3929,7 +4181,7 @@
                     "connections": {}
                 },
                 "Tile Group (MISSILE)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 10800.0,
@@ -3939,12 +4191,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_074",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "MISSILE"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 9800.0,
@@ -3954,12 +4210,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_061",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 10300.0,
@@ -3969,12 +4229,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_062",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 9900.0,
@@ -3984,12 +4248,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_063",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 4": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 10800.0,
@@ -3999,7 +4267,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_064",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 }
@@ -4036,7 +4308,7 @@
                 "asset_id": "collision_camera_027"
             },
             "nodes": {
-                "Door (doorpowerpower_014)": {
+                "Door to collision_camera_026 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4056,7 +4328,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_026 (F)",
-                        "node_name": "Door (doorpowerpower_014)"
+                        "node_name": "Door to collision_camera_027 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -4079,8 +4351,8 @@
                 }
             }
         },
-        "collision_camera_028 (F)": {
-            "default_node": "Elevator (elevator_shipyard_000)",
+        "Transport to Hanubia": {
+            "default_node": "Elevator to Hanubia - Transport to Ferenia",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4110,7 +4382,7 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Door (doorpowerpower_021)": {
+                "Door to collision_camera_018 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4130,13 +4402,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_018 (F)",
-                        "node_name": "Door (doorpowerpower_021)"
+                        "node_name": "Door to Transport to Hanubia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_022)": {
+                "Dock to collision_camera_029 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4156,7 +4428,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_029 (F)",
-                        "node_name": "Door (doorpowerpower_022)"
+                        "node_name": "Dock to Transport to Hanubia"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -4178,7 +4450,7 @@
                     "event_name": "s070_basesanc:default:db_reg_b2_005",
                     "connections": {}
                 },
-                "Elevator (elevator_shipyard_000)": {
+                "Elevator to Hanubia - Transport to Ferenia": {
                     "node_type": "teleporter",
                     "heal": false,
                     "coordinates": {
@@ -4197,7 +4469,7 @@
                     },
                     "destination": {
                         "world_name": "Hanubia",
-                        "area_name": "collision_camera_000 (H)"
+                        "area_name": "Transport to Ferenia"
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
@@ -4214,7 +4486,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 }
@@ -4251,7 +4527,7 @@
                 "asset_id": "collision_camera_029"
             },
             "nodes": {
-                "Door (doorpowerpower_022)": {
+                "Dock to Transport to Hanubia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4270,14 +4546,14 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_028 (F)",
-                        "node_name": "Door (doorpowerpower_022)"
+                        "area_name": "Transport to Hanubia",
+                        "node_name": "Dock to collision_camera_029 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (dooremmy_007)": {
+                "Dock to collision_camera_031 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4293,10 +4569,10 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_031 (F)",
-                        "node_name": "Door (dooremmy_007)"
+                        "node_name": "Dock to collision_camera_029 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Save Station": {
@@ -4349,7 +4625,7 @@
                 "asset_id": "collision_camera_030"
             },
             "nodes": {
-                "Door (dooremmy_008)": {
+                "Dock to collision_camera_031 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4365,10 +4641,10 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_031 (F)",
-                        "node_name": "Door (dooremmy_008)"
+                        "node_name": "Dock to collision_camera_030 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Pickup (item_missiletank_003)": {
@@ -4388,7 +4664,7 @@
                     "major_location": false,
                     "connections": {}
                 },
-                "Door (doorpowerpower)": {
+                "Dock to collision_camera_018 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4408,13 +4684,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_018 (F)",
-                        "node_name": "Door (doorpowerpower)"
+                        "node_name": "Dock to collision_camera_030 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (doorchargecharge_000)": {
+                "Door to collision_camera_018 (F) (doorchargecharge_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4434,13 +4710,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_018 (F)",
-                        "node_name": "Door (doorchargecharge_000)"
+                        "node_name": "Door to collision_camera_030 (F) (doorchargecharge_000)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
-                "Door (doorgrapplegrapple_000)": {
+                "Door to collision_camera_018 (F) (doorgrapplegrapple_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4460,14 +4736,14 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_018 (F)",
-                        "node_name": "Door (doorgrapplegrapple_000)"
+                        "node_name": "Door to collision_camera_030 (F) (doorgrapplegrapple_000)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 1900.0,
@@ -4477,12 +4753,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_011",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 1400.0,
@@ -4492,12 +4772,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_012",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SCREWATTACK) 3": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 100.0,
@@ -4507,12 +4791,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_013",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (MISSILE)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 700.0,
@@ -4522,12 +4810,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_073",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "MISSILE"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -100.0,
@@ -4537,12 +4829,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_065",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (SPEEDBOOST)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 500.0,
@@ -4552,7 +4848,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_072",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
                     },
                     "connections": {}
                 }
@@ -4589,7 +4889,7 @@
                 "asset_id": "collision_camera_031"
             },
             "nodes": {
-                "Door (doorpowerpower_023)": {
+                "Dock to collision_camera_034 (F) (doorpowerpower_023)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4609,13 +4909,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_034 (F)",
-                        "node_name": "Door (doorpowerpower_023)"
+                        "node_name": "Dock to collision_camera_031 (F) (doorpowerpower_023)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (dooremmy_008)": {
+                "Dock to collision_camera_030 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4631,13 +4931,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_030 (F)",
-                        "node_name": "Door (dooremmy_008)"
+                        "node_name": "Dock to collision_camera_031 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_002)": {
+                "Door to collision_camera_033 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4657,13 +4957,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_033 (F)",
-                        "node_name": "Door (doorclosedcharge_002)"
+                        "node_name": "Door from collision_camera_031 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
-                "Door (dooremmy_007)": {
+                "Dock to collision_camera_029 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4679,10 +4979,10 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_029 (F)",
-                        "node_name": "Door (dooremmy_007)"
+                        "node_name": "Dock to collision_camera_031 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Event - Breakable (db_reg_b2_006)": {
@@ -4701,7 +5001,7 @@
                     "event_name": "s070_basesanc:default:db_reg_b2_006",
                     "connections": {}
                 },
-                "Door (tunnelframe)": {
+                "Dock to collision_camera_034 (F) (tunnelframe)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4713,6 +5013,7 @@
                     "extra": {
                         "actor_name": "tunnelframe",
                         "actor_def": "actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad",
+                        "actor_layer": "Emmy",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
@@ -4721,7 +5022,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_034 (F)",
-                        "node_name": "Door (tunnelframe)"
+                        "node_name": "Dock to collision_camera_031 (F) (tunnelframe)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -4760,7 +5061,7 @@
                 "asset_id": "collision_camera_032"
             },
             "nodes": {
-                "Door (doorpowerpower_017)": {
+                "Door to collision_camera_033 (F) (doorpowerpower_017)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4780,13 +5081,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_033 (F)",
-                        "node_name": "Door (doorpowerpower_017)"
+                        "node_name": "Door to collision_camera_032 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_001)": {
+                "Door to collision_camera_033 (F) (doorclosedcharge_001)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4806,13 +5107,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_033 (F)",
-                        "node_name": "Door (doorclosedcharge_001)"
+                        "node_name": "Door from collision_camera_032 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {}
                 },
-                "Door (dooremmy_006)": {
+                "Dock to collision_camera_025 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4828,10 +5129,10 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_025 (F)",
-                        "node_name": "Door (dooremmy_006)"
+                        "node_name": "Dock to collision_camera_032 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 }
             }
@@ -4867,7 +5168,7 @@
                 "asset_id": "collision_camera_033"
             },
             "nodes": {
-                "Door (doorpowerpower_015)": {
+                "Door to collision_camera_021 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4887,13 +5188,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_021 (F)",
-                        "node_name": "Door (doorpowerpower_015)"
+                        "node_name": "Door to collision_camera_033 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorpowerpower_017)": {
+                "Door to collision_camera_032 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4913,13 +5214,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_032 (F)",
-                        "node_name": "Door (doorpowerpower_017)"
+                        "node_name": "Door to collision_camera_033 (F) (doorpowerpower_017)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_001)": {
+                "Door from collision_camera_032 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4939,13 +5240,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_032 (F)",
-                        "node_name": "Door (doorclosedcharge_001)"
+                        "node_name": "Door to collision_camera_033 (F) (doorclosedcharge_001)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_002)": {
+                "Door from collision_camera_031 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4965,7 +5266,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_031 (F)",
-                        "node_name": "Door (doorclosedcharge_002)"
+                        "node_name": "Door to collision_camera_033 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
@@ -5004,7 +5305,7 @@
                 "asset_id": "collision_camera_034"
             },
             "nodes": {
-                "Door (doorpowerpower_023)": {
+                "Dock to collision_camera_031 (F) (doorpowerpower_023)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5024,7 +5325,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_031 (F)",
-                        "node_name": "Door (doorpowerpower_023)"
+                        "node_name": "Dock to collision_camera_034 (F) (doorpowerpower_023)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -5110,7 +5411,7 @@
                     "event_name": "s070_basesanc:default:db_reg_b2_010",
                     "connections": {}
                 },
-                "Door (tunnelframe_000)": {
+                "Dock to collision_camera_038_A (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5122,6 +5423,7 @@
                     "extra": {
                         "actor_name": "tunnelframe_000",
                         "actor_def": "actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad",
+                        "actor_layer": "Emmy",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
@@ -5130,13 +5432,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_038_A (F)",
-                        "node_name": "Door (tunnelframe_000)"
+                        "node_name": "Dock to collision_camera_034 (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
                     "connections": {}
                 },
-                "Door (tunnelframe)": {
+                "Dock to collision_camera_031 (F) (tunnelframe)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5148,6 +5450,7 @@
                     "extra": {
                         "actor_name": "tunnelframe",
                         "actor_def": "actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad",
+                        "actor_layer": "Emmy",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
@@ -5156,7 +5459,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_031 (F)",
-                        "node_name": "Door (tunnelframe)"
+                        "node_name": "Dock to collision_camera_034 (F) (tunnelframe)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -5188,12 +5491,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_007",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 9400.0,
@@ -5203,12 +5510,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_010",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 6100.0,
@@ -5218,12 +5529,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_070",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 1": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 7600.0,
@@ -5233,7 +5548,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_068",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 },
@@ -5248,12 +5567,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_069",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (POWERBEAM) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 7700.0,
@@ -5263,12 +5586,16 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_032",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBEAM"
+                        ]
                     },
                     "connections": {}
                 },
                 "Tile Group (BOMB) 2": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": 6200.0,
@@ -5278,7 +5605,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_043",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
                     },
                     "connections": {}
                 }
@@ -5363,7 +5694,7 @@
                 "asset_id": "collision_camera_038_A"
             },
             "nodes": {
-                "Door (tunnelframe_000)": {
+                "Dock to collision_camera_034 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5375,6 +5706,7 @@
                     "extra": {
                         "actor_name": "tunnelframe_000",
                         "actor_def": "actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad",
+                        "actor_layer": "Emmy",
                         "left_shield_entity": "{EMPTY}",
                         "left_shield_def": null,
                         "right_shield_entity": "{EMPTY}",
@@ -5383,7 +5715,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_034 (F)",
-                        "node_name": "Door (tunnelframe_000)"
+                        "node_name": "Dock to collision_camera_038_A (F)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
@@ -5460,7 +5792,7 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
-                "Door (dooremmy_000)": {
+                "Dock to collision_camera_001 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5476,13 +5808,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_001 (F)",
-                        "node_name": "Door (dooremmy_000)"
+                        "node_name": "Dock to collision_camera_040 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
-                "Door (dooremmy_001)": {
+                "Dock to collision_camera_004 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5498,10 +5830,10 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_004 (F)",
-                        "node_name": "Door (dooremmy_001)"
+                        "node_name": "Dock to collision_camera_040 (F)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "EMMI Door",
                     "connections": {}
                 },
                 "Pickup (item_powerbombtank_000)": {
@@ -5537,7 +5869,7 @@
                     "connections": {}
                 },
                 "Tile Group (POWERBOMB)": {
-                    "node_type": "generic",
+                    "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
                         "x": -7300.0,
@@ -5547,7 +5879,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_005",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "POWERBOMB"
+                        ]
                     },
                     "connections": {}
                 },
@@ -5562,7 +5898,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_006",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 },
@@ -5577,7 +5917,11 @@
                     "description": "",
                     "extra": {
                         "actor_name": "breakabletilegroup_051",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad"
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
                     },
                     "connections": {}
                 }
@@ -5614,7 +5958,7 @@
                 "asset_id": "collision_camera_041"
             },
             "nodes": {
-                "Door (doorpowerpower_024)": {
+                "Door to collision_camera_024 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5634,13 +5978,13 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_024 (F)",
-                        "node_name": "Door (doorpowerpower_024)"
+                        "node_name": "Door to collision_camera_041 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Door (doorclosedcharge_003)": {
+                "Door from collision_camera_025 (F)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5660,7 +6004,7 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_025 (F)",
-                        "node_name": "Door (doorclosedcharge_003)"
+                        "node_name": "Door to collision_camera_041 (F)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",

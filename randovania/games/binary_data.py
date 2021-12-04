@@ -7,7 +7,7 @@ import construct
 from construct import (Struct, Int32ub, Const, CString, Byte, Rebuild, Float32b, Flag,
                        Short, PrefixedArray, Switch, If, VarInt, Float64b, Compressed)
 
-from randovania.game_description import schema_migration
+from randovania.game_description import game_migration
 from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 
@@ -329,7 +329,7 @@ ConstructGame = Struct(
     magic_number=Const(b"Req."),
     format_version=Const(current_format_version, Int32ub),
     db=Compressed(Struct(
-        schema_version=Const(schema_migration.CURRENT_DATABASE_VERSION, VarInt),
+        schema_version=Const(game_migration.CURRENT_VERSION, VarInt),
         game=ConstructGameEnum,
         resource_database=ConstructResourceDatabase,
 

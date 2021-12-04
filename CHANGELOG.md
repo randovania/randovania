@@ -9,22 +9,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.3.0] - Unreleased
 
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
+This feature comes with plenty of quality of life functionality for editing the database. 
 - **Major** - Added: The Logic Database can now have descriptions for nodes.
+- Added: Game Details window can now spoil the item order, elevators, translator gates and hints.
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
+- Added: Items now have tooltips in the Auto-Tracker.
+- Added: One joke hint.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
+- Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
+- Fixed: Data Editor now properly handles areas without nodes.
 
 ### Metroid Prime
 
+- Added: Start in any (uncrashed) Frigate room
+- Added: 1-way cycles and 1-way anywhere elevators can lead to (uncrashed) Frigate rooms
+- Added: Essence Death and Frigate Escape Cutscene teleporter destinations can now be shuffled
+- Added: Artifact hints can now be configured to show area and room name, just area name, or nothing at all
+- Added: Cosmetic Option - Select HUD Color
+- Added: Cosmetic Option - Rotate hue of all 4 suit textures and ball glow color
+
+#### Known Issues:
+- Small Samus doesn't work on NTSC-K
+
 #### Patcher Changes
 
-- Nothing.
+- Added: Support for NTSC-U 0-01, NTSC-J and NTSC-K (Gamecube).
+- Added: QoL Game Breaking now fixes several crashes on Frigate Orpheon
+- Added: Option to disable item loss in Frigate (Enabled by default)
+- Fixed: Safeguard against blowing past layer limits.
+- Fixed: On Major custscene skip, Elite Quarters now stays locked until the player picks up the item. The hudmemo is now tied to the item rather than the death animation.
+- Fixed: Ruined fountain not always showing the right scan.
+- Fixed: Phazon Suit Small Samus Morph Ball Glow
+- Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
+- Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 
 #### Logic Database
 
 - Fixed: Magma Pool - Added missing suit or heated runs trick requirement for non-grapple methods of crossing the room
+- Fixed: HAT - Updated spawn node
+- Fixed: Quarantine Cave - Properly model when the fight is required and when it is not
+- Added: New Event - Gravity Chamber Item (Lower)
+- Added: New Trick Category - Infinite Speed
 - Added: Magma Pool - Added standable terrain method to cross the room with a video example
+- Added: Main Plaza - Hypermode Dash to get Grapple Ledge
+- Added: Elite Quarters - BSJ to skip scan visor
+- Added: Reactor Core - NSJ Gravityless Bomb Jumps
+- Added: Cargo Freight Lift - NSJ Gravityless Boost or Bombs climbs
+- Added: Flick BSJ in watery hall OoB
+- Added: NSJ Bombless Lower GTH Climb (Wallboost)
+- Added: NSJ Bombless Quarantine Cave Elevator Spider Skip
+- Added: NSJ Bombless Gravity Chamber Escape (Gravity Wallboost)
+- Added: NSJ Bombless Lower Phen's Edge
+- Added: NSJ Bombless Frozen Pike (Mid-Section)
+- Added: NSJ Bombless Life Grove (Wallboost)
+- Added: NSJ Bombless HOTE Climb (Boost IUJs)
+- Added: NSJ Bombless Elite Control Access (Wallboost)
+- Added: Elite Control Access Item (Damage Boost)
+- Added: Central Dynamo Item w/ Infinite Speed
+- Added: Bomb jump to skip grapple in Biotech Research Area 2
+
 - Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
+- Changed: Hall of the Elders - Now properly model needing to kill the 1 ghost to leave the room. Chargeless 1 ghost fight combat difficulty reduced to beginner.
 
 ### Metroid Prime 2: Echoes
 

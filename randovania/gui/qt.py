@@ -75,17 +75,18 @@ async def show_tracker(app: QtWidgets.QApplication):
 
 
 def show_data_editor(app: QtWidgets.QApplication, options, game: RandovaniaGame):
-    from randovania.gui.data_editor import DataEditorWindow
-    app.data_editor = DataEditorWindow.open_internal_data(game, True)
+    from randovania.gui import data_editor
+    data_editor.SHOW_WORLD_MIN_MAX_SPINNER = True
+    app.data_editor = data_editor.DataEditorWindow.open_internal_data(game, True)
     app.data_editor.show()
 
 
 def show_game_details(app: QtWidgets.QApplication, options, game: Path):
     from randovania.layout.layout_description import LayoutDescription
-    from randovania.gui.seed_details_window import SeedDetailsWindow
+    from randovania.gui.game_details.game_details_window import GameDetailsWindow
 
     layout = LayoutDescription.from_file(game)
-    details_window = SeedDetailsWindow(None, options)
+    details_window = GameDetailsWindow(None, options)
     details_window.update_layout_description(layout)
     logger.info("Displaying game details")
     details_window.show()
@@ -192,7 +193,7 @@ async def _load_options():
 
     theme.set_dark_theme(options.dark_mode)
 
-    from randovania.layout.preset_migration import VersionedPreset
+    from randovania.layout.versioned_preset import VersionedPreset
     for old_preset in options.data_dir.joinpath("presets").glob("*.randovania_preset"):
         old_preset.rename(old_preset.with_name(f"{old_preset.stem}.{VersionedPreset.file_extension()}"))
 

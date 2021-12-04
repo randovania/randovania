@@ -8,7 +8,7 @@ from PySide2.QtCore import Qt
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.lib import enum_lib
-from randovania.layout.preset_migration import VersionedPreset, InvalidPreset
+from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):

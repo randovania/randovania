@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui, QtWidgets, QtCore
+from PySide2 import QtGui, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
@@ -12,8 +12,10 @@ from qasync import asyncSlot
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
+from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation, EventNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games import default_data
@@ -26,6 +28,8 @@ from randovania.gui.lib import async_dialog
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 
+SHOW_WORLD_MIN_MAX_SPINNER = False
+
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     edit_mode: bool
@@ -35,6 +39,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     _previous_selected_node: Optional[Node] = None
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
     _edit_popup: Optional[QDialog] = None
+    _warning_dialogs_disabled = False
 
     def __init__(self, data: dict, data_path: Optional[Path], is_internal: bool, edit_mode: bool):
         super().__init__()
@@ -53,17 +58,28 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.splitDockWidget(self.points_of_interest_dock, self.area_view_dock, Qt.Horizontal)
         self.splitDockWidget(self.area_view_dock, self.node_info_dock, Qt.Horizontal)
 
-        # self.spin_min_x = QtWidgets.QSpinBox(super().centralWidget())
-        # self.spin_min_y = QtWidgets.QSpinBox(super().centralWidget())
-        # self.spin_max_x = QtWidgets.QSpinBox(super().centralWidget())
-        # self.spin_max_y = QtWidgets.QSpinBox(super().centralWidget())
-        # for i, it in enumerate([self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]):
-        #     it.setMaximum(99999)
-        #     la = QtWidgets.QLabel(super().centralWidget())
-        #     la.setText(["min_x", "min_y", "max_x", "max_y"][i])
-        #     self.gridLayout_2.addWidget(la)
-        #     self.gridLayout_2.addWidget(it)
-        #     it.valueChanged.connect(self._on_image_spin_update)
+        if SHOW_WORLD_MIN_MAX_SPINNER:
+            area_border_body = QtWidgets.QWidget()
+
+            area_border_dock = QtWidgets.QDockWidget(self)
+            area_border_dock.setWidget(area_border_body)
+            area_border_dock.setWindowTitle("World min/max for image")
+
+            layout = QtWidgets.QVBoxLayout(area_border_body)
+            self.spin_min_x = QtWidgets.QSpinBox(area_border_body)
+            self.spin_min_y = QtWidgets.QSpinBox(area_border_body)
+            self.spin_max_x = QtWidgets.QSpinBox(area_border_body)
+            self.spin_max_y = QtWidgets.QSpinBox(area_border_body)
+
+            for i, it in enumerate([self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]):
+                it.setMaximum(99999)
+                la = QtWidgets.QLabel(area_border_body)
+                la.setText(["min_x", "min_y", "max_x", "max_y"][i])
+                layout.addWidget(la)
+                layout.addWidget(it)
+                it.valueChanged.connect(self._on_image_spin_update)
+
+            self.tabifyDockWidget(self.points_of_interest_dock, area_border_dock)
 
         self.world_selector_box.currentIndexChanged.connect(self.on_select_world)
         self.area_selector_box.currentIndexChanged.connect(self.on_select_area)
@@ -71,13 +87,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_heals_check.stateChanged.connect(self.on_node_heals_check)
         self.area_spawn_check.stateChanged.connect(self.on_area_spawn_check)
         self.node_edit_button.clicked.connect(self.on_node_edit_button)
+        self.other_node_connection_swap_button.clicked.connect(self._swap_selected_connection)
         self.other_node_connection_edit_button.clicked.connect(self._open_edit_connection)
         self.area_view_canvas.CreateNodeRequest.connect(self._create_new_node)
         self.area_view_canvas.CreateDockRequest.connect(self._create_new_dock)
+        self.area_view_canvas.MoveNodeToAreaRequest.connect(self._move_dock_to_area)
         self.area_view_canvas.MoveNodeRequest.connect(self._move_node)
         self.area_view_canvas.SelectNodeRequest.connect(self.focus_on_node)
         self.area_view_canvas.SelectAreaRequest.connect(self.focus_on_area)
         self.area_view_canvas.SelectConnectionsRequest.connect(self.focus_on_connection)
+        self.area_view_canvas.ReplaceConnectionsRequest.connect(self.replace_connection_with)
 
         self.save_database_button.setEnabled(data_path is not None)
         if self._is_internal:
@@ -105,11 +124,16 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
         self.points_of_interest_dock.raise_()
 
+        self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
+
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
             self.world_selector_box.addItem(name, userData=world)
 
         self.update_edit_mode()
+
+    def set_warning_dialogs_disabled(self, value: bool):
+        self._warning_dialogs_disabled = value
 
     @classmethod
     def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> "DataEditorWindow":
@@ -125,13 +149,20 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         else:
             data = data_writer.write_game_description(self.game_description)
             if data != self._last_data:
-                user_response = QMessageBox.warning(self, "Unsaved changes",
-                                                    "You have unsaved changes. Do you want to close and discard?",
-                                                    QMessageBox.Yes | QMessageBox.No,
-                                                    QMessageBox.No)
-                if user_response == QMessageBox.No:
+                if not self.prompt_unsaved_changes_warning():
                     return event.ignore()
             super().closeEvent(event)
+
+    def prompt_unsaved_changes_warning(self) -> bool:
+        """Return value: True, if user decided to discard"""
+        if self._warning_dialogs_disabled:
+            return True
+
+        user_response = QMessageBox.warning(self, "Unsaved changes",
+                                            "You have unsaved changes. Do you want to close and discard?",
+                                            QMessageBox.Yes | QMessageBox.No,
+                                            QMessageBox.No)
+        return user_response == QMessageBox.Yes
 
     def on_select_world(self):
         self.area_selector_box.clear()
@@ -146,24 +177,25 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.on_select_area()
 
-        # for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
-        #     it.valueChanged.disconnect(self._on_image_spin_update)
-        #
-        # self.spin_min_x.setValue(world.extra["map_min_x"])
-        # self.spin_min_y.setValue(world.extra["map_min_y"])
-        # self.spin_max_x.setValue(world.extra["map_max_x"])
-        # self.spin_max_y.setValue(world.extra["map_max_y"])
-        #
-        # for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
-        #     it.valueChanged.connect(self._on_image_spin_update)
+        if SHOW_WORLD_MIN_MAX_SPINNER:
+            for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
+                it.valueChanged.disconnect(self._on_image_spin_update)
 
-    # def _on_image_spin_update(self):
-    #     world = self.current_world
-    #     world.extra["map_min_x"] = self.spin_min_x.value()
-    #     world.extra["map_min_y"] = self.spin_min_y.value()
-    #     world.extra["map_max_x"] = self.spin_max_x.value()
-    #     world.extra["map_max_y"] = self.spin_max_y.value()
-    #     self.area_view_canvas.select_world(world)
+            self.spin_min_x.setValue(world.extra["map_min_x"])
+            self.spin_min_y.setValue(world.extra["map_min_y"])
+            self.spin_max_x.setValue(world.extra["map_max_x"])
+            self.spin_max_y.setValue(world.extra["map_max_y"])
+
+            for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
+                it.valueChanged.connect(self._on_image_spin_update)
+
+    def _on_image_spin_update(self):
+        w = self.current_world
+        w.extra["map_min_x"] = self.spin_min_x.value()
+        w.extra["map_min_y"] = self.spin_min_y.value()
+        w.extra["map_max_x"] = self.spin_max_x.value()
+        w.extra["map_max_y"] = self.spin_max_y.value()
+        self.area_view_canvas.select_world(w)
 
     def on_select_area(self, select_node: Optional[Node] = None):
         for node in self.radio_button_to_node.keys():
@@ -298,18 +330,29 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         area = self.current_area
-        node_edit_popup = NodeDetailsPopup(self.game_description, self.current_node)
+        old_node = self.current_node
+        if old_node not in area.nodes:
+            raise ValueError("Current node is not part of the current area")
+
+        node_edit_popup = NodeDetailsPopup(self.game_description, old_node)
         if await self._execute_edit_dialog(node_edit_popup):
             try:
                 new_node = node_edit_popup.create_new_node()
             except ValueError as e:
-                await async_dialog.warning(self, "Error in new node", str(e))
+                if not self._warning_dialogs_disabled:
+                    await async_dialog.warning(self, "Error in new node", str(e))
                 return
             self.replace_node_with(area, node_edit_popup.node, new_node)
 
     def update_selected_node(self):
         node = self.current_node
-        assert node is not None
+        self.node_info_group.setEnabled(node is not None)
+        if node is None:
+            self.node_name_label.setText("<missing node>")
+            self.node_details_label.setText("")
+            self.node_description_label.setText("")
+            self.update_other_node_connection()
+            return
 
         self.node_heals_check.setChecked(node.heal)
         is_default_spawn = self.current_area.default_node == node.name
@@ -323,15 +366,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             msg = f"Unable to describe node: {e}"
 
         if isinstance(node, DockNode):
-            try:
-                other = self.world_list.node_by_identifier(node.default_connection)
-                msg = "{} to <a href=\"node://{}\">{}</a>".format(
-                    node.default_dock_weakness.name,
-                    self.world_list.node_name(other, with_world=True),
-                    self.world_list.node_name(other)
-                )
-            except IndexError:
-                pass
+            msg = "{} to <a href=\"node://{}\">{}</a>".format(
+                node.default_dock_weakness.name,
+                node.default_connection.as_string,
+                node.default_connection.node_name,
+            )
 
         elif isinstance(node, TeleporterNode):
             try:
@@ -362,7 +401,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         :return:
         """
         current_node = self.current_node
-        assert current_node is not None
+        if current_node is None:
+            assert not self.current_area.nodes
 
         # Calculates which node should be selected
         selected_node = None
@@ -393,10 +433,12 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self.other_node_connection_combo.count() > 0:
             self.other_node_connection_combo.currentIndexChanged.connect(self.update_connections)
             self.other_node_connection_combo.setEnabled(True)
+            self.other_node_connection_swap_button.setEnabled(True)
             self.other_node_connection_edit_button.setEnabled(True)
         else:
             self.other_node_connection_combo.setEnabled(False)
             self.other_node_connection_combo.addItem("No connections")
+            self.other_node_connection_swap_button.setEnabled(False)
             self.other_node_connection_edit_button.setEnabled(False)
 
         self.update_connections()
@@ -405,19 +447,18 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_node = self.current_node
         current_connection_node = self.current_connection_node
 
-        assert current_node is not None
-        assert current_node != current_connection_node
+        assert current_node != current_connection_node or current_node is None
 
         if self._connections_visualizer is not None:
             self._connections_visualizer.deleteLater()
             self._connections_visualizer = None
 
-        if current_connection_node is None:
-            assert len(self.current_area.nodes) == 1 or not self.edit_mode
+        if current_connection_node is None or current_node is None:
+            assert len(self.current_area.nodes) <= 1 or not self.edit_mode
             return
 
-        requirement = self.current_area.connections[self.current_node].get(self.current_connection_node,
-                                                                           Requirement.impossible())
+        requirement = self.current_area.connections[current_node].get(self.current_connection_node,
+                                                                      Requirement.impossible())
         self._connections_visualizer = ConnectionsVisualizer(
             self.other_node_alternatives_contents,
             self.alternatives_grid_layout,
@@ -425,6 +466,19 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             requirement,
             False
         )
+
+    def _swap_selected_connection(self):
+        self.focus_on_node(self.current_connection_node)
+
+    def replace_connection_with(self, target_node: Node, requirement: Requirement):
+        current_node = self.current_node
+
+        if requirement == Requirement.impossible():
+            requirement = None
+
+        self.editor.edit_connections(self.current_area, current_node, target_node, requirement)
+        self.update_connections()
+        self.area_view_canvas.update()
 
     @asyncSlot()
     async def _open_edit_connection(self):
@@ -441,6 +495,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if await self._execute_edit_dialog(editor):
             self.editor.edit_connections(self.current_area, from_node, target_node, editor.final_requirement)
             self.update_connections()
+            self.area_view_canvas.update()
 
     def _prompt_save_database(self):
         open_result = QFileDialog.getSaveFileName(self, caption="Select a Randovania database path.", filter="*.json")
@@ -448,23 +503,31 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
         self._save_database(Path(open_result[0]))
 
+    def display_integrity_errors_warning(self, errors: list[str]) -> bool:
+        """Return value: true if ignoring"""
+        if self._warning_dialogs_disabled:
+            return True
+
+        message = "Database has the following errors:\n\n" + "\n".join(errors)
+
+        options = QMessageBox.Ok
+        if self.game_description.game.data.experimental:
+            options = QMessageBox.Yes | QMessageBox.No
+            message += "\n\nIgnore?"
+
+        user_response = QMessageBox.critical(
+            self, "Integrity Check",
+            message,
+            options,
+            QMessageBox.No
+        )
+
+        return user_response == QMessageBox.Yes
+
     def _save_database(self, path: Path) -> bool:
         errors = integrity_check.find_database_errors(self.game_description)
         if errors:
-            message = "Database has the following errors:\n\n" + "\n".join(errors)
-
-            options = QMessageBox.Ok
-            if self.game_description.game.data.experimental:
-                options = QMessageBox.Yes | QMessageBox.No
-                message += "\n\nIgnore?"
-
-            user_response = QMessageBox.critical(
-                self, "Integrity Check",
-                message,
-                options,
-                QMessageBox.No
-            )
-            if user_response != QMessageBox.Yes:
+            if not self.display_integrity_errors_warning(errors):
                 return False
 
         data = data_writer.write_game_description(self.game_description)
@@ -488,9 +551,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if not did_confirm or new_name == "" or new_name == self.current_area.name:
             return
 
+        node_index = self.current_area.nodes.index(self.current_node)
         self.editor.rename_area(self.current_area, new_name)
         self.on_select_world()
         self.focus_on_area_by_name(new_name)
+        self.focus_on_node(self.current_area.nodes[node_index])
 
     def _move_node(self, node: Node, location: NodeLocation):
         area = self.current_area
@@ -507,9 +572,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             return
 
         if self.current_area.node_with_name(node_name) is not None:
-            QMessageBox.warning(self,
-                                "New Node",
-                                "A node named '{}' already exists.".format(node_name))
+            if not self._warning_dialogs_disabled:
+                QMessageBox.warning(self,
+                                    "New Node",
+                                    "A node named '{}' already exists.".format(node_name))
             return
 
         self._do_create_node(node_name, location)
@@ -525,16 +591,24 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _create_new_dock(self, location: NodeLocation, target_area: Area):
         current_area = self.current_area
-
-        i = 1
-        while current_area.node_with_name(source_name := f"Door to {target_area.name} ({i})") is not None:
-            i += 1
-
-        i = 1
-        while target_area.node_with_name(target_name := f"Door to {current_area.name} ({i})") is not None:
-            i += 1
+        target_identifier = self.world_list.identifier_for_area(target_area)
+        source_identifier = self.world_list.identifier_for_area(current_area)
 
         dock_weakness = self.game_description.dock_weakness_database.default_weakness
+        source_name_base = integrity_check.base_dock_name_raw(dock_weakness[0], dock_weakness[1], target_identifier)
+        target_name_base = integrity_check.base_dock_name_raw(dock_weakness[0], dock_weakness[1], source_identifier)
+
+        source_count = len(integrity_check.docks_with_same_base_name(current_area, source_name_base))
+        if source_count != len(integrity_check.docks_with_same_base_name(target_area, target_name_base)):
+            raise ValueError(f"Expected {target_area.name} to also have {source_count} "
+                             f"docks with name {target_name_base}")
+
+        if source_count > 0:
+            source_name = f"{source_name_base} ({source_count + 1})"
+            target_name = f"{target_name_base} ({source_count + 1})"
+        else:
+            source_name = source_name_base
+            target_name = target_name_base
 
         self.generic_index += 1
         new_node_this_area = DockNode(
@@ -554,7 +628,22 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.editor.add_node(current_area, new_node_this_area)
         self.editor.add_node(target_area, new_node_other_area)
+        if source_count == 1:
+            self.editor.rename_node(
+                current_area,
+                current_area.node_with_name(source_name_base),
+                f"{source_name_base} (1)",
+            )
+            self.editor.rename_node(
+                target_area,
+                target_area.node_with_name(target_name_base),
+                f"{target_name_base} (1)",
+            )
         self.on_select_area(new_node_this_area)
+
+    def _move_dock_to_area(self, node: Node, new_area: Area):
+        self.editor.move_node_from_area_to_area(self.current_area, new_area, node)
+        self.on_select_area()
 
     def _remove_node(self):
         if self._check_for_edit_dialog():
@@ -563,7 +652,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         current_node = self.current_node
 
         if not isinstance(current_node, GenericNode):
-            QMessageBox.warning(self, "Delete Node", "Can only remove Generic Nodes")
+            if not self._warning_dialogs_disabled:
+                QMessageBox.warning(self, "Delete Node", "Can only remove Generic Nodes")
             return
 
         user_response = QMessageBox.warning(
@@ -579,6 +669,17 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.editor.remove_node(self.current_area, current_node)
         self.on_select_area()
+
+    def _on_resource_changed(self, resource: ResourceInfo):
+        if resource.resource_type == ResourceType.EVENT:
+            for area in self.game_description.world_list.all_areas:
+                for i in range(len(area.nodes)):
+                    node = area.nodes[i]
+                    if not isinstance(node, EventNode):
+                        continue
+
+                    if node.event.short_name == resource.short_name:
+                        self.replace_node_with(area, node, dataclasses.replace(node, event=resource))
 
     def update_edit_mode(self):
         self.rename_area_button.setVisible(self.edit_mode)

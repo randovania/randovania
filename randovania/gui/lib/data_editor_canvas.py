@@ -6,11 +6,13 @@ from typing import Optional, Type, NamedTuple, Union
 from PySide2 import QtWidgets, QtGui, QtCore
 from PySide2.QtCore import QPointF, QRectF, QSizeF, Signal
 
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
     NodeLocation
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
+from randovania.resolver.state import State
 
 _color_for_node: dict[Type[Node], int] = {
     GenericNode: QtGui.Qt.red,
@@ -72,10 +74,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
     SelectNodeRequest = Signal(Node)
     SelectAreaRequest = Signal(Area)
     SelectConnectionsRequest = Signal(Node)
+    ReplaceConnectionsRequest = Signal(Node, Requirement)
     CreateDockRequest = Signal(NodeLocation, Area)
+    MoveNodeToAreaRequest = Signal(Node, Area)
 
-    def __init__(self):
-        super().__init__()
+    state: Optional[State] = None
+    visible_nodes: Optional[set[Node]] = None
+
+    def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
+        super().__init__(parent)
 
         self._show_all_connections_action = QtWidgets.QAction("Show all node connections", self)
         self._show_all_connections_action.setCheckable(True)
@@ -102,7 +109,8 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
     def select_world(self, world: World):
         self.world = world
-        image_path = self.game.data_path.joinpath("assets", "maps", f"{world.name}.png") if self.game is not None else None
+        image_path = self.game.data_path.joinpath("assets", "maps",
+                                                  f"{world.name}.png") if self.game is not None else None
         if image_path is not None and image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
             self.image_bounds = BoundsInt(
@@ -188,6 +196,23 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.highlighted_node = node
         self.update()
 
+    def set_state(self, state: Optional[State]):
+        self.state = state
+        self.highlighted_node = state.node
+        self.update()
+
+    def set_visible_nodes(self, visible_nodes: Optional[set[Node]]):
+        self.visible_nodes = visible_nodes
+        self.update()
+
+    def is_node_visible(self, node: Node) -> bool:
+        return self.visible_nodes is None or node in self.visible_nodes
+
+    def is_connection_visible(self, requirement: Requirement) -> bool:
+        return self.state is None or requirement.satisfied(self.state.resources,
+                                                           self.state.energy,
+                                                           self.state.resource_database)
+
     def _update_scale_variables(self):
         self.border_x = self.rect().width() * 0.05
         self.border_y = self.rect().height() * 0.05
@@ -199,25 +224,17 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         self.canvas_size = QSizeF(canvas_width, canvas_width)
 
-    def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
-        local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
-        local_pos -= self.get_area_canvas_offset()
-        self._next_node_location = self.qt_local_to_game_loc(local_pos)
+    def _nodes_at_position(self, qt_local_position: QPointF):
+        return [
+            node
+            for node in self.area.nodes
+            if node.location is not None and (
+                    self.game_loc_to_qt_local(node.location) - qt_local_position).manhattanLength() < 10
+        ]
 
-        menu = QtWidgets.QMenu(self)
-        menu.addAction(self._show_all_connections_action)
-        if self.edit_mode:
-            menu.addAction(self._create_node_action)
-            menu.addAction(self._move_node_action)
-            self._move_node_action.setEnabled(self.highlighted_node is not None)
-            if self.highlighted_node is not None:
-                self._move_node_action.setText(f"Move {self.highlighted_node.name} here")
+    def _other_areas_at_position(self, qt_local_position: QPointF):
+        result = []
 
-        reference_position = self.game_loc_to_qt_local(self._next_node_location)
-
-        # Areas Menu
-        menu.addSeparator()
-        has_nearby_area = False
         for area in self.world.areas:
             if "total_boundings" not in area.extra or area == self.area:
                 continue
@@ -226,48 +243,107 @@ class DataEditorCanvas(QtWidgets.QWidget):
             tl = self.game_loc_to_qt_local([bounds.min_x, bounds.min_y])
             br = self.game_loc_to_qt_local([bounds.max_x, bounds.max_y])
             rect = QRectF(tl, br)
-            if rect.contains(reference_position):
-                a = QtWidgets.QMenu(area.name, self)
-                a.addAction("View area").triggered.connect(functools.partial(self.SelectAreaRequest.emit, area))
-                if self.edit_mode:
-                    a.addAction("Create dock here to this area").triggered.connect(
-                        functools.partial(self.CreateDockRequest.emit, self._next_node_location, area)
-                    )
-                menu.addMenu(a)
-                has_nearby_area = True
+            if rect.contains(qt_local_position):
+                result.append(area)
 
-        if not has_nearby_area:
-            a = QtWidgets.QAction("No areas here", self)
-            a.setEnabled(False)
-            menu.addAction(a)
+        return result
+
+    def mouseDoubleClickEvent(self, event: QtGui.QMouseEvent) -> None:
+        local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
+        local_pos -= self.get_area_canvas_offset()
+
+        nodes_at_mouse = self._nodes_at_position(local_pos)
+        if nodes_at_mouse:
+            if len(nodes_at_mouse) == 1:
+                self.SelectNodeRequest.emit(nodes_at_mouse[0])
+            return
+
+        areas_at_mouse = self._other_areas_at_position(local_pos)
+        if areas_at_mouse:
+            if len(areas_at_mouse) == 1:
+                self.SelectAreaRequest.emit(areas_at_mouse[0])
+            return
+
+    def contextMenuEvent(self, event: QtGui.QContextMenuEvent) -> None:
+        local_pos = QPointF(self.mapFromGlobal(event.globalPos()))
+        local_pos -= self.get_area_canvas_offset()
+        self._next_node_location = self.qt_local_to_game_loc(local_pos)
+
+        menu = QtWidgets.QMenu(self)
+        if self.highlighted_node is None:
+            menu.addAction(self._show_all_connections_action)
+        if self.edit_mode:
+            menu.addAction(self._create_node_action)
+            menu.addAction(self._move_node_action)
+            self._move_node_action.setEnabled(self.highlighted_node is not None)
+            if self.highlighted_node is not None:
+                self._move_node_action.setText(f"Move {self.highlighted_node.name} here")
+
+        # Areas Menu
+        menu.addSeparator()
+        areas_at_mouse = self._other_areas_at_position(local_pos)
+
+        for area in areas_at_mouse:
+            sub_menu = QtWidgets.QMenu(f"Area: {area.name}", self)
+            sub_menu.addAction("View area").triggered.connect(functools.partial(self.SelectAreaRequest.emit, area))
+            if self.edit_mode:
+                sub_menu.addAction("Create dock here to this area").triggered.connect(
+                    functools.partial(self.CreateDockRequest.emit, self._next_node_location, area)
+                )
+            menu.addMenu(sub_menu)
+
+        if not areas_at_mouse:
+            sub_menu = QtWidgets.QAction("No areas here", self)
+            sub_menu.setEnabled(False)
+            menu.addAction(sub_menu)
 
         # Nodes Menu
         menu.addSeparator()
-        has_nearby_node = False
-        for node in self.area.nodes:
-            if node.location is not None and (
-                    self.game_loc_to_qt_local(node.location) - reference_position).manhattanLength() < 10:
-                a = QtWidgets.QMenu(node.name, self)
+        nodes_at_mouse = self._nodes_at_position(local_pos)
+        if self.highlighted_node in nodes_at_mouse:
+            nodes_at_mouse.remove(self.highlighted_node)
 
-                highlight_action = a.addAction("Highlight this")
-                highlight_action.setEnabled(self.highlighted_node != node)
-                highlight_action.triggered.connect(functools.partial(self.SelectNodeRequest.emit, node))
+        for node in nodes_at_mouse:
+            if len(nodes_at_mouse) == 1:
+                menu.addAction(node.name).setEnabled(False)
+                sub_menu = menu
+            else:
+                sub_menu = QtWidgets.QMenu(node.name, self)
 
-                view_connections = a.addAction("View connections to this")
-                view_connections.setEnabled(
-                    (self.edit_mode and self.highlighted_node != node) or (
+            sub_menu.addAction("Highlight this").triggered.connect(
+                functools.partial(self.SelectNodeRequest.emit, node)
+            )
+            view_connections = sub_menu.addAction("View connections to this")
+            view_connections.setEnabled(
+                (self.edit_mode and self.highlighted_node != node) or (
                         node in self.area.connections.get(self.highlighted_node, {})
-                    )
                 )
-                view_connections.triggered.connect(functools.partial(self.SelectConnectionsRequest.emit, node))
+            )
+            view_connections.triggered.connect(functools.partial(self.SelectConnectionsRequest.emit, node))
 
-                menu.addMenu(a)
-                has_nearby_node = True
+            if self.edit_mode:
+                sub_menu.addSeparator()
+                sub_menu.addAction("Replace connection with Trivial").triggered.connect(functools.partial(
+                    self.ReplaceConnectionsRequest.emit, node, Requirement.trivial(),
+                ))
+                sub_menu.addAction("Remove connection").triggered.connect(functools.partial(
+                    self.ReplaceConnectionsRequest.emit, node, Requirement.impossible(),
+                ))
+                if areas_at_mouse:
+                    move_menu = QtWidgets.QMenu("Move to...", self)
+                    for area in areas_at_mouse:
+                        move_menu.addAction(area.name).triggered.connect(functools.partial(
+                            self.MoveNodeToAreaRequest.emit, node, area,
+                        ))
+                    sub_menu.addMenu(move_menu)
 
-        if not has_nearby_node:
-            a = QtWidgets.QAction("No nodes here", self)
-            a.setEnabled(False)
-            menu.addAction(a)
+            if sub_menu != menu:
+                menu.addMenu(sub_menu)
+
+        if not nodes_at_mouse:
+            sub_menu = QtWidgets.QAction("No other nodes here", self)
+            sub_menu.setEnabled(False)
+            menu.addAction(sub_menu)
 
         # Done
 
@@ -340,9 +416,16 @@ class DataEditorCanvas(QtWidgets.QWidget):
             if source_node.location is None:
                 return
 
-            for target_node in area.connections[source_node].keys():
+            for target_node, requirement in area.connections[source_node].items():
                 if target_node.location is None:
                     continue
+
+                if not self.is_connection_visible(requirement):
+                    painter.setPen(QtGui.Qt.darkGray)
+                elif source_node == self.highlighted_node or self.state is not None:
+                    painter.setPen(QtGui.Qt.white)
+                else:
+                    painter.setPen(QtGui.Qt.gray)
 
                 source = self.game_loc_to_qt_local(source_node.location)
                 target = self.game_loc_to_qt_local(target_node.location)
@@ -368,23 +451,25 @@ class DataEditorCanvas(QtWidgets.QWidget):
         brush = painter.brush()
         brush.setStyle(QtGui.Qt.BrushStyle.SolidPattern)
         painter.setBrush(brush)
-        painter.setPen(QtGui.Qt.gray)
 
-        if self._show_all_connections_action.isChecked():
+        if self._show_all_connections_action.isChecked() or self.visible_nodes is not None:
             for node in area.nodes:
                 if node != self.highlighted_node:
                     draw_connections_from(node)
 
-        painter.setPen(QtGui.Qt.white)
-
         if self.highlighted_node is not None and self.highlighted_node in area.nodes:
             draw_connections_from(self.highlighted_node)
+
+        painter.setPen(QtGui.Qt.white)
 
         for node in area.nodes:
             if node.location is None:
                 continue
 
-            brush.setColor(_color_for_node.get(type(node), QtGui.Qt.yellow))
+            if self.is_node_visible(node):
+                brush.setColor(_color_for_node.get(type(node), QtGui.Qt.yellow))
+            else:
+                brush.setColor(QtGui.Qt.darkGray)
             painter.setBrush(brush)
 
             p = self.game_loc_to_qt_local(node.location)

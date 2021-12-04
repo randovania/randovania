@@ -1,12 +1,15 @@
 import json
 import os
 from pathlib import Path
-from typing import Optional, List
+from typing import Optional, List, Union
 
 import open_dread_rando
 
 from randovania.game_description import default_database
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -68,11 +71,14 @@ class OpenDreadPatcher(Patcher):
         inventory = {
             "ITEM_MAX_LIFE": 99,
             "ITEM_MAX_SPECIAL_ENERGY": 1000,
-            "ITEM_WEAPON_MISSILE_MAX": 15,
-            "ITEM_WEAPON_POWER_BOMB_MAX": 0,
+            # "ITEM_WEAPON_MISSILE_MAX": 15,
+            # "ITEM_WEAPON_POWER_BOMB_MAX": 0,
             "ITEM_METROID_COUNT": 0,
             "ITEM_METROID_TOTAL_COUNT": 40,
-            "ITEM_FLOOR_SLIDE": 1,
+            # "ITEM_FLOOR_SLIDE": 1,
+
+            "ITEM_SPECIAL_ENERGY": 1000,
+            "ITEM_SPECIAL_ENERGY_SCANNING_PULSE": 1000,
         }
         for resource, quantity in patches.starting_items.items():
             try:
@@ -81,17 +87,50 @@ class OpenDreadPatcher(Patcher):
                 print(f"Skipping {resource}")
                 continue
 
-        world, area = db.world_list.world_and_area_by_area_identifier(patches.starting_location)
+        def _node_for(identifier: Union[AreaIdentifier, NodeIdentifier]) -> Node:
+            if isinstance(identifier, NodeIdentifier):
+                return db.world_list.node_by_identifier(identifier)
+            else:
+                area = db.world_list.area_by_area_location(identifier)
+                node = area.node_with_name(area.default_node)
+                assert node is not None
+                return node
 
-        level_name: str = os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
-        actor = area.node_with_name(area.default_node)
+        def _start_point_ref_for(node: Node) -> dict:
+            world = db.world_list.nodes_to_world(node)
+            level_name: str = os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
+
+            try:
+                return {
+                    "scenario": level_name,
+                    "actor": node.extra["start_point_actor_name"],
+                }
+            except KeyError as e:
+                raise KeyError(f"{node} has no extra {e}")
+
+        def _teleporter_ref_for(node: Node) -> dict:
+            world = db.world_list.nodes_to_world(node)
+            level_name: str = os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
+
+            try:
+                return {
+                    "scenario": level_name,
+                    "layer": node.extra.get("actor_layer", "default"),
+                    "actor": node.extra["actor_name"],
+                }
+            except KeyError as e:
+                raise KeyError(f"{node} has no extra {e}")
 
         return {
-            "starting_location": {
-                "level": level_name,
-                "actor": actor.extra["start_point_actor_name"],
-            },
-            "starting_items": inventory
+            "starting_location": _start_point_ref_for(_node_for(patches.starting_location)),
+            "starting_items": inventory,
+            "elevators": [
+                {
+                    "teleporter": _teleporter_ref_for(_node_for(source)),
+                    "destination": _start_point_ref_for(_node_for(target)),
+                }
+                for source, target in patches.elevator_connection.items()
+            ]
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,

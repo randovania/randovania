@@ -1,9 +1,12 @@
+from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
+from randovania.games.dread.generator.pool_creator import pool_creator
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.dread.layout.preset_describer import dread_format_params, dread_expected_items, \
     dread_unexpected_items
 from randovania.games.dread.patcher.open_dread_patcher import OpenDreadPatcher
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
+from randovania.resolver.bootstrap import Bootstrap
 
 
 def _dread_gui():
@@ -14,6 +17,7 @@ def _dread_gui():
     return GameGui(
         tab_provider=dread_preset_tabs,
         cosmetic_dialog=DreadCosmeticPatchesDialog,
+        input_file_text=("an extracted RomFS folder", "the Nintendo Switch", "RomFS folder"),
         progressive_item_gui_tuples=progressive_items.gui_tuples()
     )
 
@@ -42,7 +46,9 @@ game_data: GameData = GameData(
     gui=_dread_gui,
 
     generator=GameGenerator(
-        item_pool_creator=lambda results, config, db: None
+        item_pool_creator=pool_creator,
+        base_patches_factory=DreadBasePatchesFactory(),
+        bootstrap=Bootstrap()
     ),
 
     patcher=OpenDreadPatcher()

@@ -25,6 +25,17 @@ class NodeLocation(NamedTuple):
     z: float
 
 
+def wrap_frozen(x):
+    if isinstance(x, dict):
+        return frozendict((key, wrap_frozen(value)) for key, value in x.items())
+
+    elif isinstance(x, list):
+        return tuple(wrap_frozen(value) for value in x)
+
+    else:
+        return x
+
+
 @dataclasses.dataclass(frozen=True)
 class Node:
     name: str
@@ -44,7 +55,7 @@ class Node:
         if not isinstance(self.extra, frozendict):
             if not isinstance(self.extra, dict):
                 raise ValueError(f"Expected dict for extra, got {type(self.extra)}")
-            object.__setattr__(self, "extra", frozendict(self.extra))
+            object.__setattr__(self, "extra", wrap_frozen(self.extra))
 
     @property
     def is_resource_node(self) -> bool:

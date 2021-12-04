@@ -1,24 +1,12 @@
-import copy
-import io
-import json
 import math
 import uuid
-from pathlib import Path
-from typing import Optional, Dict
-
-import aiofiles
-import slugify
+from typing import Dict
 
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
-from randovania.layout.preset import Preset
+from randovania.lib import migration_lib
 
-CURRENT_PRESET_VERSION = 16
-
-
-class InvalidPreset(Exception):
-    def __init__(self, original_exception: Exception):
-        self.original_exception = original_exception
+CURRENT_VERSION = 17
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -489,149 +477,37 @@ def _migrate_v15(preset: dict) -> dict:
 
     return preset
 
+def _migrate_v16(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        art_hints = {"artifacts": "precise"}
+        preset["configuration"]["hints"] = art_hints
 
-_MIGRATIONS = {
-    1: _migrate_v1,
-    2: _migrate_v2,
-    3: _migrate_v3,
-    4: _migrate_v4,
-    5: _migrate_v5,
-    6: _migrate_v6,
-    7: _migrate_v7,
-    8: _migrate_v8,
-    9: _migrate_v9,
-    10: _migrate_v10,
-    11: _migrate_v11,
-    12: _migrate_v12,
-    13: _migrate_v13,
-    14: _migrate_v14,
-    15: _migrate_v15,
-}
-
-
-def _apply_migration(preset: dict, version: int) -> dict:
-    while version < CURRENT_PRESET_VERSION:
-        preset = _MIGRATIONS[version](preset)
-        version += 1
     return preset
 
 
+_MIGRATIONS = {
+    1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
+    2: _migrate_v2,  # v1.2.2-71-g0fbabe91
+    3: _migrate_v3,  # v1.2.2-563-g50f4d07a
+    4: _migrate_v4,  # v1.2.2-832-gec9b8004
+    5: _migrate_v5,  # v2.0.2-15-g1096103d
+    6: _migrate_v6,  # v2.1.2-61-g8bb33489
+    7: _migrate_v7,  # v2.3.0-27-g6b4168b8
+    8: _migrate_v8,  # v2.5.2-39-g3cf0b27d
+    9: _migrate_v9,  # v2.6.1-33-gf0b8ec32
+    10: _migrate_v10,  # v2.6.1-416-g358711ce
+    11: _migrate_v11,  # v2.6.1-494-g086eb8cf
+    12: _migrate_v12,  # v3.0.2-13-gdffb4b9a
+    13: _migrate_v13,  # v3.1.3-122-g9f50c418
+    14: _migrate_v14,  # v3.2.1-44-g11823eac
+    15: _migrate_v15,  # v3.2.1-203-g6e303090
+    16: _migrate_v16,  # v3.2.1-363-g3a93b533
+}
+
+
 def convert_to_current_version(preset: dict) -> dict:
-    schema_version = preset["schema_version"]
-    if schema_version > CURRENT_PRESET_VERSION:
-        raise ValueError(f"Unknown version: {schema_version}")
-
-    if schema_version < CURRENT_PRESET_VERSION:
-        return _apply_migration(preset, schema_version)
-    else:
-        return preset
-
-
-class VersionedPreset:
-    data: dict
-    exception: Optional[InvalidPreset] = None
-    _preset: Optional[Preset] = None
-
-    def __init__(self, data):
-        self.data = data
-
-    @classmethod
-    def file_extension(cls) -> str:
-        return "rdvpreset"
-
-    @property
-    def slug_name(self) -> str:
-        return slugify.slugify(self.name)
-
-    @property
-    def name(self) -> str:
-        if self._preset is not None:
-            return self._preset.name
-        else:
-            return self.data["name"]
-
-    @property
-    def base_preset_uuid(self) -> Optional[uuid.UUID]:
-        if self._preset is not None:
-            return self._preset.base_preset_uuid
-        elif self.data["base_preset_uuid"] is not None:
-            return uuid.UUID(self.data["base_preset_uuid"])
-
-    @property
-    def game(self) -> RandovaniaGame:
-        if self._preset is not None:
-            return self._preset.configuration.game
-
-        if self.data["schema_version"] < 6:
-            return RandovaniaGame.METROID_PRIME_ECHOES
-
-        return RandovaniaGame(self.data["game"])
-
-    @property
-    def uuid(self) -> uuid.UUID:
-        if self._preset is not None:
-            return self._preset.uuid
-        else:
-            return uuid.UUID(self.data["uuid"])
-
-    def __eq__(self, other):
-        if isinstance(other, VersionedPreset):
-            return self.get_preset() == other.get_preset()
-        return False
-
-    @property
-    def _converted(self):
-        return self._preset is not None or self.exception is not None
-
-    def ensure_converted(self):
-        if not self._converted:
-            try:
-                self._preset = Preset.from_json_dict(convert_to_current_version(copy.deepcopy(self.data)))
-            except (ValueError, KeyError, TypeError) as e:
-                self.exception = InvalidPreset(e)
-                raise self.exception from e
-
-    def get_preset(self) -> Preset:
-        self.ensure_converted()
-        if self.exception:
-            raise self.exception
-        else:
-            return self._preset
-
-    @classmethod
-    async def from_file(cls, path: Path) -> "VersionedPreset":
-        async with aiofiles.open(path) as f:
-            return VersionedPreset(json.loads(await f.read()))
-
-    @classmethod
-    def from_file_sync(cls, path: Path) -> "VersionedPreset":
-        with path.open() as f:
-            return VersionedPreset(json.load(f))
-
-    @classmethod
-    def with_preset(cls, preset: Preset) -> "VersionedPreset":
-        result = VersionedPreset(None)
-        result._preset = preset
-        return result
-
-    def save_to_file(self, path: Path):
-        path.parent.mkdir(exist_ok=True, parents=True)
-        with path.open("w") as preset_file:
-            json.dump(self.as_json, preset_file, indent=4)
-
-    def save_to_io(self, data: io.BytesIO):
-        data.write(
-            json.dumps(self.as_json, indent=4).encode("utf-8")
-        )
-
-    @property
-    def as_json(self) -> dict:
-        if self._preset is not None:
-            preset_json = {
-                "schema_version": CURRENT_PRESET_VERSION,
-            }
-            preset_json.update(self._preset.as_json)
-            return preset_json
-        else:
-            assert self.data is not None
-            return self.data
+    return migration_lib.migrate_to_version(
+        preset,
+        CURRENT_VERSION,
+        _MIGRATIONS,
+    )

@@ -1,5 +1,4 @@
-import typing
-from typing import Tuple, Callable, Dict
+from typing import Tuple
 
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -14,6 +13,7 @@ def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
     base_results.pickups.extend(extension.pickups)
     base_results.assignment.update(extension.assignment)
     add_resources_into_another(base_results.initial_resources, extension.initial_resources)
+
 
 def calculate_pool_results(layout_configuration: BaseConfiguration,
                            resource_database: ResourceDatabase,
