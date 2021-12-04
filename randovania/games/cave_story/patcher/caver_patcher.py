@@ -67,6 +67,8 @@ class CaverPatcher(Patcher):
         music_rng = Random(description.permalink.seed_number)
         mychar_rng = Random(description.permalink.seed_number)
 
+        nothing_item_script = "<PRI<MSG<TUR\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
+
         pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
         for index, target in patches.pickup_assignment.items():
             if target.player != players_config.player_index:
@@ -78,7 +80,7 @@ class CaverPatcher(Patcher):
 
             mapname = node.extra.get("event_map", area.extra["map_name"])
             event = node.extra["event"]
-            pickups[mapname][event] = item_database.get_item_with_name(target.pickup.name).extra.get("script", "<EVE0000") # TODO: proper nothing item script
+            pickups[mapname][event] = item_database.get_item_with_name(target.pickup.name).extra.get("script", nothing_item_script)
 
         music = CaverMusic.get_shuffled_mapping(music_rng, cosmetic_patches)
 
