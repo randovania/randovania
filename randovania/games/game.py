@@ -61,8 +61,8 @@ class GameGui:
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
 
-    input_file_text: Optional[tuple[str, str, str]]
-    """Two strings used to describe the input file for the game."""
+    input_file_text: Optional[tuple[str, str, str]] = None
+    """Three strings used to describe the input file for the game."""
 
     progressive_item_gui_tuples: Iterable[tuple[str, tuple[str, ...]]] = frozenset()
     """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long names replaced by the progressive item."""
