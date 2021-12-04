@@ -5,7 +5,7 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.games.prime1.generator.item_pool.pool_creator import prime1_specific_pool
 from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher
 from randovania.games.prime1.layout.preset_describer import prime_expected_items, prime_unexpected_items, prime_format_params
-from randovania.generator.base_patches_factory import BasePatchesFactory
+from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
 
 
 def _prime_gui():
@@ -50,7 +50,7 @@ game_data: GameData = GameData(
     generator=GameGenerator(
         item_pool_creator=prime1_specific_pool,
         bootstrap=PrimeBootstrap(),
-        base_patches_factory=BasePatchesFactory()
+        base_patches_factory=PrimeTrilogyBasePatchesFactory()
     ),
 
     patcher=RandomprimePatcher()
