@@ -26,7 +26,7 @@ jobs:
             name: 'macOS'
 
           - os: 'macos-latest'
-            python: '3.9.9'
+            python: '3.9'
             executable: true
             name: 'macOS Executable'
 
@@ -36,7 +36,7 @@ jobs:
             name: 'Windows'
 
           - os: 'windows-latest'
-            python: '3.9.9'
+            python: '3.9'
             executable: true
             name: 'Windows Executable'
 
@@ -101,7 +101,7 @@ jobs:
         if: ${{ !matrix.executable }}
 
       - name: create executable
-        run: python tools/create_release.py
+        run: python -u tools/create_release.py
         if: matrix.executable
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
