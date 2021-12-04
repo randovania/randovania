@@ -4,24 +4,29 @@ import typing
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+from random import Random
 from typing import Callable, Iterable, Optional, Type
 
 from randovania import get_file_path
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import \
+        ResourceDatabase
+    from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.item_pool import PoolResults
-    from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+    from randovania.gui.dialog.base_cosmetic_patches_dialog import \
+        BaseCosmeticPatchesDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-    from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+    from randovania.layout.base.major_items_configuration import \
+        MajorItemsConfiguration
     from randovania.patching.patcher import Patcher
-    from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.resolver.bootstrap import Bootstrap
 
 
@@ -72,7 +77,7 @@ class GameGui:
 
 @dataclass(frozen=True)
 class GameGenerator:
-    item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]
+    item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase, GamePatches, Random], None]
     """Extends the base item pools with any specific item pools such as Artifacts."""
 
     bootstrap: Bootstrap
