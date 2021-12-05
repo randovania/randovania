@@ -73,6 +73,4 @@ def test_quick_fill_ship(skip_qtbot, preset_manager, game_enum: RandovaniaGame):
     skip_qtbot.mouseClick(window.starting_area_quick_fill_ship, QtCore.Qt.LeftButton)
 
     # Assert
-    assert editor.configuration.starting_location.locations == frozenset([
-        window.game_description.starting_location
-    ])
+    assert editor.configuration.starting_location.locations == (window.game_description.starting_location,)
