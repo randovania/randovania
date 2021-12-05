@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Iterator, Tuple, FrozenSet, List, Callable, TypeVar, Type
+from typing import Iterator, Tuple, List, Callable, TypeVar, Type, Iterable
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -9,9 +9,13 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.game import RandovaniaGame
 
 
-def area_locations_with_filter(game: RandovaniaGame, condition: Callable[[Area], bool]) -> List[AreaIdentifier]:
+def _sorted_area_identifiers(elements: Iterable[AreaIdentifier]) -> list[AreaIdentifier]:
+    return sorted(elements)
+
+
+def area_locations_with_filter(game: RandovaniaGame, condition: Callable[[Area], bool]) -> list[AreaIdentifier]:
     world_list = default_database.game_description_for(game).world_list
-    areas = [
+    identifiers = [
         AreaIdentifier(
             world_name=world.name,
             area_name=area.name,
@@ -20,7 +24,7 @@ def area_locations_with_filter(game: RandovaniaGame, condition: Callable[[Area],
         for area in world.areas
         if condition(area)
     ]
-    return list(sorted(areas))
+    return _sorted_area_identifiers(identifiers)
 
 
 T = TypeVar("T")
@@ -29,8 +33,15 @@ SelfType = TypeVar("SelfType")
 
 @dataclass(frozen=True)
 class LocationList(BitPackValue):
-    locations: FrozenSet[AreaIdentifier]
+    locations: tuple[AreaIdentifier, ...]
     game: RandovaniaGame
+
+    def __post_init__(self):
+        if not isinstance(self.locations, tuple):
+            raise ValueError("locations must be tuple, got {}".format(type(self.locations)))
+
+        if list(self.locations) != sorted(self.locations):
+            raise ValueError("locations aren't sorted: {}".format(self.locations))
 
     @classmethod
     def areas_list(cls, game: RandovaniaGame) -> List[AreaIdentifier]:
@@ -41,15 +52,14 @@ class LocationList(BitPackValue):
         return AreaIdentifier
 
     @classmethod
-    def with_elements(cls: Type[SelfType], elements: Iterator[AreaIdentifier], game: RandovaniaGame) -> SelfType:
-        elements_set = frozenset(sorted(elements))
+    def with_elements(cls: Type[SelfType], elements: Iterable[AreaIdentifier], game: RandovaniaGame) -> SelfType:
+        elements_set = frozenset(elements)
         all_locations = frozenset(cls.areas_list(game))
-        return cls(elements_set & all_locations, game)
+        return cls(tuple(_sorted_area_identifiers(elements_set & all_locations)), game)
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         areas = self.areas_list(self.game)
-        locations = list(sorted(self.locations))
-        yield from bitpacking.pack_sorted_array_elements(locations, areas)
+        yield from bitpacking.pack_sorted_array_elements(list(self.locations), areas)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "LocationList":
@@ -87,4 +97,4 @@ class LocationList(BitPackValue):
             elif area_location in new_locations:
                 new_locations.remove(area_location)
 
-        return self.with_elements(iter(new_locations), self.game)
+        return self.with_elements(new_locations, self.game)
