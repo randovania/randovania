@@ -255,7 +255,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self._next_node_location = self.qt_local_to_game_loc(local_pos)
 
         menu = QtWidgets.QMenu(self)
-        if self.highlighted_node is None:
+        if self.state is None:
             menu.addAction(self._show_all_connections_action)
         if self.edit_mode:
             menu.addAction(self._create_node_action)
@@ -416,6 +416,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 target = self.game_loc_to_qt_local(target_node.location)
                 line = QtCore.QLineF(source, target)
                 line_len = line.length()
+
+                if line_len == 0:
+                    continue
+
                 end_point = line.pointAt(1 - 7 / line_len)
                 line.setPoints(end_point, line.pointAt(5 / line_len))
                 painter.drawLine(line)
