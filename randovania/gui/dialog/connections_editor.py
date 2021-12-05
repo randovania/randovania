@@ -15,6 +15,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.gui.generated.connections_editor_ui import Ui_ConnectionEditor
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
+from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.lib.enum_lib import iterate_enum
 
 
@@ -108,21 +109,50 @@ class ResourceRequirementEditor:
         self.negate_combo.setMinimumWidth(40)
         self.negate_combo.setMaximumWidth(40)
 
+        self.negate_check = QtWidgets.QCheckBox(parent)
+        self.negate_check.setChecked(item.negate)
+
         self.amount_edit = QLineEdit(parent)
         self.amount_edit.setValidator(QIntValidator(1, 10000))
         self.amount_edit.setText(str(item.amount))
         self.amount_edit.setMinimumWidth(45)
         self.amount_edit.setMaximumWidth(45)
 
+        self.amount_combo = ScrollProtectedComboBox(parent)
+        for trick_level in iterate_enum(LayoutTrickLevel):
+            self.amount_combo.addItem(trick_level.long_name, userData=trick_level.as_number)
+        self.amount_combo.setCurrentIndex(self.amount_combo.findData(item.amount))
+
         self.layout.addWidget(self.resource_type_combo)
+        self.layout.addWidget(self.negate_check)
         self.layout.addWidget(self.resource_name_combo)
         self.layout.addWidget(self.negate_combo)
         self.layout.addWidget(self.amount_edit)
+        self.layout.addWidget(self.amount_combo)
 
         self.resource_type_combo.currentIndexChanged.connect(self._update_type)
+        self._update_visible_elements_by_type()
+
+    @property
+    def resource_type(self) -> ResourceType:
+        return self.resource_type_combo.currentData()
+
+    def _update_visible_elements_by_type(self):
+        resource_type = self.resource_type
+
+        if resource_type == ResourceType.DAMAGE:
+            self.negate_combo.setCurrentIndex(0)
+
+        self.negate_check.setText("Before" if resource_type == ResourceType.EVENT else "Not")
+        self.negate_check.setVisible(resource_type in {ResourceType.EVENT, ResourceType.VERSION, ResourceType.MISC})
+        self.negate_combo.setVisible(resource_type in {ResourceType.ITEM, ResourceType.DAMAGE})
+        self.negate_combo.setEnabled(resource_type == ResourceType.ITEM)
+        self.amount_edit.setVisible(resource_type in {ResourceType.ITEM, ResourceType.DAMAGE})
+        self.amount_combo.setVisible(resource_type == ResourceType.TRICK)
 
     def _update_type(self):
         old_combo = self.resource_name_combo
+
         self.resource_name_combo = _create_resource_name_combo(self.resource_database,
                                                                self.resource_type_combo.currentData(),
                                                                None,
@@ -130,6 +160,7 @@ class ResourceRequirementEditor:
 
         self.layout.replaceWidget(old_combo, self.resource_name_combo)
         old_combo.deleteLater()
+        self._update_visible_elements_by_type()
 
     def deleteLater(self):
         self.resource_type_combo.deleteLater()
@@ -139,11 +170,25 @@ class ResourceRequirementEditor:
 
     @property
     def current_requirement(self) -> ResourceRequirement:
-        return ResourceRequirement(
-            self.resource_name_combo.currentData(),
-            int(self.amount_edit.text()),
-            self.negate_combo.currentData()
-        )
+        resource_type = self.resource_type
+
+        # Quantity
+        if resource_type == ResourceType.TRICK:
+            quantity: int = self.amount_combo.currentData()
+        elif resource_type == ResourceType.EVENT:
+            quantity = 1
+        else:
+            quantity = int(self.amount_edit.text())
+
+        # Negate flag
+        if resource_type == ResourceType.ITEM:
+            negate: bool = self.negate_combo.currentData()
+        elif resource_type == ResourceType.EVENT:
+            negate = self.negate_check.isChecked()
+        else:
+            negate = False
+
+        return ResourceRequirement(self.resource_name_combo.currentData(), quantity, negate)
 
 
 class ArrayRequirementEditor:
