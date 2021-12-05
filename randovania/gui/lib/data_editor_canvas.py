@@ -416,6 +416,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 target = self.game_loc_to_qt_local(target_node.location)
                 line = QtCore.QLineF(source, target)
                 line_len = line.length()
+
+                if line_len == 0:
+                    continue
+
                 end_point = line.pointAt(1 - 7 / line_len)
                 line.setPoints(end_point, line.pointAt(5 / line_len))
                 painter.drawLine(line)
