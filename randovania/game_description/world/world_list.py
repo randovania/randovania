@@ -168,6 +168,11 @@ class WorldList:
                     if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
                         requirement = RequirementAnd([requirement, back_weakness.requirement])
 
+                    elif back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE:
+                        # FIXME: this should check if we've already openend the back
+                        if back_weakness != forward_weakness:
+                            requirement = Requirement.impossible()
+
                 yield target_node, requirement
 
             except ValueError:
