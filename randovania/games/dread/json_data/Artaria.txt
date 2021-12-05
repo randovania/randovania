@@ -1096,9 +1096,11 @@ Extra - asset_id: collision_camera_011
   * Pickup 20; Major Location? False
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (BOMB) 4
+      Morph Ball
 
 > Door to Chain Reaction Access; Heals? False
-  * Power Beam Door to Chain Reaction Access/Door to Teleport to Cataris
+  * Super Missile Door to Chain Reaction Access/Door to Teleport to Cataris
   * Extra - actor_name: Door054
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000
@@ -1174,6 +1176,8 @@ Extra - asset_id: collision_camera_011
   * Extra - tile_types: ('MISSILE',)
   > Pickup (Missile Tank, Underwater)
       Morph Ball
+  > Under Teleporter
+      Trivial
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -1212,6 +1216,8 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Pickup (Missile Tank, Supers-locked)
+      Morph Ball
   > Door to Chain Reaction Access
       Trivial
 
@@ -1242,6 +1248,8 @@ Extra - asset_id: collision_camera_011
 
 > Dock to Chain Reaction Access (3); Heals? False
   * Morph Ball Tunnel to Chain Reaction Access/Dock to Teleport to Cataris (3)
+  > Dock to Chain Reaction Access (Morph Puzzle)
+      After Artaria - Thermal Device
 
 > Under Teleporter; Heals? False
   > Door to Save Station West
@@ -1567,7 +1575,7 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Proto EMMI Battle
-      Trivial
+      After Artaria - Proto Central Unit or Can Slide
   > Tile Group (BOMB)
       All of the following:
           Morph Ball
@@ -1589,9 +1597,9 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Melee Tutorial Room (Lower)
-      Trivial
-  > Door to Melee Tutorial Room (Upper)
       After Artaria - Proto Central Unit
+  > Door to Melee Tutorial Room (Upper)
+      Space Jump and After Artaria - Proto Central Unit
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -1929,6 +1937,8 @@ Extra - asset_id: collision_camera_023
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Hot Room Hub
+      Trivial
 
 > Door to Hot Room Hub; Heals? False
   * Power Beam Door to Hot Room Hub/Door to Magma Flow Vista
@@ -1938,6 +1948,8 @@ Extra - asset_id: collision_camera_023
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Thermal Door Tutorial
+      Trivial
 
 ----------------
 East Lava Missile Room
@@ -2859,7 +2871,7 @@ Extra - asset_id: collision_camera_054
   > Dock to Charge Beam Access
       Trivial
   > Top Left
-      Spider Magnet or Simple IBJ or Use Spin Boost
+      Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
   > Top Right
       Simple IBJ or Use Spin Boost
 
@@ -2897,6 +2909,8 @@ Extra - asset_id: collision_camera_055
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Room Middle
+      Morph Ball
 
 > Door to Teleport to Cataris; Heals? False
   * Super Missile Door to Teleport to Cataris/Door to Chain Reaction Access
@@ -2906,6 +2920,8 @@ Extra - asset_id: collision_camera_055
   * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Room Middle
+      Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -2928,13 +2944,21 @@ Extra - asset_id: collision_camera_055
 
 > Dock to Teleport to Cataris (3); Heals? False
   * Slide Tunnel to Teleport to Cataris/Dock to Chain Reaction Access (3)
-  > Door to Teleport to Cataris
-      Trivial
+  > Room Middle
+      Morph Ball
 
 > Dock to Waterfall; Heals? False
   * Morph Ball Tunnel to Waterfall/Dock to Chain Reaction Access
   > Dock to Teleport to Cataris (Morph Puzzle)
       Morph Ball
+
+> Room Middle; Heals? False
+  > Door to Chain Reaction Room
+      Morph Ball
+  > Door to Teleport to Cataris
+      Trivial
+  > Dock to Teleport to Cataris (3)
+      Trivial
 
 ----------------
 Waterfall
@@ -3186,6 +3210,8 @@ Extra - asset_id: collision_camera_060
   * Extra - start_point_actor_name: SP_Checkpoint_WaterValve
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Map Station
+      Trivial
+  > Dock to collision_camera_075 (A)
       Trivial
   > Door to Behind Waterfall
       Trivial
