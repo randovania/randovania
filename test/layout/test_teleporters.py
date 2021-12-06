@@ -50,8 +50,8 @@ def _with_data(request):
         mode=TeleporterShuffleMode.VANILLA,
         skip_final_bosses=False,
         allow_unvisited_room_names=False,
-        excluded_teleporters=TeleporterList(frozenset(), game),
-        excluded_targets=TeleporterTargetList(frozenset(), game),
+        excluded_teleporters=TeleporterList(tuple(), game),
+        excluded_targets=TeleporterTargetList(tuple(), game),
     )
     return (reference, request.param["encoded"], request.param["bit_count"],
             TeleporterConfiguration.from_json(request.param["json"], game=game))

@@ -13,16 +13,18 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import LogbookNode, LoreType
 from randovania.game_description.world.world_list import WorldList
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator import elevator_distributor
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 
 
 class MissingRng(Exception):
     pass
 
+
 HintTargetPrecision = Tuple[PickupIndex, HintLocationPrecision, HintItemPrecision]
+
 
 class BasePatchesFactory:
     def create_base_patches(self,
@@ -35,7 +37,7 @@ class BasePatchesFactory:
         """
         """
         patches = dataclasses.replace(game.create_game_patches(),
-                                    player_index=player_index)
+                                      player_index=player_index)
 
         # Elevators
         patches = self.add_elevator_connections_to_patches(configuration, rng, patches)
@@ -55,7 +57,7 @@ class BasePatchesFactory:
                                                         num_joke=self.num_joke_hints, is_multiworld=is_multiworld)
 
         return patches
-    
+
     def add_elevator_connections_to_patches(self,
                                             configuration: BaseConfiguration,
                                             rng: Random,
@@ -68,7 +70,6 @@ class BasePatchesFactory:
         :return:
         """
         return patches
-        
 
     def starting_location_for_configuration(self,
                                             configuration: BaseConfiguration,
@@ -86,8 +87,9 @@ class BasePatchesFactory:
             location = rng.choice(locations)
 
         return location
-    
-    def configurable_node_assignment(self, configuration: BaseConfiguration, game: GameDescription, rng: Random) -> NodeConfigurationAssignment:
+
+    def configurable_node_assignment(self, configuration: BaseConfiguration, game: GameDescription,
+                                     rng: Random) -> NodeConfigurationAssignment:
         return NodeConfigurationAssignment()
 
     @property
@@ -157,8 +159,10 @@ class BasePatchesFactory:
 
         return patches
 
+
 class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
-    def add_elevator_connections_to_patches(self, configuration: EchoesConfiguration, rng: Random, patches: GamePatches) -> GamePatches:
+    def add_elevator_connections_to_patches(self, configuration: EchoesConfiguration, rng: Random,
+                                            patches: GamePatches) -> GamePatches:
         elevator_connection = copy.copy(patches.elevator_connection)
         elevators = configuration.elevators
 
