@@ -64,7 +64,7 @@ UI_CUSTOM_NAMES = {
     ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree Elevator",
 
     # Frigate
-    ("Frigate Orpheon", "Exterior Docking Hangar"): 'Frigate Escape Cutscene Teleporter',
+    ("Frigate Orpheon", "Exterior Docking Hangar"): 'Exterior Docking Hangar',
 
     # Impact Crater
     ("Impact Crater", "Crater Entry Point"): 'Crater Entry Point',

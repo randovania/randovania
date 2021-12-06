@@ -208,9 +208,11 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
             origin_check = self._elevator_source_for_location[origin]
             dest_check = self._elevator_source_for_location.get(destination)
 
+            assert origin_check or dest_check
+
             is_locked = origin in static_areas
-            if not can_shuffle_target:
-                is_locked = is_locked or destination in static_areas
+            if not is_locked and not can_shuffle_target:
+                is_locked = (destination in static_areas) or (origin_check and not dest_check)
 
             origin_check.setEnabled(not config_elevators.is_vanilla and not is_locked)
             origin_check.setChecked(origin not in config_elevators.excluded_teleporters.locations and not is_locked)
