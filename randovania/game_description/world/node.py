@@ -211,9 +211,9 @@ class ConfigurableNode(ResourceNode):
 
 
 class LoreType(Enum):
-    LUMINOTH_LORE = "luminoth-lore"
-    LUMINOTH_WARRIOR = "luminoth-warrior"
-    PIRATE_LORE = "pirate-lore"
+    REQUIRES_ITEM = "requires-item"
+    SPECIFIC_PICKUP = "specific-pickup"
+    GENERIC = "generic"
     SKY_TEMPLE_KEY_HINT = "sky-temple-key-hint"
 
     @property
@@ -226,9 +226,9 @@ class LoreType(Enum):
 
 
 _LORE_TYPE_LONG_NAME = {
-    LoreType.LUMINOTH_LORE: "Luminoth Lore",
-    LoreType.LUMINOTH_WARRIOR: "Keybearer Corpse",
-    LoreType.PIRATE_LORE: "Pirate Lore",
+    LoreType.REQUIRES_ITEM: "Requires Item",
+    LoreType.SPECIFIC_PICKUP: "Specific Pickup",
+    LoreType.GENERIC: "Generic",
     LoreType.SKY_TEMPLE_KEY_HINT: "Sky Temple Key Hint",
 }
 
@@ -255,7 +255,9 @@ class LogbookNode(ResourceNode):
         )
 
     def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
-        items = [ResourceRequirement(self.scan_visor, 1, False)]
+        items = []
+        if self.scan_visor is not None:
+            items.append(ResourceRequirement(self.scan_visor, 1, False))
         if self.required_translator is not None:
             items.append(ResourceRequirement(self.required_translator, 1, False))
 
@@ -276,14 +278,15 @@ class LogbookNode(ResourceNode):
         """
         if current_resources.get(self.resource(), 0) != 0:
             return False
-
-        if current_resources.get(self.scan_visor, 0) == 0:
-            return False
+        
+        if self.scan_visor is not None:
+            if current_resources.get(self.scan_visor, 0) == 0:
+                return False
 
         if self.required_translator is not None:
             return current_resources.get(self.required_translator, 0) > 0
-        else:
-            return True
+        
+        return True
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources,
                                  all_nodes: Tuple[Node, ...], database: ResourceDatabase) -> ResourceGain:

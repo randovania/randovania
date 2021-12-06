@@ -71,7 +71,7 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
     
     def add_default_hints_to_patches(self, rng: Random, patches: GamePatches, world_list: WorldList, num_joke: int, is_multiworld: bool) -> GamePatches:
         for node in world_list.all_nodes:
-            if isinstance(node, LogbookNode) and node.lore_type == LoreType.LUMINOTH_WARRIOR:
+            if isinstance(node, LogbookNode) and node.lore_type == LoreType.SPECIFIC_PICKUP:
                 patches = patches.assign_hint(node.resource(),
                                             Hint(HintType.LOCATION,
                                                 PrecisionPair(HintLocationPrecision.KEYBEARER,

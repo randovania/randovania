@@ -187,10 +187,10 @@ def _migrate_v3(data: dict) -> dict:
                     node["event_name"] = find_resource(ResourceType.EVENT, node.pop("event_index"))
 
                 if node_type == "logbook":
-                    lore_type = LoreType(node["lore_type"])
-                    if lore_type == LoreType.LUMINOTH_LORE:
+                    lore_type = node["lore_type"]
+                    if lore_type == "luminoth-lore":
                         node["extra"]["translator"] = find_resource(ResourceType.ITEM, node.pop("lore_extra"))
-                    if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
+                    if lore_type in {"luminoth-warrior", "sky-temple-key-hint"}:
                         node["extra"]["hint_index"] = node.pop("lore_extra")
 
                 if node_type == "player_ship":
