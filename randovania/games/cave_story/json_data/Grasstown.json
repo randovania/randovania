@@ -1296,15 +1296,19 @@
                     }
                 },
                 "Hint - Cthulhu (East)": {
-                    "node_type": "generic",
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": {
-                        "x": 4422.5641025641025,
-                        "y": 105.2915479582145,
-                        "z": 0
+                        "x": 4422.56,
+                        "y": 105.29,
+                        "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "event": "0205"
+                    },
+                    "string_asset_id": 3,
+                    "lore_type": "generic",
                     "connections": {
                         "East Side": {
                             "type": "and",
@@ -1337,15 +1341,19 @@
                     }
                 },
                 "Hint - Cthulhu (West)": {
-                    "node_type": "generic",
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": {
-                        "x": 253.14339981006648,
-                        "y": 292.4900284900284,
-                        "z": 0
+                        "x": 253.14,
+                        "y": 292.49,
+                        "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "event": "0201"
+                    },
+                    "string_asset_id": 2,
+                    "lore_type": "generic",
                     "connections": {
                         "West Side": {
                             "type": "and",
@@ -1786,6 +1794,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Hint - MALCO": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventBalrog2",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1920,6 +1937,31 @@
                     },
                     "pickup_index": 13,
                     "major_location": false,
+                    "connections": {
+                        "Door to Grasstown": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - MALCO": {
+                    "node_type": "logbook",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 199.77,
+                        "y": 132.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "event": "0306",
+                        "hint_index": 13
+                    },
+                    "string_asset_id": 8,
+                    "lore_type": "specific-pickup",
                     "connections": {
                         "Door to Grasstown": {
                             "type": "and",
