@@ -17,7 +17,9 @@ class TextColor(Enum):
     PLAYER = "#d4cc33"
 
 
-def color_text(color: TextColor, text: str):
+def color_text(color: Optional[TextColor], text: str):
+    if color is None:
+        return text
     return f"&push;&main-color={color.value};{text}&pop;"
 
 
@@ -32,8 +34,9 @@ class AreaNamer:
     world_list: WorldList
     index_to_node: Dict[PickupIndex, PickupNode]
 
-    def __init__(self, world_list: WorldList):
+    def __init__(self, world_list: WorldList, include_world: bool = True):
         self.world_list = world_list
+        self.include_world = include_world
 
         self.index_to_node = {
             node.pickup_index: node
@@ -44,15 +47,15 @@ class AreaNamer:
     def location_name(self, pickup_index: PickupIndex, hide_area: bool,
                       color: Optional[TextColor] = TextColor.LOCATION) -> str:
         result = self.node_name(self.index_to_node[pickup_index], hide_area)
-        if color is not None:
-            return color_text(color, result)
-        return result
+        return color_text(color, result)
 
     def node_name(self, pickup_node: PickupNode, hide_area: bool) -> str:
         if hide_area:
             return self.world_list.world_name_from_node(pickup_node, True)
-        else:
+        elif self.include_world:
             return self.world_list.area_name(self.world_list.nodes_to_area(pickup_node))
+        else:
+            return self.world_list.nodes_to_area(pickup_node).name
 
 
 class Determiner:
@@ -72,6 +75,22 @@ class Determiner:
             return self.s.title()
         else:
             return self.s
+    
+    @property
+    def capitalize(self):
+        return self.s.capitalize()
+    
+    @property
+    def capitalize_title(self):
+        return self.title.capitalize()
+    
+    @property
+    def upper(self):
+        return self.s.upper()
+    
+    @property
+    def upper_title(self):
+        return self.title.upper()
 
 
 def player_determiner(players_config: PlayersConfiguration, player: int,
