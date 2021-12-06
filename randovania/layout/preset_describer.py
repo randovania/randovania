@@ -159,7 +159,7 @@ def _format_params_base(configuration: BaseConfiguration,
     # Gameplay
     starting_locations = configuration.starting_location.locations
     if len(starting_locations) == 1:
-        area = game_description.world_list.area_by_area_location(next(iter(starting_locations)))
+        area = game_description.world_list.area_by_area_location(starting_locations[0])
         starting_location = game_description.world_list.area_name(area)
     else:
         starting_location = "{} locations".format(len(starting_locations))
