@@ -1,13 +1,17 @@
 import copy
 import dataclasses
 from random import Random
-from typing import Union
+from typing import Tuple, Union
+from build.lib.randovania.game_description.hint import HintLocationPrecision
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import NodeConfigurationAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.hint import Hint, HintItemPrecision, HintType, PrecisionPair
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import LogbookNode, LoreType
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import elevator_distributor
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -17,6 +21,8 @@ from randovania.games.prime2.layout.echoes_configuration import EchoesConfigurat
 
 class MissingRng(Exception):
     pass
+
+HintTargetPrecision = Tuple[PickupIndex, HintLocationPrecision, HintItemPrecision]
 
 class BasePatchesFactory:
     def create_base_patches(self,
@@ -45,7 +51,7 @@ class BasePatchesFactory:
 
         # Hints
         if rng is not None:
-            patches = self.add_default_hints_to_patches(rng, patches, game.world_list,
+            patches = self.add_default_hints_to_patches(configuration, game, rng, patches, game.world_list,
                                                         num_joke=self.num_joke_hints, is_multiworld=is_multiworld)
 
         return patches
@@ -87,8 +93,14 @@ class BasePatchesFactory:
     @property
     def num_joke_hints(self) -> int:
         return 2
+    
+    def indices_with_hint(self, configuration: BaseConfiguration, game: GameDescription, rng: Random, patches: GamePatches, world_list: WorldList) -> list[HintTargetPrecision]:
+        return []
+    
+    def add_other_hints(self, patches: GamePatches, all_logbook_nodes: list[LogbookNode]) -> GamePatches:
+        return patches
 
-    def add_default_hints_to_patches(self, rng: Random, patches: GamePatches, world_list: WorldList, num_joke: int, is_multiworld: bool) -> GamePatches:
+    def add_default_hints_to_patches(self, configuration: BaseConfiguration, game: GameDescription, rng: Random, patches: GamePatches, world_list: WorldList, num_joke: int, is_multiworld: bool) -> GamePatches:
         """
         Adds hints that are present on all games.
         :param rng:
@@ -98,6 +110,47 @@ class BasePatchesFactory:
         :param is_multiworld
         :return:
         """
+        # Specific Pickup/LogbookNode Hints
+        for node in world_list.all_nodes:
+            if isinstance(node, LogbookNode) and node.lore_type == LoreType.SPECIFIC_PICKUP:
+                patches = patches.assign_hint(node.resource(),
+                                              Hint(HintType.LOCATION,
+                                              PrecisionPair(HintLocationPrecision.KEYBEARER,
+                                                            HintItemPrecision.BROAD_CATEGORY,
+                                                            include_owner=True),
+                                              PickupIndex(node.hint_index)))
+
+        all_logbook_nodes = [node
+                            for node in world_list.all_nodes
+                            if isinstance(node, LogbookNode)
+                            and node.resource() not in patches.hints
+                            and node.lore_type.holds_generic_hint]
+        rng.shuffle(all_logbook_nodes)
+        
+        # Specific Pickup/any LogbookNode Hints
+        indices_with_hint = self.indices_with_hint(configuration, game, rng, patches, world_list)
+        rng.shuffle(indices_with_hint)
+
+        for index, location_precision, item_precision in indices_with_hint:
+            if not all_logbook_nodes:
+                break
+
+            logbook_node = all_logbook_nodes.pop()
+            patches = patches.assign_hint(logbook_node.resource(), Hint(
+                HintType.LOCATION,
+                PrecisionPair(location_precision, item_precision, include_owner=False),
+                index
+            ))
+        
+        # Other hints
+        patches = self.add_other_hints(patches, all_logbook_nodes)
+
+        # Jokes
+        while num_joke > 0 and all_logbook_nodes:
+            logbook_asset = all_logbook_nodes.pop().resource()
+            patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, None))
+            num_joke -= 1
+
         return patches
 
 class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
