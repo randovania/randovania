@@ -218,7 +218,7 @@ class LoreType(Enum):
 
     @property
     def holds_generic_hint(self) -> bool:
-        return self in {LoreType.LUMINOTH_LORE, LoreType.PIRATE_LORE}
+        return self in {LoreType.REQUIRES_ITEM, LoreType.GENERIC}
 
     @property
     def long_name(self) -> str:

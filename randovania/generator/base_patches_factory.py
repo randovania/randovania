@@ -2,7 +2,7 @@ import copy
 import dataclasses
 from random import Random
 from typing import Tuple, Union
-from build.lib.randovania.game_description.hint import HintLocationPrecision
+from randovania.game_description.hint import HintLocationPrecision
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import NodeConfigurationAssignment
@@ -100,6 +100,9 @@ class BasePatchesFactory:
     def add_other_hints(self, patches: GamePatches, all_logbook_nodes: list[LogbookNode]) -> GamePatches:
         return patches
 
+    def get_specific_location_precisions(self) -> dict[str, Tuple[HintLocationPrecision, HintItemPrecision]]:
+        return {}
+    
     def add_default_hints_to_patches(self, configuration: BaseConfiguration, game: GameDescription, rng: Random, patches: GamePatches, world_list: WorldList, num_joke: int, is_multiworld: bool) -> GamePatches:
         """
         Adds hints that are present on all games.
@@ -111,13 +114,14 @@ class BasePatchesFactory:
         :return:
         """
         # Specific Pickup/LogbookNode Hints
+        specific_location_precisions = self.get_specific_location_precisions()
+
         for node in world_list.all_nodes:
             if isinstance(node, LogbookNode) and node.lore_type == LoreType.SPECIFIC_PICKUP:
+                location, item = specific_location_precisions.get(node.name, (HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY))
                 patches = patches.assign_hint(node.resource(),
                                               Hint(HintType.LOCATION,
-                                              PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                            HintItemPrecision.BROAD_CATEGORY,
-                                                            include_owner=True),
+                                              PrecisionPair(location, item, include_owner=True),
                                               PickupIndex(node.hint_index)))
 
         all_logbook_nodes = [node

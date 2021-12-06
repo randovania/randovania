@@ -10,9 +10,19 @@ from randovania.generator.base_patches_factory import BasePatchesFactory, HintTa
 
 
 class CSBasePatchesFactory(BasePatchesFactory):
+    def get_specific_location_precisions(self) -> dict[str, HintLocationPrecision]:
+        return {
+            "Hint - MALCO": (HintLocationPrecision.MALCO, HintItemPrecision.DETAILED),
+            "Hint - Mrs. Little": (HintLocationPrecision.LITTLE, HintItemPrecision.DETAILED),
+            "Hint - Jenka 1": (HintLocationPrecision.JENKA, HintItemPrecision.DETAILED),
+            "Hint - Jenka 2": (HintLocationPrecision.JENKA, HintItemPrecision.DETAILED),
+            "Hint - Numahachi 1": (HintLocationPrecision.NUMAHACHI, HintItemPrecision.DETAILED),
+            "Hint - Numahachi 2": (HintLocationPrecision.NUMAHACHI, HintItemPrecision.DETAILED)
+        }
+
     def indices_with_hint(self, configuration: CSConfiguration, game: GameDescription, rng: Random, patches: GamePatches, world_list: WorldList) -> list[HintTargetPrecision]:
         return []
-        
+
         # TODO: assign base hints *after* generation?
         items_with_hint = []
         if configuration.objective == CSObjective.BAD_ENDING:

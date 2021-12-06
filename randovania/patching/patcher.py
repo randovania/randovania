@@ -6,6 +6,7 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.layout.layout_description import LayoutDescription
+from randovania.patching.prime.patcher_file_lib import hint_lib
 
 
 class Patcher(ABC):

@@ -1,6 +1,7 @@
 from randovania.games.cave_story.generator.base_patches_factory import CSBasePatchesFactory
 from randovania.games.cave_story.generator.bootstrap import CSBootstrap
 from randovania.games.cave_story.generator.pool_creator import pool_creator
+from randovania.games.cave_story.gui.hint_details_tab import HintDetailsTab
 from randovania.games.cave_story.patcher.caver_patcher import CaverPatcher
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
 
@@ -16,7 +17,8 @@ def _cs_gui():
     return GameGui(
         tab_provider=cs_preset_tabs,
         cosmetic_dialog=CSCosmeticPatchesDialog,
-        progressive_item_gui_tuples=progressive_items.gui_tuples()
+        progressive_item_gui_tuples=progressive_items.gui_tuples(),
+        spoiler_visualizer=(HintDetailsTab,)
     )
 
 game_data: GameData = GameData(

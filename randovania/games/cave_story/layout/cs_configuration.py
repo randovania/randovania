@@ -1,6 +1,8 @@
 import dataclasses
 from enum import Enum
-from randovania.bitpacking.bitpacking import BitPackEnum
+from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
+from randovania.bitpacking.json_dataclass import JsonDataclass
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 
 from randovania.game_description.requirements import Requirement
 from randovania.games.game import RandovaniaGame
@@ -51,10 +53,15 @@ class CSObjective(BitPackEnum, Enum):
         raise ValueError(f"No script for objective {self}")
 
 @dataclasses.dataclass(frozen=True)
+class HintConfiguration(BitPackDataclass, DataclassPostInitTypeCheck, JsonDataclass):
+    item_hints: bool = True
+
+@dataclasses.dataclass(frozen=True)
 class CSConfiguration(BaseConfiguration):
     puppies_anywhere: bool
     objective: CSObjective
     no_blocks: bool
+    hints: HintConfiguration = HintConfiguration()
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

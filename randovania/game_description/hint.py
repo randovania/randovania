@@ -61,6 +61,11 @@ class HintLocationPrecision(Enum):
     RELATIVE_TO_AREA = "relative-to-area"
     RELATIVE_TO_INDEX = "relative-to-index"
 
+    MALCO = "malco"
+    JENKA = "jenka"
+    LITTLE = "mrs-little"
+    NUMAHACHI = "numahachi"
+
 
 class HintRelativeAreaName(Enum):
     # The area's name

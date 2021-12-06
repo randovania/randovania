@@ -36,8 +36,8 @@ _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 
 
 class RelativeItemFormatter(RelativeFormatter):
-    def __init__(self, world_list: WorldList, patches: GamePatches, players_config: PlayersConfiguration):
-        super().__init__(world_list, patches)
+    def __init__(self, world_list: WorldList, patches: GamePatches, players_config: PlayersConfiguration, text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
+        super().__init__(world_list, patches, text_color)
         self.players_config = players_config
 
     def format(self, determiner: Determiner, pickup: str, hint: Hint) -> str:
