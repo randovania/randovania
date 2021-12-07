@@ -229,8 +229,8 @@ collision_camera_005 (B)
 Extra - total_boundings: {'x1': -5000.0, 'x2': -1900.0, 'y1': 7700.0, 'y2': 12500.0}
 Extra - polygon: [[-1900.0, 12500.0], [-5000.0, 12500.0], [-5000.0, 7700.0], [-1900.0, 7700.0]]
 Extra - asset_id: collision_camera_005
-> Door to collision_camera_029 (B); Heals? False
-  * Power Beam Door to collision_camera_029 (B)/Door to collision_camera_005 (B)
+> Door to Drogyga Access; Heals? False
+  * Power Beam Door to Drogyga Access/Door to collision_camera_005 (B)
   * Extra - actor_name: doorpowerpower_010
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -256,8 +256,8 @@ Transport to Ghavoran
 Extra - total_boundings: {'x1': 1000.0, 'x2': 4800.0, 'y1': 6600.0, 'y2': 13200.0}
 Extra - polygon: [[3700.0, 13200.0], [1000.0, 13200.0], [1000.0, 6600.0], [4800.0, 6600.0], [4800.0, 11100.0], [3700.0, 11100.0]]
 Extra - asset_id: collision_camera_006
-> Door to collision_camera_007 (B); Heals? False
-  * Grapple Beam Door to collision_camera_007 (B)/Door to Transport to Ghavoran
+> Door to Underneath Drogyga; Heals? False
+  * Grapple Beam Door to Underneath Drogyga/Door to Transport to Ghavoran
   * Extra - actor_name: doorgrapplegrapple_001
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -316,13 +316,16 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
 
+> Dock to Underneath Drogyga; Heals? False
+  * Not Determined to Underneath Drogyga/Dock to Transport to Ghavoran
+
 ----------------
-collision_camera_007 (B)
+Underneath Drogyga
 Extra - total_boundings: {'x1': -2000.0, 'x2': 1100.0, 'y1': 7600.0, 'y2': 10250.0}
 Extra - polygon: [[1100.0, 10250.0], [-2000.0, 10250.0], [-2000.0, 7600.0], [1100.0, 7600.0]]
 Extra - asset_id: collision_camera_007
 > Door to Transport to Ghavoran; Heals? False
-  * Grapple Beam Door to Transport to Ghavoran/Door to collision_camera_007 (B)
+  * Grapple Beam Door to Transport to Ghavoran/Door to Underneath Drogyga
   * Extra - actor_name: doorgrapplegrapple_001
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -340,12 +343,26 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Left of Grapple Blocks
+      Trivial
 
 > Tile Group (WEIGHT) 2; Heals? False
   * Extra - actor_name: breakabletilegroup_035
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+
+> Dock to Drogyga Arena; Heals? False
+  * Open Passage to Drogyga Arena/Dock to Underneath Drogyga
+  > Tile Group (WEIGHT) 1
+      Trivial
+
+> Left of Grapple Blocks; Heals? False
+  > Dock to Transport to Ghavoran
+      Flash Shift or Grapple Beam or Space Jump
+
+> Dock to Transport to Ghavoran; Heals? False
+  * Not Determined to Transport to Ghavoran/Dock to Underneath Drogyga
 
 ----------------
 Teleport to Ferenia
@@ -1373,39 +1390,66 @@ Extra - asset_id: collision_camera_027
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
 
 ----------------
-collision_camera_028 (B)
+Drogyga Arena
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -1900.0, 'x2': 1000.0, 'y1': 10300.0, 'y2': 11550.0}
 Extra - polygon: [[1000.0, 11500.0], [-1400.0, 11500.0], [-1500.0, 11550.0], [-1800.0, 11550.0], [-1900.0, 11500.0], [-1900.0, 10300.0], [1000.0, 10300.0]]
 Extra - asset_id: collision_camera_028
-> Start Point; Heals? False; Spawn Point
+> Before Fight; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Hydrogiga_Dead
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > After Fight
+      Trivial
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_031
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Before Fight
+      Trivial
+
+> Dock to Drogyga Access; Heals? False
+  * Open Passage to Drogyga Access/Dock to Drogyga Arena
+  > Tile Group (WEIGHT)
+      Trivial
+
+> After Fight; Heals? False
+  > Dock to Underneath Drogyga
+      Trivial
+
+> Dock to Underneath Drogyga; Heals? False
+  * Open Passage to Underneath Drogyga/Dock to Drogyga Arena
 
 ----------------
-collision_camera_029 (B)
+Drogyga Access
 Extra - total_boundings: {'x1': -2000.0, 'x2': -520.0, 'y1': 11450.0, 'y2': 12350.0}
 Extra - polygon: [[-520.0, 12350.0], [-2000.0, 12350.0], [-2000.0, 11450.0], [-520.0, 11450.0]]
 Extra - asset_id: collision_camera_029
 > Door to collision_camera_005 (B); Heals? False
-  * Power Beam Door to collision_camera_005 (B)/Door to collision_camera_029 (B)
+  * Power Beam Door to collision_camera_005 (B)/Door to Drogyga Access
   * Extra - actor_name: doorpowerpower_010
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Event - Grapple Block
+      Grapple Beam
+  > Dock to Drogyga Arena
+      Morph Ball and After Burenia - Drogyga Access Grapple Block
 
-> Event - Breakable (grapplepulloff1x2_006); Heals? False
-  * Event Burenia - grapplepulloff1x2_006
+> Event - Grapple Block; Heals? False
+  * Event Burenia - Drogyga Access Grapple Block
   * Extra - actor_name: grapplepulloff1x2_006
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Door to collision_camera_005 (B)
+      Trivial
+
+> Dock to Drogyga Arena; Heals? False
+  * Open Passage to Drogyga Arena/Dock to Drogyga Access
+  > Door to collision_camera_005 (B)
+      Morph Ball and After Burenia - Drogyga Access Grapple Block
 
 ----------------
 collision_camera_030 (B)
