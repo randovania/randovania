@@ -61,6 +61,7 @@ class CSConfiguration(BaseConfiguration):
     puppies_anywhere: bool
     objective: CSObjective
     no_blocks: bool
+    starting_hp: int = dataclasses.field(metadata={"min": 1, "max": 55, "precision": 1})
     hints: HintConfiguration = HintConfiguration()
 
     @classmethod

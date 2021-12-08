@@ -14,6 +14,7 @@ def cs_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.games.cave_story.gui.preset_settings.cs_item_pool_tab import CSPresetItemPool
     from randovania.games.cave_story.gui.preset_settings.cs_goal_tab import PresetCSObjective
+    from randovania.games.cave_story.gui.preset_settings.cs_hp_tab import PresetCSHP
 
     return [
         PresetTrickLevel(editor, game_description, window_manager),
@@ -21,5 +22,6 @@ def cs_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetLogicDamage(editor),
         PresetCSObjective(editor),
         PresetLocationPool(editor, game_description),
-        CSPresetItemPool(editor)
+        CSPresetItemPool(editor),
+        PresetCSHP(editor)
     ]

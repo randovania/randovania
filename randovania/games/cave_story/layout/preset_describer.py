@@ -24,6 +24,9 @@ def cs_format_params(configuration: CSConfiguration) -> dict[str, list[str]]:
                 {"Missiles need main Launcher": "Missile Expansion"}
             ),
             {"No falling blocks in B2": configuration.no_blocks}
+        ],
+        "Difficulty": [
+            {f"Starting HP: {configuration.starting_hp}": configuration.starting_hp != 3}
         ]
     }
     fill_template_strings_from_tree(template_strings, extra_message_tree)
