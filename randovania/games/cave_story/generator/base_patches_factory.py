@@ -10,6 +10,9 @@ from randovania.generator.base_patches_factory import BasePatchesFactory, HintTa
 
 
 class CSBasePatchesFactory(BasePatchesFactory):
+    def num_joke_hints(self) -> int:
+        return 0
+
     def get_specific_location_precisions(self) -> dict[str, HintLocationPrecision]:
         return {
             "Hint - MALCO": (HintLocationPrecision.MALCO, HintItemPrecision.DETAILED),
