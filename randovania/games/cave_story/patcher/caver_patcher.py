@@ -28,6 +28,8 @@ from randovania.patching.prime.patcher_file_lib.hint_formatters import RelativeA
 from randovania.patching.prime.patcher_file_lib.hints import create_location_formatters, get_hints_for_asset
 from randovania.patching.prime.patcher_file_lib.item_hints import RelativeItemFormatter
 
+from tsc_utils.numbers import num_to_tsc_value
+
 
 class CaverPatcher(Patcher):
     _busy: bool = False
@@ -137,6 +139,10 @@ class CaverPatcher(Patcher):
         starting_script += "<MP+0040<MP+0043"
         # Softlock prevention mapflags
         starting_script += "<MP+0032<MP+0033<MP+0036"
+
+        # Starting HP
+        if configuration.starting_hp != 3:
+            starting_script += f"<ML+{num_to_tsc_value(configuration.starting_hp - 3).decode('utf-8')}"
 
         # TODO: starting items
 
