@@ -126,6 +126,9 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.update()
 
     def update_world_bounds(self):
+        if self.world is None:
+            return
+        
         min_x, min_y = math.inf, math.inf
         max_x, max_y = -math.inf, -math.inf
 

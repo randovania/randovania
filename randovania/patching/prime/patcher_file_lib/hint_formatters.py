@@ -28,7 +28,7 @@ class GuardianFormatter(LocationFormatter):
 
 
 class TemplatedFormatter(LocationFormatter):
-    def __init__(self, template: str, area_namer: hint_lib.AreaNamer, upper_pickup: bool = False, text_color: hint_lib.TextColor = hint_lib.TextColor.ITEM):
+    def __init__(self, template: str, area_namer: hint_lib.AreaNamer, upper_pickup: bool = False, text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
         self.template = template
         self.hint_name_creator = area_namer
         self.upper_pickup = upper_pickup
