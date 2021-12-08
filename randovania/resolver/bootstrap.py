@@ -1,5 +1,5 @@
 import copy
-from typing import Tuple
+from typing import NamedTuple, Tuple
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
@@ -14,6 +14,10 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.resolver.state import State, StateGameData
 
+
+class EnergyConfig(NamedTuple):
+    starting_energy: int
+    energy_per_tank: int
 
 class Bootstrap:
     def trick_resources_for_configuration(self, configuration: TrickLevelConfiguration,
@@ -64,10 +68,14 @@ class Bootstrap:
             if item.short_name not in items_to_skip:
                 resources[item] = custom_item_count.get(item.short_name, 1)
 
+    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
+        return EnergyConfig(99, 100)
 
-    def calculate_starting_state(self, game: GameDescription, patches: GamePatches, energy_per_tank: int) -> "State":
+    def calculate_starting_state(self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration) -> "State":
         starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
         initial_resources = copy.copy(patches.starting_items)
+
+        starting_energy, energy_per_tank = self.energy_config(configuration)
 
         if isinstance(starting_node, PlayerShipNode):
             add_resource_gain_to_current_resources(
@@ -83,7 +91,7 @@ class Bootstrap:
         starting_state = State(
             initial_resources,
             (),
-            99 + (100 * initial_resources.get(game.resource_database.energy_tank, 0)),
+            starting_energy + (energy_per_tank * initial_resources.get(game.resource_database.energy_tank, 0)),
             starting_node,
             patches,
             None,
@@ -156,9 +164,7 @@ class Bootstrap:
         if not game.mutable:
             raise ValueError("Running logic_bootstrap with non-mutable game")
 
-        # FIXME
-        energy_per_tank = getattr(configuration, "energy_per_tank", 100)
-        starting_state = self.calculate_starting_state(game, patches, energy_per_tank)
+        starting_state = self.calculate_starting_state(game, patches, configuration)
 
         if configuration.trick_level.minimal_logic:
             self._add_minimal_logic_initial_resources(starting_state.resources,
@@ -176,3 +182,7 @@ class Bootstrap:
         game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
         return game, starting_state
+
+class MetroidBootstrap(Bootstrap):
+    def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
+        return EnergyConfig(99, configuration.energy_per_tank)
