@@ -391,6 +391,9 @@ class RandomprimePatcher(Patcher):
 
                 "etankCapacity": configuration.energy_per_tank,
                 "itemMaxCapacity": {
+                    "Energy Tank": 200,
+                    "Power Bomb": 99,
+                    "Missile": 999,
                     "Unknown Item 1": db.resource_database.multiworld_magic_item.max_capacity,
                 },
 
