@@ -801,7 +801,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door to collision_camera_029 (B)": {
+                "Door to Drogyga Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -820,7 +820,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "collision_camera_029 (B)",
+                        "area_name": "Drogyga Access",
                         "node_name": "Door to collision_camera_005 (B)"
                     },
                     "dock_type": "door",
@@ -909,7 +909,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Door to collision_camera_007 (B)": {
+                "Door to Underneath Drogyga": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -928,7 +928,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "collision_camera_007 (B)",
+                        "area_name": "Underneath Drogyga",
                         "node_name": "Door to Transport to Ghavoran"
                     },
                     "dock_type": "door",
@@ -1088,10 +1088,29 @@
                         ]
                     },
                     "connections": {}
+                },
+                "Dock to Underneath Drogyga": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1065.3756890049322,
+                        "y": 9188.054830287207,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Underneath Drogyga",
+                        "node_name": "Dock to Transport to Ghavoran"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
+                    "connections": {}
                 }
             }
         },
-        "collision_camera_007 (B)": {
+        "Underneath Drogyga": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1142,7 +1161,7 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "Transport to Ghavoran",
-                        "node_name": "Door to collision_camera_007 (B)"
+                        "node_name": "Door to Underneath Drogyga"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -1182,7 +1201,15 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Left of Grapple Blocks": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT) 2": {
                     "node_type": "generic",
@@ -1201,6 +1228,100 @@
                             "WEIGHT"
                         ]
                     },
+                    "connections": {}
+                },
+                "Dock to Drogyga Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -445.79,
+                        "y": 10186.75,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Drogyga Arena",
+                        "node_name": "Dock to Underneath Drogyga"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (WEIGHT) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Left of Grapple Blocks": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1461.7493472584856,
+                        "y": 9295.974760661444,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Dock to Transport to Ghavoran": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Transport to Ghavoran": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1065.3756890049322,
+                        "y": 9188.054830287207,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Transport to Ghavoran",
+                        "node_name": "Dock to Underneath Drogyga"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Not Determined",
                     "connections": {}
                 }
             }
@@ -4597,8 +4718,8 @@
                 }
             }
         },
-        "collision_camera_028 (B)": {
-            "default_node": "Start Point",
+        "Drogyga Arena": {
+            "default_node": "Before Fight",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -4640,7 +4761,7 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Start Point": {
+                "Before Fight": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -4653,7 +4774,15 @@
                         "start_point_actor_name": "SP_Checkpoint_Hydrogiga_Dead",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "After Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT)": {
                     "node_type": "generic",
@@ -4672,11 +4801,85 @@
                             "WEIGHT"
                         ]
                     },
+                    "connections": {
+                        "Before Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Drogyga Access": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1605.63,
+                        "y": 11460.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Drogyga Access",
+                        "node_name": "Dock to Drogyga Arena"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Tile Group (WEIGHT)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "After Fight": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -147.1279373368145,
+                        "y": 10401.283724978242,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Dock to Underneath Drogyga": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Underneath Drogyga": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -445.79,
+                        "y": 10186.75,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Underneath Drogyga",
+                        "node_name": "Dock to Drogyga Arena"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
                     "connections": {}
                 }
             }
         },
-        "collision_camera_029 (B)": {
+        "Drogyga Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -4727,13 +4930,49 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "collision_camera_005 (B)",
-                        "node_name": "Door to collision_camera_029 (B)"
+                        "node_name": "Door to Drogyga Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Event - Grapple Block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Dock to Drogyga Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:grapplepulloff1x2_006",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Event - Breakable (grapplepulloff1x2_006)": {
+                "Event - Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -4747,7 +4986,61 @@
                         "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
                     },
                     "event_name": "s040_aqua:default:grapplepulloff1x2_006",
-                    "connections": {}
+                    "connections": {
+                        "Door to collision_camera_005 (B)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Drogyga Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1605.63,
+                        "y": 11460.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Drogyga Arena",
+                        "node_name": "Dock to Drogyga Access"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Door to collision_camera_005 (B)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:grapplepulloff1x2_006",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
