@@ -1,7 +1,7 @@
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
-from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.bootstrap import Bootstrap, EnergyConfig
 
 
 class CSBootstrap(Bootstrap):
@@ -26,3 +26,6 @@ class CSBootstrap(Bootstrap):
             resource: 1 if resource.long_name == "Freeware" else 0
             for resource in resource_database.version
         }
+    
+    def energy_config(self, configuration: CSConfiguration) -> EnergyConfig:
+        return EnergyConfig(configuration.starting_hp, 1)
