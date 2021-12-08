@@ -2,11 +2,10 @@ from typing import Union
 
 from randovania.game_description import migration_data
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import LoreType
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 6
+CURRENT_VERSION = 7
 
 
 def _migrate_v1(data: dict) -> dict:
@@ -319,6 +318,19 @@ def _migrate_v5(data: dict) -> dict:
 
     return data
 
+def _migrate_v6(data: dict) -> dict:
+    lore_types = {
+        "luminoth-lore": "requires-item",
+        "luminoth-warrior": "specific-pickup",
+        "pirate-lore": "generic"
+    }
+    for world in data["worlds"]:
+        for area in world["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "logbook":
+                    node["lore_type"] = lore_types.get(node["lore_type"], node["lore_type"])
+    return data
+
 
 _MIGRATIONS = {
     1: _migrate_v1,
@@ -326,6 +338,7 @@ _MIGRATIONS = {
     3: _migrate_v3,
     4: _migrate_v4,
     5: _migrate_v5,
+    6: _migrate_v6
 }
 
 

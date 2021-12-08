@@ -184,7 +184,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 
 def test_reach_size_from_start_echoes(small_echoes_game_description, default_layout_configuration):
     # Setup
-    game = small_echoes_game_description
+    game: GameDescription = small_echoes_game_description
     specific_levels = {
         trick.short_name: LayoutTrickLevel.maximum()
         for trick in game.resource_database.trick
@@ -213,7 +213,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
     )
     patches = game.game.data.generator.base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,
                                                        False, player_index=0)
-    state = game.game.data.generator.bootstrap.calculate_starting_state(game, patches, 100)
+    state = game.game.data.generator.bootstrap.calculate_starting_state(game, patches, default_layout_configuration)
     state.resources[item("Combat Visor")] = 1
     state.resources[item("Amber Translator")] = 1
     state.resources[item("Scan Visor")] = 1
