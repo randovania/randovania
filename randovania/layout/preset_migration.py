@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 17
+CURRENT_VERSION = 18
 
 def _migrate_v1(preset: dict) -> dict:
     layout_configuration = preset["layout_configuration"]
