@@ -150,15 +150,18 @@ class CaverPatcher(Patcher):
         # TODO: allow any starting location
 
         # starting location flag and EVE/TRA
-        if patches.starting_location.area_name == "Start Point":
-            starting_script += "<FL+6200<EVE0091"
+        if patches.starting_location.area_name in {"Start Point", "First Cave", "Hermit Gunsmith"}:
+            starting_script += "<FL+6200"
         else:
             # flags set during first cave in normal gameplay
             starting_script += "<FL+0301<FL+0302<FL+1641<FL+1642<FL+0320<FL+0321"
-            if patches.starting_location.area_name == "Arthur's House":
-                starting_script += "<FL+6201<TRA0001:0094:0008:0004"
-            elif patches.starting_location.area_name == "Camp":
-                starting_script += "<FL+6202<TRA0040:0094:0014:0009"
+            waterway = {"Waterway", "Waterway Cabin", "Main Artery"}
+            if patches.starting_location.world_name == "Labyrinth" and patches.starting_location.area_name not in waterway:
+                starting_script += "<FL+6202"
+            elif (patches.starting_location.world_name != "Mimiga Village" and patches.starting_location.area_name not in waterway) or patches.starting_location.area_name == "Arthur's House":
+                starting_script += "<FL+6201"
+        
+        starting_script += game_description.world_list.area_by_area_location(patches.starting_location).extra["starting_script"]
         
         maps["Start"]["pickups"]["0201"] = starting_script
 
