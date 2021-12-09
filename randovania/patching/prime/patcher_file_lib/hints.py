@@ -5,6 +5,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.world.node import LogbookNode
 from randovania.game_description.world.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.patching.prime.patcher_file_lib import hint_lib
 from randovania.patching.prime.patcher_file_lib.hint_formatters import LocationFormatter, GuardianFormatter, \
@@ -60,12 +61,16 @@ def create_location_formatters(
     }
 
 
-def create_hints(all_patches: Dict[int, GamePatches],
-                 players_config: PlayersConfiguration,
-                 world_list: WorldList,
-                 area_namers: Dict[int, hint_lib.AreaNamer],
-                 rng: Random,
-                 ) -> list:
+def get_hints_for_asset(all_patches: Dict[int, GamePatches],
+                    players_config: PlayersConfiguration,
+                    world_list: WorldList,
+                    area_namers: Dict[int, hint_lib.AreaNamer],
+                    rng: Random,
+                    create_loc_formatters = create_location_formatters,
+                    game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
+                    item_text_color: hint_lib.TextColor = hint_lib.TextColor.ITEM,
+                    joke_text_color: hint_lib.TextColor = hint_lib.TextColor.JOKE
+                    ) -> dict[int, str]:
     """
     Creates the string patches entries that changes the Lore scans in the game for item pickups
     :param all_patches:
@@ -80,13 +85,21 @@ def create_hints(all_patches: Dict[int, GamePatches],
     this_area_namer = area_namers[players_config.player_index]
     patches = all_patches[players_config.player_index]
 
-    location_formatters = create_location_formatters(this_area_namer, world_list, patches, players_config)
+    location_formatters = create_loc_formatters(this_area_namer, world_list, patches, players_config)
 
-    hints_for_asset: Dict[int, str] = {}
+    hints_for_asset: dict[int, str] = {}
     for asset, hint in patches.hints.items():
-        hints_for_asset[asset.asset_id] = hint_name_creator.create_message_for_hint(hint, all_patches, players_config,
-                                                                                    location_formatters)
+        hints_for_asset[asset.asset_id] = hint_name_creator.create_message_for_hint(hint, all_patches, players_config,   
+                                                                            location_formatters, game, item_text_color, joke_text_color)
+    return hints_for_asset
 
+def create_hints(all_patches: Dict[int, GamePatches],
+                 players_config: PlayersConfiguration,
+                 world_list: WorldList,
+                 area_namers: Dict[int, hint_lib.AreaNamer],
+                 rng: Random,
+                 ) -> list:
+    hints_for_asset = get_hints_for_asset(all_patches, players_config, world_list, area_namers, rng)
     return [
         create_simple_logbook_hint(
             logbook_node.string_asset_id,

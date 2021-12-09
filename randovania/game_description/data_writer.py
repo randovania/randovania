@@ -264,10 +264,10 @@ def write_node(node: Node) -> dict:
         data["string_asset_id"] = node.string_asset_id
         data["lore_type"] = node.lore_type.value
 
-        if node.lore_type == LoreType.LUMINOTH_LORE:
+        if node.lore_type == LoreType.REQUIRES_ITEM:
             data["extra"]["translator"] = node.required_translator.short_name
 
-        elif node.lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
+        elif node.lore_type in {LoreType.SPECIFIC_PICKUP, LoreType.SKY_TEMPLE_KEY_HINT}:
             data["extra"]["hint_index"] = node.hint_index
 
     elif isinstance(node, PlayerShipNode):

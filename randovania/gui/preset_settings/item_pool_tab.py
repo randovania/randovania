@@ -18,7 +18,7 @@ from randovania.gui.preset_settings.progressive_item_widget import ProgressiveIt
 from randovania.patching.prime.patcher_file_lib import item_names
 from randovania.generator.item_pool import pool_creator
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
-from randovania.gui.lib import common_qt_lib
+from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
@@ -74,6 +74,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         # General
         self.multi_pickup_placement_check.setChecked(layout.multi_pickup_placement)
+        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
 
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
@@ -91,6 +92,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         for _, _, elements in self._boxes_for_category.values():
             for major_item, widget in elements.items():
                 widget.state = major_configuration.items_state[major_item]
+
+        # Progressive Items
+        for progressive_widget in self._progressive_widgets:
+            progressive_widget.on_preset_changed(
+                preset,
+                self._boxes_for_category[progressive_widget.progressive_item.item_category.name][2],
+            )
 
         # Ammo
         ammo_provided = major_configuration.calculate_provided_ammo()
@@ -152,6 +160,10 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         except InvalidConfiguration as invalid_config:
             self.item_pool_count_label.setText("Invalid Configuration: {}".format(invalid_config))
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, True)
+
+    def _persist_multi_pickup_placement(self, value: bool):
+        with self._editor as editor:
+            editor.set_configuration_field("multi_pickup_placement", value)
 
     # Random Starting
     def _register_random_starting_events(self):

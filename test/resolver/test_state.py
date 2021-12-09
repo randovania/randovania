@@ -16,7 +16,8 @@ def _state_game_data() -> StateGameData:
         Mock(energy_tank=ItemResourceInfo("Energy Tank", "EnergyTank", 14, None),
              item_percentage=ItemResourceInfo("Item Percentage", "Percentage", 255, None)),
         None,
-        100
+        100,
+        99
     )
 
 

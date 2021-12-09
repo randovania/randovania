@@ -204,6 +204,8 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
 @pytest.mark.parametrize("is_multiworld", [False, True])
 def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is_multiworld):
     # Setup
+    layout_configuration = MagicMock()
+    layout_configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     rng = MagicMock()
 
     def _light_suit_location_hint(number: int):
@@ -256,6 +258,7 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is
 
     # Run
     result = echoes_game_description.game.data.generator.base_patches_factory.add_default_hints_to_patches(
+        layout_configuration, echoes_game_description,
         rng, empty_patches, echoes_game_description.world_list, num_joke=2, is_multiworld=is_multiworld)
 
     # Assert
@@ -308,7 +311,7 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     patches[3].assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
     # Hints
-    mock_add_default_hints_to_patches.assert_called_once_with(factory, rng, patches[4], game.world_list, num_joke=2,
+    mock_add_default_hints_to_patches.assert_called_once_with(factory, layout_configuration, game, rng, patches[4], game.world_list, num_joke=2,
                                                               is_multiworld=is_multiworld)
 
     assert result is mock_add_default_hints_to_patches.return_value

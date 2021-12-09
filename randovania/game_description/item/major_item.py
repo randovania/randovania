@@ -1,5 +1,8 @@
 from dataclasses import dataclass
+import dataclasses
 from typing import Dict, Optional, Tuple
+
+from frozendict import frozendict
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -21,6 +24,7 @@ class MajorItem:
     probability_offset: int = 0
     probability_multiplier: float = 1
     warning: Optional[str] = None
+    extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
         if not self.progression and not self.ammo_index:
@@ -43,6 +47,7 @@ class MajorItem:
             probability_offset=value["probability_offset"],
             probability_multiplier=value["probability_multiplier"],
             warning=value.get("warning"),
+            extra=frozendict(value.get("extra", {}))
         )
 
     @property
@@ -57,6 +62,7 @@ class MajorItem:
             "required": self.required,
             "probability_offset": self.probability_offset,
             "probability_multiplier": self.probability_multiplier,
+            "extra": self.extra
         }
         if self.original_index is not None:
             result["original_index"] = self.original_index.index

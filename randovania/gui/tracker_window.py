@@ -564,6 +564,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     self._node_to_item[node] = node_item
 
     def setup_elevators(self):
+        self._elevator_id_to_combo = {}
+        
         if not hasattr(self.game_configuration, "elevators"):
             return
 
@@ -571,7 +573,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         world_list = self.game_description.world_list
         nodes_by_world: Dict[str, List[TeleporterNode]] = collections.defaultdict(list)
-        self._elevator_id_to_combo = {}
 
         areas_to_not_change = {
             "Sky Temple Gateway",

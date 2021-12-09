@@ -4,6 +4,7 @@ from typing import Dict, List
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintType, Hint, HintLocationPrecision
 from randovania.game_description.world.world_list import WorldList
+from randovania.games.game import RandovaniaGame
 from randovania.patching.prime.patcher_file_lib import hint_lib
 from randovania.patching.prime.patcher_file_lib.hint_formatters import LocationFormatter
 from randovania.patching.prime.patcher_file_lib.item_hints import create_pickup_hint
@@ -34,16 +35,21 @@ class LocationHintCreator:
                                 all_patches: Dict[int, GamePatches],
                                 players_config: PlayersConfiguration,
                                 location_formatters: Dict[HintLocationPrecision, LocationFormatter],
+                                game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
+                                item_text_color: hint_lib.TextColor = hint_lib.TextColor.ITEM,
+                                joke_text_color: hint_lib.TextColor = hint_lib.TextColor.JOKE
                                 ) -> str:
+        patches = all_patches[players_config.player_index]
+
         if hint.hint_type == HintType.JOKE:
-            return hint_lib.color_text(hint_lib.TextColor.JOKE, self.create_joke_hint())
+            return hint_lib.color_text(joke_text_color, self.create_joke_hint())
 
         elif hint.hint_type == HintType.RED_TEMPLE_KEY_SET:
             return create_temple_key_hint(all_patches, players_config.player_index, hint.dark_temple, self.area_namers)
 
         else:
             assert hint.hint_type == HintType.LOCATION
-            patches = all_patches[players_config.player_index]
+            
             pickup_target = patches.pickup_assignment.get(hint.target)
             determiner, pickup_name = create_pickup_hint(patches.pickup_assignment,
                                                          self.world_list,
@@ -54,6 +60,6 @@ class LocationHintCreator:
 
             return location_formatters[hint.precision.location].format(
                 determiner,
-                hint_lib.color_text(hint_lib.TextColor.ITEM, pickup_name),
+                hint_lib.color_text(item_text_color, pickup_name),
                 hint,
             )

@@ -170,7 +170,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         translator_identif: ResourceRequirement(scan_visor, 1, False)
     })
     initial_state = State({scan_visor: 1 if has_translator else 0}, (), 99,
-                          node_a, patches, None, StateGameData(echoes_resource_database, game.world_list, 100))
+                          node_a, patches, None, StateGameData(echoes_resource_database, game.world_list, 100, 99))
 
     # Run
     reach = reach_with_all_safe_resources(game, initial_state)
@@ -184,7 +184,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 
 def test_reach_size_from_start_echoes(small_echoes_game_description, default_layout_configuration):
     # Setup
-    game = small_echoes_game_description
+    game: GameDescription = small_echoes_game_description
     specific_levels = {
         trick.short_name: LayoutTrickLevel.maximum()
         for trick in game.resource_database.trick
@@ -213,7 +213,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
     )
     patches = game.game.data.generator.base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,
                                                        False, player_index=0)
-    state = game.game.data.generator.bootstrap.calculate_starting_state(game, patches, 100)
+    state = game.game.data.generator.bootstrap.calculate_starting_state(game, patches, default_layout_configuration)
     state.resources[item("Combat Visor")] = 1
     state.resources[item("Amber Translator")] = 1
     state.resources[item("Scan Visor")] = 1
