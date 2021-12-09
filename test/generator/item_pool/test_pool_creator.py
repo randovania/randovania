@@ -3,12 +3,14 @@ from random import Random
 import pytest
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.cave_story.generator.pool_creator import CAMP_INDICES, FIRST_CAVE_INDICES, STRONG_WEAPONS
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 
 from randovania.generator.item_pool import pool_creator
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
+from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
 def test_calculate_pool_item_count(default_layout_configuration):
@@ -33,8 +35,11 @@ def test_calculate_pool_item_count(default_layout_configuration):
     AreaIdentifier("Labyrinth", "Camp")
 ])
 def test_cs_item_pool_creator(default_cs_configuration: CSConfiguration, puppies, starting_area):
-    default_cs_configuration = dataclasses.replace(default_cs_configuration, puppies_anywhere=puppies)
     game_description = default_database.game_description_for(default_cs_configuration.game)
+    default_cs_configuration = dataclasses.replace(default_cs_configuration, puppies_anywhere=puppies)
+    tricks = default_cs_configuration.trick_level.set_level_for_trick(game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, "SNBubbler"), LayoutTrickLevel.HYPERMODE)
+    tricks = tricks.set_level_for_trick(game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, "SNMissiles"), LayoutTrickLevel.HYPERMODE)
+
     base_patches = GamePatches(0, {}, {}, {}, {}, {}, {}, starting_area, {})
     rng = Random()
 

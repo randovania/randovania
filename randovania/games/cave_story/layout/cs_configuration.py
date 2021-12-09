@@ -14,11 +14,6 @@ class CSObjective(BitPackEnum, Enum):
     BEST_ENDING = 2
     ALL_BOSSES = 3
     HUNDRED_PERCENT = 4
-
-    @property
-    def requirements(self) -> Requirement:
-        # TODO
-        return Requirement.trivial
     
     @property
     def long_name(self) -> str:
