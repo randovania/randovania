@@ -29,6 +29,7 @@ from randovania.patching.prime.patcher_file_lib.hints import create_location_for
 from randovania.patching.prime.patcher_file_lib.item_hints import RelativeItemFormatter
 
 from tsc_utils.numbers import num_to_tsc_value
+from tsc_utils.flags import set_flag
 
 
 class CaverPatcher(Patcher):
@@ -133,8 +134,8 @@ class CaverPatcher(Patcher):
         # rocket skip enabled
         if configuration.trick_level.level_for_trick(db.get_by_type_and_index(ResourceType.TRICK, "Dboost")).as_number >= 4:
             starting_script += "<FL+6400"
-        # initialize HP counter to 3HP
-        starting_script += "<FL+4011<FL+4012"
+        # initialize HP counter
+        starting_script += set_flag(4011, configuration.starting_hp, bits=6)
         # Camp and Labyrinth B CMP mapflags
         starting_script += "<MP+0040<MP+0043"
         # Softlock prevention mapflags
