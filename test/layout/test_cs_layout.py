@@ -16,7 +16,7 @@ def test_cs_objective():
 
 def test_cs_cosmetic_patches():
     patches = CSCosmeticPatches.default()
-    assert patches.game == RandovaniaGame.CAVE_STORY
+    assert patches.game() == RandovaniaGame.CAVE_STORY
 
     assert {mychar for mychar in MyChar if mychar.description is not None} == {MyChar.CUSTOM, MyChar.RANDOM}
         
