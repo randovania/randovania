@@ -1,3 +1,4 @@
+import typing
 from typing import Optional, List, Union
 
 from PySide2 import QtWidgets
@@ -123,12 +124,8 @@ class ResourceRequirementEditor:
             self.amount_combo.addItem(trick_level.long_name, userData=trick_level.as_number)
         self.amount_combo.setCurrentIndex(self.amount_combo.findData(item.amount))
 
-        self.layout.addWidget(self.resource_type_combo)
-        self.layout.addWidget(self.negate_check)
-        self.layout.addWidget(self.resource_name_combo)
-        self.layout.addWidget(self.negate_combo)
-        self.layout.addWidget(self.amount_edit)
-        self.layout.addWidget(self.amount_combo)
+        for widget in self._all_widgets:
+            self.layout.addWidget(widget)
 
         self.resource_type_combo.currentIndexChanged.connect(self._update_type)
         self._update_visible_elements_by_type()
@@ -163,10 +160,17 @@ class ResourceRequirementEditor:
         self._update_visible_elements_by_type()
 
     def deleteLater(self):
-        self.resource_type_combo.deleteLater()
-        self.resource_name_combo.deleteLater()
-        self.negate_combo.deleteLater()
-        self.amount_edit.deleteLater()
+        for widget in self._all_widgets:
+            widget.deleteLater()
+
+    @property
+    def _all_widgets(self) -> typing.Iterable[QWidget]:
+        yield self.resource_type_combo
+        yield self.negate_check
+        yield self.resource_name_combo
+        yield self.negate_combo
+        yield self.amount_edit
+        yield self.amount_combo
 
     @property
     def current_requirement(self) -> ResourceRequirement:
