@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 import pytest
 from unittest.mock import PropertyMock
 
@@ -42,6 +43,12 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     data = patcher.create_patch_data(description, players_config, cosmetic)
 
     # Expected Result
+
+    # strip mychar to just the filename rather than full path
+    if data["mychar"] is not None:
+        mychar = Path(data["mychar"])
+        data["mychar"] = mychar.name
+    
     # Uncomment the following lines to update:
     # with test_files_dir.joinpath("caver_expected_data", f"{out_file}.json").open("w") as f:
     #     json.dump(data, f)
