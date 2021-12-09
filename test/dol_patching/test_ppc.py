@@ -149,3 +149,7 @@ def test_mfspr_LR():
 
 def test_mtctr():
     assert _b(ppc.mtctr(ppc.r12)) == [0x7d, 0x89, 0x03, 0xa6]
+
+
+def test_nop():
+    assert _b(ppc.nop()) == [96, 0, 0, 0]
