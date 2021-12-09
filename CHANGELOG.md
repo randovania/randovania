@@ -80,11 +80,11 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Waste Disposal Wallboosts
 - Added: Climb Connection Elevator to Deck Beta Gravityless
 - Added: Combat Requirements for Essence fight
+- Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
 - Changed: Removed under-used "Complex Movement" trick category
 - Changed: All Gravityless Slope Jumps are now categorized as "Underwater Movement without Gravity", as opposed to just NSJ ones
 - Changed: Knowledge (Beginner) to Traverse Magmoor Workstation without Varia
-
 - Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
 - Changed: Hall of the Elders - Now properly model needing to kill the 1 ghost to leave the room. Chargeless 1 ghost fight combat difficulty reduced to beginner.
 
