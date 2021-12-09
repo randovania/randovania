@@ -4,24 +4,29 @@ import typing
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+from random import Random
 from typing import Callable, Iterable, Optional, Type
 
 from randovania import get_file_path
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.resources.resource_database import ResourceDatabase
+    from randovania.game_description.game_patches import GamePatches
+    from randovania.game_description.resources.resource_database import \
+        ResourceDatabase
+    from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.item_pool import PoolResults
-    from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+    from randovania.gui.dialog.base_cosmetic_patches_dialog import \
+        BaseCosmeticPatchesDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-    from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+    from randovania.layout.base.major_items_configuration import \
+        MajorItemsConfiguration
     from randovania.patching.patcher import Patcher
-    from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.resolver.bootstrap import Bootstrap
 
 
@@ -61,8 +66,8 @@ class GameGui:
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
 
-    input_file_text: Optional[tuple[str, str, str]]
-    """Two strings used to describe the input file for the game."""
+    input_file_text: Optional[tuple[str, str, str]] = None
+    """Three strings used to describe the input file for the game."""
 
     progressive_item_gui_tuples: Iterable[tuple[str, tuple[str, ...]]] = frozenset()
     """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long names replaced by the progressive item."""
@@ -72,7 +77,7 @@ class GameGui:
 
 @dataclass(frozen=True)
 class GameGenerator:
-    item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase], None]
+    item_pool_creator: Callable[[PoolResults, BaseConfiguration, ResourceDatabase, GamePatches, Random], None]
     """Extends the base item pools with any specific item pools such as Artifacts."""
 
     bootstrap: Bootstrap
@@ -118,6 +123,7 @@ class RandovaniaGame(BitPackEnum, Enum):
     METROID_PRIME_CORRUPTION = "prime3"
     SUPER_METROID = "super_metroid"
     METROID_DREAD = "dread"
+    CAVE_STORY = "cave_story"
 
     @property
     def data(self) -> GameData:
@@ -131,6 +137,8 @@ class RandovaniaGame(BitPackEnum, Enum):
             import randovania.games.super_metroid.game_data as game_module
         elif self == RandovaniaGame.METROID_DREAD:
             import randovania.games.dread.game_data as game_module
+        elif self == RandovaniaGame.CAVE_STORY:
+            import randovania.games.cave_story.game_data as game_module
         else:
             raise ValueError(f"Missing import for game: {self.value}")
         return game_module.game_data

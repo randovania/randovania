@@ -20,7 +20,7 @@ from randovania.games.prime2.layout.echoes_configuration import \
     EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import \
     LayoutTranslatorRequirement
-from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFactory,
+from randovania.generator.base_patches_factory import (HintTargetPrecision, PrimeTrilogyBasePatchesFactory,
                                                        MissingRng)
 from randovania.lib.enum_lib import iterate_enum
 
@@ -69,53 +69,19 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
 
         return result
     
-    def add_default_hints_to_patches(self, rng: Random, patches: GamePatches, world_list: WorldList, num_joke: int, is_multiworld: bool) -> GamePatches:
-        for node in world_list.all_nodes:
-            if isinstance(node, LogbookNode) and node.lore_type == LoreType.LUMINOTH_WARRIOR:
-                patches = patches.assign_hint(node.resource(),
-                                            Hint(HintType.LOCATION,
-                                                PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                                HintItemPrecision.BROAD_CATEGORY,
-                                                                include_owner=True),
-                                                PickupIndex(node.hint_index)))
-
-        all_logbook_assets = [node.resource()
-                            for node in world_list.all_nodes
-                            if isinstance(node, LogbookNode)
-                            and node.resource() not in patches.hints
-                            and node.lore_type.holds_generic_hint]
-
-        rng.shuffle(all_logbook_assets)
-
-        # The 4 guaranteed hints
-        indices_with_hint = [
-            (PickupIndex(24), HintLocationPrecision.LIGHT_SUIT_LOCATION),  # Light Suit
-            (PickupIndex(43), HintLocationPrecision.GUARDIAN),  # Dark Suit (Amorbis)
-            (PickupIndex(79), HintLocationPrecision.GUARDIAN),  # Dark Visor (Chykka)
-            (PickupIndex(115), HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
+    def indices_with_hint(self, configuration: EchoesConfiguration, game: GameDescription, rng: Random, patches: GamePatches, world_list: WorldList) -> list[HintTargetPrecision]:
+        return [
+            (PickupIndex(24), HintLocationPrecision.LIGHT_SUIT_LOCATION, HintItemPrecision.DETAILED),  # Light Suit
+            (PickupIndex(43), HintLocationPrecision.GUARDIAN, HintItemPrecision.DETAILED),  # Dark Suit (Amorbis)
+            (PickupIndex(79), HintLocationPrecision.GUARDIAN, HintItemPrecision.DETAILED),  # Dark Visor (Chykka)
+            (PickupIndex(115), HintLocationPrecision.GUARDIAN, HintItemPrecision.DETAILED),  # Annihilator Beam (Quadraxis)
         ]
-        rng.shuffle(indices_with_hint)
-        for index, location_type in indices_with_hint:
-            if not all_logbook_assets:
-                break
-
-            logbook_asset = all_logbook_assets.pop()
-            patches = patches.assign_hint(logbook_asset, Hint(HintType.LOCATION,
-                                                            PrecisionPair(location_type, HintItemPrecision.DETAILED,
-                                                                            include_owner=False),
-                                                            index))
-
+    
+    def add_other_hints(self, patches: GamePatches, all_logbook_nodes: list[LogbookNode]) -> GamePatches:
         # Dark Temple hints
         temple_hints = list(iterate_enum(HintDarkTemple))
-        while all_logbook_assets and temple_hints:
-            logbook_asset = all_logbook_assets.pop()
+        while all_logbook_nodes and temple_hints:
+            logbook_asset = all_logbook_nodes.pop().resource()
             patches = patches.assign_hint(logbook_asset, Hint(HintType.RED_TEMPLE_KEY_SET, None,
                                                             dark_temple=temple_hints.pop(0)))
-
-        # Jokes
-        while num_joke > 0 and all_logbook_assets:
-            logbook_asset = all_logbook_assets.pop()
-            patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, None))
-            num_joke -= 1
-
         return patches

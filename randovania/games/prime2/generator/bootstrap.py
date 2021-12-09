@@ -4,10 +4,10 @@ from randovania.game_description.resources.damage_resource_info import DamageRed
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.resolver.bootstrap import Bootstrap
+from randovania.resolver.bootstrap import MetroidBootstrap
 
 
-class EchoesBootstrap(Bootstrap):
+class EchoesBootstrap(MetroidBootstrap):
     def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[str]:
         enabled_resources = set()
         allow_vanilla = {

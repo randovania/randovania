@@ -1,0 +1,395 @@
+----------------
+Start Point
+(Valid Starting Location)
+Extra - map_name: Start
+> Door to First Cave; Heals? False; Spawn Point
+  * Door to First Cave/Door to Start Point
+  > Save Point
+      Trivial
+
+> Save Point; Heals? False
+  > Door to First Cave
+      Trivial
+  > Refill
+      Trivial
+
+> Room Spawn; Heals? False
+  > Event - Start Point
+      Trivial
+
+> Refill; Heals? True
+  > Save Point
+      Trivial
+
+> Event - Start Point; Heals? False
+  * Event Start in Start Point
+  > Door to First Cave
+      Trivial
+
+----------------
+First Cave
+Extra - map_name: Cave
+> Door to Start Point; Heals? False; Spawn Point
+  * Door to Start Point/Door to First Cave
+  > Door to Hermit Gunsmith
+      Trivial
+  > Door to Mimiga Village
+      All of the following:
+          Can Break Blocks
+          Any of the following:
+              # Kill the Eye Door if Starting in Start Point
+              Before Start in Start Point or Has Weapon
+  > Pickup (First Cave Life Capsule)
+      Trivial
+
+> Door to Hermit Gunsmith; Heals? False
+  * Door to Hermit Gunsmith/Door to First Cave
+  > Door to Start Point
+      Trivial
+
+> Door to Mimiga Village; Heals? False
+  * Door to Mimiga Village/Door to First Cave
+  > Door to Start Point
+      Can Break Blocks
+
+> Pickup (First Cave Life Capsule); Heals? False
+  * Pickup 32; Major Location? False
+  * Extra - event: 0401
+  > Door to Start Point
+      Trivial
+
+----------------
+Hermit Gunsmith
+Extra - map_name: Pole
+> Door to First Cave; Heals? False; Spawn Point
+  * Door to First Cave/Door to Hermit Gunsmith
+  > Pickup (Hermit Gunsmith Chest)
+      Trivial
+  > Pickup (Tetsuzou)
+      All of the following:
+          After Defeated Core
+          Polar Star or Spur
+
+> Pickup (Hermit Gunsmith Chest); Heals? False
+  * Pickup 33; Major Location? False
+  * Extra - event: 0202
+  > Door to First Cave
+      Trivial
+
+> Pickup (Tetsuzou); Heals? False
+  * Pickup 34; Major Location? False
+  * Extra - event: 0303
+  > Door to First Cave
+      Trivial
+
+----------------
+Mimiga Village
+Extra - map_name: Mimi
+> Door to First Cave; Heals? False; Spawn Point
+  * Door to First Cave/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Room Centre; Heals? False
+  > Door to First Cave
+      Has Flight
+  > Door to Save Point
+      Trivial
+  > Door to Reservoir
+      Trivial
+  > Door to Yamashita Farm
+      Trivial
+  > Door to Assembly Hall
+      Trivial
+  > Door to Graveyard
+      After Toroko Kidnapped
+  > Door to Shack
+      Trivial
+  > Door to Arthur's House
+      Arthur's Key
+  > Pickup (Mimiga Village Chest)
+      Trivial
+
+> Door to Save Point; Heals? False
+  * Door to Save Point/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Reservoir; Heals? False
+  * Door to Reservoir/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Yamashita Farm; Heals? False
+  * Door to Yamashita Farm/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Assembly Hall; Heals? False
+  * Door to Assembly Hall/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Graveyard; Heals? False
+  * Door to Graveyard/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Shack; Heals? False
+  * Door to Shack/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Door to Arthur's House; Heals? False
+  * Door to Arthur's House/Door to Mimiga Village
+  > Room Centre
+      Trivial
+
+> Pickup (Mimiga Village Chest); Heals? False
+  * Pickup 35; Major Location? False
+  * Extra - event: 0202
+  > Room Centre
+      Trivial
+
+----------------
+Save Point
+Extra - map_name: MiBox
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Door to Mimiga Village/Door to Save Point
+  > Save Point
+      Trivial
+  > Refill
+      Trivial
+
+> Save Point; Heals? False
+  > Door to Mimiga Village
+      Trivial
+
+> Refill; Heals? True
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Yamashita Farm
+Extra - map_name: Plant
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Door to Mimiga Village/Door to Yamashita Farm
+  > Pickup (Yamashita Farm)
+      Trivial
+
+> Pickup (Yamashita Farm); Heals? False
+  * Pickup 36; Major Location? False
+  * Extra - event: 0401
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Reservoir
+Extra - map_name: Pool
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Door to Mimiga Village/Door to Reservoir
+  > Debug Cat to Dark Place
+      All of the following:
+          # Appears after killing Ironhead with entrance rando disabled
+          After Defeated Ironhead and Disabled Entrance Randomizer
+  > Pickup (Reservoir)
+      Trivial
+
+> Debug Cat to Dark Place; Heals? False
+  * Debug Cat to Dark Place/Entrance from Reservoir
+  > Door to Mimiga Village
+      Trivial
+
+> Pickup (Reservoir); Heals? False
+  * Pickup 37; Major Location? False
+  * Extra - event: 0301
+  > Door to Mimiga Village
+      Trivial
+
+> Entrance from Main Artery; Heals? False
+  * Entrance to Main Artery/Exit to Reservoir
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Assembly Hall
+Extra - map_name: Comu
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Door to Mimiga Village/Door to Assembly Hall
+  > Pickup (Assembly Hall Fireplace)
+      Jellyfish Juice
+
+> Pickup (Assembly Hall Fireplace); Heals? False
+  * Pickup 38; Major Location? False
+  * Extra - event: 0303
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Graveyard
+Extra - map_name: Cemet
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Door to Mimiga Village/Door to Graveyard
+  > Door to Storage
+      Has Flight
+  > Pickup (Arthur's Grave)
+      Trivial
+  > Pickup (Mr. Little (Graveyard))
+      Trivial
+
+> Door to Storage; Heals? False
+  * Door to Storage/Door to Graveyard
+  > Door to Mimiga Village
+      Trivial
+
+> Pickup (Arthur's Grave); Heals? False
+  * Pickup 39; Major Location? False
+  * Extra - event: 0301
+  > Door to Mimiga Village
+      Trivial
+
+> Pickup (Mr. Little (Graveyard)); Heals? False
+  * Pickup 40; Major Location? False
+  * Extra - event: 0202
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Storage
+Extra - map_name: Mapi
+> Door to Graveyard; Heals? False; Spawn Point
+  * Door to Graveyard/Door to Storage
+  > Pickup (Storage? Chest)
+      After Saved Curly
+  > Event - Ma Pignon
+      All of the following:
+          Mushroom Badge
+          Any of the following:
+              # Ma Pignon is completely immune to Missiles, Super Missiles, and the Blade
+              Bubbler or Fireball or Machine Gun or Nemesis or Polar Star or Snake or Spur
+
+> Pickup (Storage? Chest); Heals? False
+  * Pickup 41; Major Location? False
+  * Extra - event: 0202
+  > Door to Graveyard
+      Trivial
+
+> Event - Ma Pignon; Heals? False
+  * Event Defeated Ma Pignon
+  > Pickup (Ma Pignon Boss)
+      Trivial
+
+> Pickup (Ma Pignon Boss); Heals? False
+  * Pickup 42; Major Location? False
+  * Extra - event: 0501
+  > Door to Graveyard
+      Trivial
+
+----------------
+Shack
+Extra - map_name: Barr
+> Door to Mimiga Village; Heals? False; Spawn Point
+  * Door to Mimiga Village/Door to Shack
+  > Event - Toroko Kidnapped
+      Silver Locket
+  > Event - Balrog 1
+      After Toroko Kidnapped and Has Weapon
+
+> Event - Toroko Kidnapped; Heals? False
+  * Event Toroko Kidnapped
+  > Door to Mimiga Village
+      Trivial
+
+> Event - Balrog 1; Heals? False
+  * Event Defeated Balrog 1
+  > Door to Mimiga Village
+      Trivial
+
+----------------
+Arthur's House
+(Valid Starting Location)
+Extra - map_name: Pens1
+> Door to Mimiga Village; Heals? False
+  * Door to Mimiga Village/Door to Arthur's House
+  > Main Teleporter
+      Trivial
+
+> Pickup (Professor Booster); Heals? False
+  * Pickup 43; Major Location? False
+  * Extra - event: 0652
+  > Main Teleporter
+      Trivial
+
+> Main Teleporter; Heals? False
+  > Door to Mimiga Village
+      Arthur's Key
+  > Pickup (Professor Booster)
+      After Defeated Core
+  > Save Point
+      Trivial
+  > Teleporter to Egg Corridor
+      Trivial
+  > Teleporter to Grasstown
+      Trivial
+  > Teleporter to Sand Zone
+      Trivial
+  > Teleporter to Labyrinth B
+      Trivial
+  > Teleporter to Teleporter
+      Trivial
+  > Teleporter to Egg Corridor?
+      Any of the following:
+          # Defeat the Core or come in from Egg Corridor?
+          After Defeated Core or After Used Egg Corridor? Teleporter
+  > Room Spawn
+      Trivial
+
+> Save Point; Heals? False
+  > Main Teleporter
+      Trivial
+  > Refill
+      Trivial
+
+> Teleporter to Egg Corridor; Heals? False
+  * Teleporter to Egg Corridor/Teleporter to Arthur's House
+  > Main Teleporter
+      Trivial
+
+> Teleporter to Grasstown; Heals? False
+  * Teleporter to Grasstown/Teleporter to Arthur's House
+  > Main Teleporter
+      Trivial
+
+> Teleporter to Sand Zone; Heals? False
+  * Teleporter to Sand Zone/Teleporter to Arthur's House
+  > Main Teleporter
+      Trivial
+
+> Teleporter to Labyrinth B; Heals? False
+  * Teleporter to Labyrinth B/Teleporter to Arthur's House
+  > Main Teleporter
+      Trivial
+
+> Teleporter to Teleporter; Heals? False
+  * Teleporter to Teleporter/Teleporter to Arthur's House
+  > Main Teleporter
+      Trivial
+
+> Teleporter to Egg Corridor?; Heals? False
+  * Teleporter to Egg Corridor?/Teleporter to Arthur's House
+  > Main Teleporter
+      Trivial
+
+> Room Spawn; Heals? False; Spawn Point
+  > Event - Arthur's House
+      Trivial
+
+> Refill; Heals? True
+  > Save Point
+      Trivial
+
+> Event - Arthur's House; Heals? False
+  * Event Start in Arthur's House
+  > Main Teleporter
+      Trivial
+

@@ -63,3 +63,7 @@ class Area:
 
     def clear_dock_cache(self):
         pass
+    
+    @property
+    def map_name(self) -> str:
+        return self.extra.get("map_name", self.name)
