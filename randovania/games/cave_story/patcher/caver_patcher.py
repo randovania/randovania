@@ -3,7 +3,11 @@ from pathlib import Path
 from random import Random
 from typing import Optional
 import typing
+from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import HintLocationPrecision
+from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
+from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
+from randovania.game_description.resources.resource_info import ResourceGainTuple
 from randovania.game_description.world import world_list
 from randovania.game_description.world.node import LogbookNode
 from randovania.patching.prime.patcher_file_lib.hint_formatters import LocationFormatter
@@ -82,10 +86,19 @@ class CaverPatcher(Patcher):
         mychar_rng = Random(description.permalink.seed_number)
         hint_rng = Random(description.permalink.seed_number)
 
+        nothing_item = PickupTarget(PickupEntry(
+            "Nothing",
+            PickupModel(RandovaniaGame.CAVE_STORY, "Nothing"),
+            USELESS_ITEM_CATEGORY,
+            USELESS_ITEM_CATEGORY,
+            tuple()
+        ), players_config.player_index)
         nothing_item_script = "<PRI<MSG<TUR\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
         pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
-        for index, target in patches.pickup_assignment.items():
+        for index in game_description.world_list._pickup_index_to_node.keys():
+            target = patches.pickup_assignment.get(index, nothing_item)
+
             if target.player != players_config.player_index:
                 # TODO: will need to figure out what scripts to insert for other player's items
                 pass
@@ -95,7 +108,12 @@ class CaverPatcher(Patcher):
 
             mapname = node.extra.get("event_map", area.extra["map_name"])
             event = node.extra["event"]
-            pickups[mapname][event] = item_database.get_item_with_name(target.pickup.name).extra.get("script", nothing_item_script)
+            
+            if target == nothing_item:
+                pickup_script = nothing_item_script
+            else:
+                pickup_script = item_database.get_item_with_name(target.pickup.name).extra.get("script", nothing_item_script)
+            pickups[mapname][event] = pickup_script
 
         music = CaverMusic.get_shuffled_mapping(music_rng, cosmetic_patches)
 
@@ -147,14 +165,14 @@ class CaverPatcher(Patcher):
 
         # Starting Items
         if len(patches.starting_items):
-            starting_script += "<PRI<MSG<TUR"
+            starting_script += "\r\n<PRI<MSG<TUR"
         
         equip_num = 0
         items_extra = ""
         trades = {"blade": 0, "fireball": 0, "none": 0}
         life = 0
 
-        missile = next(res for res in patches.starting_items.keys() if res.short_name in {"missile", "tempMissile"})
+        missile = next((res for res in patches.starting_items.keys() if res.short_name in {"missile", "tempMissile"}), None)
         for item in patches.starting_items.keys():
             if item.resource_type != ResourceType.ITEM or item == missile:
                 continue
@@ -179,51 +197,58 @@ class CaverPatcher(Patcher):
                     5: "the last"
                 }
 
-                starting_script += f"""<GIT1014{flags}<SNP0136:0000:0000:0000
-                Got {words[num_puppies]} =Puppy=!<WAI0010<NOD<CLR"""
+                starting_script += (
+                    f"<IT+0014<GIT1014{flags}<SNP0136:0000:0000:0000\r\n"
+                    f"Got {words[num_puppies]} =Puppy=!<WAI0010<NOD\r\n<CLR"
+                )
                 continue
 
-            item_script = item.extra.get("starting_script")
-            if item_script is None:
+            if item.extra.get("text") is None:
                 raise ValueError(f"{item.long_name} is not a valid starting item!")
 
-            item_num = item_script.get("it+")
-            arms_num = item_script.get("am+")
+            item_num = item.extra.get("it+")
+            arms_num = item.extra.get("am+")
             if (item_num is None) == (arms_num is None):
                 raise ValueError(f"{item.long_name} must define exactly one of item_num and arms_num.")
 
-            equip_num |= item_script.get("equip", 0)
-            items_extra += item_script.get("extra", "")
-            trades[item_script.get("trade", "none")] += 1
+            equip_num |= item.extra.get("equip", 0)
+            items_extra += item.extra.get("extra", "")
+            trades[item.extra.get("trade", "none")] += 1
 
             git = num_to_tsc_value(arms_num or item_num + 1000).decode('utf-8')
-            ammo = num_to_tsc_value(item_script.get("ammo", 0)).decode('utf-8')
+            ammo = num_to_tsc_value(item.extra.get("ammo", 0)).decode('utf-8')
             if item.short_name in {"missiles", "supers"}:
                 ammo = num_to_tsc_value(patches.starting_items[missile]).decode('utf-8')
-            plus = f"<IT+{item_num}" if item_num else f"<AM+{arms_num}:{ammo}"
-            flag = num_to_tsc_value(item_script["flag"]).decode('utf-8')
-            text = item_script["text"]
+            plus = f"<IT+{num_to_tsc_value(item_num).decode('utf-8')}" if item_num else f"<AM+{num_to_tsc_value(arms_num).decode('utf-8')}:{ammo}"
+            flag = num_to_tsc_value(item.extra["flag"]).decode('utf-8')
+            text = item.extra["text"]
 
-            starting_script += f"<GIT{git}{plus}<FL+{flag}\n{text}<WAI0010<NOD<CLR"
+            starting_script += f"<GIT{git}{plus}<FL+{flag}\r\n{text}<WAI0010<NOD\r\n<CLR"
 
         if len(patches.starting_items):
             starting_script += items_extra
-            starting_script += f"<EQ+{num_to_tsc_value(equip_num).decode('utf-8')}"
+            starting_script += f"<EQ+{num_to_tsc_value(equip_num).decode('utf-8')}\r\n"
             
             if life > 0:
-                starting_script += f"""Got a =Life Capsule=!<ML+{num_to_tsc_value(life).decode('utf-8')}
-                Max health increased by
-                {life}!<WAI0010<NOD<CLR"""
+                starting_script += (
+                    f"Got a =Life Capsule=!<ML+{num_to_tsc_value(life).decode('utf-8')}\r\n"
+                    f"Max health increased by\r\n"
+                    f"{life}!<WAI0010<NOD\r\n<CLR"
+                )
 
             if trades["blade"] >= 2:
-                starting_script += """You may trade the =Nemesis=
-                with the =Blade= and vice-versa
-                at the computer in Arthur's House.<WAI0025<NOD<FL+2811<CLR"""
+                starting_script += (
+                    "You may trade the =Nemesis=\r\n"
+                    "with the =Blade= and vice-versa\r\n"
+                    "at the computer in Arthur's House.<WAI0025<NOD<FL+2811\r\n<CLR"
+                )
             
             if trades["fireball"] >= 2:
-                starting_script += """You may trade the =Fireball=
-                with the =Snake= and vice-versa
-                at the computer in Arthur's House.<WAI0025<NOD<FL+2802<CLR"""
+                starting_script += (
+                    "You may trade the =Fireball=\r\n"
+                    "with the =Snake= and vice-versa\r\n"
+                    "at the computer in Arthur's House.<WAI0025<NOD<FL+2802\r\n<CLR"
+                )
             
             starting_script += "<CLO"
 
@@ -254,8 +279,10 @@ class CaverPatcher(Patcher):
     
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict, internal_copies_path: Path, progress_update: ProgressUpdateCallable):
         self._busy = True
-        caver_patcher.patch_files(patch_data, output_file, progress_update)
-        self._busy = False
+        try:
+            caver_patcher.patch_files(patch_data, output_file, progress_update)
+        finally:
+            self._busy = False
 
 def create_loc_formatters(area_namer: hint_lib.AreaNamer, world_list: WorldList, patches: GamePatches, players_config: PlayersConfiguration) -> dict[HintLocationPrecision, LocationFormatter]:
     return {
