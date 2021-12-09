@@ -26,6 +26,7 @@ class StateGameData:
     resource_database: ResourceDatabase
     world_list: WorldList
     energy_per_tank: int
+    starting_energy: int
 
 
 class State:
@@ -49,7 +50,7 @@ class State:
     def __init__(self,
                  resources: CurrentResources,
                  collected_resource_nodes: Tuple[ResourceNode, ...],
-                 energy: int,
+                 energy: Optional[int],
                  node: Node,
                  patches: GamePatches,
                  previous: Optional["State"],
@@ -64,6 +65,8 @@ class State:
         self.game_data = game_data
 
         # We place this last because we need resource_database set
+        if energy is None:
+            energy = self.maximum_energy
         self.energy = min(energy, self.maximum_energy)
 
     def has_resource(self, resource: ResourceInfo) -> bool:
@@ -107,7 +110,7 @@ class State:
     def _energy_for(self, resources: CurrentResources) -> int:
         num_tanks = resources.get(self.game_data.resource_database.energy_tank, 0)
         energy_per_tank = self.game_data.energy_per_tank
-        return (energy_per_tank - 1) + (energy_per_tank * num_tanks)
+        return self.game_data.starting_energy + (energy_per_tank * num_tanks)
 
     @property
     def maximum_energy(self) -> int:

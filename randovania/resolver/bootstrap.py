@@ -91,7 +91,7 @@ class Bootstrap:
         starting_state = State(
             initial_resources,
             (),
-            starting_energy + (energy_per_tank * initial_resources.get(game.resource_database.energy_tank, 0)),
+            None,
             starting_node,
             patches,
             None,
@@ -99,6 +99,7 @@ class Bootstrap:
                 game.resource_database,
                 game.world_list,
                 energy_per_tank,
+                starting_energy
             )
         )
 
@@ -185,4 +186,4 @@ class Bootstrap:
 
 class MetroidBootstrap(Bootstrap):
     def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
-        return EnergyConfig(99, configuration.energy_per_tank)
+        return EnergyConfig(configuration.energy_per_tank - 1, configuration.energy_per_tank)
