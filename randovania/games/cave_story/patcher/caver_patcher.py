@@ -28,7 +28,7 @@ from randovania.patching.prime.patcher_file_lib.hint_formatters import RelativeA
 from randovania.patching.prime.patcher_file_lib.hints import create_location_formatters, get_hints_for_asset
 from randovania.patching.prime.patcher_file_lib.item_hints import RelativeItemFormatter
 
-from tsc_utils.numbers import num_to_tsc_value
+from tsc_utils.numbers import num_to_tsc_value, tsc_value_to_num
 from tsc_utils.flags import set_flag
 
 
@@ -145,20 +145,101 @@ class CaverPatcher(Patcher):
         if configuration.starting_hp != 3:
             starting_script += f"<ML+{num_to_tsc_value(configuration.starting_hp - 3).decode('utf-8')}"
 
-        # TODO: starting items
+        # Starting Items
+        if len(patches.starting_items):
+            starting_script += "<PRI<MSG<TUR"
+        
+        equip_num = 0
+        items_extra = ""
+        trades = {"blade": 0, "fireball": 0, "none": 0}
+        life = 0
 
-        # TODO: allow any starting location
+        missile = next(res for res in patches.starting_items.keys() if res.short_name in {"missile", "tempMissile"})
+        for item in patches.starting_items.keys():
+            if item.resource_type != ResourceType.ITEM or item == missile:
+                continue
 
-        # starting location flag and EVE/TRA
+            if item.short_name == "lifeCapsule":
+                life = patches.starting_items[item]
+                continue
+
+            if item.short_name == "puppies":
+                num_puppies = patches.starting_items[item]
+
+                flags = "".join([f"<FL+{num_to_tsc_value(5001+i).decode('utf-8')}" for i in range(num_puppies)])
+                flags += "<FL+0274"
+                if num_puppies == 5:
+                    flags += "<FL+0593"
+                
+                words = {
+                    1: "a",
+                    2: "a second",
+                    3: "a third",
+                    4: "a fourth",
+                    5: "the last"
+                }
+
+                starting_script += f"""<GIT1014{flags}<SNP0136:0000:0000:0000
+                Got {words[num_puppies]} =Puppy=!<WAI0010<NOD<CLR"""
+                continue
+
+            item_script = item.extra.get("starting_script")
+            if item_script is None:
+                raise ValueError(f"{item.long_name} is not a valid starting item!")
+
+            item_num = item_script.get("it+")
+            arms_num = item_script.get("am+")
+            if (item_num is None) == (arms_num is None):
+                raise ValueError(f"{item.long_name} must define exactly one of item_num and arms_num.")
+
+            equip_num |= item_script.get("equip", 0)
+            items_extra += item_script.get("extra", "")
+            trades[item_script.get("trade", "none")] += 1
+
+            git = num_to_tsc_value(arms_num or item_num + 1000).decode('utf-8')
+            ammo = num_to_tsc_value(item_script.get("ammo", 0)).decode('utf-8')
+            if item.short_name in {"missiles", "supers"}:
+                ammo = num_to_tsc_value(patches.starting_items[missile]).decode('utf-8')
+            plus = f"<IT+{item_num}" if item_num else f"<AM+{arms_num}:{ammo}"
+            flag = num_to_tsc_value(item_script["flag"]).decode('utf-8')
+            text = item_script["text"]
+
+            starting_script += f"<GIT{git}{plus}<FL+{flag}\n{text}<WAI0010<NOD<CLR"
+
+        if len(patches.starting_items):
+            starting_script += items_extra
+            starting_script += f"<EQ+{num_to_tsc_value(equip_num).decode('utf-8')}"
+            
+            if life > 0:
+                starting_script += f"""Got a =Life Capsule=!<ML+{num_to_tsc_value(life).decode('utf-8')}
+                Max health increased by
+                {life}!<WAI0010<NOD<CLR"""
+
+            if trades["blade"] >= 2:
+                starting_script += """You may trade the =Nemesis=
+                with the =Blade= and vice-versa
+                at the computer in Arthur's House.<WAI0025<NOD<FL+2811<CLR"""
+            
+            if trades["fireball"] >= 2:
+                starting_script += """You may trade the =Fireball=
+                with the =Snake= and vice-versa
+                at the computer in Arthur's House.<WAI0025<NOD<FL+2802<CLR"""
+            
+            starting_script += "<CLO"
+
+        # Starting Locations
         if patches.starting_location.area_name in {"Start Point", "First Cave", "Hermit Gunsmith"}:
+            # started in first cave
             starting_script += "<FL+6200"
         else:
             # flags set during first cave in normal gameplay
             starting_script += "<FL+0301<FL+0302<FL+1641<FL+1642<FL+0320<FL+0321"
             waterway = {"Waterway", "Waterway Cabin", "Main Artery"}
             if patches.starting_location.world_name == "Labyrinth" and patches.starting_location.area_name not in waterway:
+                # started near camp; disable camp collision
                 starting_script += "<FL+6202"
             elif (patches.starting_location.world_name != "Mimiga Village" and patches.starting_location.area_name not in waterway) or patches.starting_location.area_name == "Arthur's House":
+                # started outside mimiga village
                 starting_script += "<FL+6201"
         
         starting_script += game_description.world_list.area_by_area_location(patches.starting_location).extra["starting_script"]
