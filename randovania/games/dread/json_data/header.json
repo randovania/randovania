@@ -325,11 +325,11 @@
                 "extra": {}
             },
             "s020_magma:default:deviceheat": {
-                "long_name": "Cataris - deviceheat",
+                "long_name": "Cataris - First Thermal Device",
                 "extra": {}
             },
             "s020_magma:default:deviceheat_001": {
-                "long_name": "Cataris - deviceheat_001",
+                "long_name": "Cataris - Hallway Thermal Device",
                 "extra": {}
             },
             "s020_magma:default:deviceheat_002": {
@@ -665,7 +665,7 @@
                 "extra": {}
             },
             "s040_aqua:default:grapplepulloff1x2_006": {
-                "long_name": "Burenia - grapplepulloff1x2_006",
+                "long_name": "Burenia - Drogyga Access Grapple Block",
                 "extra": {}
             },
             "s040_aqua:default:grapplepulloff1x2_005": {
@@ -758,6 +758,30 @@
             },
             "ArtariaProtoCU": {
                 "long_name": "Artaria - Proto Central Unit",
+                "extra": {}
+            },
+            "CatarisThermalMagnetPlatformLowered": {
+                "long_name": "Cataris - Thermal Magnet Platform Lowered",
+                "extra": {}
+            },
+            "CatarisThermalLowerLava": {
+                "long_name": "Cataris - Lower Lava Button",
+                "extra": {}
+            },
+            "CatarisMoveMagnetWallsButton": {
+                "long_name": "Cataris - Move Magnet Walls Button",
+                "extra": {}
+            },
+            "CatarisTransportDaironWideBeamBlock": {
+                "long_name": "Cataris - Dairon Transport Wide Beam Block",
+                "extra": {}
+            },
+            "CatarisHeatedWideBeamBlock": {
+                "long_name": "Cataris - Heated Wide Beam Block",
+                "extra": {}
+            },
+            "CatarisLowerPowerBombTankCeiling": {
+                "long_name": "Cataris - Lower Power Bomb Tank Ceiling",
                 "extra": {}
             }
         },
@@ -1435,6 +1459,32 @@
                             "data": {
                                 "type": "items",
                                 "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Ballspark": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
                                 "amount": 1,
                                 "negate": false
                             }
