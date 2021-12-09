@@ -10,6 +10,7 @@ from randovania.generator.base_patches_factory import BasePatchesFactory, HintTa
 
 
 class CSBasePatchesFactory(BasePatchesFactory):
+    @property
     def num_joke_hints(self) -> int:
         return 0
 

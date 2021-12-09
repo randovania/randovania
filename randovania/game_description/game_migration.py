@@ -338,7 +338,7 @@ _MIGRATIONS = {
     3: _migrate_v3,
     4: _migrate_v4,
     5: _migrate_v5,
-    6: _migrate_v6
+    6: _migrate_v6,
 }
 
 
