@@ -5,11 +5,8 @@ from randovania.games.cave_story.layout.preset_describer import get_ingame_hash,
 from randovania.games.game import RandovaniaGame
 
 
-class FakeObjective(CSObjective):
-    FAKE = 1000
-
 def test_cs_objective():
-    for obj in FakeObjective:
+    for obj in CSObjective:
         try:
             assert isinstance(obj.name, str)
             assert isinstance(obj.script, str)
