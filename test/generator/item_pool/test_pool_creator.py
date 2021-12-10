@@ -39,6 +39,7 @@ def test_cs_item_pool_creator(default_cs_configuration: CSConfiguration, puppies
     default_cs_configuration = dataclasses.replace(default_cs_configuration, puppies_anywhere=puppies)
     tricks = default_cs_configuration.trick_level.set_level_for_trick(game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, "SNBubbler"), LayoutTrickLevel.HYPERMODE)
     tricks = tricks.set_level_for_trick(game_description.resource_database.get_by_type_and_index(ResourceType.TRICK, "SNMissiles"), LayoutTrickLevel.HYPERMODE)
+    default_cs_configuration = dataclasses.replace(default_cs_configuration, trick_level=tricks)
 
     base_patches = GamePatches(0, {}, {}, {}, {}, {}, {}, starting_area, {})
     rng = Random()
