@@ -5,11 +5,12 @@
     },
     "areas": {
         "Egg Corridor?": {
-            "default_node": "West Side",
-            "valid_starting_location": false,
+            "default_node": "Teleporter to Arthur's House",
+            "valid_starting_location": true,
             "extra": {
                 "map_name": "Eggs2",
-                "in_dark_aether": false
+                "in_dark_aether": false,
+                "starting_script": "<TRA0049:0099:0007:0006"
             },
             "nodes": {
                 "Door to Cthulhu's Abode? (Upper)": {
@@ -424,11 +425,12 @@
             }
         },
         "Cthulhu's Abode?": {
-            "default_node": "Door to Egg Corridor? (Upper)",
-            "valid_starting_location": false,
+            "default_node": "Door to Egg Corridor? (Lower)",
+            "valid_starting_location": true,
             "extra": {
                 "map_name": "Cthu2",
-                "in_dark_aether": false
+                "in_dark_aether": false,
+                "starting_script": "<TRA0050:0094:0011:0012"
             },
             "nodes": {
                 "Door to Egg Corridor? (Upper)": {
@@ -627,10 +629,11 @@
         },
         "Egg Observation Room?": {
             "default_node": "Door to Egg Corridor? (Western)",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "map_name": "EggR2",
-                "in_dark_aether": false
+                "in_dark_aether": false,
+                "starting_script": "<TRA0051:0094:0004:0004"
             },
             "nodes": {
                 "Door to Egg Corridor? (Western)": {
@@ -863,11 +866,12 @@
             }
         },
         "Side Room": {
-            "default_node": "Door to Egg Corridor?",
-            "valid_starting_location": false,
+            "default_node": "Save Point",
+            "valid_starting_location": true,
             "extra": {
                 "map_name": "EgEnd2",
-                "in_dark_aether": false
+                "in_dark_aether": false,
+                "starting_script": "<TRA0054:0094:0011:0006"
             },
             "nodes": {
                 "Door to Egg Corridor?": {
@@ -888,7 +892,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Door",
                     "connections": {
-                        "Save Point/Refill": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -897,13 +901,13 @@
                         }
                     }
                 },
-                "Save Point/Refill": {
+                "Save Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 183.70658036677455,
-                        "y": 150.50269687162893,
-                        "z": 0
+                        "x": 183.71,
+                        "y": 150.5,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
@@ -935,7 +939,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Save Point/Refill": {
+                        "Save Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -948,10 +952,11 @@
         },
         "Egg No. 00": {
             "default_node": "Door to Egg Corridor?",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "map_name": "EggX2",
-                "in_dark_aether": false
+                "in_dark_aether": false,
+                "starting_script": "<TRA0052:0094:0004:0010"
             },
             "nodes": {
                 "Door to Egg Corridor?": {
@@ -1013,11 +1018,12 @@
             }
         },
         "Outer Wall": {
-            "default_node": "Door to Egg No. 00",
-            "valid_starting_location": false,
+            "default_node": "Room Bottom",
+            "valid_starting_location": true,
             "extra": {
                 "map_name": "Oside",
-                "in_dark_aether": false
+                "in_dark_aether": true,
+                "starting_script": "<TRA0053:0092:0165:0004"
             },
             "nodes": {
                 "Door to Egg No. 00": {
@@ -1382,10 +1388,11 @@
         },
         "Little House": {
             "default_node": "Door to Outer Wall",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "map_name": "Little",
-                "in_dark_aether": false
+                "in_dark_aether": true,
+                "starting_script": "<TRA0069:0090:0015:0008"
             },
             "nodes": {
                 "Door to Outer Wall": {
@@ -1494,10 +1501,11 @@
         },
         "Clock Room": {
             "default_node": "Door to Outer Wall",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
                 "map_name": "Clock",
-                "in_dark_aether": false
+                "in_dark_aether": true,
+                "starting_script": "<TRA0094:0090:0014:0007"
             },
             "nodes": {
                 "Door to Outer Wall": {
