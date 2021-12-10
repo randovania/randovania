@@ -6,8 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 17
-
+CURRENT_VERSION = 18
 
 def _migrate_v1(preset: dict) -> dict:
     layout_configuration = preset["layout_configuration"]
@@ -484,6 +483,23 @@ def _migrate_v16(preset: dict) -> dict:
 
     return preset
 
+def _migrate_v17(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["elevators"]["excluded_teleporters"].append(
+                {
+                    "world_name": "Impact Crater",
+                    "area_name": "Metroid Prime Lair",
+                    "node_name": "Teleporter to Credits"
+                }
+        )
+        preset["configuration"]["elevators"]["excluded_teleporters"].append(
+                {
+                    "world_name": "Frigate Orpheon",
+                    "area_name": "Exterior Docking Hangar",
+                    "node_name": "Teleport to Landing Site"
+                }
+        )
+    return preset
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -502,6 +518,7 @@ _MIGRATIONS = {
     14: _migrate_v14,  # v3.2.1-44-g11823eac
     15: _migrate_v15,  # v3.2.1-203-g6e303090
     16: _migrate_v16,  # v3.2.1-363-g3a93b533
+    17: _migrate_v17,
 }
 
 
