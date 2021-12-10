@@ -1,6 +1,8 @@
 ----------------
 Labyrinth B
+(Valid Starting Location)
 Extra - map_name: MazeB
+Extra - starting_script: <TRA0043:0099:0010:0034
 > Door to Boulder Chamber; Heals? False
   * Door to Boulder Chamber/Door to Labyrinth B
   > Door to Labyrinth W
@@ -17,13 +19,13 @@ Extra - map_name: MazeB
   > Save Point
       Trivial
 
-> Pickup (Booster Chest); Heals? False; Spawn Point
+> Pickup (Booster Chest); Heals? False
   * Pickup 17; Major Location? False
   * Extra - event: 0502
   > Teleporter to Arthur's House
       Trivial
 
-> Teleporter to Arthur's House; Heals? False
+> Teleporter to Arthur's House; Heals? False; Spawn Point
   * Teleporter to Arthur's House/Teleporter to Labyrinth B
   > Door to Labyrinth W
       Any of the following:
@@ -49,7 +51,9 @@ Extra - map_name: MazeB
 
 ----------------
 Boulder Chamber
+(Valid Starting Location)
 Extra - map_name: MazeS
+Extra - starting_script: <TRA0044:0092:0002:0013
 > Door to Labyrinth B; Heals? False; Spawn Point
   * Door to Labyrinth B/Door to Boulder Chamber
   > Event - Balrog 3
@@ -91,8 +95,10 @@ Extra - map_name: MazeS
 
 ----------------
 Labyrinth M
+(Valid Starting Location)
 Extra - map_name: MazeM
-> Door to Boulder Chamber; Heals? False; Spawn Point
+Extra - starting_script: <TRA0045:0099:0002:0053
+> Door to Boulder Chamber; Heals? False
   * Door to Boulder Chamber/Door to Labyrinth M
   > Door to Dark Place
       Any of the following:
@@ -110,15 +116,17 @@ Extra - map_name: MazeM
   > Teleporter to Labyrinth Shop
       Pacifist Strats (Beginner) or Has Weapon
 
-> Teleporter to Labyrinth Shop; Heals? False
+> Teleporter to Labyrinth Shop; Heals? False; Spawn Point
   * Teleporter to Labyrinth Shop/Teleporter to Labyrinth M
   > Door to Dark Place
       Pacifist Strats (Beginner) or Has Weapon
 
 ----------------
 Dark Place
+(Valid Starting Location)
 Extra - map_name: Drain
-> Door to Labyrinth M; Heals? False; Spawn Point
+Extra - starting_script: <TRA0046:0094:0004:0006
+> Door to Labyrinth M; Heals? False
   * Door to Labyrinth M/Door to Dark Place
   > Door to Core
       After Defeated Balrog 3
@@ -142,13 +150,15 @@ Extra - map_name: Drain
   > Door to Labyrinth M
       Trivial
 
-> Save Point; Heals? False
+> Save Point; Heals? False; Spawn Point
   > Door to Labyrinth M
       Trivial
 
 ----------------
 Core
+(Valid Starting Location)
 Extra - map_name: Almond
+Extra - starting_script: <TRA0047:0092:0004:0017
 > Door to Dark Place; Heals? False; Spawn Point
   * Door to Dark Place/Door to Core
   > Inner Room
@@ -184,7 +194,9 @@ Extra - map_name: Almond
 
 ----------------
 Waterway
+(Valid Starting Location)
 Extra - map_name: River
+Extra - starting_script: <TRA0048:0093:0155:0001
 > Entrance from Dark Place; Heals? False; Spawn Point
   * Entrance to Dark Place/Exit to Waterway
   > Door to Waterway Cabin
@@ -200,8 +212,10 @@ Extra - map_name: River
 
 ----------------
 Waterway Cabin
+(Valid Starting Location)
 Extra - map_name: Pixel
-> Door to Waterway; Heals? False; Spawn Point
+Extra - starting_script: <TRA0073:0094:0008:0009
+> Door to Waterway; Heals? False
   * Door to Waterway/Door to Waterway Cabin
   > Event - Drained Curly
       After Picked up Curly (Core)
@@ -211,7 +225,7 @@ Extra - map_name: Pixel
   > Door to Waterway
       Trivial
 
-> Save Point; Heals? False
+> Save Point; Heals? False; Spawn Point
   > Door to Waterway
       Trivial
   > Bed
@@ -255,13 +269,15 @@ Extra - map_name: Stream
 
 ----------------
 Labyrinth I
+(Valid Starting Location)
 Extra - map_name: MazeI
+Extra - starting_script: <TRA0009:0400:0017:0064
 > Door to Labyrinth H; Heals? False
   * Door to Labyrinth H/Door to Labyrinth I
   > Room Bottom
       Trivial
 
-> Event - Opened Labyrinth I Door; Heals? False; Spawn Point
+> Event - Opened Labyrinth I Door; Heals? False
   * Event Opened Labyrinth I Door
   > Room Bottom
       Trivial
@@ -272,7 +288,7 @@ Extra - map_name: MazeI
   > Room Bottom
       Trivial
 
-> Room Bottom; Heals? False
+> Room Bottom; Heals? False; Spawn Point
   > Door to Labyrinth H
       After Opened Labyrinth I Door
   > Event - Opened Labyrinth I Door
@@ -328,7 +344,9 @@ Extra - map_name: MazeI
 
 ----------------
 Labyrinth H
+(Valid Starting Location)
 Extra - map_name: MazeH
+Extra - starting_script: <TRA0038:0090:0035:0013
 > Door to Labyrinth I; Heals? False; Spawn Point
   * Door to Labyrinth I/Door to Labyrinth H
   > Door to Labyrinth W
@@ -341,7 +359,9 @@ Extra - map_name: MazeH
 
 ----------------
 Labyrinth W
+(Valid Starting Location)
 Extra - map_name: MazeW
+Extra - starting_script: <TRA0039:0091:0004:0016
 > Door to Labyrinth H; Heals? False; Spawn Point
   * Door to Labyrinth H/Door to Labyrinth W
   > Outside Camp
@@ -416,8 +436,10 @@ Extra - map_name: MazeW
 
 ----------------
 Labyrinth Shop
+(Valid Starting Location)
 Extra - map_name: MazeA
-> Door to Labyrinth W; Heals? False; Spawn Point
+Extra - starting_script: <TRA0042:0094:0015:0003
+> Door to Labyrinth W; Heals? False
   * Door to Labyrinth W/Door to Labyrinth Shop
   > Pickup (Chaba Chest (Machine Gun))
       Machine Gun
@@ -453,7 +475,7 @@ Extra - map_name: MazeA
   > Door to Labyrinth W
       Trivial
 
-> Save Point; Heals? False
+> Save Point; Heals? False; Spawn Point
   > Door to Labyrinth W
       Trivial
 
@@ -461,6 +483,7 @@ Extra - map_name: MazeA
 Camp
 (Valid Starting Location)
 Extra - map_name: MazeO
+Extra - starting_script: <TRA0040:0094:0014:0009
 > Door to Labyrinth W (Lower); Heals? False
   * Door to Labyrinth W/Door to Camp (Lower)
   > Door to Labyrinth W (Upper)
@@ -511,7 +534,9 @@ Extra - map_name: MazeO
 
 ----------------
 Clinic Ruins
+(Valid Starting Location)
 Extra - map_name: MazeD
+Extra - starting_script: <TRA0041:0090:0015:0009
 > Door to Labyrinth W; Heals? False; Spawn Point
   * Door to Labyrinth W/Door to Clinic Ruins
   > Pickup (Puu Black Boss)
