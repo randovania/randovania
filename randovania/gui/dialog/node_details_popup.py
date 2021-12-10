@@ -11,7 +11,7 @@ from randovania.game_description import integrity_check
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.search import find_resource_info_with_long_name
+from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockType
@@ -198,10 +198,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
         self.lore_type_combo.setCurrentIndex(self.lore_type_combo.findData(node.lore_type))
         refresh_if_needed(self.lore_type_combo, self.on_lore_type_combo)
 
-        if node.lore_type == LoreType.LUMINOTH_LORE:
+        if node.lore_type == LoreType.REQUIRES_ITEM:
             self.logbook_extra_combo.setCurrentIndex(self.logbook_extra_combo.findData(node.required_translator))
 
-        elif node.lore_type == LoreType.LUMINOTH_WARRIOR:
+        elif node.lore_type == LoreType.SPECIFIC_PICKUP:
             self.logbook_extra_combo.setCurrentIndex(self.logbook_extra_combo.findData(node.hint_index))
 
     def fill_for_player_ship_node(self, node: PlayerShipNode):
@@ -284,12 +284,12 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         self.logbook_extra_combo.clear()
 
-        if lore_type == LoreType.LUMINOTH_LORE:
+        if lore_type == LoreType.REQUIRES_ITEM:
             self.logbook_extra_label.setText("Translator needed:")
             for item in self.game.resource_database.item:
                 self.logbook_extra_combo.addItem(item.long_name, item)
 
-        elif lore_type == LoreType.LUMINOTH_WARRIOR:
+        elif lore_type == LoreType.SPECIFIC_PICKUP:
             self.logbook_extra_label.setText("Pickup index hinted:")
             for node in self.game.world_list.all_nodes:
                 if isinstance(node, PickupNode):
@@ -379,14 +379,14 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == LogbookNode:
             lore_type: LoreType = self.lore_type_combo.currentData()
-            if lore_type == LoreType.LUMINOTH_LORE:
+            if lore_type == LoreType.REQUIRES_ITEM:
                 required_translator = self.logbook_extra_combo.currentData()
                 if required_translator is None:
                     raise ValueError("Missing required translator.")
             else:
                 required_translator = None
 
-            if lore_type == LoreType.LUMINOTH_WARRIOR:
+            if lore_type == LoreType.SPECIFIC_PICKUP:
                 hint_index = self.logbook_extra_combo.currentData()
             else:
                 hint_index = None
@@ -411,16 +411,22 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             raise RuntimeError(f"Unknown node type: {node_type}")
 
     def _get_scan_visor(self):
-        return find_resource_info_with_long_name(
-            self.game.resource_database.item,
-            "Scan Visor"
-        )
+        try:
+            return find_resource_info_with_long_name(
+                self.game.resource_database.item,
+                "Scan Visor"
+            )
+        except MissingResource:
+            return None
 
     def _get_command_visor(self):
-        return find_resource_info_with_long_name(
-            self.game.resource_database.item,
-            "Command Visor"
-        )
+        try:
+            return find_resource_info_with_long_name(
+                self.game.resource_database.item,
+                "Command Visor"
+            )
+        except MissingResource:
+            return None
 
     def try_accept(self):
         try:

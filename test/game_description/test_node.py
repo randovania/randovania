@@ -14,7 +14,7 @@ def _logbook_node(request):
     translator = ItemResourceInfo("Translator", "T", 1, None)
 
     node = LogbookNode("Logbook", False, None, "", {}, 0,
-                       1000, scan_visor, LoreType.LUMINOTH_LORE,
+                       1000, scan_visor, LoreType.REQUIRES_ITEM,
                        translator if has_translator else None, None)
 
     return has_translator, scan_visor, translator, node

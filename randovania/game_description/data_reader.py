@@ -222,16 +222,23 @@ class WorldReader:
         self.dock_weakness_database = dock_weakness_database
 
     def _get_scan_visor(self) -> ItemResourceInfo:
-        return find_resource_info_with_long_name(
-            self.resource_database.item,
-            "Scan Visor"
-        )
+        try:
+            return find_resource_info_with_long_name(
+                self.resource_database.item,
+                "Scan Visor"
+            )
+        except MissingResource:
+            return None
+        
 
     def _get_command_visor(self) -> ItemResourceInfo:
-        return find_resource_info_with_long_name(
-            self.resource_database.item,
-            "Command Visor"
-        )
+        try:
+            return find_resource_info_with_long_name(
+                self.resource_database.item,
+                "Command Visor"
+            )
+        except MissingResource:
+            return None
 
     def read_node(self, name: str, data: Dict) -> Node:
         self.generic_index += 1
@@ -294,12 +301,12 @@ class WorldReader:
             elif node_type == "logbook":
                 lore_type = LoreType(data["lore_type"])
 
-                if lore_type == LoreType.LUMINOTH_LORE:
+                if lore_type == LoreType.REQUIRES_ITEM:
                     required_translator = self.resource_database.get_item(data["extra"]["translator"])
                 else:
                     required_translator = None
 
-                if lore_type in {LoreType.LUMINOTH_WARRIOR, LoreType.SKY_TEMPLE_KEY_HINT}:
+                if lore_type in {LoreType.SPECIFIC_PICKUP, LoreType.SKY_TEMPLE_KEY_HINT}:
                     hint_index = data["extra"]["hint_index"]
                 else:
                     hint_index = None

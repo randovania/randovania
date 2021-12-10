@@ -175,6 +175,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.area_view_canvas.select_world(world)
 
+        self.on_select_area()
+
         if SHOW_WORLD_MIN_MAX_SPINNER:
             for it in [self.spin_min_x, self.spin_min_y, self.spin_max_x, self.spin_max_y]:
                 it.valueChanged.disconnect(self._on_image_spin_update)

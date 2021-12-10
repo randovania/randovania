@@ -1,6 +1,8 @@
+from random import Random
 from typing import Tuple
 
 from randovania.game_description import default_database
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import add_resources_into_another
 from randovania.generator.item_pool import PoolResults
@@ -17,6 +19,8 @@ def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
 
 def calculate_pool_results(layout_configuration: BaseConfiguration,
                            resource_database: ResourceDatabase,
+                           base_patches: GamePatches = None,
+                           rng: Random = None
                            ) -> PoolResults:
     """
     Creates a PoolResults with all starting items and pickups in fixed locations, as well as a list of
@@ -36,7 +40,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     base_results.pickups.extend(add_ammo(resource_database,
                                          layout_configuration.ammo_configuration))
 
-    layout_configuration.game.data.generator.item_pool_creator(base_results, layout_configuration, resource_database)
+    layout_configuration.game.data.generator.item_pool_creator(base_results, layout_configuration, resource_database, base_patches, rng)
 
     return base_results
 
