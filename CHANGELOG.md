@@ -79,6 +79,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Waste Disposal Wallboosts
 - Added: Climb Connection Elevator to Deck Beta Gravityless
 - Added: Combat Requirements for Essence fight
+- Added: 2 Additional NSJ methods for reaching FCS item
+- Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
 - Changed: Removed under-used "Complex Movement" trick category
