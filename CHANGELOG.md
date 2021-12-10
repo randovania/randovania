@@ -8,9 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.3.0] - Unreleased
 
+- **Major** - Added: Cave Story has been added as an Experimental Game.
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
 This feature comes with plenty of quality of life functionality for editing the database. 
-- **Major** - Added: The Logic Database can now have descriptions for nodes.
+- Added: The Logic Database can now have descriptions for nodes.
 - Added: Game Details window can now spoil the item order, elevators, translator gates and hints.
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
