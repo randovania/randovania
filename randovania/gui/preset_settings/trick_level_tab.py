@@ -209,7 +209,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
             self,
             self._window_manager,
             self.game_description,
-            self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, 0),
+            self.game_description.resource_database.get_by_type_and_index(ResourceType.MISC, "NoGravity"),
         ))
 
     def _exec_trick_details(self, popup: TrickDetailsPopup):
