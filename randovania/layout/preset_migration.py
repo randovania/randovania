@@ -485,14 +485,14 @@ def _migrate_v16(preset: dict) -> dict:
 
 def _migrate_v17(preset: dict) -> dict:
     if preset["game"] == "prime1":
-        preset["configuration"]["elevators"]["excluded_elevators"].append(
+        preset["configuration"]["elevators"]["excluded_teleporters"].append(
                 {
                     "world_name": "Impact Crater",
                     "area_name": "Metroid Prime Lair",
                     "node_name": "Teleporter to Credits"
                 }
         )
-        preset["configuration"]["elevators"]["excluded_elevators"].append(
+        preset["configuration"]["elevators"]["excluded_teleporters"].append(
                 {
                     "world_name": "Frigate Orpheon",
                     "area_name": "Exterior Docking Hangar",
