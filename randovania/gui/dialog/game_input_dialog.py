@@ -36,16 +36,16 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
 
         per_game = options.options_for_game(self._game)
 
-        file_format1, platform, file_format2 = game.data.gui().input_file_text
-        description_text = "<html><head/><body><p>In order to create the randomized game, {} of {} for {} is necessary.</p>".format(
-            file_format1, game.long_name, platform)
-        if not patcher.uses_input_file_directly:
-            description_text += "<p>After using it once, a copy is kept by Randovania for later use.</p>"
-        description_text += "</body></html>"
-        self.description_label.setText(description_text)
-
         # Input
         if patcher.requires_input_file:
+            file_format1, platform, file_format2 = game.data.gui().input_file_text
+            description_text = "<html><head/><body><p>In order to create the randomized game, {} of {} for {} is necessary.</p>".format(
+                file_format1, game.long_name, platform)
+            if not patcher.uses_input_file_directly:
+                description_text += "<p>After using it once, a copy is kept by Randovania for later use.</p>"
+            description_text += "</body></html>"
+            self.description_label.setText(description_text)
+
             self.input_file_label.setText(f"Input File (Vanilla {file_format2})")
             self.input_file_edit.setPlaceholderText(f"Path to vanilla {file_format2}")
             self.input_file_edit.textChanged.connect(self._validate_input_file)
@@ -191,7 +191,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
         output_file = self.output_file
         if self._selected_output_format:
             has_error = output_file.is_dir() or not output_file.parent.is_dir()
-        elif self.input_file_edit.text():
+        elif self.output_file_edit.text():
             has_error = not output_file.is_dir()
         else:
             has_error = True

@@ -1,0 +1,1557 @@
+{
+    "name": "Ruined Egg Corridor",
+    "extra": {
+        "dark_name": "Outer Wall"
+    },
+    "areas": {
+        "Egg Corridor?": {
+            "default_node": "West Side",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Eggs2",
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Cthulhu's Abode? (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2033.087633087633,
+                        "y": 242.66011466011466,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Cthulhu's Abode?",
+                        "node_name": "Door to Egg Corridor? (Upper)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Area Centre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Cthulhu's Abode? (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2019.98,
+                        "y": 72.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Cthulhu's Abode?",
+                        "node_name": "Door to Egg Corridor? (Lower)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "West Side": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 925.7985257985258,
+                        "y": 157.48402948402946,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Cthulhu's Abode? (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Dragon Chest)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "pacifist",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Damage",
+                                                        "amount": 10,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dboost",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Used Egg Corridor? Teleporter": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Area Centre": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2668.6322686322687,
+                        "y": 170.58804258804258,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Cthulhu's Abode? (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Egg Observation Room? (West)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "East Side": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4051.1056511056504,
+                        "y": 170.58804258804258,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Egg Observation Room? (East)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Egg No. 00": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Side Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Dragon Chest)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1390.99,
+                        "y": 59.2,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "event": "0321"
+                    },
+                    "pickup_index": 53,
+                    "major_location": false,
+                    "connections": {
+                        "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Egg Observation Room? (West)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3461.43,
+                        "y": 190.24,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg Observation Room?",
+                        "node_name": "Door to Egg Corridor? (Western)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Area Centre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Egg Observation Room? (East)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3631.78,
+                        "y": 157.48,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg Observation Room?",
+                        "node_name": "Door to Egg Corridor? (Eastern)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "East Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Egg No. 00": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4647.34,
+                        "y": 131.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg No. 00",
+                        "node_name": "Door to Egg Corridor?"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "East Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Side Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4752.17,
+                        "y": 131.28,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Side Room",
+                        "node_name": "Door to Egg Corridor?"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "East Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter to Arthur's House": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 60.93,
+                        "y": 183.69,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Mimiga Village",
+                        "area_name": "Arthur's House",
+                        "node_name": "Teleporter to Egg Corridor?"
+                    },
+                    "dock_type": "teleporter",
+                    "dock_weakness": "Teleporter",
+                    "connections": {
+                        "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Hint - Blue Robot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Blue Robot": {
+                    "node_type": "logbook",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 35.38,
+                        "y": 147.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "event": "0210"
+                    },
+                    "string_asset_id": 7,
+                    "lore_type": "generic",
+                    "connections": {
+                        "Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Used Egg Corridor? Teleporter": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 156.2,
+                        "y": 164.68,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventEgg2Teleport",
+                    "connections": {
+                        "Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Cthulhu's Abode?": {
+            "default_node": "Door to Egg Corridor? (Upper)",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Cthu2",
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Egg Corridor? (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 200.56347256347257,
+                        "y": 212.61916461916462,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg Corridor?",
+                        "node_name": "Door to Cthulhu's Abode? (Upper)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Door to Egg Corridor? (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SNBubbler",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "bubbler",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SNMissiles",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "missiles",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Egg Corridor? (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 181.76,
+                        "y": 53.47,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg Corridor?",
+                        "node_name": "Door to Cthulhu's Abode? (Lower)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Door to Egg Corridor? (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Break Blocks"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SNMissiles",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "missiles",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "SNBubbler",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "bubbler",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Egg Observation Room?": {
+            "default_node": "Door to Egg Corridor? (Western)",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "EggR2",
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Egg Corridor? (Western)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 71.69,
+                        "y": 182.81,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg Corridor?",
+                        "node_name": "Door to Egg Observation Room? (West)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Door to Egg Corridor? (Eastern)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Egg Corridor? (Eastern)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 295.96,
+                        "y": 118.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg Corridor?",
+                        "node_name": "Door to Egg Observation Room? (East)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Door to Egg Corridor? (Western)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventSisters",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Sisters Boss)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Save Point": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventSisters",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Pickup (Sisters Boss)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 167.08,
+                        "y": 119.52,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "event": "0303"
+                    },
+                    "pickup_index": 54,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Egg Corridor? (Western)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Reverse Sisters Skip",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SisterSkip",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Egg Corridor? (Eastern)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Sisters Skip - https://www.youtube.com/watch?v=jExjnf7aLRc",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SisterSkip",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "booster2",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Sisters": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Kill Bosses"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "BossMissiles",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "missiles",
+                                                        "amount": 24,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Sisters": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 197.8116298116298,
+                        "y": 139.69533169533167,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventSisters",
+                    "connections": {
+                        "Door to Egg Corridor? (Western)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 168.0,
+                        "y": 54.68817204301078,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Egg Corridor? (Eastern)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Side Room": {
+            "default_node": "Door to Egg Corridor?",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "EgEnd2",
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Egg Corridor?": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 167.54,
+                        "y": 103.46,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg Corridor?",
+                        "node_name": "Door to Side Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Save Point/Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Point/Refill": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 183.70658036677455,
+                        "y": 150.50269687162893,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Egg Corridor?": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Refill": {
+                    "node_type": "generic",
+                    "heal": true,
+                    "coordinates": {
+                        "x": 200.01725997842502,
+                        "y": 152.31499460625673,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Save Point/Refill": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Egg No. 00": {
+            "default_node": "Door to Egg Corridor?",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "EggX2",
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Egg Corridor?": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 70.31,
+                        "y": 86.49,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg Corridor?",
+                        "node_name": "Door to Egg No. 00"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Door to Outer Wall": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventKazuma",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Outer Wall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 278.53,
+                        "y": 88.33,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Outer Wall",
+                        "node_name": "Door to Egg No. 00"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Door to Egg Corridor?": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Outer Wall": {
+            "default_node": "Door to Egg No. 00",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Oside",
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Egg No. 00": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 66.73,
+                        "y": 238.79,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Egg No. 00",
+                        "node_name": "Door to Outer Wall"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Little House": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 37.79,
+                        "y": 113.37,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Little House",
+                        "node_name": "Door to Outer Wall"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Room Bottom": {
+                            "type": "template",
+                            "data": "Has Flight"
+                        }
+                    }
+                },
+                "Outside Clock Room": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 388.3417085427135,
+                        "y": 988.1407035175878,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Room Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Room Top": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Has Flight"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Clock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Storehouse": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1205.23,
+                        "y": 2795.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Plantation",
+                        "area_name": "Storehouse",
+                        "node_name": "Door to Outer Wall"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Event - Entered Outer Wall from Storehouse": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Room Bottom": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 324.0201005025125,
+                        "y": 235.57788944723598,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Egg No. 00": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "eventKazuma",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Little House": {
+                            "type": "template",
+                            "data": "Has Flight"
+                        },
+                        "Outside Clock Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Flight"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Remove Points of No Return"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "eventOside",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Bad Ending": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "misc",
+                                            "name": "badEnd",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventKazuma",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventCore",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Room Top": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 967.2361809045227,
+                        "y": 2760.2010050251256,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Outside Clock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Storehouse": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Clock Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 134.27135678391952,
+                        "y": 939.899497487437,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Clock Room",
+                        "node_name": "Door to Outer Wall"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Event - Entered Outer Wall from Clock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Bad Ending": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 430.15,
+                        "y": 196.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventBadEnd",
+                    "connections": {}
+                },
+                "Event - Entered Outer Wall from Storehouse": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1086.23,
+                        "y": 2779.5,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventOside",
+                    "connections": {
+                        "Room Top": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Entered Outer Wall from Clock Room": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 246.83,
+                        "y": 972.06,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "eventOside",
+                    "connections": {
+                        "Outside Clock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Little House": {
+            "default_node": "Door to Outer Wall",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Little",
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Outer Wall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 248.26,
+                        "y": 119.06,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Outer Wall",
+                        "node_name": "Door to Little House"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Pickup (Little House)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "blade",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "mrLittle",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Hint - Mrs. Little": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Little House)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 168.46,
+                        "y": 101.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "event": "0204"
+                    },
+                    "pickup_index": 55,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Outer Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint - Mrs. Little": {
+                    "node_type": "logbook",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 149.03,
+                        "y": 103.76,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "event": "0212",
+                        "hint_index": 55
+                    },
+                    "string_asset_id": 11,
+                    "lore_type": "specific-pickup",
+                    "connections": {
+                        "Door to Outer Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Clock Room": {
+            "default_node": "Door to Outer Wall",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Clock",
+                "in_dark_aether": false
+            },
+            "nodes": {
+                "Door to Outer Wall": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 230.38,
+                        "y": 133.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Ruined Egg Corridor",
+                        "area_name": "Outer Wall",
+                        "node_name": "Door to Clock Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Door",
+                    "connections": {
+                        "Pickup (Clock Room)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Clock Room)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 136.35,
+                        "y": 100.71,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "event": "0300"
+                    },
+                    "pickup_index": 56,
+                    "major_location": false,
+                    "connections": {
+                        "Door to Outer Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

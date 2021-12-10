@@ -102,7 +102,7 @@ def pretty_print_node_type(node: Node, world_list: WorldList):
 
     elif isinstance(node, LogbookNode):
         message = ""
-        if node.lore_type == LoreType.LUMINOTH_LORE:
+        if node.lore_type == LoreType.REQUIRES_ITEM:
             message = f" ({node.required_translator.long_name})"
         return f"Logbook {node.lore_type.long_name}{message} for {node.string_asset_id:x}"
 

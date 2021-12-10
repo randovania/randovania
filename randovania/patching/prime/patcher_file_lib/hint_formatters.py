@@ -28,24 +28,30 @@ class GuardianFormatter(LocationFormatter):
 
 
 class TemplatedFormatter(LocationFormatter):
-    def __init__(self, template: str, area_namer: hint_lib.AreaNamer):
+    def __init__(self, template: str, area_namer: hint_lib.AreaNamer, upper_pickup: bool = False, text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
         self.template = template
         self.hint_name_creator = area_namer
+        self.upper_pickup = upper_pickup
+        self.text_color = text_color
 
     def format(self, determiner: hint_lib.Determiner, pickup: str, hint: Hint) -> str:
         node_name = self.hint_name_creator.location_name(
             hint.target,
-            hint.precision.location == HintLocationPrecision.WORLD_ONLY
+            hint.precision.location == HintLocationPrecision.WORLD_ONLY,
+            self.text_color
         )
+        if self.upper_pickup:
+            pickup = pickup.upper()
         return self.template.format(determiner=determiner,
                                     pickup=pickup,
                                     node=node_name)
 
 
 class RelativeFormatter(LocationFormatter):
-    def __init__(self, world_list: WorldList, patches: GamePatches):
+    def __init__(self, world_list: WorldList, patches: GamePatches, text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
         self.world_list = world_list
         self.patches = patches
+        self.text_color = text_color
         self._index_to_node = {
             node.pickup_index: node
             for node in world_list.all_nodes
@@ -67,7 +73,7 @@ class RelativeFormatter(LocationFormatter):
             distance_msg = f"{precise_msg}{distance} rooms"
 
         return (f"{determiner.title}{pickup} can be found "
-                f"{hint_lib.color_text(hint_lib.TextColor.LOCATION, distance_msg)} away from {other_name}.")
+                f"{hint_lib.color_text(self.text_color, distance_msg)} away from {other_name}.")
 
     def format(self, determiner: hint_lib.Determiner, pickup_name: str, hint: Hint) -> str:
         raise NotImplementedError()

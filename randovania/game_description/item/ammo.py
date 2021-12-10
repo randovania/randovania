@@ -1,5 +1,8 @@
 from dataclasses import dataclass
+import dataclasses
 from typing import Dict, Tuple, Optional
+
+from frozendict import frozendict
 
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ResourceLock
@@ -16,6 +19,7 @@ class Ammo:
     broad_category: ItemCategory
     unlocked_by: Optional[str] = None
     temporary: Optional[str] = None
+    extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
         if self.temporary is not None:
@@ -39,6 +43,7 @@ class Ammo:
             broad_category=item_categories[value["broad_category"]],
             unlocked_by=value.get("unlocked_by"),
             temporary=value.get("temporary"),
+            extra=frozendict(value.get("extra", {}))
         )
 
     @property
@@ -47,6 +52,7 @@ class Ammo:
             "model_name": self.model_name,
             "items": list(self.items),
             "broad_category": self.broad_category.name,
+            "extra": self.extra
         }
         if self.unlocked_by is not None:
             result["temporary"] = self.temporary
