@@ -49,8 +49,8 @@ UI_CUSTOM_NAMES = {
     ("Magmoor Caverns", "Transport to Phendrana Drifts South"): "Magmoor Workstation South Elevator (Save)",
 
     # Mines
-    ("Phazon Mines", "Transport to Tallon Overworld South"): "Phazon Processing Elevator",
-    ("Phazon Mines", "Transport to Magmoor Caverns South"): "Main Quarry Elevator",
+    ("Phazon Mines", "Transport to Tallon Overworld South"): "Main Quarry Elevator",
+    ("Phazon Mines", "Transport to Magmoor Caverns South"): "Phazon Processing Elevator",
 
     # Phendrana
     ("Phendrana Drifts", "Transport to Magmoor Caverns West"): "Phendrana Shoreline Elevator",
@@ -60,8 +60,8 @@ UI_CUSTOM_NAMES = {
     ("Tallon Overworld", "Transport to Chozo Ruins West"): "Tallon Canyon Elevator",
     ("Tallon Overworld", "Transport to Chozo Ruins East"): "Frigate Crash Site Elevator",
     ("Tallon Overworld", "Transport to Magmoor Caverns East"): "Root Cave Elevator",
-    ("Tallon Overworld", "Transport to Chozo Ruins South"): "Lower/North Great Tree Elevator",
-    ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree Elevator",
+    ("Tallon Overworld", "Transport to Chozo Ruins South"): "Upper/South Great Tree Elevator",
+    ("Tallon Overworld", "Transport to Phazon Mines East"): "Lower/North Great Tree Elevator",
 
     # Frigate
     ("Frigate Orpheon", "Exterior Docking Hangar"): 'Exterior Docking Hangar',
@@ -87,8 +87,8 @@ SHORT_UI_CUSTOM_NAMES = {
     ("Magmoor Caverns", "Transport to Phendrana Drifts South"): "Workstation South (Save)",
 
     # Mines
-    ("Phazon Mines", "Transport to Tallon Overworld South"): "Phazon Processing",
-    ("Phazon Mines", "Transport to Magmoor Caverns South"): "Main Quarry",
+    ("Phazon Mines", "Transport to Tallon Overworld South"): "Main Quarry",
+    ("Phazon Mines", "Transport to Magmoor Caverns South"): "Phazon Processing",
 
     # Phendrana
     ("Phendrana Drifts", "Transport to Magmoor Caverns West"): "Phendrana Shoreline",
@@ -98,8 +98,8 @@ SHORT_UI_CUSTOM_NAMES = {
     ("Tallon Overworld", "Transport to Chozo Ruins West"): "Tallon Canyon",
     ("Tallon Overworld", "Transport to Chozo Ruins East"): "Frigate Crash Site",
     ("Tallon Overworld", "Transport to Magmoor Caverns East"): "Root Cave",
-    ("Tallon Overworld", "Transport to Chozo Ruins South"): "Lower/North Great Tree",
-    ("Tallon Overworld", "Transport to Phazon Mines East"): "Upper/South Great Tree",
+    ("Tallon Overworld", "Transport to Chozo Ruins South"): "Upper/South Great Tree",
+    ("Tallon Overworld", "Transport to Phazon Mines East"): "Lower/North Great Tree",
 
     # Frigate
     ("Frigate Orpheon", "Exterior Docking Hangar"): 'Frigate Destroyed',
