@@ -1,7 +1,9 @@
 ----------------
 Egg Corridor?
+(Valid Starting Location)
 Extra - map_name: Eggs2
 Extra - in_dark_aether: False
+Extra - starting_script: <TRA0049:0099:0007:0006
 > Door to Cthulhu's Abode? (Upper); Heals? False
   * Door to Cthulhu's Abode?/Door to Egg Corridor? (Upper)
   > Area Centre
@@ -12,7 +14,7 @@ Extra - in_dark_aether: False
   > West Side
       Trivial
 
-> West Side; Heals? False; Spawn Point
+> West Side; Heals? False
   > Door to Cthulhu's Abode? (Lower)
       Trivial
   > Pickup (Dragon Chest)
@@ -62,7 +64,7 @@ Extra - in_dark_aether: False
   > East Side
       Trivial
 
-> Teleporter to Arthur's House; Heals? False
+> Teleporter to Arthur's House; Heals? False; Spawn Point
   * Teleporter to Arthur's House/Teleporter to Egg Corridor?
   > West Side
       Trivial
@@ -82,9 +84,11 @@ Extra - in_dark_aether: False
 
 ----------------
 Cthulhu's Abode?
+(Valid Starting Location)
 Extra - map_name: Cthu2
 Extra - in_dark_aether: False
-> Door to Egg Corridor? (Upper); Heals? False; Spawn Point
+Extra - starting_script: <TRA0050:0094:0011:0012
+> Door to Egg Corridor? (Upper); Heals? False
   * Door to Egg Corridor?/Door to Cthulhu's Abode? (Upper)
   > Door to Egg Corridor? (Lower)
       All of the following:
@@ -94,7 +98,7 @@ Extra - in_dark_aether: False
               Bubbler and Break blocks with Bubbler (Beginner)
               Missile Launcher ≥ 3 and Break blocks with Missiles (Beginner)
 
-> Door to Egg Corridor? (Lower); Heals? False
+> Door to Egg Corridor? (Lower); Heals? False; Spawn Point
   * Door to Egg Corridor?/Door to Cthulhu's Abode? (Lower)
   > Door to Egg Corridor? (Upper)
       All of the following:
@@ -106,8 +110,10 @@ Extra - in_dark_aether: False
 
 ----------------
 Egg Observation Room?
+(Valid Starting Location)
 Extra - map_name: EggR2
 Extra - in_dark_aether: False
+Extra - starting_script: <TRA0051:0094:0004:0004
 > Door to Egg Corridor? (Western); Heals? False; Spawn Point
   * Door to Egg Corridor?/Door to Egg Observation Room? (West)
   > Door to Egg Corridor? (Eastern)
@@ -149,27 +155,31 @@ Extra - in_dark_aether: False
 
 ----------------
 Side Room
+(Valid Starting Location)
 Extra - map_name: EgEnd2
 Extra - in_dark_aether: False
-> Door to Egg Corridor?; Heals? False; Spawn Point
+Extra - starting_script: <TRA0054:0094:0011:0006
+> Door to Egg Corridor?; Heals? False
   * Door to Egg Corridor?/Door to Side Room
-  > Save Point/Refill
+  > Save Point
       Trivial
 
-> Save Point/Refill; Heals? False
+> Save Point; Heals? False; Spawn Point
   > Door to Egg Corridor?
       Trivial
   > Refill
       Trivial
 
 > Refill; Heals? True
-  > Save Point/Refill
+  > Save Point
       Trivial
 
 ----------------
 Egg No. 00
+(Valid Starting Location)
 Extra - map_name: EggX2
 Extra - in_dark_aether: False
+Extra - starting_script: <TRA0052:0094:0004:0010
 > Door to Egg Corridor?; Heals? False; Spawn Point
   * Door to Egg Corridor?/Door to Egg No. 00
   > Door to Outer Wall
@@ -182,9 +192,11 @@ Extra - in_dark_aether: False
 
 ----------------
 Outer Wall
+(Valid Starting Location)
 Extra - map_name: Oside
-Extra - in_dark_aether: False
-> Door to Egg No. 00; Heals? False; Spawn Point
+Extra - in_dark_aether: True
+Extra - starting_script: <TRA0053:0092:0165:0004
+> Door to Egg No. 00; Heals? False
   * Door to Egg No. 00/Door to Outer Wall
   > Room Bottom
       Trivial
@@ -209,7 +221,7 @@ Extra - in_dark_aether: False
   > Event - Entered Outer Wall from Storehouse
       Trivial
 
-> Room Bottom; Heals? False
+> Room Bottom; Heals? False; Spawn Point
   > Door to Egg No. 00
       After Saved Kazuma
   > Door to Little House
@@ -247,8 +259,10 @@ Extra - in_dark_aether: False
 
 ----------------
 Little House
+(Valid Starting Location)
 Extra - map_name: Little
-Extra - in_dark_aether: False
+Extra - in_dark_aether: True
+Extra - starting_script: <TRA0069:0090:0015:0008
 > Door to Outer Wall; Heals? False; Spawn Point
   * Door to Outer Wall/Door to Little House
   > Pickup (Little House)
@@ -271,8 +285,10 @@ Extra - in_dark_aether: False
 
 ----------------
 Clock Room
+(Valid Starting Location)
 Extra - map_name: Clock
-Extra - in_dark_aether: False
+Extra - in_dark_aether: True
+Extra - starting_script: <TRA0094:0090:0014:0007
 > Door to Outer Wall; Heals? False; Spawn Point
   * Door to Outer Wall/Door to Clock Room
   > Pickup (Clock Room)

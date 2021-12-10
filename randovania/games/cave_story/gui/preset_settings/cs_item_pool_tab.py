@@ -15,7 +15,7 @@ class CSPresetItemPool(PresetItemPool):
         self._create_puppy_checkbox()
         self.previousObj = CSObjective.NORMAL_ENDING
 
-        self._disable_starting()
+        # self._disable_starting()
     
     def on_preset_changed(self, preset: Preset):
         super().on_preset_changed(preset)

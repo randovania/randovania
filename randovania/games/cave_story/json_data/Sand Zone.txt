@@ -1,12 +1,14 @@
 ----------------
 Sand Zone
+(Valid Starting Location)
 Extra - map_name: Sand
-> Door to Jenka's House; Heals? False; Spawn Point
+Extra - starting_script: <TRA0010:0099:0036:0033
+> Door to Jenka's House; Heals? False
   * Door to Jenka's House/Door to Sand Zone
   > Outside Jenka's House
       Trivial
 
-> Teleporter to Arthur's House; Heals? False
+> Teleporter to Arthur's House; Heals? False; Spawn Point
   * Teleporter to Arthur's House/Teleporter to Sand Zone
   > Outside Sand Zone Residence
       Any of the following:
@@ -242,7 +244,9 @@ Extra - map_name: Sand
 
 ----------------
 Sand Zone Residence
+(Valid Starting Location)
 Extra - map_name: Curly
+Extra - starting_script: <TRA0029:0090:0018:0009
 > Door to Sand Zone; Heals? False; Spawn Point
   * Door to Sand Zone/Door to Sand Zone Residence
   > Pickup (Curly Boss)
@@ -280,8 +284,10 @@ Extra - map_name: Curly
 
 ----------------
 Small Room
+(Valid Starting Location)
 Extra - map_name: CurlyS
-> Door to Sand Zone Residence; Heals? False; Spawn Point
+Extra - starting_script: <TRA0032:0094:0004:0009
+> Door to Sand Zone Residence; Heals? False
   * Door to Sand Zone Residence/Door to Small Room
   > Pickup (Puppy (Curly))
       Trivial
@@ -308,13 +314,15 @@ Extra - map_name: CurlyS
   > Save Point
       Trivial
 
-> Save Point; Heals? False
+> Save Point; Heals? False; Spawn Point
   > Refill
       Trivial
 
 ----------------
 Jenka's House
+(Valid Starting Location)
 Extra - map_name: Jenka2
+Extra - starting_script: <EVE0+10
 > Door to Sand Zone; Heals? False; Spawn Point
   * Door to Sand Zone/Door to Jenka's House
   > Pickup (Jenka)
@@ -361,8 +369,10 @@ Extra - map_name: Jenka2
 
 ----------------
 Deserted House
+(Valid Starting Location)
 Extra - map_name: Dark
-> Door to Sand Zone; Heals? False; Spawn Point
+Extra - starting_script: <TRA0034:0094:0012:0011
+> Door to Sand Zone; Heals? False
   * Door to Sand Zone/Door to Deserted House
   > Pickup (Puppy (Dark))
       Trivial
@@ -375,7 +385,7 @@ Extra - map_name: Dark
   > Door to Sand Zone
       Trivial
 
-> Save Point; Heals? False
+> Save Point; Heals? False; Spawn Point
   > Door to Sand Zone
       Trivial
 

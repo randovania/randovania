@@ -52,7 +52,6 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     # Uncomment the following lines to update:
     # with test_files_dir.joinpath("caver_expected_data", f"{out_file}.json").open("w") as f:
     #     json.dump(data, f)
-    # assert data == {}
     
     with test_files_dir.joinpath("caver_expected_data", f"{out_file}.json").open("r") as f:
         expected_data = json.load(f)
