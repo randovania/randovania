@@ -51,6 +51,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Fixed: HAT - Updated spawn node
 - Fixed: Quarantine Cave - Properly model when the fight is required and when it is not
 - Fixed: Bug where Biohazard Containment didn't check Power Conduit Requirements if Super Missiles were available
+- Fixed: Typo in Frozen Pike - Hunter Cave Access requires Slope Jump (Advanced), not Single-Room OoB (Advanced)
 - Added: New Event - Gravity Chamber Item (Lower)
 - Added: New Trick Category - Infinite Speed
 - Added: Magma Pool - Added standable terrain method to cross the room with a video example
