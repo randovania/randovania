@@ -273,6 +273,7 @@ class CaverPatcher(Patcher):
 
         return {
             "maps": maps,
+            "other_tsc": {},
             "mychar": cosmetic_patches.mychar.mychar_bmp(mychar_rng),
             "hash": get_ingame_hash(description._shareable_hash_bytes)
         }
