@@ -255,6 +255,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             (RandovaniaGame.METROID_PRIME, self.prime_hint_item_names_tree_widget),
             (RandovaniaGame.METROID_PRIME_ECHOES, self.echoes_hint_item_names_tree_widget),
             (RandovaniaGame.METROID_PRIME_CORRUPTION, self.corruption_hint_item_names_tree_widget),
+            (RandovaniaGame.CAVE_STORY, self.cs_hint_item_names_tree_widget),
         ]:
             hints_text.update_hints_text(game, widget)
 
@@ -264,6 +265,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             (RandovaniaGame.METROID_PRIME, self.prime_hint_locations_tree_widget),
             (RandovaniaGame.METROID_PRIME_ECHOES, self.echoes_hint_locations_tree_widget),
             (RandovaniaGame.METROID_PRIME_CORRUPTION, self.corruption_hint_locations_tree_widget),
+            (RandovaniaGame.CAVE_STORY, self.cs_hint_locations_tree_widget)
         ]:
             hints_text.update_hint_locations(game, widget)
 
@@ -277,6 +279,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.help_prime_tab_widget.setCurrentWidget(self.prime_faq_tab)
         self.help_echoes_tab_widget.setCurrentWidget(self.echoes_faq_tab)
         self.help_corruption_tab_widget.setCurrentWidget(self.corruption_faq_tab)
+        self.help_cs_tab_widget.setCurrentWidget(self.cs_faq_tab)
 
     async def generate_seed_from_permalink(self, permalink):
         from randovania.lib.status_update_lib import ProgressUpdateCallable
