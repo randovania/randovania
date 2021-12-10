@@ -1,6 +1,8 @@
 ----------------
 Egg Corridor
+(Valid Starting Location)
 Extra - map_name: Eggs
+Extra - starting_script: <TRA0002:0099:0005:0006
 > Door to Cthulhu's Abode (Lower); Heals? False
   * Door to Cthulhu's Abode/Door to Egg Corridor (Lower)
   > Outside Cthulhu's Abode
@@ -115,8 +117,10 @@ Extra - map_name: Eggs
 
 ----------------
 Cthulhu's Abode
+(Valid Starting Location)
 Extra - map_name: Cthu
-> Door to Egg Corridor (Lower); Heals? False; Spawn Point
+Extra - starting_script: <TRA0022:0094:0006:0012
+> Door to Egg Corridor (Lower); Heals? False
   * Door to Egg Corridor/Door to Cthulhu's Abode (Lower)
   > Door to Egg Corridor (Upper)
       Can Break Blocks
@@ -136,13 +140,15 @@ Extra - map_name: Cthu
   > Door to Egg Corridor (Lower)
       Trivial
 
-> Save Point; Heals? False
+> Save Point; Heals? False; Spawn Point
   > Door to Egg Corridor (Lower)
       Trivial
 
 ----------------
 Egg No. 06
+(Valid Starting Location)
 Extra - map_name: Egg6
+Extra - starting_script: <TRA0004:0094:0008:0008
 > Door to Egg Corridor; Heals? False; Spawn Point
   * Door to Egg Corridor/H/V Trigger to Egg No. 06
   > Pickup (Egg Chest)
@@ -156,21 +162,25 @@ Extra - map_name: Egg6
 
 ----------------
 Egg Observation Room
+(Valid Starting Location)
 Extra - map_name: EggR
-> Pickup (Egg Observation Room Chest); Heals? False; Spawn Point
+Extra - starting_script: <TRA0005:0094:0017:0008
+> Pickup (Egg Observation Room Chest); Heals? False
   * Pickup 3; Major Location? False
   * Extra - event: 0301
   > Door to Egg Corridor
       Trivial
 
-> Door to Egg Corridor; Heals? False
+> Door to Egg Corridor; Heals? False; Spawn Point
   * Door to Egg Corridor/Door to Egg Observation Room
   > Pickup (Egg Observation Room Chest)
       Trivial
 
 ----------------
 Egg No. 01
+(Valid Starting Location)
 Extra - map_name: Egg1
+Extra - starting_script: <TRA0023:0094:0008:0008
 > Door to Egg Corridor; Heals? False; Spawn Point
   * Door to Egg Corridor/H/V Trigger to Egg No. 01
   > Event - Lowered Egg Corridor Barrier
@@ -183,7 +193,9 @@ Extra - map_name: Egg1
 
 ----------------
 Egg No. 00
+(Valid Starting Location)
 Extra - map_name: EggX
+Extra - starting_script: <TRA0003:0094:0004:0010
 > Door to Egg Corridor; Heals? False; Spawn Point
   * Door to Egg Corridor/Door to Egg No. 00
   > Event - Saved Sue
@@ -196,13 +208,15 @@ Extra - map_name: EggX
 
 ----------------
 Side Room
+(Valid Starting Location)
 Extra - map_name: EgEnd1
-> Door to Egg Corridor; Heals? False; Spawn Point
+Extra - starting_script: <TRA0021:0094:0011:0006
+> Door to Egg Corridor; Heals? False
   * Door to Egg Corridor/Door to Side Room
   > Save Point
       Trivial
 
-> Save Point; Heals? False
+> Save Point; Heals? False; Spawn Point
   > Door to Egg Corridor
       Trivial
   > Refill
