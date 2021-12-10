@@ -147,6 +147,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Level MG (West)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -173,6 +182,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Event - Level MG (Centre)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -207,6 +225,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Event - Level MG (East)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -414,6 +441,69 @@
                     "event_name": "eventEgg2Teleport",
                     "connections": {
                         "Teleporter to Arthur's House": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG (West)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 757.51,
+                        "y": 152.51,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
+                    "connections": {
+                        "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG (Centre)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2549.81,
+                        "y": 174.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
+                    "connections": {
+                        "Area Centre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG (East)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3966.22,
+                        "y": 190.65,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
+                    "connections": {
+                        "East Side": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1151,6 +1241,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Level MG": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1374,6 +1473,27 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventOside",
+                    "connections": {
+                        "Outside Clock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 447.84,
+                        "y": 984.92,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
                     "connections": {
                         "Outside Clock Room": {
                             "type": "and",

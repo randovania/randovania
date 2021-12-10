@@ -319,6 +319,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Level MG": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -834,6 +843,27 @@
                     },
                     "string_asset_id": 6,
                     "lore_type": "generic",
+                    "connections": {
+                        "Lower Level": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 760.61,
+                        "y": 261.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
                     "connections": {
                         "Lower Level": {
                             "type": "and",
