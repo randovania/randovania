@@ -50,6 +50,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Fixed: Magma Pool - Added missing suit or heated runs trick requirement for non-grapple methods of crossing the room
 - Fixed: HAT - Updated spawn node
 - Fixed: Quarantine Cave - Properly model when the fight is required and when it is not
+- Fixed: Bug where Biohazard Containment didn't check Power Conduit Requirements if Super Missiles were available
+- Fixed: Typo in Frozen Pike - Hunter Cave Access requires Slope Jump (Advanced), not Single-Room OoB (Advanced)
 - Added: New Event - Gravity Chamber Item (Lower)
 - Added: New Trick Category - Infinite Speed
 - Added: Magma Pool - Added standable terrain method to cross the room with a video example
@@ -69,7 +71,22 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Elite Control Access Item (Damage Boost)
 - Added: Central Dynamo Item w/ Infinite Speed
 - Added: Bomb jump to skip grapple in Biotech Research Area 2
-
+- Added: Jump Off Enemies DBJ to reach GTH NSJ
+- Added: Wallboost FCS Climb
+- Added: Logic for Traversing Twin Fires Tunnel to Workstation NSJ Gravity
+- Added: Logic for Traversing Twin Fires Tunnel to Workstation NSJ Bombless
+- Added: Logic for Traversing Twin Fires Tunnel to Workstation Missileless Grappless
+- Added: Gravityless Grappless Morphless method for crossing FCS
+- Added: Waste Disposal Wallboosts
+- Added: Climb Connection Elevator to Deck Beta Gravityless
+- Added: Combat Requirements for Essence fight
+- Added: 2 Additional NSJ methods for reaching FCS item
+- Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
+- Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
+- Changed: HAT Wallboosts can be done using Gravity at the same difficulty
+- Changed: Removed under-used "Complex Movement" trick category
+- Changed: All Gravityless Slope Jumps are now categorized as "Underwater Movement without Gravity", as opposed to just NSJ ones
+- Changed: Knowledge (Beginner) to Traverse Magmoor Workstation without Varia
 - Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
 - Changed: Hall of the Elders - Now properly model needing to kill the 1 ghost to leave the room. Chargeless 1 ghost fight combat difficulty reduced to beginner.
 
