@@ -706,6 +706,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Level MG (West)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1108,6 +1117,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Level MG (East)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1378,6 +1396,48 @@
                     "event_name": "eventFireplace",
                     "connections": {
                         "Area Centre": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG (West)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 742.6,
+                        "y": 196.71,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
+                    "connections": {
+                        "West Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG (East)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3844.18,
+                        "y": 140.78,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
+                    "connections": {
+                        "East Side": {
                             "type": "and",
                             "data": {
                                 "comment": null,
