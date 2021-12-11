@@ -96,7 +96,7 @@ class CaverPatcher(Patcher):
         nothing_item_script = "<PRI<MSG<TUR\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
         pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
-        for index in game_description.world_list._pickup_index_to_node.keys():
+        for index in sorted(game_description.world_list._pickup_index_to_node.keys()):
             target = patches.pickup_assignment.get(index, nothing_item)
 
             if target.player != players_config.player_index:
@@ -142,7 +142,7 @@ class CaverPatcher(Patcher):
             "music": music.get(mapname, {}),
             "entrances": entrances.get(mapname, {}),
             "hints": hints.get(mapname, {}),
-        } for mapname in mapnames}
+        } for mapname in sorted(mapnames)}
 
         # objective flags
         starting_script = configuration.objective.script
