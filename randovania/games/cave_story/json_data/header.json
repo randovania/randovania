@@ -659,6 +659,10 @@
             "camp": {
                 "long_name": "Start in Camp",
                 "extra": {}
+            },
+            "levelMG": {
+                "long_name": "Level Up Machine Gun",
+                "extra": {}
             }
         },
         "tricks": {
@@ -783,12 +787,29 @@
                             }
                         },
                         {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "machineGun",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "machineGun",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "levelMG",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]

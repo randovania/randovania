@@ -123,6 +123,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Level MG": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -636,6 +645,27 @@
                     "dock_weakness": "Door",
                     "connections": {
                         "Door to Egg No. 00": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 229.08,
+                        "y": 201.54,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
+                    "connections": {
+                        "Teleporter to Arthur's House": {
                             "type": "and",
                             "data": {
                                 "comment": null,
