@@ -26,6 +26,9 @@ def test_create_patch_data_cosmetic(test_files_dir, mocker, patches):
     test_file, cosmetic_patches = patches
     _create_patch_data(test_files_dir, mocker, "arthur", test_file, cosmetic_patches)
 
+def test_create_patch_data_starting_items(test_files_dir, mocker):
+    _create_patch_data(test_files_dir, mocker, "starting", "starting", CSCosmeticPatches())
+
 def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     # Setup
     f = test_files_dir.joinpath("log_files", "cave_story", f"{in_file}.rdvgame")
