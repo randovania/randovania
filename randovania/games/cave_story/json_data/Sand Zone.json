@@ -600,6 +600,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Level MG (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -1288,6 +1297,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Event - Level MG (Upper)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "machineGun",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2258,7 +2276,7 @@
                             "data": {
                                 "type": "events",
                                 "name": "eventPuppies",
-                                "amount": 5,
+                                "amount": 1,
                                 "negate": false
                             }
                         },
@@ -2321,6 +2339,48 @@
                     "extra": {},
                     "connections": {
                         "Refill (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG (Lower)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 993.88,
+                        "y": 88.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
+                    "connections": {
+                        "Lower Side": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG (Upper)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 884.93,
+                        "y": 681.1,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
+                    "connections": {
+                        "Above Sunstones": {
                             "type": "and",
                             "data": {
                                 "comment": null,

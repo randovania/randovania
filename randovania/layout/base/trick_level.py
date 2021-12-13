@@ -31,6 +31,10 @@ class LayoutTrickLevel(BitPackEnum, Enum):
     @property
     def long_name(self) -> str:
         return _PRETTY_TRICK_LEVEL_NAME[self]
+    
+    @property
+    def is_enabled(self) -> bool:
+        return self.as_number > LayoutTrickLevel.DISABLED.as_number
 
 
 _TRICK_LEVEL_ORDER: List[LayoutTrickLevel] = list(LayoutTrickLevel)

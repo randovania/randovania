@@ -1457,6 +1457,32 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Level MG": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "machineGun",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventBalrog",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -1492,6 +1518,27 @@
                     "description": "",
                     "extra": {},
                     "event_name": "eventBalrog",
+                    "connections": {
+                        "Door to Mimiga Village": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Level MG": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 263.14,
+                        "y": 150.69,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "levelMG",
                     "connections": {
                         "Door to Mimiga Village": {
                             "type": "and",
