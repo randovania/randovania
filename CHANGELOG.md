@@ -165,6 +165,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 
 ### Metroid Prime 2: Echoes - Patcher Changes
 
+- Added: Cosmetic option to customize hud color.
 - Fixed: Scanning hints now displays the correct, edited categories.
 
 ### Metroid Prime - Logic Database
