@@ -121,8 +121,13 @@ class ClarisPatcher(Patcher):
             updaters[2])
 
         # Change the color of the hud
-        hud_color = None
+        hud_color = patch_data["specific_patches"]["hud_color"]
         if hud_color:
+            hud_color = [
+                hud_color[0] / 255,
+                hud_color[1] / 255,
+                hud_color[2] / 255,
+            ]
             ntwk_file = str(contents_files_path.joinpath("files","Standard.ntwk"))
             mp2hudcolor_c(ntwk_file, ntwk_file, hud_color[0], hud_color[1], hud_color[2]) # RGB 0.0-1.0
 

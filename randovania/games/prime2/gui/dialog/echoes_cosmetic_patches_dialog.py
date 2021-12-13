@@ -1,7 +1,10 @@
 import dataclasses
 from functools import partial
 
-from PySide2.QtWidgets import QWidget, QCheckBox, QSlider, QLabel
+from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QCheckBox, QSlider, QLabel
+
+from PySide2.QtCore import QSize
+from PySide2.QtGui import QColor
 
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
@@ -48,6 +51,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
+        self._update_color_squares()
 
     def connect_signals(self):
         super().connect_signals()
@@ -58,8 +62,9 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         self.unvisited_room_names_check.stateChanged.connect(self._persist_option_then_notify("unvisited_room_names"))
         self.pickup_markers_check.stateChanged.connect(self._persist_option_then_notify("pickup_markers"))
         self.elevator_sound_check.stateChanged.connect(self._persist_option_then_notify("teleporter_sounds"))
-
         self.sound_mode_combo.currentIndexChanged.connect(self._on_sound_mode_update)
+        self.custom_hud_color.stateChanged.connect(self._persist_option_then_notify("use_hud_color"))
+        self.custom_hud_color_button.clicked.connect(self._open_color_picker)
 
         for field_name, slider in self.field_to_slider_mapping.items():
             slider.valueChanged.connect(partial(self._on_slider_update, slider, field_name))
@@ -75,6 +80,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         self.pickup_markers_check.setChecked(patches.pickup_markers)
         self.elevator_sound_check.setChecked(patches.teleporter_sounds)
         self.on_new_user_preferences(patches.user_preferences)
+        self.custom_hud_color.setChecked(patches.use_hud_color)
 
     def on_new_user_preferences(self, user_preferences: EchoesUserPreferences):
         self.sound_mode_combo.setCurrentIndex(self.sound_mode_combo.findData(user_preferences.sound_mode))
@@ -102,6 +108,28 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
             )
 
         return persist
+
+    def _open_color_picker(self):
+        init_color = self._cosmetic_patches.hud_color
+        color = QColorDialog.getColor(QColor(*init_color))
+
+        if color.isValid():
+            color_tuple = (color.red(), color.green(), color.blue())
+            self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, hud_color=color_tuple)
+            self._update_color_squares()
+
+    def _update_color_squares(self):
+        color = self._cosmetic_patches.hud_color
+        style = 'background-color: rgb({},{},{})'.format(*color)
+        self.custom_hud_color_square.setStyleSheet(style)
+
+    def _add_preview_color_square_to_layout(self, layout: QLayout, default_color: tuple[int,int,int]):
+        color_square = QFrame(self.game_changes_box)
+        color_square.setMinimumSize(QSize(22, 22))
+        color_square.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))
+        color_square.setStyleSheet('background-color: rgb({},{},{})'.format(*default_color))
+        layout.addWidget(color_square)
+        return color_square
 
     @property
     def cosmetic_patches(self) -> EchoesCosmeticPatches:
