@@ -1,9 +1,17 @@
 ----------------
-collision_camera_000 (E)
+Elun Gate
 Extra - total_boundings: {'x1': -2600.0, 'x2': -500.0, 'y1': 500.0, 'y2': 3500.0}
 Extra - polygon: [[-500.0, 3500.0], [-2600.0, 3500.0], [-2600.0, 500.0], [-500.0, 500.0]]
 Extra - asset_id: collision_camera_000
-> Placeholder; Heals? False
+> Dock to Exterior Bridge; Heals? False
+  * Open Passage to Exterior Bridge/Dock to Elun Gate
+  > Dock to Purple Drapes
+      Trivial
+
+> Dock to Purple Drapes; Heals? False
+  * Open Passage to Purple Drapes/Dock to Elun Gate
+  > Dock to Exterior Bridge
+      Trivial
 
 ----------------
 Transport to Ghavoran
@@ -11,18 +19,26 @@ Transport to Ghavoran
 Extra - total_boundings: {'x1': -17300.0, 'x2': -11600.0, 'y1': 500.0, 'y2': 1642.0}
 Extra - polygon: [[-11600.0, 1642.0], [-17300.0, 1642.0], [-17300.0, 500.0], [-11600.0, 500.0]]
 Extra - asset_id: collision_camera_001
-> Door to collision_camera_012 (E); Heals? False
-  * Power Beam Door to collision_camera_012 (E)/Door to Transport to Ghavoran
+> Door to Elun Save Station; Heals? False
+  * Power Beam Door to Elun Save Station/Door to Transport to Ghavoran
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 1
+      Trivial
+  > Tram to Ghavoran - Transport to Elun
+      Trivial
+  > Start Point 2
+      Trivial
 
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: StartPoint0
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Elun Save Station
+      Trivial
 
 > Tram to Ghavoran - Transport to Elun; Heals? False; Spawn Point
   * Teleporter to Ghavoran - Transport to Elun
@@ -32,24 +48,32 @@ Extra - asset_id: collision_camera_001
   * Extra - target_spawn_point: wagontrain_quarantine_000_platform
   * Extra - start_point_actor_name: wagontrain_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+  > Door to Elun Save Station
+      Trivial
 
 > Start Point 2; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_ProfessorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Elun Save Station
+      Trivial
 
 ----------------
-collision_camera_002 (E)
+Purple Drapes
 Extra - total_boundings: {'x1': -700.0, 'x2': 1400.0, 'y1': -2100.0, 'y2': 1600.0}
 Extra - polygon: [[1400.0, 1600.0], [-700.0, 1600.0], [-700.0, -2100.0], [1400.0, -2100.0]]
 Extra - asset_id: collision_camera_002
-> Dock to collision_camera_003 (E); Heals? False
-  * Not Determined to collision_camera_003 (E)/Dock to collision_camera_002 (E)
+> Door to Ammo Refill Room; Heals? False
+  * Plasma Beam Door to Ammo Refill Room/Door to Purple Drapes
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Dock to Elun Gate
+      Trivial
+  > Morph Launcher Entrance
+      Bomb and Morph Ball
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -65,72 +89,110 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
 
+> Dock to Elun Gate; Heals? False
+  * Open Passage to Elun Gate/Dock to Purple Drapes
+  > Door to Ammo Refill Room
+      Trivial
+
+> Morph Launcher Entrance; Heals? False
+  > Door to Ammo Refill Room
+      Bomb and Morph Ball
+  > Dock to Ammo Refill Room
+      Bomb and Morph Ball
+
+> Dock to Ammo Refill Room; Heals? False
+  * Morph Ball Tunnel to Ammo Refill Room/Dock to Purple Drapes
+
 ----------------
-collision_camera_003 (E)
+Ammo Refill Room
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 1300.0, 'x2': 3400.0, 'y1': -2700.0, 'y2': 4000.0}
 Extra - polygon: [[3400.0, 4000.0], [1300.0, 4000.0], [1300.0, -2700.0], [3400.0, -2700.0]]
 Extra - asset_id: collision_camera_003
-> Dock to collision_camera_002 (E); Heals? False
-  * Not Determined to collision_camera_002 (E)/Dock to collision_camera_003 (E)
+> Door to Purple Drapes; Heals? False
+  * Plasma Beam Door to Purple Drapes/Door to Ammo Refill Room
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Door to Chozo Soldier Arena
+      Trivial
 
-> Door to collision_camera_004 (E); Heals? False
-  * Power Beam Door to collision_camera_004 (E)/Door to collision_camera_003 (E)
+> Door to Chozo Soldier Arena; Heals? False
+  * Power Beam Door to Chozo Soldier Arena/Door to Ammo Refill Room
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Purple Drapes
+      Trivial
+  > Pickup (Energy Tank)
+      Lay Bomb
+  > Dock to Horizontal Bomb Maze
+      All of the following:
+          # TODO: Wall Jump / SJ Requirements
+          Lay Bomb
 
-> Door to collision_camera_005 (E); Heals? False
-  * Power Beam Door to collision_camera_005 (E)/Door to collision_camera_003 (E)
+> Door to Gyroscope Room; Heals? False
+  * Power Beam Door to Gyroscope Room/Door to Ammo Refill Room
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Plasma Beam Room (Upper)
+      Trivial
 
-> Pickup (item_energytank_000); Heals? False
+> Pickup (Energy Tank); Heals? False
   * Pickup 114; Major Location? False
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
+  > Door to Chozo Soldier Arena
+      Lay Bomb
 
-> Dock to collision_camera_006 (E) (doorpowerpower_003); Heals? False
-  * Not Determined to collision_camera_006 (E)/Dock to collision_camera_003 (E) (doorpowerpower_003)
+> Door to Plasma Beam Room (Upper); Heals? False
+  * Plasma Beam Door to Plasma Beam Room/Door to Ammo Refill Room
   * Extra - actor_name: doorpowerpower_003
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Door to Gyroscope Room
+      Trivial
+  > Ammo Recharge
+      Trivial
 
-> Dock to collision_camera_006 (E) (doorpowerclosed_000); Heals? False
-  * Not Determined to collision_camera_006 (E)/Dock to collision_camera_003 (E) (doorpowerclosed_000)
+> Door to Plasma Beam Room (Lower); Heals? False
+  * Missile Door to Plasma Beam Room/Door from Ammo Refill Room
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Bottom Morph Launcher
+      Morph Ball
 
-> Event - Breakable (db_reg_qt_001); Heals? False
-  * Event Elun - db_reg_qt_001
+> Event - Elun - Ammo Recharge Room Blob; Heals? False
+  * Event Elun - Ammo Recharge Room Blob
   * Extra - actor_name: db_reg_qt_001
   * Extra - actor_def: actordef:actors/props/db_reg_qt_001/charclasses/db_reg_qt_001.bmsad
+  > Door to Plasma Beam Room (Upper)
+      Trivial
 
 > Ammo Recharge; Heals? False
   * Extra - actor_name: ammorecharge_000
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: ammorecharge_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
+  > Door to Plasma Beam Room (Upper)
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_PlasmaBeam
@@ -164,65 +226,103 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
 
+> Dock to Purple Drapes; Heals? False
+  * Morph Ball Tunnel to Purple Drapes/Dock to Ammo Refill Room
+  > Door to Plasma Beam Room (Upper)
+      After Elun - Ammo Recharge Room Blob
+  > Event - Elun - Ammo Recharge Room Blob
+      Trivial
+
+> Dock to Bottom Morph Launcher; Heals? False
+  * Morph Ball Tunnel to Bottom Morph Launcher/Dock to Ammo Refill Room
+  > Door to Plasma Beam Room (Lower)
+      Morph Ball
+
+> Dock to Horizontal Bomb Maze; Heals? False
+  * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Ammo Refill Room
+  > Door to Chozo Soldier Arena
+      Lay Bomb
+
 ----------------
-collision_camera_004 (E)
+Chozo Soldier Arena
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 3300.0, 'x2': 5700.0, 'y1': 1569.0, 'y2': 2711.0}
 Extra - polygon: [[5700.0, 2711.0], [3300.0, 2711.0], [3300.0, 1569.0], [5700.0, 1569.0]]
 Extra - asset_id: collision_camera_004
-> Door to collision_camera_003 (E); Heals? False
-  * Power Beam Door to collision_camera_003 (E)/Door to collision_camera_004 (E)
+> Door to Ammo Refill Room; Heals? False
+  * Power Beam Door to Ammo Refill Room/Door to Chozo Soldier Arena
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Spider Magnet Room
+      After Elun Chozo Soldier Fight
+  > Event - Chozo Soldier Fight
+      Trivial
 
-> Door to collision_camera_007 (E); Heals? False
-  * Power Beam Door to collision_camera_007 (E)/Door to collision_camera_004 (E)
+> Door to Spider Magnet Room; Heals? False
+  * Power Beam Door to Spider Magnet Room/Door to Chozo Soldier Arena
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Ammo Refill Room
+      After Elun Chozo Soldier Fight
+  > Event - Chozo Soldier Fight
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
+> Event - Chozo Soldier Fight; Heals? False
+  * Event Elun Chozo Soldier Fight
+  > Door to Spider Magnet Room
+      Trivial
+
 ----------------
-collision_camera_005 (E)
+Gyroscope Room
 Extra - total_boundings: {'x1': 3300.0, 'x2': 5700.0, 'y1': -500.0, 'y2': 1500.0}
 Extra - polygon: [[5700.0, 1500.0], [3300.0, 1500.0], [3300.0, -500.0], [5700.0, -500.0]]
 Extra - asset_id: collision_camera_005
-> Door to collision_camera_003 (E); Heals? False
-  * Power Beam Door to collision_camera_003 (E)/Door to collision_camera_005 (E)
+> Door to Ammo Refill Room; Heals? False
+  * Power Beam Door to Ammo Refill Room/Door to Gyroscope Room
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Spider Magnet Room
+      Trivial
 
-> Dock to collision_camera_007 (E); Heals? False
-  * Not Determined to collision_camera_007 (E)/Dock to collision_camera_005 (E)
+> Door to Spider Magnet Room; Heals? False
+  * Plasma Beam Door to Spider Magnet Room/Dock to Gyroscope Room
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Ammo Refill Room
+      Trivial
+  > Door to Fan Room
+      Bomb and Morph Ball
 
-> Door to collision_camera_008 (E); Heals? False
-  * Power Beam Door to collision_camera_008 (E)/Door to collision_camera_005 (E)
+> Door to Fan Room; Heals? False
+  * Power Beam Door to Fan Room/Door to Gyroscope Room
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Spider Magnet Room
+      Bomb and Morph Ball
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -232,18 +332,22 @@ Extra - asset_id: collision_camera_005
   * Extra - tile_types: ('BOMB',)
 
 ----------------
-collision_camera_006 (E)
+Plasma Beam Room
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 3400.0, 'x2': 5500.0, 'y1': -2700.0, 'y2': -500.0}
 Extra - polygon: [[5500.0, -500.0], [3400.0, -500.0], [3400.0, -2700.0], [5500.0, -2700.0]]
 Extra - asset_id: collision_camera_006
-> Pickup (itemsphere_plasmabeam_000); Heals? False
+> Pickup (Plasma Beam); Heals? False
   * Pickup 115; Major Location? True
   * Extra - actor_name: itemsphere_plasmabeam_000
   * Extra - actor_def: actordef:actors/items/itemsphere_plasmabeam/charclasses/itemsphere_plasmabeam.bmsad
+  > Door to Ammo Refill Room
+      Trivial
+  > Door from Ammo Refill Room
+      Trivial
 
-> Dock to collision_camera_003 (E) (doorpowerpower_003); Heals? False
-  * Not Determined to collision_camera_003 (E)/Dock to collision_camera_006 (E) (doorpowerpower_003)
+> Door to Ammo Refill Room; Heals? False
+  * Plasma Beam Door to Ammo Refill Room/Door to Plasma Beam Room (Upper)
   * Extra - actor_name: doorpowerpower_003
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
@@ -251,14 +355,18 @@ Extra - asset_id: collision_camera_006
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
 
-> Dock to collision_camera_003 (E) (doorpowerclosed_000); Heals? False
-  * Not Determined to collision_camera_003 (E)/Dock to collision_camera_006 (E) (doorpowerclosed_000)
+> Door from Ammo Refill Room; Heals? False
+  * Access Closed to Ammo Refill Room/Door to Plasma Beam Room (Lower)
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Pickup (Plasma Beam)
+      Trivial
+  > Door to Ammo Refill Room
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_PlasmaBeam
@@ -272,28 +380,36 @@ Extra - asset_id: collision_camera_006
   * Extra - tile_types: ('POWERBEAM',)
 
 ----------------
-collision_camera_007 (E)
+Spider Magnet Room
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 5600.0, 'x2': 7700.0, 'y1': 400.0, 'y2': 2900.0}
 Extra - polygon: [[7700.0, 2900.0], [5600.0, 2900.0], [5600.0, 400.0], [7700.0, 400.0]]
 Extra - asset_id: collision_camera_007
-> Door to collision_camera_004 (E); Heals? False
-  * Power Beam Door to collision_camera_004 (E)/Door to collision_camera_007 (E)
+> Door to Chozo Soldier Arena; Heals? False
+  * Power Beam Door to Chozo Soldier Arena/Door to Spider Magnet Room
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Gyroscope Room
+      Morph Ball
 
-> Dock to collision_camera_005 (E); Heals? False
-  * Not Determined to collision_camera_005 (E)/Dock to collision_camera_007 (E)
+> Dock to Gyroscope Room; Heals? False
+  * Not Determined to Gyroscope Room/Door to Spider Magnet Room
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Chozo Soldier Arena
+      All of the following:
+          # TODO: Add wall jump trick or item requirement
+          Can Slide
+  > Dock to Vertical Bomb Maze
+      Lay Bomb
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorX
@@ -306,24 +422,39 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
 
+> Dock to Vertical Bomb Maze; Heals? False
+  * Morph Ball Tunnel to Vertical Bomb Maze/Dock to Spider Magnet Room
+  > Dock to Gyroscope Room
+      Lay Bomb
+
 ----------------
-collision_camera_008 (E)
+Fan Room
 Extra - total_boundings: {'x1': 5600.0, 'x2': 7700.0, 'y1': -2700.0, 'y2': 500.0}
 Extra - polygon: [[7700.0, 500.0], [5600.0, 500.0], [5600.0, -2700.0], [7700.0, -2700.0]]
 Extra - asset_id: collision_camera_008
-> Door to collision_camera_005 (E); Heals? False
-  * Power Beam Door to collision_camera_005 (E)/Door to collision_camera_008 (E)
+> Door to Gyroscope Room; Heals? False
+  * Power Beam Door to Gyroscope Room/Door to Fan Room
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Pickup (Missile Tank)
+      Speed Booster
+  > Dock to Vertical Bomb Maze
+      Morph Ball
+  > Dock to Bottom Morph Launcher
+      Morph Ball
 
-> Pickup (item_missiletank_002); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 117; Major Location? False
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Door to Gyroscope Room
+      Speed Booster
+  > Dock to Bottom Morph Launcher
+      Morph Ball
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -339,8 +470,18 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
 
+> Dock to Vertical Bomb Maze; Heals? False
+  * Morph Ball Tunnel to Vertical Bomb Maze/Dock to Fan Room
+  > Door to Gyroscope Room
+      Morph Ball
+
+> Dock to Bottom Morph Launcher; Heals? False
+  * Morph Ball Tunnel to Bottom Morph Launcher/Dock to Fan Room
+  > Door to Gyroscope Room
+      Bomb and Morph Ball and Speed Booster
+
 ----------------
-collision_camera_009 (E)
+Vertical Bomb Maze
 Extra - total_boundings: {'x1': 7600.0, 'x2': 9700.0, 'y1': -300.0, 'y2': 4000.0}
 Extra - polygon: [[9700.0, 4000.0], [7600.0, 4000.0], [7600.0, -300.0], [9700.0, -300.0]]
 Extra - asset_id: collision_camera_009
@@ -348,17 +489,23 @@ Extra - asset_id: collision_camera_009
   * Pickup 116; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  > Dock to Horizontal Bomb Maze (Lower)
+      Lay Bomb
 
 > Event - Breakable (grapplepulloff1x2_000); Heals? False
-  * Event Elun - grapplepulloff1x2_000
+  * Event Elun - Grapple Pull Off
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Dock to Spider Magnet Room
+      Morph Ball
 
 > Life Recharge; Heals? True; Spawn Point
   * Extra - actor_name: energyrecharge_000
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
   * Extra - start_point_actor_name: energyrecharge_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
+  > Dock to Fan Room
+      Morph Ball
 
 > Tile Group (BOMB WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_017
@@ -428,15 +575,45 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_layer: breakables
   * Extra - tile_types: ()
 
+> Dock to Horizontal Bomb Maze (Upper); Heals? False
+  * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Vertical Bomb Maze (Upper)
+  > Dock to Horizontal Bomb Maze (Lower)
+      Lay Power Bomb
+
+> Dock to Horizontal Bomb Maze (Lower); Heals? False
+  * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Vertical Bomb Maze (Lower)
+  > Pickup (item_powerbombtank_000)
+      Lay Bomb
+  > Event - Breakable (grapplepulloff1x2_000)
+      Grapple Beam and Lay Bomb
+  > Dock to Horizontal Bomb Maze (Upper)
+      Lay Bomb and Lay Power Bomb
+  > Dock to Spider Magnet Room
+      After Elun - Grapple Pull Off and Lay Bomb
+
+> Dock to Spider Magnet Room; Heals? False
+  * Morph Ball Tunnel to Spider Magnet Room/Dock to Vertical Bomb Maze
+  > Dock to Horizontal Bomb Maze (Lower)
+      After Elun - Grapple Pull Off and Lay Bomb
+
+> Dock to Fan Room; Heals? False
+  * Morph Ball Tunnel to Fan Room/Dock to Vertical Bomb Maze
+  > Life Recharge
+      Morph Ball
+
 ----------------
-collision_camera_010 (E)
+Horizontal Bomb Maze
 Extra - total_boundings: {'x1': 3300.0, 'x2': 7700.0, 'y1': 2858.0, 'y2': 4000.0}
 Extra - polygon: [[7700.0, 4000.0], [3300.0, 4000.0], [3300.0, 2858.0], [7700.0, 2858.0]]
 Extra - asset_id: collision_camera_010
-> Pickup (item_missiletank_000); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 118; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Dock to Vertical Bomb Maze (Lower)
+      Lay Bomb
+  > Dock to Vertical Bomb Maze (Upper)
+      Trivial
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -484,53 +661,91 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
 
+> Dock to Ammo Refill Room; Heals? False
+  * Morph Ball Tunnel to Ammo Refill Room/Dock to Horizontal Bomb Maze
+  > Dock to Vertical Bomb Maze (Lower)
+      Lay Bomb
+
+> Dock to Vertical Bomb Maze (Lower); Heals? False
+  * Morph Ball Tunnel to Vertical Bomb Maze/Dock to Horizontal Bomb Maze (Lower)
+  > Dock to Ammo Refill Room
+      Lay Bomb
+
+> Dock to Vertical Bomb Maze (Upper); Heals? False
+  * Morph Ball Tunnel to Vertical Bomb Maze/Dock to Horizontal Bomb Maze (Upper)
+  > Pickup (Missile Tank)
+      Morph Ball
+
 ----------------
-collision_camera_011 (E)
+Exterior Bridge
 Extra - total_boundings: {'x1': -9700.0, 'x2': -2500.0, 'y1': 300.0, 'y2': 2300.0}
 Extra - polygon: [[-2500.0, 2300.0], [-9700.0, 2300.0], [-9700.0, 300.0], [-2500.0, 300.0]]
 Extra - asset_id: collision_camera_011
-> Door to collision_camera_012 (E); Heals? False
-  * Power Beam Door to collision_camera_012 (E)/Door to collision_camera_011 (E)
+> Door to Elun Save Station; Heals? False
+  * Power Beam Door to Elun Save Station/Door to Exterior Bridge
   * Extra - actor_name: doorpowerpower_008
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Elun Gate
+      Trivial
+
+> Dock to Elun Gate; Heals? False
+  * Open Passage to Elun Gate/Dock to Exterior Bridge
+  > Door to Elun Save Station
+      Trivial
 
 ----------------
-collision_camera_012 (E)
+Elun Save Station
 Extra - total_boundings: {'x1': -11700.0, 'x2': -9600.0, 'y1': 500.0, 'y2': 1642.0}
 Extra - polygon: [[-9600.0, 1642.0], [-11700.0, 1642.0], [-11700.0, 500.0], [-9600.0, 500.0]]
 Extra - asset_id: collision_camera_012
-> Door to collision_camera_011 (E); Heals? False
-  * Power Beam Door to collision_camera_011 (E)/Door to collision_camera_012 (E)
+> Door to Exterior Bridge; Heals? False
+  * Power Beam Door to Exterior Bridge/Door to Elun Save Station
   * Extra - actor_name: doorpowerpower_008
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Transport to Ghavoran
+      Trivial
 
 > Door to Transport to Ghavoran; Heals? False
-  * Power Beam Door to Transport to Ghavoran/Door to collision_camera_012 (E)
+  * Power Beam Door to Transport to Ghavoran/Door to Elun Save Station
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Exterior Bridge
+      Trivial
+  > Save Station
+      Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Extra - actor_name: savestation
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_save
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  > Door to Transport to Ghavoran
+      Trivial
 
 ----------------
-collision_camera_MBL_B (E)
+Bottom Morph Launcher
 Extra - total_boundings: {'x1': 1300.0, 'x2': 9700.0, 'y1': -2700.0, 'y2': -1400.0}
 Extra - polygon: [[9700.0, -1400.0], [7600.0, -1400.0], [7600.0, -2500.0], [3400.0, -2500.0], [3400.0, -1400.0], [1300.0, -1400.0], [1300.0, -2700.0], [9700.0, -2700.0]]
 Extra - asset_id: collision_camera_MBL_B
-> Placeholder; Heals? False
+> Dock to Fan Room; Heals? False
+  * Morph Ball Tunnel to Fan Room/Dock to Bottom Morph Launcher
+  > Dock to Ammo Refill Room
+      Bomb and Morph Ball
+
+> Dock to Ammo Refill Room; Heals? False
+  * Morph Ball Tunnel to Ammo Refill Room/Dock to Bottom Morph Launcher
+  > Dock to Fan Room
+      Bomb and Morph Ball
 
