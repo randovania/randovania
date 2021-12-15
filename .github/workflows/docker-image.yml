@@ -1,11 +1,5 @@
 name: Publish Server Docker image
-on:
-  pull_request:
-  push:
-    branches:
-      - main
-    tags:
-      - 'v*.*.*'
+on: push
 
 jobs:
   docker:
