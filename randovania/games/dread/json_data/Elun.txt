@@ -70,10 +70,10 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Tile Group (BOMB) 2
+      Trivial
   > Dock to Elun Gate
       Trivial
-  > Morph Launcher Entrance
-      Bomb and Morph Ball
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -81,6 +81,10 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 2
+      Trivial
+  > Morph Launcher Entrance
+      Trivial
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
@@ -88,6 +92,10 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door to Ammo Refill Room
+      Trivial
+  > Tile Group (BOMB) 1
+      Trivial
 
 > Dock to Elun Gate; Heals? False
   * Open Passage to Elun Gate/Dock to Purple Drapes
@@ -95,10 +103,10 @@ Extra - asset_id: collision_camera_002
       Trivial
 
 > Morph Launcher Entrance; Heals? False
-  > Door to Ammo Refill Room
-      Bomb and Morph Ball
+  > Tile Group (BOMB) 1
+      Trivial
   > Dock to Ammo Refill Room
-      Bomb and Morph Ball
+      Lay Bomb
 
 > Dock to Ammo Refill Room; Heals? False
   * Morph Ball Tunnel to Ammo Refill Room/Dock to Purple Drapes
@@ -132,10 +140,12 @@ Extra - asset_id: collision_camera_003
       Trivial
   > Pickup (Energy Tank)
       Lay Bomb
-  > Dock to Horizontal Bomb Maze
+  > Tile Group (POWERBEAM)
+      Trivial
+  > Tile Group (BOMB) 1
       All of the following:
-          # TODO: Wall Jump / SJ Requirements
-          Lay Bomb
+          # TODO: Wall Jump
+          Morph Ball
 
 > Door to Gyroscope Room; Heals? False
   * Power Beam Door to Gyroscope Room/Door to Ammo Refill Room
@@ -154,6 +164,8 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
   > Door to Chozo Soldier Arena
       Lay Bomb
+  > Tile Group (BOMB) 3
+      Morph Ball
 
 > Door to Plasma Beam Room (Upper); Heals? False
   * Plasma Beam Door to Plasma Beam Room/Door to Ammo Refill Room
@@ -204,6 +216,10 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door to Chozo Soldier Arena
+      Trivial
+  > Tile Group (BOMB) 3
+      Morph Ball
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -211,6 +227,10 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door to Chozo Soldier Arena
+      Morph Ball
+  > Tile Group (BOMB) 2
+      Morph Ball
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
@@ -218,6 +238,10 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 1
+      Morph Ball
+  > Dock to Horizontal Bomb Maze
+      Morph Ball
 
 > Tile Group (BOMB) 3; Heals? False
   * Configurable Node
@@ -225,6 +249,10 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Pickup (Energy Tank)
+      Morph Ball
+  > Tile Group (POWERBEAM)
+      Morph Ball
 
 > Dock to Purple Drapes; Heals? False
   * Morph Ball Tunnel to Purple Drapes/Dock to Ammo Refill Room
@@ -240,8 +268,8 @@ Extra - asset_id: collision_camera_003
 
 > Dock to Horizontal Bomb Maze; Heals? False
   * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Ammo Refill Room
-  > Door to Chozo Soldier Arena
-      Lay Bomb
+  > Tile Group (BOMB) 2
+      Morph Ball
 
 ----------------
 Chozo Soldier Arena
@@ -310,8 +338,8 @@ Extra - asset_id: collision_camera_005
   * Extra - right_shield_def: None
   > Door to Ammo Refill Room
       Trivial
-  > Door to Fan Room
-      Bomb and Morph Ball
+  > Tile Group (BOMB)
+      Trivial
 
 > Door to Fan Room; Heals? False
   * Power Beam Door to Fan Room/Door to Gyroscope Room
@@ -321,8 +349,8 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Spider Magnet Room
-      Bomb and Morph Ball
+  > Tile Group (BOMB)
+      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -330,6 +358,10 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door to Spider Magnet Room
+      Trivial
+  > Door to Fan Room
+      Trivial
 
 ----------------
 Plasma Beam Room
@@ -343,7 +375,7 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_def: actordef:actors/items/itemsphere_plasmabeam/charclasses/itemsphere_plasmabeam.bmsad
   > Door to Ammo Refill Room
       Trivial
-  > Door from Ammo Refill Room
+  > Tile Group (POWERBEAM)
       Trivial
 
 > Door to Ammo Refill Room; Heals? False
@@ -354,6 +386,12 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_005
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Pickup (Plasma Beam)
+      Trivial
+  > Start Point
+      Trivial
+  > Tile Group (POWERBEAM)
+      Trivial
 
 > Door from Ammo Refill Room; Heals? False
   * Access Closed to Ammo Refill Room/Door to Plasma Beam Room (Lower)
@@ -363,14 +401,14 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Pickup (Plasma Beam)
-      Trivial
-  > Door to Ammo Refill Room
+  > Tile Group (POWERBEAM)
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_PlasmaBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Ammo Refill Room
+      Trivial
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -378,6 +416,12 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Pickup (Plasma Beam)
+      Trivial
+  > Door to Ammo Refill Room
+      Trivial
+  > Door from Ammo Refill Room
+      Trivial
 
 ----------------
 Spider Magnet Room
@@ -395,6 +439,8 @@ Extra - asset_id: collision_camera_007
   * Extra - right_shield_def: None
   > Dock to Gyroscope Room
       Morph Ball
+  > Start Point
+      Trivial
 
 > Dock to Gyroscope Room; Heals? False
   * Not Determined to Gyroscope Room/Door to Spider Magnet Room
@@ -408,12 +454,14 @@ Extra - asset_id: collision_camera_007
       All of the following:
           # TODO: Add wall jump trick or item requirement
           Can Slide
-  > Dock to Vertical Bomb Maze
-      Lay Bomb
+  > Tile Group (BOMB)
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Chozo Soldier Arena
+      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -421,11 +469,13 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Dock to Vertical Bomb Maze
+      Morph Ball and After Elun - Grapple Pull Off
 
 > Dock to Vertical Bomb Maze; Heals? False
   * Morph Ball Tunnel to Vertical Bomb Maze/Dock to Spider Magnet Room
-  > Dock to Gyroscope Room
-      Lay Bomb
+  > Tile Group (BOMB)
+      Morph Ball and After Elun - Grapple Pull Off
 
 ----------------
 Fan Room
@@ -440,21 +490,19 @@ Extra - asset_id: collision_camera_008
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Pickup (Missile Tank)
-      Speed Booster
+  > Tile Group (POWERBEAM)
+      Can Slide
+  > Tile Group (SPEEDBOOST)
+      Can Slide
   > Dock to Vertical Bomb Maze
-      Morph Ball
-  > Dock to Bottom Morph Launcher
       Morph Ball
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 117; Major Location? False
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Door to Gyroscope Room
-      Speed Booster
-  > Dock to Bottom Morph Launcher
-      Morph Ball
+  > Tile Group (SPEEDBOOST)
+      Trivial
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -462,6 +510,10 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door to Gyroscope Room
+      Morph Ball and Speed Booster
+  > Dock to Bottom Morph Launcher
+      Morph Ball
 
 > Tile Group (SPEEDBOOST); Heals? False
   * Configurable Node
@@ -469,6 +521,10 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Door to Gyroscope Room
+      Morph Ball and Speed Booster
+  > Pickup (Missile Tank)
+      Trivial
 
 > Dock to Vertical Bomb Maze; Heals? False
   * Morph Ball Tunnel to Vertical Bomb Maze/Dock to Fan Room
@@ -477,8 +533,8 @@ Extra - asset_id: collision_camera_008
 
 > Dock to Bottom Morph Launcher; Heals? False
   * Morph Ball Tunnel to Bottom Morph Launcher/Dock to Fan Room
-  > Door to Gyroscope Room
-      Bomb and Morph Ball and Speed Booster
+  > Tile Group (POWERBEAM)
+      Morph Ball
 
 ----------------
 Vertical Bomb Maze
@@ -489,13 +545,15 @@ Extra - asset_id: collision_camera_009
   * Pickup 116; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
-  > Dock to Horizontal Bomb Maze (Lower)
-      Lay Bomb
+  > Tile Group (BOMB) 4
+      Morph Ball
 
 > Event - Breakable (grapplepulloff1x2_000); Heals? False
   * Event Elun - Grapple Pull Off
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Tile Group (BOMB) 4
+      Morph Ball
   > Dock to Spider Magnet Room
       Morph Ball
 
@@ -512,6 +570,8 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB', 'WEIGHT')
+  > Tile Group (BOMB) 1
+      Trivial
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_018
@@ -525,6 +585,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (POWERBOMB) 2
+      Morph Ball
+  > Dock to Horizontal Bomb Maze (Upper)
+      Morph Ball
 
 > Tile Group (POWERBOMB) 2; Heals? False
   * Configurable Node
@@ -532,6 +596,14 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
+  > Tile Group (POWERBOMB) 1
+      Morph Ball
+  > Tile Group (BOMB) 1
+      Morph Ball
+  > Tile Group (POWERBEAM)
+      Morph Ball
+  > Dock to Horizontal Bomb Maze (Lower)
+      Morph Ball
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -539,6 +611,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (POWERBOMB) 2
+      Morph Ball
+  > Tile Group (POWERBEAM)
+      Morph Ball
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -546,6 +622,12 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (POWERBOMB) 2
+      Morph Ball
+  > Tile Group (BOMB) 1
+      Trivial
+  > Tile Group (BOMB) 2
+      Morph Ball
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
@@ -553,6 +635,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (POWERBEAM)
+      Morph Ball
+  > Tile Group (BOMB) 3
+      Morph Ball
 
 > Tile Group (BOMB) 3; Heals? False
   * Configurable Node
@@ -560,6 +646,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 2
+      Morph Ball
+  > Tile Group (BOMB) 4
+      Morph Ball
 
 > Tile Group (BOMB) 4; Heals? False
   * Configurable Node
@@ -567,6 +657,14 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Pickup (item_powerbombtank_000)
+      Morph Ball
+  > Event - Breakable (grapplepulloff1x2_000)
+      Grapple Beam and Morph Ball
+  > Tile Group (BOMB) 3
+      Morph Ball
+  > Dock to Spider Magnet Room
+      Morph Ball and After Elun - Grapple Pull Off
 
 > Tile Group (); Heals? False
   * Configurable Node
@@ -577,24 +675,18 @@ Extra - asset_id: collision_camera_009
 
 > Dock to Horizontal Bomb Maze (Upper); Heals? False
   * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Vertical Bomb Maze (Upper)
-  > Dock to Horizontal Bomb Maze (Lower)
-      Lay Power Bomb
+  > Tile Group (POWERBOMB) 1
+      Morph Ball
 
 > Dock to Horizontal Bomb Maze (Lower); Heals? False
   * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Vertical Bomb Maze (Lower)
-  > Pickup (item_powerbombtank_000)
+  > Tile Group (BOMB WEIGHT)
       Lay Bomb
-  > Event - Breakable (grapplepulloff1x2_000)
-      Grapple Beam and Lay Bomb
-  > Dock to Horizontal Bomb Maze (Upper)
-      Lay Bomb and Lay Power Bomb
-  > Dock to Spider Magnet Room
-      After Elun - Grapple Pull Off and Lay Bomb
 
 > Dock to Spider Magnet Room; Heals? False
   * Morph Ball Tunnel to Spider Magnet Room/Dock to Vertical Bomb Maze
-  > Dock to Horizontal Bomb Maze (Lower)
-      After Elun - Grapple Pull Off and Lay Bomb
+  > Tile Group (BOMB) 4
+      Morph Ball and After Elun - Grapple Pull Off
 
 > Dock to Fan Room; Heals? False
   * Morph Ball Tunnel to Fan Room/Dock to Vertical Bomb Maze
@@ -610,8 +702,8 @@ Extra - asset_id: collision_camera_010
   * Pickup 118; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Dock to Vertical Bomb Maze (Lower)
-      Lay Bomb
+  > Tile Group (BOMB) 4
+      Morph Ball
   > Dock to Vertical Bomb Maze (Upper)
       Trivial
 
@@ -621,6 +713,10 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 3
+      Morph Ball
+  > Dock to Ammo Refill Room
+      Morph Ball
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_011
@@ -640,6 +736,10 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 3
+      Morph Ball
+  > Dock to Ammo Refill Room
+      Morph Ball
 
 > Tile Group (BOMB) 3; Heals? False
   * Configurable Node
@@ -647,6 +747,10 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 2
+      Morph Ball
+  > Tile Group (BOMB) 4
+      Morph Ball
 
 > Tile Group (WEIGHT) 3; Heals? False
   * Extra - actor_name: breakabletilegroup_015
@@ -660,16 +764,20 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 3
+      Morph Ball
+  > Dock to Vertical Bomb Maze (Lower)
+      Morph Ball
 
 > Dock to Ammo Refill Room; Heals? False
   * Morph Ball Tunnel to Ammo Refill Room/Dock to Horizontal Bomb Maze
-  > Dock to Vertical Bomb Maze (Lower)
-      Lay Bomb
+  > Tile Group (BOMB) 1
+      Morph Ball
 
 > Dock to Vertical Bomb Maze (Lower); Heals? False
   * Morph Ball Tunnel to Vertical Bomb Maze/Dock to Horizontal Bomb Maze (Lower)
-  > Dock to Ammo Refill Room
-      Lay Bomb
+  > Tile Group (BOMB) 4
+      Morph Ball
 
 > Dock to Vertical Bomb Maze (Upper); Heals? False
   * Morph Ball Tunnel to Vertical Bomb Maze/Dock to Horizontal Bomb Maze (Upper)
