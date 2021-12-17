@@ -124,7 +124,7 @@ Extra - asset_id: collision_camera_001
 > Dock to collision_camera_053 (C); Heals? False
   * Slide Tunnel to collision_camera_053 (C)/Dock to collision_camera_001 (C)
   > Dock to Above Z-57 Fight
-      Space Jump or Infinite Bomb Jump (Beginner)
+      Space Jump or Simple IBJ
 
 ----------------
 Navigation Room Southeast
@@ -656,9 +656,9 @@ Extra - asset_id: collision_camera_014
       Trivial
   > Door to collision_camera_018 (C) (doorclosedcharge_002)
       Any of the following:
-          Space Jump
+          Space Jump or Speed Booster
           All of the following:
-              Spider Magnet and Speed Booster
+              Spider Magnet
               Grapple Beam or After Cataris - Move Magnet Walls Button
 
 > Door to collision_camera_045 (C); Heals? False
@@ -757,7 +757,9 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
   > Door to Moving Magnet Walls (Tall)
-      Morph Ball and After Cataris - Lower Power Bomb Tank Ceiling
+      All of the following:
+          Morph Ball and After Cataris - Lower Power Bomb Tank Ceiling
+          Varia Suit or Heat Damage ≥ 50
 
 > Door to Moving Magnet Walls (Tall); Heals? False
   * Grapple Beam Door to Moving Magnet Walls (Tall)/Door to Teleport to Artaria (Blue)
@@ -768,9 +770,13 @@ Extra - asset_id: collision_camera_015
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Pickup (item_powerbombtank_000)
-      Morph Ball and After Cataris - Lower Power Bomb Tank Ceiling
+      All of the following:
+          Morph Ball and After Cataris - Lower Power Bomb Tank Ceiling
+          Varia Suit or Heat Damage ≥ 100
   > Tile Group (POWERBEAM) 4
-      Grapple Beam or Simple IBJ or Use Spin Boost
+      All of the following:
+          Varia Suit or Heat Damage ≥ 50
+          Grapple Beam or Simple IBJ or Use Spin Boost
 
 > Event - Blue Teleport Blob (breakablemag012); Heals? False
   * Event Cataris - breakablemag012
@@ -797,7 +803,11 @@ Extra - asset_id: collision_camera_015
   > Event - Blue Teleport Blob (breakablemag012)
       Shoot Beam
   > Tile Group (POWERBOMB)
-      After Cataris - breakablemag012
+      All of the following:
+          After Cataris - breakablemag012
+          Varia Suit or Heat Damage ≥ 50
+  > Lava Room
+      Gravity Suit or Lava Damage ≥ 200
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -806,9 +816,13 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Right Room
-      Can Slide
+      All of the following:
+          Can Slide
+          Varia Suit or Heat Damage ≥ 10
   > Center Room
-      Can Slide
+      All of the following:
+          Can Slide
+          Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_029
@@ -831,9 +845,13 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
   > Tile Group (BOMB) 2
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 10
   > Center Room
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
@@ -842,9 +860,13 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
   > Tile Group (BOMB) 1
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 10
   > Tile Group (BOMB) 3
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 10
 
 > Tile Group (BOMB) 3; Heals? False
   * Configurable Node
@@ -858,6 +880,7 @@ Extra - asset_id: collision_camera_015
       All of the following:
           Morph Ball
           Space Jump or Infinite Bomb Jump (Beginner)
+          Varia Suit or Heat Damage ≥ 200
   > Tile Group (BOMB) 4
       Morph Ball
 
@@ -868,7 +891,9 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
   > Tile Group (WEIGHT) 1
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 10
   > Tile Group (BOMB) 3
       Morph Ball
 
@@ -879,7 +904,9 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
   > Teleporter to Artaria - Screw Attack Room
-      After Cataris - breakablemag012
+      All of the following:
+          After Cataris - breakablemag012
+          Varia Suit or Heat Damage ≥ 30
   > Right Room
       Trivial
   > Event - Blue Teleport Blob from other side (breakablemag012)
@@ -892,9 +919,9 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (POWERBEAM) 3
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
   > Upper-Left Room
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (POWERBEAM) 3; Heals? False
   * Configurable Node
@@ -903,9 +930,9 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (POWERBEAM) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
   > Center Room
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
 
 > Tile Group (BOMB MISSILE); Heals? False
   * Configurable Node
@@ -913,12 +940,15 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB', 'MISSILE')
+  > Door to Moving Magnet Walls (Tall)
+      Trivial
   > Tile Group (POWERBEAM) 4
       Trivial
   > Event - Lower PB Tank Ceiling
       All of the following:
           Spider Magnet
           Grapple Beam or Simple IBJ or Use Spin Boost
+          Varia Suit or Heat Damage ≥ 100
 
 > Tile Group (SCREWATTACK); Heals? False
   * Configurable Node
@@ -927,9 +957,9 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
   > Right Room
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
   > Center Room
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (POWERBEAM) 4; Heals? False
   * Configurable Node
@@ -945,16 +975,27 @@ Extra - asset_id: collision_camera_015
 > Dock to Double Obsydomithon Room; Heals? False
   * Morph Ball Tunnel to Double Obsydomithon Room/Dock to Teleport to Artaria (Blue)
   > Upper-Left Room
-      Trivial
+      Varia Suit or Heat Damage ≥ 100
 
 > Dock to collision_camera_045 (C); Heals? False
   * Slide Tunnel to collision_camera_045 (C)/Dock to Teleport to Artaria (Blue)
   > Center Room
-      After Cataris - db_dside_mg_004
+      All of the following:
+          After Cataris - db_dside_mg_004
+          Varia Suit or Heat Damage ≥ 100
 
 > Upper-Left Room; Heals? False
+  > Tile Group (POWERBEAM) 2
+      Varia Suit or Heat Damage ≥ 50
   > Dock to Double Obsydomithon Room
-      Spider Magnet or Space Jump
+      Any of the following:
+          All of the following:
+              Varia Suit
+              Spider Magnet or Space Jump or Simple IBJ
+          All of the following:
+              Heat Damage ≥ 200
+              Spider Magnet or Space Jump
+          Heat Damage ≥ 300 and Simple IBJ
 
 > Lava Room; Heals? False
   > Door to collision_camera_006 (C)
@@ -968,23 +1009,33 @@ Extra - asset_id: collision_camera_015
 
 > Right Room; Heals? False
   > Tile Group (POWERBEAM) 1
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
   > Tile Group (POWERBOMB)
       Trivial
+  > Tile Group (SCREWATTACK)
+      Varia Suit or Heat Damage ≥ 10
 
 > Center Room; Heals? False
   > Event - Morph Tunnel Blob (db_dside_mg_004)
       Shoot Beam
   > Tile Group (POWERBEAM) 1
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
   > Tile Group (BOMB) 1
-      Infinite Bomb Jump (Beginner) or Use Spin Boost
+      Any of the following:
+          All of the following:
+              Use Spin Boost
+              Varia Suit or Heat Damage ≥ 100
+          All of the following:
+              Simple IBJ
+              Varia Suit or Heat Damage ≥ 200
   > Tile Group (POWERBEAM) 3
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
   > Tile Group (SCREWATTACK)
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
   > Dock to collision_camera_045 (C)
-      After Cataris - db_dside_mg_004
+      All of the following:
+          After Cataris - db_dside_mg_004
+          Varia Suit or Heat Damage ≥ 50
 
 > Event - Lower PB Tank Ceiling; Heals? False
   * Event Cataris - Lower Power Bomb Tank Ceiling
@@ -1132,14 +1183,14 @@ Extra - asset_id: collision_camera_019
   * Extra - left_shield_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002b_000
   * Extra - right_shield_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
-  > Left Ledge
+  > Top Ledge
       After Cataris - db_hdoor_mg_002
 
 > Event - First Tunnel Blob (breakablemag004); Heals? False
   * Event Cataris - breakablemag004
   * Extra - actor_name: breakablemag004
   * Extra - actor_def: actordef:actors/props/breakablemag004/charclasses/breakablemag004.bmsad
-  > Lower Platform
+  > Right Platform
       Trivial
 
 > Event - Second Tunnel Blob (breakablemag014); Heals? False
@@ -1153,55 +1204,77 @@ Extra - asset_id: collision_camera_019
   * Event Cataris - breakablemag013
   * Extra - actor_name: breakablemag013
   * Extra - actor_def: actordef:actors/props/breakablemag013/charclasses/breakablemag013.bmsad
-  > Lower Platform
+  > Right Platform
       Trivial
 
-> Dock to collision_camera_021 (C) (1); Heals? False
-  * Open Passage to collision_camera_021 (C)/Dock to collision_camera_019 (C) (1)
-  > Lower Platform
-      After Cataris - breakablemag013
+> Dock to collision_camera_021 (C) (Open Passage); Heals? False
+  * Open Passage to collision_camera_021 (C)/Dock to collision_camera_019 (C) (Open Passage)
+  > Right Platform
+      All of the following:
+          After Cataris - breakablemag013
+          Varia Suit or Heat Damage ≥ 20
 
-> Lower Platform; Heals? False
+> Left Platform; Heals? False
+  > Top Ledge
+      All of the following:
+          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+          Varia Suit or Heat Damage ≥ 50
+  > Right Platform
+      Varia Suit or Heat Damage ≥ 50
+
+> Dock to collision_camera_021 (C) (Tunnel); Heals? False
+  * Morph Ball Tunnel to collision_camera_021 (C)/Dock to collision_camera_019 (C) (Tunnel)
+  > Tiny Alcove
+      All of the following:
+          Morph Ball and After Cataris - breakablemag014
+          Varia Suit or Heat Damage ≥ 10
+
+> Tiny Alcove; Heals? False
+  > Event - Second Tunnel Blob (breakablemag014)
+      Shoot Beam
+  > Dock to collision_camera_021 (C) (Tunnel)
+      All of the following:
+          Morph Ball and After Cataris - breakablemag014
+          Varia Suit or Heat Damage ≥ 10
+  > Right Platform
+      All of the following:
+          After Cataris - breakablemag004 and Can Slide
+          Varia Suit or Heat Damage ≥ 20
+
+> Event - Door Blob (db_hdoor_mg_002); Heals? False
+  * Event Cataris - db_hdoor_mg_002
+  > Top Ledge
+      Trivial
+
+> Top Ledge; Heals? False
+  > Door to collision_camera_052 (C)
+      After Cataris - db_hdoor_mg_002
+  > Left Platform
+      Varia Suit or Heat Damage ≥ 10
+  > Event - Door Blob (db_hdoor_mg_002)
+      Shoot Beam
+
+> Right Platform; Heals? False
   > Event - First Tunnel Blob (breakablemag004)
       Any of the following:
           Shoot Diffusion or Wave
           All of the following:
               Lay Bomb
               Simple IBJ or Use Spin Boost
+              Varia Suit or Heat Damage ≥ 100
   > Event - Open Passage Blob (breakablemag013)
       Shoot Beam
-  > Dock to collision_camera_021 (C) (1)
-      After Cataris - breakablemag013
+  > Dock to collision_camera_021 (C) (Open Passage)
+      All of the following:
+          After Cataris - breakablemag013
+          Varia Suit or Heat Damage ≥ 20
+  > Left Platform
+      Varia Suit or Heat Damage ≥ 50
   > Tiny Alcove
-      Morph Ball and After Cataris - breakablemag004
-  > Left Ledge
-      Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
-
-> Dock to collision_camera_021 (C) (Tunnel); Heals? False
-  * Morph Ball Tunnel to collision_camera_021 (C)/Dock to collision_camera_019 (C) (Tunnel)
-  > Tiny Alcove
-      Morph Ball and After Cataris - breakablemag014
-
-> Tiny Alcove; Heals? False
-  > Event - Second Tunnel Blob (breakablemag014)
-      Shoot Beam
-  > Lower Platform
-      Morph Ball and After Cataris - breakablemag004
-  > Dock to collision_camera_021 (C) (Tunnel)
-      Morph Ball and After Cataris - breakablemag014
-
-> Event - Door Blob (db_hdoor_mg_002); Heals? False
-  * Event Cataris - db_hdoor_mg_002
-  > Left Ledge
-      Trivial
-
-> Left Ledge; Heals? False
-  > Door to collision_camera_052 (C)
-      After Cataris - db_hdoor_mg_002
-  > Lower Platform
-      Trivial
-  > Event - Door Blob (db_hdoor_mg_002)
-      Shoot Beam
+      All of the following:
+          Morph Ball and After Cataris - breakablemag004
+          Varia Suit or Heat Damage ≥ 100
+          Simple IBJ or Use Spin Boost
 
 ----------------
 Green EMMI Introduction
@@ -1217,7 +1290,7 @@ Extra - asset_id: collision_camera_020
   > Event - Lower-left Blob (breakablemag005)
       Wave Beam
   > Dock to collision_camera_046 (C) (Bottom)
-      Trivial
+      After Cataris - Central Unit
   > Center Alcove
       Morph Ball or After Cataris - breakablemag005
 
@@ -1243,9 +1316,11 @@ Extra - asset_id: collision_camera_020
   > Tile Group (POWERBEAM) 1
       Trivial
   > Dock to collision_camera_029 (C)
-      Simple IBJ or Use Spin Boost
+      All of the following:
+          After Cataris - Central Unit
+          Simple IBJ or Use Spin Boost
   > Dock to collision_camera_046 (C) (Upper)
-      Morph Ball
+      After Cataris - Central Unit
   > Center Alcove
       Can Slide
 
@@ -1303,17 +1378,17 @@ Extra - asset_id: collision_camera_020
 > Dock to collision_camera_029 (C); Heals? False
   * Morph Ball Tunnel to collision_camera_029 (C)/Dock to Green EMMI Introduction
   > Door to collision_camera_059 (C)
-      Trivial
+      After Cataris - Central Unit
 
 > Dock to collision_camera_046 (C) (Bottom); Heals? False
   * Morph Ball Tunnel to collision_camera_046 (C)/Dock to Green EMMI Introduction (Bottom)
   > Dock to collision_camera_052 (C)
-      Trivial
+      After Cataris - Central Unit
 
 > Dock to collision_camera_046 (C) (Upper); Heals? False
   * Morph Ball Tunnel to collision_camera_046 (C)/Dock to Green EMMI Introduction (Upper)
   > Door to collision_camera_059 (C)
-      Morph Ball
+      After Cataris - Central Unit
 
 > Center Alcove; Heals? False
   > Dock to collision_camera_052 (C)
@@ -1338,8 +1413,10 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to collision_camera_019 (C) (1)
-      After Cataris - breakablemag013
+  > Dock to collision_camera_019 (C) (Open Passage)
+      All of the following:
+          After Cataris - breakablemag013
+          Varia Suit or Heat Damage ≥ 100
   > Event - Open Passage Blob (breakablemag013)
       Shoot Beam
 
@@ -1350,10 +1427,12 @@ Extra - asset_id: collision_camera_021
   > Dock to collision_camera_019 (C) (Tunnel)
       Morph Ball
 
-> Dock to collision_camera_019 (C) (1); Heals? False
-  * Open Passage to collision_camera_019 (C)/Dock to collision_camera_021 (C) (1)
+> Dock to collision_camera_019 (C) (Open Passage); Heals? False
+  * Open Passage to collision_camera_019 (C)/Dock to collision_camera_021 (C) (Open Passage)
   > Door to Above Z-57 Fight
-      After Cataris - breakablemag013
+      All of the following:
+          After Cataris - breakablemag013
+          Varia Suit or Heat Damage ≥ 100
 
 > Event - Open Passage Blob (breakablemag013); Heals? False
   * Event Cataris - breakablemag013
@@ -1389,13 +1468,13 @@ Extra - asset_id: collision_camera_022
       Trivial
   > Dock to collision_camera_035 (C)
       All of the following:
-          Morph Ball
+          Morph Ball and After Cataris - Central Unit
           Space Jump or Infinite Bomb Jump (Beginner)
 
 > Dock to collision_camera_035 (C); Heals? False
   * Morph Ball Tunnel to collision_camera_035 (C)/Dock to collision_camera_022 (C)
   > Dock to Map Station
-      Trivial
+      Morph Ball and After Cataris - Central Unit
 
 ----------------
 Long Mouth Statue Room
@@ -1533,12 +1612,16 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Blob above Kraid (db_reg_mg_019)
+  > Event - Shoot Blob above Kraid, from below (db_reg_mg_019)
       Shoot Beam
   > Tile Group (WEIGHT)
-      Can Slide
-  > Left Room
-      Morph Ball and After Cataris - db_reg_mg_019
+      All of the following:
+          Before Cataris - Rubble Before Kraid and Can Slide
+          Varia Suit or Heat Damage ≥ 100
+  > Center Room
+      All of the following:
+          Morph Ball and After Cataris - db_reg_mg_019
+          Varia Suit or Heat Damage ≥ 100
 
 > Event - Ceiling Blob (breakablemag010); Heals? False
   * Event Cataris - breakablemag010
@@ -1547,7 +1630,7 @@ Extra - asset_id: collision_camera_024
   > Tile Group (POWERBEAM) 2
       Trivial
 
-> Event - Blob above Kraid (db_reg_mg_019); Heals? False
+> Event - Shoot Blob above Kraid, from below (db_reg_mg_019); Heals? False
   * Event Cataris - db_reg_mg_019
   * Extra - actor_name: db_reg_mg_019
   * Extra - actor_def: actordef:actors/props/db_reg_mg_018/charclasses/db_reg_mg_018.bmsad
@@ -1559,7 +1642,7 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Dock to Kraid Room
+  > Event - Rubble before Kraid
       Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
@@ -1569,9 +1652,11 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (POWERBEAM) 2
-      Morph Ball
-  > Left Room
-      Can Slide
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 50
+  > Center Room
+      Trivial
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -1582,40 +1667,76 @@ Extra - asset_id: collision_camera_024
   > Event - Ceiling Blob (breakablemag010)
       Morph Ball and Shoot Beam
   > Tile Group (POWERBEAM) 1
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 50
   > Dock to Kraid Eyedoor Room
-      Morph Ball and After Cataris - breakablemag010
+      All of the following:
+          Morph Ball and After Cataris - breakablemag010
+          Varia Suit or Heat Damage ≥ 50
 
-> Dock to Kraid Room; Heals? False
-  * Open Passage to Kraid Room/Dock to Above Kraid
+> Dock to Kraid Arena; Heals? False
+  * Open Passage to Kraid Arena/Dock to Above Kraid
 
 > Dock to collision_camera_060 (C) (bottom); Heals? False
-  * Not Determined to collision_camera_060 (C)/Dock to Above Kraid (bottom)
+  * Slide Tunnel to collision_camera_060 (C)/Dock to Above Kraid (bottom)
   > Left Room
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 200
 
 > Dock to collision_camera_060 (C) (top); Heals? False
   * Morph Ball Tunnel to collision_camera_060 (C)/Dock to Above Kraid (top)
   > Dock to collision_camera_043 (C)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 100
 
 > Left Room; Heals? False
-  > Door to Kraid Eyedoor Room
-      After Cataris - db_reg_mg_019 and Can Slide
-  > Tile Group (POWERBEAM) 1
-      Can Slide
   > Dock to collision_camera_060 (C) (bottom)
-      Morph Ball
+      Morph Ball and Varia Suit and Heat Damage ≥ 200
+  > Center Room
+      All of the following:
+          Can Slide
+          Varia Suit or Heat Damage ≥ 100
 
 > Dock to Kraid Eyedoor Room; Heals? False
   * Morph Ball Tunnel to Kraid Eyedoor Room/Dock to Above Kraid
   > Tile Group (POWERBEAM) 2
-      Morph Ball and After Cataris - breakablemag010
+      All of the following:
+          Morph Ball and After Cataris - breakablemag010
+          Varia Suit or Heat Damage ≥ 50
 
 > Dock to collision_camera_043 (C); Heals? False
   * Open Passage to collision_camera_043 (C)/Dock to Above Kraid
   > Dock to collision_camera_060 (C) (top)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 100
+
+> Event - Rubble before Kraid; Heals? False
+  * Event Cataris - Rubble Before Kraid
+  > Dock to Kraid Arena
+      Trivial
+
+> Center Room; Heals? False
+  > Door to Kraid Eyedoor Room
+      All of the following:
+          After Cataris - db_reg_mg_019 and Can Slide
+          Varia Suit or Heat Damage ≥ 100
+  > Tile Group (POWERBEAM) 1
+      Trivial
+  > Left Room
+      All of the following:
+          Can Slide
+          Varia Suit or Heat Damage ≥ 100
+  > Event - Shoot Blob above Kraid, from left (db_reg_mg_019)
+      Shoot Diffusion or Wave
+
+> Event - Shoot Blob above Kraid, from left (db_reg_mg_019); Heals? False
+  * Event Cataris - db_reg_mg_019
+  > Center Room
+      Trivial
 
 ----------------
 Teleport to Artaria (Red)
@@ -1755,7 +1876,9 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Top room
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 20
 
 > Pickup (item_missiletank_006); Heals? False
   * Pickup 53; Major Location? False
@@ -1794,11 +1917,17 @@ Extra - asset_id: collision_camera_026
   * Extra - start_point_actor_name: teleporter_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Event - Green Teleport Grapple Block (grapplepulloff1x2_001)
-      Grapple Beam
+      All of the following:
+          Grapple Beam
+          Varia Suit or Heat Damage ≥ 20
   > Tile Group (POWERBEAM) 3
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 20
   > Top room
-      After Cataris - grapplepulloff1x2_001
+      All of the following:
+          Morph Ball and After Cataris - grapplepulloff1x2_001
+          Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -1836,7 +1965,9 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Teleporter to Ghavoran - Teleporter to Cataris
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 20
   > Lower Center
       Trivial
 
@@ -1848,33 +1979,43 @@ Extra - asset_id: collision_camera_026
   > Tile Group (POWERBEAM) 2
       Gravity Suit
   > Tile Group (POWERBEAM) 3
-      Grapple Beam or Infinite Bomb Jump (Beginner) or Use Spin Boost
+      All of the following:
+          Varia Suit and Heat Damage ≥ 100
+          Grapple Beam or Infinite Bomb Jump (Beginner) or Use Spin Boost
   > Dock to Teleport to Artaria (Red)
-      After Cataris - db_dside_mg_003
+      All of the following:
+          After Cataris - db_dside_mg_003
+          Varia Suit or Heat Damage ≥ 100
 
 > Top room; Heals? False
   > Pickup (item_missiletank_005)
       All of the following:
-          Morph Ball
-          Infinite Bomb Jump (Beginner) or Use Spin Boost
+          Morph Ball and Varia Suit and Heat Damage ≥ 50
+          Simple IBJ or Use Spin Boost
   > Event - Upper-right Tunnel Blob (db_dside_mg_002)
       Shoot Beam
   > Teleporter to Ghavoran - Teleporter to Cataris
-      After Cataris - grapplepulloff1x2_001
-  > Tile Group (POWERBEAM) 1
-      Trivial
+      All of the following:
+          After Cataris - grapplepulloff1x2_001 and Can Slide
+          Varia Suit or Heat Damage ≥ 20
   > Dock to collision_camera_027 (C)
-      After Cataris - db_dside_mg_002
+      All of the following:
+          After Cataris - db_dside_mg_002
+          Varia Suit or Heat Damage ≥ 50
 
 > Dock to Teleport to Artaria (Red); Heals? False
   * Slide Tunnel to Teleport to Artaria (Red)/Dock to Teleport to Ghavoran
   > Lower Center
-      After Cataris - db_dside_mg_003
+      All of the following:
+          After Cataris - db_dside_mg_003
+          Varia Suit or Heat Damage ≥ 100
 
 > Dock to collision_camera_027 (C); Heals? False
   * Slide Tunnel to collision_camera_027 (C)/Dock to Teleport to Ghavoran
   > Top room
-      After Cataris - db_dside_mg_002
+      All of the following:
+          After Cataris - db_dside_mg_002
+          Varia Suit or Heat Damage ≥ 50
 
 ----------------
 collision_camera_027 (C)
@@ -1935,7 +2076,7 @@ Extra - asset_id: collision_camera_028
   > Dock to Long Mouth Statue Room (dooremmy_008)
       Morph Ball
   > Dock to Green EMMI Fight
-      Morph Ball
+      Morph Ball and After Cataris - Central Unit
 
 > Dock to collision_camera_027 (C); Heals? False
   * EMMI Door to collision_camera_027 (C)/Dock to collision_camera_028 (C)
@@ -1957,9 +2098,7 @@ Extra - asset_id: collision_camera_028
   * EMMI Door to Long Mouth Statue Room/Dock to collision_camera_028 (C) (dooremmy_009)
   * Extra - actor_name: dooremmy_009
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock to collision_camera_059 (C)
-      Morph Ball
-  > Dock to collision_camera_029 (C)
+  > Upper Ledge
       Trivial
 
 > Door to collision_camera_059 (C); Heals? False
@@ -1970,8 +2109,8 @@ Extra - asset_id: collision_camera_028
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to collision_camera_029 (C)
-      Spider Magnet or Space Jump or Simple IBJ
+  > Upper Ledge
+      Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
 
 > Pickup (item_missiletank_004); Heals? False
   * Pickup 40; Major Location? False
@@ -1982,20 +2121,30 @@ Extra - asset_id: collision_camera_028
 
 > Dock to collision_camera_059 (C); Heals? False
   * Morph Ball Tunnel to collision_camera_059 (C)/Dock to collision_camera_028 (C)
-  > Dock to Long Mouth Statue Room (dooremmy_009)
-      Space Jump or Infinite Bomb Jump (Beginner)
+  > Upper Ledge
+      All of the following:
+          After Cataris - Central Unit
+          Space Jump or Simple IBJ
 
 > Dock to collision_camera_029 (C); Heals? False
   * Morph Ball Tunnel to collision_camera_029 (C)/Dock to collision_camera_028 (C)
-  > Dock to Long Mouth Statue Room (dooremmy_009)
-      Trivial
-  > Door to collision_camera_059 (C)
-      Trivial
+  > Upper Ledge
+      After Cataris - Central Unit
 
 > Dock to Green EMMI Fight; Heals? False
   * Morph Ball Tunnel to Green EMMI Fight/Dock to collision_camera_028 (C)
   > Door to collision_camera_029 (C)
-      Morph Ball
+      Morph Ball and After Cataris - Central Unit
+
+> Upper Ledge; Heals? False
+  > Dock to Long Mouth Statue Room (dooremmy_009)
+      Trivial
+  > Door to collision_camera_059 (C)
+      Trivial
+  > Dock to collision_camera_059 (C)
+      Morph Ball and After Cataris - Central Unit
+  > Dock to collision_camera_029 (C)
+      After Cataris - Central Unit
 
 ----------------
 collision_camera_029 (C)
@@ -2030,12 +2179,8 @@ Extra - asset_id: collision_camera_029
   * Extra - right_shield_def: None
   > Door to collision_camera_028 (C)
       Can Slide
-  > Tile Group (POWERBOMB)
-      Morph Ball
-  > Dock to Green EMMI Introduction
-      Morph Ball
-  > Dock to collision_camera_028 (C)
-      Morph Ball
+  > Tunnel Center
+      Morph Ball and After Cataris - Central Unit
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -2060,18 +2205,28 @@ Extra - asset_id: collision_camera_029
   * Extra - tile_types: ('POWERBOMB',)
   > Pickup (item_powerbombtank_002)
       Ballspark
-  > Door to collision_camera_022 (C)
+  > Tunnel Center
       Morph Ball
 
 > Dock to Green EMMI Introduction; Heals? False
   * Morph Ball Tunnel to Green EMMI Introduction/Dock to collision_camera_029 (C)
-  > Door to collision_camera_022 (C)
-      Morph Ball
+  > Tunnel Center
+      Morph Ball and After Cataris - Central Unit
 
 > Dock to collision_camera_028 (C); Heals? False
   * Morph Ball Tunnel to collision_camera_028 (C)/Dock to collision_camera_029 (C)
+  > Tunnel Center
+      Morph Ball and After Cataris - Central Unit
+
+> Tunnel Center; Heals? False
   > Door to collision_camera_022 (C)
+      Morph Ball and After Cataris - Central Unit
+  > Tile Group (POWERBOMB)
       Morph Ball
+  > Dock to Green EMMI Introduction
+      Morph Ball and After Cataris - Central Unit
+  > Dock to collision_camera_028 (C)
+      Morph Ball and After Cataris - Central Unit
 
 ----------------
 Map Station
@@ -2188,8 +2343,11 @@ Extra - asset_id: collision_camera_032
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Hall Thermal Device Room
       Any of the following:
-          Infinite Bomb Jump (Beginner)
-          Morph Ball and Space Jump
+          All of the following:
+              After Cataris - Central Unit
+              Any of the following:
+                  Simple IBJ
+                  Morph Ball and Space Jump
           All of the following:
               After Cataris - deviceheat_camerafar_000
               Spider Magnet or Use Spin Boost
@@ -2238,7 +2396,7 @@ Extra - asset_id: collision_camera_032
   > Dock to collision_camera_055 (C)
       Trivial
   > Dock to collision_camera_046 (C) (2)
-      Trivial
+      After Cataris - Central Unit
 
 > Dock to collision_camera_055 (C); Heals? False
   * Morph Ball Tunnel to collision_camera_055 (C)/Dock to collision_camera_032 (C)
@@ -2264,7 +2422,7 @@ Extra - asset_id: collision_camera_032
 > Dock to collision_camera_046 (C) (2); Heals? False
   * Morph Ball Tunnel to collision_camera_046 (C)/Dock to collision_camera_032 (C) (2)
   > Door from collision_camera_010 (C)
-      Trivial
+      After Cataris - Central Unit
 
 ----------------
 Save Station East
@@ -2349,7 +2507,7 @@ Extra - asset_id: collision_camera_035
   > Door to Green EMMI Fight
       Trivial
   > Dock to collision_camera_022 (C)
-      Trivial
+      Morph Ball and After Cataris - Central Unit
 
 > Dock to Speedboost Maze before Transport to Dairon; Heals? False
   * EMMI Door to Speedboost Maze before Transport to Dairon/Dock to collision_camera_035 (C)
@@ -2374,7 +2532,7 @@ Extra - asset_id: collision_camera_035
 > Dock to collision_camera_022 (C); Heals? False
   * Morph Ball Tunnel to collision_camera_022 (C)/Dock to collision_camera_035 (C)
   > Dock to Moving Magnet Walls (Small)
-      Trivial
+      Morph Ball and After Cataris - Central Unit
 
 ----------------
 Green EMMI Fight
@@ -2448,10 +2606,17 @@ Extra - asset_id: collision_camera_036
       Shoot Beam
   > Upper-right Corner
       Morph Ball or After Cataris - breakablemag007
+  > Pickup (Morph Ball)
+      After Cataris - Central Unit
 
 > Event - Central Unit Blob through wall; Heals? False
   * Event Cataris - breakablemag008
   > Dock to collision_camera_035 (C)
+      Trivial
+
+> Pickup (Morph Ball); Heals? False
+  * Pickup 144; Major Location? True
+  > Door to Central Unit Room
       Trivial
 
 ----------------
@@ -2474,6 +2639,13 @@ Extra - asset_id: collision_camera_037
 
 > Door to Green EMMI Fight; Heals? False
   * Access Open to Green EMMI Fight/Door to Central Unit Room
+  > Event - Cataris Central Unit
+      Trivial
+
+> Event - Cataris Central Unit; Heals? False
+  * Event Cataris - Central Unit
+  > Door to Green EMMI Fight
+      Trivial
 
 ----------------
 collision_camera_038 (C)
@@ -2785,9 +2957,9 @@ Extra - asset_id: collision_camera_043
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Tile Group (POWERBEAM) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
   > Dock to Above Kraid
-      Gravity Suit or Lava Damage ≥ 100
+      Gravity Suit or Heat Damage ≥ 100 or Lava Damage ≥ 100
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -2807,16 +2979,18 @@ Extra - asset_id: collision_camera_043
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Long Mouth Statue Room
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
   > Dock to Above Kraid
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
 
 > Dock to Above Kraid; Heals? False
-  * Not Determined to Above Kraid/Dock to collision_camera_043 (C)
+  * Open Passage to Above Kraid/Dock to collision_camera_043 (C)
   > Door to Long Mouth Statue Room
-      Gravity Suit or Lava Damage ≥ 100
+      Any of the following:
+          Gravity Suit
+          Heat Damage ≥ 100 and Lava Damage ≥ 100
   > Tile Group (POWERBEAM) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
 
 > Dock to Long Mouth Statue Room; Heals? False
   * Morph Ball Tunnel to Long Mouth Statue Room/Dock to collision_camera_043 (C)
@@ -2838,18 +3012,20 @@ Extra - asset_id: collision_camera_044
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   > Pickup (itemsphere_diffusionbeam)
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
   > Event - Diffusion Tutorial Blob (db_dif_mg_002)
       Shoot Diffusion or Wave
   > Dock to Teleport to Dairon
-      Morph Ball and After Cataris - db_dif_mg_002
+      All of the following:
+          Morph Ball and After Cataris - db_dif_mg_002
+          Varia Suit or Heat Damage ≥ 20
 
 > Pickup (itemsphere_diffusionbeam); Heals? False
   * Pickup 35; Major Location? True
   * Extra - actor_name: itemsphere_diffusionbeam
   * Extra - actor_def: actordef:actors/items/itemsphere_diffusionbeam/charclasses/itemsphere_diffusionbeam.bmsad
   > Door from Teleport to Dairon
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
 
 > Pickup (item_powerbombtank_001); Heals? False
   * Pickup 51; Major Location? False
@@ -2886,7 +3062,7 @@ Extra - asset_id: collision_camera_044
   * Extra - tile_types: ('BOMB',)
   > Tile Group (BOMB) 2
       Morph Ball
-  > Dock to Kraid Room (bottom)
+  > Dock to Kraid Arena (bottom)
       Morph Ball
 
 > Tile Group (WEIGHT) 1; Heals? False
@@ -2973,24 +3149,30 @@ Extra - asset_id: collision_camera_044
   > Alcove
       Trivial
 
-> Dock to Kraid Room (top); Heals? False
-  * Morph Ball Tunnel to Kraid Room/Dock to Diffusion Beam Room (top)
+> Dock to Kraid Arena (top); Heals? False
+  * Morph Ball Tunnel to Kraid Arena/Dock to Diffusion Beam Room (top)
   > Event - Diffusion Tutorial Blob (db_dif_mg_002)
       Morph Ball and Shoot Diffusion or Wave
   > Dock to Teleport to Dairon
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 100
 
-> Dock to Kraid Room (bottom); Heals? False
-  * Morph Ball Tunnel to Kraid Room/Dock to Diffusion Beam Room (bottom)
+> Dock to Kraid Arena (bottom); Heals? False
+  * Morph Ball Tunnel to Kraid Arena/Dock to Diffusion Beam Room (bottom)
   > Tile Group (BOMB) 1
       Morph Ball
 
 > Dock to Teleport to Dairon; Heals? False
   * Morph Ball Tunnel to Teleport to Dairon/Dock to Diffusion Beam Room
   > Door from Teleport to Dairon
-      After Cataris - db_dif_mg_002
-  > Dock to Kraid Room (top)
-      Morph Ball
+      All of the following:
+          After Cataris - db_dif_mg_002
+          Varia Suit or Heat Damage ≥ 20
+  > Dock to Kraid Arena (top)
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 100
 
 > Alcove; Heals? False
   > Pickup (item_powerbombtank_001)
@@ -3111,10 +3293,10 @@ Extra - asset_id: collision_camera_046
   > Dock to collision_camera_032 (C) (1)
       Trivial
   > Dock to Green EMMI Introduction (Bottom)
-      Trivial
+      After Cataris - Central Unit
   > Dock to collision_camera_032 (C) (2)
       All of the following:
-          Morph Ball
+          Morph Ball and After Cataris - Central Unit
           Simple IBJ or Use Spin Boost
 
 > Door to Green EMMI Introduction (doorchargecharge_005); Heals? False
@@ -3161,9 +3343,9 @@ Extra - asset_id: collision_camera_046
   > Door to collision_camera_032 (C) (doorpowerpower_000)
       Can Slide
   > Dock to Green EMMI Introduction (Upper)
-      Morph Ball
+      After Cataris - Central Unit
   > Dock to collision_camera_032 (C) (2)
-      Morph Ball
+      Morph Ball and After Cataris - Central Unit
 
 > Dock to collision_camera_032 (C) (1); Heals? False
   * Morph Ball Tunnel to collision_camera_032 (C)/Dock to collision_camera_046 (C) (1)
@@ -3173,19 +3355,19 @@ Extra - asset_id: collision_camera_046
 > Dock to Green EMMI Introduction (Bottom); Heals? False
   * Morph Ball Tunnel to Green EMMI Introduction/Dock to collision_camera_046 (C) (Bottom)
   > Door to collision_camera_032 (C) (doorpowerpower_015)
-      Trivial
+      After Cataris - Central Unit
 
 > Dock to Green EMMI Introduction (Upper); Heals? False
   * Morph Ball Tunnel to Green EMMI Introduction/Dock to collision_camera_046 (C) (Upper)
   > Door to Green EMMI Introduction (doorshutter_001)
-      Morph Ball
+      After Cataris - Central Unit
 
 > Dock to collision_camera_032 (C) (2); Heals? False
   * Morph Ball Tunnel to collision_camera_032 (C)/Dock to collision_camera_046 (C) (2)
   > Door to collision_camera_032 (C) (doorpowerpower_015)
-      Morph Ball
+      Morph Ball and After Cataris - Central Unit
   > Door to Green EMMI Introduction (doorshutter_001)
-      Morph Ball
+      Morph Ball and After Cataris - Central Unit
 
 ----------------
 Double Obsydomithon Room
@@ -3217,9 +3399,11 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
   > Tile Group (POWERBEAM) 1
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
   > Left Floor
-      After Cataris - Heated Wide Beam Block
+      All of the following:
+          After Cataris - Heated Wide Beam Block
+          Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -3230,7 +3414,7 @@ Extra - asset_id: collision_camera_048
   > Pickup (item_missiletank_007)
       Morph Ball
   > Tile Group (BOMB) 1
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
@@ -3248,11 +3432,13 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (MISSILE) 1
-      Trivial
+      Spin Boost or Heat Damage ≥ 20
   > Tile Group (MISSILE) 2
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 20
   > Left Floor
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
 
 > Tile Group (MISSILE) 1; Heals? False
   * Configurable Node
@@ -3261,11 +3447,13 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
   > Tile Group (POWERBEAM) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
   > Tile Group (MISSILE) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
   > Tile Group (MISSILE) 3
-      Can Slide
+      All of the following:
+          Can Slide
+          Varia Suit or Heat Damage ≥ 20
 
 > Tile Group (MISSILE) 2; Heals? False
   * Configurable Node
@@ -3274,13 +3462,17 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
   > Tile Group (POWERBEAM) 2
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 20
   > Tile Group (MISSILE) 1
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
   > Tile Group (MISSILE) 3
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
   > Dock to Teleport to Artaria (Blue)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (MISSILE) 3; Heals? False
   * Configurable Node
@@ -3289,16 +3481,18 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
   > Tile Group (MISSILE) 1
-      Can Slide
+      All of the following:
+          Can Slide
+          Varia Suit or Heat Damage ≥ 20
   > Tile Group (MISSILE) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
   > Dock to Teleport to Artaria (Blue)
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
 
 > Dock to Teleport to Artaria (Blue); Heals? False
   * Morph Ball Tunnel to Teleport to Artaria (Blue)/Dock to Double Obsydomithon Room
   > Tile Group (MISSILE) 3
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
 
 > Event - Wide Beam Block; Heals? False
   * Event Cataris - Heated Wide Beam Block
@@ -3309,11 +3503,11 @@ Extra - asset_id: collision_camera_048
   > Door to Lone Recharge Room
       After Cataris - db_hdoor_mg_001
   > Tile Group (BOMB) 1
-      After Cataris - Heated Wide Beam Block
-  > Tile Group (BOMB) 2
-      Trivial
+      All of the following:
+          After Cataris - Heated Wide Beam Block
+          Varia Suit or Heat Damage ≥ 50
   > Tile Group (POWERBEAM) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 50
   > Event - Wide Beam Block
       Push Wide Beam Block
   > Event - Door Blob (db_hdoor_mg_001)
@@ -3339,8 +3533,10 @@ Extra - asset_id: collision_camera_049
   * Extra - right_shield_def: None
   > Pickup (item_missiletank_002)
       Any of the following:
-          Simple IBJ or Use Spin Boost
           Gravity Suit and Speed Booster
+          All of the following:
+              Varia Suit or Heat Damage ≥ 200
+              Simple IBJ or Use Spin Boost
 
 > Pickup (item_missiletank_002); Heals? False
   * Pickup 52; Major Location? False
@@ -3363,12 +3559,8 @@ Extra - asset_id: collision_camera_051
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Door to collision_camera_052 (C)
-      Morph Ball and After Cataris - db_dif_mg_001
-  > Event - Diffusion Tutorial Blob (db_dif_mg_001)
-      Shoot Diffusion or Wave
   > Dock to Diffusion Beam Room
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
 
 > Pickup (item_missiletank_003); Heals? False
   * Pickup 39; Major Location? False
@@ -3376,10 +3568,14 @@ Extra - asset_id: collision_camera_051
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Event - Missile Tank Blob (breakablemag009)
       Lay Bomb
-  > Teleporter to Dairon - Teleport to Cataris
+  > Ledge above Teleport
       All of the following:
           Morph Ball
-          Gravity Suit or After Cataris - breakablemag009
+          Any of the following:
+              Gravity Suit
+              All of the following:
+                  After Cataris - breakablemag009
+                  Varia Suit or Heat Damage ≥ 50
 
 > Door to collision_camera_052 (C); Heals? False
   * Grapple Beam Door to collision_camera_052 (C)/Door to Teleport to Dairon
@@ -3389,14 +3585,14 @@ Extra - asset_id: collision_camera_051
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Diffusion Beam Room
-      Morph Ball and After Cataris - db_dif_mg_001
   > Teleporter to Dairon - Teleport to Cataris
-      Trivial
+      Varia Suit or Heat Damage ≥ 30
   > Tile Group (POWERBEAM) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
   > Dock to Kraid Eyedoor Room
-      Morph Ball and After Cataris - db_reg_mg_021
+      All of the following:
+          After Cataris - db_reg_mg_021
+          Varia Suit or Heat Damage ≥ 100
   > Event - Wave Beam Blob (db_reg_mg_021)
       Wave Beam
 
@@ -3404,14 +3600,14 @@ Extra - asset_id: collision_camera_051
   * Event Cataris - breakablemag009
   * Extra - actor_name: breakablemag009
   * Extra - actor_def: actordef:actors/props/breakablemag009/charclasses/breakablemag009.bmsad
-  > Teleporter to Dairon - Teleport to Cataris
-      Trivial
+  > Ledge above Teleport
+      Varia Suit or Heat Damage ≥ 50
 
-> Event - Diffusion Tutorial Blob (db_dif_mg_001); Heals? False
+> Event - Diffusion Tutorial Blob from below (db_dif_mg_001); Heals? False
   * Event Cataris - db_dif_mg_001
   * Extra - actor_name: db_dif_mg_001
   * Extra - actor_def: actordef:actors/props/db_dif_mg_001/charclasses/db_dif_mg_001.bmsad
-  > Door to Diffusion Beam Room
+  > Dock to Diffusion Beam Room
       Trivial
 
 > Teleporter to Dairon - Teleport to Cataris; Heals? False; Spawn Point
@@ -3422,12 +3618,10 @@ Extra - asset_id: collision_camera_051
   * Extra - target_spawn_point: teleport_magma_000_platform
   * Extra - start_point_actor_name: teleport_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Pickup (item_missiletank_003)
-      All of the following:
-          Morph Ball
-          Gravity Suit or After Cataris - breakablemag009
   > Door to collision_camera_052 (C)
-      Trivial
+      Varia Suit or Heat Damage ≥ 30
+  > Ledge above Teleport
+      Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (POWERBOMB); Heals? False
   * Configurable Node
@@ -3449,7 +3643,7 @@ Extra - asset_id: collision_camera_051
   > Tile Group (POWERBOMB)
       Gravity Suit or Lava Damage ≥ 500
   > Tile Group (POWERBEAM) 2
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
   > Dock to collision_camera_054 (C)
       Any of the following:
           Gravity Suit and Can Slide
@@ -3462,19 +3656,33 @@ Extra - asset_id: collision_camera_051
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Door to collision_camera_052 (C)
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
   > Tile Group (POWERBEAM) 1
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
 
 > Dock to Diffusion Beam Room; Heals? False
-  * Not Determined to Diffusion Beam Room/Dock to Teleport to Dairon
+  * Morph Ball Tunnel to Diffusion Beam Room/Dock to Teleport to Dairon
   > Door to Diffusion Beam Room
-      Trivial
+      Varia Suit or Heat Damage ≥ 20
+  > Event - Diffusion Tutorial Blob from below (db_dif_mg_001)
+      Shoot Diffusion or Wave
+  > Dock to Kraid Eyedoor Room
+      All of the following:
+          Morph Ball and After Cataris - db_dif_mg_001
+          Varia Suit or Heat Damage ≥ 100
 
 > Dock to Kraid Eyedoor Room; Heals? False
   * Morph Ball Tunnel to Kraid Eyedoor Room/Dock to Teleport to Dairon
   > Door to collision_camera_052 (C)
-      Morph Ball and After Cataris - db_reg_mg_021
+      All of the following:
+          After Cataris - db_reg_mg_021
+          Varia Suit or Heat Damage ≥ 100
+  > Dock to Diffusion Beam Room
+      All of the following:
+          Morph Ball and After Cataris - db_dif_mg_001
+          Varia Suit or Heat Damage ≥ 100
+  > Event - Diffusion Tutorial Blob from above (db_dif_mg_001)
+      Wave Beam
 
 > Dock to collision_camera_054 (C); Heals? False
   * Open Passage to collision_camera_054 (C)/Dock to Teleport to Dairon
@@ -3489,6 +3697,27 @@ Extra - asset_id: collision_camera_051
   * Event Cataris - db_reg_mg_021
   > Door to collision_camera_052 (C)
       Trivial
+
+> Event - Diffusion Tutorial Blob from above (db_dif_mg_001); Heals? False
+  * Event Cataris - db_dif_mg_001
+  > Dock to Kraid Eyedoor Room
+      Trivial
+
+> Ledge above Teleport; Heals? False
+  > Pickup (item_missiletank_003)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit
+              All of the following:
+                  After Cataris - breakablemag009
+                  Varia Suit or Heat Damage ≥ 100
+  > Event - Missile Tank Blob (breakablemag009)
+      All of the following:
+          Shoot Diffusion or Wave
+          Varia Suit or Heat Damage ≥ 20
+  > Teleporter to Dairon - Teleport to Cataris
+      Varia Suit or Heat Damage ≥ 50
 
 ----------------
 collision_camera_052 (C)
@@ -3576,7 +3805,7 @@ Extra - asset_id: collision_camera_053
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Tile Group (POWERBEAM) 1
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
 
 > Pickup (item_energyfragment_000); Heals? False
   * Pickup 44; Major Location? True
@@ -3623,9 +3852,11 @@ Extra - asset_id: collision_camera_053
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Dock to collision_camera_052 (C) (1)
-      Trivial
+      Varia Suit or Heat Damage ≥ 10
   > Above Lava
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 100
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -3651,7 +3882,9 @@ Extra - asset_id: collision_camera_053
 
 > Above Lava; Heals? False
   > Tile Group (POWERBEAM) 1
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 100
   > Below Lava
       Gravity Suit or Lava Damage ≥ 400
 
@@ -3670,6 +3903,10 @@ Extra - asset_id: collision_camera_053
 
 > Dock to collision_camera_052 (C) (2); Heals? False
   * Slide Tunnel to collision_camera_052 (C)/Dock to collision_camera_053 (C) (2)
+  > Dock to collision_camera_052 (C) (1)
+      All of the following:
+          # TODO: After proper blast shield logic is implemented, adjust this. This is a temporary connection.
+          Wave Beam
   > Tile Group (POWERBEAM) 2
       Trivial
 
@@ -3692,7 +3929,7 @@ Extra - asset_id: collision_camera_054
   > Dock to collision_camera_053 (C)
       Gravity Suit or Lava Damage ≥ 400
   > Dock to Teleport to Dairon
-      Gravity Suit or Cold Damage ≥ 400
+      Gravity Suit or Lava Damage ≥ 400
 
 > Dock to collision_camera_053 (C); Heals? False
   * Open Passage to collision_camera_053 (C)/Dock to collision_camera_054 (C)
@@ -3812,12 +4049,12 @@ Extra - asset_id: collision_camera_059
   > Door to Green EMMI Introduction
       Trivial
   > Dock to collision_camera_028 (C)
-      Trivial
+      After Cataris - Central Unit
 
 > Dock to collision_camera_028 (C); Heals? False
   * Morph Ball Tunnel to collision_camera_028 (C)/Dock to collision_camera_059 (C)
   > Door to collision_camera_028 (C)
-      Trivial
+      After Cataris - Central Unit
 
 ----------------
 collision_camera_060 (C)
@@ -3825,14 +4062,18 @@ Extra - total_boundings: {'x1': -14500.0, 'x2': -12400.0, 'y1': -2400.0, 'y2': -
 Extra - polygon: [[-12400.0, -1300.0], [-14500.0, -1300.0], [-14500.0, -2400.0], [-12400.0, -2400.0]]
 Extra - asset_id: collision_camera_060
 > Dock to Above Kraid (bottom); Heals? False
-  * Morph Ball Tunnel to Above Kraid/Dock to collision_camera_060 (C) (bottom)
+  * Slide Tunnel to Above Kraid/Dock to collision_camera_060 (C) (bottom)
   > Dock to Above Kraid (top)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 100
 
 > Dock to Above Kraid (top); Heals? False
   * Morph Ball Tunnel to Above Kraid/Dock to collision_camera_060 (C) (top)
   > Dock to Above Kraid (bottom)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Varia Suit or Heat Damage ≥ 100
 
 ----------------
 Kraid Eyedoor Room
@@ -3856,7 +4097,9 @@ Extra - asset_id: collision_camera_061
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Safe Ledge
-      Flash Shift or Spider Magnet or Use Spin Boost
+      All of the following:
+          Flash Shift or Gravity Suit or Spider Magnet or Lava Damage ≥ 10 or Use Spin Boost
+          Varia Suit or Heat Damage ≥ 100
 
 > Event - Blob to Teleport to Dairon (db_reg_mg_021); Heals? False
   * Event Cataris - db_reg_mg_021
@@ -3869,14 +4112,12 @@ Extra - asset_id: collision_camera_061
   * Event Cataris - db_reg_mg_020
   * Extra - actor_name: db_reg_mg_020
   * Extra - actor_def: actordef:actors/props/db_reg_mg_019/charclasses/db_reg_mg_019.bmsad
-  > Dock to Above Kraid
+  > Ledge below blob
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Kraid
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Tile Group (BOMB)
-      Morph Ball and Lava Damage ≥ 200
   > Safe Ledge
       Trivial
 
@@ -3888,34 +4129,53 @@ Extra - asset_id: collision_camera_061
   * Extra - tile_types: ('BOMB',)
   > Pickup (item_missiletank_012)
       Morph Ball
-  > Start Point
+  > Safe Ledge
       All of the following:
           Morph Ball
-          Gravity Suit or Lava Damage ≥ 200
+          Gravity Suit or Lava Damage ≥ 400
 
 > Dock to Above Kraid; Heals? False
   * Morph Ball Tunnel to Above Kraid/Dock to Kraid Eyedoor Room
-  > Event - Top Blob (db_reg_mg_020)
-      Shoot Beam
-  > Safe Ledge
-      Morph Ball and After Cataris - db_reg_mg_020
+  > Ledge below blob
+      Varia Suit or Heat Damage ≥ 50
 
 > Safe Ledge; Heals? False
   > Door to Above Kraid
-      Flash Shift or Spider Magnet or Use Spin Boost
+      All of the following:
+          Flash Shift or Gravity Suit or Spider Magnet or Cold Damage or Use Spin Boost
+          Varia Suit or Heat Damage ≥ 100
   > Event - Blob to Teleport to Dairon (db_reg_mg_021)
       Shoot Diffusion or Wave
-  > Dock to Above Kraid
+  > Tile Group (BOMB)
+      All of the following:
+          Morph Ball
+          Gravity Suit or Lava Damage ≥ 400
+  > Dock to Teleport to Dairon
+      All of the following:
+          After Cataris - db_reg_mg_021
+          Varia Suit or Heat Damage ≥ 10
+  > Ledge below blob
       All of the following:
           Morph Ball and After Cataris - db_reg_mg_020
+          Varia Suit or Heat Damage ≥ 200
           Space Jump or Infinite Bomb Jump (Beginner)
-  > Dock to Teleport to Dairon
-      After Cataris - db_reg_mg_021
 
 > Dock to Teleport to Dairon; Heals? False
   * Morph Ball Tunnel to Teleport to Dairon/Dock to Kraid Eyedoor Room
   > Safe Ledge
-      After Cataris - db_reg_mg_021
+      All of the following:
+          After Cataris - db_reg_mg_021
+          Varia Suit or Heat Damage ≥ 10
+
+> Ledge below blob; Heals? False
+  > Event - Top Blob (db_reg_mg_020)
+      Shoot Beam
+  > Dock to Above Kraid
+      Varia Suit or Heat Damage ≥ 50
+  > Safe Ledge
+      All of the following:
+          Morph Ball and After Cataris - db_reg_mg_020
+          Varia Suit or Heat Damage ≥ 50
 
 ----------------
 Save Station West
@@ -3942,7 +4202,7 @@ Extra - asset_id: collision_camera_062
       Trivial
 
 ----------------
-Kraid Room
+Kraid Arena
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -17900.0, 'x2': -12400.0, 'y1': -7700.0, 'y2': -4128.35986328125}
 Extra - polygon: [[-12400.0, -4128.35986328125], [-17900.0, -4128.35986328125], [-17900.0, -7700.0], [-12400.0, -7700.0]]
@@ -3967,7 +4227,9 @@ Extra - asset_id: collision_camera_063
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
   > Left Ledge
-      Trivial
+      After Kraid
+  > Event - Kraid
+      Before Kraid
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -3981,21 +4243,36 @@ Extra - asset_id: collision_camera_063
 > Left Ledge; Heals? False
   > Tile Group (BOMB)
       Lay Bomb
+  > Right Ledge
+      Gravity Suit or Space Jump or Lava Damage ≥ 1500
 
 > Right Ledge; Heals? False
   > Dock to Diffusion Beam Room (top)
       Spider Magnet or Space Jump
+  > Dock to Diffusion Beam Room (bottom)
+      All of the following:
+          Morph Ball
+          Gravity Suit or Lava Damage ≥ 1000
 
 > Dock to Above Kraid; Heals? False
-  * Open Passage to Above Kraid/Dock to Kraid Room
+  * Open Passage to Above Kraid/Dock to Kraid Arena
   > Tile Group (WEIGHT) 1
       Trivial
 
 > Dock to Diffusion Beam Room (top); Heals? False
-  * Morph Ball Tunnel to Diffusion Beam Room/Dock to Kraid Room (top)
+  * Morph Ball Tunnel to Diffusion Beam Room/Dock to Kraid Arena (top)
 
 > Dock to Diffusion Beam Room (bottom); Heals? False
-  * Morph Ball Tunnel to Diffusion Beam Room/Dock to Kraid Room (bottom)
+  * Morph Ball Tunnel to Diffusion Beam Room/Dock to Kraid Arena (bottom)
+  > Right Ledge
+      All of the following:
+          Morph Ball
+          Gravity Suit or Lava Damage ≥ 1000
+
+> Event - Kraid; Heals? False
+  * Event Kraid
+  > Right Ledge
+      Nothing
 
 ----------------
 collision_camera_064 (C)
