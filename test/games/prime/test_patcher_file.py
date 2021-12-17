@@ -548,6 +548,7 @@ def test_create_claris_patcher_file(test_files_dir):
         "always_up_gfmc_compound": True,
         "always_up_torvus_temple": True,
         "always_up_great_temple": False,
+        'hud_color': None,
     }
     # TODO: check all fields?
     assert result["dol_patches"]["default_items"] == {

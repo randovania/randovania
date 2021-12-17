@@ -1,16 +1,26 @@
 {
-    "schema_version": 16,
-    "name": "Starter Preset",
-    "uuid": "955aaac1-7ab4-4414-83db-45cfc35e68d7",
-    "description": "Default preset.",
+    "schema_version": 18,
+    "name": "CSR Classic",
+    "uuid": "a66ea8a6-cf92-4cd9-992b-977911279a86",
+    "description": "For Cave Story Randomizer veterans.<br />Settings are as close as possible to the experience of playing the original randomizer.",
     "base_preset_uuid": null,
     "game": "cave_story",
     "configuration": {
         "trick_level": {
             "minimal_logic": false,
-            "specific_levels": {}
+            "specific_levels": {
+                "pacifist": "expert"
+            }
         },
         "starting_location": [
+            {
+                "world_name": "Labyrinth",
+                "area_name": "Camp"
+            },
+            {
+                "world_name": "Mimiga Village",
+                "area_name": "Arthur's House"
+            },
             {
                 "world_name": "Mimiga Village",
                 "area_name": "Start Point"
@@ -28,13 +38,11 @@
                     "num_shuffled_pickups": 2
                 },
                 "Missile Launcher": {
-                    "num_shuffled_pickups": 0,
                     "included_ammo": [
                         10
                     ]
                 },
                 "Super Missile Launcher": {
-                    "num_shuffled_pickups": 0,
                     "included_ammo": [
                         5
                     ]
@@ -64,7 +72,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Map System": {
-                    "num_included_in_starting_items": 1
+                    "num_shuffled_pickups": 1
                 },
                 "Silver Locket": {
                     "num_shuffled_pickups": 1
@@ -150,7 +158,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Nikumaru Counter": {
-                    "num_included_in_starting_items": 1
+                    "num_shuffled_pickups": 1
                 },
                 "Teleporter Room Key": {
                     "num_shuffled_pickups": 1
@@ -229,11 +237,14 @@
         "damage_strictness": 1.5,
         "pickup_model_style": "all-visible",
         "pickup_model_data_source": "etm",
-        "multi_pickup_placement": false,
+        "multi_pickup_placement": true,
         "logical_resource_action": "randomly",
-        "puppies_anywhere": false,
-        "objective": 1,
+        "puppies_anywhere": true,
+        "objective": 2,
         "no_blocks": false,
-        "starting_hp": 3
+        "starting_hp": 3,
+        "hints": {
+            "item_hints": true
+        }
     }
 }
