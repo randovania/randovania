@@ -98,6 +98,7 @@ _ECHOES_PAKS = tuple(
         "MiscData.pak",
         "FrontEnd.pak",
         "LogBook.pak",
+        "Standard.ntwk",
     ]
     + ["Metroid{}.pak".format(i) for i in range(1, 6)])
 
