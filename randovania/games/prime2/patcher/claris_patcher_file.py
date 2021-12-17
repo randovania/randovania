@@ -542,6 +542,7 @@ def create_patcher_file(description: LayoutDescription,
         "full_map_at_start": cosmetic_patches.open_map,
         "dark_world_varia_suit_damage": configuration.varia_suit_damage,
         "dark_world_dark_suit_damage": configuration.dark_suit_damage,
+        "hud_color": cosmetic_patches.hud_color if cosmetic_patches.use_hud_color else None,
     }
 
     result["logbook_patches"] = [
