@@ -12,10 +12,14 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Elevator to Dairon - East Transport to Ferenia
+      Trivial
 
 > Start Point; Heals? False
   * Extra - start_point_actor_name: StartPoint0
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to collision_camera_002 (F)
+      Trivial
 
 > Elevator to Dairon - East Transport to Ferenia; Heals? False; Spawn Point
   * Teleporter to Dairon - East Transport to Ferenia
@@ -25,6 +29,8 @@ Extra - asset_id: collision_camera_000
   * Extra - target_spawn_point: elevator_sanctuary_000_platform
   * Extra - start_point_actor_name: elevator_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  > Door to collision_camera_002 (F)
+      Trivial
 
 ----------------
 collision_camera_001 (F)
@@ -35,15 +41,21 @@ Extra - asset_id: collision_camera_001
   * EMMI Door to collision_camera_040 (F)/Dock to collision_camera_001 (F)
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to collision_camera_002 (F)
+      Trivial
 
-> Door to collision_camera_002 (F); Heals? False
-  * Phase Shift Door to collision_camera_002 (F)/Door to collision_camera_001 (F)
+> Dock to collision_camera_002 (F); Heals? False
+  * Open Passage to collision_camera_002 (F)/Door to collision_camera_001 (F)
   * Extra - actor_name: doorshutter_007
   * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to collision_camera_040 (F)
+      Any of the following:
+          Grapple Beam or Space Jump
+          Flash Shift and Use Spin Boost
 
 ----------------
 collision_camera_002 (F)
@@ -58,32 +70,48 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Total Recharge
+      Morph Ball
+  > Right Alcove
+      All of the following:
+          Morph Ball
+          Grapple Beam or Simple IBJ or Use Spin Boost
 
 > Pickup (item_energyfragment_002); Heals? False
   * Pickup 123; Major Location? True
   * Extra - actor_name: item_energyfragment_002
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
+  > Tile Group (WEIGHT)
+      Trivial
+  > Tile Group (BOMB)
+      Morph Ball
 
 > Door to collision_camera_001 (F); Heals? False
-  * Phase Shift Door to collision_camera_001 (F)/Door to collision_camera_002 (F)
+  * Phase Shift Door to collision_camera_001 (F)/Dock to collision_camera_002 (F)
   * Extra - actor_name: doorshutter_007
   * Extra - actor_def: actordef:actors/props/doorshutter/charclasses/doorshutter.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Right Alcove
+      Can Slide
 
 > Total Recharge; Heals? True; Spawn Point
   * Extra - actor_name: totalrechargestation_000
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  > Door to East Transport to Darion
+      Morph Ball
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_052
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Door to collision_camera_001 (F)
+      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -91,34 +119,75 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Pickup (item_energyfragment_002)
+      Morph Ball
+  > Right Alcove
+      Morph Ball
+
+> Right Alcove; Heals? False
+  > Door to East Transport to Darion
+      Morph Ball
+  > Door to collision_camera_001 (F)
+      All of the following:
+          Morph Ball
+          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+  > Tile Group (BOMB)
+      All of the following:
+          Morph Ball
+          Space Jump or Infinite Bomb Jump (Beginner)
 
 ----------------
-collision_camera_003 (F)
+Purple EMMI Introduction
 Extra - total_boundings: {'x1': -10500.0, 'x2': -4400.0, 'y1': -4900.0, 'y2': -2100.0}
 Extra - polygon: [[-4400.0, -2100.0], [-10500.0, -2100.0], [-10500.0, -4900.0], [-8400.0, -4900.0], [-8400.0, -3800.0], [-6400.0, -3800.0], [-4400.0, -4100.0]]
 Extra - asset_id: collision_camera_003
-> Dock to Teleport to Burenia; Heals? False
-  * EMMI Door to Teleport to Burenia/Dock to collision_camera_003 (F)
+> Dock to Teleport to Burenia (Cyan); Heals? False
+  * EMMI Door to Teleport to Burenia (Cyan)/Dock to Purple EMMI Introduction
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to collision_camera_040 (F)
+      All of the following:
+          Morph Ball and After Ferenia - Central Unit
+          Gravity Suit or Speed Booster
+  > Center Platform
+      Trivial
 
 > Door to collision_camera_021 (F); Heals? False
-  * Power Beam Door to collision_camera_021 (F)/Door to collision_camera_003 (F) (doorpowerpower_016)
+  * Power Beam Door to collision_camera_021 (F)/Door to Purple EMMI Introduction (doorpowerpower_016)
   * Extra - actor_name: doorpowerpower_016
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Center Platform
+      Trivial
 
 > Door from collision_camera_021 (F); Heals? False
-  * Access Closed to collision_camera_021 (F)/Door to collision_camera_003 (F) (doorclosedcharge_004)
+  * Access Closed to collision_camera_021 (F)/Door to Purple EMMI Introduction (doorclosedcharge_004)
   * Extra - actor_name: doorclosedcharge_004
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to collision_camera_021 (F)
+      Trivial
+  > Center Platform
+      Trivial
+
+> Dock to collision_camera_040 (F); Heals? False
+  * Morph Ball Tunnel to collision_camera_040 (F)/Dock to Purple EMMI Introduction
+  > Dock to Teleport to Burenia (Cyan)
+      All of the following:
+          Morph Ball and After Ferenia - Central Unit
+          Space Jump or Infinite Bomb Jump (Beginner)
+
+> Center Platform; Heals? False
+  > Dock to Teleport to Burenia (Cyan)
+      Grapple Beam or Gravity Suit or Use Spin Boost
+  > Door from collision_camera_021 (F)
+      Grapple Beam or Gravity Suit or Use Spin Boost
 
 ----------------
 collision_camera_004 (F)
@@ -129,6 +198,8 @@ Extra - asset_id: collision_camera_004
   * EMMI Door to collision_camera_040 (F)/Dock to collision_camera_004 (F)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to collision_camera_005 (F)
+      Trivial
 
 > Door to collision_camera_005 (F); Heals? False
   * Power Beam Door to collision_camera_005 (F)/Door to collision_camera_004 (F)
@@ -138,6 +209,17 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to collision_camera_040 (F)
+      Trivial
+  > Dock to collision_camera_006 (F)
+      Any of the following:
+          Grapple Beam or Space Jump or Speed Booster or Infinite Bomb Jump (Beginner)
+          Spider Magnet and Use Spin Boost
+
+> Dock to collision_camera_006 (F); Heals? False
+  * Morph Ball Tunnel to collision_camera_006 (F)/Dock to collision_camera_004 (F)
+  > Door to collision_camera_005 (F)
+      Trivial
 
 ----------------
 collision_camera_005 (F)
@@ -157,44 +239,62 @@ Extra - asset_id: collision_camera_005
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoRobotSanc
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to collision_camera_004 (F)
+      Trivial
 
 > Start Point 2; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoRobotSoldier
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to collision_camera_004 (F)
+      Trivial
 
 ----------------
 collision_camera_006 (F)
 Extra - total_boundings: {'x1': -13500.0, 'x2': -10400.0, 'y1': -5802.5, 'y2': -3402.5}
 Extra - polygon: [[-10400.0, -3402.5], [-13500.0, -3402.5], [-13500.0, -5802.5], [-10400.0, -5802.5]]
 Extra - asset_id: collision_camera_006
-> Door to collision_camera_010 (F); Heals? False
-  * Power Beam Door to collision_camera_010 (F)/Door to collision_camera_006 (F)
+> Door to Cold Room (Small); Heals? False
+  * Power Beam Door to Cold Room (Small)/Door to collision_camera_006 (F)
   * Extra - actor_name: doorpowerpower_003
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Transport to Dairon
+      Can Slide
+  > Tile Group (POWERBEAM)
+      Morph Ball
+  > Dock to collision_camera_004 (F)
+      Trivial
 
-> Door to West Transport to Dairon; Heals? False
-  * Power Beam Door to West Transport to Dairon/Door to collision_camera_006 (F)
+> Door to Transport to Dairon; Heals? False
+  * Power Beam Door to Transport to Dairon/Door to collision_camera_006 (F)
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Cold Room (Small)
+      All of the following:
+          Morph Ball
+          Simple IBJ or Use Spin Boost
 
 > Pickup (item_missiletankplus_001); Heals? False
   * Pickup 128; Major Location? False
   * Extra - actor_name: item_missiletankplus_001
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
+  > Tile Group (SPEEDBOOST)
+      Trivial
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_048
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Door to Transport to Dairon
+      Trivial
 
 > Tile Group (SPEEDBOOST); Heals? False
   * Configurable Node
@@ -202,6 +302,12 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Pickup (item_missiletankplus_001)
+      Trivial
+  > Tile Group (WEIGHT)
+      Trivial
+  > Tile Group (POWERBEAM)
+      Trivial
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -209,39 +315,62 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door to Cold Room (Small)
+      Morph Ball
+  > Tile Group (WEIGHT)
+      Trivial
+  > Tile Group (SPEEDBOOST)
+      Trivial
+
+> Dock to collision_camera_004 (F); Heals? False
+  * Morph Ball Tunnel to collision_camera_004 (F)/Dock to collision_camera_006 (F)
+  > Door to Cold Room (Small)
+      Speed Booster
 
 ----------------
-Teleport to Burenia
+Teleport to Burenia (Cyan)
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -13500.0, 'x2': -10400.0, 'y1': -3300.0, 'y2': 400.0}
 Extra - polygon: [[-10400.0, 400.0], [-13500.0, 400.0], [-13500.0, -3300.0], [-10400.0, -3300.0]]
 Extra - asset_id: collision_camera_007
-> Dock to collision_camera_010 (F); Heals? False
-  * Not Determined to collision_camera_010 (F)/Dock to Teleport to Burenia
+> Door to Cold Room (Small); Heals? False
+  * Plasma Beam Door to Cold Room (Small)/Door to Teleport to Burenia (Cyan)
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_003
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Door to Twin Robot Arena
+      Trivial
+  > Dock to Purple EMMI Introduction
+      Trivial
 
-> Door to collision_camera_017 (F); Heals? False
-  * Power Beam Door to collision_camera_017 (F)/Door to Teleport to Burenia
+> Door to Twin Robot Arena; Heals? False
+  * Power Beam Door to Twin Robot Arena/Door to Teleport to Burenia (Cyan)
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Cold Room (Small)
+      Trivial
+  > Dock to collision_camera_011 (F) (Upper)
+      Morph Ball
 
-> Dock to collision_camera_003 (F); Heals? False
-  * EMMI Door to collision_camera_003 (F)/Dock to Teleport to Burenia
+> Dock to Purple EMMI Introduction; Heals? False
+  * EMMI Door to Purple EMMI Introduction/Dock to Teleport to Burenia (Cyan)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to Cold Room (Small)
+      Trivial
 
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_EmmySanc
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to Purple EMMI Introduction
+      Trivial
 
 > Teleporter to Burenia - Teleport to Ferenia; Heals? False; Spawn Point
   * Teleporter to Burenia - Teleport to Ferenia
@@ -251,24 +380,40 @@ Extra - asset_id: collision_camera_007
   * Extra - target_spawn_point: LE_Platform_Teleport_Secret
   * Extra - start_point_actor_name: teleporter_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  > Dock to collision_camera_011 (F) (Lower)
+      Trivial
 
 > Start Point 2; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_TwoChozoRobots_BottomLeft
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Twin Robot Arena
+      Trivial
+
+> Dock to collision_camera_011 (F) (Lower); Heals? False
+  * Morph Ball Tunnel to collision_camera_011 (F)/Dock to Teleport to Burenia (Cyan) (Lower)
+  > Teleporter to Burenia - Teleport to Ferenia
+      Trivial
+
+> Dock to collision_camera_011 (F) (Upper); Heals? False
+  * Morph Ball Tunnel to collision_camera_011 (F)/Dock to Teleport to Burenia (Cyan) (Upper)
+  > Door to Twin Robot Arena
+      Morph Ball
 
 ----------------
-West Transport to Dairon
+Transport to Dairon
 Extra - total_boundings: {'x1': -16500.0, 'x2': -13400.0, 'y1': -5402.5, 'y2': -4258.0}
 Extra - polygon: [[-13400.0, -4258.0], [-16500.0, -4258.0], [-16500.0, -5402.5], [-13400.0, -5402.5]]
 Extra - asset_id: collision_camera_008
 > Door to collision_camera_006 (F); Heals? False
-  * Power Beam Door to collision_camera_006 (F)/Door to West Transport to Dairon
+  * Power Beam Door to collision_camera_006 (F)/Door to Transport to Dairon
   * Extra - actor_name: doorpowerpower_004
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Elevator to Dairon - West Transport to Ferenia
+      Trivial
 
 > Elevator to Dairon - West Transport to Ferenia; Heals? False; Spawn Point
   * Teleporter to Dairon - West Transport to Ferenia
@@ -278,35 +423,52 @@ Extra - asset_id: collision_camera_008
   * Extra - target_spawn_point: elevator_sanctuary_001_platform
   * Extra - start_point_actor_name: elevator_baselab_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  > Door to collision_camera_006 (F)
+      Trivial
+  > Dock to Speedboost Slopes Maze
+      After Ferenia - db_reg_b2_003
+
+> Dock to Speedboost Slopes Maze; Heals? False
+  * Slide Tunnel to Speedboost Slopes Maze/Dock to Transport to Dairon
+  > Elevator to Dairon - West Transport to Ferenia
+      After Ferenia - db_reg_b2_003
 
 ----------------
-collision_camera_009 (F)
+Speedboost Slopes Maze
 Extra - total_boundings: {'x1': -19400.0, 'x2': -16400.0, 'y1': -5400.0, 'y2': 1600.0}
 Extra - polygon: [[-16400.0, 1600.0], [-19400.0, 1600.0], [-19400.0, -5400.0], [-16400.0, -5400.0]]
 Extra - asset_id: collision_camera_009
-> Dock to collision_camera_010 (F); Heals? False
-  * Not Determined to collision_camera_010 (F)/Dock to collision_camera_009 (F)
+> Door to Cold Room (Small); Heals? False
+  * Wave Beam Door to Cold Room (Small)/Door to Speedboost Slopes Maze
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_004
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_005
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  > Tile Group (POWERBEAM) 3
+      Simple IBJ or Use Spin Boost
 
 > Pickup (item_energyfragment_000); Heals? False
   * Pickup 131; Major Location? True
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
+  > Tile Group (SPEEDBOOST) 1
+      Morph Ball
 
-> Event - Breakable (db_reg_b2_003); Heals? False
+> Event - Blob to Elevator (db_reg_b2_003); Heals? False
   * Event Ferenia - db_reg_b2_003
   * Extra - actor_name: db_reg_b2_003
   * Extra - actor_def: actordef:actors/props/db_reg_b2_003/charclasses/db_reg_b2_003.bmsad
+  > Bottom
+      Trivial
 
-> Event - Breakable (grapplepulloff1x2_003); Heals? False
+> Event - Grapple Block (grapplepulloff1x2_003); Heals? False
   * Event Ferenia - grapplepulloff1x2_003
   * Extra - actor_name: grapplepulloff1x2_003
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Grapple Block Ledge
+      Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -314,6 +476,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Dock to collision_camera_011 (F)
+      Trivial
+  > Dock to Space Jump Room
+      Morph Ball
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -321,6 +487,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Dock to collision_camera_011 (F)
+      Morph Ball
+  > Grapple Block Ledge
+      Morph Ball
 
 > Tile Group (POWERBEAM) 3; Heals? False
   * Configurable Node
@@ -328,6 +498,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door to Cold Room (Small)
+      Trivial
+  > Tile Group (POWERBEAM) 4
+      Trivial
 
 > Tile Group (SPEEDBOOST) 1; Heals? False
   * Configurable Node
@@ -335,6 +509,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Pickup (item_energyfragment_000)
+      Morph Ball
+  > Tile Group (SPEEDBOOST) 2
+      Trivial
 
 > Tile Group (SPEEDBOOST) 2; Heals? False
   * Configurable Node
@@ -342,6 +520,10 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Tile Group (SPEEDBOOST) 1
+      Space Jump or Speed Booster or Infinite Bomb Jump (Beginner)
+  > Ledge above Slope
+      Trivial
 
 > Tile Group (POWERBEAM) 4; Heals? False
   * Configurable Node
@@ -349,38 +531,99 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (POWERBEAM) 3
+      Trivial
+  > Ledge above Slope
+      Can Slide
+
+> Dock to collision_camera_011 (F); Heals? False
+  * Morph Ball Tunnel to collision_camera_011 (F)/Dock to Speedboost Slopes Maze
+  > Tile Group (POWERBEAM) 1
+      Morph Ball
+  > Tile Group (POWERBEAM) 2
+      Morph Ball
+
+> Dock to Space Jump Room; Heals? False
+  * Slide Tunnel to Space Jump Room/Dock to Speedboost Slopes Maze
+  > Tile Group (POWERBEAM) 1
+      Morph Ball
+
+> Ledge above Slope; Heals? False
+  > Tile Group (SPEEDBOOST) 2
+      Flash Shift or Speed Booster or Use Spin Boost
+  > Tile Group (POWERBEAM) 4
+      Morph Ball
+  > Bottom
+      Can Slide
+  > Grapple Block Ledge
+      Morph Ball and After Ferenia - grapplepulloff1x2_003
+
+> Dock to Transport to Dairon; Heals? False
+  * Slide Tunnel to Transport to Dairon/Dock to Speedboost Slopes Maze
+  > Bottom
+      After Ferenia - db_reg_b2_003
+
+> Bottom; Heals? False
+  > Event - Blob to Elevator (db_reg_b2_003)
+      Shoot Beam
+  > Ledge above Slope
+      All of the following:
+          Morph Ball
+          Speed Booster or Use Spin Boost
+  > Dock to Transport to Dairon
+      After Ferenia - db_reg_b2_003
+
+> Grapple Block Ledge; Heals? False
+  > Event - Grapple Block (grapplepulloff1x2_003)
+      Grapple Beam
+  > Tile Group (POWERBEAM) 2
+      Trivial
+  > Ledge above Slope
+      Morph Ball and After Ferenia - grapplepulloff1x2_003
 
 ----------------
-collision_camera_010 (F)
+Cold Room (Small)
 Extra - total_boundings: {'x1': -16500.0, 'x2': -13400.0, 'y1': -4302.5, 'y2': -1300.0}
 Extra - polygon: [[-13400.0, -1300.0], [-16500.0, -1300.0], [-16500.0, -4302.5], [-13400.0, -4302.5]]
 Extra - asset_id: collision_camera_010
 > Door to collision_camera_006 (F); Heals? False
-  * Power Beam Door to collision_camera_006 (F)/Door to collision_camera_010 (F)
+  * Power Beam Door to collision_camera_006 (F)/Door to Cold Room (Small)
   * Extra - actor_name: doorpowerpower_003
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tile Group (SCREWATTACK)
+      Gravity Suit or Cold Damage ≥ 100
 
-> Dock to Teleport to Burenia; Heals? False
-  * Not Determined to Teleport to Burenia/Dock to collision_camera_010 (F)
+> Door to Teleport to Burenia (Cyan); Heals? False
+  * Plasma Beam Door to Teleport to Burenia (Cyan)/Door to Cold Room (Small)
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_003
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Door to Speedboost Slopes Maze
+      Gravity Suit or Cold Damage ≥ 150
+  > Tile Group (SCREWATTACK)
+      Gravity Suit or Cold Damage ≥ 200
 
-> Dock to collision_camera_009 (F); Heals? False
-  * Not Determined to collision_camera_009 (F)/Dock to collision_camera_010 (F)
+> Door to Speedboost Slopes Maze; Heals? False
+  * Wave Beam Door to Speedboost Slopes Maze/Door to Cold Room (Small)
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_004
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_005
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  > Door to Teleport to Burenia (Cyan)
+      Gravity Suit or Cold Damage ≥ 150
+  > Tile Group (SCREWATTACK)
+      All of the following:
+          # Faster path for cold damage
+          Cold Damage ≥ 150 and Can Slide
 
 > Tile Group (SCREWATTACK); Heals? False
   * Configurable Node
@@ -388,6 +631,10 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
+  > Door to collision_camera_006 (F)
+      Gravity Suit or Cold Damage ≥ 100
+  > Door to Teleport to Burenia (Cyan)
+      Gravity Suit or Cold Damage ≥ 200
 
 ----------------
 collision_camera_011 (F)
@@ -398,17 +645,25 @@ Extra - asset_id: collision_camera_011
   * Pickup 120; Major Location? False
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (WEIGHT) 1
+      Morph Ball
+  > Tile Group (BOMB)
+      Morph Ball
 
 > Pickup (item_missiletank_005); Heals? False
   * Pickup 132; Major Location? False
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (POWERBEAM) 1
+      Morph Ball
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_039
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Dock to Speedboost Slopes Maze
+      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -416,12 +671,18 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Pickup (item_missiletank_001)
+      Morph Ball
+  > Tile Group (WEIGHT) 2
+      Trivial
 
 > Tile Group (WEIGHT) 2; Heals? False
   * Extra - actor_name: breakabletilegroup_041
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Dock to Speedboost Slopes Maze
+      Morph Ball
 
 > Tile Group (BOMB POWERBOMB); Heals? False
   * Configurable Node
@@ -429,6 +690,12 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB', 'POWERBOMB')
+  > Tile Group (POWERBEAM) 1
+      Morph Ball
+  > Tile Group (POWERBEAM) 2
+      Morph Ball
+  > Dock to Teleport to Burenia (Cyan) (Upper)
+      Morph Ball
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -436,6 +703,10 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Pickup (item_missiletank_005)
+      Morph Ball
+  > Tile Group (BOMB POWERBOMB)
+      Morph Ball
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -443,93 +714,152 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (BOMB POWERBOMB)
+      Morph Ball
+  > Dock to Teleport to Burenia (Cyan) (Lower)
+      Trivial
+
+> Dock to Speedboost Slopes Maze; Heals? False
+  * Morph Ball Tunnel to Speedboost Slopes Maze/Dock to collision_camera_011 (F)
+  > Tile Group (BOMB)
+      Use Spin Boost
+  > Tile Group (WEIGHT) 2
+      Trivial
+
+> Dock to Teleport to Burenia (Cyan) (Lower); Heals? False
+  * Morph Ball Tunnel to Teleport to Burenia (Cyan)/Dock to collision_camera_011 (F) (Lower)
+  > Tile Group (POWERBEAM) 2
+      Trivial
+
+> Dock to Teleport to Burenia (Cyan) (Upper); Heals? False
+  * Morph Ball Tunnel to Teleport to Burenia (Cyan)/Dock to collision_camera_011 (F) (Upper)
+  > Tile Group (BOMB POWERBOMB)
+      Morph Ball
 
 ----------------
-collision_camera_012 (F)
+Space Jump Room
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -16500.0, 'x2': -12400.0, 'y1': 600.0, 'y2': 6100.0}
 Extra - polygon: [[-12400.0, 6100.0], [-16500.0, 6100.0], [-16500.0, 800.0], [-14600.0, 800.0], [-14600.0, 600.0], [-12400.0, 600.0]]
 Extra - asset_id: collision_camera_012
-> Door to collision_camera_016 (F); Heals? False
-  * Power Beam Door to collision_camera_016 (F)/Door to collision_camera_012 (F)
+> Door to Navigation Room; Heals? False
+  * Power Beam Door to Navigation Room/Door to Space Jump Room
   * Extra - actor_name: doorpowerpower_011
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to collision_camera_015 (F) (Bottom)
+      Space Jump or Infinite Bomb Jump (Beginner)
 
-> Door to collision_camera_015 (F) (doorpowerpower_012); Heals? False
-  * Power Beam Door to collision_camera_015 (F)/Door to collision_camera_012 (F) (doorpowerpower_012)
+> Door to collision_camera_015 (F) (Bottom); Heals? False
+  * Power Beam Door to collision_camera_015 (F)/Door to Space Jump Room (Bottom)
   * Extra - actor_name: doorpowerpower_012
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Navigation Room
+      Trivial
+  > Tile Group (BOMB) 2
+      Lay Cross Comb or Lay Power Bomb
 
-> Dock to collision_camera_015 (F); Heals? False
-  * Not Determined to collision_camera_015 (F)/Dock to collision_camera_012 (F)
+> Door from collision_camera_015 (F); Heals? False
+  * Access Closed to collision_camera_015 (F)/Door to Space Jump Room (Mid)
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  > Pickup (itemsphere_spacejump)
+      Trivial
+  > Underwater Bottom
+      Can Slide
 
-> Door to collision_camera_015 (F) (doorpowerpower_013); Heals? False
-  * Power Beam Door to collision_camera_015 (F)/Door to collision_camera_012 (F) (doorpowerpower_013)
+> Door to collision_camera_015 (F) (Top); Heals? False
+  * Power Beam Door to collision_camera_015 (F)/Door to Space Jump Room (Top)
   * Extra - actor_name: doorpowerpower_013
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Transport to Ghavoran
+      Trivial
+  > Tile Group (POWERBEAM) 2
+      Trivial
 
 > Pickup (itemsphere_spacejump); Heals? False
   * Pickup 119; Major Location? True
   * Extra - actor_name: itemsphere_spacejump
   * Extra - actor_def: actordef:actors/items/itemsphere_spacejump/charclasses/itemsphere_spacejump.bmsad
+  > Door from collision_camera_015 (F)
+      Trivial
 
 > Pickup (item_missiletank_002); Heals? False
   * Pickup 129; Major Location? False
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (WEIGHT) 1
+      Morph Ball
+  > Tile Group (BOMB) 2
+      Morph Ball
 
 > Pickup (item_missiletankplus_000); Heals? False
   * Pickup 130; Major Location? False
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
+  > Tile Group (SPEEDBOOST)
+      Trivial
 
-> Event - Breakable (db_reg_b2_001); Heals? False
+> Event - Blob from below (db_reg_b2_001); Heals? False
   * Event Ferenia - db_reg_b2_001
   * Extra - actor_name: db_reg_b2_001
   * Extra - actor_def: actordef:actors/props/db_reg_b2_001/charclasses/db_reg_b2_001.bmsad
+  > Underwater Ledge Left
+      Trivial
 
 > Dock to Transport to Ghavoran; Heals? False
-  * Not Determined to Transport to Ghavoran/Dock to collision_camera_012 (F)
+  * Open Passage to Transport to Ghavoran/Dock to Space Jump Room
   * Extra - actor_name: ev_gatesealed_sanc_000
   * Extra - actor_def: actordef:actors/props/ev_gatesealed_sanc/charclasses/ev_gatesealed_sanc.bmsad
+  > Door to collision_camera_015 (F) (Top)
+      Trivial
+  > Underwater Ledge Left
+      After Ferenia - db_reg_b2_001
+  > Event - Blob from above (db_reg_b2_001)
+      Wave Beam
 
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_SpaceJump
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door from collision_camera_015 (F)
+      Trivial
 
 > Start Point 2; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_8
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Navigation Room
+      Trivial
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_075
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Tile Group (BOMB) 4
+      Morph Ball
 
 > Tile Group (WEIGHT) 2; Heals? False
   * Extra - actor_name: breakabletilegroup_008
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Door to collision_camera_015 (F) (Top)
+      Trivial
 
 > Tile Group (SPEEDBOOST); Heals? False
   * Configurable Node
@@ -537,6 +867,10 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Pickup (item_missiletankplus_000)
+      Trivial
+  > Tile Group (BOMB) 1
+      Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -544,6 +878,14 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (WEIGHT) 2
+      Can Slide
+  > Tile Group (BOMB) 1
+      Morph Ball
+  > Tile Group (POWERBEAM) 2
+      All of the following:
+          Morph Ball
+          Cross Bomb or Speed Booster
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -551,6 +893,12 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (WEIGHT) 2
+      Can Slide
+  > Tile Group (SPEEDBOOST)
+      Space Jump or Speed Booster or Simple IBJ
+  > Tile Group (POWERBEAM) 1
+      Morph Ball
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -558,6 +906,12 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (WEIGHT) 2
+      Can Slide
+  > Tile Group (POWERBEAM) 1
+      All of the following:
+          Lay Cross Comb
+          Speed Booster or Can Slide
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
@@ -565,6 +919,10 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door to Navigation Room
+      Trivial
+  > Pickup (item_missiletank_002)
+      Space Jump or Speed Booster or Infinite Bomb Jump (Intermediate)
 
 > Tile Group (BOMB) 3; Heals? False
   * Configurable Node
@@ -572,6 +930,10 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Dock to collision_camera_013 (F) (Upper)
+      Morph Ball
+  > Underwater Ledge Left
+      Trivial
 
 > Tile Group (POWERBEAM) 3; Heals? False
   * Configurable Node
@@ -579,6 +941,10 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Dock to collision_camera_013 (F) (Lower)
+      Trivial
+  > Dock to Speedboost Slopes Maze
+      Trivial
 
 > Tile Group (BOMB) 4; Heals? False
   * Configurable Node
@@ -586,6 +952,82 @@ Extra - asset_id: collision_camera_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door from collision_camera_015 (F)
+      Morph Ball
+  > Underwater Bottom
+      Can Slide
+
+> Dock to collision_camera_013 (F) (Upper); Heals? False
+  * Morph Ball Tunnel to collision_camera_013 (F)/Dock to Space Jump Room (Upper)
+  > Tile Group (BOMB) 3
+      Morph Ball
+
+> Dock to collision_camera_013 (F) (Lower); Heals? False
+  * Morph Ball Tunnel to collision_camera_013 (F)/Dock to Space Jump Room (Lower)
+  > Tile Group (POWERBEAM) 3
+      Trivial
+
+> Dock to Speedboost Slopes Maze; Heals? False
+  * Slide Tunnel to Speedboost Slopes Maze/Dock to Space Jump Room
+  > Tile Group (POWERBEAM) 3
+      Trivial
+
+> Underwater Bottom; Heals? False
+  > Door from collision_camera_015 (F)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Grapple Beam
+              All of the following:
+                  Gravity Suit
+                  Space Jump or Infinite Bomb Jump (Beginner)
+  > Underwater Ledge Left
+      All of the following:
+          Gravity Suit
+          Simple IBJ or Use Spin Boost
+  > Underwater Ledge Right
+      Any of the following:
+          Grapple Beam or Spider Magnet
+          All of the following:
+              Gravity Suit
+              Simple IBJ or Use Spin Boost
+
+> Underwater Ledge Left; Heals? False
+  > Event - Blob from below (db_reg_b2_001)
+      Shoot Beam
+  > Dock to Transport to Ghavoran
+      All of the following:
+          After Ferenia - db_reg_b2_001
+          Any of the following:
+              All of the following:
+                  Gravity Suit
+                  Space Jump or Infinite Bomb Jump (Beginner)
+              Spider Magnet and Use Spin Boost
+  > Tile Group (BOMB) 3
+      Any of the following:
+          All of the following:
+              Grapple Beam or Spider Magnet
+              Flash Shift or Use Spin Boost
+          All of the following:
+              Gravity Suit
+              Infinite Bomb Jump (Beginner) or Shoot Ice Missile or Use Spin Boost
+  > Underwater Bottom
+      Trivial
+
+> Event - Blob from above (db_reg_b2_001); Heals? False
+  * Event Ferenia - db_reg_b2_001
+  > Dock to Transport to Ghavoran
+      Trivial
+
+> Underwater Ledge Right; Heals? False
+  > Underwater Bottom
+      Trivial
+  > Underwater Ledge Left
+      Any of the following:
+          Space Jump
+          All of the following:
+              Gravity Suit
+              Flash Shift or Simple IBJ or Use Spin Boost
 
 ----------------
 collision_camera_013 (F)
@@ -596,23 +1038,39 @@ Extra - asset_id: collision_camera_013
   * Pickup 121; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (WEIGHT) 2
+      Morph Ball and After Ferenia - db_reg_b2_004
 
-> Event - Breakable (db_reg_b2_004); Heals? False
+> Event - Blob from below (db_reg_b2_004); Heals? False
   * Event Ferenia - db_reg_b2_004
   * Extra - actor_name: db_reg_b2_004
   * Extra - actor_def: actordef:actors/props/db_reg_b2_004/charclasses/db_reg_b2_004.bmsad
+  > Tile Group (WEIGHT) 2
+      Trivial
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Pickup (item_missiletank_000)
+      All of the following:
+          Morph Ball and After Ferenia - db_reg_b2_004
+          Any of the following:
+              Space Jump
+              Flash Shift and Use Spin Boost
+  > Event - Blob from below (db_reg_b2_004)
+      Shoot Diffusion or Wave
+  > Tile Group (WEIGHT) 2
+      Trivial
 
 > Tile Group (WEIGHT) 2; Heals? False
   * Extra - actor_name: breakabletilegroup_035
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Bottom
+      Trivial
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -620,16 +1078,47 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Dock to Space Jump Room (Lower)
+      Morph Ball
+  > Bottom
+      Morph Ball
+
+> Dock to Space Jump Room (Upper); Heals? False
+  * Morph Ball Tunnel to Space Jump Room/Dock to collision_camera_013 (F) (Upper)
+  > Tile Group (WEIGHT) 1
+      Trivial
+  > Bottom
+      Trivial
+  > Event - Blob from right (db_reg_b2_004)
+      Wave Beam
+
+> Dock to Space Jump Room (Lower); Heals? False
+  * Morph Ball Tunnel to Space Jump Room/Dock to collision_camera_013 (F) (Lower)
+  > Tile Group (POWERBEAM)
+      Morph Ball
+
+> Bottom; Heals? False
+  > Tile Group (POWERBEAM)
+      Morph Ball
+  > Dock to Space Jump Room (Upper)
+      Simple IBJ or Use Spin Boost
+
+> Event - Blob from right (db_reg_b2_004); Heals? False
+  * Event Ferenia - db_reg_b2_004
+  > Dock to Space Jump Room (Upper)
+      Trivial
 
 ----------------
 Transport to Ghavoran
 Extra - total_boundings: {'x1': -28200.0, 'x2': -16400.0, 'y1': 3300.0, 'y2': 6000.0}
 Extra - polygon: [[-16400.0, 6000.0], [-28200.0, 6000.0], [-28200.0, 3300.0], [-16400.0, 3300.0]]
 Extra - asset_id: collision_camera_014
-> Dock to collision_camera_012 (F); Heals? False
-  * Not Determined to collision_camera_012 (F)/Dock to Transport to Ghavoran
+> Dock to Space Jump Room; Heals? False
+  * Open Passage to Space Jump Room/Dock to Transport to Ghavoran
   * Extra - actor_name: ev_gatesealed_sanc_000
   * Extra - actor_def: actordef:actors/props/ev_gatesealed_sanc/charclasses/ev_gatesealed_sanc.bmsad
+  > Tram to Ghavoran - Transport to Ferenia
+      Trivial
 
 > Tram to Ghavoran - Transport to Ferenia; Heals? False; Spawn Point
   * Teleporter to Ghavoran - Transport to Ferenia
@@ -639,47 +1128,59 @@ Extra - asset_id: collision_camera_014
   * Extra - target_spawn_point: wagontrain_sanctuary_000_platform
   * Extra - start_point_actor_name: wagontrain_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
+  > Dock to Space Jump Room
+      Trivial
 
 ----------------
 collision_camera_015 (F)
 Extra - total_boundings: {'x1': -12500.0, 'x2': -10400.0, 'y1': 1800.0, 'y2': 5400.0}
 Extra - polygon: [[-10400.0, 5400.0], [-12500.0, 5400.0], [-12500.0, 1800.0], [-10400.0, 1800.0]]
 Extra - asset_id: collision_camera_015
-> Door from collision_camera_017 (F); Heals? False
-  * Access Closed to collision_camera_017 (F)/Door to collision_camera_015 (F)
+> Door from Twin Robot Arena; Heals? False
+  * Access Closed to Twin Robot Arena/Door to collision_camera_015 (F)
   * Extra - actor_name: doorclosedcharge_000
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tile Group (POWERBEAM) 1
+      Trivial
+  > Tile Group (POWERBEAM) 2
+      Morph Ball
 
-> Door to collision_camera_012 (F) (doorpowerpower_012); Heals? False
-  * Power Beam Door to collision_camera_012 (F)/Door to collision_camera_015 (F) (doorpowerpower_012)
+> Door to Space Jump Room (Bottom); Heals? False
+  * Power Beam Door to Space Jump Room/Door to collision_camera_015 (F) (Bottom)
   * Extra - actor_name: doorpowerpower_012
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tile Group (POWERBEAM) 2
+      Simple IBJ or Use Spin Boost
 
-> Dock to collision_camera_012 (F); Heals? False
-  * Not Determined to collision_camera_012 (F)/Dock to collision_camera_015 (F)
+> Door to Space Jump Room (Mid); Heals? False
+  * Missile Door to Space Jump Room/Door from collision_camera_015 (F)
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
+  > Aiming Platform
+      After Ferenia - Storm Missile Gate for SJ
 
-> Door to collision_camera_012 (F) (doorpowerpower_013); Heals? False
-  * Power Beam Door to collision_camera_012 (F)/Door to collision_camera_015 (F) (doorpowerpower_013)
+> Door to Space Jump Room (Top); Heals? False
+  * Power Beam Door to Space Jump Room/Door to collision_camera_015 (F) (Top)
   * Extra - actor_name: doorpowerpower_013
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Aiming Platform
+      Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -687,6 +1188,10 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door from Twin Robot Arena
+      Trivial
+  > Aiming Platform
+      Trivial
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -694,103 +1199,158 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door from Twin Robot Arena
+      Morph Ball
+  > Door to Space Jump Room (Bottom)
+      Trivial
+
+> Event - Storm Missile Gate; Heals? False
+  * Event Ferenia - Storm Missile Gate for SJ
+  > Aiming Platform
+      Trivial
+
+> Aiming Platform; Heals? False
+  > Door to Space Jump Room (Mid)
+      After Ferenia - Storm Missile Gate for SJ
+  > Door to Space Jump Room (Top)
+      Simple IBJ or Use Spin Boost
+  > Tile Group (POWERBEAM) 1
+      Trivial
+  > Event - Storm Missile Gate
+      Activate Storm Missile Locks
 
 ----------------
-collision_camera_016 (F)
+Navigation Room
 Extra - total_boundings: {'x1': -12500.0, 'x2': -10400.0, 'y1': 600.0, 'y2': 1742.0}
 Extra - polygon: [[-10400.0, 1742.0], [-12500.0, 1742.0], [-12500.0, 600.0], [-10400.0, 600.0]]
 Extra - asset_id: collision_camera_016
-> Door to collision_camera_017 (F); Heals? False
-  * Power Beam Door to collision_camera_017 (F)/Door to collision_camera_016 (F)
+> Door to Twin Robot Arena; Heals? False
+  * Power Beam Door to Twin Robot Arena/Door to Navigation Room
   * Extra - actor_name: doorpowerpower_010
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Space Jump Room
+      Trivial
 
-> Door to collision_camera_012 (F); Heals? False
-  * Power Beam Door to collision_camera_012 (F)/Door to collision_camera_016 (F)
+> Door to Space Jump Room; Heals? False
+  * Power Beam Door to Space Jump Room/Door to Navigation Room
   * Extra - actor_name: doorpowerpower_011
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Twin Robot Arena
+      Trivial
+  > Navigation Room
+      Trivial
 
 > Navigation Room; Heals? False; Spawn Point
   * Extra - actor_name: accesspoint_000
   * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
   * Extra - start_point_actor_name: accesspoint_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
+  > Door to Space Jump Room
+      Trivial
 
 ----------------
-collision_camera_017 (F)
+Twin Robot Arena
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -10500.0, 'x2': -4400.0, 'y1': -500.0, 'y2': 4400.0}
 Extra - polygon: [[-4400.0, 4400.0], [-10500.0, 4400.0], [-10500.0, -500.0], [-4400.0, -500.0]]
 Extra - asset_id: collision_camera_017
-> Door to Teleport to Burenia; Heals? False
-  * Power Beam Door to Teleport to Burenia/Door to collision_camera_017 (F)
+> Door to Teleport to Burenia (Cyan); Heals? False
+  * Power Beam Door to Teleport to Burenia (Cyan)/Door to Twin Robot Arena
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 1
+      Trivial
 
 > Door to collision_camera_019 (F); Heals? False
-  * Power Beam Door to collision_camera_019 (F)/Door to collision_camera_017 (F)
+  * Power Beam Door to collision_camera_019 (F)/Door to Twin Robot Arena
   * Extra - actor_name: doorpowerpower_008
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 1
+      Trivial
 
-> Door to collision_camera_018 (F); Heals? False
-  * Power Beam Door to collision_camera_018 (F)/Door to collision_camera_017 (F)
+> Door to Cold Room (Life Recharge); Heals? False
+  * Power Beam Door to Cold Room (Life Recharge)/Door to Twin Robot Arena
   * Extra - actor_name: doorpowerpower_009
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to collision_camera_015 (F)
+      Trivial
 
-> Door to collision_camera_016 (F); Heals? False
-  * Power Beam Door to collision_camera_016 (F)/Door to collision_camera_017 (F)
+> Door to Navigation Room; Heals? False
+  * Power Beam Door to Navigation Room/Door to Twin Robot Arena
   * Extra - actor_name: doorpowerpower_010
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to collision_camera_015 (F)
+      Trivial
+  > Start Point 1
+      Trivial
 
 > Door to collision_camera_015 (F); Heals? False
-  * Charge Beam Door to collision_camera_015 (F)/Door from collision_camera_017 (F)
+  * Charge Beam Door to collision_camera_015 (F)/Door from Twin Robot Arena
   * Extra - actor_name: doorclosedcharge_000
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Cold Room (Life Recharge)
+      Trivial
+  > Door to Navigation Room
+      Trivial
+  > Tile Group (POWERBOMB)
+      Trivial
 
 > Pickup (item_powerbombtank_001); Heals? False
   * Pickup 126; Major Location? False
   * Extra - actor_name: item_powerbombtank_001
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  > Tile Group (POWERBOMB)
+      Morph Ball
 
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_2ChozoRobots
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Teleport to Burenia (Cyan)
+      Trivial
+  > Door to collision_camera_019 (F)
+      Trivial
+  > Door to Navigation Room
+      Trivial
 
 > Start Point 2; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_TwoChozoRobots_TopLeft
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Navigation Room
+      Trivial
 
 > Start Point 3; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_TwoChozoRobots_TopRight
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Cold Room (Life Recharge)
+      Trivial
 
 > Tile Group (POWERBOMB); Heals? False
   * Configurable Node
@@ -798,67 +1358,104 @@ Extra - asset_id: collision_camera_017
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
+  > Door to collision_camera_015 (F)
+      Trivial
+  > Pickup (item_powerbombtank_001)
+      Morph Ball
 
 ----------------
-collision_camera_018 (F)
+Cold Room (Life Recharge)
 Extra - total_boundings: {'x1': -4500.0, 'x2': -1400.0, 'y1': 2900.0, 'y2': 6900.0}
 Extra - polygon: [[-1400.0, 6900.0], [-4500.0, 6900.0], [-4500.0, 2900.0], [-1400.0, 2900.0]]
 Extra - asset_id: collision_camera_018
-> Door to collision_camera_017 (F); Heals? False
-  * Power Beam Door to collision_camera_017 (F)/Door to collision_camera_018 (F)
+> Door to Twin Robot Arena; Heals? False
+  * Power Beam Door to Twin Robot Arena/Door to Cold Room (Life Recharge)
   * Extra - actor_name: doorpowerpower_009
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Center Ledge
+      All of the following:
+          Gravity Suit or Cold Damage ≥ 100
+          Simple IBJ or Use Spin Boost
 
 > Door to Transport to Hanubia; Heals? False
-  * Power Beam Door to Transport to Hanubia/Door to collision_camera_018 (F)
+  * Power Beam Door to Transport to Hanubia/Door to Cold Room (Life Recharge)
   * Extra - actor_name: doorpowerpower_021
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Life Recharge
+      All of the following:
+          Morph Ball
+          Speed Booster or Simple IBJ or Use Spin Boost
+          Gravity Suit or Cold Damage ≥ 100
+  > Tile Group (SCREWATTACK)
+      Gravity Suit or Cold Damage ≥ 100
 
-> Dock to collision_camera_030 (F); Heals? False
-  * Not Determined to collision_camera_030 (F)/Dock to collision_camera_018 (F)
+> Door to Cold Room (Storm Missile Gate) (Plasma); Heals? False
+  * Plasma Beam Door to Cold Room (Storm Missile Gate)/Door to Cold Room (Life Recharge) (Plasma)
   * Extra - actor_name: doorpowerpower
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Tile Group (BOMB)
+      Gravity Suit or Cold Damage ≥ 100
 
-> Door to collision_camera_030 (F) (doorchargecharge_000); Heals? False
-  * Charge Beam Door to collision_camera_030 (F)/Door to collision_camera_018 (F) (doorchargecharge_000)
+> Door to Cold Room (Storm Missile Gate) (Charge); Heals? False
+  * Charge Beam Door to Cold Room (Storm Missile Gate)/Door to Cold Room (Life Recharge) (Charge)
   * Extra - actor_name: doorchargecharge_000
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Cold Room (Storm Missile Gate) (Grapple)
+      All of the following:
+          Gravity Suit or Cold Damage ≥ 100
+          Simple IBJ or Use Spin Boost
+  > Tile Group (SPEEDBOOST) 1
+      All of the following:
+          Can Slide
+          Gravity Suit or Cold Damage ≥ 50
 
-> Door to collision_camera_030 (F) (doorgrapplegrapple_000); Heals? False
-  * Grapple Beam Door to collision_camera_030 (F)/Door to collision_camera_018 (F) (doorgrapplegrapple_000)
+> Door to Cold Room (Storm Missile Gate) (Grapple); Heals? False
+  * Grapple Beam Door to Cold Room (Storm Missile Gate)/Door to Cold Room (Life Recharge) (Grapple)
   * Extra - actor_name: doorgrapplegrapple_000
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Cold Room (Storm Missile Gate) (Charge)
+      Gravity Suit or Cold Damage ≥ 100
 
-> Event - Breakable (grapplepulloff1x2_002); Heals? False
+> Event - Grapple Block (grapplepulloff1x2_002); Heals? False
   * Event Ferenia - grapplepulloff1x2_002
   * Extra - actor_name: grapplepulloff1x2_002
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Tile Group (POWERBEAM)
+      Trivial
 
 > Life Recharge; Heals? True; Spawn Point
   * Extra - actor_name: energyrecharge_000
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
   * Extra - start_point_actor_name: energyrecharge_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
+  > Door to Transport to Hanubia
+      All of the following:
+          Can Slide
+          Gravity Suit or Cold Damage ≥ 100
+  > Tile Group (SCREWATTACK)
+      All of the following:
+          Can Slide
+          Gravity Suit or Cold Damage ≥ 100
 
 > Tile Group (SCREWATTACK); Heals? False
   * Configurable Node
@@ -866,6 +1463,10 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
+  > Door to Transport to Hanubia
+      Gravity Suit or Cold Damage ≥ 100
+  > Center Ledge
+      Gravity Suit or Cold Damage ≥ 50
 
 > Tile Group (SPEEDBOOST) 1; Heals? False
   * Configurable Node
@@ -873,6 +1474,12 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Door to Cold Room (Storm Missile Gate) (Charge)
+      All of the following:
+          Can Slide
+          Gravity Suit or Cold Damage ≥ 50
+  > Tile Group (POWERBEAM)
+      Trivial
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -880,6 +1487,10 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door to Cold Room (Storm Missile Gate) (Plasma)
+      Gravity Suit or Cold Damage ≥ 100
+  > Center Ledge
+      Morph Ball
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -887,6 +1498,16 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Event - Grapple Block (grapplepulloff1x2_002)
+      All of the following:
+          Grapple Beam
+          Gravity Suit or Cold Damage ≥ 100
+  > Tile Group (SPEEDBOOST) 1
+      Trivial
+  > Tile Group (SPEEDBOOST) 2
+      All of the following:
+          Morph Ball and After Ferenia - grapplepulloff1x2_002
+          Gravity Suit or Cold Damage ≥ 100
 
 > Tile Group (SPEEDBOOST) 2; Heals? False
   * Configurable Node
@@ -894,6 +1515,27 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Tile Group (POWERBEAM)
+      Morph Ball and After Ferenia - grapplepulloff1x2_002
+  > Dock to Cold Room (Storm Missile Gate)
+      All of the following:
+          Morph Ball
+          Gravity Suit or Cold Damage ≥ 200
+
+> Center Ledge; Heals? False
+  > Door to Twin Robot Arena
+      Gravity Suit or Cold Damage ≥ 50
+  > Tile Group (SCREWATTACK)
+      Gravity Suit or Cold Damage ≥ 50
+  > Tile Group (BOMB)
+      Morph Ball
+
+> Dock to Cold Room (Storm Missile Gate); Heals? False
+  * Morph Ball Tunnel to Cold Room (Storm Missile Gate)/Dock to Cold Room (Life Recharge)
+  > Tile Group (SPEEDBOOST) 2
+      All of the following:
+          Morph Ball
+          Gravity Suit or Cold Damage ≥ 200
 
 ----------------
 collision_camera_019 (F)
@@ -901,34 +1543,50 @@ collision_camera_019 (F)
 Extra - total_boundings: {'x1': -4500.0, 'x2': -2400.0, 'y1': -400.0, 'y2': 2800.0}
 Extra - polygon: [[-2400.0, 2800.0], [-4500.0, 2800.0], [-4500.0, -400.0], [-2400.0, -400.0]]
 Extra - asset_id: collision_camera_019
-> Door to collision_camera_017 (F); Heals? False
-  * Power Beam Door to collision_camera_017 (F)/Door to collision_camera_019 (F)
+> Door to Twin Robot Arena; Heals? False
+  * Power Beam Door to Twin Robot Arena/Door to collision_camera_019 (F)
   * Extra - actor_name: doorpowerpower_008
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to collision_camera_021 (F)
+      After Ferenia - Storm Missile Gate by Robot Fight
 
 > Dock to collision_camera_021 (F); Heals? False
   * EMMI Door to collision_camera_021 (F)/Dock to collision_camera_019 (F)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to Twin Robot Arena
+      After Ferenia - Storm Missile Gate by Robot Fight
+  > Life Recharge
+      Trivial
+  > Tile Group (BOMB SCREWATTACK WEIGHT)
+      Infinite Bomb Jump (Beginner) or Use Spin Boost
+  > Event - Storm Missile Gate
+      Activate Storm Missile Locks
 
-> Event - Breakable (grapplepulloff1x2_000); Heals? False
+> Event - Grapple Block (grapplepulloff1x2_000); Heals? False
   * Event Ferenia - grapplepulloff1x2_000
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
+  > Tile Group (BOMB) 1
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_TwoChozoRobots
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Twin Robot Arena
+      Trivial
 
 > Life Recharge; Heals? True
   * Extra - actor_name: energyrecharge_001
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_energy_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
+  > Dock to collision_camera_021 (F)
+      Trivial
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -936,12 +1594,22 @@ Extra - asset_id: collision_camera_019
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Event - Grapple Block (grapplepulloff1x2_000)
+      Grapple Beam
+  > Tile Group (WEIGHT)
+      Trivial
+  > Tile Group (BOMB) 2
+      Morph Ball
+  > Dock to collision_camera_020 (F)
+      Morph Ball and After Ferenia - grapplepulloff1x2_000
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_020
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Dock to collision_camera_021 (F)
+      Trivial
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
@@ -949,12 +1617,32 @@ Extra - asset_id: collision_camera_019
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 1
+      Morph Ball
+  > Tile Group (WEIGHT)
+      Trivial
+  > Tile Group (BOMB SCREWATTACK WEIGHT)
+      Trivial
 
 > Tile Group (BOMB SCREWATTACK WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_022
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB', 'SCREWATTACK', 'WEIGHT')
+  > Dock to collision_camera_021 (F)
+      Trivial
+  > Tile Group (BOMB) 2
+      Morph Ball
+
+> Event - Storm Missile Gate; Heals? False
+  * Event Ferenia - Storm Missile Gate by Robot Fight
+  > Dock to collision_camera_021 (F)
+      Trivial
+
+> Dock to collision_camera_020 (F); Heals? False
+  * Morph Ball Tunnel to collision_camera_020 (F)/Dock to collision_camera_019 (F)
+  > Tile Group (BOMB) 1
+      Morph Ball and After Ferenia - grapplepulloff1x2_000
 
 ----------------
 collision_camera_020 (F)
@@ -965,6 +1653,8 @@ Extra - asset_id: collision_camera_020
   * Pickup 124; Major Location? True
   * Extra - actor_name: item_energyfragment_001
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
+  > Tile Group (BOMB)
+      Morph Ball
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -972,6 +1662,10 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Pickup (item_energyfragment_001)
+      Morph Ball
+  > Tile Group (SCREWATTACK)
+      Trivial
 
 > Tile Group (SCREWATTACK); Heals? False
   * Configurable Node
@@ -979,12 +1673,25 @@ Extra - asset_id: collision_camera_020
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (BOMB)
+      Trivial
+  > Dock to collision_camera_019 (F)
+      Morph Ball
 
 > Tile Group (BOMB WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB', 'WEIGHT')
+  > Tile Group (BOMB)
+      Morph Ball
+
+> Dock to collision_camera_019 (F); Heals? False
+  * Morph Ball Tunnel to collision_camera_019 (F)/Dock to collision_camera_020 (F)
+  > Tile Group (SCREWATTACK)
+      Morph Ball
+  > Tile Group (BOMB WEIGHT)
+      Morph Ball
 
 ----------------
 collision_camera_021 (F)
@@ -995,6 +1702,10 @@ Extra - asset_id: collision_camera_021
   * EMMI Door to collision_camera_019 (F)/Dock to collision_camera_021 (F)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to collision_camera_033 (F)
+      Trivial
+  > Dock to collision_camera_022 (F) (dooremmy_004)
+      Morph Ball
 
 > Door to collision_camera_033 (F); Heals? False
   * Power Beam Door to collision_camera_033 (F)/Door to collision_camera_021 (F)
@@ -1004,34 +1715,54 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to collision_camera_019 (F)
+      Trivial
 
 > Dock to collision_camera_022 (F) (dooremmy_004); Heals? False
   * EMMI Door to collision_camera_022 (F)/Dock to collision_camera_021 (F) (dooremmy_004)
   * Extra - actor_name: dooremmy_004
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to collision_camera_019 (F)
+      All of the following:
+          Morph Ball
+          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+  > Dock to collision_camera_022 (F) (dooremmy_005)
+      Morph Ball and After Ferenia - Central Unit
 
-> Door to collision_camera_003 (F) (doorpowerpower_016); Heals? False
-  * Power Beam Door to collision_camera_003 (F)/Door to collision_camera_021 (F)
+> Door to Purple EMMI Introduction (doorpowerpower_016); Heals? False
+  * Power Beam Door to Purple EMMI Introduction/Door to collision_camera_021 (F)
   * Extra - actor_name: doorpowerpower_016
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to collision_camera_022 (F) (dooremmy_005)
+      Grapple Beam or Gravity Suit
 
 > Dock to collision_camera_022 (F) (dooremmy_005); Heals? False
   * EMMI Door to collision_camera_022 (F)/Dock to collision_camera_021 (F) (dooremmy_005)
   * Extra - actor_name: dooremmy_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to collision_camera_022 (F) (dooremmy_004)
+      All of the following:
+          Morph Ball and After Ferenia - Central Unit
+          Space Jump or Speed Booster or Infinite Bomb Jump (Beginner)
+  > Door to Purple EMMI Introduction (doorpowerpower_016)
+      Grapple Beam or Gravity Suit
+  > Door to Purple EMMI Introduction (doorclosedcharge_004)
+      Can Slide
 
-> Door to collision_camera_003 (F) (doorclosedcharge_004); Heals? False
-  * Charge Beam Door to collision_camera_003 (F)/Door from collision_camera_021 (F)
+> Door to Purple EMMI Introduction (doorclosedcharge_004); Heals? False
+  * Charge Beam Door to Purple EMMI Introduction/Door from collision_camera_021 (F)
   * Extra - actor_name: doorclosedcharge_004
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to collision_camera_022 (F) (dooremmy_005)
+      Can Slide
 
 ----------------
 collision_camera_022 (F)
@@ -1042,29 +1773,39 @@ Extra - asset_id: collision_camera_022
   * EMMI Door to collision_camera_021 (F)/Dock to collision_camera_022 (F) (dooremmy_004)
   * Extra - actor_name: dooremmy_004
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to Storm Missile Tutorial
+      Trivial
 
 > Dock to collision_camera_021 (F) (dooremmy_005); Heals? False
   * EMMI Door to collision_camera_021 (F)/Dock to collision_camera_022 (F) (dooremmy_005)
   * Extra - actor_name: dooremmy_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Center Platform
+      Simple IBJ or Use Spin Boost
 
-> Door to collision_camera_024 (F); Heals? False
-  * Power Beam Door to collision_camera_024 (F)/Door to collision_camera_022 (F)
+> Door to Storm Missile Tutorial; Heals? False
+  * Power Beam Door to Storm Missile Tutorial/Door to collision_camera_022 (F)
   * Extra - actor_name: doorpowerpower_019
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to collision_camera_021 (F) (dooremmy_004)
+      Trivial
+  > Tile Group (BOMB)
+      Trivial
 
-> Door to collision_camera_023 (F); Heals? False
-  * Power Beam Door to collision_camera_023 (F)/Door to collision_camera_022 (F)
+> Door to Map Station; Heals? False
+  * Power Beam Door to Map Station/Door to collision_camera_022 (F)
   * Extra - actor_name: doorpowerpower_020
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Center Platform
+      Simple IBJ or Use Spin Boost
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -1072,64 +1813,102 @@ Extra - asset_id: collision_camera_022
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door to Storm Missile Tutorial
+      Trivial
+  > Center Platform
+      Morph Ball
+
+> Center Platform; Heals? False
+  > Dock to collision_camera_021 (F) (dooremmy_005)
+      Trivial
+  > Door to Map Station
+      Trivial
+  > Tile Group (BOMB)
+      Morph Ball
 
 ----------------
-collision_camera_023 (F)
+Map Station
 Extra - total_boundings: {'x1': 1500.0, 'x2': 3600.0, 'y1': -3802.5, 'y2': -2658.0}
 Extra - polygon: [[3600.0, -2658.0], [1500.0, -2658.0], [1500.0, -3802.5], [3600.0, -3802.5]]
 Extra - asset_id: collision_camera_023
 > Door to collision_camera_022 (F); Heals? False
-  * Power Beam Door to collision_camera_022 (F)/Door to collision_camera_023 (F)
+  * Power Beam Door to collision_camera_022 (F)/Door to Map Station
   * Extra - actor_name: doorpowerpower_020
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Map Station
+      Trivial
 
 > Map Station; Heals? False; Spawn Point
   * Extra - actor_name: maproom
   * Extra - actor_def: actordef:actors/props/maproom/charclasses/maproom.bmsad
   * Extra - start_point_actor_name: maproom_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad
+  > Door to collision_camera_022 (F)
+      Trivial
 
 ----------------
-collision_camera_024 (F)
+Storm Missile Tutorial
 Extra - total_boundings: {'x1': 1500.0, 'x2': 6600.0, 'y1': -2400.0, 'y2': -400.0}
 Extra - polygon: [[6600.0, -1258.0], [4600.0, -1258.0], [4600.0, -400.0], [1500.0, -400.0], [1500.0, -2300.0], [3000.0, -2300.0], [3300.0, -2400.0], [6600.0, -2400.0]]
 Extra - asset_id: collision_camera_024
 > Door to collision_camera_025 (F); Heals? False
-  * Power Beam Door to collision_camera_025 (F)/Door to collision_camera_024 (F)
+  * Power Beam Door to collision_camera_025 (F)/Door to Storm Missile Tutorial
   * Extra - actor_name: doorpowerpower_018
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Total Recharge
+      Trivial
 
 > Door to collision_camera_022 (F); Heals? False
-  * Power Beam Door to collision_camera_022 (F)/Door to collision_camera_024 (F)
+  * Power Beam Door to collision_camera_022 (F)/Door to Storm Missile Tutorial
   * Extra - actor_name: doorpowerpower_019
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Save Station Southeast
+      Trivial
+  > Dock to collision_camera_025 (F)
+      After Ferenia - Storm Missile Gate Tutorial
 
-> Door to collision_camera_041 (F); Heals? False
-  * Power Beam Door to collision_camera_041 (F)/Door to collision_camera_024 (F)
+> Door to Save Station Southeast; Heals? False
+  * Power Beam Door to Save Station Southeast/Door to Storm Missile Tutorial
   * Extra - actor_name: doorpowerpower_024
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to collision_camera_022 (F)
+      Trivial
 
 > Total Recharge; Heals? True; Spawn Point
   * Extra - actor_name: totalrechargestation_001
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total_001
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  > Door to collision_camera_025 (F)
+      Trivial
+
+> Dock to collision_camera_025 (F); Heals? False
+  * Slide Tunnel to collision_camera_025 (F)/Dock to Storm Missile Tutorial
+  > Door to collision_camera_022 (F)
+      After Ferenia - Storm Missile Gate Tutorial
+  > Event - Storm Missile Gate
+      Activate Storm Missile Locks
+
+> Event - Storm Missile Gate; Heals? False
+  * Event Ferenia - Storm Missile Gate Tutorial
+  > Dock to collision_camera_025 (F)
+      Trivial
 
 ----------------
 collision_camera_025 (F)
@@ -1140,29 +1919,41 @@ Extra - asset_id: collision_camera_025
   * EMMI Door to collision_camera_032 (F)/Dock to collision_camera_025 (F)
   * Extra - actor_name: dooremmy_006
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to Save Station Southeast
+      Trivial
 
-> Door to collision_camera_024 (F); Heals? False
-  * Power Beam Door to collision_camera_024 (F)/Door to collision_camera_025 (F)
+> Door to Storm Missile Tutorial; Heals? False
+  * Power Beam Door to Storm Missile Tutorial/Door to collision_camera_025 (F)
   * Extra - actor_name: doorpowerpower_018
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Escue Eyedoor Room
+      Trivial
+  > Dock to Storm Missile Tutorial
+      Trivial
 
-> Door to collision_camera_041 (F); Heals? False
-  * Charge Beam Door to collision_camera_041 (F)/Door from collision_camera_025 (F)
+> Door to Save Station Southeast; Heals? False
+  * Charge Beam Door to Save Station Southeast/Door from collision_camera_025 (F)
   * Extra - actor_name: doorclosedcharge_003
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to collision_camera_032 (F)
+      Simple IBJ
+  > Tile Group (WEIGHT)
+      Morph Ball
 
 > Pickup (item_energyfragment); Heals? False
   * Pickup 133; Major Location? True
   * Extra - actor_name: item_energyfragment
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
+  > Tile Group (BOMB)
+      Morph Ball
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -1170,12 +1961,18 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Pickup (item_energyfragment)
+      Morph Ball
+  > Dock to Escue Eyedoor Room
+      Morph Ball
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_059
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Door to Storm Missile Tutorial
+      Trivial
 
 > Tile Group (MISSILE); Heals? False
   * Configurable Node
@@ -1184,8 +1981,20 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
 
+> Dock to Escue Eyedoor Room; Heals? False
+  * Morph Ball Tunnel to Escue Eyedoor Room/Dock to collision_camera_025 (F)
+  > Door to Storm Missile Tutorial
+      Trivial
+  > Tile Group (BOMB)
+      Morph Ball
+
+> Dock to Storm Missile Tutorial; Heals? False
+  * Slide Tunnel to Storm Missile Tutorial/Dock to collision_camera_025 (F)
+  > Door to Storm Missile Tutorial
+      Trivial
+
 ----------------
-collision_camera_026 (F)
+Escue Eyedoor Room
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 9500.0, 'x2': 12700.0, 'y1': -3802.5, 'y2': -400.0}
 Extra - polygon: [[12700.0, -400.0], [9500.0, -400.0], [9500.0, -3802.5], [12700.0, -3802.5]]
@@ -1194,19 +2003,25 @@ Extra - asset_id: collision_camera_026
   * Pickup 122; Major Location? False
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (MISSILE)
+      Morph Ball
 
-> Door to collision_camera_027 (F); Heals? False
-  * Power Beam Door to collision_camera_027 (F)/Door to collision_camera_026 (F)
+> Door to Escue Arena; Heals? False
+  * Power Beam Door to Escue Arena/Door to Escue Eyedoor Room
   * Extra - actor_name: doorpowerpower_014
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tile Group (POWERBEAM) 4
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_SuperQuetzoa
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Escue Arena
+      Trivial
 
 > Tile Group (MISSILE); Heals? False
   * Configurable Node
@@ -1214,6 +2029,10 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
+  > Pickup (item_missiletank_004)
+      Morph Ball
+  > Tile Group (POWERBEAM) 1
+      Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -1221,6 +2040,10 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (MISSILE)
+      Trivial
+  > Dock to collision_camera_025 (F)
+      Trivial
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -1228,6 +2051,10 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (POWERBEAM) 3
+      Trivial
+  > Dock to collision_camera_025 (F)
+      Trivial
 
 > Tile Group (POWERBEAM) 3; Heals? False
   * Configurable Node
@@ -1235,6 +2062,10 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (POWERBEAM) 2
+      Trivial
+  > Tile Group (POWERBEAM) 4
+      Trivial
 
 > Tile Group (POWERBEAM) 4; Heals? False
   * Configurable Node
@@ -1242,53 +2073,90 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door to Escue Arena
+      Can Slide
+  > Tile Group (POWERBEAM) 3
+      Morph Ball
+
+> Dock to collision_camera_025 (F); Heals? False
+  * Morph Ball Tunnel to collision_camera_025 (F)/Dock to Escue Eyedoor Room
+  > Tile Group (POWERBEAM) 1
+      Trivial
+  > Tile Group (POWERBEAM) 2
+      Trivial
 
 ----------------
-collision_camera_027 (F)
+Escue Arena
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 7350.0, 'x2': 9450.0, 'y1': -3771.0, 'y2': -2629.0}
 Extra - polygon: [[9450.0, -2629.0], [7350.0, -2629.0], [7350.0, -3771.0], [9450.0, -3771.0]]
 Extra - asset_id: collision_camera_027
-> Door to collision_camera_026 (F); Heals? False
-  * Power Beam Door to collision_camera_026 (F)/Door to collision_camera_027 (F)
+> Door to Escue Eyedoor Room; Heals? False
+  * Power Beam Door to Escue Eyedoor Room/Door to Escue Arena
   * Extra - actor_name: doorpowerpower_014
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Event - Escue
+      Any of the following:
+          # TODO: Fight requirements
+          Missiles or Shoot Charge Beam
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_MultiLockOn
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Escue Eyedoor Room
+      Trivial
+
+> Pickup (Storm Missiles); Heals? False
+  * Pickup 142; Major Location? True
+  > Door to Escue Eyedoor Room
+      Trivial
+
+> Event - Escue; Heals? False
+  * Event Escue
+  > Pickup (Storm Missiles)
+      Trivial
 
 ----------------
 Transport to Hanubia
 Extra - total_boundings: {'x1': -1500.0, 'x2': 600.0, 'y1': 5400.0, 'y2': 7500.0}
 Extra - polygon: [[600.0, 7500.0], [-1500.0, 7500.0], [-1500.0, 5400.0], [600.0, 5400.0]]
 Extra - asset_id: collision_camera_028
-> Door to collision_camera_018 (F); Heals? False
-  * Power Beam Door to collision_camera_018 (F)/Door to Transport to Hanubia
+> Door to Cold Room (Life Recharge); Heals? False
+  * Power Beam Door to Cold Room (Life Recharge)/Door to Transport to Hanubia
   * Extra - actor_name: doorpowerpower_021
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Save Station North
+      Trivial
 
-> Dock to collision_camera_029 (F); Heals? False
-  * Not Determined to collision_camera_029 (F)/Dock to Transport to Hanubia
+> Door to Save Station North; Heals? False
+  * Wave Beam Door to Save Station North/Door to Transport to Hanubia
   * Extra - actor_name: doorpowerpower_022
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  > Door to Cold Room (Life Recharge)
+      Trivial
+  > Event - Wave Blob (db_reg_b2_005)
+      Wave Beam
+  > Elevator to Hanubia - Transport to Ferenia
+      After Ferenia - db_reg_b2_005
 
-> Event - Breakable (db_reg_b2_005); Heals? False
+> Event - Wave Blob (db_reg_b2_005); Heals? False
   * Event Ferenia - db_reg_b2_005
   * Extra - actor_name: db_reg_b2_005
   * Extra - actor_def: actordef:actors/props/db_reg_b2_005/charclasses/db_reg_b2_005.bmsad
+  > Door to Save Station North
+      Trivial
 
 > Elevator to Hanubia - Transport to Ferenia; Heals? False; Spawn Point
   * Teleporter to Hanubia - Transport to Ferenia
@@ -1298,79 +2166,107 @@ Extra - asset_id: collision_camera_028
   * Extra - target_spawn_point: elevator_sanctuary_000_platform
   * Extra - start_point_actor_name: elevator_shipyard_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  > Door to Save Station North
+      After Ferenia - db_reg_b2_005
+  > Event - Wave Blob (db_reg_b2_005)
+      Wave Beam
+  > Tile Group (WEIGHT)
+      Trivial
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Door to Save Station North
+      Trivial
 
 ----------------
-collision_camera_029 (F)
+Save Station North
 Extra - total_boundings: {'x1': 500.0, 'x2': 2600.0, 'y1': 5400.0, 'y2': 6542.0}
 Extra - polygon: [[2600.0, 6542.0], [500.0, 6542.0], [500.0, 5400.0], [2600.0, 5400.0]]
 Extra - asset_id: collision_camera_029
-> Dock to Transport to Hanubia; Heals? False
-  * Not Determined to Transport to Hanubia/Dock to collision_camera_029 (F)
+> Door to Transport to Hanubia; Heals? False
+  * Wave Beam Door to Transport to Hanubia/Door to Save Station North
   * Extra - actor_name: doorpowerpower_022
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  > Dock to Wave Beam Tutorial
+      Trivial
 
-> Dock to collision_camera_031 (F); Heals? False
-  * EMMI Door to collision_camera_031 (F)/Dock to collision_camera_029 (F)
+> Dock to Wave Beam Tutorial; Heals? False
+  * EMMI Door to Wave Beam Tutorial/Dock to Save Station North
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to Transport to Hanubia
+      Trivial
+  > Save Station
+      Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Extra - actor_name: savestation_000
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
   * Extra - start_point_actor_name: savestation_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  > Dock to Wave Beam Tutorial
+      Trivial
 
 ----------------
-collision_camera_030 (F)
+Cold Room (Storm Missile Gate)
 Extra - total_boundings: {'x1': -1500.0, 'x2': 2600.0, 'y1': 2900.0, 'y2': 5400.0}
 Extra - polygon: [[2600.0, 5400.0], [-1500.0, 5400.0], [-1500.0, 2900.0], [2600.0, 2900.0]]
 Extra - asset_id: collision_camera_030
-> Dock to collision_camera_031 (F); Heals? False
-  * EMMI Door to collision_camera_031 (F)/Dock to collision_camera_030 (F)
+> Dock to Wave Beam Tutorial; Heals? False
+  * EMMI Door to Wave Beam Tutorial/Dock to Cold Room (Storm Missile Gate)
   * Extra - actor_name: dooremmy_008
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Tile Group (SCREWATTACK) 1
+      Gravity Suit or Cold Damage ≥ 50
 
 > Pickup (item_missiletank_003); Heals? False
   * Pickup 125; Major Location? False
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
+  > Tile Group (MISSILE)
+      Morph Ball
 
-> Dock to collision_camera_018 (F); Heals? False
-  * Not Determined to collision_camera_018 (F)/Dock to collision_camera_030 (F)
+> Door to Cold Room (Life Recharge) (Plasma); Heals? False
+  * Plasma Beam Door to Cold Room (Life Recharge)/Door to Cold Room (Storm Missile Gate) (Plasma)
   * Extra - actor_name: doorpowerpower
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_001
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Door to Cold Room (Life Recharge) (Grapple)
+      Gravity Suit or Cold Damage ≥ 50
 
-> Door to collision_camera_018 (F) (doorchargecharge_000); Heals? False
-  * Charge Beam Door to collision_camera_018 (F)/Door to collision_camera_030 (F) (doorchargecharge_000)
+> Door to Cold Room (Life Recharge) (Charge); Heals? False
+  * Charge Beam Door to Cold Room (Life Recharge)/Door to Cold Room (Storm Missile Gate) (Charge)
   * Extra - actor_name: doorchargecharge_000
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tile Group (BOMB)
+      All of the following:
+          Morph Ball
+          Gravity Suit or Cold Damage ≥ 50
 
-> Door to collision_camera_018 (F) (doorgrapplegrapple_000); Heals? False
-  * Grapple Beam Door to collision_camera_018 (F)/Door to collision_camera_030 (F) (doorgrapplegrapple_000)
+> Door to Cold Room (Life Recharge) (Grapple); Heals? False
+  * Grapple Beam Door to Cold Room (Life Recharge)/Door to Cold Room (Storm Missile Gate) (Grapple)
   * Extra - actor_name: doorgrapplegrapple_000
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Cold Room (Life Recharge) (Plasma)
+      Gravity Suit or Cold Damage ≥ 50
 
 > Tile Group (SCREWATTACK) 1; Heals? False
   * Configurable Node
@@ -1378,6 +2274,10 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
+  > Dock to Wave Beam Tutorial
+      Gravity Suit or Cold Damage ≥ 50
+  > Tile Group (SCREWATTACK) 2
+      Gravity Suit or Cold Damage ≥ 50
 
 > Tile Group (SCREWATTACK) 2; Heals? False
   * Configurable Node
@@ -1385,6 +2285,15 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (SCREWATTACK) 1
+      All of the following:
+          Gravity Suit or Cold Damage ≥ 200
+          Simple IBJ or Use Spin Boost
+  > Tile Group (SCREWATTACK) 3
+      All of the following:
+          After Ferenia - Storm Missile Gate Cold
+          Space Jump or Infinite Bomb Jump (Beginner)
+          Gravity Suit or Cold Damage ≥ 200
 
 > Tile Group (SCREWATTACK) 3; Heals? False
   * Configurable Node
@@ -1392,6 +2301,16 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
+  > Tile Group (SCREWATTACK) 2
+      All of the following:
+          After Ferenia - Storm Missile Gate Cold
+          Gravity Suit or Cold Damage ≥ 100
+  > Tile Group (BOMB)
+      Can Slide
+  > Event - Storm Missile Gate
+      All of the following:
+          Activate Storm Missile Locks
+          Gravity Suit or Cold Damage ≥ 100
 
 > Tile Group (MISSILE); Heals? False
   * Configurable Node
@@ -1399,6 +2318,10 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
+  > Pickup (item_missiletank_003)
+      Morph Ball
+  > Tile Group (SPEEDBOOST)
+      Gravity Suit or Cold Damage ≥ 50
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -1406,6 +2329,14 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door to Cold Room (Life Recharge) (Charge)
+      All of the following:
+          Morph Ball
+          Gravity Suit or Cold Damage ≥ 50
+  > Tile Group (SCREWATTACK) 3
+      All of the following:
+          Can Slide
+          Gravity Suit or Cold Damage ≥ 100
 
 > Tile Group (SPEEDBOOST); Heals? False
   * Configurable Node
@@ -1413,47 +2344,85 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Tile Group (MISSILE)
+      Gravity Suit or Cold Damage ≥ 50
+  > Dock to Cold Room (Life Recharge)
+      All of the following:
+          Morph Ball
+          Gravity Suit or Cold Damage ≥ 200
+
+> Event - Storm Missile Gate; Heals? False
+  * Event Ferenia - Storm Missile Gate Cold
+  > Tile Group (SCREWATTACK) 3
+      Trivial
+
+> Dock to Cold Room (Life Recharge); Heals? False
+  * Morph Ball Tunnel to Cold Room (Life Recharge)/Dock to Cold Room (Storm Missile Gate)
+  > Tile Group (SPEEDBOOST)
+      All of the following:
+          Morph Ball
+          Gravity Suit or Cold Damage ≥ 200
 
 ----------------
-collision_camera_031 (F)
+Wave Beam Tutorial
 Extra - total_boundings: {'x1': 2500.0, 'x2': 4600.0, 'y1': 1800.0, 'y2': 6500.0}
 Extra - polygon: [[4600.0, 6500.0], [2500.0, 6500.0], [2500.0, 1800.0], [4600.0, 1800.0]]
 Extra - asset_id: collision_camera_031
-> Dock to collision_camera_034 (F) (doorpowerpower_023); Heals? False
-  * Not Determined to collision_camera_034 (F)/Dock to collision_camera_031 (F) (doorpowerpower_023)
+> Door to Purple EMMI Fight; Heals? False
+  * Wave Beam Door to Purple EMMI Fight/Door to Wave Beam Tutorial
   * Extra - actor_name: doorpowerpower_023
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  > Dock to Save Station North
+      Morph Ball and After Ferenia - db_reg_b2_006
+  > Event - Wave Blob from right (db_reg_b2_006)
+      Wave Beam
 
-> Dock to collision_camera_030 (F); Heals? False
-  * EMMI Door to collision_camera_030 (F)/Dock to collision_camera_031 (F)
+> Dock to Cold Room (Storm Missile Gate); Heals? False
+  * EMMI Door to Cold Room (Storm Missile Gate)/Dock to Wave Beam Tutorial
   * Extra - actor_name: dooremmy_008
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to collision_camera_033 (F)
+      Can Slide
+  > Dock to Purple EMMI Fight
+      Simple IBJ or Use Spin Boost
 
 > Door to collision_camera_033 (F); Heals? False
-  * Charge Beam Door to collision_camera_033 (F)/Door from collision_camera_031 (F)
+  * Charge Beam Door to collision_camera_033 (F)/Door from Wave Beam Tutorial
   * Extra - actor_name: doorclosedcharge_002
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Cold Room (Storm Missile Gate)
+      Morph Ball
+  > Dock to collision_camera_033 (F)
+      After Ferenia - Central Unit
 
-> Dock to collision_camera_029 (F); Heals? False
-  * EMMI Door to collision_camera_029 (F)/Dock to collision_camera_031 (F)
+> Dock to Save Station North; Heals? False
+  * EMMI Door to Save Station North/Dock to Wave Beam Tutorial
   * Extra - actor_name: dooremmy_007
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to Purple EMMI Fight
+      All of the following:
+          Morph Ball and After Ferenia - db_reg_b2_006
+          Simple IBJ or Use Spin Boost
+  > Event - Wave Blob from left (db_reg_b2_006)
+      Shoot Beam
 
-> Event - Breakable (db_reg_b2_006); Heals? False
+> Event - Wave Blob from left (db_reg_b2_006); Heals? False
   * Event Ferenia - db_reg_b2_006
   * Extra - actor_name: db_reg_b2_006
   * Extra - actor_def: actordef:actors/props/db_reg_b2_006/charclasses/db_reg_b2_006.bmsad
+  > Dock to Save Station North
+      Trivial
 
-> Dock to collision_camera_034 (F) (tunnelframe); Heals? False
-  * Not Determined to collision_camera_034 (F)/Dock to collision_camera_031 (F) (tunnelframe)
+> Dock to Purple EMMI Fight; Heals? False
+  * Morph Ball Tunnel to Purple EMMI Fight/Dock to Wave Beam Tutorial
   * Extra - actor_name: tunnelframe
   * Extra - actor_def: actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad
   * Extra - actor_layer: Emmy
@@ -1461,6 +2430,18 @@ Extra - asset_id: collision_camera_031
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Cold Room (Storm Missile Gate)
+      Trivial
+
+> Event - Wave Blob from right (db_reg_b2_006); Heals? False
+  * Event Ferenia - db_reg_b2_006
+  > Door to Purple EMMI Fight
+      Trivial
+
+> Dock to collision_camera_033 (F); Heals? False
+  * Morph Ball Tunnel to collision_camera_033 (F)/Dock to Wave Beam Tutorial
+  > Door to collision_camera_033 (F)
+      After Ferenia - Central Unit
 
 ----------------
 collision_camera_032 (F)
@@ -1475,6 +2456,8 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to collision_camera_033 (F) (doorclosedcharge_001)
+      Morph Ball
 
 > Door to collision_camera_033 (F) (doorclosedcharge_001); Heals? False
   * Charge Beam Door to collision_camera_033 (F)/Door from collision_camera_032 (F)
@@ -1484,11 +2467,21 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to collision_camera_033 (F) (doorpowerpower_017)
+      Morph Ball
+  > Dock to collision_camera_025 (F)
+      Any of the following:
+          Flash Shift or Spider Magnet or Space Jump
+          All of the following:
+              Gravity Suit
+              Simple IBJ or Use Spin Boost
 
 > Dock to collision_camera_025 (F); Heals? False
   * EMMI Door to collision_camera_025 (F)/Dock to collision_camera_032 (F)
   * Extra - actor_name: dooremmy_006
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to collision_camera_033 (F) (doorclosedcharge_001)
+      Trivial
 
 ----------------
 collision_camera_033 (F)
@@ -1503,6 +2496,8 @@ Extra - asset_id: collision_camera_033
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door from collision_camera_032 (F)
+      Trivial
 
 > Door to collision_camera_032 (F); Heals? False
   * Power Beam Door to collision_camera_032 (F)/Door to collision_camera_033 (F) (doorpowerpower_017)
@@ -1512,6 +2507,8 @@ Extra - asset_id: collision_camera_033
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door from collision_camera_032 (F)
+      Trivial
 
 > Door from collision_camera_032 (F); Heals? False
   * Access Closed to collision_camera_032 (F)/Door to collision_camera_033 (F) (doorclosedcharge_001)
@@ -1521,58 +2518,91 @@ Extra - asset_id: collision_camera_033
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to collision_camera_021 (F)
+      Trivial
+  > Door to collision_camera_032 (F)
+      Trivial
+  > Door from Wave Beam Tutorial
+      Trivial
+  > Dock to Wave Beam Tutorial
+      All of the following:
+          After Ferenia - Central Unit
+          Flash Shift or Simple IBJ or Use Spin Boost
 
-> Door from collision_camera_031 (F); Heals? False
-  * Access Closed to collision_camera_031 (F)/Door to collision_camera_033 (F)
+> Door from Wave Beam Tutorial; Heals? False
+  * Access Closed to Wave Beam Tutorial/Door to collision_camera_033 (F)
   * Extra - actor_name: doorclosedcharge_002
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door from collision_camera_032 (F)
+      Trivial
+
+> Dock to Wave Beam Tutorial; Heals? False
+  * Morph Ball Tunnel to Wave Beam Tutorial/Dock to collision_camera_033 (F)
+  > Door from collision_camera_032 (F)
+      After Ferenia - Central Unit
 
 ----------------
-collision_camera_034 (F)
+Purple EMMI Fight
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 4500.0, 'x2': 9600.0, 'y1': 2000.0, 'y2': 6400.0}
 Extra - polygon: [[9600.0, 6400.0], [4500.0, 6400.0], [4500.0, 2000.0], [9600.0, 2000.0]]
 Extra - asset_id: collision_camera_034
-> Dock to collision_camera_031 (F) (doorpowerpower_023); Heals? False
-  * Not Determined to collision_camera_031 (F)/Dock to collision_camera_034 (F) (doorpowerpower_023)
+> Door to Wave Beam Tutorial; Heals? False
+  * Wave Beam Door to Wave Beam Tutorial/Door to Purple EMMI Fight
   * Extra - actor_name: doorpowerpower_023
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_003
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
+  > Event - Blob 2 (db_reg_b2_008)
+      After Ferenia - db_reg_b2_007 and Shoot Beam
+  > Event - Blob 3 (db_reg_b2_009)
+      After Ferenia - db_reg_b2_007 and After Ferenia - db_reg_b2_008 and Shoot Beam
+  > Event - Blob 1 (db_reg_b2_007)
+      Shoot Beam
 
-> Event - Breakable (db_reg_b2_008); Heals? False
+> Event - Blob 2 (db_reg_b2_008); Heals? False
   * Event Ferenia - db_reg_b2_008
   * Extra - actor_name: db_reg_b2_008
   * Extra - actor_def: actordef:actors/props/db_reg_b2_008/charclasses/db_reg_b2_008.bmsad
+  > Door to Wave Beam Tutorial
+      Trivial
 
-> Event - Breakable (db_reg_b2_011); Heals? False
+> Event - Chase Blob 1 (db_reg_b2_011); Heals? False
   * Event Ferenia - db_reg_b2_011
   * Extra - actor_name: db_reg_b2_011
   * Extra - actor_def: actordef:actors/props/db_reg_b2_011/charclasses/db_reg_b2_011.bmsad
+  > Lower-Left Alcove
+      Trivial
 
-> Event - Breakable (db_reg_b2_009); Heals? False
+> Event - Blob 3 (db_reg_b2_009); Heals? False
   * Event Ferenia - db_reg_b2_009
   * Extra - actor_name: db_reg_b2_009
   * Extra - actor_def: actordef:actors/props/db_reg_b2_009/charclasses/db_reg_b2_009.bmsad
+  > Upper-right Alcove
+      Trivial
 
-> Event - Breakable (db_reg_b2_007); Heals? False
+> Event - Blob 1 (db_reg_b2_007); Heals? False
   * Event Ferenia - db_reg_b2_007
   * Extra - actor_name: db_reg_b2_007
   * Extra - actor_def: actordef:actors/props/db_reg_b2_007/charclasses/db_reg_b2_007.bmsad
+  > Door to Wave Beam Tutorial
+      Trivial
 
-> Event - Breakable (db_reg_b2_010); Heals? False
+> Event - Chase Blob 2 (db_reg_b2_010); Heals? False
   * Event Ferenia - db_reg_b2_010
   * Extra - actor_name: db_reg_b2_010
   * Extra - actor_def: actordef:actors/props/db_reg_b2_010/charclasses/db_reg_b2_010.bmsad
+  > Tile Group (BOMB) 2
+      Trivial
 
-> Dock to collision_camera_038_A (F); Heals? False
-  * Not Determined to collision_camera_038_A (F)/Dock to collision_camera_034 (F)
+> Dock to Purple EMMI Water Elevator (Top); Heals? False
+  * Morph Ball Tunnel to Purple EMMI Water Elevator/Dock to Purple EMMI Fight (Top)
   * Extra - actor_name: tunnelframe_000
   * Extra - actor_def: actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad
   * Extra - actor_layer: Emmy
@@ -1580,9 +2610,11 @@ Extra - asset_id: collision_camera_034
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Upper-right Alcove
+      Trivial
 
-> Dock to collision_camera_031 (F) (tunnelframe); Heals? False
-  * Not Determined to collision_camera_031 (F)/Dock to collision_camera_034 (F) (tunnelframe)
+> Dock to Wave Beam Tutorial; Heals? False
+  * Morph Ball Tunnel to Wave Beam Tutorial/Dock to Purple EMMI Fight
   * Extra - actor_name: tunnelframe
   * Extra - actor_def: actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad
   * Extra - actor_layer: Emmy
@@ -1590,16 +2622,24 @@ Extra - asset_id: collision_camera_034
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tile Group (WEIGHT) 1
+      Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_WaveBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Lower-Left Alcove
+      Morph Ball and After Ferenia - Central Unit
+  > Lower-Right Alcove
+      Trivial
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_007
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Door to Wave Beam Tutorial
+      Gravity Suit or After Ferenia - Wave Emmi Lower Water
 
 > Tile Group (POWERBOMB); Heals? False
   * Configurable Node
@@ -1614,6 +2654,10 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (BOMB) 2
+      Morph Ball
+  > Lower-Left Alcove
+      Trivial
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -1621,12 +2665,20 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Event - Chase Blob 1 (db_reg_b2_011)
+      After Ferenia - Wave EMMI Wide Beam Block 1 and Shoot Diffusion or Wave
+  > Tile Group (POWERBEAM) 2
+      Morph Ball
+  > Event - Wide Beam Block 1
+      Push Wide Beam Block
 
 > Tile Group (WEIGHT) 2; Heals? False
   * Extra - actor_name: breakabletilegroup_069
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Start Wave EMMI Ledge
+      Trivial
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -1634,6 +2686,10 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Tile Group (BOMB) 1
+      Morph Ball
+  > Start Wave EMMI Ledge
+      Trivial
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
@@ -1641,9 +2697,79 @@ Extra - asset_id: collision_camera_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Event - Chase Blob 2 (db_reg_b2_010)
+      Shoot Beam
+  > Tile Group (POWERBEAM) 1
+      Morph Ball
+  > Lower-Right Alcove
+      After Ferenia - db_reg_b2_010 and Can Slide
+
+> Dock to Purple EMMI Water Elevator (Bottom); Heals? False
+  * Morph Ball Tunnel to Purple EMMI Water Elevator/Dock to Purple EMMI Fight (Bottom)
+  > Start Wave EMMI Ledge
+      Trivial
+
+> Event - Wide Beam Block 1; Heals? False
+  * Event Ferenia - Wave EMMI Wide Beam Block 1
+  > Tile Group (BOMB) 1
+      Trivial
+
+> Event - Wide Beam Block 2; Heals? False
+  * Event Ferenia - Wave EMMI Wide Beam Block 2
+  > Lower-Right Alcove
+      Trivial
+
+> Upper-right Alcove; Heals? False
+  > Door to Wave Beam Tutorial
+      All of the following:
+          After Ferenia - db_reg_b2_007 and After Ferenia - db_reg_b2_008 and After Ferenia - db_reg_b2_009
+          Gravity Suit or After Ferenia - Wave Emmi Lower Water
+          Space Jump or Simple IBJ
+  > Dock to Purple EMMI Water Elevator (Top)
+      All of the following:
+          Before Ferenia - Central Unit
+          Gravity Suit or After Ferenia - Wave Emmi Lower Water
+          Space Jump or Infinite Bomb Jump (Beginner)
+  > Lower-Right Alcove
+      After Ferenia - Central Unit and Can Slide
+
+> Lower-Left Alcove; Heals? False
+  > Start Point
+      All of the following:
+          Morph Ball and After Ferenia - Central Unit
+          Space Jump or Simple IBJ
+  > Tile Group (POWERBEAM) 1
+      Morph Ball
+  > Start Wave EMMI Ledge
+      Morph Ball and After Ferenia - Central Unit
+
+> Lower-Right Alcove; Heals? False
+  > Event - Chase Blob 2 (db_reg_b2_010)
+      Wave Beam
+  > Start Point
+      Flash Shift
+  > Tile Group (WEIGHT) 2
+      Trivial
+  > Tile Group (BOMB) 2
+      After Ferenia - db_reg_b2_010 and Can Slide
+  > Event - Wide Beam Block 2
+      Push Wide Beam Block
+  > Upper-right Alcove
+      Morph Ball and After Ferenia - Central Unit
+  > Pickup (Wave Beam)
+      After Ferenia - Central Unit
+
+> Pickup (Wave Beam); Heals? False
+  * Pickup 143; Major Location? True
+  > Lower-Right Alcove
+      Trivial
+
+> Start Wave EMMI Ledge; Heals? False
+  > Tile Group (POWERBEAM) 2
+      Morph Ball
 
 ----------------
-collision_camera_035 (F)
+Central Unit Room
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 11500.0, 'x2': 13600.0, 'y1': 4800.0, 'y2': 5942.0}
 Extra - polygon: [[13600.0, 5942.0], [11500.0, 5942.0], [11500.0, 4800.0], [13600.0, 4800.0]]
@@ -1651,15 +2777,29 @@ Extra - asset_id: collision_camera_035
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_EmmySancPhase2_CURoom
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to Purple EMMI Water Elevator
+      Trivial
+  > Event - Ferenia Central Unit
+      Trivial
+
+> Dock to Purple EMMI Water Elevator; Heals? False
+  * EMMI Door to Purple EMMI Water Elevator/Dock to Central Unit Room
+  > Start Point
+      Trivial
+
+> Event - Ferenia Central Unit; Heals? False
+  * Event Ferenia - Central Unit
+  > Start Point
+      Trivial
 
 ----------------
-collision_camera_038_A (F)
+Purple EMMI Water Elevator
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 9450.0, 'x2': 11550.0, 'y1': 2600.0, 'y2': 5900.0}
 Extra - polygon: [[11550.0, 5900.0], [9450.0, 5900.0], [9450.0, 2600.0], [11550.0, 2600.0]]
 Extra - asset_id: collision_camera_038_A
-> Dock to collision_camera_034 (F); Heals? False
-  * Not Determined to collision_camera_034 (F)/Dock to collision_camera_038_A (F)
+> Dock to Purple EMMI Fight (Top); Heals? False
+  * Morph Ball Tunnel to Purple EMMI Fight/Dock to Purple EMMI Water Elevator (Top)
   * Extra - actor_name: tunnelframe_000
   * Extra - actor_def: actordef:actors/props/tunnelframe/charclasses/tunnelframe.bmsad
   * Extra - actor_layer: Emmy
@@ -1667,14 +2807,35 @@ Extra - asset_id: collision_camera_038_A
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 1
+      Trivial
 
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to Central Unit Room
+      Trivial
+  > Event - Lower Water
+      After Ferenia - Central Unit and Shoot Beam
 
 > Start Point 2; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_EmmySancPhase2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to Purple EMMI Fight (Bottom)
+      After Ferenia - Wave Emmi Lower Water and Lay Bomb
+
+> Dock to Central Unit Room; Heals? False
+  * EMMI Door to Central Unit Room/Dock to Purple EMMI Water Elevator
+  > Start Point 1
+      Trivial
+
+> Dock to Purple EMMI Fight (Bottom); Heals? False
+  * Morph Ball Tunnel to Purple EMMI Fight/Dock to Purple EMMI Water Elevator (Bottom)
+
+> Event - Lower Water; Heals? False
+  * Event Ferenia - Wave Emmi Lower Water
+  > Start Point 2
+      Trivial
 
 ----------------
 collision_camera_040 (F)
@@ -1686,20 +2847,30 @@ Extra - asset_id: collision_camera_040
   * EMMI Door to collision_camera_001 (F)/Dock to collision_camera_040 (F)
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to collision_camera_004 (F)
+      Morph Ball and After Ferenia - Central Unit
+  > Central Platform
+      Flash Shift
 
 > Dock to collision_camera_004 (F); Heals? False
   * EMMI Door to collision_camera_004 (F)/Dock to collision_camera_040 (F)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to collision_camera_001 (F)
+      Morph Ball and After Ferenia - Central Unit
 
 > Pickup (item_powerbombtank_000); Heals? False
   * Pickup 127; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
+  > Tile Group (POWERBOMB)
+      Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Professor
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Dock to collision_camera_001 (F)
+      Nothing
 
 > Tile Group (POWERBOMB); Heals? False
   * Configurable Node
@@ -1707,45 +2878,76 @@ Extra - asset_id: collision_camera_040
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
+  > Pickup (item_powerbombtank_000)
+      Morph Ball
+  > Central Platform
+      Trivial
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_006
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Tile Group (WEIGHT) 2
+      Trivial
 
 > Tile Group (WEIGHT) 2; Heals? False
   * Extra - actor_name: breakabletilegroup_051
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
+  > Dock to collision_camera_004 (F)
+      Trivial
+
+> Dock to Purple EMMI Introduction; Heals? False
+  * Morph Ball Tunnel to Purple EMMI Introduction/Dock to collision_camera_040 (F)
+  > Central Platform
+      Trivial
+
+> Central Platform; Heals? False
+  > Dock to collision_camera_001 (F)
+      Trivial
+  > Tile Group (POWERBOMB)
+      Space Jump or Infinite Bomb Jump (Beginner)
+  > Tile Group (WEIGHT) 1
+      Can Slide
+  > Dock to Purple EMMI Introduction
+      Simple IBJ or Use Spin Boost
 
 ----------------
-collision_camera_041 (F)
+Save Station Southeast
 Extra - total_boundings: {'x1': 4500.0, 'x2': 6600.0, 'y1': -1342.0, 'y2': -200.0}
 Extra - polygon: [[6600.0, -200.0], [4500.0, -200.0], [4500.0, -1342.0], [6600.0, -1342.0]]
 Extra - asset_id: collision_camera_041
-> Door to collision_camera_024 (F); Heals? False
-  * Power Beam Door to collision_camera_024 (F)/Door to collision_camera_041 (F)
+> Door to Storm Missile Tutorial; Heals? False
+  * Power Beam Door to Storm Missile Tutorial/Door to Save Station Southeast
   * Extra - actor_name: doorpowerpower_024
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door from collision_camera_025 (F)
+      Trivial
 
 > Door from collision_camera_025 (F); Heals? False
-  * Access Closed to collision_camera_025 (F)/Door to collision_camera_041 (F)
+  * Access Closed to collision_camera_025 (F)/Door to Save Station Southeast
   * Extra - actor_name: doorclosedcharge_003
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Storm Missile Tutorial
+      Trivial
+  > Save Station
+      Trivial
 
 > Save Station; Heals? False; Spawn Point
   * Extra - actor_name: savestation_001
   * Extra - actor_def: actordef:actors/props/savestation/charclasses/savestation.bmsad
   * Extra - start_point_actor_name: savestation_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
+  > Door from collision_camera_025 (F)
+      Trivial
 
