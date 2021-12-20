@@ -53,18 +53,33 @@ Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testi
 
 ### Setup
 
-1. Clone this repository
-2. Open a terminal in the repository root
-3. Run the following file:
-   1. Windows: `tools/prepare_virtual_env.bat`
-   2. Linux/macOS: `tools/prepare_virtual_env.sh`
-4. You should see "Setup finished successfully." visible when the command finishes.
+Getting started:
+   1. Clone this repository
+   2. Open a terminal in the repository root
+   3. Run the following file:
+      1. Windows: `tools/prepare_virtual_env.bat`
+      2. Linux/macOS: `tools/prepare_virtual_env.sh`
+   4. You should see "Setup finished successfully." visible when the command finishes.
 
 In order to start Randovania, open:
    1. Windows: `tools/start_client.bat`
    2. Linux/macOS: `tools/start_client.sh` 
 
-Alternatively, install requirements.txt to run tests or server.
+In order to run the tests:
+   1. Run both "Getting started" and "Start Randovania" steps. 
+   2. Activate the virtual env. Check start_client.bat/sh for details.
+   3. Run `python -m pip install -r requirements.txt`.
+   4. Run `python -m pytest test`.
+
+In order to run the server:
+   1. Run both "Getting started" and "Start Randovania" steps. 
+   2. Activate the virtual env. Check start_client.bat/sh for details.
+   3. Run `python -m pip install -r requirements.txt`.
+   4. Run `python tools/prepare_dev_server_config.py` once.
+   5. If you wish to use any Discord functionality, you'll need to create an app in Discord 
+   and fill both ids in `tools/dev-server-configuration.json`.  
+   6. Run the server with `tools/start_dev_server.bat` and the client with `tools/start_debug_client.bat`.
+
 Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
 # Documentation
