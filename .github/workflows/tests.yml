@@ -1,6 +1,13 @@
 name: Python Package
 
-on: push
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - stable
+    tags:
+      - 'v*.*.*'
 
 jobs:
   pytest:
