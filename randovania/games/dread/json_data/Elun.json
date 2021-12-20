@@ -8,7 +8,7 @@
         "map_max_y": 239
     },
     "areas": {
-        "collision_camera_000 (E)": {
+        "Elun Gate": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -39,13 +39,59 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Placeholder": {
-                    "node_type": "generic",
+                "Dock to Exterior Bridge": {
+                    "node_type": "dock",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": -2597.57,
+                        "y": 671.02,
+                        "z": 0.0
+                    },
                     "description": "",
                     "extra": {},
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Exterior Bridge",
+                        "node_name": "Dock to Elun Gate"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Dock to Purple Drapes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Purple Drapes": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -509.69,
+                        "y": 776.33,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Purple Drapes",
+                        "node_name": "Dock to Elun Gate"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Dock to Exterior Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -80,7 +126,7 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Door to collision_camera_012 (E)": {
+                "Door to Elun Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -99,12 +145,34 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_012 (E)",
+                        "area_name": "Elun Save Station",
                         "node_name": "Door to Transport to Ghavoran"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Start Point 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tram to Ghavoran - Transport to Elun": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point 1": {
                     "node_type": "generic",
@@ -119,7 +187,15 @@
                         "start_point_actor_name": "StartPoint0",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Elun Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tram to Ghavoran - Transport to Elun": {
                     "node_type": "teleporter",
@@ -144,7 +220,15 @@
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Elun Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point 2": {
                     "node_type": "generic",
@@ -159,11 +243,19 @@
                         "start_point_actor_name": "SP_Checkpoint_ProfessorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Elun Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_002 (E)": {
+        "Purple Drapes": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -194,7 +286,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Dock to collision_camera_003 (E)": {
+                "Door to Ammo Refill Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -213,12 +305,27 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_003 (E)",
-                        "node_name": "Dock to collision_camera_002 (E)"
+                        "area_name": "Ammo Refill Room",
+                        "node_name": "Door to Purple Drapes"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Plasma Beam Door",
+                    "connections": {
+                        "Tile Group (BOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Elun Gate": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 1": {
                     "node_type": "configurable_node",
@@ -237,7 +344,22 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Morph Launcher Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 2": {
                     "node_type": "configurable_node",
@@ -256,11 +378,104 @@
                             "BOMB"
                         ]
                     },
+                    "connections": {
+                        "Door to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Elun Gate": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -713.6,
+                        "y": 654.62,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Elun Gate",
+                        "node_name": "Dock to Purple Drapes"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Door to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Morph Launcher Entrance": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -149.33430162188347,
+                        "y": -308.21834906802223,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Ammo Refill Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1382.26,
+                        "y": -2086.12,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Ammo Refill Room",
+                        "node_name": "Dock to Purple Drapes"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
                     "connections": {}
                 }
             }
         },
-        "collision_camera_003 (E)": {
+        "Ammo Refill Room": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -291,7 +506,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Dock to collision_camera_002 (E)": {
+                "Door to Purple Drapes": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -310,14 +525,22 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_002 (E)",
-                        "node_name": "Dock to collision_camera_003 (E)"
+                        "area_name": "Purple Drapes",
+                        "node_name": "Door to Ammo Refill Room"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Plasma Beam Door",
+                    "connections": {
+                        "Door to Chozo Soldier Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to collision_camera_004 (E)": {
+                "Door to Chozo Soldier Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -336,14 +559,58 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_004 (E)",
-                        "node_name": "Door to collision_camera_003 (E)"
+                        "area_name": "Chozo Soldier Arena",
+                        "node_name": "Door to Ammo Refill Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Purple Drapes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (POWERBEAM)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Wall Jump requirements?",
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Wall Jump",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Door to collision_camera_005 (E)": {
+                "Door to Gyroscope Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -362,14 +629,22 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_005 (E)",
-                        "node_name": "Door to collision_camera_003 (E)"
+                        "area_name": "Gyroscope Room",
+                        "node_name": "Door to Ammo Refill Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Plasma Beam Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (item_energytank_000)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -384,9 +659,39 @@
                     },
                     "pickup_index": 114,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Chozo Soldier Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_006 (E) (doorpowerpower_003)": {
+                "Door to Plasma Beam Room (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -405,14 +710,29 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_006 (E)",
-                        "node_name": "Dock to collision_camera_003 (E) (doorpowerpower_003)"
+                        "area_name": "Plasma Beam Room",
+                        "node_name": "Door to Ammo Refill Room"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Plasma Beam Door",
+                    "connections": {
+                        "Door to Gyroscope Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Ammo Recharge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_006 (E) (doorpowerclosed_000)": {
+                "Door to Plasma Beam Room (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -431,14 +751,32 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_006 (E)",
-                        "node_name": "Dock to collision_camera_003 (E) (doorpowerclosed_000)"
+                        "area_name": "Plasma Beam Room",
+                        "node_name": "Door from Ammo Refill Room"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Door",
+                    "connections": {
+                        "Dock to Bottom Morph Launcher": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Event - Breakable (db_reg_qt_001)": {
+                "Event - Elun - Ammo Recharge Room Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -452,7 +790,15 @@
                         "actor_def": "actordef:actors/props/db_reg_qt_001/charclasses/db_reg_qt_001.bmsad"
                     },
                     "event_name": "s060_quarantine:default:db_reg_qt_001",
-                    "connections": {}
+                    "connections": {
+                        "Door to Plasma Beam Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Ammo Recharge": {
                     "node_type": "generic",
@@ -469,7 +815,15 @@
                         "start_point_actor_name": "ammorecharge_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Plasma Beam Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -503,7 +857,32 @@
                             "POWERBEAM"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Chozo Soldier Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 1": {
                     "node_type": "configurable_node",
@@ -522,7 +901,42 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Chozo Soldier Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 2": {
                     "node_type": "configurable_node",
@@ -541,7 +955,42 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Horizontal Bomb Maze": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 3": {
                     "node_type": "configurable_node",
@@ -560,11 +1009,164 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Energy Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (POWERBEAM)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Purple Drapes": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1649.86,
+                        "y": -2107.06,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Purple Drapes",
+                        "node_name": "Dock to Ammo Refill Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Door to Plasma Beam Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:db_reg_qt_001",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Elun - Ammo Recharge Room Blob": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Bottom Morph Launcher": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2678.32,
+                        "y": -2107.06,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Bottom Morph Launcher",
+                        "node_name": "Dock to Ammo Refill Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Door to Plasma Beam Room (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Horizontal Bomb Maze": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3366.59,
+                        "y": 3486.17,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Horizontal Bomb Maze",
+                        "node_name": "Dock to Ammo Refill Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (BOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_004 (E)": {
+        "Chozo Soldier Arena": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -595,7 +1197,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Door to collision_camera_003 (E)": {
+                "Door to Ammo Refill Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -614,14 +1216,39 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_003 (E)",
-                        "node_name": "Door to collision_camera_004 (E)"
+                        "area_name": "Ammo Refill Room",
+                        "node_name": "Door to Chozo Soldier Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Spider Magnet Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ElunSoldier",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo Soldier Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Chozo Soldier requirements",
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to collision_camera_007 (E)": {
+                "Door to Spider Magnet Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -640,12 +1267,37 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_007 (E)",
-                        "node_name": "Door to collision_camera_004 (E)"
+                        "area_name": "Spider Magnet Room",
+                        "node_name": "Door to Chozo Soldier Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "ElunSoldier",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Chozo Soldier Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Chozo Soldier Requirements",
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -661,10 +1313,31 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {}
+                },
+                "Event - Chozo Soldier Fight": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4515.942941053074,
+                        "y": 1662.5508705684915,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "ElunSoldier",
+                    "connections": {
+                        "Door to Spider Magnet Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_005 (E)": {
+        "Gyroscope Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -695,7 +1368,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door to collision_camera_003 (E)": {
+                "Door to Ammo Refill Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -714,14 +1387,22 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_003 (E)",
-                        "node_name": "Door to collision_camera_005 (E)"
+                        "area_name": "Ammo Refill Room",
+                        "node_name": "Door to Gyroscope Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Spider Magnet Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_007 (E)": {
+                "Door to Spider Magnet Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -740,14 +1421,29 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_007 (E)",
-                        "node_name": "Dock to collision_camera_005 (E)"
+                        "area_name": "Spider Magnet Room",
+                        "node_name": "Dock to Gyroscope Room"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Plasma Beam Door",
+                    "connections": {
+                        "Door to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Door to collision_camera_008 (E)": {
+                "Door to Fan Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -766,12 +1462,20 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_008 (E)",
-                        "node_name": "Door to collision_camera_005 (E)"
+                        "area_name": "Fan Room",
+                        "node_name": "Door to Gyroscope Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB)": {
                     "node_type": "configurable_node",
@@ -790,11 +1494,26 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Spider Magnet Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Fan Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_006 (E)": {
+        "Plasma Beam Room": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -825,7 +1544,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Pickup (itemsphere_plasmabeam_000)": {
+                "Pickup (Plasma Beam)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -840,9 +1559,24 @@
                     },
                     "pickup_index": 115,
                     "major_location": true,
-                    "connections": {}
+                    "connections": {
+                        "Door to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBEAM)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_003 (E) (doorpowerpower_003)": {
+                "Door to Ammo Refill Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -861,14 +1595,36 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_003 (E)",
-                        "node_name": "Dock to collision_camera_006 (E) (doorpowerpower_003)"
+                        "area_name": "Ammo Refill Room",
+                        "node_name": "Door to Plasma Beam Room (Upper)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Plasma Beam Door",
+                    "connections": {
+                        "Pickup (Plasma Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBEAM)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_003 (E) (doorpowerclosed_000)": {
+                "Door from Ammo Refill Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -887,12 +1643,20 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_003 (E)",
-                        "node_name": "Dock to collision_camera_006 (E) (doorpowerclosed_000)"
+                        "area_name": "Ammo Refill Room",
+                        "node_name": "Door to Plasma Beam Room (Lower)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
+                    "connections": {
+                        "Tile Group (POWERBEAM)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -907,7 +1671,15 @@
                         "start_point_actor_name": "SP_PlasmaBeam",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
@@ -926,11 +1698,33 @@
                             "POWERBEAM"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (Plasma Beam)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door from Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_007 (E)": {
+        "Spider Magnet Room": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -961,7 +1755,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to collision_camera_004 (E)": {
+                "Door to Chozo Soldier Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -980,14 +1774,39 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_004 (E)",
-                        "node_name": "Door to collision_camera_007 (E)"
+                        "area_name": "Chozo Soldier Arena",
+                        "node_name": "Door to Spider Magnet Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Dock to Gyroscope Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Dock to collision_camera_005 (E)": {
+                "Dock to Gyroscope Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1006,12 +1825,32 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_005 (E)",
-                        "node_name": "Dock to collision_camera_007 (E)"
+                        "area_name": "Gyroscope Room",
+                        "node_name": "Door to Spider Magnet Room"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "connections": {
+                        "Door to Chozo Soldier Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Add wall jump trick or item requirement",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point": {
                     "node_type": "generic",
@@ -1026,7 +1865,15 @@
                         "start_point_actor_name": "SP_Checkpoint_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Chozo Soldier Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB)": {
                     "node_type": "configurable_node",
@@ -1045,11 +1892,84 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Vertical Bomb Maze": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Vertical Bomb Maze": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7658.09,
+                        "y": 523.83,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Vertical Bomb Maze",
+                        "node_name": "Dock to Spider Magnet Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (BOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_008 (E)": {
+        "Fan Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1080,7 +2000,7 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door to collision_camera_005 (E)": {
+                "Door to Gyroscope Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1099,20 +2019,62 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_005 (E)",
-                        "node_name": "Door to collision_camera_008 (E)"
+                        "area_name": "Gyroscope Room",
+                        "node_name": "Door to Fan Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBEAM)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (SPEEDBOOST)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Vertical Bomb Maze": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
-                "Pickup (item_missiletank_002)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 6100.0,
-                        "y": -1380.0,
-                        "z": 0.0
+                        "x": 6121.620227038184,
+                        "y": -1586.182777204449,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1121,15 +2083,23 @@
                     },
                     "pickup_index": 117,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (SPEEDBOOST)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 7200.0,
-                        "y": -1800.0,
-                        "z": 0.0
+                        "x": 7237.08863662424,
+                        "y": -2015.4913427359247,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1140,15 +2110,59 @@
                             "POWERBEAM"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Gyroscope Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Bottom Morph Launcher": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SPEEDBOOST)": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 5700.0,
-                        "y": -1500.0,
-                        "z": 0.0
+                        "x": 5813.398692810458,
+                        "y": -1692.5925925925926,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1159,11 +2173,119 @@
                             "SPEEDBOOST"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Gyroscope Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Vertical Bomb Maze": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7592.73,
+                        "y": 111.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Vertical Bomb Maze",
+                        "node_name": "Dock to Fan Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Door to Gyroscope Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Bottom Morph Launcher": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7660.75,
+                        "y": -2027.62,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Bottom Morph Launcher",
+                        "node_name": "Dock to Fan Room"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (POWERBEAM)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_009 (E)": {
+        "Vertical Bomb Maze": {
             "default_node": "Life Recharge",
             "valid_starting_location": false,
             "extra": {
@@ -1209,15 +2331,33 @@
                     },
                     "pickup_index": 116,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Event - Breakable (grapplepulloff1x2_000)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 7650.0,
-                        "y": 650.0,
-                        "z": 0.0
+                        "x": 7777.278981768146,
+                        "y": 540.918472652219,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1225,7 +2365,42 @@
                         "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
                     },
                     "event_name": "s060_quarantine:default:grapplepulloff1x2_000",
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Spider Magnet Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Life Recharge": {
                     "node_type": "generic",
@@ -1242,7 +2417,25 @@
                         "start_point_actor_name": "energyrecharge_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Fan Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB WEIGHT)": {
                     "node_type": "generic",
@@ -1262,7 +2455,15 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT)": {
                     "node_type": "generic",
@@ -1300,7 +2501,42 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Horizontal Bomb Maze (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 2": {
                     "node_type": "configurable_node",
@@ -1319,7 +2555,76 @@
                             "POWERBOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (POWERBEAM)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Horizontal Bomb Maze (Lower)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 1": {
                     "node_type": "configurable_node",
@@ -1338,7 +2643,42 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (POWERBEAM)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
@@ -1357,7 +2697,49 @@
                             "POWERBEAM"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBOMB) 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 2": {
                     "node_type": "configurable_node",
@@ -1376,7 +2758,42 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (POWERBEAM)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 3": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 3": {
                     "node_type": "configurable_node",
@@ -1395,7 +2812,42 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 4": {
                     "node_type": "configurable_node",
@@ -1414,7 +2866,94 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Pickup (item_powerbombtank_000)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Breakable (grapplepulloff1x2_000)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 3": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Spider Magnet Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group ()": {
                     "node_type": "configurable_node",
@@ -1432,10 +2971,162 @@
                         "tile_types": []
                     },
                     "connections": {}
+                },
+                "Dock to Horizontal Bomb Maze (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7606.61,
+                        "y": 3695.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Horizontal Bomb Maze",
+                        "node_name": "Dock to Vertical Bomb Maze (Upper)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (POWERBOMB) 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Horizontal Bomb Maze (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7605.77,
+                        "y": 3478.13,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Horizontal Bomb Maze",
+                        "node_name": "Dock to Vertical Bomb Maze (Lower)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (BOMB WEIGHT)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Spider Magnet Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7610.62,
+                        "y": 536.84,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Spider Magnet Room",
+                        "node_name": "Dock to Vertical Bomb Maze"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (BOMB) 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Fan Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7620.31,
+                        "y": 100.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Fan Room",
+                        "node_name": "Dock to Vertical Bomb Maze"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Life Recharge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_010 (E)": {
+        "Horizontal Bomb Maze": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1466,13 +3157,13 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Pickup (item_missiletank_000)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 6800.0,
-                        "y": 3600.0,
-                        "z": 0.0
+                        "x": 6753.561253561254,
+                        "y": 3678.2199158865824,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1481,15 +3172,40 @@
                     },
                     "pickup_index": 118,
                     "major_location": false,
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Vertical Bomb Maze (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 1": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 3700.0,
-                        "y": 3100.0,
-                        "z": 0.0
+                        "x": 3768.8916022249355,
+                        "y": 3161.8720662053993,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1500,15 +3216,50 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 3": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Ammo Refill Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT) 1": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 4000.0,
-                        "y": 3500.0,
-                        "z": 0.0
+                        "x": 4061.389228055895,
+                        "y": 3609.5725139058472,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1544,9 +3295,9 @@
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 5700.0,
-                        "y": 3400.0,
-                        "z": 0.0
+                        "x": 5765.635598968933,
+                        "y": 3487.201058201058,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1557,15 +3308,50 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 3": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Ammo Refill Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 3": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 6000.0,
-                        "y": 3100.0,
-                        "z": 0.0
+                        "x": 6064.102564102564,
+                        "y": 3149.933387600054,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1576,15 +3362,50 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 2": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT) 3": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 6300.0,
-                        "y": 3400.0,
-                        "z": 0.0
+                        "x": 6347.646180979515,
+                        "y": 3537.9404422737757,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1601,9 +3422,9 @@
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 6400.0,
-                        "y": 3300.0,
-                        "z": 0.0
+                        "x": 6475.986975986976,
+                        "y": 3391.6916293582963,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {
@@ -1614,11 +3435,157 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 3": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Vertical Bomb Maze (Lower)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Ammo Refill Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3314.0,
+                        "y": 3461.31,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Ammo Refill Room",
+                        "node_name": "Dock to Horizontal Bomb Maze"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (BOMB) 1": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Vertical Bomb Maze (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7679.85,
+                        "y": 3479.77,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Vertical Bomb Maze",
+                        "node_name": "Dock to Horizontal Bomb Maze (Lower)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Tile Group (BOMB) 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Vertical Bomb Maze (Upper)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 7670.62,
+                        "y": 3698.21,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Vertical Bomb Maze",
+                        "node_name": "Dock to Horizontal Bomb Maze (Upper)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_011 (E)": {
+        "Exterior Bridge": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1649,7 +3616,7 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Door to collision_camera_012 (E)": {
+                "Door to Elun Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1668,16 +3635,51 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_012 (E)",
-                        "node_name": "Door to collision_camera_011 (E)"
+                        "area_name": "Elun Save Station",
+                        "node_name": "Door to Exterior Bridge"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Dock to Elun Gate": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Elun Gate": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2500.0,
+                        "y": 600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Elun Gate",
+                        "node_name": "Dock to Exterior Bridge"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Door to Elun Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_012 (E)": {
+        "Elun Save Station": {
             "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
@@ -1708,7 +3710,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door to collision_camera_011 (E)": {
+                "Door to Exterior Bridge": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1727,12 +3729,20 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "collision_camera_011 (E)",
-                        "node_name": "Door to collision_camera_012 (E)"
+                        "area_name": "Exterior Bridge",
+                        "node_name": "Door to Elun Save Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Ghavoran": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Transport to Ghavoran": {
                     "node_type": "dock",
@@ -1754,11 +3764,26 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Transport to Ghavoran",
-                        "node_name": "Door to collision_camera_012 (E)"
+                        "node_name": "Door to Elun Save Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Exterior Bridge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Save Station": {
                     "node_type": "generic",
@@ -1775,11 +3800,19 @@
                         "start_point_actor_name": "weightactivatedplatform_save",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Transport to Ghavoran": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
-        "collision_camera_MBL_B (E)": {
+        "Bottom Morph Launcher": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1826,13 +3859,97 @@
                 "asset_id": "collision_camera_MBL_B"
             },
             "nodes": {
-                "Placeholder": {
-                    "node_type": "generic",
+                "Dock to Fan Room": {
+                    "node_type": "dock",
                     "heal": false,
-                    "coordinates": null,
+                    "coordinates": {
+                        "x": 7629.22,
+                        "y": -2011.82,
+                        "z": 0.0
+                    },
                     "description": "",
                     "extra": {},
-                    "connections": {}
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Fan Room",
+                        "node_name": "Dock to Bottom Morph Launcher"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Dock to Ammo Refill Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Ammo Refill Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2742.29,
+                        "y": -2146.92,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Elun",
+                        "area_name": "Ammo Refill Room",
+                        "node_name": "Dock to Bottom Morph Launcher"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Dock to Fan Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         }
