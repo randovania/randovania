@@ -84,7 +84,15 @@ jobs:
       -
         name: Test image
         run: |
-          docker run --rm --entrypoint /bin/bash randovania/server:${{ steps.prep.outputs.version }} tools/server_image_test.sh 
+          docker run --rm --entrypoint /bin/bash -v $(pwd):/host \
+            randovania/server:${{ steps.prep.outputs.version }} \
+            tools/server_image_test.sh --cov randovania --cov-report=xml:/host/coverage.xml
+
+      - name: codecov
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          fail_ci_if_error: true
+          files: ./coverage.xml
 
   deploy:
     runs-on: 'ubuntu-latest'
