@@ -30,6 +30,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Artifact hints can now be configured to show area and room name, just area name, or nothing at all
 - Added: Cosmetic Option - Select HUD Color
 - Added: Cosmetic Option - Rotate hue of all 4 suit textures and ball glow color
+- Added: Cosmetic Option - Set default in-game options like Echoes
 
 #### Known Issues:
 
