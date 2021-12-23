@@ -317,7 +317,11 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to collision_camera_011 (G)
-      Spider Magnet or Space Jump or Simple IBJ
+      Any of the following:
+          Spider Magnet or Space Jump or Simple IBJ
+          All of the following:
+              Walljump (Beginner)
+              Flash Shift or Use Spin Boost
 
 > Door to collision_camera_011 (G); Heals? False
   * Plasma Beam Door to collision_camera_011 (G)/Door to Blue EMMI Introduction
@@ -1722,6 +1726,8 @@ Extra - asset_id: collision_camera_024
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Tile Group (POWERBOMB)
       Trivial
+  > Tile Group (SCREWATTACK)
+      Walljump (Beginner) or Simple IBJ or Use Spin Boost
   > Dock to collision_camera_025_B (G)
       After Ghavoran - Storm Missile Gate
 
@@ -1739,8 +1745,10 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
-  > Dock to collision_camera_031 (G) (Mid)
+  > Teleporter to Burenia - Teleport to Ghavoran
       Trivial
+  > Dock to collision_camera_031 (G) (Mid)
+      Morph Ball
 
 > Door to collision_camera_025_B (G); Heals? False
   * Power Beam Door to collision_camera_025_B (G)/Door to Teleport to Burenia (Missile)
@@ -1824,7 +1832,7 @@ Extra - asset_id: collision_camera_025_B
   > Door to Teleport to Burenia (Missile)
       All of the following:
           Morph Ball and Before Ghavoran - grapplepulloff1x2_002
-          Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Simple IBJ
+          Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
   > Door to Teleport to Burenia (Power Beam)
       Infinite Bomb Jump (Intermediate) or Use Spin Boost
 
@@ -2212,10 +2220,12 @@ Extra - asset_id: collision_camera_031
   * Extra - tile_types: ('SCREWATTACK',)
   > Door to Golzuna Tower
       Trivial
+  > Left Water Ledge
+      Trivial
   > Top Room
       All of the following:
           Morph Ball
-          Speed Booster or Simple IBJ or Use Spin Boost
+          Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -2266,6 +2276,12 @@ Extra - asset_id: collision_camera_031
       Morph Ball
 
 > Left Water Ledge; Heals? False
+  > Tile Group (BOMB) 1
+      All of the following:
+          Morph Ball
+          Grapple Beam or Gravity Suit or Spider Magnet
+  > Tile Group (SCREWATTACK) 2
+      Grapple Beam or Gravity Suit or Spider Magnet
   > Dock to Teleport to Burenia (Bottom)
       Trivial
   > Dock to Teleport to Burenia (Mid)
@@ -2274,24 +2290,14 @@ Extra - asset_id: collision_camera_031
           All of the following:
               Gravity Suit
               Flash Shift or Simple IBJ or Use Spin Boost
-  > Top Room
-      All of the following:
-          Morph Ball
-          Any of the following:
-              All of the following:
-                  Gravity Suit
-                  Space Jump or Simple IBJ
-              All of the following:
-                  Space Jump
-                  Grapple Beam or Spider Magnet
 
 > Top Room; Heals? False
   > Life Recharge
       Trivial
+  > Tile Group (SCREWATTACK) 2
+      Morph Ball
   > Dock to Golzuna Tower
       After Ghavoran - Pulse Radar Enky
-  > Left Water Ledge
-      Morph Ball
   > Event - Pulse Radar Enky
       Destroy Enky
 
