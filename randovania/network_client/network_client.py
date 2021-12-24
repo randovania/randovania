@@ -449,7 +449,7 @@ class NetworkClient:
                                   backend: MemoryExecutorChoice):
 
         inventory_binary = BinaryInventory.build([
-            {"index": resource.index, "amount": item.amount, "capacity": item.capacity}
+            {"index": resource.extra["item_id"], "amount": item.amount, "capacity": item.capacity}
             for resource, item in inventory.items()
         ])
         state_string = f"{state.pretty_text} ({backend.pretty_text})"
