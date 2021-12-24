@@ -35,7 +35,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 
 #### Patcher Changes
 
-- Added: Support for NTSC-U 0-01, NTSC-J and NTSC-K (Gamecube).
+- Added: Support for NTSC-U 0-01, NTSC-J and NTSC-K (Gamecube)
+- Added: List of tournament winners on lore scan in Artifact Temple
 - Added: QoL Game Breaking now fixes several crashes on Frigate Orpheon
 - Added: QoL Game Breaking now fixes the soft-lock in hive totem by making the blocks drop sooner
 - Added: Option to disable item loss in Frigate (Enabled by default)
