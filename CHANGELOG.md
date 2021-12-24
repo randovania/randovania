@@ -37,14 +37,19 @@ This feature comes with plenty of quality of life functionality for editing the 
 
 - Added: Support for NTSC-U 0-01, NTSC-J and NTSC-K (Gamecube).
 - Added: QoL Game Breaking now fixes several crashes on Frigate Orpheon
+- Added: QoL Game Breaking now fixes the soft-lock in hive totem by making the blocks drop sooner
 - Added: Option to disable item loss in Frigate (Enabled by default)
+- Added: QoL Pickup Scans - Weeds by item in Landing Site now don't have scan point
 - Fixed: Safeguard against blowing past layer limits.
 - Fixed: On Major custscene skip, Elite Quarters now stays locked until the player picks up the item. The hudmemo is now tied to the item rather than the death animation.
 - Fixed: Ruined fountain not always showing the right scan.
 - Fixed: Phazon Suit Small Samus Morph Ball Glow
+- Fixed: Vent shaft item not being scannable on QoL Pickup Scans
+- Fixed: Automatic crash screen
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 - Changed: Increased Maximum Missile/Etank/Capacity for seeds with more expansion count than is available in vanilla
+- Changed: Phazon Elite QoL now leaves the turrets on their original layer, making central dynamo affect the room as in vanilla
 
 #### Logic Database
 
