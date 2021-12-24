@@ -267,6 +267,23 @@ class RandomprimePatcher(Patcher):
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
 
         world_data = {}
+
+        default_game_options = {
+            "screenBrightness": cosmetic_patches.user_preferences.screen_brightness,
+            "screenOffsetX": cosmetic_patches.user_preferences.screen_x_offset,
+            "screenOffsety": cosmetic_patches.user_preferences.screen_y_offset,
+            "screenStretch": cosmetic_patches.user_preferences.screen_stretch,
+            "soundMode": cosmetic_patches.user_preferences.sound_mode,
+            "sfxVolume": cosmetic_patches.user_preferences.sfx_volume,
+            "musicVolume": cosmetic_patches.user_preferences.music_volume,
+            "visorOpacity": cosmetic_patches.user_preferences.hud_alpha,
+            "helmetOpacity": cosmetic_patches.user_preferences.helmet_alpha,
+            "hudLag": cosmetic_patches.user_preferences.hud_lag,
+            "reverseYAxis": cosmetic_patches.user_preferences.invert_y_axis,
+            "rumble": cosmetic_patches.user_preferences.rumble,
+            "swapBeamControls": cosmetic_patches.user_preferences.swap_beam_controls,
+        }
+        
         for world in db.world_list.worlds:
             if world.name == "End of Game":
                 continue
@@ -359,6 +376,7 @@ class RandomprimePatcher(Patcher):
         return {
             "seed": description.permalink.seed_number,
             "preferences": {
+                "defaultGameOptions" : default_game_options,
                 "qolGameBreaking": configuration.qol_game_breaking,
                 "qolCosmetic": cosmetic_patches.qol_cosmetic,
                 "qolPickupScans": configuration.qol_pickup_scans,
