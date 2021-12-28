@@ -30,12 +30,14 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Artifact hints can now be configured to show area and room name, just area name, or nothing at all
 - Added: Cosmetic Option - Select HUD Color
 - Added: Cosmetic Option - Rotate hue of all 4 suit textures and ball glow color
+- Added: Cosmetic Option - Set default in-game options like Echoes
 
 #### Known Issues:
 
 #### Patcher Changes
 
-- Added: Support for NTSC-U 0-01, NTSC-J and NTSC-K (Gamecube).
+- Added: Support for NTSC-U 0-01, NTSC-J and NTSC-K (Gamecube)
+- Added: List of tournament winners on lore scan in Artifact Temple
 - Added: QoL Game Breaking now fixes several crashes on Frigate Orpheon
 - Added: QoL Game Breaking now fixes the soft-lock in hive totem by making the blocks drop sooner
 - Added: Option to disable item loss in Frigate (Enabled by default)
