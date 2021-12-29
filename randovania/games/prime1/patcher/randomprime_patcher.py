@@ -391,7 +391,8 @@ class RandomprimePatcher(Patcher):
                 "suitColors": suit_colors
             },
             "gameConfig": {
-                "shufflePickupPosition":True,
+                "shufflePickupPosition": configuration.shuffle_item_pos,
+                "shufflePickupPosAllRooms": configuration.shuffle_item_pos,
                 "startingRoom": _name_for_location(db.world_list, patches.starting_location),
                 "startingMemo": starting_memo,
                 "warpToStart": configuration.warp_to_start,

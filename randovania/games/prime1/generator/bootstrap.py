@@ -22,6 +22,8 @@ class PrimeBootstrap(MetroidBootstrap):
             "backwards_lower_mines": "backwards_lower_mines",
             "phazon_elite_without_dynamo": "phazon_elite_without_dynamo",
             "small_samus": "small",
+            "shuffle_item_pos":"shuffle_item_pos",
+            "items_every_room":"items_every_room",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):

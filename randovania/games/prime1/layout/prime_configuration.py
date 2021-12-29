@@ -29,6 +29,8 @@ class PrimeConfiguration(BaseConfiguration):
     progressive_damage_reduction: bool
     allow_underwater_movement_without_gravity: bool
     small_samus: bool
+    shuffle_item_pos: bool
+    items_every_room: bool
 
     main_plaza_door: bool
     backwards_frigate: bool
