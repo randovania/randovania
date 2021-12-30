@@ -1,0 +1,319 @@
+----------------
+Bowling Alley
+(Valid Starting Location)
+Extra - asset_id: 51
+> Door from West Ocean; Heals? False; Spawn Point
+  * Permanently Locked to West Ocean/Door to Bowling Alley
+  > Door to Gravity Suit Room
+      All of the following:
+          Morph Ball
+          Grapple Beam or Space Jump
+
+> Door to Gravity Suit Room; Heals? False
+  * Normal Door to Gravity Suit Room/Door to Bowling Alley
+  > Pickup (Missile Expansion)
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 130; Major Location? False
+  > Door to Gravity Suit Room
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+  > Pickup (Reserve Tank)
+      Morph Ball and Power Bombs and Speed Booster
+
+> Pickup (Reserve Tank); Heals? False
+  * Pickup 129; Major Location? True
+  > Pickup (Missile Expansion)
+      Trivial
+
+----------------
+Gravity Suit Room
+(Valid Starting Location)
+Extra - asset_id: 52
+> Door to West Ocean; Heals? False; Spawn Point
+  * Normal Door to West Ocean/Door from Gravity Suit Room
+  > Door to Bowling Alley
+      Trivial
+  > Pickup (Gravity Suit)
+      Trivial
+
+> Door to Bowling Alley; Heals? False
+  * Normal Door to Bowling Alley/Door to Gravity Suit Room
+  > Door to West Ocean
+      Trivial
+
+> Pickup (Gravity Suit); Heals? False
+  * Pickup 135; Major Location? True
+  > Door to West Ocean
+      Trivial
+
+----------------
+Wrecked Ship Entrance
+(Valid Starting Location)
+Extra - asset_id: 53
+> Door to West Ocean; Heals? False; Spawn Point
+  * Normal Door to West Ocean/Door to Wrecked Ship Entrance
+  > Door to Wrecked Ship Main Shaft
+      Trivial
+
+> Door to Wrecked Ship Main Shaft; Heals? False
+  * Normal Door to Wrecked Ship Main Shaft/Door to Wrecked Ship Entrance
+  > Door to West Ocean
+      Trivial
+
+----------------
+Wrecked Ship Main Shaft
+(Valid Starting Location)
+Extra - asset_id: 54
+> Door to Wrecked Ship Entrance; Heals? False; Spawn Point
+  * Normal Door to Wrecked Ship Entrance/Door to Wrecked Ship Main Shaft
+  > Door to Attic
+      Trivial
+  > Door to Shaft Save Station
+      Trivial
+  > Door to Sponge Bath
+      After Power Wrecked Ship
+  > Pickup (Missile Expansion)
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+
+> Door to Attic; Heals? False
+  * Normal Door to Attic/Door to Wrecked Ship Main Shaft
+  > Door to Wrecked Ship Entrance
+      Trivial
+  > Door to Wrecked Ship East Super Room
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+  > Door to Wrecked Ship West Super Room
+      After Power Wrecked Ship
+
+> Door to Shaft Save Station; Heals? False
+  * Normal Door to Shaft Save Station/Door to Wrecked Ship Main Shaft
+
+> Door to Sponge Bath; Heals? False
+  * Normal Door to Sponge Bath/Door to Wrecked Ship Main Shaft
+  > Door to Wrecked Ship Entrance
+      Trivial
+
+> Door to Wrecked Ship East Super Room; Heals? False
+  * Normal Door to Wrecked Ship East Super Room/Door to Wrecked Ship Main Shaft
+  > Door to Attic
+      All of the following:
+          Charge Beam
+          Morph Ball Bombs or Power Bombs
+          Hi-Jump Boots or Space Jump
+
+> Door to Wrecked Ship West Super Room; Heals? False
+  * Normal Door to Wrecked Ship West Super Room/Door to Wrecked Ship Main Shaft
+  > Door to Attic
+      Hi-Jump Boots or Space Jump
+
+> Door to Basement; Heals? False
+  * Super Missile Door to Basement/Door to Wrecked Ship Main Shaft
+  > Door to Wrecked Ship Entrance
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+          Hi-Jump Boots or Space Jump
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 128; Major Location? False
+  > Door to Wrecked Ship Entrance
+      All of the following:
+          Morph Ball
+          Hi-Jump Boots or Space Jump
+
+----------------
+Shaft Save Station
+Extra - asset_id: 55
+> Door to Wrecked Ship Main Shaft; Heals? False; Spawn Point
+  * Normal Door to Wrecked Ship Main Shaft/Door to Shaft Save Station
+
+----------------
+Basement
+(Valid Starting Location)
+Extra - asset_id: 56
+> Door to Wrecked Ship Main Shaft; Heals? False; Spawn Point
+  * Normal Door to Wrecked Ship Main Shaft/Door to Basement
+  > Door to Wrecked Ship Map Station
+      Trivial
+  > Door to Phantoon's Room
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+          Missile ≥ 3 or Super Missile
+
+> Door to Wrecked Ship Map Station; Heals? False
+  * Normal Door to Wrecked Ship Map Station/Door to Basement
+  > Door to Wrecked Ship Main Shaft
+      Trivial
+
+> Door to Phantoon's Room; Heals? False
+  * Normal Door to Phantoon's Room/Door to Basement
+  > Door to Wrecked Ship Main Shaft
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+
+----------------
+Phantoon's Room
+(Valid Starting Location)
+Extra - asset_id: 57
+> Door to Basement; Heals? False; Spawn Point
+  * Normal Door to Basement/Door to Phantoon's Room
+  > Event - Phantoon Defeated
+      Charge Beam or Missile ≥ 25 or Super Missile ≥ 5
+
+> Event - Phantoon Defeated; Heals? False
+  * Event Phantoon Defeated
+  > Event - Wrecked Ship Powered
+      Trivial
+
+> Event - Wrecked Ship Powered; Heals? False
+  * Event Power Wrecked Ship
+  > Door to Basement
+      Trivial
+
+----------------
+Wrecked Ship Map Station
+(Valid Starting Location)
+Extra - asset_id: 58
+> Door to Basement; Heals? False; Spawn Point
+  * Normal Door to Basement/Door to Wrecked Ship Map Station
+
+----------------
+Wrecked Ship East Super Room
+(Valid Starting Location)
+Extra - asset_id: 59
+> Door to Wrecked Ship Main Shaft; Heals? False; Spawn Point
+  * Normal Door to Wrecked Ship Main Shaft/Door to Wrecked Ship East Super Room
+  > Pickup (Super Missile Expansion)
+      All of the following:
+          Morph Ball and After Power Wrecked Ship
+          Morph Ball Bombs or Power Bombs
+
+> Pickup (Super Missile Expansion); Heals? False
+  * Pickup 134; Major Location? False
+  > Door to Wrecked Ship Main Shaft
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+
+----------------
+Wrecked Ship West Super Room
+(Valid Starting Location)
+Extra - asset_id: 60
+> Door to Wrecked Ship Main Shaft; Heals? False; Spawn Point
+  * Normal Door to Wrecked Ship Main Shaft/Door to Wrecked Ship West Super Room
+  > Pickup (Super Missile Expansion)
+      Trivial
+
+> Pickup (Super Missile Expansion); Heals? False
+  * Pickup 133; Major Location? False
+  > Door to Wrecked Ship Main Shaft
+      Trivial
+
+----------------
+Sponge Bath
+(Valid Starting Location)
+Extra - asset_id: 61
+> Door to Wrecked Ship Main Shaft; Heals? False; Spawn Point
+  * Normal Door to Wrecked Ship Main Shaft/Door to Sponge Bath
+  > Door to Spiky Death Room
+      Gravity Suit or Space Jump
+
+> Door to Spiky Death Room; Heals? False
+  * Normal Door to Spiky Death Room/Door to Sponge Bath
+  > Door to Wrecked Ship Main Shaft
+      Trivial
+
+----------------
+Spiky Death Room
+(Valid Starting Location)
+Extra - asset_id: 62
+> Door to Electric Death Room; Heals? False; Spawn Point
+  * Normal Door to Electric Death Room/Door to Spiky Death Room
+  > Door to Sponge Bath
+      Trivial
+
+> Door to Sponge Bath; Heals? False
+  * Normal Door to Sponge Bath/Door to Spiky Death Room
+  > Door to Electric Death Room
+      Trivial
+
+----------------
+Electric Death Room
+(Valid Starting Location)
+Extra - asset_id: 63
+> Door to Spiky Death Room; Heals? False; Spawn Point
+  * Normal Door to Spiky Death Room/Door to Electric Death Room
+  > Door to East Ocean
+      Trivial
+
+> Door to Wrecked Ship Energy Tank Room; Heals? False
+  * Missile Door to Wrecked Ship Energy Tank Room/Door to Electric Death Room
+  > Door to East Ocean
+      Trivial
+
+> Door to East Ocean; Heals? False
+  * Normal Door to East Ocean/Door to Electric Death Room
+  > Door to Spiky Death Room
+      Gravity Suit or Hi-Jump Boots or Space Jump
+  > Door to Wrecked Ship Energy Tank Room
+      Trivial
+
+----------------
+Wrecked Ship Energy Tank Room
+(Valid Starting Location)
+Extra - asset_id: 64
+> Door to Electric Death Room; Heals? False; Spawn Point
+  * Normal Door to Electric Death Room/Door to Wrecked Ship Energy Tank Room
+  > Pickup (Energy Tank)
+      Trivial
+
+> Pickup (Energy Tank); Heals? False
+  * Pickup 132; Major Location? True
+  > Door to Electric Death Room
+      Trivial
+
+----------------
+Attic
+(Valid Starting Location)
+Extra - asset_id: 65
+> Door to West Ocean; Heals? False; Spawn Point
+  * Normal Door to West Ocean/Door to Attic
+  > Door to Wrecked Ship Main Shaft
+      Trivial
+
+> Door to Wrecked Ship Main Shaft; Heals? False
+  * Normal Door to Wrecked Ship Main Shaft/Door to Attic
+  > Door to West Ocean
+      After Power Wrecked Ship
+  > Door to Assembly Line
+      After Power Wrecked Ship
+
+> Door to Assembly Line; Heals? False
+  * Normal Door to Assembly Line/Door to Attic
+  > Door to Wrecked Ship Main Shaft
+      Trivial
+
+----------------
+Assembly Line
+(Valid Starting Location)
+Extra - asset_id: 66
+> Door to Attic; Heals? False; Spawn Point
+  * Normal Door to Attic/Door to Assembly Line
+  > Pickup (Missile Expansion)
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 131; Major Location? False
+  > Door to Attic
+      Trivial
+
