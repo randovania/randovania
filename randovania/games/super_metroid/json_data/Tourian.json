@@ -1,0 +1,1488 @@
+{
+	"name": "Tourian",
+	"extra": {
+		"asset_id": 5554
+	},
+	"areas": {
+		"Tourian Entrance": {
+            "default_node": "Elevator - Golden Four",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 33
+            },
+            "nodes": {
+                "Door to Upper Tourian Save Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Upper Tourian Save Station",
+                        "node_name": "Door to Tourian Entrance"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Metroid Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Metroid Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Metroid Room 1",
+                        "node_name": "Door to Tourian Entrance"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Upper Tourian Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Elevator - Golden Four": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Elevator - Golden Four": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {
+                        "scan_asset_id": null,
+                        "teleporter_instance_id": null
+                    },
+                    "destination": {
+                        "world_name": "Crateria",
+                        "area_name": "Gold Four"
+                    },
+                    "keep_name_when_vanilla": false,
+                    "editable": false,
+                    "connections": {
+                        "Door to Metroid Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Upper Tourian Save Station": {
+            "default_node": "Door to Tourian Entrance",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": 34
+            },
+            "nodes": {
+                "Door to Tourian Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Entrance",
+                        "node_name": "Door to Upper Tourian Save Station"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
+                }
+            }
+        },
+        "Metroid Room 1": {
+            "default_node": "Door to Tourian Entrance",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 35
+            },
+            "nodes": {
+                "Door to Tourian Entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Entrance",
+                        "node_name": "Door to Metroid Room 1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Metroid Room 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Metroid Room 1 Cleared": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Supers",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 20,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 12,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Metroid Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Metroid Room 2",
+                        "node_name": "Door to Metroid Room 1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Locked until Metroid Room 1 Cleared",
+                    "connections": {
+                        "Door to Tourian Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Metroid Room 1 Cleared": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Event14",
+                    "connections": {
+                        "Door to Tourian Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Metroid Room 2": {
+            "default_node": "Door to Metroid Room 1",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 36
+            },
+            "nodes": {
+                "Door to Metroid Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Metroid Room 1",
+                        "node_name": "Door to Metroid Room 2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Metroid Room 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Metroid Room 2 Cleared": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Supers",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 10,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 6,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Metroid Room 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Metroid Room 3",
+                        "node_name": "Door to Metroid Room 2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Locked until Metroid Room 2 Cleared",
+                    "connections": {
+                        "Door to Metroid Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Metroid Room 2 Cleared": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Event15",
+                    "connections": {
+                        "Door to Metroid Room 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Metroid Room 3": {
+            "default_node": "Door to Metroid Room 2",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 37
+            },
+            "nodes": {
+                "Door to Metroid Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Metroid Room 2",
+                        "node_name": "Door to Metroid Room 3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Metroid Room 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Metroid Room 3 Cleared": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Supers",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 15,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 9,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Metroid Room 4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Metroid Room 4",
+                        "node_name": "Door to Metroid Room 3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Locked until Metroid Room 3 Cleared",
+                    "connections": {
+                        "Door to Metroid Room 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Metroid Room 3 Cleared": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Event16",
+                    "connections": {
+                        "Door to Metroid Room 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Metroid Room 4": {
+            "default_node": "Door to Metroid Room 3",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 38
+            },
+            "nodes": {
+                "Door to Metroid Room 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Metroid Room 3",
+                        "node_name": "Door to Metroid Room 4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Blue Hopper Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Metroid Room 4 Cleared": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Ice",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Supers",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missile",
+                                                                    "amount": 15,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 9,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Blue Hopper Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Blue Hopper Room",
+                        "node_name": "Door to Metroid Room 4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Locked until Metroid Room 4 Cleared",
+                    "connections": {
+                        "Door to Metroid Room 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Metroid Room 4 Cleared": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Event17",
+                    "connections": {
+                        "Door to Metroid Room 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Blue Hopper Room": {
+            "default_node": "Door to Dust Torizo Room",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 39
+            },
+            "nodes": {
+                "Door to Dust Torizo Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Dust Torizo Room",
+                        "node_name": "Door from Blue Hopper Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Metroid Room 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Metroid Room 4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Metroid Room 4",
+                        "node_name": "Door to Blue Hopper Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Dust Torizo Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Dust Torizo Room": {
+            "default_node": "Door from Blue Hopper Room",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 40
+            },
+            "nodes": {
+                "Door from Blue Hopper Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Blue Hopper Room",
+                        "node_name": "Door to Dust Torizo Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Permanently Locked",
+                    "connections": {
+                        "Door to Big Boy Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Big Boy Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Big Boy Room",
+                        "node_name": "Door from Dust Torizo Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door from Blue Hopper Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Big Boy Room": {
+            "default_node": "Door from Dust Torizo Room",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 41
+            },
+            "nodes": {
+                "Door to Seaweed Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Seaweed Room",
+                        "node_name": "Door to Big Boy Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door from Dust Torizo Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door from Dust Torizo Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Dust Torizo Room",
+                        "node_name": "Door to Big Boy Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Permanently Locked",
+                    "connections": {
+                        "Door to Seaweed Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Seaweed Room": {
+            "default_node": "Door to Big Boy Room",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 42
+            },
+            "nodes": {
+                "Door to Big Boy Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Big Boy Room",
+                        "node_name": "Door to Seaweed Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Tourian Gadora Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Tourian Gadora Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Gadora Room",
+                        "node_name": "Door to Seaweed Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Door",
+                    "connections": {
+                        "Door to Big Boy Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Tourian Resupply Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Tourian Resupply Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Resupply Station",
+                        "node_name": "Door to Seaweed Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Tourian Gadora Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Tourian Resupply Station": {
+            "default_node": "Door to Seaweed Room",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 43
+            },
+            "nodes": {
+                "Door to Seaweed Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Seaweed Room",
+                        "node_name": "Door to Tourian Resupply Station"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
+                }
+            }
+        },
+        "Tourian Gadora Room": {
+            "default_node": "Door to Seaweed Room",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 44
+            },
+            "nodes": {
+                "Door to Seaweed Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Seaweed Room",
+                        "node_name": "Door to Tourian Gadora Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Rinka Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Rinka Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Rinka Shaft",
+                        "node_name": "Door to Tourian Gadora Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Seaweed Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Rinka Shaft": {
+            "default_node": "Door to Rinka Shaft Save Station",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 45
+            },
+            "nodes": {
+                "Door to Rinka Shaft Save Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Rinka Shaft Save Station",
+                        "node_name": "Door to Rinka Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Mother Brain's Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Tourian Gadora Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Mother Brain's Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Mother Brain's Room",
+                        "node_name": "Door to Rinka Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Missile Door",
+                    "connections": {
+                        "Door to Rinka Shaft Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Tourian Gadora Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Gadora Room",
+                        "node_name": "Door to Rinka Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Rinka Shaft Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Rinka Shaft Save Station": {
+            "default_node": "Door to Rinka Shaft",
+            "valid_starting_location": false,
+            "extra": {
+                "asset_id": 46
+            },
+            "nodes": {
+                "Door to Rinka Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Rinka Shaft",
+                        "node_name": "Door to Rinka Shaft Save Station"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
+                }
+            }
+        },
+        "Mother Brain's Room": {
+            "default_node": "Door to Rinka Shaft",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 47
+            },
+            "nodes": {
+                "Door to Rinka Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Rinka Shaft",
+                        "node_name": "Door to Mother Brain's Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Event - Defeat Mother Brain": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "ETank",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Missile",
+                                                        "amount": 96,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Supers",
+                                                        "amount": 40,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Tourian Escape Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Escape Room 1",
+                        "node_name": "Door from Mother Brain's Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
+                },
+                "Event - Defeat Mother Brain": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Event7",
+                    "connections": {
+                        "Door to Tourian Escape Room 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Tourian Escape Room 1": {
+            "default_node": "Door from Mother Brain's Room",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 42069
+            },
+            "nodes": {
+                "Door from Mother Brain's Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Mother Brain's Room",
+                        "node_name": "Door to Tourian Escape Room 1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Permanently Locked",
+                    "connections": {
+                        "Door to Tourian Escape Room 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Tourian Escape Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Escape Room 2",
+                        "node_name": "Door from Tourian Escape Room 1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
+                }
+            }
+        },
+        "Tourian Escape Room 2": {
+            "default_node": "Door to Tourian Escape Room 3",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 48
+            },
+            "nodes": {
+                "Door to Tourian Escape Room 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Escape Room 3",
+                        "node_name": "Door from Tourian Escape Room 2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
+                },
+                "Door from Tourian Escape Room 1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Escape Room 1",
+                        "node_name": "Door to Tourian Escape Room 2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Permanently Locked",
+                    "connections": {
+                        "Door to Tourian Escape Room 3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Tourian Escape Room 3": {
+            "default_node": "Door from Tourian Escape Room 2",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 49
+            },
+            "nodes": {
+                "Door from Tourian Escape Room 2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Escape Room 2",
+                        "node_name": "Door to Tourian Escape Room 3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Permanently Locked",
+                    "connections": {
+                        "Door to Tourian Escape Room 4": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "HiJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Tourian Escape Room 4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Escape Room 4",
+                        "node_name": "Door from Tourian Escape Room 3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
+                }
+            }
+        },
+        "Tourian Escape Room 4": {
+            "default_node": "Door from Tourian Escape Room 3",
+            "valid_starting_location": true,
+            "extra": {
+                "asset_id": 50
+            },
+            "nodes": {
+                "Door from Tourian Escape Room 3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Tourian",
+                        "area_name": "Tourian Escape Room 3",
+                        "node_name": "Door to Tourian Escape Room 4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Permanently Locked",
+                    "connections": {
+                        "Door to Climb": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "HiJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Climb": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Crateria",
+                        "area_name": "Climb",
+                        "node_name": "Door from Tourian Escape Room 4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
+                }
+            }
+        }
+	}
+}
