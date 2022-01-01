@@ -92,7 +92,7 @@
             }
         },
         "Upper Tourian Save Station": {
-            "default_node": "Door to Tourian Entrance",
+            "default_node": "Save Station",
             "valid_starting_location": true,
             "extra": {
                 "asset_id": 34
@@ -111,7 +111,31 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Tourian Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1126,7 +1150,7 @@
             }
         },
         "Rinka Shaft Save Station": {
-            "default_node": "Door to Rinka Shaft",
+            "default_node": "Save Station",
             "valid_starting_location": true,
             "extra": {
                 "asset_id": 46
@@ -1145,7 +1169,31 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Rinka Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
