@@ -844,7 +844,7 @@
             }
         },
         "Shaft Save Station": {
-            "default_node": "Door to Wrecked Ship Main Shaft",
+            "default_node": "Save Station",
             "valid_starting_location": true,
             "extra": {
                 "asset_id": 55
@@ -863,7 +863,31 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Wrecked Ship Main Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
