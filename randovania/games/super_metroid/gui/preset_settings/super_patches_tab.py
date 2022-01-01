@@ -24,10 +24,10 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
             self._on_patch_checkbox_changed, "max_ammo_display"
         ))
         self.aim_with_any_button_checkbox.stateChanged.connect(functools.partial(
-            self._on_patch_checkbox_changed, "rebindable_aim"
+            self._on_patch_checkbox_changed, "aim_with_any_button"
         ))
         self.fast_doors_checkbox.stateChanged.connect(functools.partial(
-            self._on_patch_checkbox_changed, "faster_doors_and_elevators"
+            self._on_patch_checkbox_changed, "fast_doors_and_elevators"
         ))
         self.backup_saves_checkbox.stateChanged.connect(functools.partial(
             self._on_patch_checkbox_changed, "backup_saves"
@@ -39,7 +39,7 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
             self._on_patch_checkbox_changed, "skip_intro"
         ))
         self.mb_cutscene_tweaks_checkbox.stateChanged.connect(functools.partial(
-            self._on_patch_checkbox_changed, "mb_cutscene_tweaks"
+            self._on_patch_checkbox_changed, "mother_brain_cutscene_edits"
         ))
         self.no_demo_checkbox.stateChanged.connect(functools.partial(
             self._on_patch_checkbox_changed, "no_demo"
@@ -48,7 +48,7 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
             self._on_patch_checkbox_changed, "dachora_pit"
         ))
         self.early_supers_checkbox.stateChanged.connect(functools.partial(
-            self._on_patch_checkbox_changed, "early_supers"
+            self._on_patch_checkbox_changed, "early_supers_bridge"
         ))
         self.pre_hi_jump_checkbox.stateChanged.connect(functools.partial(
             self._on_patch_checkbox_changed, "pre_hi_jump"
@@ -63,10 +63,10 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
             self._on_patch_checkbox_changed, "red_tower"
         ))
         self.nova_boost_checkbox.stateChanged.connect(functools.partial(
-            self._on_patch_checkbox_changed, "nova_boost"
+            self._on_patch_checkbox_changed, "nova_boost_platform"
         ))
         self.save_refills_checkbox.stateChanged.connect(functools.partial(
-            self._on_patch_checkbox_changed, "saves_refill_energy"
+            self._on_patch_checkbox_changed, "refill_before_save"
         ))
         self.respin_checkbox.stateChanged.connect(functools.partial(
             self._on_patch_checkbox_changed, "respin"
@@ -81,10 +81,10 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
             self._on_patch_checkbox_changed, "speedkeep"
         ))
         self.isj_checkbox.stateChanged.connect(functools.partial(
-            self._on_patch_checkbox_changed, "isj"
+            self._on_patch_checkbox_changed, "infinite_space_jump"
         ))
         self.mb_rainbow_beam_nerf_checkbox.stateChanged.connect(functools.partial(
-            self._on_patch_checkbox_changed, "mb_rainbow_beam_nerf"
+            self._on_patch_checkbox_changed, "nerfed_rainbow_beam"
         ))
         self.fix_spacetime_checkbox.stateChanged.connect(functools.partial(
             self._on_patch_checkbox_changed, "fix_spacetime"
@@ -131,27 +131,27 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
         self.colorblind_checkbox.setChecked(patch_configuration.colorblind_mode)
         self.instant_g4_checkbox.setChecked(patch_configuration.instant_g4)
         self.max_ammo_display_checkbox.setChecked(patch_configuration.max_ammo_display)
-        self.aim_with_any_button_checkbox.setChecked(patch_configuration.rebindable_aim)
-        self.fast_doors_checkbox.setChecked(patch_configuration.faster_doors_and_elevators)
+        self.aim_with_any_button_checkbox.setChecked(patch_configuration.aim_with_any_button)
+        self.fast_doors_checkbox.setChecked(patch_configuration.fast_doors_and_elevators)
         self.backup_saves_checkbox.setChecked(patch_configuration.backup_saves)
         self.better_decompression_checkbox.setChecked(patch_configuration.better_decompression)
         self.skip_intro_checkbox.setChecked(patch_configuration.skip_intro)
-        self.mb_cutscene_tweaks_checkbox.setChecked(patch_configuration.mb_cutscene_tweaks)
+        self.mb_cutscene_tweaks_checkbox.setChecked(patch_configuration.mother_brain_cutscene_edits)
         self.no_demo_checkbox.setChecked(patch_configuration.no_demo)
         self.dachora_pit_checkbox.setChecked(patch_configuration.dachora_pit)
-        self.early_supers_checkbox.setChecked(patch_configuration.early_supers)
+        self.early_supers_checkbox.setChecked(patch_configuration.early_supers_bridge)
         self.pre_hi_jump_checkbox.setChecked(patch_configuration.pre_hi_jump)
         self.moat_checkbox.setChecked(patch_configuration.moat)
         self.pre_spazer_checkbox.setChecked(patch_configuration.pre_spazer)
         self.red_tower_checkbox.setChecked(patch_configuration.red_tower)
-        self.nova_boost_checkbox.setChecked(patch_configuration.nova_boost)
+        self.nova_boost_checkbox.setChecked(patch_configuration.nova_boost_platform)
         self.respin_checkbox.setChecked(patch_configuration.respin)
-        self.save_refills_checkbox.setChecked(patch_configuration.saves_refill_energy)
+        self.save_refills_checkbox.setChecked(patch_configuration.refill_before_save)
         self.cant_use_supers_on_red_doors_checkbox.setChecked(patch_configuration.cant_use_supers_on_red_doors)
         self.cheap_charge_checkbox.setChecked(patch_configuration.cheap_charge)
         self.speedkeep_checkbox.setChecked(patch_configuration.speedkeep)
-        self.isj_checkbox.setChecked(patch_configuration.isj)
-        self.mb_rainbow_beam_nerf_checkbox.setChecked(patch_configuration.mb_rainbow_beam_nerf)
+        self.isj_checkbox.setChecked(patch_configuration.infinite_space_jump)
+        self.mb_rainbow_beam_nerf_checkbox.setChecked(patch_configuration.nerfed_rainbow_beam)
         self.fix_spacetime_checkbox.setChecked(patch_configuration.fix_spacetime)
         self.fix_heat_echoes_checkbox.setChecked(patch_configuration.fix_heat_echoes)
         self.fix_screw_attack_menu_checkbox.setChecked(patch_configuration.fix_screw_attack_menu)
