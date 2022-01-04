@@ -12,6 +12,7 @@ class MusicMode(Enum):
 
 @dataclasses.dataclass(frozen=True)
 class SuperPatchConfiguration(BitPackDataclass, JsonDataclass):
+    music: int = dataclasses.field(metadata={"min": 0, "max": 2})
     colorblind_mode: bool = False
     instant_g4: bool = True
     max_ammo_display: bool = True
@@ -40,4 +41,4 @@ class SuperPatchConfiguration(BitPackDataclass, JsonDataclass):
     fix_heat_echoes: bool = True
     fix_screw_attack_menu: bool = True
     no_gt_code: bool = True
-    music: MusicMode = MusicMode.VANILLA
+

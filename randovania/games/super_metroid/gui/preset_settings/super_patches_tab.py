@@ -100,13 +100,13 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
         ))
 
         self.vanilla_music_option.toggled.connect(functools.partial(
-            self._on_music_option_changed, MusicMode.VANILLA
+            self._on_music_option_changed, MusicMode.VANILLA.value
         ))
         self.random_music_option.toggled.connect(functools.partial(
-            self._on_music_option_changed, MusicMode.RANDOMIZED
+            self._on_music_option_changed, MusicMode.RANDOMIZED.value
         ))
         self.no_music_option.toggled.connect(functools.partial(
-            self._on_music_option_changed, MusicMode.OFF
+            self._on_music_option_changed, MusicMode.OFF.value
         ))
     @property
     def uses_patches_tab(self) -> bool:
@@ -118,7 +118,7 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
             new_config = dataclasses.replace(patch_configuration, **{field_name: value})
             editor.set_configuration_field("patches", new_config)
 
-    def _on_music_option_changed(self, option: MusicMode, value: bool):
+    def _on_music_option_changed(self, option: int, value: bool):
         if value:
             with self._editor as editor:
                 patch_configuration = editor.configuration.patches
@@ -158,4 +158,4 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
         self.no_gt_checkbox.setChecked(patch_configuration.no_gt_code)
 
         for radio_index, radio_button in enumerate([self.vanilla_music_option, self.random_music_option, self.no_music_option]):
-            radio_button.setChecked(MusicMode(radio_index) == patch_configuration.music)
+            radio_button.setChecked(radio_index == patch_configuration.music)
