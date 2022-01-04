@@ -30,6 +30,38 @@ _multiplier_for_item = {
     "Energy Tank": 100, "Reserve Tank": 100,
 }
 
+_mapping = {
+    "Missile": "Missile Expansion",
+    "Super Missile": "Super Missile Expansion",
+    "Power Bombs": "Power Bomb Expansion",
+
+    "Nothing": "No Item",
+}
+
+_effect = {
+    "Energy Tank": "Get Energy Tank",
+    "Missile Expansion": "Get Missile Expansion",
+    "Super Missile Expansion": "Get Super Missile Expansion",
+    "Power Bomb Expansion": "Get Power Bomb Expansion",
+    "Grapple Beam": "Get Grapple Beam",
+    "X-Ray Scope": "Get X-Ray Scope",
+    "Varia Suit": "Get Varia Suit",
+    "Spring Ball": "Get Spring Ball",
+    "Morph Ball": "Get Morph Ball",
+    "Screw Attack": "Get Screw Attack",
+    "Hi-Jump Boots": "Get Hi-Jump Boots",
+    "Space Jump": "Get Space Jump",
+    "Speed Booster": "Get Speed Booster",
+    "Charge Beam": "Get Charge Beam",
+    "Ice Beam": "Get Ice Beam",
+    "Wave Beam": "Get Wave Beam",
+    "Spazer Beam": "Get Spazer Beam",
+    "Plasma Beam": "Get Plasma Beam",
+    "Morph Ball Bombs": "Get Morph Ball Bombs",
+    "Reserve Tank": "Get Reserve Tank",
+    "Gravity Suit": "Get Gravity Suit",
+    "No Item": "No Effect",
+}
 
 def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
                                  ) -> dict:
@@ -52,39 +84,6 @@ def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
 
     count *= _multiplier_for_item.get(pickup_type, 1)
 
-    _mapping = {
-        "Missile": "Missile Expansion",
-        "Super Missile": "Super Missile Expansion",
-        "Power Bombs": "Power Bomb Expansion",
-
-        "Nothing": "No Item",
-    }
-
-    _effect = {
-        "Energy Tank": "Get Energy Tank",
-        "Missile Expansion": "Get Missile Expansion",
-        "Super Missile Expansion": "Get Super Missile Expansion",
-        "Power Bomb Expansion": "Get Power Bomb Expansion",
-        "Grapple Beam": "Get Grapple Beam",
-        "X-Ray Scope": "Get X-Ray Scope",
-        "Varia Suit": "Get Varia Suit",
-        "Spring Ball": "Get Spring Ball",
-        "Morph Ball": "Get Morph Ball",
-        "Screw Attack": "Get Screw Attack",
-        "Hi-Jump Boots": "Get Hi-Jump Boots",
-        "Space Jump": "Get Space Jump",
-        "Speed Booster": "Get Speed Booster",
-        "Charge Beam": "Get Charge Beam",
-        "Ice Beam": "Get Ice Beam",
-        "Wave Beam": "Get Wave Beam",
-        "Spazer Beam": "Get Spazer Beam",
-        "Plasma Beam": "Get Plasma Beam",
-        "Morph Ball Bombs": "Get Morph Ball Bombs",
-        "Reserve Tank": "Get Reserve Tank",
-        "Gravity Suit": "Get Gravity Suit",
-        "No Item": "No Effect",
-    }
-
     item_name = _mapping.get(pickup_type, pickup_type)
 
     result = {
@@ -100,41 +99,8 @@ def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
 
 
 def sm_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
-    _mapping = {
-        "Missile": "Missile Expansion",
-        "Super Missile": "Super Missile Expansion",
-        "Power Bombs": "Power Bomb Expansion",
-
-        "Nothing": "No Item",
-    }
-
-    _effect = {
-        "Energy Tank": "Get Energy Tank",
-        "Missile Expansion": "Get Missile Expansion",
-        "Super Missile Expansion": "Get Super Missile Expansion",
-        "Power Bomb Expansion": "Get Power Bomb Expansion",
-        "Grapple Beam": "Get Grapple Beam",
-        "X-Ray Scope": "Get X-Ray Scope",
-        "Varia Suit": "Get Varia Suit",
-        "Spring Ball": "Get Spring Ball",
-        "Morph Ball": "Get Morph Ball",
-        "Screw Attack": "Get Screw Attack",
-        "Hi-Jump Boots": "Get Hi-Jump Boots",
-        "Space Jump": "Get Space Jump",
-        "Speed Booster": "Get Speed Booster",
-        "Charge Beam": "Get Charge Beam",
-        "Ice Beam": "Get Ice Beam",
-        "Wave Beam": "Get Wave Beam",
-        "Spazer Beam": "Get Spazer Beam",
-        "Plasma Beam": "Get Plasma Beam",
-        "Morph Ball Bombs": "Get Morph Ball Bombs",
-        "Reserve Tank": "Get Reserve Tank",
-        "Gravity Suit": "Get Gravity Suit",
-        "No Item": "No Effect",
-    }
-
     item_name = _mapping.get(item.long_name, item.long_name)
-
+    quantity *= _multiplier_for_item.get(item_name, 1)
     result = {
         "item_name": item_name,
         "quantity_given": quantity,
@@ -317,8 +283,6 @@ class SuperDuperMetroidPatcher(Patcher):
             vanilla_bytes = internal_copy.read_bytes()
 
         temporary_output.write_bytes(vanilla_bytes)
-
-        print(json.dumps(patch_data))
 
         SuperDuperMetroid.ROM_Patcher.patch_rom_json(os.fspath(temporary_output), json.dumps(patch_data))
 
