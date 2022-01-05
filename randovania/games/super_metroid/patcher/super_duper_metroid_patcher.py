@@ -108,42 +108,6 @@ def sm_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
     }
     return result
 
-
-def sm_starting_save_station_to_patcher(location: AreaIdentifier) -> dict:
-    _starting_area_data = {
-        "Brinstar: Big Pink Save Station": 0,
-        "Brinstar: Green Brinstar Upper Save Station": 1,
-        "Brinstar: Green Brinstar Lower Save Station": 2,
-        "Brinstar: Warehouse Save Station": 3,
-        "Brinstar: Red Tower Save Station": 4,
-        "Ceres Station: Elevator Shaft": 0,
-        "Crateria: Landing Site": 0,
-        "Crateria: Parlor Save Station": 1,
-        "Maridia: Maridia Glass Tube Save Station": 0,
-        "Maridia: Maridia Elevator Save Station": 1,
-        "Maridia: Aqueduct Save Station": 2,
-        "Maridia: Colosseum Save Station": 3,
-        "Norfair: Post Crocomire Save Station": 0,
-        "Norfair: Bubble Mountain Save Station": 1,
-        "Norfair: Business Center Save Station": 2,
-        "Norfair: Crocomire Save Station": 3,
-        "Norfair: Elevator to Lower Norfair Save Station": 4,
-        "Norfair: Red Kihunter Shaft Save Station": 5,
-        "Tourian: Rinka Shaft Save Station": 0,
-        "Tourian: Upper Tourian Save Station": 1,
-        "Wrecked Ship: Shaft Save Station": 0,
-    }
-
-    location_name = location.world_name + ": " + location.area_name
-
-    result = {
-        "starting_region": location.world_name,
-        "starting_save_station_index": _starting_area_data[location_name],
-    }
-    return result
-
-
-
 class SuperDuperMetroidPatcher(Patcher):
     @property
     def is_busy(self) -> bool:
@@ -240,6 +204,14 @@ class SuperDuperMetroidPatcher(Patcher):
 
         starting_point = patches.starting_location
 
+        starting_area = db.world_list.world_with_name(starting_point.world_name).area_by_name(starting_point.area_name)
+
+        starting_save_index = starting_area.extra["save_index"]
+
+        starting_location_info = {
+            "starting_region": starting_point.world_name,
+            "starting_save_station_index": starting_save_index,
+        }
         return {
             "pickups": [
                 sm_pickup_details_to_patcher(detail)
@@ -250,7 +222,7 @@ class SuperDuperMetroidPatcher(Patcher):
                 for item, qty in patches.starting_items.items()
             ],
             "specific_patches": specific_patches,
-            "starting_conditions": sm_starting_save_station_to_patcher(starting_point)
+            "starting_conditions": starting_location_info
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
