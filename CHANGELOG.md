@@ -93,6 +93,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: 2 Additional NSJ methods for reaching FCS item
 - Added: Lava Lake Item NSJ Combat Dash
 - Added: Triclops Pit Item SJ Beginner Standable
+- Added: More logical paths for Ice Ruins West NSJ
+- Added: Ice Ruins West Middle-Left Rooftop to Item Combat/Scan Dash
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
@@ -104,6 +106,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Added requirement for X-Ray Visor or Invisible Platforms to Triclops Pit Item NSJ tricks
 - Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
 - Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
+- Changed: Removed Slope Jump and Standable requirement from Ice Ruins West NSJ
 
 ### Metroid Prime 2: Echoes
 
