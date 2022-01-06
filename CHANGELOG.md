@@ -93,6 +93,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: 2 Additional NSJ methods for reaching FCS item
 - Added: Lava Lake Item NSJ Combat Dash
 - Added: Triclops Pit Item SJ Beginner Standable
+- Added: Frigate Crash Site climb with Space Jump and L-Jump (Intermediate) and Standable Terrain (Beginner)
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
@@ -104,6 +105,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Added requirement for X-Ray Visor or Invisible Platforms to Triclops Pit Item NSJ tricks
 - Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
 - Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
+- Changed: Frigate Crash Site Climb Space Jump Slope Jump Standable Terrain difficulty was reduced to Standable Terrain (Beginner)
 
 ### Metroid Prime 2: Echoes
 
