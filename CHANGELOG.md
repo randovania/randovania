@@ -93,6 +93,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Climb Connection Elevator to Deck Beta Gravityless
 - Added: Combat Requirements for Essence fight
 - Added: 2 Additional NSJ methods for reaching FCS item
+- Added: Lava Lake Item NSJ Combat Dash
+- Added: Triclops Pit Item SJ Beginner Standable
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
@@ -101,6 +103,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Knowledge (Beginner) to Traverse Magmoor Workstation without Varia
 - Changed: Magma Pool - Gravity Suit lava dive difficulty was reduced to L-Jump (Intermediate) and Standable Terrain (Beginner)
 - Changed: Hall of the Elders - Now properly model needing to kill the 1 ghost to leave the room. Chargeless 1 ghost fight combat difficulty reduced to beginner.
+- Changed: Added requirement for X-Ray Visor or Invisible Platforms to Triclops Pit Item NSJ tricks
+- Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
+- Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
 
 ### Metroid Prime 2: Echoes
 
