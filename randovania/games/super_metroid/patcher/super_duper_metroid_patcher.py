@@ -3,6 +3,7 @@ import pprint
 import shutil
 import typing
 import json
+import dataclasses
 from pathlib import Path
 from random import Random
 from typing import List, Optional
@@ -63,6 +64,7 @@ _effect = {
     "No Item": "No Effect",
 }
 
+
 def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
                                  ) -> dict:
     if detail.model.game == RandovaniaGame.SUPER_METROID:
@@ -107,6 +109,7 @@ def sm_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
         "pickup_effect": _effect[item_name],
     }
     return result
+
 
 class SuperDuperMetroidPatcher(Patcher):
     @property
@@ -185,26 +188,19 @@ class SuperDuperMetroidPatcher(Patcher):
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
-        specific_patch_list = [attr for attr in vars(configuration.patches) if
-                               not callable(getattr(configuration.patches, attr)) and not attr.startswith("__")]
+        specific_patch_list = [field.name for field in dataclasses.fields(configuration.patches)]
         specific_patch_list.remove("music")
-
         specific_patches = {}
 
         for patch in specific_patch_list:
             specific_patches[patch] = getattr(configuration.patches, patch)
 
-        specific_patches["random_music"] = False
-        specific_patches["no_music"] = False
-
-        if configuration.patches.music == MusicMode.RANDOMIZED:
-            specific_patches["random_music"] = True
-        elif configuration.patches.music == MusicMode.OFF:
-            specific_patches["no_music"] = True
+        if configuration.patches.music != MusicMode.VANILLA:
+            specific_patches[configuration.patches.music.value] = True
 
         starting_point = patches.starting_location
 
-        starting_area = db.world_list.world_with_name(starting_point.world_name).area_by_name(starting_point.area_name)
+        starting_area = db.world_list.area_by_area_location(starting_point)
 
         starting_save_index = starting_area.extra["save_index"]
 
@@ -255,7 +251,6 @@ class SuperDuperMetroidPatcher(Patcher):
             vanilla_bytes = internal_copy.read_bytes()
 
         temporary_output.write_bytes(vanilla_bytes)
-
         SuperDuperMetroid.ROM_Patcher.patch_rom_json(os.fspath(temporary_output), json.dumps(patch_data))
 
         shutil.copy2(temporary_output, output_file)
