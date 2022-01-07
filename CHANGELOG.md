@@ -122,6 +122,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Ore Processing Storage Depot B to Waste Disposal NSJ Standable difficulty from Intermediate to Beginner
 - Changed: Ore Processing Storage Depot B to Waste Disposal R-Jump to L-Jump
 - Changed: Elite Research Spinners without Boost from Advanced to Intermediate
+- Changed: Sun Tower Early Wild now requires Intermediate Knowledge on all methods
 
 ### Metroid Prime 2: Echoes
 
