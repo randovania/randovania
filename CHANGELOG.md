@@ -95,6 +95,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: 2 Additional NSJ methods for reaching FCS item
 - Added: Lava Lake Item NSJ Combat Dash
 - Added: Triclops Pit Item SJ Beginner Standable
+- Added: More logical paths for Ice Ruins West NSJ
+- Added: Ice Ruins West Middle-Left Rooftop to Item Combat/Scan Dash
 - Added: Beginner L-Jump to reach Main Quarry Save Station
 - Added: Main Quarry Crane Platform to Waste Disposal NSJ Advanced Combat Dash
 - Added: Main Quarry Crane Platform to Item Intermediate Scan Dash
@@ -109,6 +111,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Added requirement for X-Ray Visor or Invisible Platforms to Triclops Pit Item NSJ tricks
 - Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
 - Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
+- Changed: Removed Slope Jump and Standable requirement from Ice Ruins West NSJ
 - Changed: Main Quarry Save Station NSJ Movement difficulty from Beginner to Intermediate
 - Changed: Main Quarry Crane Platform to Waste Disposal Standable/Slope Jumpe no longer requires L-Jump
 - Changed: Main Quarry Crane Platform to Waste Disposal NSJ Scan Dash difficiulty from Advanced to Intermediate
