@@ -20,8 +20,9 @@ _FIELDS = [
     "qol_game_breaking",
     "qol_pickup_scans",
     "small_samus",
+    "shuffle_item_pos",
+    "items_every_room",
 ]
-
 
 class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
 

@@ -31,6 +31,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Cosmetic Option - Select HUD Color
 - Added: Cosmetic Option - Rotate hue of all 4 suit textures and ball glow color
 - Added: Cosmetic Option - Set default in-game options like Echoes
+- Added: Experimental Option - Shuffle the coordinates of items within their respective rooms. Seeds may not be completable.
+- Added: Experimental Option - Add random (non-logical) items to rooms which do not usually have items.
 - Added: Shuffle Power Beam
 - Added: Shuffle Combat Visor
 
