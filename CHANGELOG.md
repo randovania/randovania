@@ -95,6 +95,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: 2 Additional NSJ methods for reaching FCS item
 - Added: Lava Lake Item NSJ Combat Dash
 - Added: Triclops Pit Item SJ Beginner Standable
+- Added: 3 new ways to climb Tower of Light (L-Jump, R-Jump, Slope Jump)
+- Added: Underwater Movement (Beginner) to get to Tower Chamber with Space Jump
+- Added: Underwater Movement (Intermediate) for NSJ Tower Chamber
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
@@ -106,6 +109,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Added requirement for X-Ray Visor or Invisible Platforms to Triclops Pit Item NSJ tricks
 - Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
 - Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
+- Changed: Increase the difficulty of Tower of Light climb with combat dash from 'Beginner' to 'Advanced' lowered Standable Terrain from 'Intermediate' to 'Beginner'
 
 ### Metroid Prime 2: Echoes
 
