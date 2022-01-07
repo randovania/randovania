@@ -80,32 +80,15 @@ class OpenDreadPatcher(Patcher):
         assert isinstance(configuration, DreadConfiguration)
         rng = Random(description.permalink.seed_number)
 
-        inventory = {
-            "ITEM_MAX_LIFE": 99,
-            "ITEM_MAX_SPECIAL_ENERGY": 1000,
-            "ITEM_METROID_COUNT": 0,
-            "ITEM_METROID_TOTAL_COUNT": 40,
-            "ITEM_WEAPON_MISSILE_MAX": 0,
-            "ITEM_WEAPON_POWER_BOMB_MAX": 0,
-        }
-
-        # ITEM_MAX_LIFE = 99
-        # ITEM_MAX_SPECIAL_ENERGY = 1000
-        # ITEM_METROID_COUNT = 0
-        # ITEM_METROID_TOTAL_COUNT = 40
-        # ITEM_WEAPON_MISSILE_MAX = 15
-        # ITEM_WEAPON_POWER_BOMB_MAX = 0
-        # ITEM_FLOOR_SLIDE = 1
-
-        def _fill_inventory(resources: CurrentResources):
+        def _calculate_starting_inventory(resources: CurrentResources):
+            result = {}
             for resource, quantity in resources.items():
                 try:
-                    inventory[_get_item_id_for_item(resource)] = quantity
+                    result[_get_item_id_for_item(resource)] = quantity
                 except KeyError:
-                    print(f"Skipping {resource}")
+                    print(f"Skipping {resource} for starting inventory: no item id")
                     continue
-
-        _fill_inventory(patches.starting_items)
+            return result
 
         def _node_for(identifier: Union[AreaIdentifier, NodeIdentifier]) -> Node:
             if isinstance(identifier, NodeIdentifier):
@@ -173,6 +156,9 @@ class OpenDreadPatcher(Patcher):
             except KeyError:
                 return None
 
+        starting_location = _start_point_ref_for(_node_for(patches.starting_location))
+        starting_items = _calculate_starting_inventory(patches.starting_items)
+
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
                                       players_config.player_index)
 
@@ -188,8 +174,8 @@ class OpenDreadPatcher(Patcher):
         )
 
         return {
-            "starting_location": _start_point_ref_for(_node_for(patches.starting_location)),
-            "starting_items": inventory,
+            "starting_location": starting_location,
+            "starting_items": starting_items,
             "pickups": [
                 data
                 for pickup_item in pickup_list
