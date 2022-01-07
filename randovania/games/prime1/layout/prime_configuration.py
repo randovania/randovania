@@ -1,5 +1,6 @@
 import dataclasses
 from enum import Enum
+from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.games.game import RandovaniaGame
@@ -29,6 +30,8 @@ class PrimeConfiguration(BaseConfiguration):
     progressive_damage_reduction: bool
     allow_underwater_movement_without_gravity: bool
     small_samus: bool
+    shuffle_item_pos: bool
+    items_every_room: bool
 
     main_plaza_door: bool
     backwards_frigate: bool
@@ -44,3 +47,11 @@ class PrimeConfiguration(BaseConfiguration):
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME
+
+    def dangerous_settings(self) -> List[str]:
+        result = super().dangerous_settings()
+
+        if self.shuffle_item_pos:
+            result.append("Shuffled item position")
+
+        return result
