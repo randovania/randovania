@@ -98,6 +98,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: 3 new ways to climb Tower of Light (L-Jump, R-Jump, Slope Jump)
 - Added: Underwater Movement (Beginner) to get to Tower Chamber with Space Jump
 - Added: Underwater Movement (Intermediate) for NSJ Tower Chamber
+- Added: Beginner L-Jump to reach Main Quarry Save Station
+- Added: Main Quarry Crane Platform to Waste Disposal NSJ Advanced Combat Dash
+- Added: Main Quarry Crane Platform to Item Intermediate Scan Dash
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
@@ -110,6 +113,12 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
 - Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
 - Changed: Increase the difficulty of Tower of Light climb with combat dash from 'Beginner' to 'Advanced' lowered Standable Terrain from 'Intermediate' to 'Beginner'
+- Changed: Main Quarry Save Station NSJ Movement difficulty from Beginner to Intermediate
+- Changed: Main Quarry Crane Platform to Waste Disposal Standable/Slope Jumpe no longer requires L-Jump
+- Changed: Main Quarry Crane Platform to Waste Disposal NSJ Scan Dash difficiulty from Advanced to Intermediate
+- Changed: Ore Processing Storage Depot B to Waste Disposal NSJ Standable difficulty from Intermediate to Beginner
+- Changed: Ore Processing Storage Depot B to Waste Disposal R-Jump to L-Jump
+- Changed: Elite Research Spinners without Boost from Advanced to Intermediate
 
 ### Metroid Prime 2: Echoes
 
