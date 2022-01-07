@@ -7,6 +7,7 @@ import dataclasses
 from pathlib import Path
 from random import Random
 from typing import List, Optional
+from io import BytesIO
 
 import SuperDuperMetroid.ROM_Patcher
 import SuperDuperMetroid.SM_Constants
@@ -250,7 +251,5 @@ class SuperDuperMetroidPatcher(Patcher):
                 raise ValueError("Missing input ROM")
             vanilla_bytes = internal_copy.read_bytes()
 
-        temporary_output.write_bytes(vanilla_bytes)
-        SuperDuperMetroid.ROM_Patcher.patch_rom_json(os.fspath(temporary_output), json.dumps(patch_data))
+        SuperDuperMetroid.ROM_Patcher.patch_rom_json(BytesIO(vanilla_bytes), output_file, patch_data)
 
-        shutil.copy2(temporary_output, output_file)
