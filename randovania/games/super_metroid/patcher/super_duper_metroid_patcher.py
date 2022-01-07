@@ -1,5 +1,4 @@
 import os
-import pprint
 import shutil
 import typing
 import json
@@ -252,4 +251,3 @@ class SuperDuperMetroidPatcher(Patcher):
             vanilla_bytes = internal_copy.read_bytes()
 
         SuperDuperMetroid.ROM_Patcher.patch_rom_json(BytesIO(vanilla_bytes), output_file, patch_data)
-
