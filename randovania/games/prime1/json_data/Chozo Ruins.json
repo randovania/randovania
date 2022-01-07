@@ -2654,13 +2654,8 @@
                             }
                         },
                         "Event - Chozo Ghosts": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Power",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Shoot Power Beam"
                         },
                         "Event - Unlock morph track": {
                             "type": "and",
@@ -4499,6 +4494,10 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "template",
+                                                    "data": "Can Use Arm Cannon"
+                                                },
+                                                {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": null,
@@ -5142,6 +5141,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Arm Cannon"
                                     }
                                 ]
                             }
@@ -5431,15 +5434,6 @@
                                     {
                                         "type": "template",
                                         "data": "Shoot Super Missile"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 5,
-                                            "negate": false
-                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -6548,13 +6542,8 @@
                             }
                         },
                         "Event - Hive Mecha": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Power",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Shoot Power Beam"
                         }
                     }
                 },
@@ -6964,13 +6953,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Shoot Wave Beam"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -7068,13 +7052,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Shoot Power Beam"
                                                 },
                                                 {
                                                     "type": "or",
@@ -7152,15 +7131,6 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
@@ -7169,10 +7139,26 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "Power",
+                                                        "name": "Missile",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Use Arm Cannon"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Power Beam"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -8283,12 +8269,24 @@
                     "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Missile Expansion)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Missile",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Use Arm Cannon"
+                                    }
+                                ]
                             }
                         },
                         "Pickup (Missile Expansion 2)": {
@@ -8704,10 +8702,23 @@
                             }
                         },
                         "Event - Incinerator Drone": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Power Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Wave Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Ice Beam"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9899,13 +9910,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ice",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Ice Beam"
                                     }
                                 ]
                             }
@@ -9916,13 +9922,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Plasma",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Plasma Beam"
                                     },
                                     {
                                         "type": "resource",
@@ -9954,13 +9955,8 @@
                                             "comment": null,
                                             "items": [
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Shoot Wave Beam"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -10147,13 +10143,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ice",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Ice Beam"
                                     }
                                 ]
                             }
@@ -10346,13 +10337,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Power Beam"
                                     },
                                     {
                                         "type": "or",
