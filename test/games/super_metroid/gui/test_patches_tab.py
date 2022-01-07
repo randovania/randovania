@@ -6,9 +6,9 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 
 
-def test_elements_init():
+def test_elements_init(test_files_dir):
     # Set up and initialize patches tab
-    preset_file = open("test/games/super_metroid/gui/test_preset.rdvpreset", "r")
+    preset_file = test_files_dir.joinpath("presets/super_test_preset.rdvpreset").open()
     preset_dict = json.load(preset_file)
     preset_file.close()
     preset = Preset.from_json_dict(preset_dict)
