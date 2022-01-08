@@ -1,3 +1,5 @@
+from PySide2 import QtCore
+
 import pytest
 import json
 
@@ -6,7 +8,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 
 
-def test_elements_init(test_files_dir):
+def test_elements_init(skip_qtbot, test_files_dir):
     # Set up and initialize patches tab
     preset_file = test_files_dir.joinpath("presets/super_test_preset.rdvpreset").open()
     preset_dict = json.load(preset_file)
@@ -14,6 +16,7 @@ def test_elements_init(test_files_dir):
     preset = Preset.from_json_dict(preset_dict)
     editor = PresetEditor(preset)
     super_patches_tab = PresetSuperPatchConfiguration(editor)
+    skip_qtbot.addWidget(super_patches_tab)
 
     # Test whether visual elements are initialized correctly
     patches = (preset_dict["configuration"])["patches"]
