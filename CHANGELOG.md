@@ -128,7 +128,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 
 #### Patcher Changes
 
-- Nothing.
+- Fixed: Exporting an ISO when Randovania is in a read-only path now works properly.
 
 #### Logic Database
 

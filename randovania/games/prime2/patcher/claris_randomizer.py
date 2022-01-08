@@ -5,17 +5,12 @@ from pathlib import Path
 from typing import Callable, List, Union
 
 from randovania import get_data_path
-from randovania.games.prime2.patcher import csharp_subprocess
 from randovania.patching.patchers.exceptions import ExportFailure
-from randovania.games.prime2.patcher import echoes_dol_patcher
+from randovania.games.prime2.patcher import csharp_subprocess, echoes_dol_patcher
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
-try:
-    from asyncio.exceptions import IncompleteReadError
-except ImportError:
-    from asyncio.streams import IncompleteReadError
 
 CURRENT_PATCH_VERSION = 2
 logger = logging.getLogger(__name__)
@@ -46,7 +41,8 @@ def _get_randomizer_path() -> Path:
 
 
 def _get_custom_data_path() -> Path:
-    return _get_randomizer_folder().joinpath("CustomRandomizerData.json")
+    from randovania.interface_common import persistence
+    return persistence.local_data_dir().joinpath("CustomEchoesRandomizerData.json")
 
 
 def _get_menu_mod_path() -> Path:
@@ -152,6 +148,12 @@ def _add_menu_mod_to_files(
     files_folder.joinpath("menu_mod.txt").write_bytes(b"")
 
 
+def update_json_file(file: Path, content: dict):
+    file.mkdir(parents=True, exist_ok=True)
+    with file.open("w") as data_file:
+        json.dump(content, data_file, indent=4)
+
+
 def apply_patcher_file(game_root: Path,
                        patcher_data: dict,
                        randomizer_data: dict,
@@ -176,8 +178,7 @@ def apply_patcher_file(game_root: Path,
                             f"which is above supported version {CURRENT_PATCH_VERSION}. "
                             f"\nPlease press 'Delete internal copy'.", None)
 
-    with _get_custom_data_path().open("w") as data_file:
-        json.dump(randomizer_data, data_file, indent=4)
+    update_json_file(_get_custom_data_path(), randomizer_data)
     _run_with_args(_base_args(game_root),
                    json.dumps(patcher_data),
                    "Randomized!",
