@@ -98,7 +98,7 @@ def _get_next_player(rng: Random, player_states: List[PlayerState], num_indices:
 
 
 def weighted_potential_actions(player_state: PlayerState, status_update: Callable[[str], None],
-                               num_available_indices: int) -> Dict[Action, float]:
+                               num_available_indices: int) -> dict[Action, float]:
     """
     Weights all potential actions based on current criteria.
     :param player_state:
@@ -142,6 +142,19 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
     return actions_weights
 
 
+def select_weighted_action(rng: Random, weighted_actions: dict[Action, float]) -> Action:
+    """
+    Choose a random action, respecting the weights.
+    If all actions have weight 0, select one randomly.
+    """
+    try:
+        return select_element_with_weight(weighted_actions, rng=rng)
+    except StopIteration:
+        # All actions had weight 0. Select one randomly instead.
+        # No need to check if potential_actions is empty, _get_next_player only return players with actions
+        return rng.choice(list(weighted_actions.keys()))
+
+
 def retcon_playthrough_filler(rng: Random,
                               player_states: List[PlayerState],
                               status_update: Callable[[str], None],
@@ -183,12 +196,7 @@ def retcon_playthrough_filler(rng: Random,
             break
 
         weighted_actions = weighted_potential_actions(current_player, action_report, len(all_locations_weighted))
-        try:
-            action = select_element_with_weight(weighted_actions, rng=rng)
-        except StopIteration:
-            # All actions had weight 0. Select one randomly instead.
-            # No need to check if potential_actions is empty, _get_next_player only return players with actions
-            action = rng.choice(list(weighted_actions.keys()))
+        action = select_weighted_action(rng, weighted_actions)
 
         if isinstance(action, tuple):
             new_pickups: List[PickupEntry] = sorted(action)
