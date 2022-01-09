@@ -3589,12 +3589,8 @@ Extra - asset_id: collision_camera_051
       Varia Suit or Heat Damage ≥ 30
   > Tile Group (POWERBEAM) 2
       Varia Suit or Heat Damage ≥ 10
-  > Dock to Kraid Eyedoor Room
-      All of the following:
-          After Cataris - db_reg_mg_021
-          Varia Suit or Heat Damage ≥ 100
-  > Event - Wave Beam Blob (db_reg_mg_021)
-      Wave Beam
+  > Above Tutorial Blob
+      Varia Suit or Heat Damage ≥ 100
 
 > Event - Missile Tank Blob (breakablemag009); Heals? False
   * Event Cataris - breakablemag009
@@ -3666,23 +3662,17 @@ Extra - asset_id: collision_camera_051
       Varia Suit or Heat Damage ≥ 20
   > Event - Diffusion Tutorial Blob from below (db_dif_mg_001)
       Shoot Diffusion or Wave
-  > Dock to Kraid Eyedoor Room
+  > Above Tutorial Blob
       All of the following:
-          Morph Ball and After Cataris - db_dif_mg_001
-          Varia Suit or Heat Damage ≥ 100
+          Morph Ball and After Cataris - db_reg_mg_021
+          Varia Suit or Heat Damage ≥ 120
 
 > Dock to Kraid Eyedoor Room; Heals? False
   * Morph Ball Tunnel to Kraid Eyedoor Room/Dock to Teleport to Dairon
-  > Door to collision_camera_052 (C)
+  > Above Tutorial Blob
       All of the following:
-          After Cataris - db_reg_mg_021
-          Varia Suit or Heat Damage ≥ 100
-  > Dock to Diffusion Beam Room
-      All of the following:
-          Morph Ball and After Cataris - db_dif_mg_001
-          Varia Suit or Heat Damage ≥ 100
-  > Event - Diffusion Tutorial Blob from above (db_dif_mg_001)
-      Wave Beam
+          Morph Ball and After Cataris - db_reg_mg_021
+          Varia Suit or Heat Damage ≥ 20
 
 > Dock to collision_camera_054 (C); Heals? False
   * Open Passage to collision_camera_054 (C)/Dock to Teleport to Dairon
@@ -3695,12 +3685,12 @@ Extra - asset_id: collision_camera_051
 
 > Event - Wave Beam Blob (db_reg_mg_021); Heals? False
   * Event Cataris - db_reg_mg_021
-  > Door to collision_camera_052 (C)
+  > Above Tutorial Blob
       Trivial
 
 > Event - Diffusion Tutorial Blob from above (db_dif_mg_001); Heals? False
   * Event Cataris - db_dif_mg_001
-  > Dock to Kraid Eyedoor Room
+  > Above Tutorial Blob
       Trivial
 
 > Ledge above Teleport; Heals? False
@@ -3718,6 +3708,22 @@ Extra - asset_id: collision_camera_051
           Varia Suit or Heat Damage ≥ 20
   > Teleporter to Dairon - Teleport to Cataris
       Varia Suit or Heat Damage ≥ 50
+
+> Above Tutorial Blob; Heals? False
+  > Door to collision_camera_052 (C)
+      Varia Suit or Heat Damage ≥ 100
+  > Dock to Diffusion Beam Room
+      All of the following:
+          Morph Ball and After Cataris - db_reg_mg_021
+          Varia Suit or Heat Damage ≥ 100
+  > Dock to Kraid Eyedoor Room
+      All of the following:
+          Morph Ball and After Cataris - db_reg_mg_021
+          Morph Ball or Heat Damage ≥ 20
+  > Event - Wave Beam Blob (db_reg_mg_021)
+      Wave Beam
+  > Event - Diffusion Tutorial Blob from above (db_dif_mg_001)
+      Wave Beam
 
 ----------------
 collision_camera_052 (C)

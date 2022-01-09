@@ -18723,56 +18723,30 @@
                                 ]
                             }
                         },
-                        "Dock to Kraid Eyedoor Room": {
-                            "type": "and",
+                        "Above Tutorial Blob": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "s020_magma:default:db_reg_mg_021",
+                                            "type": "items",
+                                            "name": "Varia",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 100,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "damage",
+                                            "name": "Heat",
+                                            "amount": 100,
+                                            "negate": false
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Wave Beam Blob (db_reg_mg_021)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -19222,7 +19196,7 @@
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
-                        "Dock to Kraid Eyedoor Room": {
+                        "Above Tutorial Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19230,8 +19204,8 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Morph",
+                                            "type": "events",
+                                            "name": "s020_magma:default:db_reg_mg_021",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -19239,8 +19213,8 @@
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "s020_magma:default:db_dif_mg_001",
+                                            "type": "items",
+                                            "name": "Morph",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -19264,7 +19238,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Heat",
-                                                        "amount": 100,
+                                                        "amount": 120,
                                                         "negate": false
                                                     }
                                                 }
@@ -19294,7 +19268,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to collision_camera_052 (C)": {
+                        "Above Tutorial Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19309,40 +19283,6 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 100,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to Diffusion Beam Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
@@ -19352,15 +19292,6 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s020_magma:default:db_dif_mg_001",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "or",
                                         "data": {
                                             "comment": null,
@@ -19379,7 +19310,7 @@
                                                     "data": {
                                                         "type": "damage",
                                                         "name": "Heat",
-                                                        "amount": 100,
+                                                        "amount": 20,
                                                         "negate": false
                                                     }
                                                 }
@@ -19387,15 +19318,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Diffusion Tutorial Blob from above (db_dif_mg_001)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -19494,7 +19416,7 @@
                     "extra": {},
                     "event_name": "s020_magma:default:db_reg_mg_021",
                     "connections": {
-                        "Door to collision_camera_052 (C)": {
+                        "Above Tutorial Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19515,7 +19437,7 @@
                     "extra": {},
                     "event_name": "s020_magma:default:db_dif_mg_001",
                     "connections": {
-                        "Dock to Kraid Eyedoor Room": {
+                        "Above Tutorial Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19674,6 +19596,167 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Above Tutorial Blob": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9852.065884980459,
+                        "y": -4125.991066443328,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to collision_camera_052 (C)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Heat",
+                                            "amount": 100,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Diffusion Beam Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s020_magma:default:db_reg_mg_021",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Kraid Eyedoor Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s020_magma:default:db_reg_mg_021",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 20,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Wave Beam Blob (db_reg_mg_021)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Diffusion Tutorial Blob from above (db_dif_mg_001)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
