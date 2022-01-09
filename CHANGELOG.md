@@ -112,7 +112,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Added requirement for X-Ray Visor or Invisible Platforms to Triclops Pit Item NSJ tricks
 - Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
 - Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
-- Changed: Increase the difficulty of Tower of Light climb with combat dash from 'Beginner' to 'Advanced' lowered Standable Terrain from 'Intermediate' to 'Beginner'
+- Changed: Increase the difficulty of Tower of Light climb with combat dash from 'Beginner' to 'Intermediate' lowered Standable Terrain from 'Intermediate' to 'Beginner'
 - Changed: Main Quarry Save Station NSJ Movement difficulty from Beginner to Intermediate
 - Changed: Main Quarry Crane Platform to Waste Disposal Standable/Slope Jumpe no longer requires L-Jump
 - Changed: Main Quarry Crane Platform to Waste Disposal NSJ Scan Dash difficiulty from Advanced to Intermediate
