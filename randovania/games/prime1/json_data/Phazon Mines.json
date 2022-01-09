@@ -5192,21 +5192,36 @@
                     "dock_weakness": "Ice Door",
                     "connections": {
                         "Door to Omega Research": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event50",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Elite Pirate Fight": {
-                            "type": "resource",
+                        "Event - Elite Pirate Fight": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5232,31 +5247,47 @@
                     "dock_weakness": "Ice Door",
                     "connections": {
                         "Door to Central Dynamo": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": true
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Plasma",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event50",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Elite Pirate Fight": {
-                            "type": "resource",
+                        "Event - Elite Pirate Fight": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
                 },
-                "Elite Pirate Fight": {
-                    "node_type": "generic",
+                "Event - Elite Pirate Fight": {
+                    "node_type": "event",
                     "heal": false,
                     "coordinates": null,
                     "description": "",
                     "extra": {},
+                    "event_name": "Event50",
                     "connections": {
                         "Door to Central Dynamo": {
                             "type": "or",
