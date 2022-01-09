@@ -70,44 +70,35 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QGroupBox" name="accessibility_box">
-          <property name="title">
-           <string>Accessibility</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_8">
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="colorblind_checkbox">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Colorblind Mode</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="colorblind_label">
-             <property name="text">
-              <string>Changes the colors of some game elements to be more easily distinguishable to players with some types of colorblindness.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
          <widget class="QGroupBox" name="qol_box">
           <property name="title">
            <string>Quality of Life</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_4">
-           <item row="21" column="0">
-            <widget class="QLabel" name="skip_intro_label">
+           <item row="11" column="0">
+            <widget class="QLabel" name="backup_saves_label">
              <property name="text">
-              <string>Removes the game's intro cutscene.</string>
+              <string>When saving the game, your previous save is backed up to the unused save slots.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="0">
+            <widget class="QLabel" name="better_decompression_label">
+             <property name="text">
+              <string>Improves the efficiency of the game's decompression algorithm.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QCheckBox" name="fast_doors_checkbox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Faster Doors and Elevators</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -121,140 +112,23 @@
              </property>
             </widget>
            </item>
-           <item row="15" column="0">
-            <widget class="QLabel" name="backup_saves_label">
-             <property name="text">
-              <string>When saving the game, your previous save is backed up to the unused save slots.</string>
-             </property>
-            </widget>
-           </item>
            <item row="18" column="0">
-            <widget class="QLabel" name="better_decompression_label">
-             <property name="text">
-              <string>Improves the efficiency of the game's decompression algorithm.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="max_ammo_display_label">
-             <property name="text">
-              <string>Displays Samus' maximum ammunition on the HUD.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="20" column="0">
-            <widget class="QCheckBox" name="skip_intro_checkbox">
-             <property name="text">
-              <string>Skip Intro</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="17" column="0">
-            <widget class="QCheckBox" name="better_decompression_checkbox">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Better Decompression</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QCheckBox" name="max_ammo_display_checkbox">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Max Ammo Display</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="25" column="0">
-            <widget class="QLabel" name="no_demo_label">
-             <property name="text">
-              <string>The gameplay demo no longer plays on the title screen.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="0">
-            <widget class="QCheckBox" name="backup_saves_checkbox">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Backup Saves</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="aim_with_any_button_label">
-             <property name="text">
-              <string>Allows aiming to be bound to any button, not just the shoulder buttons.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="23" column="0">
-            <widget class="QLabel" name="mb_cutscene_tweaks_label">
-             <property name="text">
-              <string>Abbreviates the transition between Mother Brain's glass jar phase and her standing phase.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QCheckBox" name="aim_with_any_button_checkbox">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Rebindable Aim</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="0">
-            <widget class="QCheckBox" name="fast_doors_checkbox">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="text">
-              <string>Faster Doors and Elevators</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="0">
-            <widget class="QLabel" name="fast_doors_label">
-             <property name="text">
-              <string>Increases the speed of doors and elevators.</string>
-             </property>
-            </widget>
-           </item>
-           <item row="22" column="0">
             <widget class="QCheckBox" name="mb_cutscene_tweaks_checkbox">
              <property name="toolTip">
               <string/>
              </property>
              <property name="text">
               <string>Mother Brain Cutscene Tweaks</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="0">
+            <widget class="QCheckBox" name="skip_intro_checkbox">
+             <property name="text">
+              <string>Skip Intro</string>
              </property>
              <property name="checked">
               <bool>true</bool>
@@ -271,13 +145,50 @@
              </property>
             </widget>
            </item>
-           <item row="24" column="0">
-            <widget class="QCheckBox" name="no_demo_checkbox">
+           <item row="8" column="0">
+            <widget class="QLabel" name="fast_doors_label">
+             <property name="text">
+              <string>Increases the speed of doors and elevators.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="17" column="0">
+            <widget class="QLabel" name="skip_intro_label">
+             <property name="text">
+              <string>Removes the game's intro cutscene.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0">
+            <widget class="QCheckBox" name="backup_saves_checkbox">
              <property name="toolTip">
               <string/>
              </property>
              <property name="text">
-              <string>No Demo</string>
+              <string>Backup Saves</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="19" column="0">
+            <widget class="QLabel" name="mb_cutscene_tweaks_label">
+             <property name="text">
+              <string>Abbreviates the transition between Mother Brain's glass jar phase and her standing phase.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QCheckBox" name="better_decompression_checkbox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Better Decompression</string>
              </property>
              <property name="checked">
               <bool>true</bool>
@@ -674,57 +585,6 @@
              </property>
              <property name="wordWrap">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="music_box">
-          <property name="title">
-           <string>Music</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_6">
-           <item row="3" column="0">
-            <widget class="QRadioButton" name="no_music_option">
-             <property name="text">
-              <string>Off</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QRadioButton" name="vanilla_music_option">
-             <property name="text">
-              <string>Vanilla</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="music_label">
-             <property name="text">
-              <string>Changes the way music triggers behave.
-Randomized music will choose a random song when activating a music trigger. Some music, such as the title theme, is not randomized.
-Off will disable all music for the game.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QRadioButton" name="random_music_option">
-             <property name="text">
-              <string>Randomized</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
              </property>
             </widget>
            </item>

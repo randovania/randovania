@@ -21,9 +21,8 @@ from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
-from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
+from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches, MusicMode
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-from randovania.games.super_metroid.layout.super_metroid_patch_configuration import MusicMode
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.world.area_identifier import AreaIdentifier
 
@@ -188,15 +187,18 @@ class SuperDuperMetroidPatcher(Patcher):
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
-        specific_patch_list = [field.name for field in dataclasses.fields(configuration.patches)]
-        specific_patch_list.remove("music")
+        gameplay_patch_list = [field.name for field in dataclasses.fields(configuration.patches)]
+        cosmetic_patch_list = [field.name for field in dataclasses.fields(cosmetic_patches)]
+
+        cosmetic_patch_list.remove("music")
         specific_patches = {}
 
-        for patch in specific_patch_list:
+        for patch in gameplay_patch_list:
             specific_patches[patch] = getattr(configuration.patches, patch)
-
-        if configuration.patches.music != MusicMode.VANILLA:
-            specific_patches[configuration.patches.music.value] = True
+        for patch in cosmetic_patch_list:
+            specific_patches[patch] = getattr(cosmetic_patches, patch)
+        if cosmetic_patches.music != MusicMode.VANILLA:
+            specific_patches[cosmetic_patches.music.value] = True
 
         starting_point = patches.starting_location
 
