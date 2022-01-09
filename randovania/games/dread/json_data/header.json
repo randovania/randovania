@@ -879,6 +879,30 @@
             "GhavoranFereniaTransportEnkyRight": {
                 "long_name": "Ghavoran - Ferenia Transport Enky Right",
                 "extra": {}
+            },
+            "BureniaGhavoranTeleportEnky": {
+                "long_name": "Burenia - Ghavoran Teleport Enky",
+                "extra": {}
+            },
+            "BureniaStormMissileGateTeleport": {
+                "long_name": "Burenia - Storm Missile Gate for Teleport",
+                "extra": {}
+            },
+            "BureniaStormMissileGateEtank": {
+                "long_name": "Burenia - Storm Missile Gate for Etank",
+                "extra": {}
+            },
+            "BureniaHubMagnetPlatform": {
+                "long_name": "Burenia - Hub Magnet Wall",
+                "extra": {}
+            },
+            "BureniaDestroyGravitySuitFloor": {
+                "long_name": "Burenia - Destroy Gravity Suit Floor",
+                "extra": {}
+            },
+            "Quiet Robe": {
+                "long_name": "Quiet Robe",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1605,6 +1629,49 @@
                         {
                             "type": "template",
                             "data": "Lay Power Bomb"
+                        }
+                    ]
+                }
+            },
+            "Horizontal Water Movement": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Space",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
