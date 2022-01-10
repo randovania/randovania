@@ -22,6 +22,3 @@ def test_elements_init(skip_qtbot, test_files_dir):
     patches = (preset_dict["configuration"])["patches"]
     for field_name, checkbox in super_patches_tab.checkboxes.items():
         assert checkbox.isChecked() == patches[field_name]
-
-    for music_mode, radio_button in super_patches_tab.radio_buttons.items():
-        assert radio_button.isChecked() == (patches["music"] == music_mode.value)
