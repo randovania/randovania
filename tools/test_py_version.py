@@ -15,7 +15,7 @@ bits = struct.calcsize("P")*8
 expected_ver = version_str(REQUIRED_VERSION_MAJOR, REQUIRED_VERSION_MINOR, REQUIRED_WORD_SIZE_BITS)
 actual_ver = version_str(major, minor, bits)
 
-if major != REQUIRED_VERSION_MAJOR or minor != REQUIRED_VERSION_MINOR or bits != REQUIRED_WORD_SIZE_BITS:
+if (major, minor, bits) != (REQUIRED_VERSION_MAJOR, REQUIRED_VERSION_MINOR, REQUIRED_WORD_SIZE_BITS):
     error_msg = "Default python installation must be %s; Found %s" % (
             expected_ver,
             actual_ver,
