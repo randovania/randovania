@@ -391,6 +391,8 @@ class RandomprimePatcher(Patcher):
                 "suitColors": suit_colors
             },
             "gameConfig": {
+                "shufflePickupPosition": configuration.shuffle_item_pos,
+                "shufflePickupPosAllRooms": configuration.items_every_room,
                 "startingRoom": starting_room,
                 "startingMemo": starting_memo,
                 "warpToStart": configuration.warp_to_start,
@@ -406,9 +408,9 @@ class RandomprimePatcher(Patcher):
 
                 "etankCapacity": configuration.energy_per_tank,
                 "itemMaxCapacity": {
-                    "Energy Tank": 200,
-                    "Power Bomb": 99,
-                    "Missile": 999,
+                    "Energy Tank": db.resource_database.get_item("EnergyTank").max_capacity,
+                    "Power Bomb": db.resource_database.get_item("PowerBomb").max_capacity,
+                    "Missile": db.resource_database.get_item("Missile").max_capacity,
                     "Unknown Item 1": db.resource_database.multiworld_magic_item.max_capacity,
                 },
 

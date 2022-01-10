@@ -31,6 +31,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Cosmetic Option - Select HUD Color
 - Added: Cosmetic Option - Rotate hue of all 4 suit textures and ball glow color
 - Added: Cosmetic Option - Set default in-game options like Echoes
+- Added: Experimental Option - Shuffle the coordinates of items within their respective rooms. Seeds may not be completable.
+- Added: Experimental Option - Add random (non-logical) items to rooms which do not usually have items.
 - Added: Shuffle Power Beam
 - Added: Shuffle Combat Visor
 
@@ -44,6 +46,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: QoL Game Breaking now fixes the soft-lock in hive totem by making the blocks drop sooner
 - Added: Option to disable item loss in Frigate (Enabled by default)
 - Added: QoL Pickup Scans - Weeds by item in Landing Site now don't have scan point
+- Added: Combat/Scan/Thermal/X-Ray all have unique custom models
 - Fixed: Safeguard against blowing past layer limits.
 - Fixed: On Major custscene skip, Elite Quarters now stays locked until the player picks up the item. The hudmemo is now tied to the item rather than the death animation.
 - Fixed: Ruined fountain not always showing the right scan.
@@ -52,6 +55,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Fixed: Automatic crash screen
 - Fixed: Wavesun not collecting item/unlocking door
 - Fixed: Locked door on Storage Depot B (NTSC 0-02)
+- Fixed: Bug in Elite Quarters where game would crash during OP death cutscene if the player changed suit during the fight
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 - Changed: Increased Maximum Missile/Etank/Capacity for seeds with more expansion count than is available in vanilla
@@ -98,6 +102,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: 3 new ways to climb Tower of Light (L-Jump, R-Jump, Slope Jump)
 - Added: Underwater Movement (Beginner) to get to Tower Chamber with Space Jump
 - Added: Underwater Movement (Intermediate) for NSJ Tower Chamber
+- Added: Frigate Crash Site climb with Space Jump and L-Jump (Intermediate) and Standable Terrain (Beginner)
+- Added: More logical paths for Ice Ruins West NSJ
+- Added: Ice Ruins West Middle-Left Rooftop to Item Combat/Scan Dash
 - Added: Beginner L-Jump to reach Main Quarry Save Station
 - Added: Main Quarry Crane Platform to Waste Disposal NSJ Advanced Combat Dash
 - Added: Main Quarry Crane Platform to Item Intermediate Scan Dash
@@ -113,18 +120,22 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
 - Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
 - Changed: Increase the difficulty of Tower of Light climb with combat dash from 'Beginner' to 'Intermediate' lowered Standable Terrain from 'Intermediate' to 'Beginner'
+- Changed: Frigate Crash Site Climb Space Jump Slope Jump Standable Terrain difficulty was reduced to Standable Terrain (Beginner)
+- Changed: Removed Slope Jump and Standable requirement from Ice Ruins West NSJ
 - Changed: Main Quarry Save Station NSJ Movement difficulty from Beginner to Intermediate
 - Changed: Main Quarry Crane Platform to Waste Disposal Standable/Slope Jumpe no longer requires L-Jump
 - Changed: Main Quarry Crane Platform to Waste Disposal NSJ Scan Dash difficiulty from Advanced to Intermediate
 - Changed: Ore Processing Storage Depot B to Waste Disposal NSJ Standable difficulty from Intermediate to Beginner
 - Changed: Ore Processing Storage Depot B to Waste Disposal R-Jump to L-Jump
 - Changed: Elite Research Spinners without Boost from Advanced to Intermediate
+- Changed: Sun Tower Early Wild now requires Intermediate Knowledge on all methods
 
 ### Metroid Prime 2: Echoes
 
 #### Patcher Changes
 
-- Nothing.
+- Fixed: Exporting an ISO when Randovania is in a read-only path now works properly.
+- Added: Ability to set a custom HUD color
 
 #### Logic Database
 

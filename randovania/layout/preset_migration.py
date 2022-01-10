@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 18
+CURRENT_VERSION = 19
 
 def _migrate_v1(preset: dict) -> dict:
     layout_configuration = preset["layout_configuration"]
@@ -501,6 +501,12 @@ def _migrate_v17(preset: dict) -> dict:
         )
     return preset
 
+def _migrate_v18(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["shuffle_item_pos"] = False
+        preset["configuration"]["items_every_room"] = False
+    return preset
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
     2: _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -519,6 +525,7 @@ _MIGRATIONS = {
     15: _migrate_v15,  # v3.2.1-203-g6e303090
     16: _migrate_v16,  # v3.2.1-363-g3a93b533
     17: _migrate_v17,
+    18: _migrate_v18,
 }
 
 
