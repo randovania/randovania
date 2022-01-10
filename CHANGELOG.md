@@ -46,6 +46,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: QoL Game Breaking now fixes the soft-lock in hive totem by making the blocks drop sooner
 - Added: Option to disable item loss in Frigate (Enabled by default)
 - Added: QoL Pickup Scans - Weeds by item in Landing Site now don't have scan point
+- Added: Combat/Scan/Thermal/X-Ray all have unique custom models
 - Fixed: Safeguard against blowing past layer limits.
 - Fixed: On Major custscene skip, Elite Quarters now stays locked until the player picks up the item. The hudmemo is now tied to the item rather than the death animation.
 - Fixed: Ruined fountain not always showing the right scan.
@@ -129,6 +130,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 #### Patcher Changes
 
 - Fixed: Exporting an ISO when Randovania is in a read-only path now works properly.
+- Added: Ability to set a custom HUD color
 
 #### Logic Database
 
