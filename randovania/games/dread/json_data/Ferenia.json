@@ -1051,7 +1051,7 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_005 (F)": {
+                        "Door to Quiet Robe Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1060,7 +1060,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_005 (F)": {
+                "Door to Quiet Robe Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1079,7 +1079,7 @@
                     },
                     "destination": {
                         "world_name": "Ferenia",
-                        "area_name": "collision_camera_005 (F)",
+                        "area_name": "Quiet Robe Room",
                         "node_name": "Door to collision_camera_004 (F)"
                     },
                     "dock_type": "door",
@@ -1177,7 +1177,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to collision_camera_005 (F)": {
+                        "Door to Quiet Robe Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1188,7 +1188,7 @@
                 }
             }
         },
-        "collision_camera_005 (F)": {
+        "Quiet Robe Room": {
             "default_node": "Start Point 2",
             "valid_starting_location": true,
             "extra": {
@@ -1239,11 +1239,19 @@
                     "destination": {
                         "world_name": "Ferenia",
                         "area_name": "collision_camera_004 (F)",
-                        "node_name": "Door to collision_camera_005 (F)"
+                        "node_name": "Door to Quiet Robe Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Event - Quiet Robe": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Start Point 1": {
                     "node_type": "generic",
@@ -1281,6 +1289,27 @@
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoRobotSoldier",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
+                    "connections": {
+                        "Door to collision_camera_004 (F)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Quiet Robe": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -11673.5,
+                        "y": -6888.88,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Quiet Robe",
                     "connections": {
                         "Door to collision_camera_004 (F)": {
                             "type": "and",

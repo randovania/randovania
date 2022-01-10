@@ -52,6 +52,10 @@ def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str
                 "Small Samus": configuration.small_samus,
             },
             {
+                "Shuffle Item Position": configuration.shuffle_item_pos,
+                "Items Every Room": configuration.items_every_room,
+            },
+            {
                 cutscene_removal: cutscene_removal is not None,
             }
         ],

@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock, call, ANY
 import pytest
 
 from randovania.games.prime2.patcher import claris_randomizer
+from randovania.interface_common import persistence
 from randovania.patching.patchers.exceptions import ExportFailure
 from randovania.layout.layout_description import LayoutDescription
 
@@ -112,7 +113,9 @@ def test_base_args(mock_get_data_path: MagicMock,
     expected_results = [
         Path("data", "ClarisPrimeRandomizer", "Randomizer.exe"),
         Path("root"),
-        "-data:" + str(Path("data", "ClarisPrimeRandomizer", "CustomRandomizerData.json"))
+        "-data:" + str(persistence.local_data_dir().joinpath(
+            "CustomEchoesRandomizerData.json"
+        ))
     ]
 
     assert results == expected_results
@@ -214,6 +217,11 @@ def test_add_menu_mod_to_files(mock_get_data_path: MagicMock,
     assert game_root.joinpath("files", "menu_mod.txt").is_file()
 
 
+def test_get_custom_data_path(skip_qtbot):
+    # prevent test from running on docker, since it depends on client packages
+    assert claris_randomizer._get_custom_data_path().suffix == ".json"
+
+
 @pytest.mark.parametrize("include_menu_mod", [False, True])
 def test_apply_patcher_file(
         include_menu_mod: bool,
@@ -232,6 +240,12 @@ def test_apply_patcher_file(
     )
     mock_create_progress_update_from_successive_messages: MagicMock = mocker.patch(
         "randovania.lib.status_update_lib.create_progress_update_from_successive_messages", autospec=True
+    )
+    mock_update_json_file: MagicMock = mocker.patch(
+        "randovania.games.prime2.patcher.claris_randomizer.update_json_file", autospec=True
+    )
+    mock_get_custom_data_path: MagicMock = mocker.patch(
+        "randovania.games.prime2.patcher.claris_randomizer._get_custom_data_path", autospec=True
     )
 
     game_root = valid_tmp_game_root
@@ -254,6 +268,10 @@ def test_apply_patcher_file(
         progress_update,
         200 if include_menu_mod else 100
     )
+    mock_update_json_file.assert_called_once_with(
+        mock_get_custom_data_path.return_value, randomizer_data,
+    )
+    mock_get_custom_data_path.assert_called_with()
     mock_run_with_args.assert_called_once_with(claris_randomizer._base_args(game_root),
                                                json.dumps(patcher_data), "Randomized!", status_update)
     mock_data_from_json.assert_called_once_with({"key": "special"})
@@ -265,4 +283,9 @@ def test_apply_patcher_file(
         mock_add_menu_mod_to_files.assert_not_called()
 
     assert claris_randomizer.get_patch_version(game_root) == claris_randomizer.CURRENT_PATCH_VERSION
-    assert claris_randomizer._get_custom_data_path()
+
+
+def test_update_json_file(tmp_path):
+    p = tmp_path.joinpath("foo/bar.json")
+    claris_randomizer.update_json_file(p, {"a": 5})
+    assert p.read_text() == '{\n    "a": 5\n}'

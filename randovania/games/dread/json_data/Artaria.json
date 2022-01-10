@@ -1710,15 +1710,6 @@
                                 "items": []
                             }
                         },
-                        "Door to Path to Corpius": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s010_cave:default:PRP_DB_CV_020",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Event - Early Cloak Blob": {
                             "type": "or",
                             "data": {
@@ -1747,6 +1738,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Above Early Cloak Blob": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s010_cave:default:PRP_DB_CV_020",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1806,15 +1806,6 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Save Station South": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s010_cave:default:PRP_DB_CV_020",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Dock to EMMI Zone First Entrance (DoorEmmy10_000)": {
                             "type": "and",
                             "data": {
@@ -1822,7 +1813,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Early Cloak Blob": {
+                        "Above Early Cloak Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1853,6 +1844,13 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {
                         "Door to Path to Corpius": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Above Early Cloak Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1900,7 +1898,7 @@
                     },
                     "event_name": "s010_cave:default:PRP_DB_CV_020",
                     "connections": {
-                        "Door to Save Station South": {
+                        "Above Early Cloak Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1962,7 +1960,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s010_cave:default:PRP_CV_PlatformCaveWater_B",
+                                            "name": "s010_cave:default:PRP_DB_CV_003",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1988,6 +1986,49 @@
                             }
                         },
                         "Event - Water Introduction Blob": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Above Early Cloak Blob": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9491.322824911142,
+                        "y": -1070.796631123474,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Save Station South": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s010_cave:default:PRP_DB_CV_020",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Path to Corpius": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to EMMI Zone First Entrance (DoorEmmy10_000)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Early Cloak Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,

@@ -198,11 +198,11 @@ Extra - asset_id: collision_camera_004
   * EMMI Door to collision_camera_040 (F)/Dock to collision_camera_004 (F)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to collision_camera_005 (F)
+  > Door to Quiet Robe Room
       Trivial
 
-> Door to collision_camera_005 (F); Heals? False
-  * Power Beam Door to collision_camera_005 (F)/Door to collision_camera_004 (F)
+> Door to Quiet Robe Room; Heals? False
+  * Power Beam Door to Quiet Robe Room/Door to collision_camera_004 (F)
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -218,23 +218,25 @@ Extra - asset_id: collision_camera_004
 
 > Dock to collision_camera_006 (F); Heals? False
   * Morph Ball Tunnel to collision_camera_006 (F)/Dock to collision_camera_004 (F)
-  > Door to collision_camera_005 (F)
+  > Door to Quiet Robe Room
       Trivial
 
 ----------------
-collision_camera_005 (F)
+Quiet Robe Room
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -13500.0, 'x2': -10400.0, 'y1': -7402.5, 'y2': -5802.5}
 Extra - polygon: [[-10400.0, -5802.5], [-13500.0, -5802.5], [-13500.0, -7402.5], [-10400.0, -7402.5]]
 Extra - asset_id: collision_camera_005
 > Door to collision_camera_004 (F); Heals? False
-  * Power Beam Door to collision_camera_004 (F)/Door to collision_camera_005 (F)
+  * Power Beam Door to collision_camera_004 (F)/Door to Quiet Robe Room
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Event - Quiet Robe
+      Trivial
 
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoRobotSanc
@@ -245,6 +247,11 @@ Extra - asset_id: collision_camera_005
 > Start Point 2; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoRobotSoldier
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to collision_camera_004 (F)
+      Trivial
+
+> Event - Quiet Robe; Heals? False
+  * Event Quiet Robe
   > Door to collision_camera_004 (F)
       Trivial
 
