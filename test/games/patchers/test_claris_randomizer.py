@@ -283,3 +283,9 @@ def test_apply_patcher_file(
         mock_add_menu_mod_to_files.assert_not_called()
 
     assert claris_randomizer.get_patch_version(game_root) == claris_randomizer.CURRENT_PATCH_VERSION
+
+
+def test_update_json_file(tmp_path):
+    p = tmp_path.joinpath("foo/bar.json")
+    claris_randomizer.update_json_file(p, {"a": 5})
+    assert p.read_text() == '{\n    "a": 5\n}'
