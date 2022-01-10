@@ -1,7 +1,6 @@
 import dataclasses
 import functools
 
-from PySide2 import QtWidgets
 from PySide2.QtWidgets import QCheckBox, QWidget
 
 from randovania.gui.generated.super_cosmetic_patches_dialog_ui import Ui_SuperCosmeticPatchesDialog
