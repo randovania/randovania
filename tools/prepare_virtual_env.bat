@@ -1,7 +1,10 @@
-
-
+@echo off
 cd /D "%~dp0"
 cd ..
+
+python3 tools\test_py_version.py
+if NOT ["%errorlevel%"]==["0"] pause
+if NOT ["%errorlevel%"]==["0"] exit /b 0
 
 py -3.9 -m venv venv
 if %errorlevel% neq 0 exit /b %errorlevel%
