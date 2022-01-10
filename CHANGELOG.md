@@ -55,6 +55,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Fixed: Automatic crash screen
 - Fixed: Wavesun not collecting item/unlocking door
 - Fixed: Locked door on Storage Depot B (NTSC 0-02)
+- Fixed: Bug in Elite Quarters where game would crash during OP death cutscene if the player changed suit during the fight
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 - Changed: Increased Maximum Missile/Etank/Capacity for seeds with more expansion count than is available in vanilla
