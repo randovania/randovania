@@ -149,7 +149,7 @@ def _add_menu_mod_to_files(
 
 
 def update_json_file(file: Path, content: dict):
-    file.mkdir(parents=True, exist_ok=True)
+    file.parent.mkdir(parents=True, exist_ok=True)
     with file.open("w") as data_file:
         json.dump(content, data_file, indent=4)
 
