@@ -499,32 +499,69 @@ Extra - asset_id: 3305828730
 > Door to Maintenance Tunnel; Heals? False
   * Ice Door to Maintenance Tunnel/Door to Elite Control
   * Extra - dock_index: 0
-  > Door to Elite Control Access
+  > Bottom Floor Center - Elite Pirate Idle or Dead
       Trivial
 
 > Door to Elite Control Access; Heals? False; Spawn Point
   * Wave Door to Elite Control Access/Door to Elite Control
   * Extra - dock_index: 1
-  > Door to Maintenance Tunnel
-      Trivial
-  > Door to Ventilation Shaft
-      After Elite Control Barriers
-  > Event - Elite Control Barriers Lowered
-      All of the following:
-          # Skipping Elite Pirate Standable: https://youtu.be/60i2ca6f27w
-          Scan Visor
+  > Bottom Floor Center - Elite Pirate Triggered
+      Before Elite Pirate Fight (Elite Control)
+  > Bottom Floor Center - Elite Pirate Idle or Dead
+      After Elite Pirate Fight (Elite Control)
 
 > Door to Ventilation Shaft; Heals? False
   * Ice Door to Ventilation Shaft/Door to Elite Control
   * Extra - dock_index: 2
-  > Door to Elite Control Access
-      After Elite Control Barriers
   > Event - Elite Control Barriers Lowered
       Scan Visor and Enabled Backwards Lower Mines
+  > Top Floor - Before Barriers
+      After Elite Control Barriers
 
 > Event - Elite Control Barriers Lowered; Heals? False
   * Event Elite Control Barriers
+  > Top Floor - Before Barriers
+      Trivial
+
+> Event - Elite Pirate Fight; Heals? False
+  * Event Elite Pirate Fight (Elite Control)
+  > Bottom Floor Center - Elite Pirate Idle or Dead
+      Trivial
+
+> Bottom Floor Center - Elite Pirate Triggered; Heals? False
+  > Event - Elite Pirate Fight
+      All of the following:
+          # https://youtu.be/mx0rQa9ZAY4
+          Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
+  > Top Floor - Before Barriers
+      All of the following:
+          # https://youtu.be/60i2ca6f27w
+          Standable Terrain (Intermediate)
+
+> Bottom Floor Center - Elite Pirate Idle or Dead; Heals? False
+  > Door to Maintenance Tunnel
+      Trivial
   > Door to Elite Control Access
+      Any of the following:
+          After Elite Pirate Fight (Elite Control)
+          All of the following:
+              # https://youtu.be/lmEsr1Y1izM
+              L-Jump (Beginner) and Standable Terrain (Intermediate)
+  > Bottom Floor Center - Elite Pirate Triggered
+      Before Elite Pirate Fight (Elite Control)
+  > Top Floor - Before Barriers
+      Any of the following:
+          After Elite Pirate Fight (Elite Control)
+          All of the following:
+              # https://youtu.be/VOesQWYfL-4
+              Standable Terrain (Intermediate)
+
+> Top Floor - Before Barriers; Heals? False
+  > Door to Ventilation Shaft
+      After Elite Control Barriers
+  > Event - Elite Control Barriers Lowered
+      Scan Visor
+  > Bottom Floor Center - Elite Pirate Idle or Dead
       Trivial
 
 ----------------
@@ -747,7 +784,7 @@ Extra - asset_id: 4111966698
   > Door to Omega Research
       No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
   > Event - Elite Pirate Fight
-      Trivial
+      Plasma Beam
 
 > Door to Omega Research; Heals? False
   * Ice Door to Omega Research/Door to Dynamo Access
@@ -755,14 +792,14 @@ Extra - asset_id: 4111966698
   > Door to Central Dynamo
       No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
   > Event - Elite Pirate Fight
-      Trivial
+      Plasma Beam
 
 > Event - Elite Pirate Fight; Heals? False
   * Event Elite Pirate Fight (Dynamo Access)
-  > Door to Central Dynamo
-      Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
   > Door to Omega Research
-      Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
+      All of the following:
+          # https://youtu.be/20peXRPG-e0
+          Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
 
 ----------------
 Transport to Magmoor Caverns South

@@ -3334,7 +3334,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Ice Door",
                     "connections": {
-                        "Door to Elite Control Access": {
+                        "Bottom Floor Center - Elite Pirate Idle or Dead": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3363,45 +3363,22 @@
                     "dock_type": "door",
                     "dock_weakness": "Wave Door",
                     "connections": {
-                        "Door to Maintenance Tunnel": {
-                            "type": "and",
+                        "Bottom Floor Center - Elite Pirate Triggered": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "Event51",
+                                "amount": 1,
+                                "negate": true
                             }
                         },
-                        "Door to Ventilation Shaft": {
-                            "type": "and",
+                        "Bottom Floor Center - Elite Pirate Idle or Dead": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event26",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Elite Control Barriers Lowered": {
-                            "type": "and",
-                            "data": {
-                                "comment": "Skipping Elite Pirate Standable: https://youtu.be/60i2ca6f27w",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Scan",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "events",
+                                "name": "Event51",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3426,15 +3403,6 @@
                     "dock_type": "door",
                     "dock_weakness": "Ice Door",
                     "connections": {
-                        "Door to Elite Control Access": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event26",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Event - Elite Control Barriers Lowered": {
                             "type": "and",
                             "data": {
@@ -3460,6 +3428,15 @@
                                     }
                                 ]
                             }
+                        },
+                        "Top Floor - Before Barriers": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event26",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -3471,7 +3448,221 @@
                     "extra": {},
                     "event_name": "Event26",
                     "connections": {
+                        "Top Floor - Before Barriers": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Elite Pirate Fight": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Event51",
+                    "connections": {
+                        "Bottom Floor Center - Elite Pirate Idle or Dead": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Bottom Floor Center - Elite Pirate Triggered": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Event - Elite Pirate Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://youtu.be/mx0rQa9ZAY4",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Charge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Combat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 200,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Top Floor - Before Barriers": {
+                            "type": "and",
+                            "data": {
+                                "comment": "https://youtu.be/60i2ca6f27w",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Standable",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Bottom Floor Center - Elite Pirate Idle or Dead": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Maintenance Tunnel": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Elite Control Access": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/lmEsr1Y1izM",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "LJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event51",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Bottom Floor Center - Elite Pirate Triggered": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event51",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Top Floor - Before Barriers": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event51",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://youtu.be/VOesQWYfL-4",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Standable",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Top Floor - Before Barriers": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Ventilation Shaft": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event26",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Elite Control Barriers Lowered": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Scan",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Bottom Floor Center - Elite Pirate Idle or Dead": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5218,10 +5409,12 @@
                             }
                         },
                         "Event - Elite Pirate Fight": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5273,10 +5466,12 @@
                             }
                         },
                         "Event - Elite Pirate Fight": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Plasma",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -5289,45 +5484,10 @@
                     "extra": {},
                     "event_name": "Event50",
                     "connections": {
-                        "Door to Central Dynamo": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Charge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "Combat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Damage",
-                                            "amount": 200,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Omega Research": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
-                                "comment": null,
+                                "comment": "https://youtu.be/20peXRPG-e0",
                                 "items": [
                                     {
                                         "type": "resource",
