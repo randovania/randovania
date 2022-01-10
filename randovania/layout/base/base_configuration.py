@@ -60,7 +60,4 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
             if hasattr(f, "dangerous_settings"):
                 result.extend(f.dangerous_settings())
 
-        if self.multi_pickup_placement:
-            result.append("Multi-pickup placement enabled")
-
         return result

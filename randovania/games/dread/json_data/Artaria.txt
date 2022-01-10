@@ -410,10 +410,10 @@ Extra - asset_id: collision_camera_004
   * Extra - right_shield_def: None
   > Door to Melee Tutorial Room
       Trivial
-  > Door to Path to Corpius
-      After Artaria - Early Cloak Blob
   > Event - Early Cloak Blob
       Wave Beam or Pseudo-Wave Beam (Intermediate) or Shoot Diffusion Beam
+  > Above Early Cloak Blob
+      After Artaria - Early Cloak Blob
 
 > Dock to EMMI Zone First Entrance (Main); Heals? False
   * EMMI Door to EMMI Zone First Entrance/Dock to Early Cloak Room (Water Blob)
@@ -430,11 +430,9 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Save Station South
-      After Artaria - Early Cloak Blob
   > Dock to EMMI Zone First Entrance (DoorEmmy10_000)
       Trivial
-  > Event - Early Cloak Blob
+  > Above Early Cloak Blob
       Trivial
 
 > Dock to EMMI Zone First Entrance (DoorEmmy10_000); Heals? False
@@ -442,6 +440,8 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: DoorEmmy10_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Path to Corpius
+      Trivial
+  > Above Early Cloak Blob
       Trivial
 
 > Event - Water Introduction Blob; Heals? False
@@ -455,7 +455,7 @@ Extra - asset_id: collision_camera_004
   * Event Artaria - Early Cloak Blob
   * Extra - actor_name: PRP_DB_CV_020
   * Extra - actor_def: actordef:actors/props/breakablecave020/charclasses/breakablecave020.bmsad
-  > Door to Save Station South
+  > Above Early Cloak Blob
       Trivial
 
 > Next to Water Introduction Blob; Heals? False
@@ -464,8 +464,18 @@ Extra - asset_id: collision_camera_004
           Can Slide Underwater
           Before Artaria - Water Introduction Blob and Can Slide
   > Dock to EMMI Zone First Entrance (Main)
-      Gravity Suit or After Artaria - EMMI Zone Water Device or Lay Cross Comb or Use Spin Boost
+      Gravity Suit or After Artaria - Water Introduction Blob or Lay Cross Comb or Use Spin Boost
   > Event - Water Introduction Blob
+      Trivial
+
+> Above Early Cloak Blob; Heals? False
+  > Door to Save Station South
+      After Artaria - Early Cloak Blob
+  > Door to Path to Corpius
+      Trivial
+  > Dock to EMMI Zone First Entrance (DoorEmmy10_000)
+      Trivial
+  > Event - Early Cloak Blob
       Trivial
 
 ----------------
