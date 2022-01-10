@@ -100,21 +100,14 @@ _LOCATIONS_WITH_MODAL_ALERT = {
 _LOCATIONS_GROUPED_TOGETHER = [
     ({0, 1, 2, 3}, None),  # Main Plaza
     ({5, 6, 7}, None),  # Ruined Shrine (all 3)
-    ({27, 28}, None),  # Burn dome
     ({94}, 97),  # Warrior shrine -> Fiery Shores Tunnel
-    ({23, 24}, None),  # Watery Hall
-    ({25, 26}, None),  # Dynamo (the one in Chozo)
     ({55}, 54),  # Gravity Chamber: Upper -> Lower
     ({19, 17}, None),  # Hive Totem + Transport Access North
-    ({12}, 11),  # Magma Pool -> Training Chamber Access
     ({59}, 58),  # Alcove -> Landing Site
     ({62, 65}, None),  # Root Cave + Arbor Chamber
-    ({40}, 39),  # Ice Ruins East (spider -> ice)
     ({15, 16}, None),  # Ruined Gallery
-    ({18}, 22),  # Gathering Hall -> Watery Hall Access
     ({52, 53}, None),  # Research Lab Aether
 ]
-
 
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
@@ -372,6 +365,13 @@ class RandomprimePatcher(Patcher):
         for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, cosmetic_patches.suit_color_rotations):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
+        
+        starting_room = _name_for_location(db.world_list, patches.starting_location)
+
+        starting_items = {
+            name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
+            for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
+        }
 
         return {
             "seed": description.permalink.seed_number,
@@ -391,7 +391,9 @@ class RandomprimePatcher(Patcher):
                 "suitColors": suit_colors
             },
             "gameConfig": {
-                "startingRoom": _name_for_location(db.world_list, patches.starting_location),
+                "shufflePickupPosition": configuration.shuffle_item_pos,
+                "shufflePickupPosAllRooms": configuration.items_every_room,
+                "startingRoom": starting_room,
                 "startingMemo": starting_memo,
                 "warpToStart": configuration.warp_to_start,
 
@@ -402,16 +404,13 @@ class RandomprimePatcher(Patcher):
                 "multiworldDolPatches": True,
 
                 "disableItemLoss": True,  # Item Loss in Frigate
-                "startingItems": {
-                    name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
-                    for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
-                },
+                "startingItems": starting_items,
 
                 "etankCapacity": configuration.energy_per_tank,
                 "itemMaxCapacity": {
-                    "Energy Tank": 200,
-                    "Power Bomb": 99,
-                    "Missile": 999,
+                    "Energy Tank": db.resource_database.get_item("EnergyTank").max_capacity,
+                    "Power Bomb": db.resource_database.get_item("PowerBomb").max_capacity,
+                    "Missile": db.resource_database.get_item("Missile").max_capacity,
                     "Unknown Item 1": db.resource_database.multiworld_magic_item.max_capacity,
                 },
 
