@@ -55,6 +55,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Fixed: Automatic crash screen
 - Fixed: Wavesun not collecting item/unlocking door
 - Fixed: Locked door on Storage Depot B (NTSC 0-02)
+- Fixed: Bug in Elite Quarters where game would crash during OP death cutscene if the player changed suit during the fight
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 - Changed: Increased Maximum Missile/Etank/Capacity for seeds with more expansion count than is available in vanilla
@@ -98,6 +99,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: 2 Additional NSJ methods for reaching FCS item
 - Added: Lava Lake Item NSJ Combat Dash
 - Added: Triclops Pit Item SJ Beginner Standable
+- Added: 3 new ways to climb Tower of Light (L-Jump, R-Jump, Slope Jump)
+- Added: Underwater Movement (Beginner) to get to Tower Chamber with Space Jump
+- Added: Underwater Movement (Intermediate) for NSJ Tower Chamber
 - Added: Frigate Crash Site climb with Space Jump and L-Jump (Intermediate) and Standable Terrain (Beginner)
 - Added: More logical paths for Ice Ruins West NSJ
 - Added: Ice Ruins West Middle-Left Rooftop to Item Combat/Scan Dash
@@ -115,6 +119,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Added requirement for X-Ray Visor or Invisible Platforms to Triclops Pit Item NSJ tricks
 - Changed: Monitor Station climb to Warrior Shrine Bomb Jump difficulty changed from Advanced to Intermediate
 - Changed: Monitor Station NSJ Combat Dash to Warrior Shrine lowered difficulty from Advanced to Intermediate
+- Changed: Increase the difficulty of Tower of Light climb with combat dash from 'Beginner' to 'Intermediate' lowered Standable Terrain from 'Intermediate' to 'Beginner'
 - Changed: Frigate Crash Site Climb Space Jump Slope Jump Standable Terrain difficulty was reduced to Standable Terrain (Beginner)
 - Changed: Removed Slope Jump and Standable requirement from Ice Ruins West NSJ
 - Changed: Main Quarry Save Station NSJ Movement difficulty from Beginner to Intermediate
