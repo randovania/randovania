@@ -93,7 +93,7 @@ class CaverPatcher(Patcher):
             USELESS_ITEM_CATEGORY,
             tuple()
         ), players_config.player_index)
-        nothing_item_script = "<PRI<MSG<TUR\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
+        nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
         pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
         for index in sorted(game_description.world_list._pickup_index_to_node.keys()):
