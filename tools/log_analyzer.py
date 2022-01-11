@@ -103,6 +103,8 @@ def accumulate_results(game_modifications: dict,
             item_name = "Nothing"
         else:
             area_name, location_name = index_to_location[hint_data["target"]]
+            if "Portal Chamber" in location_name:
+                location_name = "Portal Chamber/Pickup (Missile)"
             item_name = game_modifications["locations"][area_name][location_name]
 
         item_name = _filter_item_name(item_name)
