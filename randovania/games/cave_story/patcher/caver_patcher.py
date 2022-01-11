@@ -159,10 +159,6 @@ class CaverPatcher(Patcher):
         # Softlock prevention mapflags
         starting_script += "<MP+0032<MP+0033<MP+0036"
 
-        # Starting HP
-        if configuration.starting_hp != 3:
-            starting_script += f"<ML+{num_to_tsc_value(configuration.starting_hp - 3).decode('utf-8')}"
-
         # Starting Items
         if len(patches.starting_items):
             starting_script += "\r\n<PRI<MSG<TUR"
@@ -290,6 +286,10 @@ class CaverPatcher(Patcher):
                 starting_script += "<IT+0044"
 
             starting_script += "<CLO"
+
+        # Starting HP
+        if configuration.starting_hp != 3 or life > 0:
+            starting_script += f"<ML+{num_to_tsc_value(configuration.starting_hp + life - 3).decode('utf-8')}"
 
         # Starting Locations
         if patches.starting_location.area_name in {"Start Point", "First Cave", "Hermit Gunsmith"}:
