@@ -195,16 +195,16 @@ class CaverPatcher(Patcher):
                     flags += "<FL+0593"
                 
                 words = {
-                    1: "a",
-                    2: "a second",
-                    3: "a third",
-                    4: "a fourth",
-                    5: "the last"
+                    1: "a =Puppy=",
+                    2: "two =Puppies=",
+                    3: "three =Puppies=",
+                    4: "four =Puppies=",
+                    5: "all five =Puppies="
                 }
 
                 starting_script += (
                     f"<IT+0014<GIT1014{flags}<SNP0136:0000:0000:0000\r\n"
-                    f"Got {words[num_puppies]} =Puppy=!<WAI0010<NOD\r\n<CLR"
+                    f"Got {words[num_puppies]}!<WAI0010<NOD\r\n<CLR"
                 )
                 continue
 
