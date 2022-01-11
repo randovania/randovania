@@ -30,6 +30,16 @@ NON_MAJOR_PROGRESSION = [
     "Grapple Beam",
     "Thermal Visor",
     "Phazon Suit",
+    "Sonic Boom",
+    "Darkburst",
+    "Sunburst",
+    "Unlimited Missiles",
+    "Unlimited Beam Ammo",
+    "Double Damage",
+    "Cannon Ball",
+    "Dark Ammo Expansion",
+    "Light Ammo Expansion",
+    "Beam Ammo Expansion",
 ]
 
 
