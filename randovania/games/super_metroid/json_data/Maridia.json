@@ -88,6 +88,15 @@
                             }
                         },
                         "Door to Maridia Glass Tube Save Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event18",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Door to Main Street": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -96,7 +105,33 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Bombs",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event18",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Maridia Tube Shattered": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -111,15 +146,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Door to Main Street": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -162,10 +188,38 @@
                     "dock_weakness": "Missile Door",
                     "connections": {
                         "Door to Red Brinstar West Tunnel": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event18",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Maridia Tube Shattered": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerBomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -185,6 +239,51 @@
                     "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Red Brinstar West Tunnel": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "Event18",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Maridia Tube Shattered": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerBomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Maridia Tube Shattered": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Event18",
+                    "connections": {
+                        "Door to Maridia Glass Tube Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
