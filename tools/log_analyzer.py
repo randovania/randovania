@@ -151,9 +151,10 @@ def get_items_order(all_items: Iterable[str], item_order: List[str], major_progr
         order[item] = i
         location = location.split(" with ", 1)[0]
         locations.add(location)
-        if "Key" not in item and "Artifact" not in item:
+        if "key" not in item and "artifact" not in item.lower():
             no_key.add(location)
-        progression_items.add(item)
+
+        progression_items.add(item.split("'s ")[-1])
 
     for item in all_items:
         if item not in order:
