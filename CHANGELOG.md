@@ -110,7 +110,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Main Quarry Crane Platform to Item Intermediate Scan Dash
 - Added: Ore Processing Door To Elevator Access A to Storage Depot B Standable L-Jump with Power Bombs
 - Added: Combat logic for Dynamo Access and Elite Control Elite Pirate fights
-- Added: Intermediate Standables to escape Elite Control after/without triggering Elite Pirate
+- Added: Intermediate/Advanced Standables to enter/escape Elite Control after/without triggering Elite Pirate
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty

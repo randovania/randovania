@@ -499,15 +499,17 @@ Extra - asset_id: 3305828730
 > Door to Maintenance Tunnel; Heals? False
   * Ice Door to Maintenance Tunnel/Door to Elite Control
   * Extra - dock_index: 0
-  > Bottom Floor Center - Elite Pirate Idle or Dead
+  > Bottom Floor Center
       Trivial
 
 > Door to Elite Control Access; Heals? False; Spawn Point
   * Wave Door to Elite Control Access/Door to Elite Control
   * Extra - dock_index: 1
-  > Bottom Floor Center - Elite Pirate Triggered
-      Before Elite Pirate Fight (Elite Control)
-  > Bottom Floor Center - Elite Pirate Idle or Dead
+  > Event - Elite Pirate Defeated
+      All of the following:
+          # https://youtu.be/mx0rQa9ZAY4
+          Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
+  > Bottom Floor Center
       After Elite Pirate Fight (Elite Control)
 
 > Door to Ventilation Shaft; Heals? False
@@ -515,30 +517,20 @@ Extra - asset_id: 3305828730
   * Extra - dock_index: 2
   > Event - Elite Control Barriers Lowered
       Scan Visor and Enabled Backwards Lower Mines
-  > Top Floor - Before Barriers
+  > Bottom Floor Center
       After Elite Control Barriers
 
 > Event - Elite Control Barriers Lowered; Heals? False
   * Event Elite Control Barriers
-  > Top Floor - Before Barriers
+  > Bottom Floor Center
       Trivial
 
-> Event - Elite Pirate Fight; Heals? False
+> Event - Elite Pirate Defeated; Heals? False
   * Event Elite Pirate Fight (Elite Control)
-  > Bottom Floor Center - Elite Pirate Idle or Dead
+  > Bottom Floor Center
       Trivial
 
-> Bottom Floor Center - Elite Pirate Triggered; Heals? False
-  > Event - Elite Pirate Fight
-      All of the following:
-          # https://youtu.be/mx0rQa9ZAY4
-          Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
-  > Top Floor - Before Barriers
-      All of the following:
-          # https://youtu.be/60i2ca6f27w
-          Standable Terrain (Intermediate)
-
-> Bottom Floor Center - Elite Pirate Idle or Dead; Heals? False
+> Bottom Floor Center; Heals? False
   > Door to Maintenance Tunnel
       Trivial
   > Door to Elite Control Access
@@ -546,23 +538,27 @@ Extra - asset_id: 3305828730
           After Elite Pirate Fight (Elite Control)
           All of the following:
               # https://youtu.be/lmEsr1Y1izM
-              L-Jump (Beginner) and Standable Terrain (Intermediate)
-  > Bottom Floor Center - Elite Pirate Triggered
-      Before Elite Pirate Fight (Elite Control)
-  > Top Floor - Before Barriers
-      Any of the following:
-          After Elite Pirate Fight (Elite Control)
-          All of the following:
-              # https://youtu.be/VOesQWYfL-4
-              Standable Terrain (Intermediate)
-
-> Top Floor - Before Barriers; Heals? False
+              Movement (Beginner) and Standable Terrain (Intermediate)
   > Door to Ventilation Shaft
-      After Elite Control Barriers
+      All of the following:
+          After Elite Control Barriers
+          Any of the following:
+              After Elite Pirate Fight (Elite Control)
+              All of the following:
+                  # https://youtu.be/VOesQWYfL-4
+                  Standable Terrain (Intermediate)
   > Event - Elite Control Barriers Lowered
-      Scan Visor
-  > Bottom Floor Center - Elite Pirate Idle or Dead
-      Trivial
+      All of the following:
+          Scan Visor
+          Any of the following:
+              After Elite Pirate Fight (Elite Control)
+              All of the following:
+                  # https://youtu.be/VOesQWYfL-4
+                  Standable Terrain (Intermediate)
+  > Event - Elite Pirate Defeated
+      All of the following:
+          # https://youtu.be/mx0rQa9ZAY4
+          Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
 
 ----------------
 Maintenance Tunnel
