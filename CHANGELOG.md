@@ -59,7 +59,6 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 - Changed: Increased Maximum Missile/Etank/Capacity for seeds with more expansion count than is available in vanilla
-- Changed: Phazon Elite QoL now leaves the turrets on their original layer, making central dynamo affect the room as in vanilla
 
 #### Logic Database
 
