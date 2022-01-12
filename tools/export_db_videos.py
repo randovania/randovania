@@ -1,3 +1,7 @@
+# USAGE
+# - No arguments to export all games to ./exported_db_videos
+# - Single argument to export 1 game to ./exported_db_videos/{game}
+
 import os
 import sys
 import json
@@ -11,7 +15,29 @@ HTML_HEADER_FORMAT = '''
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>%s</title>
-		<style type="text/css">body{margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px}h1,h2,h3{line-height:1.2}</style>
+		<style type="text/css">
+    
+            body{margin:30px auto;max-width:1000px;line-height:1.6;font-size:19px;padding:0 10px}h1,h2,h3{line-height:1.2}
+
+            #toc_container {
+                background: #f9f9f9 none repeat scroll 0 0;
+                border: 1px solid #aaa;
+                display: table;
+                font-size: 95%%;
+                margin-bottom: 1em;
+                padding: 20px;
+                width: auto;
+            }
+
+            .toc_title {
+                font-weight: 700;
+                text-align: center;
+            }
+
+            #toc_container li, #toc_container ul, #toc_container ul li{
+                list-style: outside none none !important;
+            }
+        </style>
 	</head>
 	<body>
         <h1>%s</h1>
@@ -19,11 +45,11 @@ HTML_HEADER_FORMAT = '''
 '''
 
 HTML_AREA_FORMAT = '''
-        <strong><h2>%s</h2></strong>
+        <strong><h2 id="%s">%s</h2></strong>
 '''
 
 HTML_CONNECTION_FORMAT = '''
-        <p>%s -> %s</p>
+        <h4 id="%s">%s</h4>
 '''
 
 HTML_VIDEO_FORMAT = '''
@@ -101,22 +127,48 @@ def collect_game_info(game):
     return worlds
 
 def generate_world_html(name, areas):
-    html = HTML_HEADER_FORMAT % (name, name, str(datetime.datetime.now()).split('.')[0])
 
-    # TODO: Create table of contents
+    body = ""
+    toc = """
+    <div id="toc_container">
+    <ul class="toc_list">
+    """
+
+    TOC_AREA_FORMAT = '''
+        <li><a href="#%s">%s</a>
+            <ul>
+                %s
+            </ul>
+        </li>
+    '''
+
+    TOC_CONNECTION_FORMAT = '''
+                <li><a href="#%s">%s</a></li>
+    '''
 
     for area in areas:
-        html += HTML_AREA_FORMAT % area
+        body += HTML_AREA_FORMAT % (area, area)
         nodes = areas[area]
         for node in nodes:
             connections = nodes[node]
+            toc_connections = ""
             for connection in connections:
-                html += HTML_CONNECTION_FORMAT % (node, connection)
+                connection_name = "%s -> %s" % (node, connection)
+                body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
                 for (id, start_time) in yt_ids:
-                    html += HTML_VIDEO_FORMAT % (id, start_time)
-    html += HTML_FOOTER
-    return html
+                    body += HTML_VIDEO_FORMAT % (id, start_time)
+                toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
+        toc += TOC_AREA_FORMAT % (area, area, toc_connections)
+
+    toc += """
+        </ul>
+    </div>
+    """
+
+    header = HTML_HEADER_FORMAT % (name, name, str(datetime.datetime.now()).split('.')[0].split(" ")[0])
+    
+    return header + toc + body + HTML_FOOTER
 
 def export_game(game, out_dir):
     worlds = collect_game_info(game)
