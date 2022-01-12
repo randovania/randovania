@@ -332,16 +332,16 @@ class CaverPatcher(Patcher):
         head = {}
         for event, m_ammo in missile_events.items():
             head[event] = {
-                "needle": f"<AM+{m_ammo[0]}:....",
-                "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1])}"
+                "needle": f"<AM%+....:....",
+                "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1]).decode('utf-8')}"
             }
 
         life_capsules = [("Small Life Capsule", "0012"), ("Medium Life Capsule", "0013"), ("Large Life Capsule", "0014")]
         for name, event in life_capsules:
-            amount = configuration.major_items_configuration.items_state[item_database.major_items[name]]
+            amount = configuration.major_items_configuration.items_state[item_database.major_items[name]].included_ammo[0]
             head[event] = {
-                "needle": f".!<ML+....",
-                "script": f"{amount}!<ML+{num_to_tsc_value(amount)}"
+                "needle": f".!<ML%+....",
+                "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}"
             }
 
         return {
@@ -358,6 +358,7 @@ class CaverPatcher(Patcher):
         try:
             caver_patcher.patch_files(patch_data, output_file, progress_update)
         finally:
+            json.dump(patch_data, output_file.joinpath("data", "patcher_data.json").open("w"))
             self._busy = False
 
 def create_loc_formatters(area_namer: hint_lib.AreaNamer, world_list: WorldList, patches: GamePatches, players_config: PlayersConfiguration) -> dict[HintLocationPrecision, LocationFormatter]:
