@@ -312,7 +312,7 @@ class CaverPatcher(Patcher):
 
         # Configurable missile ammo
         small_missile_ammo = item_database.ammo["Missile Expansion"]
-        hell_missile_ammo = item_database.ammo["Missile Expansion (Large)"]
+        hell_missile_ammo = item_database.ammo["Large Missile Expansion"]
         
         ammo_state = configuration.ammo_configuration.items_state
         small_missile = ammo_state[small_missile_ammo].ammo_count[0]
