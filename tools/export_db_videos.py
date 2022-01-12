@@ -61,6 +61,20 @@ HTML_FOOTER = '''
 </html>
 '''
 
+FULL_GAME_NAMES = {
+    "cave_story": "Cave Story",
+    "dread": "Metroid Dread",
+    "prime1": "Metroid Prime",
+    "prime2": "Metroid Prime 2: Echoes",
+    "prime3": "Metroid Prime 3: Corruption",
+    "super_metroid": "Super Metroid",
+}
+
+def full_game_name(game):
+    if game not in FULL_GAME_NAMES.keys():
+        return game
+    return FULL_GAME_NAMES[game]
+
 def get_date():
     return str(datetime.datetime.now()).split('.')[0].split(" ")[0]
 
@@ -181,7 +195,9 @@ def export_game(game, out_dir):
         file.write(html)
         file.close()
     
-    html = HTML_HEADER_FORMAT % ("index", game, get_date())
+    full_name = full_game_name(game)
+    header = HTML_HEADER_FORMAT % (full_name, full_name, get_date())
+    html = HTML_HEADER_FORMAT % ("Index - " + full_name, full_name, get_date())
     
     toc = """
     <div>
