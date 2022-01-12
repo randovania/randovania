@@ -70,6 +70,44 @@ It is important to note that a database does not need to have every connection b
 Sometimes, areas exist in which every node connects to every other node in some unique and complicated way, such that no simplifications exist. In this case, often the logic involved can be made easier to work with by adding a node to an arbitrary location in the area. By adding extra nodes, you can represent in-between points between the existing nodes in an area, which is often helpful to reduce the number of possible scenarios that must be considered and to make the area's logic more organized.  
   
   
+![Extra Nodes](./img/adding_extra_nodes.png)  
+  
+  
+## TRICK DIFFICULTY  
+The question of what difficulty should be assigned to a trick comes up frequently, and this is because it is a complex question to consider. There are many aspects to consider when assigning a trick to one of the difficulty tiers. The tiers, and the role they serve in the database, are as follows  
+  
+#### Disabled  
+This "trick" isn't a trick at all. Its use here is obvious to both the player and the developer, was clearly intended as a way to traverse this section, and conforms closely to the game's difficulty. A trick with this difficulty level can't actually be toggled off by the player - as the name might suggest, this trick may still be required even when the trick is "disabled", so you should not actually assign this difficulty to a trick.  
+  
+#### Beginner  
+Beginner tricks are something a novice can perform with ease. Most beginner tricks require only knowledge of the trick's existence to be performed, with muscle memory and skill not being required to perform the trick. Tricks which involve abuse of intended mechanics may also fall in this category, as they are likely to be more familiar to someone who has already become familiar with the game in a casual setting.  
+  
+#### Intermediate  
+Intermediate represents a mere step above beginner. While beginner tricks can be performed easily by just about anyone who has heard of them, Intermediate tricks present more of a challenge, if only slightly. The player may not need to practice to land one of these tricks consistently, but it's not something that a new player will be likely to get on their first try. Often, knowledge of the general trick is easily transferable from one location to the next, making it easy to pick up new implementations of the trick.  
+  
+#### Advanced  
+Advanced tricks require a good deal of skill to execute consistently, and players will need to practice with the trick both in general and at the specific location which calls for it to retain any degree of consistency. This trick could still be performed by a beginner, but only if they have an external guide open and take some real time trying to land it even once, at least about 10-20 minutes, and it would be ill-advised for them to attempt this trick in a speed setting without this degree of familiarity. If this trick is failed, it might come at the cost of a significant time or resource expenditure, further penalizing players.  
+  
+#### Expert  
+Expert tricks cannot be performed by a beginner until they cease to be a beginner. These tricks require a precise and exacting knowledge of the game's mechanics, and cannot be performed first-try even by those who pour hundreds of hours into the game. They may take a long time to set up, carry enormous attempt costs, or have great penalties for failure, such as causing the player to die, fall to a previous area, softlock, or even crash the game. The trick is still a fair challenge, but one that should be regarded with caution by all but the most experienced players.  
+  
+#### Hypermode  
+Hypermode tricks aren't fair. They are placed in their own difficulty so that players who wish to challenge their skill at the highest level can save themselves some frustration. Hypermode tricks are stupid, inconsistent, random, or otherwise painful to perform. They may require a degree of precision which isn't possible for a human to provide with consistency, and may cause permanent and lasting problems for a player when attempted or even when completed successfully, such as causing them to lose items or corrupting their save data. Hypermode tricks may actually be easier than an expert or even advanced trick to perform, but are so obscure, unpredictable, annoying, or punishing that players just don't like them.  
+  
+  
+As has been discussed, there are many different criteria for deciding a trick's difficulty, and some of them are a little subjective. Every time you add or modify a trick, you should ask yourself:  
+  
+How familiar does a player need to be with a trick to perform it?  
+Is the trick consistent?  
+Are there consequences for attempting the trick?  
+How long does the trick take?  
+How quickly can the player re-attempt the trick?  
+Is the trick fun or flashy to perform?  
+Could a player intuit this trick on their own?  
+How similar is this trick to other tricks of the same type?  
+Are players who play the game outside a randomizer setting likely to know the trick?  
+  
+  
 ## NAMING CONVENTIONS  
 Area names should be memorable and descriptive. If your game does not provide an official name for an area, you will need to name it yourself. Avoid using in-jokes that newer players may be unfamiliar with, and remember that while a funny area name now and then can be good, it should not come at the expense of utility. Needless to say, profane or offensive names will be rejected outright. If a game's community has already adopted community names for areas, it is best to use those as well, as many resources will have already been created using them, and players familiar with the game will easily adapt to your database. It can occasionally be worthwhile to alter or ignore an established community name, however, if it comes into conflict with the aforementioned principles.  
   
