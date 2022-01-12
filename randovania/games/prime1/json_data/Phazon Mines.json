@@ -1658,7 +1658,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Standable",
-                                                        "amount": 3,
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
@@ -3399,7 +3399,7 @@
                             }
                         },
                         "Bottom Floor Center": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -4173,7 +4173,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": "Halfway up: https://youtu.be/vOr2W2ut25k Al the way up: https://youtu.be/gU2yAun0Zvg",
+                                                        "comment": "Halfway up: https://youtu.be/vOr2W2ut25k All the way up: https://youtu.be/gU2yAun0Zvg",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6162,7 +6162,7 @@
                         "Door to Quarantine Access A": {
                             "type": "and",
                             "data": {
-                                "comment": "If Samus leaves this room without picking up the item, the doors to Save Station Mines B and Quarantine Access A will permanently be sealed, making it impossible to backtrack through the room.",
+                                "comment": "The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A. However, if Samus leaves this room without picking up the item, the doors to Save Station Mines B and Dynamo Access will then permanently be sealed, making it impossible to backtrack through the room.",
                                 "items": [
                                     {
                                         "type": "resource",
@@ -6436,7 +6436,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "Original video: https://www.youtube.com/watch?v=rDCTXaNmypI Full acquisition: https://youtu.be/LRmJn2BAYwc",
+                                                        "comment": "Destroying the drone requires Samus being able to take 400 more damage during item acquisition. The video shows how to avoid destroying it. https://youtu.be/LRmJn2BAYwc",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -6470,7 +6470,60 @@
                                                                 "data": {
                                                                     "type": "damage",
                                                                     "name": "Damage",
-                                                                    "amount": 650,
+                                                                    "amount": 680,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/LRmJn2BAYwc",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Boost",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "IS",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Damage",
+                                                                    "amount": 280,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Knowledge",
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
