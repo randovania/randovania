@@ -61,6 +61,9 @@ HTML_FOOTER = '''
 </html>
 '''
 
+def get_date():
+    return str(datetime.datetime.now()).split('.')[0].split(" ")[0]
+
 def games_dir():
     return os.path.abspath(__file__ + "/../../randovania/games")
 
@@ -131,15 +134,15 @@ def generate_world_html(name, areas):
     body = ""
     toc = """
     <div id="toc_container">
-    <ul class="toc_list">
+        <ul class="toc_list">
     """
 
     TOC_AREA_FORMAT = '''
-        <li><a href="#%s">%s</a>
-            <ul>
-                %s
-            </ul>
-        </li>
+            <li><a href="#%s">%s</a>
+                <ul>
+                    %s
+                </ul>
+            </li>
     '''
 
     TOC_CONNECTION_FORMAT = '''
@@ -166,7 +169,7 @@ def generate_world_html(name, areas):
     </div>
     """
 
-    header = HTML_HEADER_FORMAT % (name, name, str(datetime.datetime.now()).split('.')[0].split(" ")[0])
+    header = HTML_HEADER_FORMAT % (name, name, get_date())
     
     return header + toc + body + HTML_FOOTER
 
@@ -178,7 +181,31 @@ def export_game(game, out_dir):
         file.write(html)
         file.close()
     
-    # TODO: create index
+    html = HTML_HEADER_FORMAT % ("index", game, get_date())
+    
+    toc = """
+    <div>
+        <ul>
+    """
+
+    TOC_WORLD_FORMAT = '''
+        <li><a href="%s">%s</a>
+    '''
+
+    for world in worlds:
+        toc += TOC_WORLD_FORMAT % (world + ".html", world)
+    toc += """
+        </ul>
+    </div>
+    """
+
+    html += toc
+
+    html += HTML_FOOTER
+
+    file = open(os.path.join(out_dir, "index.html"), "w")
+    file.write(html)
+    file.close()
 
 def main():
     games = len(sys.argv) < 2
