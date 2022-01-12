@@ -310,9 +310,38 @@ class CaverPatcher(Patcher):
         
         maps["Start"]["pickups"]["0201"] = starting_script
 
+        # Configurable missile ammo
+        small_missile_ammo = item_database.ammo["Missile Expansion"]
+        hell_missile_ammo = item_database.ammo["Missile Expansion (Large)"]
+        
+        ammo_state = configuration.ammo_configuration.items_state
+        small_missile = ammo_state[small_missile_ammo].ammo_count[0]
+        hell_missile = ammo_state[hell_missile_ammo].ammo_count[0]
+        base_missiles = patches.starting_items[missile]
+        missile_id = "0005"
+        supers_id = "0010"
+        missile_events = {
+            "0030": (missile_id, small_missile+base_missiles),  # normal launcher
+            "0031": (missile_id, small_missile),                # normal expansion
+            "0032": (supers_id,  small_missile),                # supers expansion
+            "0035": (missile_id, hell_missile+base_missiles),   # normal hell launcher
+            "0036": (missile_id, hell_missile),                 # normal hell expansion
+            "0037": (supers_id,  hell_missile),                 # supers hell expansion
+            "0038": (supers_id,  base_missiles)                 # supers launcher
+        }
+        head = {}
+        for event, m_ammo in missile_events.items():
+            head[event] = {
+                "needle": f"<AM+{m_ammo[0]}:....",
+                "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1])}"
+            }
+
+
         return {
             "maps": maps,
-            "other_tsc": {},
+            "other_tsc": {
+                "Head": head
+            },
             "mychar": cosmetic_patches.mychar.mychar_bmp(mychar_rng),
             "hash": get_ingame_hash(description._shareable_hash_bytes)
         }
