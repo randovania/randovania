@@ -27,7 +27,7 @@ HTML_CONNECTION_FORMAT = '''
 '''
 
 HTML_VIDEO_FORMAT = '''
-        <iframe width="560" height="420" src="https://www.youtube.com/embed/%s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="560" height="420" src="https://www.youtube.com/embed/%s?start=%d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 '''
 
 HTML_FOOTER = '''
@@ -57,8 +57,11 @@ def get_yt_ids(item, ids):
     if data["comment"] is not None:
         comment = data["comment"]
         if "youtu" in comment:
-            video_id = comment.split("/")[-1].split("watch?v=")[-1].split(" ")[0]
-            ids.append(video_id)
+            video_id = comment.split("/")[-1].split("watch?v=")[-1].split(" ")[0].split("?t=")[0]
+            start_time = 0
+            if "?t=" in comment:
+                start_time = int(comment.split("?t=")[-1])
+            ids.append((video_id, start_time))
 
     for i in data["items"]:
         get_yt_ids(i, ids)
@@ -110,8 +113,8 @@ def generate_world_html(name, areas):
             for connection in connections:
                 html += HTML_CONNECTION_FORMAT % (node, connection)
                 yt_ids = connections[connection]
-                for id in yt_ids:
-                    html += HTML_VIDEO_FORMAT % id
+                for (id, start_time) in yt_ids:
+                    html += HTML_VIDEO_FORMAT % (id, start_time)
     html += HTML_FOOTER
     return html
 
