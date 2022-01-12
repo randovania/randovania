@@ -30,6 +30,16 @@ NON_MAJOR_PROGRESSION = [
     "Grapple Beam",
     "Thermal Visor",
     "Phazon Suit",
+    "Sonic Boom",
+    "Darkburst",
+    "Sunburst",
+    "Unlimited Missiles",
+    "Unlimited Beam Ammo",
+    "Double Damage",
+    "Cannon Ball",
+    "Dark Ammo Expansion",
+    "Light Ammo Expansion",
+    "Beam Ammo Expansion",
 ]
 
 
@@ -93,6 +103,8 @@ def accumulate_results(game_modifications: dict,
             item_name = "Nothing"
         else:
             area_name, location_name = index_to_location[hint_data["target"]]
+            if "Portal Chamber" in location_name:
+                location_name = "Portal Chamber/Pickup (Missile)"
             item_name = game_modifications["locations"][area_name][location_name]
 
         item_name = _filter_item_name(item_name)
@@ -151,9 +163,10 @@ def get_items_order(all_items: Iterable[str], item_order: List[str], major_progr
         order[item] = i
         location = location.split(" with ", 1)[0]
         locations.add(location)
-        if "Key" not in item and "Artifact" not in item:
+        if "key" not in item.lower() and "artifact" not in item.lower():
             no_key.add(location)
-        progression_items.add(item)
+
+        progression_items.add(item.split("'s ")[-1])
 
     for item in all_items:
         if item not in order:

@@ -6,7 +6,7 @@
     "areas": {
         "Business Center": {
             "default_node": "Elevator - Warehouse Entrance",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 177
             },
@@ -159,7 +159,7 @@
                         "teleporter_instance_id": null
                     },
                     "destination": {
-                        "world_name": "Middle Zebes",
+                        "world_name": "Brinstar",
                         "area_name": "Warehouse Entrance"
                     },
                     "keep_name_when_vanilla": false,
@@ -213,7 +213,7 @@
         },
         "Norfair Map Station": {
             "default_node": "Door to Business Center",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 178
             },
@@ -237,7 +237,7 @@
         },
         "Hi-Jump Energy Tank Room": {
             "default_node": "Door to Business Center",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 179
             },
@@ -392,7 +392,7 @@
         },
         "Hi-Jump Room": {
             "default_node": "Door to Hi-Jump Energy Tank Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 180
             },
@@ -461,7 +461,7 @@
         },
         "Ice Beam Gate Room": {
             "default_node": "Door to Business Center",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 181
             },
@@ -717,7 +717,7 @@
         },
         "Ice Beam Tutorial Room": {
             "default_node": "Door to Ice Beam Snake Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 182
             },
@@ -828,7 +828,7 @@
         },
         "Ice Beam Acid Room": {
             "default_node": "Door to Ice Beam Snake Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 183
             },
@@ -887,7 +887,7 @@
         },
         "Ice Beam Snake Room": {
             "default_node": "Door to Ice Beam Tutorial Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 184
             },
@@ -1014,7 +1014,7 @@
         },
         "Ice Beam Room": {
             "default_node": "Door to Ice Beam Snake Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 185
             },
@@ -1064,7 +1064,7 @@
         },
         "Crumble Shaft": {
             "default_node": "Door to Ice Beam Gate Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 186
             },
@@ -1186,7 +1186,7 @@
         },
         "Crocomire Escape": {
             "default_node": "Door to Business Center",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 187
             },
@@ -1298,7 +1298,7 @@
         },
         "Crocomire Speedway": {
             "default_node": "Door to Acid Snakes Tunnel",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 188
             },
@@ -1466,10 +1466,11 @@
             }
         },
         "Crocomire Save Station": {
-            "default_node": "Door to Crocomire Speedway",
-            "valid_starting_location": false,
+            "default_node": "Save Station",
+            "valid_starting_location": true,
             "extra": {
-                "asset_id": 189
+                "asset_id": 189,
+                "save_index": 3
             },
             "nodes": {
                 "Door to Crocomire Speedway": {
@@ -1485,13 +1486,37 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Crocomire Speedway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Crocomire's Room": {
             "default_node": "Door to Crocomire Speedway",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 190
             },
@@ -1735,7 +1760,7 @@
         },
         "Post Crocomire Farming Room": {
             "default_node": "Door to Crocomire's Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 191
             },
@@ -1896,10 +1921,11 @@
             }
         },
         "Post Crocomire Save Station": {
-            "default_node": "Door to Post Crocomire Farming Room",
-            "valid_starting_location": false,
+            "default_node": "Save Station",
+            "valid_starting_location": true,
             "extra": {
-                "asset_id": 192
+                "asset_id": 192,
+                "save_index": 0
             },
             "nodes": {
                 "Door to Post Crocomire Farming Room": {
@@ -1915,13 +1941,37 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Post Crocomire Farming Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Post Crocomire Power Bomb Room": {
             "default_node": "Door to Post Crocomire Farming Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 193
             },
@@ -1975,7 +2025,7 @@
         },
         "Post Crocomire Shaft": {
             "default_node": "Door to Cosine Missile Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 194
             },
@@ -2092,7 +2142,7 @@
         },
         "Cosine Missile Room": {
             "default_node": "Door to Post Crocomire Shaft",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 195
             },
@@ -2146,7 +2196,7 @@
         },
         "Post Crocomire Jump Room": {
             "default_node": "Door to Post Crocomire Shaft",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 196
             },
@@ -2292,7 +2342,7 @@
         },
         "Grapple Tutorial Room 3": {
             "default_node": "Door to Post Crocomire Shaft",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 197
             },
@@ -2375,7 +2425,7 @@
         },
         "Grapple Tutorial Room 2": {
             "default_node": "Door to Grapple Tutorial Room 1",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 198
             },
@@ -2466,7 +2516,7 @@
         },
         "Grapple Tutorial Room 1": {
             "default_node": "Door to Grapple Beam Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 199
             },
@@ -2549,7 +2599,7 @@
         },
         "Grapple Beam Room": {
             "default_node": "Door to Post Crocomire Jump Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 200
             },
@@ -2665,7 +2715,7 @@
         },
         "Acid Snakes Tunnel": {
             "default_node": "Door to Crocomire Speedway",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 201
             },
@@ -2758,7 +2808,7 @@
         },
         "Red Pirate Shaft": {
             "default_node": "Door to Acid Snakes Tunnel",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 202
             },
@@ -2813,7 +2863,7 @@
         },
         "Upper Norfair Farming Room": {
             "default_node": "Door to Red Pirate Shaft",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 203
             },
@@ -2923,7 +2973,7 @@
         },
         "Norfair Speedway": {
             "default_node": "Door to Business Center Save Station",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 204
             },
@@ -2981,10 +3031,11 @@
             }
         },
         "Business Center Save Station": {
-            "default_node": "Door to Business Center",
-            "valid_starting_location": false,
+            "default_node": "Save Station",
+            "valid_starting_location": true,
             "extra": {
-                "asset_id": 205
+                "asset_id": 205,
+                "save_index": 2
             },
             "nodes": {
                 "Door to Business Center": {
@@ -3002,6 +3053,13 @@
                     "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Norfair Speedway": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3032,12 +3090,28 @@
                             }
                         }
                     }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Business Center": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Cathedral Access": {
             "default_node": "Door to Business Center",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 206
             },
@@ -3147,7 +3221,7 @@
         },
         "Cathedral": {
             "default_node": "Door to Cathedral Access",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 207
             },
@@ -3252,7 +3326,7 @@
         },
         "Rising Tide": {
             "default_node": "Door to Cathedral",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 208
             },
@@ -3311,7 +3385,7 @@
         },
         "Bubble Mountain": {
             "default_node": "Door to Bubble Mountain Save Station",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 209
             },
@@ -3652,10 +3726,11 @@
             }
         },
         "Bubble Mountain Save Station": {
-            "default_node": "Door to Bubble Mountain",
-            "valid_starting_location": false,
+            "default_node": "Save Station",
+            "valid_starting_location": true,
             "extra": {
-                "asset_id": 210
+                "asset_id": 210,
+                "save_index": 1
             },
             "nodes": {
                 "Door to Bubble Mountain": {
@@ -3671,13 +3746,37 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Bubble Mountain": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Bubble Mountain Reserve Access": {
             "default_node": "Door to Bubble Mountain",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 211
             },
@@ -3799,7 +3898,7 @@
         },
         "Bubble Mountain Reserve": {
             "default_node": "Door to Bubble Mountain Reserve Access",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 212
             },
@@ -3882,7 +3981,7 @@
         },
         "Bat Cave": {
             "default_node": "Door to Bubble Mountain",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 213
             },
@@ -3975,7 +4074,7 @@
         },
         "Speed Booster Hall": {
             "default_node": "Door to Bat Cave",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 214
             },
@@ -4097,7 +4196,7 @@
         },
         "Speed Booster Room": {
             "default_node": "Door to Speed Booster Hall",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 215
             },
@@ -4151,7 +4250,7 @@
         },
         "Purple Shaft": {
             "default_node": "Door to Bubble Mountain",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 216
             },
@@ -4244,7 +4343,7 @@
         },
         "Purple Farming Room": {
             "default_node": "Door to Purple Shaft",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 217
             },
@@ -4268,7 +4367,7 @@
         },
         "Magdollite Tunnel": {
             "default_node": "Door to Purple Shaft",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 218
             },
@@ -4327,7 +4426,7 @@
         },
         "Kronic Boost Room": {
             "default_node": "Door to Lava Dive",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 219
             },
@@ -4497,7 +4596,7 @@
         },
         "Spiky Acid Snakes Tunnel": {
             "default_node": "Door to Peanut Butter Refill",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 220
             },
@@ -4624,7 +4723,7 @@
         },
         "Peanut Butter Refill": {
             "default_node": "Door to Acid Snakes Tunnel",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 221
             },
@@ -4695,7 +4794,7 @@
         },
         "Volcano": {
             "default_node": "Door to Kronic Boost Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 222
             },
@@ -4797,7 +4896,7 @@
         },
         "Spiky Platforms Tunnel": {
             "default_node": "Door to Volcano",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 223
             },
@@ -4890,7 +4989,7 @@
         },
         "Single Chamber": {
             "default_node": "Door to Double Chamber",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 224
             },
@@ -5144,7 +5243,7 @@
         },
         "Double Chamber": {
             "default_node": "Door to Single Chamber",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 225
             },
@@ -5266,7 +5365,7 @@
         },
         "Wave Beam Room": {
             "default_node": "Door to Double Chamber",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 226
             },
@@ -5316,7 +5415,7 @@
         },
         "Lava Dive": {
             "default_node": "Door to Kronic Boost Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 227
             },
@@ -5418,7 +5517,7 @@
         },
         "Elevator to Lower Norfair": {
             "default_node": "Elevator - Main Hall",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 228
             },
@@ -5513,9 +5612,10 @@
         },
         "Elevator to Lower Norfair Save Station": {
             "default_node": "Door to Elevator to Lower Norfair",
-            "valid_starting_location": false,
+            "valid_starting_location": true,
             "extra": {
-                "asset_id": 229
+                "asset_id": 229,
+                "save_index": 4
             },
             "nodes": {
                 "Door to Elevator to Lower Norfair": {
@@ -5531,13 +5631,37 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Elevator to Lower Norfair": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Three Musketeers' Room": {
             "default_node": "Door to Single Chamber",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 230
             },
@@ -5754,7 +5878,7 @@
         },
         "Lower Norfair Springball Maze Room": {
             "default_node": "Door to Three Musketeers' Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 231
             },
@@ -5926,7 +6050,7 @@
         },
         "Lower Norfair Escape Power Bomb Room": {
             "default_node": "Door to Lower Norfair Springball Maze Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 232
             },
@@ -6004,7 +6128,7 @@
         },
         "Lower Norfair Fireflea Room": {
             "default_node": "Door to Lower Norfair Escape Power Bomb Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 233
             },
@@ -6228,7 +6352,7 @@
         },
         "Red Kihunter Shaft": {
             "default_node": "Door to Red Kihunter Shaft Save Station",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 234
             },
@@ -6467,7 +6591,7 @@
         },
         "Wasteland": {
             "default_node": "Door to Red Kihunter Shaft",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 235
             },
@@ -6788,10 +6912,11 @@
             }
         },
         "Red Kihunter Shaft Save Station": {
-            "default_node": "Door to Red Kihunter Shaft",
-            "valid_starting_location": false,
+            "default_node": "Save Station",
+            "valid_starting_location": true,
             "extra": {
-                "asset_id": 236
+                "asset_id": 236,
+                "save_index": 5
             },
             "nodes": {
                 "Door to Red Kihunter Shaft": {
@@ -6807,13 +6932,37 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Save Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Save Station": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Red Kihunter Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Metal Pirates Room": {
             "default_node": "Door to Plowerhouse Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 237
             },
@@ -6970,7 +7119,7 @@
         },
         "Plowerhouse Room": {
             "default_node": "Door to Metal Pirates Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 238
             },
@@ -7029,7 +7178,7 @@
         },
         "Ridley Farming Room": {
             "default_node": "Door to Plowerhouse Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 239
             },
@@ -7088,7 +7237,7 @@
         },
         "Ridley's Room": {
             "default_node": "Door to Ridley Farming Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 240
             },
@@ -7207,7 +7356,7 @@
         },
         "Ridley Energy Tank Room": {
             "default_node": "Door to Ridley's Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 241
             },
@@ -7261,7 +7410,7 @@
         },
         "Amphitheater": {
             "default_node": "Door to The Worst Room in the Game",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 242
             },
@@ -7344,7 +7493,7 @@
         },
         "Pillar Room": {
             "default_node": "Door to Fast Pillars Setup Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 243
             },
@@ -7455,7 +7604,7 @@
         },
         "The Worst Room in the Game": {
             "default_node": "Door to Pillar Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 244
             },
@@ -7718,7 +7867,7 @@
         },
         "Famous Trademarked Mouse Room": {
             "default_node": "Door to The Worst Room in the Game",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 245
             },
@@ -7908,7 +8057,7 @@
         },
         "Fast Pillars Setup Room": {
             "default_node": "Door to Pillar Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 246
             },
@@ -8147,7 +8296,7 @@
         },
         "Fast Ripper Room": {
             "default_node": "Door to Screw Attack Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 247
             },
@@ -8213,7 +8362,7 @@
         },
         "Screw Attack Room": {
             "default_node": "Door to Fast Ripper Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 248
             },
@@ -8583,7 +8732,7 @@
         },
         "Screw Attack Energy Refill": {
             "default_node": "Door to Screw Attack Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 249
             },
@@ -8631,7 +8780,7 @@
         },
         "Golden Torizo's Room": {
             "default_node": "Door to Acid Statue Room",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 250
             },
@@ -8742,7 +8891,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Acid Statue Room": {
+                        "Door to Screw Attack Room": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8871,7 +9020,7 @@
         },
         "Acid Statue Room": {
             "default_node": "Door to Main Hall",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 251
             },
@@ -8955,7 +9104,7 @@
         },
         "Main Hall": {
             "default_node": "Elevator - Elevator to Lower Norfair",
-            "valid_starting_location": true,
+            "valid_starting_location": false,
             "extra": {
                 "asset_id": 252
             },
