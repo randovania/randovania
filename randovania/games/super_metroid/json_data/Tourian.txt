@@ -1,0 +1,306 @@
+----------------
+Tourian Entrance
+Extra - asset_id: 33
+> Door to Upper Tourian Save Station; Heals? False
+  * Normal Door to Upper Tourian Save Station/Door to Tourian Entrance
+  > Door to Metroid Room 1
+      Trivial
+
+> Door to Metroid Room 1; Heals? False
+  * Normal Door to Metroid Room 1/Door to Tourian Entrance
+  > Door to Upper Tourian Save Station
+      Trivial
+  > Elevator - Golden Four
+      Trivial
+
+> Elevator - Golden Four; Heals? False; Spawn Point
+  * Teleporter to Crateria - Gold Four
+  * Extra - scan_asset_id: None
+  * Extra - teleporter_instance_id: None
+  > Door to Metroid Room 1
+      Trivial
+
+----------------
+Upper Tourian Save Station
+(Valid Starting Location)
+Extra - asset_id: 34
+Extra - save_index: 1
+> Door to Tourian Entrance; Heals? False
+  * Normal Door to Tourian Entrance/Door to Upper Tourian Save Station
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  > Door to Tourian Entrance
+      Trivial
+
+----------------
+Metroid Room 1
+Extra - asset_id: 35
+> Door to Tourian Entrance; Heals? False; Spawn Point
+  * Normal Door to Tourian Entrance/Door to Metroid Room 1
+  > Door to Metroid Room 2
+      Trivial
+  > Event - Metroid Room 1 Cleared
+      Any of the following:
+          All of the following:
+              Ice Beam
+              Missile ≥ 20 or Super Missile ≥ 4
+          Morph Ball and Power Bombs ≥ 12
+
+> Door to Metroid Room 2; Heals? False
+  * Locked until Metroid Room 1 Cleared to Metroid Room 2/Door to Metroid Room 1
+  > Door to Tourian Entrance
+      Trivial
+
+> Event - Metroid Room 1 Cleared; Heals? False
+  * Event Metroid Room 1 Cleared
+  > Door to Tourian Entrance
+      Trivial
+
+----------------
+Metroid Room 2
+Extra - asset_id: 36
+> Door to Metroid Room 1; Heals? False; Spawn Point
+  * Normal Door to Metroid Room 1/Door to Metroid Room 2
+  > Door to Metroid Room 3
+      Trivial
+  > Event - Metroid Room 2 Cleared
+      Any of the following:
+          All of the following:
+              Ice Beam
+              Missile ≥ 10 or Super Missile ≥ 2
+          Morph Ball and Power Bombs ≥ 6
+
+> Door to Metroid Room 3; Heals? False
+  * Locked until Metroid Room 2 Cleared to Metroid Room 3/Door to Metroid Room 2
+  > Door to Metroid Room 1
+      Trivial
+
+> Event - Metroid Room 2 Cleared; Heals? False
+  * Event Metroid Room 2 Cleared
+  > Door to Metroid Room 3
+      Trivial
+
+----------------
+Metroid Room 3
+Extra - asset_id: 37
+> Door to Metroid Room 2; Heals? False; Spawn Point
+  * Normal Door to Metroid Room 2/Door to Metroid Room 3
+  > Door to Metroid Room 4
+      Trivial
+  > Event - Metroid Room 3 Cleared
+      Any of the following:
+          All of the following:
+              Ice Beam
+              Missile ≥ 15 or Super Missile ≥ 3
+          Morph Ball and Power Bombs ≥ 9
+
+> Door to Metroid Room 4; Heals? False
+  * Locked until Metroid Room 3 Cleared to Metroid Room 4/Door to Metroid Room 3
+  > Door to Metroid Room 2
+      Trivial
+
+> Event - Metroid Room 3 Cleared; Heals? False
+  * Event Metroid Room 3 Cleared
+  > Door to Metroid Room 2
+      Trivial
+
+----------------
+Metroid Room 4
+Extra - asset_id: 38
+> Door to Metroid Room 3; Heals? False; Spawn Point
+  * Normal Door to Metroid Room 3/Door to Metroid Room 4
+  > Door to Blue Hopper Room
+      Trivial
+  > Event - Metroid Room 4 Cleared
+      Any of the following:
+          All of the following:
+              Ice Beam
+              Missile ≥ 15 or Super Missile ≥ 3
+          Morph Ball and Power Bombs ≥ 9
+
+> Door to Blue Hopper Room; Heals? False
+  * Locked until Metroid Room 4 Cleared to Blue Hopper Room/Door to Metroid Room 4
+  > Door to Metroid Room 3
+      Trivial
+
+> Event - Metroid Room 4 Cleared; Heals? False
+  * Event Metroid Room 4 Cleared
+  > Door to Metroid Room 3
+      Trivial
+
+----------------
+Blue Hopper Room
+Extra - asset_id: 39
+> Door to Dust Torizo Room; Heals? False; Spawn Point
+  * Normal Door to Dust Torizo Room/Door from Blue Hopper Room
+  > Door to Metroid Room 4
+      Trivial
+
+> Door to Metroid Room 4; Heals? False
+  * Normal Door to Metroid Room 4/Door to Blue Hopper Room
+  > Door to Dust Torizo Room
+      Trivial
+
+----------------
+Dust Torizo Room
+Extra - asset_id: 40
+> Door from Blue Hopper Room; Heals? False; Spawn Point
+  * Permanently Locked to Blue Hopper Room/Door to Dust Torizo Room
+  > Door to Big Boy Room
+      Trivial
+
+> Door to Big Boy Room; Heals? False
+  * Normal Door to Big Boy Room/Door from Dust Torizo Room
+  > Door from Blue Hopper Room
+      Trivial
+
+----------------
+Big Boy Room
+Extra - asset_id: 41
+> Door to Seaweed Room; Heals? False
+  * Normal Door to Seaweed Room/Door to Big Boy Room
+  > Door from Dust Torizo Room
+      Trivial
+
+> Door from Dust Torizo Room; Heals? False; Spawn Point
+  * Permanently Locked to Dust Torizo Room/Door to Big Boy Room
+  > Door to Seaweed Room
+      Trivial
+
+----------------
+Seaweed Room
+Extra - asset_id: 42
+> Door to Big Boy Room; Heals? False; Spawn Point
+  * Normal Door to Big Boy Room/Door to Seaweed Room
+  > Door to Tourian Gadora Room
+      Trivial
+
+> Door to Tourian Gadora Room; Heals? False
+  * Missile Door to Tourian Gadora Room/Door to Seaweed Room
+  > Door to Big Boy Room
+      Trivial
+  > Door to Tourian Resupply Station
+      Trivial
+
+> Door to Tourian Resupply Station; Heals? False
+  * Normal Door to Tourian Resupply Station/Door to Seaweed Room
+  > Door to Tourian Gadora Room
+      Trivial
+
+----------------
+Tourian Resupply Station
+Extra - asset_id: 43
+> Door to Seaweed Room; Heals? False; Spawn Point
+  * Normal Door to Seaweed Room/Door to Tourian Resupply Station
+
+----------------
+Tourian Gadora Room
+Extra - asset_id: 44
+> Door to Seaweed Room; Heals? False; Spawn Point
+  * Normal Door to Seaweed Room/Door to Tourian Gadora Room
+  > Door to Rinka Shaft
+      Trivial
+
+> Door to Rinka Shaft; Heals? False
+  * Normal Door to Rinka Shaft/Door to Tourian Gadora Room
+  > Door to Seaweed Room
+      Trivial
+
+----------------
+Rinka Shaft
+Extra - asset_id: 45
+> Door to Rinka Shaft Save Station; Heals? False; Spawn Point
+  * Normal Door to Rinka Shaft Save Station/Door to Rinka Shaft
+  > Door to Mother Brain's Room
+      Trivial
+  > Door to Tourian Gadora Room
+      Trivial
+
+> Door to Mother Brain's Room; Heals? False
+  * Missile Door to Mother Brain's Room/Door to Rinka Shaft
+  > Door to Rinka Shaft Save Station
+      Trivial
+
+> Door to Tourian Gadora Room; Heals? False
+  * Normal Door to Tourian Gadora Room/Door to Rinka Shaft
+  > Door to Rinka Shaft Save Station
+      Trivial
+
+----------------
+Rinka Shaft Save Station
+(Valid Starting Location)
+Extra - asset_id: 46
+Extra - save_index: 0
+> Door to Rinka Shaft; Heals? False
+  * Normal Door to Rinka Shaft/Door to Rinka Shaft Save Station
+  > Save Station
+      Trivial
+
+> Save Station; Heals? False; Spawn Point
+  > Door to Rinka Shaft
+      Trivial
+
+----------------
+Mother Brain's Room
+Extra - asset_id: 47
+> Door to Rinka Shaft; Heals? False; Spawn Point
+  * Normal Door to Rinka Shaft/Door to Mother Brain's Room
+  > Event - Defeat Mother Brain
+      All of the following:
+          Charge Beam and Energy Tank ≥ 4
+          Missile ≥ 96 or Super Missile ≥ 40
+
+> Door to Tourian Escape Room 1; Heals? False
+  * Normal Door to Tourian Escape Room 1/Door from Mother Brain's Room
+
+> Event - Defeat Mother Brain; Heals? False
+  * Event Defeat Mother Brain
+  > Door to Tourian Escape Room 1
+      Trivial
+
+----------------
+Tourian Escape Room 1
+Extra - asset_id: 42069
+> Door from Mother Brain's Room; Heals? False; Spawn Point
+  * Permanently Locked to Mother Brain's Room/Door to Tourian Escape Room 1
+  > Door to Tourian Escape Room 2
+      Trivial
+
+> Door to Tourian Escape Room 2; Heals? False
+  * Normal Door to Tourian Escape Room 2/Door from Tourian Escape Room 1
+
+----------------
+Tourian Escape Room 2
+Extra - asset_id: 48
+> Door to Tourian Escape Room 3; Heals? False; Spawn Point
+  * Normal Door to Tourian Escape Room 3/Door from Tourian Escape Room 2
+
+> Door from Tourian Escape Room 1; Heals? False
+  * Permanently Locked to Tourian Escape Room 1/Door to Tourian Escape Room 2
+  > Door to Tourian Escape Room 3
+      Trivial
+
+----------------
+Tourian Escape Room 3
+Extra - asset_id: 49
+> Door from Tourian Escape Room 2; Heals? False; Spawn Point
+  * Permanently Locked to Tourian Escape Room 2/Door to Tourian Escape Room 3
+  > Door to Tourian Escape Room 4
+      Hi-Jump Boots or Space Jump
+
+> Door to Tourian Escape Room 4; Heals? False
+  * Normal Door to Tourian Escape Room 4/Door from Tourian Escape Room 3
+
+----------------
+Tourian Escape Room 4
+Extra - asset_id: 50
+> Door from Tourian Escape Room 3; Heals? False; Spawn Point
+  * Permanently Locked to Tourian Escape Room 3/Door to Tourian Escape Room 4
+  > Door to Climb
+      Hi-Jump Boots or Space Jump
+
+> Door to Climb; Heals? False
+  * Normal Door to Climb/Door from Tourian Escape Room 4
+
