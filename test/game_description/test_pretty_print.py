@@ -10,7 +10,7 @@ from randovania.games.game import RandovaniaGame
 
 @pytest.mark.skipif(randovania.is_frozen(), reason="frozen executable doesn't have JSON files")
 @pytest.mark.parametrize("game", RandovaniaGame)
-def test_commited_human_readable_description(game: RandovaniaGame, tmp_path):
+def test_committed_human_readable_description(game: RandovaniaGame, tmp_path):
     pretty_print.write_human_readable_game(default_database.game_description_for(game), tmp_path)
     new_files = {f.name: f.read_text("utf-8")
                  for f in tmp_path.glob("*.txt")}

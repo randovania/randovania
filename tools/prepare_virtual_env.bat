@@ -2,7 +2,7 @@
 cd /D "%~dp0"
 cd ..
 
-python3 tools\test_py_version.py
+py -3.9 tools\test_py_version.py
 if NOT ["%errorlevel%"]==["0"] pause
 if NOT ["%errorlevel%"]==["0"] exit /b 0
 
