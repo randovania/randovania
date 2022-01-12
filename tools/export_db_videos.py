@@ -45,15 +45,15 @@ HTML_HEADER_FORMAT = '''
 '''
 
 HTML_AREA_FORMAT = '''
-        <strong><h2 id="%s">%s</h2></strong>
+        <strong><h2 id="%s">%s</h2></strong>\n
 '''
 
 HTML_CONNECTION_FORMAT = '''
-        <h4 id="%s">%s</h4>
+        <h4 id="%s">%s</h4>\n
 '''
 
 HTML_VIDEO_FORMAT = '''
-        <iframe width="560" height="420" src="https://www.youtube.com/embed/%s?start=%d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="560" height="420" src="https://www.youtube.com/embed/%s?start=%d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n
 '''
 
 HTML_FOOTER = '''
@@ -146,15 +146,15 @@ def generate_world_html(name, areas):
     '''
 
     TOC_CONNECTION_FORMAT = '''
-                <li><a href="#%s">%s</a></li>
+                <li><a href="#%s">%s</a></li>\n
     '''
 
     for area in sorted(areas):
         body += HTML_AREA_FORMAT % (area, area)
         nodes = areas[area]
+        toc_connections = ""
         for node in sorted(nodes):
             connections = nodes[node]
-            toc_connections = ""
             for connection in sorted(connections):
                 connection_name = "%s -> %s" % (node, connection)
                 body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
@@ -189,11 +189,12 @@ def export_game(game, out_dir):
     """
 
     TOC_WORLD_FORMAT = '''
-        <li><a href="%s">%s</a>
+        <li><a href="%s">%s</a>\n
     '''
 
     for world in sorted(worlds):
         toc += TOC_WORLD_FORMAT % (world + ".html", world)
+
     toc += """
         </ul>
     </div>
@@ -208,9 +209,9 @@ def export_game(game, out_dir):
     file.close()
 
 def main():
-    games = len(sys.argv) < 2
+    do_all = len(sys.argv) < 2
     games = list()
-    if all_games:
+    if do_all:
         games = all_games()
     else:
         games.append(sys.argv[1])
