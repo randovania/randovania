@@ -138,7 +138,7 @@ def generate_world_html(name, areas):
     """
 
     TOC_AREA_FORMAT = '''
-            <li><a href="#%s">%s</a>
+            <li><strong><a>%s</a></strong>
                 <ul>
                     %s
                 </ul>
@@ -162,7 +162,7 @@ def generate_world_html(name, areas):
                 for (id, start_time) in yt_ids:
                     body += HTML_VIDEO_FORMAT % (id, start_time)
                 toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
-        toc += TOC_AREA_FORMAT % (area, area, toc_connections)
+        toc += TOC_AREA_FORMAT % (area, toc_connections)
 
     toc += """
         </ul>
