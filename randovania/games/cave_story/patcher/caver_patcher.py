@@ -336,6 +336,13 @@ class CaverPatcher(Patcher):
                 "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1])}"
             }
 
+        life_capsules = [("Small Life Capsule", "0012"), ("Medium Life Capsule", "0013"), ("Large Life Capsule", "0014")]
+        for name, event in life_capsules:
+            amount = configuration.major_items_configuration.items_state[item_database.major_items[name]]
+            head[event] = {
+                "needle": f".!<ML+....",
+                "script": f"{amount}!<ML+{num_to_tsc_value(amount)}"
+            }
 
         return {
             "maps": maps,
