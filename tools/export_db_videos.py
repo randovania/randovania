@@ -149,13 +149,13 @@ def generate_world_html(name, areas):
                 <li><a href="#%s">%s</a></li>
     '''
 
-    for area in areas:
+    for area in sorted(areas):
         body += HTML_AREA_FORMAT % (area, area)
         nodes = areas[area]
-        for node in nodes:
+        for node in sorted(nodes):
             connections = nodes[node]
             toc_connections = ""
-            for connection in connections:
+            for connection in sorted(connections):
                 connection_name = "%s -> %s" % (node, connection)
                 body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
@@ -192,7 +192,7 @@ def export_game(game, out_dir):
         <li><a href="%s">%s</a>
     '''
 
-    for world in worlds:
+    for world in sorted(worlds):
         toc += TOC_WORLD_FORMAT % (world + ".html", world)
     toc += """
         </ul>
