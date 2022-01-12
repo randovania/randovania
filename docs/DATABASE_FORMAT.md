@@ -74,7 +74,7 @@ Sometimes, areas exist in which every node connects to every other node in some 
   
   
 ## TRICK DIFFICULTY  
-The question of what difficulty should be assigned to a trick comes up frequently, and this is because it is a complex question to consider. There are many aspects to consider when assigning a trick to one of the difficulty tiers. The tiers, and the role they serve in the database, are as follows  
+The question of what difficulty a trick should be given comes up frequently, and this is because it is a complex question to consider. There are many aspects to consider when assigning a trick to one of the difficulty tiers. The tiers, and the role they serve in the database, are as follows  
   
 #### Disabled  
 This "trick" isn't a trick at all. Its use here is obvious to both the player and the developer, was clearly intended as a way to traverse this section, and conforms closely to the game's difficulty. A trick with this difficulty level can't actually be toggled off by the player - as the name might suggest, this trick may still be required even when the trick is "disabled", so you should not actually assign this difficulty to a trick.  
@@ -114,24 +114,24 @@ Area names should be memorable and descriptive. If your game does not provide an
 Node names do not need to be memorable, and should be purely descriptive. Because an area contains only a few nodes, anyone reviewing the database will almost certainly know what each node refers to. In addition, there are a few naming conventions that exist for specific node types:  
   
 Pickup nodes should follow the format  
-Pickup (Pickup Type)  
+`Pickup (Pickup Type)`  
   
 If two pickups in an area would share the same name, it is required that you add some descriptive text to their names to distinguish them. For example,  
-Pickup (Lower Ledge Missile Expansion)  
-Pickup (Morph Tunnel Missile Expansion)  
+`Pickup (Lower Ledge Missile Expansion)`  
+`Pickup (Morph Tunnel Missile Expansion)`  
   
 Event nodes should follow the format  
-Event - Event Name  
+`Event - Event Name`  
   
 And docks should adhere to  
-Dock Type to Area Name  
+`Dock Type to Area Name`  
   
 In the case of two areas which have multiple docks of the same type to one-another, the database creator should modify the area name to indicate which is which. For example  
-Door to Solemn Temple Left  
-Door to Solemn Temple Right  
+`Door to Solemn Temple Left`  
+`Door to Solemn Temple Right`  
   
 In addition, for docks which represent the outlet of a one-way area connection, and which cannot be used in reverse, docks should instead be named  
-Dock Type from Area Name  
+`Dock Type from Area Name`  
   
   
 ## COMMENTS  
