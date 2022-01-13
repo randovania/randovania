@@ -17,6 +17,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Data Editor can now view and edit resources.
 - Added: Items now have tooltips in the Auto-Tracker.
 - Added: One joke hint.
+- Added: Descriptions for Minimal Logic for each game, with a better definition of what Minimal Logic is.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
 - Changed: Editing connections in the Data Editor now has an easier to use selector for non-item resources.
 - Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
@@ -35,6 +36,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Experimental Option - Add random (non-logical) items to rooms which do not usually have items.
 - Added: Shuffle Power Beam
 - Added: Shuffle Combat Visor
+- Changed: Minimal Logic no longer checks for Plasma Beam.
 
 #### Known Issues:
 
@@ -134,6 +136,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Sun Tower Early Wild now requires Intermediate Knowledge on all methods
 
 ### Metroid Prime 2: Echoes
+
+- Changed: Minimal Logic no longer checks for Light Suit or Agon Keys.
 
 #### Patcher Changes
 
