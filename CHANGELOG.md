@@ -107,6 +107,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Beginner L-Jump to reach Main Quarry Save Station
 - Added: Main Quarry Crane Platform to Waste Disposal NSJ Advanced Combat Dash
 - Added: Main Quarry Crane Platform to Item Intermediate Scan Dash
+- Added: Ore Processing Door To Elevator Access A to Storage Depot B Standable L-Jump with Power Bombs
+- Added: Combat logic for Dynamo Access and Elite Control Elite Pirate fights
+- Added: Intermediate/Advanced Standables to enter/escape Elite Control after/without triggering Elite Pirate
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
@@ -127,6 +130,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Ore Processing Storage Depot B to Waste Disposal NSJ Standable difficulty from Intermediate to Beginner
 - Changed: Ore Processing Storage Depot B to Waste Disposal R-Jump to L-Jump
 - Changed: Elite Research Spinners without Boost from Advanced to Intermediate
+- Changed: Ore Processing Door To Elevator Access A to Storage Depot B Standable difficulty from Intermediate to Advanced
 - Changed: Sun Tower Early Wild now requires Intermediate Knowledge on all methods
 
 ### Metroid Prime 2: Echoes
