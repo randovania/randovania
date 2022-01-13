@@ -17,6 +17,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Data Editor can now view and edit resources.
 - Added: Items now have tooltips in the Auto-Tracker.
 - Added: One joke hint.
+- Added: Descriptions for Minimal Logic for each game, with a better definition of what Minimal Logic is.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
 - Changed: Editing connections in the Data Editor now has an easier to use selector for non-item resources.
 - Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
@@ -35,6 +36,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Experimental Option - Add random (non-logical) items to rooms which do not usually have items.
 - Added: Shuffle Power Beam
 - Added: Shuffle Combat Visor
+- Changed: Minimal Logic no longer checks for Plasma Beam.
 
 #### Known Issues:
 
@@ -59,7 +61,6 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 - Changed: Increased Maximum Missile/Etank/Capacity for seeds with more expansion count than is available in vanilla
-- Changed: Phazon Elite QoL now leaves the turrets on their original layer, making central dynamo affect the room as in vanilla
 
 #### Logic Database
 
@@ -118,6 +119,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Phendrana Canyon Hypermode Boost
 - Added: NSJ Combat Dash (Expert) to Temple Entryway from lower part of room
 - Added: Various tricks in Uncrashed Frigate
+- Added: Ore Processing Door To Elevator Access A to Storage Depot B Standable L-Jump with Power Bombs
+- Added: Combat logic for Dynamo Access and Elite Control Elite Pirate fights
+- Added: Intermediate/Advanced Standables to enter/escape Elite Control after/without triggering Elite Pirate
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
@@ -138,10 +142,13 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Ore Processing Storage Depot B to Waste Disposal NSJ Standable difficulty from Intermediate to Beginner
 - Changed: Ore Processing Storage Depot B to Waste Disposal R-Jump to L-Jump
 - Changed: Elite Research Spinners without Boost from Advanced to Intermediate
+- Changed: Ore Processing Door To Elevator Access A to Storage Depot B Standable difficulty from Intermediate to Advanced
 - Changed: Sun Tower Early Wild now requires Intermediate Knowledge on all methods
 - Changed: Less damage required for Watery Hall with Gravity Suit
 
 ### Metroid Prime 2: Echoes
+
+- Changed: Minimal Logic no longer checks for Light Suit or Agon Keys.
 
 #### Patcher Changes
 

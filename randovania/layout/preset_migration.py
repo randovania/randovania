@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 19
+CURRENT_VERSION = 20
 
 def _migrate_v1(preset: dict) -> dict:
     layout_configuration = preset["layout_configuration"]
@@ -507,6 +507,35 @@ def _migrate_v18(preset: dict) -> dict:
         preset["configuration"]["items_every_room"] = False
     return preset
 
+def _migrate_v19(preset: dict) -> dict:
+    if preset["game"] == "cave_story":
+        itemconfig = preset["configuration"]["major_items_configuration"]["items_state"]
+        ammoconfig = preset["configuration"]["ammo_configuration"]["items_state"]
+        
+        if itemconfig.get("Base Missiles") is not None:
+            # handles presets which were hand-migrated before this func was written
+            return preset
+        
+        itemconfig["Base Missiles"] = {
+            "num_included_in_starting_items": 1,
+            "included_ammo": [5],
+        }
+
+        itemconfig["Missile Launcher"].pop("included_ammo", None)
+        itemconfig["Super Missile Launcher"].pop("included_ammo", None)
+        itemconfig["Progressive Missile Launcher"].pop("included_ammo", None)
+        
+        itemconfig["Small Life Capsule"] = itemconfig.pop("3HP Life Capsule")
+        itemconfig["Medium Life Capsule"] = itemconfig.pop("4HP Life Capsule")
+        itemconfig["Large Life Capsule"] = itemconfig.pop("5HP Life Capsule")
+
+        ammoconfig["Large Missile Expansion"] = ammoconfig.pop("Missile Expansion (24)")
+
+        preset["configuration"]["major_items_configuration"]["items_state"] = itemconfig
+        preset["configuration"]["ammo_configuration"]["items_state"] = ammoconfig
+
+    return preset
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
     2: _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -526,6 +555,7 @@ _MIGRATIONS = {
     16: _migrate_v16,  # v3.2.1-363-g3a93b533
     17: _migrate_v17,
     18: _migrate_v18,
+    19: _migrate_v19,  # v3.3.0dev721
 }
 
 

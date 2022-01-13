@@ -1,10 +1,12 @@
 import os
-import pprint
 import shutil
 import typing
+import json
+import dataclasses
 from pathlib import Path
 from random import Random
 from typing import List, Optional
+from io import BytesIO
 
 import SuperDuperMetroid.ROM_Patcher
 import SuperDuperMetroid.SM_Constants
@@ -19,16 +21,50 @@ from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
-from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
+from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches, MusicMode
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.world.area_identifier import AreaIdentifier
 
 _multiplier_for_item = {
     "Energy Tank": 100, "Reserve Tank": 100,
 }
 
+_mapping = {
+    "Missile": "Missile Expansion",
+    "Super Missile": "Super Missile Expansion",
+    "Power Bombs": "Power Bomb Expansion",
 
-def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
+    "Nothing": "No Item",
+}
+
+_effect = {
+    "Energy Tank": "Get Energy Tank",
+    "Missile Expansion": "Get Missile Expansion",
+    "Super Missile Expansion": "Get Super Missile Expansion",
+    "Power Bomb Expansion": "Get Power Bomb Expansion",
+    "Grapple Beam": "Get Grapple Beam",
+    "X-Ray Scope": "Get X-Ray Scope",
+    "Varia Suit": "Get Varia Suit",
+    "Spring Ball": "Get Spring Ball",
+    "Morph Ball": "Get Morph Ball",
+    "Screw Attack": "Get Screw Attack",
+    "Hi-Jump Boots": "Get Hi-Jump Boots",
+    "Space Jump": "Get Space Jump",
+    "Speed Booster": "Get Speed Booster",
+    "Charge Beam": "Get Charge Beam",
+    "Ice Beam": "Get Ice Beam",
+    "Wave Beam": "Get Wave Beam",
+    "Spazer Beam": "Get Spazer Beam",
+    "Plasma Beam": "Get Plasma Beam",
+    "Morph Ball Bombs": "Get Morph Ball Bombs",
+    "Reserve Tank": "Get Reserve Tank",
+    "Gravity Suit": "Get Gravity Suit",
+    "No Item": "No Effect",
+}
+
+
+def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
                                  ) -> dict:
     if detail.model.game == RandovaniaGame.SUPER_METROID:
         model_name = detail.model.name
@@ -49,29 +85,29 @@ def sm_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
 
     count *= _multiplier_for_item.get(pickup_type, 1)
 
-    _mapping = {
-        "Missile": "Missile Expansion",
-        "Super Missile": "Super Missile Expansion",
-        "Power Bombs": "Power Bomb Expansion",
-
-        "Nothing": "Missile Expansion",
-    }
+    item_name = _mapping.get(pickup_type, pickup_type)
 
     result = {
-        "item_name": _mapping.get(pickup_type, pickup_type),
-        "quantity": count,
+        "item_name": item_name,
+        "quantity_given": count,
+        "pickup_effect": _effect[item_name],
         "pickup_index": detail.index.index,
+        "native_sprite_name": item_name,
+        "owner_name": None,
     }
 
     return result
 
 
-def _json_to_pickup_placement_data(pickup: dict) -> SuperDuperMetroid.ROM_Patcher.PickupPlacementData:
-    return SuperDuperMetroid.ROM_Patcher.PickupPlacementData(
-        quantity_given=pickup["quantity"],
-        pickup_index=pickup["pickup_index"],
-        item_name=pickup["item_name"],
-    )
+def sm_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
+    item_name = _mapping.get(item.long_name, item.long_name)
+    quantity *= _multiplier_for_item.get(item_name, 1)
+    result = {
+        "item_name": item_name,
+        "quantity_given": quantity,
+        "pickup_effect": _effect[item_name],
+    }
+    return result
 
 
 class SuperDuperMetroidPatcher(Patcher):
@@ -94,7 +130,7 @@ class SuperDuperMetroidPatcher(Patcher):
         """
         Does this patcher uses the input file directly?
         """
-        return False
+        return True
 
     def has_internal_copy(self, game_files_path: Path) -> bool:
         """
@@ -151,15 +187,40 @@ class SuperDuperMetroidPatcher(Patcher):
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
+        gameplay_patch_list = [field.name for field in dataclasses.fields(configuration.patches)]
+        cosmetic_patch_list = [field.name for field in dataclasses.fields(cosmetic_patches)]
+
+        cosmetic_patch_list.remove("music")
+        specific_patches = {}
+
+        for patch in gameplay_patch_list:
+            specific_patches[patch] = getattr(configuration.patches, patch)
+        for patch in cosmetic_patch_list:
+            specific_patches[patch] = getattr(cosmetic_patches, patch)
+        if cosmetic_patches.music != MusicMode.VANILLA:
+            specific_patches[cosmetic_patches.music.value] = True
+
+        starting_point = patches.starting_location
+
+        starting_area = db.world_list.area_by_area_location(starting_point)
+
+        starting_save_index = starting_area.extra["save_index"]
+
+        starting_location_info = {
+            "starting_region": starting_point.world_name,
+            "starting_save_station_index": starting_save_index,
+        }
         return {
-            "item_list": [
+            "pickups": [
                 sm_pickup_details_to_patcher(detail)
                 for detail in pickup_list
             ],
-            "starting_items": {
-                item.long_name: quantity * _multiplier_for_item.get(item.long_name, 1)
-                for item, quantity in patches.starting_items.items()
-            },
+            "starting_items": [
+                sm_starting_items_to_patcher(item, qty)
+                for item, qty in patches.starting_items.items()
+            ],
+            "specific_patches": specific_patches,
+            "starting_conditions": starting_location_info
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
@@ -191,28 +252,4 @@ class SuperDuperMetroidPatcher(Patcher):
                 raise ValueError("Missing input ROM")
             vanilla_bytes = internal_copy.read_bytes()
 
-        temporary_output.write_bytes(vanilla_bytes)
-
-        item_list = [
-            _json_to_pickup_placement_data(pickup)
-            for pickup in patch_data["item_list"]
-        ]
-        starting_items = [
-            SuperDuperMetroid.ROM_Patcher.PickupPlacementData(
-                quantity_given=quantity,
-                pickup_index=-1,
-                item_name=name,
-            )
-            for name, quantity in patch_data["starting_items"]
-        ]
-
-        patches_to_apply = ["InstantG4", "MaxAmmoDisplay"]
-        SuperDuperMetroid.ROM_Patcher.patch_rom(
-            os.fspath(temporary_output),
-            item_list=item_list,
-            starting_items=starting_items,
-            skip_intro=True,
-            static_patches=patches_to_apply,
-        )
-
-        shutil.copy2(temporary_output, output_file)
+        SuperDuperMetroid.ROM_Patcher.patch_rom_json(BytesIO(vanilla_bytes), output_file, patch_data)

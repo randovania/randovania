@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SuperCosmeticPatchesDialog</class>
+ <widget class="QDialog" name="SuperCosmeticPatchesDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>476</width>
+    <height>647</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Game Patches</string>
+  </property>
+  <property name="toolTip">
+   <string extracomment="Tourian Elevator can be accessed immediately, without waiting for the G4 cutscene to finish."/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>481</width>
+     <height>591</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="main_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>477</width>
+         <height>587</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <layout class="QVBoxLayout" name="scroll_area_layout">
+        <property name="leftMargin">
+         <number>1</number>
+        </property>
+        <property name="topMargin">
+         <number>1</number>
+        </property>
+        <property name="rightMargin">
+         <number>1</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="accessibility_box">
+          <property name="title">
+           <string>Accessibility</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="1" column="0">
+            <widget class="QCheckBox" name="colorblind_checkbox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Colorblind Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="colorblind_label">
+             <property name="text">
+              <string>Changes the colors of some game elements to be more easily distinguishable to players with some types of colorblindness.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="qol_box">
+          <property name="title">
+           <string>Quality of Life</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="12" column="0">
+            <widget class="QCheckBox" name="no_demo_checkbox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="text">
+              <string>No Demo</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="max_ammo_display_label">
+             <property name="text">
+              <string>Displays Samus' maximum ammunition on the HUD.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QLabel" name="no_demo_label">
+             <property name="text">
+              <string>The gameplay demo no longer plays on the title screen.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QCheckBox" name="max_ammo_display_checkbox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Max Ammo Display</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QCheckBox" name="aim_with_any_button_checkbox">
+             <property name="toolTip">
+              <string/>
+             </property>
+             <property name="text">
+              <string>Rebindable Aim</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="aim_with_any_button_label">
+             <property name="text">
+              <string>Allows aiming to be bound to any button, not just the shoulder buttons.</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="music_box">
+          <property name="title">
+           <string>Music</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="3" column="0">
+            <widget class="QRadioButton" name="no_music_option">
+             <property name="text">
+              <string>Off</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QRadioButton" name="vanilla_music_option">
+             <property name="text">
+              <string>Vanilla</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="music_label">
+             <property name="text">
+              <string>Changes the way music triggers behave.
+Randomized music will choose a random song when activating a music trigger. Some music, such as the title theme, is not randomized.
+Off will disable all music for the game.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QRadioButton" name="random_music_option">
+             <property name="text">
+              <string>Randomized</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="reset_button">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>600</y>
+     <width>122</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset to Defaults</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="accept_button">
+   <property name="geometry">
+    <rect>
+     <x>34</x>
+     <y>600</y>
+     <width>122</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Accept</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancel_button">
+   <property name="geometry">
+    <rect>
+     <x>162</x>
+     <y>600</y>
+     <width>122</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
