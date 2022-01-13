@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 7
+CURRENT_VERSION = 8
 
 
 def _migrate_v1(json_dict: dict) -> dict:
@@ -158,6 +158,23 @@ def _migrate_v6(json_dict: dict) -> dict:
                 break
     return json_dict
 
+def _migrate_v7(json_dict: dict) -> dict:
+    renamed_items = {
+        "3HP Life Capsule": "Small Life Capsule",
+        "4HP Life Capsule": "Medium Life Capsule",
+        "5HP Life Capsule": "Large Life Capsule",
+        "Missile Expansion (24)": "Large Missile Expansion"
+    }
+
+    for game in json_dict["game_modifications"]:
+        if game["game"] != "cave_story":
+            continue
+        for world, locations in game["locations"].items():
+            game["locations"][world] = {k: renamed_items.get(v, v) for k,v in locations.items()}
+        game["starting_items"]["Missiles"] = 5
+
+    return json_dict
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v2.2.0-6-gbfd37022
     2: _migrate_v2,  # v2.4.2-16-g735569fd
@@ -165,6 +182,7 @@ _MIGRATIONS = {
     4: _migrate_v4,  # v3.2.1-40-g94ed9301
     5: _migrate_v5,  # v3.2.1-203-g6e303090
     6: _migrate_v6,
+    7: _migrate_v7,  # v3.3.0dev721
 }
 
 

@@ -93,7 +93,7 @@ class CaverPatcher(Patcher):
             USELESS_ITEM_CATEGORY,
             tuple()
         ), players_config.player_index)
-        nothing_item_script = "<PRI<MSG<TUR\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
+        nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
         pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
         for index in sorted(game_description.world_list._pickup_index_to_node.keys()):
@@ -159,10 +159,6 @@ class CaverPatcher(Patcher):
         # Softlock prevention mapflags
         starting_script += "<MP+0032<MP+0033<MP+0036"
 
-        # Starting HP
-        if configuration.starting_hp != 3:
-            starting_script += f"<ML+{num_to_tsc_value(configuration.starting_hp - 3).decode('utf-8')}"
-
         # Starting Items
         if len(patches.starting_items):
             starting_script += "\r\n<PRI<MSG<TUR"
@@ -199,16 +195,16 @@ class CaverPatcher(Patcher):
                     flags += "<FL+0593"
                 
                 words = {
-                    1: "a",
-                    2: "a second",
-                    3: "a third",
-                    4: "a fourth",
-                    5: "the last"
+                    1: "a =Puppy=",
+                    2: "two =Puppies=",
+                    3: "three =Puppies=",
+                    4: "four =Puppies=",
+                    5: "all five =Puppies="
                 }
 
                 starting_script += (
                     f"<IT+0014<GIT1014{flags}<SNP0136:0000:0000:0000\r\n"
-                    f"Got {words[num_puppies]} =Puppy=!<WAI0010<NOD\r\n<CLR"
+                    f"Got {words[num_puppies]}!<WAI0010<NOD\r\n<CLR"
                 )
                 continue
 
@@ -291,6 +287,10 @@ class CaverPatcher(Patcher):
 
             starting_script += "<CLO"
 
+        # Starting HP
+        if configuration.starting_hp != 3 or life > 0:
+            starting_script += f"<ML+{num_to_tsc_value(configuration.starting_hp + life - 3).decode('utf-8')}"
+
         # Starting Locations
         if patches.starting_location.area_name in {"Start Point", "First Cave", "Hermit Gunsmith"}:
             # started in first cave
@@ -310,9 +310,45 @@ class CaverPatcher(Patcher):
         
         maps["Start"]["pickups"]["0201"] = starting_script
 
+        # Configurable missile ammo
+        small_missile_ammo = item_database.ammo["Missile Expansion"]
+        hell_missile_ammo = item_database.ammo["Large Missile Expansion"]
+        
+        ammo_state = configuration.ammo_configuration.items_state
+        small_missile = ammo_state[small_missile_ammo].ammo_count[0]
+        hell_missile = ammo_state[hell_missile_ammo].ammo_count[0]
+        base_missiles = patches.starting_items[missile]
+        missile_id = "0005"
+        supers_id = "0010"
+        missile_events = {
+            "0030": (missile_id, small_missile+base_missiles),  # normal launcher
+            "0031": (missile_id, small_missile),                # normal expansion
+            "0032": (supers_id,  small_missile),                # supers expansion
+            "0035": (missile_id, hell_missile+base_missiles),   # normal hell launcher
+            "0036": (missile_id, hell_missile),                 # normal hell expansion
+            "0037": (supers_id,  hell_missile),                 # supers hell expansion
+            "0038": (supers_id,  base_missiles)                 # supers launcher
+        }
+        head = {}
+        for event, m_ammo in missile_events.items():
+            head[event] = {
+                "needle": f"<AM%+....:....",
+                "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1]).decode('utf-8')}"
+            }
+
+        life_capsules = [("Small Life Capsule", "0012"), ("Medium Life Capsule", "0013"), ("Large Life Capsule", "0014")]
+        for name, event in life_capsules:
+            amount = configuration.major_items_configuration.items_state[item_database.major_items[name]].included_ammo[0]
+            head[event] = {
+                "needle": f".!<ML%+....",
+                "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}"
+            }
+
         return {
             "maps": maps,
-            "other_tsc": {},
+            "other_tsc": {
+                "Head": head
+            },
             "mychar": cosmetic_patches.mychar.mychar_bmp(mychar_rng),
             "hash": get_ingame_hash(description._shareable_hash_bytes)
         }
@@ -322,6 +358,7 @@ class CaverPatcher(Patcher):
         try:
             caver_patcher.patch_files(patch_data, output_file, progress_update)
         finally:
+            json.dump(patch_data, output_file.joinpath("data", "patcher_data.json").open("w"))
             self._busy = False
 
 def create_loc_formatters(area_namer: hint_lib.AreaNamer, world_list: WorldList, patches: GamePatches, players_config: PlayersConfiguration) -> dict[HintLocationPrecision, LocationFormatter]:
