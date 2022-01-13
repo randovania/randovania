@@ -36,6 +36,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Experimental Option - Add random (non-logical) items to rooms which do not usually have items.
 - Added: Shuffle Power Beam
 - Added: Shuffle Combat Visor
+- Changed: Minimal Logic no longer checks for Plasma Beam.
 
 #### Known Issues:
 
@@ -135,6 +136,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Sun Tower Early Wild now requires Intermediate Knowledge on all methods
 
 ### Metroid Prime 2: Echoes
+
+- Changed: Minimal Logic no longer checks for Light Suit or Agon Keys.
 
 #### Patcher Changes
 
