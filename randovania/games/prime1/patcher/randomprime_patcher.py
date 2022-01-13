@@ -374,7 +374,7 @@ class RandomprimePatcher(Patcher):
         }
 
         return {
-            "seed": description.permalink.seed_number,
+            "seed": description.permalink.seed_number + players_config.player_index,
             "preferences": {
                 "defaultGameOptions" : default_game_options,
                 "qolGameBreaking": configuration.qol_game_breaking,
