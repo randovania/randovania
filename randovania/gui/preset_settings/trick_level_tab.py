@@ -21,14 +21,13 @@ from randovania.gui.lib import common_qt_lib
 
 _GAME_SPECIFIC_MINIMAL_LOGIC_TEXT = {
     RandovaniaGame.METROID_PRIME: (
-        "TODO: Minimal logic description for Prime."
+        "Items checked for: Morph Ball, Morph Ball Bomb, Wave Beam, Ice Beam, Phazon Suit, Artifacts."
     ),
     RandovaniaGame.METROID_PRIME_ECHOES: (
-        "Randovania will only check that Screw Attack, Dark Visor and Light Suit won't all be behind "
-        "Ing Caches and Dark Water, removing the biggest reasons for a pure random layout to be impossible."
+        "Items checked for: Dark Visor, Screw Attack, Torvus Keys, Sky Temple Keys."
     ),
     RandovaniaGame.METROID_PRIME_CORRUPTION: (
-        "TODO: Minimal logic description for Corruption."
+        "Items checked for: Nova Beam, X-Ray Visor, Hypermode, Grapple Lasso, Grapple Voltage, Hyper Grapple, Energy Cells."
     ),
 }
 
