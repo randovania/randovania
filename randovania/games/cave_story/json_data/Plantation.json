@@ -388,15 +388,6 @@
                                 "negate": false
                             }
                         },
-                        "Pickup (Plantation Puppy)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "eventRocket",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Upper Level": {
                             "type": "and",
                             "data": {
@@ -628,8 +619,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Has Flight"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "eventRocket",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
