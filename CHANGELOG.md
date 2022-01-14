@@ -112,6 +112,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Ore Processing Door To Elevator Access A to Storage Depot B Standable L-Jump with Power Bombs
 - Added: Combat logic for Dynamo Access and Elite Control Elite Pirate fights
 - Added: Intermediate/Advanced Standables to enter/escape Elite Control after/without triggering Elite Pirate
+- Added: Logic now can expect players to play in just scan visor, using bombs to open doors
+- Added: Knowledge/Combat (Intermediate) trick to skip needing Power Beam for Exo fight
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
