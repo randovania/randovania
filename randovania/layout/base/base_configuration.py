@@ -34,6 +34,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_data_source: PickupModelDataSource
     multi_pickup_placement: bool
     logical_resource_action: LayoutLogicalResourceAction
+    full_clear_generation: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

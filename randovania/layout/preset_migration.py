@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 20
+CURRENT_VERSION = 21
 
 def _migrate_v1(preset: dict) -> dict:
     layout_configuration = preset["layout_configuration"]
@@ -536,6 +536,10 @@ def _migrate_v19(preset: dict) -> dict:
 
     return preset
 
+def _migrate_v20(preset: dict) -> dict:
+    preset["configuration"]["full_clear_generation"] = False
+    return preset
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
     2: _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -556,6 +560,7 @@ _MIGRATIONS = {
     17: _migrate_v17,
     18: _migrate_v18,
     19: _migrate_v19,  # v3.3.0dev721
+    20: _migrate_v20,  
 }
 
 
