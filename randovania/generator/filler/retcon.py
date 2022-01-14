@@ -121,7 +121,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
         if isinstance(action, tuple):
             pickups = typing.cast(Tuple[PickupEntry, ...], action)
             base_weight = _calculate_weights_for(_calculate_reach_for_progression(player_state.reach, pickups),
-                                                 current_uncollected)
+                                                 current_uncollected, player_state)
 
             multiplier = sum(pickup.probability_multiplier for pickup in pickups) / len(pickups)
             offset = sum(pickup.probability_offset for pickup in pickups)
@@ -130,7 +130,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
         else:
             weight = _calculate_weights_for(
                 reach_lib.advance_to_with_reach_copy(player_state.reach, player_state.reach.state.act_on_node(action)),
-                current_uncollected) * _DANGEROUS_ACTION_MULTIPLIER
+                current_uncollected, player_state) * _DANGEROUS_ACTION_MULTIPLIER
 
         actions_weights[action] = weight
         update_for_option()
@@ -336,9 +336,10 @@ def _calculate_hint_location_for_action(action: PickupEntry,
 
 def _calculate_weights_for(potential_reach: GeneratorReach,
                            current_uncollected: UncollectedState,
+                           player_state: PlayerState
                            ) -> float:
     if potential_reach.victory_condition_satisfied():
-        return _VICTORY_WEIGHT
+        return _VICTORY_WEIGHT if player_state.victory_condition_satisfied() else 0
 
     potential_uncollected = UncollectedState.from_reach(potential_reach) - current_uncollected
     return sum((

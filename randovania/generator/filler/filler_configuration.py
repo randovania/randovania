@@ -14,3 +14,4 @@ class FillerConfiguration:
     indices_to_exclude: FrozenSet[PickupIndex]
     multi_pickup_placement: bool
     logical_resource_action: LayoutLogicalResourceAction
+    full_clear_generation: bool

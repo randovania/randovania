@@ -7,6 +7,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node import ResourceNode
 from randovania.game_description.world.world import World
@@ -122,9 +123,10 @@ class PlayerState:
         return result
 
     def victory_condition_satisfied(self):
-        return self.game.victory_condition.satisfied(self.reach.state.resources,
+        return ((not self.configuration.full_clear_generation or len(self.items_to_progress) == 0)
+            and self.game.victory_condition.satisfied(self.reach.state.resources,
                                                      self.reach.state.energy,
-                                                     self.reach.state.resource_database)
+                                                     self.reach.state.resource_database))
 
     def assign_pickup(self, pickup_index: PickupIndex, target: PickupTarget):
         self.num_assigned_pickups += 1
@@ -141,8 +143,7 @@ class PlayerState:
             pickups_by_name_and_quantity[_KEY_MATCH.sub("Key", pickup.name)] += 1
 
         to_progress = {_KEY_MATCH.sub("Key", resource.long_name)
-                       for resource in interesting_resources_for_reach(self.reach)
-                       if resource.resource_type == ResourceType.ITEM}
+                       for resource in self.items_to_progress}
 
         return ("At {0} after {1} actions and {2} pickups, with {3} collected locations.\n\n"
                 "Pickups still available: {4}\n\nResources to progress: {5}").format(
@@ -154,6 +155,11 @@ class PlayerState:
                       for name, quantity in sorted(pickups_by_name_and_quantity.items())),
             ", ".join(sorted(to_progress)),
         )
+    
+    @property
+    def items_to_progress(self) -> frozenset[ResourceInfo]:
+        return set((res for res in interesting_resources_for_reach(self.reach)
+            if res.resource_type == ResourceType.ITEM))
 
 
 def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) -> Iterator[PickupIndex]:
