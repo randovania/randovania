@@ -1,6 +1,7 @@
 import dataclasses
 from typing import Iterable, Optional
 from PySide2.QtWidgets import *
+from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab, PresetEditor
@@ -11,21 +12,8 @@ from randovania.layout.base.logical_resource_action import LayoutLogicalResource
 from randovania.layout.preset import Preset
 
 
-# TODO: move to game classes (possibly in database?)
-_GAME_SPECIFIC_MINIMAL_LOGIC_TEXT = {
-    RandovaniaGame.METROID_PRIME: (
-        "Items checked for: Morph Ball, Morph Ball Bomb, Wave Beam, Ice Beam, Phazon Suit, Artifacts."
-    ),
-    RandovaniaGame.METROID_PRIME_ECHOES: (
-        "Items checked for: Dark Visor, Screw Attack, Torvus Keys, Sky Temple Keys."
-    ),
-    RandovaniaGame.METROID_PRIME_CORRUPTION: (
-        "Items checked for: Nova Beam, X-Ray Visor, Hypermode, Grapple Lasso, Grapple Voltage, Hyper Grapple, Energy Cells."
-    ),
-}
-
 class PresetGeneration(PresetTab, Ui_PresetGeneration):
-    def __init__(self, editor: PresetEditor) -> None:
+    def __init__(self, editor: PresetEditor, game_description: GameDescription) -> None:
         super().__init__(editor)
         self.setupUi(self)
 
@@ -52,12 +40,13 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
             self.trick_level_minimal_logic_label,
             self.minimal_logic_line
         ]:
-            w.setVisible(self.game_enum in _GAME_SPECIFIC_MINIMAL_LOGIC_TEXT)
-        self.trick_level_minimal_logic_label.setText(
-            self.trick_level_minimal_logic_label.text().format(
-                game_specific_text=_GAME_SPECIFIC_MINIMAL_LOGIC_TEXT.get(self.game_enum, "Unknown text")
+            w.setVisible(game_description.minimal_logic is not None)
+        if game_description.minimal_logic is not None:
+            self.trick_level_minimal_logic_label.setText(
+                self.trick_level_minimal_logic_label.text().format(
+                    game_specific_text=game_description.minimal_logic.description
+                )
             )
-        )
 
         # Damage strictness
         self.damage_strictness_combo.setItemData(0, LayoutDamageStrictness.STRICT)
