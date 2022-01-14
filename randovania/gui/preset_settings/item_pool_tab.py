@@ -72,10 +72,6 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         layout = preset.configuration
         major_configuration = layout.major_items_configuration
 
-        # General
-        self.multi_pickup_placement_check.setChecked(layout.multi_pickup_placement)
-        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
-
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
         self.maximum_starting_spinbox.setValue(major_configuration.maximum_random_starting_items)
@@ -160,10 +156,6 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         except InvalidConfiguration as invalid_config:
             self.item_pool_count_label.setText("Invalid Configuration: {}".format(invalid_config))
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, True)
-
-    def _persist_multi_pickup_placement(self, value: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("multi_pickup_placement", value)
 
     # Random Starting
     def _register_random_starting_events(self):
