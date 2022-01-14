@@ -11,7 +11,7 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.elevators_tab import PresetElevators
     from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
-    from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
+    from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
     return [
@@ -19,7 +19,7 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPatcherEnergy(editor, game_enum),
         PresetElevators(editor, game_description),
         PresetStartingArea(editor, game_description),
-        PresetLogicDamage(editor),
+        PresetGeneration(editor),
         PresetLocationPool(editor, game_description),
         MetroidPresetItemPool(editor),
     ]
