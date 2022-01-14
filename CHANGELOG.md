@@ -88,7 +88,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Elite Control Access Item (Damage Boost)
 - Added: Central Dynamo Item w/ Infinite Speed
 - Added: Bomb jump to skip grapple in Biotech Research Area 2
-- Added: Jump Off Enemies DBJ to reach GTH NSJ
+- Added: Great Tree Hall - Jump Off Enemies Bomb Jump (Advanced) to reach GTC NSJ
 - Added: Wallboost FCS Climb
 - Added: Logic for Traversing Twin Fires Tunnel to Workstation NSJ Gravity
 - Added: Logic for Traversing Twin Fires Tunnel to Workstation NSJ Bombless
