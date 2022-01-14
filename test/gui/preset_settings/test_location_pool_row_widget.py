@@ -75,7 +75,8 @@ def test_location_pool_row_disabled_on_major_minor_split(customized_preset, echo
     assert first_non_major.isEnabled()
     assert not first_major.radio_shuffled.isChecked()
 
-    location_pool_tab.check_major_minor.setChecked(True)
+    location_pool_tab._major_minor = True
+    location_pool_tab._on_update_randomization_mode()
 
     assert first_major.isEnabled()
     assert not first_non_major.isEnabled()
