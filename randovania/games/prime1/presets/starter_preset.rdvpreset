@@ -1,5 +1,5 @@
 {
-    "schema_version": 17,
+    "schema_version": 21,
     "name": "Starter Preset",
     "uuid": "e36f52b3-ccd9-4dd7-a18f-b57b25f6b079",
     "description": "This preset unlocks things in the world and changes suits behavior in order to improve world navigation and remove certain items being obsoleted by others.<br />Crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
@@ -107,10 +107,7 @@
                     "num_shuffled_pickups": 1
                 }
             },
-            "default_items": {
-                "visor": "Combat Visor",
-                "beam": "Power Beam"
-            },
+            "default_items": {},
             "minimum_random_starting_items": 0,
             "maximum_random_starting_items": 0
         },
@@ -137,13 +134,14 @@
         "pickup_model_data_source": "etm",
         "multi_pickup_placement": false,
         "logical_resource_action": "randomly",
+        "full_clear_generation": false,
         "elevators": {
             "mode": "vanilla",
             "excluded_teleporters": [
                 {
-                    "world_name": "Tallon Overworld",
-                    "area_name": "Artifact Temple",
-                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
+                    "world_name": "Frigate Orpheon",
+                    "area_name": "Exterior Docking Hangar",
+                    "node_name": "Teleport to Landing Site"
                 },
                 {
                     "world_name": "Impact Crater",
@@ -156,9 +154,9 @@
                     "node_name": "Teleporter to Credits"
                 },
                 {
-                    "world_name": "Frigate Orpheon",
-                    "area_name": "Exterior Docking Hangar",
-                    "node_name": "Teleport to Landing Site"
+                    "world_name": "Tallon Overworld",
+                    "area_name": "Artifact Temple",
+                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
                 }
             ],
             "excluded_targets": [],
@@ -177,6 +175,8 @@
         "progressive_damage_reduction": true,
         "allow_underwater_movement_without_gravity": false,
         "small_samus": false,
+        "shuffle_item_pos": false,
+        "items_every_room": false,
         "main_plaza_door": true,
         "backwards_frigate": true,
         "backwards_labs": true,

@@ -1,5 +1,5 @@
 {
-    "schema_version": 17,
+    "schema_version": 21,
     "name": "Fewest Changes",
     "uuid": "da2537a8-0e2e-4365-aab5-9162b3f21c7e",
     "description": "This preset keeps the game as close as possible to how the original game operates. Only crashes are fixed.",
@@ -107,10 +107,7 @@
                     "num_shuffled_pickups": 1
                 }
             },
-            "default_items": {
-                "visor": "Combat Visor",
-                "beam": "Power Beam"
-            },
+            "default_items": {},
             "minimum_random_starting_items": 0,
             "maximum_random_starting_items": 0
         },
@@ -137,18 +134,29 @@
         "pickup_model_data_source": "etm",
         "multi_pickup_placement": false,
         "logical_resource_action": "randomly",
+        "full_clear_generation": false,
         "elevators": {
             "mode": "vanilla",
             "excluded_teleporters": [
                 {
-                    "world_name": "Tallon Overworld",
-                    "area_name": "Artifact Temple",
-                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
+                    "world_name": "Frigate Orpheon",
+                    "area_name": "Exterior Docking Hangar",
+                    "node_name": "Teleport to Landing Site"
                 },
                 {
                     "world_name": "Impact Crater",
                     "area_name": "Crater Entry Point",
                     "node_name": "Teleport to Artifact Temple"
+                },
+                {
+                    "world_name": "Impact Crater",
+                    "area_name": "Metroid Prime Lair",
+                    "node_name": "Teleporter to Credits"
+                },
+                {
+                    "world_name": "Tallon Overworld",
+                    "area_name": "Artifact Temple",
+                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
                 }
             ],
             "excluded_targets": [],
@@ -167,6 +175,8 @@
         "progressive_damage_reduction": false,
         "allow_underwater_movement_without_gravity": false,
         "small_samus": false,
+        "shuffle_item_pos": false,
+        "items_every_room": false,
         "main_plaza_door": false,
         "backwards_frigate": false,
         "backwards_labs": false,

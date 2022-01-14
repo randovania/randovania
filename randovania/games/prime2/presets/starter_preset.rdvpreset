@@ -1,5 +1,5 @@
 {
-    "schema_version": 17,
+    "schema_version": 21,
     "name": "Starter Preset",
     "uuid": "fcbe4e3f-b1fa-41cc-83cb-c86d84c10f0f",
     "description": "This preset balances the item pool with additional beam ammo expansions and progressive suits, while minimizing softlocks as much as possible.<br />Crashes are fixed and unexpected behaviours of the game are changed to what would be expected from a casual view.",
@@ -194,28 +194,29 @@
         "pickup_model_data_source": "etm",
         "multi_pickup_placement": false,
         "logical_resource_action": "randomly",
+        "full_clear_generation": false,
         "elevators": {
             "mode": "vanilla",
             "excluded_teleporters": [
-                {
-                    "world_name": "Sanctuary Fortress",
-                    "area_name": "Aerie",
-                    "node_name": "Elevator to Sanctuary Fortress - Aerie Transport Station"
-                },
                 {
                     "world_name": "Great Temple",
                     "area_name": "Sky Temple Energy Controller",
                     "node_name": "Teleport to Temple Grounds - Sky Temple Gateway"
                 },
                 {
-                    "world_name": "Temple Grounds",
-                    "area_name": "Sky Temple Gateway",
-                    "node_name": "Teleport to Great Temple - Sky Temple Energy Controller"
+                    "world_name": "Sanctuary Fortress",
+                    "area_name": "Aerie",
+                    "node_name": "Elevator to Sanctuary Fortress - Aerie Transport Station"
                 },
                 {
                     "world_name": "Sanctuary Fortress",
                     "area_name": "Aerie Transport Station",
                     "node_name": "Elevator to Sanctuary Fortress - Aerie"
+                },
+                {
+                    "world_name": "Temple Grounds",
+                    "area_name": "Sky Temple Gateway",
+                    "node_name": "Teleport to Great Temple - Sky Temple Energy Controller"
                 }
             ],
             "excluded_targets": [],
