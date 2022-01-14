@@ -33,6 +33,9 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
         with self._editor as editor:
             editor.set_configuration_field("objective", combo_enum)
             self.b2_check.setVisible(combo_enum.enters_hell)
+            
+            if combo_enum == CSObjective.HUNDRED_PERCENT:
+                editor.set_configuration_field("full_clear_generation", True)
     
     def _on_blocks_changed(self):
         disabled = self.b2_check.isChecked()

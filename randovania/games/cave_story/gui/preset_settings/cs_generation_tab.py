@@ -1,5 +1,6 @@
 from typing import Iterable, Optional
 from PySide2.QtWidgets import *
+from randovania.games.cave_story.layout.cs_configuration import CSObjective
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
@@ -16,6 +17,8 @@ class PresetCSGeneration(PresetGeneration):
     def on_preset_changed(self, preset: Preset):
         super().on_preset_changed(preset)
         self._puppy_widget.setChecked(preset.configuration.puppies_anywhere)
+        for w in [self.check_full_clear, self.full_clear_label, self.full_clear_line]:
+            w.setVisible(preset.configuration.objective != CSObjective.HUNDRED_PERCENT)
 
     def _create_puppy_checkbox(self):
         puppy = QCheckBox("Shuffle puppies anywhere")
