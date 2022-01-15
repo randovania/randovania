@@ -23,7 +23,7 @@ def prime1_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPatcherEnergy(editor, game_enum),
         PresetElevators(editor, game_description),
         PresetStartingArea(editor, game_description),
-        PresetPrimeGeneration(editor),
+        PresetPrimeGeneration(editor, game_description),
         PresetPrimeGoal(editor),
         PresetPrimeHints(editor),
         PresetPrimePatches(editor),

@@ -19,7 +19,7 @@ def cs_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetStartingArea(editor, game_description),
-        PresetCSGeneration(editor),
+        PresetCSGeneration(editor, game_description),
         PresetCSObjective(editor),
         PresetLocationPool(editor, game_description),
         CSPresetItemPool(editor),

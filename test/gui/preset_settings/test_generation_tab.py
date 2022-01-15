@@ -4,7 +4,7 @@ import uuid
 import pytest
 
 from PySide2.QtWidgets import *
-
+from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor
@@ -25,7 +25,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
     editor = PresetEditor(preset)
-    window: PresetGeneration = tab(editor)
+    window: PresetGeneration = tab(editor, default_database.game_description_for(game))
     parent = QGroupBox()
     window.setParent(parent)
 

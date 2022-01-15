@@ -19,7 +19,7 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetPatcherEnergy(editor, game_enum),
         PresetElevators(editor, game_description),
         PresetStartingArea(editor, game_description),
-        PresetGeneration(editor),
+        PresetGeneration(editor, game_description),
         PresetLocationPool(editor, game_description),
         MetroidPresetItemPool(editor),
     ]
