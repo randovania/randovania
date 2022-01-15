@@ -16,7 +16,7 @@ def super_metroid_preset_tabs(editor: PresetEditor, window_manager: WindowManage
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetStartingArea(editor, game_description),
-        PresetGeneration(editor),
+        PresetGeneration(editor, game_description),
         PresetLocationPool(editor, game_description),
         MetroidPresetItemPool(editor),
         PresetSuperPatchConfiguration(editor),
