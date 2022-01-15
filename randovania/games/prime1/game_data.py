@@ -29,7 +29,10 @@ game_data: GameData = GameData(
     presets=[
         {
             "path": "starter_preset.rdvpreset"
-        }
+        },
+        {
+            "path": "moderate_challenge.rdvpreset"
+        },
     ],
 
     layout=GameLayout(
