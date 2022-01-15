@@ -48,6 +48,7 @@ class MinimalLogicData:
     items_to_exclude: List[IndexWithReason]
     custom_item_amount: Dict[int, int]
     events_to_exclude: List[IndexWithReason]
+    description: str
 
 
 class GameDescription:
