@@ -37,6 +37,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Shuffle Power Beam
 - Added: Shuffle Combat Visor
 - Changed: Minimal Logic no longer checks for Plasma Beam.
+- Changed: Removed "Fewest Changes" preset.
+- Changed: Updated "Starter Preset" to better match community preferences
 
 #### Known Issues:
 

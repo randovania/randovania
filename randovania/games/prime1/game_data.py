@@ -29,9 +29,6 @@ game_data: GameData = GameData(
     presets=[
         {
             "path": "starter_preset.rdvpreset"
-        },
-        {
-            "path": "fewest_changes.rdvpreset"
         }
     ],
 
