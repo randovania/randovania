@@ -16,6 +16,8 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
 
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         for obj in CSObjective:
+            if obj == CSObjective.HUNDRED_PERCENT:
+                continue # disabled for now
             self.goal_combo.setItemData(obj.value, obj)
         
         self.goal_combo.currentIndexChanged.connect(self._on_objective_changed)
