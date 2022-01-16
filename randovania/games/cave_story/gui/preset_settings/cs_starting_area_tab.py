@@ -7,7 +7,7 @@ class PresetCSStartingArea(PresetStartingArea):
         super().create_quick_fill_buttons()
 
         self.starting_area_quick_fill_classic = self._quick_fill_button("Classic", self._starting_location_on_select_classic)
-        self.starting_area_quick_fill_classic = self._quick_fill_button("Save Point", self._starting_location_on_select_save_point)
+        self.starting_area_quick_fill_save_point = self._quick_fill_button("Save Point", self._starting_location_on_select_save_point)
 
     @property
     def quick_fill_description(self) -> str:
