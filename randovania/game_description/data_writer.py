@@ -390,7 +390,8 @@ def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
         "events_to_exclude": [
             {"name": it.name, "reason": it.reason}
             for it in db.events_to_exclude
-        ]
+        ],
+        "description": db.description,
     }
 
 
