@@ -29,7 +29,7 @@ def test_echoes_format_params(default_layout_configuration):
             'Starting Location: Temple Grounds - Landing Site',
             'Translator Gates: Vanilla (Colors)',
         ],
-        'Item Placement': [
+        'Logic Settings': [
             'All tricks disabled',
             'Dangerous Actions: Randomly',
         ],
