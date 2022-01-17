@@ -19,18 +19,6 @@ from randovania.layout.preset import Preset
 from randovania.lib import enum_lib
 from randovania.gui.lib import common_qt_lib
 
-_GAME_SPECIFIC_MINIMAL_LOGIC_TEXT = {
-    RandovaniaGame.METROID_PRIME: (
-        "Items checked for: Morph Ball, Morph Ball Bomb, Wave Beam, Ice Beam, Phazon Suit, Artifacts."
-    ),
-    RandovaniaGame.METROID_PRIME_ECHOES: (
-        "Items checked for: Dark Visor, Screw Attack, Torvus Keys, Sky Temple Keys."
-    ),
-    RandovaniaGame.METROID_PRIME_CORRUPTION: (
-        "Items checked for: Nova Beam, X-Ray Visor, Hypermode, Grapple Lasso, Grapple Voltage, Hyper Grapple, Energy Cells."
-    ),
-}
-
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
@@ -41,12 +29,7 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
         self.game_description = game_description
         self._window_manager = window_manager
 
-        self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
-        self.dangerous_combo.setItemData(1, LayoutLogicalResourceAction.LAST_RESORT)
-        signal_handling.on_combo(self.dangerous_combo, self._on_dangerous_changed)
-
         self.trick_level_layout.setAlignment(QtCore.Qt.AlignTop)
-        signal_handling.on_checked(self.trick_level_minimal_logic_check, self._on_trick_level_minimal_logic_check)
         signal_handling.on_checked(self.underwater_abuse_check, self._on_underwater_abuse_check)
         self.underwater_abuse_label.linkActivated.connect(self._on_click_link_underwater_details)
 
@@ -58,14 +41,6 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
         self.trick_level_line_1.setVisible(self.game_enum != RandovaniaGame.METROID_PRIME_CORRUPTION)
         self.underwater_abuse_label.setText(self.underwater_abuse_label.text().replace("color:#0000ff;", ""))
-
-        for w in [self.trick_level_minimal_logic_check, self.trick_level_minimal_logic_label]:
-            w.setVisible(self.game_enum in _GAME_SPECIFIC_MINIMAL_LOGIC_TEXT)
-        self.trick_level_minimal_logic_label.setText(
-            self.trick_level_minimal_logic_label.text().format(
-                game_specific_text=_GAME_SPECIFIC_MINIMAL_LOGIC_TEXT.get(self.game_enum, "Unknown text")
-            )
-        )
 
         if self.game_enum != RandovaniaGame.METROID_PRIME:
             for w in [self.underwater_abuse_check, self.underwater_abuse_label]:
@@ -137,8 +112,6 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
     def on_preset_changed(self, preset: Preset):
         trick_level_configuration = preset.configuration.trick_level
-        self.trick_level_minimal_logic_check.setChecked(trick_level_configuration.minimal_logic)
-        common_qt_lib.set_combo_with_value(self.dangerous_combo, preset.configuration.logical_resource_action)
 
         for trick, slider in self._slider_for_trick.items():
             assert self._slider_for_trick[trick] is slider
@@ -184,24 +157,12 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
                     )
                 )
 
-    def _on_trick_level_minimal_logic_check(self, state: bool):
-        with self._editor as options:
-            options.set_configuration_field(
-                "trick_level",
-                dataclasses.replace(options.configuration.trick_level,
-                                    minimal_logic=state)
-            )
-
     def _on_underwater_abuse_check(self, state: bool):
         with self._editor as options:
             options.set_configuration_field(
                 "allow_underwater_movement_without_gravity",
                 state,
             )
-
-    def _on_dangerous_changed(self, value: LayoutLogicalResourceAction):
-        with self._editor as editor:
-            editor.set_configuration_field("logical_resource_action", value)
 
     def _on_click_link_underwater_details(self, link: str):
         self._exec_trick_details(ResourceDetailsPopup(

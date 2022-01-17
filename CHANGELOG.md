@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Cave Story has been added as an Experimental Game.
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
 This feature comes with plenty of quality of life functionality for editing the database. 
+- Added: A new tab has been added to the preset editor, Generation Settings, consolidating various settings such as minimal logic, multi-pickup placement, dangerous actions, etc.
 - Added: The Logic Database can now have descriptions for nodes.
 - Added: Game Details window can now spoil the item order, elevators, translator gates and hints.
 - Added: Data Editor can now edit area names.
@@ -36,7 +37,10 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Experimental Option - Add random (non-logical) items to rooms which do not usually have items.
 - Added: Shuffle Power Beam
 - Added: Shuffle Combat Visor
+- Added: New default preset: "Moderate Challenge".
 - Changed: Minimal Logic no longer checks for Plasma Beam.
+- Changed: Removed "Fewest Changes" preset.
+- Changed: Updated "Starter Preset" to better match community preferences.
 
 #### Known Issues:
 

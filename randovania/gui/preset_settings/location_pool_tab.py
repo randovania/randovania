@@ -27,6 +27,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
     _row_widget_for_node: Dict[Node, LocationPoolRowWidget]
     _during_batch_update: bool
+    _major_minor: bool
 
     def __init__(self, editor: PresetEditor, game: GameDescription):
         super().__init__(editor)
@@ -35,8 +36,6 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
         self._during_batch_update = False
 
         self._row_widget_for_node = {}
-        
-        self.check_major_minor.stateChanged.connect(self._on_update_randomization_mode)
 
         world_list = self.game_description.world_list
         
@@ -99,7 +98,8 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
 
         self._during_batch_update = True
 
-        self.check_major_minor.setChecked(available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT)
+        self._major_minor = available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT
+        self._on_update_randomization_mode()
 
         for node, row_widget in self._row_widget_for_node.items():
             can_have_progression = node.pickup_index not in available_locations.excluded_indices
@@ -109,7 +109,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
 
     def _on_update_randomization_mode(self):
         with self._editor as editor:
-            mode = RandomizationMode.MAJOR_MINOR_SPLIT if self.check_major_minor.isChecked() else RandomizationMode.FULL
+            mode = RandomizationMode.MAJOR_MINOR_SPLIT if self._major_minor else RandomizationMode.FULL
             editor.available_locations = dataclasses.replace(editor.available_locations, randomization_mode=mode)
             for node, row_widget in self._row_widget_for_node.items():
                 if mode == RandomizationMode.MAJOR_MINOR_SPLIT and not node.major_location:
