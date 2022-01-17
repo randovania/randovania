@@ -18,8 +18,8 @@ Extra - map_name: Priso2
 Extra - in_dark_aether: False
 > Door to Plantation; Heals? False
   * Door to Plantation/Door to Last Cave (Hidden)
-  > Event - Red Demon
-      Booster 2.0 and Can Kill Bosses
+  > Before Red Demon
+      Booster 2.0 and Has Weapon
 
 > Event - Red Demon; Heals? False
   * Event Defeated Red Demon
@@ -40,8 +40,19 @@ Extra - in_dark_aether: False
 
 > Door to Balcony (Pre-Bosses); Heals? False
   * Door to Balcony (Pre-Bosses)/Door to Last Cave (Hidden)
+  > Before Red Demon
+      Booster 2.0 and Has Weapon
+
+> Before Red Demon; Heals? False
+  > Door to Plantation
+      After Defeated Red Demon
   > Event - Red Demon
-      Booster 2.0 and Can Kill Bosses
+      Any of the following:
+          Can Kill Bosses
+          Missiles ≥ 8 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
+          Missiles ≥ 18 and Missile Launcher and Kill Bosses with Missiles (Advanced)
+  > Door to Balcony (Pre-Bosses)
+      After Defeated Red Demon
 
 ----------------
 Balcony (Pre-Bosses)
@@ -122,7 +133,10 @@ Extra - in_dark_aether: False
 > Entrance from Balcony (Pre-Bosses); Heals? False
   * Entrance to Balcony (Pre-Bosses)/Exit to Throne Room
   > Event - Misery
-      Can Kill Bosses
+      Any of the following:
+          Can Kill Bosses
+          Missiles ≥ 13 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
+          Missiles ≥ 31 and Missile Launcher and Kill Bosses with Missiles (Expert)
 
 > Exit to Balcony (Post-Bosses); Heals? False
   * Exit to Balcony (Post-Bosses)/Entrance from Throne Room
@@ -144,7 +158,10 @@ Extra - in_dark_aether: False
 > H/V Trigger to Throne Room; Heals? False
   * H/V Trigger to Throne Room/H/V Trigger to The King's Table
   > Event - Doctor
-      Can Kill Bosses
+      Any of the following:
+          Can Kill Bosses
+          Missiles ≥ 36 and Missile Launcher and Kill Bosses with Missiles (Intermediate)
+          Missiles ≥ 16 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
 
 > H/V Trigger to Black Space; Heals? False
   * H/V Trigger to Black Space/H/V Trigger to The King's Table
@@ -163,7 +180,10 @@ Extra - in_dark_aether: False
 > H/V Trigger to The King's Table; Heals? False
   * H/V Trigger to The King's Table/H/V Trigger to Black Space
   > Event - Undead Core
-      Can Kill Bosses
+      Any of the following:
+          Can Kill Bosses
+          Missiles ≥ 18 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
+          Missiles ≥ 42 and Missile Launcher and Kill Bosses with Missiles (Expert)
 
 ----------------
 Balcony (Post-Bosses)
@@ -278,7 +298,13 @@ Extra - in_dark_aether: False
   > H/V Trigger to Sacred Grounds - B2
       Has Flight and Has Weapon
   > Event - Heavy Press
-      Can Kill Bosses
+      Any of the following:
+          Can Kill Bosses
+          All of the following:
+              # Shoot with Curly's Nemesis
+              After Picked up Curly (Hell) and Pacifist Strats (Beginner)
+          Missiles ≥ 18 and Super Missile Launcher and Kill Bosses with Missiles (Intermediate)
+          Missiles ≥ 41 and Missile Launcher and Kill Bosses with Missiles (Advanced)
 
 > Exit to Passage?; Heals? False
   * Exit to Passage?/Entrance from Sacred Grounds - B3
@@ -308,7 +334,13 @@ Extra - in_dark_aether: False
   * Entrance to Corridor/Exit to Seal Chamber
   > Event - Best Ending
       All of the following:
-          Can Kill Bosses and Has Flight
+          Has Flight
+          Any of the following:
+              # No Missile tricks because holy moly 3808 HP absolutely dwarfs every other boss in the game lol
+              Can Kill Bosses
+              All of the following:
+                  # Shoot with Curly's Nemesis
+                  After Picked up Curly (Hell) and Pacifist Strats (Beginner)
           Enabled All Bosses or Enabled Best Ending or Enabled 100%
 
 > Event - Best Ending; Heals? False
