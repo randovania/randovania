@@ -429,17 +429,61 @@
                             }
                         },
                         "Pickup (West Grasstown Floor)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=e2Y-j0IV1Fs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Pickup (West Grasstown Ceiling)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "https://www.youtube.com/watch?v=e2Y-j0IV1Fs",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "pacifist",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Chaco's House": {
@@ -1885,7 +1929,7 @@
                         "Event - Balrog 2": {
                             "type": "or",
                             "data": {
-                                "comment": "Missile counts TBD",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -1919,7 +1963,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "missile",
-                                                        "amount": 1,
+                                                        "amount": 7,
                                                         "negate": false
                                                     }
                                                 }
@@ -1954,7 +1998,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "missile",
-                                                        "amount": 1,
+                                                        "amount": 15,
                                                         "negate": false
                                                     }
                                                 }
@@ -2348,10 +2392,10 @@
                     "pickup_index": 16,
                     "major_location": false,
                     "connections": {
-                        "Door to Grasstown": {
+                        "Event - Balfrog": {
                             "type": "or",
                             "data": {
-                                "comment": "Missile counts TBD",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
@@ -2385,7 +2429,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "missile",
-                                                        "amount": 1,
+                                                        "amount": 8,
                                                         "negate": false
                                                     }
                                                 }
@@ -2411,16 +2455,7 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "missiles",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "missile",
-                                                        "amount": 1,
+                                                        "amount": 18,
                                                         "negate": false
                                                     }
                                                 }
@@ -2428,13 +2463,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Balfrog": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }

@@ -29,7 +29,7 @@ def _cs_gui():
 game_data: GameData = GameData(
     short_name="CS",
     long_name="Cave Story",
-    experimental=True,
+    experimental=False,
 
     presets=[
         {
