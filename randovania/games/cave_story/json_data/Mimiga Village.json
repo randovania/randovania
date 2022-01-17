@@ -1429,12 +1429,24 @@
                     "dock_weakness": "Door",
                     "connections": {
                         "Event - Toroko Kidnapped": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "locket",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "locket",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Has Weapon"
+                                    }
+                                ]
                             }
                         },
                         "Event - Balrog 1": {

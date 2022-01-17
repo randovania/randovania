@@ -11,12 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Cave Story has been added as an Experimental Game.
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
 This feature comes with plenty of quality of life functionality for editing the database. 
+- Added: A new tab has been added to the preset editor, Generation Settings, consolidating various settings such as minimal logic, multi-pickup placement, dangerous actions, etc.
 - Added: The Logic Database can now have descriptions for nodes.
 - Added: Game Details window can now spoil the item order, elevators, translator gates and hints.
 - Added: Data Editor can now edit area names.
 - Added: Data Editor can now view and edit resources.
 - Added: Items now have tooltips in the Auto-Tracker.
 - Added: One joke hint.
+- Added: Descriptions for Minimal Logic for each game, with a better definition of what Minimal Logic is.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
 - Changed: Editing connections in the Data Editor now has an easier to use selector for non-item resources.
 - Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
@@ -35,6 +37,10 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Experimental Option - Add random (non-logical) items to rooms which do not usually have items.
 - Added: Shuffle Power Beam
 - Added: Shuffle Combat Visor
+- Added: New default preset: "Moderate Challenge".
+- Changed: Minimal Logic no longer checks for Plasma Beam.
+- Changed: Removed "Fewest Changes" preset.
+- Changed: Updated "Starter Preset" to better match community preferences.
 
 #### Known Issues:
 
@@ -59,7 +65,6 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: The vines in arboretum which cover the scan panel remain in the room on the ghost layer to help aid newer players.
 - Changed: Exo and Essence stay dead permanently if traversing Impact Crater multiple times
 - Changed: Increased Maximum Missile/Etank/Capacity for seeds with more expansion count than is available in vanilla
-- Changed: Phazon Elite QoL now leaves the turrets on their original layer, making central dynamo affect the room as in vanilla
 
 #### Logic Database
 
@@ -87,7 +92,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Elite Control Access Item (Damage Boost)
 - Added: Central Dynamo Item w/ Infinite Speed
 - Added: Bomb jump to skip grapple in Biotech Research Area 2
-- Added: Jump Off Enemies DBJ to reach GTH NSJ
+- Added: Great Tree Hall - Jump Off Enemies Bomb Jump (Advanced) to reach GTC NSJ
 - Added: Wallboost FCS Climb
 - Added: Logic for Traversing Twin Fires Tunnel to Workstation NSJ Gravity
 - Added: Logic for Traversing Twin Fires Tunnel to Workstation NSJ Bombless
@@ -108,6 +113,11 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Beginner L-Jump to reach Main Quarry Save Station
 - Added: Main Quarry Crane Platform to Waste Disposal NSJ Advanced Combat Dash
 - Added: Main Quarry Crane Platform to Item Intermediate Scan Dash
+- Added: Ore Processing Door To Elevator Access A to Storage Depot B Standable L-Jump with Power Bombs
+- Added: Combat logic for Dynamo Access and Elite Control Elite Pirate fights
+- Added: Intermediate/Advanced Standables to enter/escape Elite Control after/without triggering Elite Pirate
+- Added: Logic now can expect players to play in just scan visor, using bombs to open doors
+- Added: Knowledge/Combat (Intermediate) trick to skip needing Power Beam for Exo fight
 - Changed: Renamed Misc Logic Option to "Allow Dangerous Gravity Suit Logic"
 - Changed: Increased difficulty of Connection Elevator to Deck Beta DBJs to Advanced
 - Changed: HAT Wallboosts can be done using Gravity at the same difficulty
@@ -128,9 +138,12 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Ore Processing Storage Depot B to Waste Disposal NSJ Standable difficulty from Intermediate to Beginner
 - Changed: Ore Processing Storage Depot B to Waste Disposal R-Jump to L-Jump
 - Changed: Elite Research Spinners without Boost from Advanced to Intermediate
+- Changed: Ore Processing Door To Elevator Access A to Storage Depot B Standable difficulty from Intermediate to Advanced
 - Changed: Sun Tower Early Wild now requires Intermediate Knowledge on all methods
 
 ### Metroid Prime 2: Echoes
+
+- Changed: Minimal Logic no longer checks for Light Suit or Agon Keys.
 
 #### Patcher Changes
 

@@ -427,6 +427,7 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
             IndexWithReason(it["name"], it.get("reason"))
             for it in data["events_to_exclude"]
         ],
+        description=data["description"]
     )
 
 

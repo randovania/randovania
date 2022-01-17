@@ -311,6 +311,7 @@ ConstructMinimalLogicDatabase = Struct(
         name=String,
         reason=OptionalValue(String),
     )),
+    description=String,
 )
 
 ConstructDockWeaknessDatabase = Struct(

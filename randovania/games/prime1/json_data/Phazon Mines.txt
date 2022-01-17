@@ -108,7 +108,7 @@ Extra - asset_id: 1681720207
       Trivial
   > Pickup (Missile)
       All of the following:
-          Scan Visor and Wave Beam
+          Scan Visor and Shoot Wave Beam
           Thermal Visor or Invisible Objects (Beginner)
           Any of the following:
               Morph Ball Bomb and Morph Ball and Spider Ball
@@ -238,7 +238,10 @@ Extra - asset_id: 2547167990
           Morph Ball Bomb and Morph Ball and Power Bomb and Space Jump Boots and Spider Ball
           All of the following:
               # https://youtu.be/Wf1Pz9bXAgQ
-              Space Jump Boots and R-Jump (Intermediate) and Standable Terrain (Intermediate)
+              Space Jump Boots and R-Jump (Intermediate) and Standable Terrain (Advanced)
+          All of the following:
+              # https://youtu.be/vA9uH9u1RjE
+              Power Bomb and Space Jump Boots and L-Jump (Beginner) and Standable Terrain (Intermediate)
 
 ----------------
 Mine Security Station
@@ -249,7 +252,7 @@ Extra - asset_id: 2507085138
   * Extra - dock_index: 0
   > Door to Security Access B
       All of the following:
-          Wave Beam
+          Shoot Wave Beam
           Any of the following:
               Charge Beam or Combat (Advanced)
               Combat (Intermediate) and Normal Damage ≥ 200
@@ -259,7 +262,7 @@ Extra - asset_id: 2507085138
   * Extra - dock_index: 1
   > Door to Security Access A
       All of the following:
-          Wave Beam
+          Shoot Wave Beam
           Any of the following:
               Charge Beam or Combat (Advanced)
               Combat (Intermediate) and Normal Damage ≥ 200
@@ -335,7 +338,7 @@ Extra - asset_id: 639736833
           Morph Ball
           Any of the following:
               Spider Ball
-              Morph Ball Bomb and Space Jump Boots and Wave Beam and Bomb Space Jump (Advanced) and Standable Terrain (Expert)
+              Morph Ball Bomb and Space Jump Boots and Bomb Space Jump (Advanced) and Standable Terrain (Expert) and Shoot Wave Beam
 
 ----------------
 Security Access B
@@ -387,7 +390,7 @@ Extra - asset_id: 2325199700
   * Extra - dock_index: 1
   > Pickup (Artifact of Warrior)
       All of the following:
-          Morph Ball and Power Bomb
+          Morph Ball and Power Bomb and Shoot Any Beam
           After Invisible Drone or Enabled Phazon Elite without Dynamo
           Charge Beam or Combat (Beginner)
   > Top Floor
@@ -496,33 +499,70 @@ Extra - asset_id: 3305828730
 > Door to Maintenance Tunnel; Heals? False
   * Ice Door to Maintenance Tunnel/Door to Elite Control
   * Extra - dock_index: 0
-  > Door to Elite Control Access
+  > Bottom Floor Center
       Trivial
 
 > Door to Elite Control Access; Heals? False; Spawn Point
   * Wave Door to Elite Control Access/Door to Elite Control
   * Extra - dock_index: 1
-  > Door to Maintenance Tunnel
-      Trivial
-  > Door to Ventilation Shaft
-      After Elite Control Barriers
-  > Event - Elite Control Barriers Lowered
-      All of the following:
-          # Skipping Elite Pirate Standable: https://youtu.be/60i2ca6f27w
-          Scan Visor
+  > Event - Elite Pirate Defeated
+      Any of the following:
+          # https://youtu.be/mx0rQa9ZAY4
+          Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
+  > Bottom Floor Center
+      Any of the following:
+          After Elite Pirate Fight (Elite Control)
+          All of the following:
+              # https://youtu.be/86eWOxO83Zk
+              Movement (Intermediate) and Standable Terrain (Advanced)
 
 > Door to Ventilation Shaft; Heals? False
   * Ice Door to Ventilation Shaft/Door to Elite Control
   * Extra - dock_index: 2
-  > Door to Elite Control Access
-      After Elite Control Barriers
   > Event - Elite Control Barriers Lowered
       Scan Visor and Enabled Backwards Lower Mines
+  > Bottom Floor Center
+      After Elite Control Barriers
 
 > Event - Elite Control Barriers Lowered; Heals? False
   * Event Elite Control Barriers
-  > Door to Elite Control Access
+  > Bottom Floor Center
       Trivial
+
+> Event - Elite Pirate Defeated; Heals? False
+  * Event Elite Pirate Fight (Elite Control)
+  > Bottom Floor Center
+      Trivial
+
+> Bottom Floor Center; Heals? False
+  > Door to Maintenance Tunnel
+      Trivial
+  > Door to Elite Control Access
+      Any of the following:
+          After Elite Pirate Fight (Elite Control)
+          All of the following:
+              # https://youtu.be/lmEsr1Y1izM
+              Movement (Beginner) and Standable Terrain (Intermediate)
+  > Door to Ventilation Shaft
+      All of the following:
+          After Elite Control Barriers
+          Any of the following:
+              After Elite Pirate Fight (Elite Control)
+              All of the following:
+                  # https://youtu.be/VOesQWYfL-4
+                  Standable Terrain (Intermediate)
+  > Event - Elite Control Barriers Lowered
+      All of the following:
+          Scan Visor
+          Any of the following:
+              After Elite Pirate Fight (Elite Control)
+              All of the following:
+                  # https://youtu.be/VOesQWYfL-4
+                  Standable Terrain (Intermediate)
+  > Event - Elite Pirate Defeated
+      All of the following:
+          # https://youtu.be/mx0rQa9ZAY4
+          Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
 
 ----------------
 Maintenance Tunnel
@@ -591,6 +631,7 @@ Extra - asset_id: 2905505465
           All of the following:
               Space Jump Boots
               Any of the following:
+                  # Halfway up: https://youtu.be/vOr2W2ut25k All the way up: https://youtu.be/gU2yAun0Zvg
                   Standable Terrain (Intermediate)
                   Morph Ball and Spider Ball
           All of the following:
@@ -616,6 +657,7 @@ Extra - asset_id: 2905505465
                   Phazon Suit
                   Movement (Beginner) and Phazon Damage ≥ 45
               Any of the following:
+                  # https://youtu.be/SjS_b_HBmqE
                   Standable Terrain (Beginner)
                   Morph Ball Bomb and Morph Ball and Spider Ball
           All of the following:
@@ -626,7 +668,9 @@ Extra - asset_id: 2905505465
   > Pickup (Missile)
       All of the following:
           Morph Ball and Power Bomb and Space Jump Boots
-          Thermal Visor or X-Ray Visor or Invisible Objects (Beginner)
+          Any of the following:
+              # https://youtu.be/cxZ7-YewvDw
+              Thermal Visor or X-Ray Visor or Invisible Objects (Beginner)
 
 > Pickup (Missile); Heals? False
   * Pickup 81; Major Location? False
@@ -738,13 +782,24 @@ Extra - asset_id: 4111966698
   * Ice Door to Central Dynamo/Door to Dynamo Access
   * Extra - dock_index: 0
   > Door to Omega Research
-      Trivial
+      No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
+  > Event - Elite Pirate Fight
+      Plasma Beam
 
 > Door to Omega Research; Heals? False
   * Ice Door to Omega Research/Door to Dynamo Access
   * Extra - dock_index: 1
   > Door to Central Dynamo
-      Trivial
+      No Plasma Beam or After Elite Pirate Fight (Dynamo Access)
+  > Event - Elite Pirate Fight
+      Plasma Beam
+
+> Event - Elite Pirate Fight; Heals? False
+  * Event Elite Pirate Fight (Dynamo Access)
+  > Door to Omega Research
+      Any of the following:
+          # https://youtu.be/20peXRPG-e0
+          Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
 
 ----------------
 Transport to Magmoor Caverns South
@@ -802,7 +857,7 @@ Extra - asset_id: 961790803
 > Fight Trigger; Heals? False
   > Event - Omega Pirate
       All of the following:
-          X-Ray Visor
+          X-Ray Visor and Shoot Any Beam
           Any of the following:
               Combat (Hypermode)
               Charge Beam and Normal Damage ≥ 300 and Have all Beams
@@ -811,7 +866,7 @@ Extra - asset_id: 961790803
                   Any of the following:
                       # 1-Cycle Strats
                       Plasma Beam
-                      Missile ≥ 30 and Super Missile
+                      Missile ≥ 30 and Shoot Super Missile
               Morph Ball and Power Bomb ≥ 3 and Combat (Advanced)
               Combat (Expert) and Normal Damage ≥ 300
               Combat (Intermediate) and Normal Damage ≥ 500
@@ -825,11 +880,15 @@ Extra - asset_id: 4272124642
   * Ice Door to Dynamo Access/Door to Central Dynamo
   * Extra - dock_index: 0
   > Door to Quarantine Access A
-      Morph Ball and Power Bomb and Knowledge (Beginner)
+      All of the following:
+          # The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A. However, if Samus leaves this room without picking up the item, the doors to Save Station Mines B and Dynamo Access will then permanently be sealed, making it impossible to backtrack through the room.
+          Morph Ball and Power Bomb and Knowledge (Beginner)
   > Door to Save Station Mines B
       After Invisible Drone
   > Event - Security Drone
-      Combat (Beginner) or Normal Damage ≥ 100
+      Any of the following:
+          # Easy kills - Wavebuster (no X-Ray): https://youtu.be/3Y2n-boOGUw Super Missiles: https://youtu.be/aprVv7pePYc
+          Combat (Beginner) or Normal Damage ≥ 100
 
 > Door to Quarantine Access A; Heals? False
   * Ice Door to Quarantine Access A/Door to Central Dynamo
@@ -842,6 +901,7 @@ Extra - asset_id: 4272124642
   * Extra - dock_index: 2
   > Door to Dynamo Access
       Any of the following:
+          # Fast climb with Standable: https://youtu.be/MtpgWKgaF-U
           Space Jump Boots
           Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert) and Standable Terrain (Intermediate)
   > Door to Quarantine Access A
@@ -855,8 +915,11 @@ Extra - asset_id: 4272124642
           Any of the following:
               Morph Ball Bomb
               All of the following:
-                  # https://www.youtube.com/watch?v=rDCTXaNmypI
-                  Boost Ball and Power Bomb and Infinite Speed (Intermediate) and Normal Damage ≥ 650
+                  # Destroying the drone requires Samus being able to take 400 more damage during item acquisition. The video shows how to avoid destroying it. https://youtu.be/LRmJn2BAYwc
+                  Boost Ball and Power Bomb and Infinite Speed (Intermediate) and Normal Damage ≥ 680
+              All of the following:
+                  # Skipping the Security Drone trigger to take 400 less damage during item acquisition: https://youtu.be/LRmJn2BAYwc
+                  Boost Ball and Power Bomb and Infinite Speed (Intermediate) and Knowledge (Advanced) and Normal Damage ≥ 280
 
 > Pickup (Main Power Bombs); Heals? False
   * Pickup 84; Major Location? True
@@ -873,7 +936,7 @@ Extra - asset_id: 1899248703
   > Door to Elite Quarters
       After Elite Quarters Access Barrier
   > Event - Elite Quarters Access Barrier Opened
-      Plasma Beam
+      Shoot Plasma Beam
 
 > Door to Elite Quarters; Heals? False
   * Plasma Door to Elite Quarters/Door to Elite Quarters Access
@@ -1148,7 +1211,7 @@ Extra - asset_id: 3964125762
               Space Jump Boots
               Grapple Beam or Combat/Scan Dash (Intermediate) or Slope Jump (Beginner) or Standable Terrain (Beginner)
           Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert)
-          Ice Beam and Jump Off Enemies (Expert)
+          Jump Off Enemies (Expert) and Shoot Ice Beam
   > Pickup (Missile)
       All of the following:
           Morph Ball
