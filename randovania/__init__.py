@@ -20,7 +20,7 @@ def get_file_path() -> Path:
 
 def get_readme() -> Path:
     if is_frozen():
-        return get_file_path().joinpath("README.md")
+        return get_data_path().joinpath("README.md")
     return get_file_path().parent.joinpath("README.md")
 
 def get_data_path() -> Path:
