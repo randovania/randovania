@@ -25,7 +25,7 @@ a = Analysis(['randovania/__main__.py', 'randovania/cli/__init__.py'],
                  *item_databases,
                  *presets,
                  *game_assets,
-                 ("README.md", "README.md")
+                 ("README.md", "data/")
              ],
              hiddenimports=[
                 "mock",
