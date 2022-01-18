@@ -2,6 +2,7 @@ import functools
 import json
 import logging
 import os
+import re
 from functools import partial
 from pathlib import Path
 from typing import Optional, List
@@ -10,7 +11,7 @@ from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import QUrl, Signal, Qt
 from qasync import asyncSlot
 
-from randovania import VERSION, get_readme
+from randovania import VERSION, get_data_path, get_readme
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.patching.patcher_provider import PatcherProvider
@@ -94,10 +95,12 @@ class MainWindow(WindowManager, Ui_MainWindow):
         common_qt_lib.set_default_window_icon(self)
 
         self.setup_about_text()
+        self.setup_welcome_text()
+
+        self.set_icon_data_paths(self.database_viewer_label)
+        self.set_icon_data_paths(self.tracker_label)
 
         self.browse_racetime_label.setText(self.browse_racetime_label.text().replace("color:#0000ff;", ""))
-
-        self.setup_welcome_text()
 
         self._preset_manager = preset_manager
         self.network_client = network_client
@@ -598,6 +601,13 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.games_supported_label.setText(supported)
         self.games_experimental_label.setText(experimental)
         self.intro_welcome_label.setText(welcome)
+    
+    def set_icon_data_paths(self, label: QtWidgets.QLabel):
+        image_pattern = re.compile('<img src="data/(.*?)"/>')
+
+        repl = f'<img src="{get_data_path().as_posix()}/\g<1>"/>'
+        new_text = image_pattern.sub(repl, label.text())
+        label.setText(new_text)
 
 def get_readme_section(section: str) -> str:
     readme = get_readme().read_text()
