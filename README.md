@@ -1,6 +1,28 @@
+<!-- The Begin and End comments throughout this document are used in order to pull specific sections of the readme into the main GUI window at runtime. -->
+
 # Randovania
 
-Welcome to Randovania, a randomizer for Metroid Prime and Metroid Prime 2: Echoes.
+Welcome to Randovania, a randomizer platform for a multitude of games.
+
+<!-- Begin SUPPORTED -->
+
+### Supported Games
+ - Metroid Prime
+ - Metroid Prime 2: Echoes
+ - Cave Story
+
+<!-- End SUPPORTED -->
+
+<!-- Begin EXPERIMENTAL -->
+
+### Experimental Games
+ - Metroid Prime 3: Corruption
+ - Metroid Dread
+ - Super Metroid
+
+<!-- End EXPERIMENTAL -->
+
+<!-- Begin WELCOME -->
 
 Here you will be able to randomize many aspects of either game, while still being ensured it's possible to 
 finish without any trick or glitch! What can be randomized?
@@ -18,43 +40,77 @@ you can even shuffle items you normally start with, like the Power Beam and Scan
 
 So have fun and start randomizing.
 
-## Installation
+<!-- End WELCOME -->
 
-### Windows
+# Installation
+
+## Windows
 
 In the [releases page](https://github.com/randovania/randovania/releases), we have zip files
 with everything ready to use. Just extract and run!
 
-## Community
+<!-- Begin COMMUNITY -->
 
-Join the Metroid Prime Randomizer Discord: <https://discord.gg/metroid-prime-randomizer>
+# Community
 
-## Credits
-Game patching written by [Claris](https://www.twitch.tv/claris).
+Join the Randovania Discord: <https://discord.gg/M23gCxj6fw>
+
+Invite links for specific games' servers can be found in the `#game-communities` channel in our server.
+
+<!-- End COMMUNITY -->
+
+<!-- Begin CREDITS -->
+
+# Credits
 
 GUI and logic written by [Henrique Gemignani](https://github.com/henriquegemignani/), with contributions 
-by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook) and [gollop](https://github.com/gollop).
+by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](https://github.com/gollop) and [many others](https://github.com/randovania/randovania/graphs/contributors).
 
-Many thanks to Claris for making the original Echoes Randomizer and both collecting and providing this
-incredible initial set of data which powers Randovania.
+[BashPrime](https://www.twitch.tv/bashprime), [Pwootage](https://github.com/Pwootage), and [April Wade](https://github.com/aprilwade) made <https://randomizer.metroidprime.run/>, from which the GUI was based.
 
-Claris also made the included [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z),
-a tool for practicing Echoes. For more information, see the
+## Games
+
+### Metroid Prime 1
+* Game patching via [randomprime](https://github.com/aprilwade/randomprime) from April Wade, with contributions from [UltiNaruto](https://github.com/UltiNaruto), BashPrime and toasterparty.
+* Room data collected by UltiNaruto, [EthanArmbrust](https://github.com/EthanArmbrust) and [samuelroy21](https://github.com/samuelroy21).
+
+### Metroid Prime 2: Echoes
+* Game patching written by [Claris](https://www.twitch.tv/claris).
+* Room data initially collected by Claris, revamped by [Dyceron](https://www.twitch.tv/dyceron).
+* [Menu Mod](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z) created by Claris. For more information, see the
 [Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
 
-Also thanks to [Dyceron](https://www.twitch.tv/dyceron) for motivation and testing.
+### Metroid Prime 3: Corruption
+* Game patching written by gollop.
+* Room data collected by Dyceron and [KirbymastaH](https://www.twitch.tv/kirbymastah).
 
-## Developer Help
+### Cave Story
+* Patcher and logic written by [duncathan_salt](https://twitter.com/duncathan_salt).
+* Based on the [original randomizer](https://shru.itch.io/cave-story-randomizer) by shru.
+* Features contributions from [many others](https://github.com/cave-story-randomizer/cave-story-randomizer/graphs/contributors).
 
-### Dependencies
+## Auto Tracker
+
+Classic theme uses assets derived from [this spritesheet](https://www.spriters-resource.com/custom_edited/metroidcustoms/sheet/23198/) from ChaosMiles07 and Ridleymaster, with edits from SpaghettiToastBook.
+
+Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedKirby).
+
+## Multiworld
+Server and logic written by Henrique, including Dolphin and Nintendont integrations. These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).
+
+<!-- End CREDITS -->
+
+# Developer Help
+
+## Dependencies
 
 * [Python 3.9 64-bit](https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe)
 * [Git](https://git-scm.com/downloads)
 
-### Setup
+## Setup
 
 Getting started:
-   1. Clone this repository
+   1. Clone this repository (downloading the zip is *not* supported and will not work)
    2. Open a terminal in the repository root
    3. Run the following file:
       1. Windows: `tools/prepare_virtual_env.bat`
@@ -84,5 +140,6 @@ Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 
 # Documentation
 
+- Unfamiliar with a term? Check the [glossary](docs/GLOSSARY.md).
 - Adding a new game? Check the [dedicated guide](docs/NEW_GAME.md).
 - Changing a data format? Check the [migrations documentation](docs/MIGRATIONS.md).
