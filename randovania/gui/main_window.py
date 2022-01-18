@@ -2,6 +2,7 @@ import functools
 import json
 import logging
 import os
+import re
 from functools import partial
 from pathlib import Path
 from typing import Optional, List
@@ -10,7 +11,7 @@ from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import QUrl, Signal, Qt
 from qasync import asyncSlot
 
-from randovania import VERSION
+from randovania import VERSION, get_data_path, get_readme
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
 from randovania.patching.patcher_provider import PatcherProvider
@@ -33,7 +34,6 @@ _DISABLE_VALIDATION_WARNING = """
 Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable with possibly unbeatable seeds.
 </p><p align="center">Are you sure you want to disable validation?</p></body></html>
 """
-
 
 def _t(key: str, disambiguation: Optional[str] = None):
     return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
@@ -94,16 +94,13 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.setAcceptDrops(True)
         common_qt_lib.set_default_window_icon(self)
 
-        # Remove all hardcoded link color
-        about_document: QtGui.QTextDocument = self.about_text_browser.document()
-        about_document.setHtml(about_document.toHtml().replace("color:#0000ff;", ""))
-        cursor: QtGui.QTextCursor = self.about_text_browser.textCursor()
-        cursor.setPosition(0)
-        self.about_text_browser.setTextCursor(cursor)
+        self.setup_about_text()
+        self.setup_welcome_text()
+
+        self.set_icon_data_paths(self.database_viewer_label)
+        self.set_icon_data_paths(self.tracker_label)
 
         self.browse_racetime_label.setText(self.browse_racetime_label.text().replace("color:#0000ff;", ""))
-
-        self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
         self._preset_manager = preset_manager
         self.network_client = network_client
@@ -567,3 +564,58 @@ class MainWindow(WindowManager, Ui_MainWindow):
         from randovania.gui.corruption_layout_editor import CorruptionLayoutEditor
         self.corruption_editor = CorruptionLayoutEditor()
         self.corruption_editor.show()
+    
+    def setup_about_text(self):
+        ABOUT_TEXT = "\n".join([
+            "# Randovania",
+            "",
+            "<https://github.com/randovania/randovania>",
+            "",
+            "This software is covered by the [GNU General Public License v3 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.en.html)",
+            "",
+            "{community}",
+            "",
+            "{credits}",
+        ])
+
+        about_document: QtGui.QTextDocument = self.about_text_browser.document()
+        
+        # Populate from README.md
+        community = get_readme_section("COMMUNITY")
+        credit = get_readme_section("CREDITS")
+        about_document.setMarkdown(ABOUT_TEXT.format(community=community, credits=credit))
+
+        # Remove all hardcoded link color
+        about_document.setHtml(about_document.toHtml().replace("color:#0000ff;", ""))
+        cursor: QtGui.QTextCursor = self.about_text_browser.textCursor()
+        cursor.setPosition(0)
+        self.about_text_browser.setTextCursor(cursor)
+    
+    def setup_welcome_text(self):
+        self.intro_label.setText(self.intro_label.text().format(version=VERSION))
+
+        welcome = get_readme_section("WELCOME")
+        supported = get_readme_section("SUPPORTED")
+        experimental = get_readme_section("EXPERIMENTAL")
+
+        self.games_supported_label.setText(supported)
+        self.games_experimental_label.setText(experimental)
+        self.intro_welcome_label.setText(welcome)
+    
+    def set_icon_data_paths(self, label: QtWidgets.QLabel):
+        image_pattern = re.compile('<img src="data/(.*?)"/>')
+
+        repl = f'<img src="{get_data_path().as_posix()}/\g<1>"/>'
+        new_text = image_pattern.sub(repl, label.text())
+        label.setText(new_text)
+
+def get_readme_section(section: str) -> str:
+    readme = get_readme().read_text()
+
+    start_comment = f"<!-- Begin {section} -->\n"
+    end_comment = f"<!-- End {section} -->"
+
+    start = readme.find(start_comment) + len(start_comment)
+    end = readme.find(end_comment)
+
+    return readme[start:end]
