@@ -1,18 +1,28 @@
+<!-- The Begin and End comments throughout this document are used in order to pull specific sections of the readme into the main GUI window at runtime. -->
+
 # Randovania
 
 Welcome to Randovania, a randomizer platform for a multitude of games.
 
-<!-- Begin WELCOME -->
+<!-- Begin SUPPORTED -->
 
 ### Supported Games
  - Metroid Prime
  - Metroid Prime 2: Echoes
  - Cave Story
 
+<!-- End SUPPORTED -->
+
+<!-- Begin EXPERIMENTAL -->
+
 ### Experimental Games
  - Metroid Prime 3: Corruption
  - Metroid Dread
  - Super Metroid
+
+<!-- End EXPERIMENTAL -->
+
+<!-- Begin WELCOME -->
 
 Here you will be able to randomize many aspects of either game, while still being ensured it's possible to 
 finish without any trick or glitch! What can be randomized?
