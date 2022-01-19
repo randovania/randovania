@@ -60,10 +60,10 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
         else:
             resource = None
 
-        print("{}> {} for {}".format(_indent(1), n(state.node, world_list=world_list), resource))
         if _DEBUG_LEVEL >= 3:
-            for node in reach.nodes:
-                print("{}: {}".format(_indent(), n(node, world_list=world_list)))
+            for node in state.path_from_previous_state[1:]:
+                print("{}: {}".format(_indent(1), n(node, world_list=world_list)))
+        print("{}> {} for {}".format(_indent(1), n(state.node, world_list=world_list), resource))
 
 
 def log_checking_satisfiable_actions():
