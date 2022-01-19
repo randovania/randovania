@@ -1,21 +1,16 @@
-from typing import Tuple
 from PySide2 import QtWidgets
-
 from PySide2.QtCore import Signal
 from PySide2.QtWidgets import QDialog, QWidget
 
-from randovania.gui.lib.common_qt_lib import set_default_window_icon
-from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.major_item_state import MajorItemState
 from randovania.gui.generated.widget_pickup_style_ui import Ui_PickupStyleWidget
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.gui.lib import signal_handling
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.pickup_model import PickupModelDataSource, PickupModelStyle
-from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
+
 
 class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
     Changed = Signal()
-    
+
     def __init__(self, parent: QWidget, editor: PresetEditor):
         super().__init__(parent)
         self.setupUi(self)
@@ -38,6 +33,7 @@ class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
         def persist(index: int):
             with self._editor as options:
                 options.set_configuration_field(attribute_name, combo.itemData(index))
+
         return persist
 
     def update(self, layout: BaseConfiguration):
@@ -45,4 +41,3 @@ class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
         self.pickup_data_source_combo.setCurrentIndex(
             self.pickup_data_source_combo.findData(layout.pickup_model_data_source))
         self.pickup_data_source_combo.setEnabled(layout.pickup_model_style != PickupModelStyle.ALL_VISIBLE)
-

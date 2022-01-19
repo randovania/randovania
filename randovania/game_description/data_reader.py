@@ -229,7 +229,6 @@ class WorldReader:
             )
         except MissingResource:
             return None
-        
 
     def _get_command_visor(self) -> ItemResourceInfo:
         try:

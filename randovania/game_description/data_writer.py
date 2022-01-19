@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import List, TypeVar, Callable, Dict, Tuple, Iterator, Optional
 
 from randovania.game_description import game_migration
-from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
+from randovania.game_description.game_description import GameDescription, MinimalLogicData
 from randovania.game_description.requirements import ResourceRequirement, \
     RequirementOr, RequirementAnd, Requirement, RequirementTemplate, RequirementArrayBase
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo

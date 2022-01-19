@@ -5,12 +5,11 @@ from pathlib import Path
 from typing import Callable, List, Union
 
 from randovania import get_data_path
-from randovania.patching.patchers.exceptions import ExportFailure
 from randovania.games.prime2.patcher import csharp_subprocess, echoes_dol_patcher
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-
+from randovania.patching.patchers.exceptions import ExportFailure
 
 CURRENT_PATCH_VERSION = 2
 logger = logging.getLogger(__name__)

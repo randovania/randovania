@@ -4,7 +4,7 @@ from typing import List, Dict, Optional, Iterator, Tuple
 
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node import Node, DockNode, PickupNode
+from randovania.game_description.world.node import Node, PickupNode
 
 
 @dataclasses.dataclass(frozen=True)
@@ -63,7 +63,7 @@ class Area:
 
     def clear_dock_cache(self):
         pass
-    
+
     @property
     def map_name(self) -> str:
         return self.extra.get("map_name", self.name)

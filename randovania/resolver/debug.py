@@ -1,9 +1,9 @@
 import time
 from typing import Set
 
-from randovania.game_description.world.node import Node
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import Node
 
 _DEBUG_LEVEL = 0
 count = 0

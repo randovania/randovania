@@ -4,9 +4,9 @@ import struct
 from asyncio import StreamReader, StreamWriter
 from typing import List, Optional, Dict
 
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
 
 @dataclasses.dataclass(frozen=True)

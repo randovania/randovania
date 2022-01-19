@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from typing import Iterable
 from random import Random
+from typing import Iterable
 
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSSong, CSCosmeticPatches, MusicRandoType, SONGS
+
 
 @dataclass(frozen=True)
 class CaverCue:
@@ -12,9 +13,10 @@ class CaverCue:
 
     def assign_song(self, song: CSSong) -> dict[str, CSSong]:
         return {event: song for event in self.events}
-    
+
     def assign_songs(self, songs: dict[str, CSSong]):
         return {event: songs.get(event, self.default_song) for event in self.events}
+
 
 class CaverMusic:
     CUES: Iterable[CaverCue] = (
@@ -152,7 +154,7 @@ class CaverMusic:
                 mapping[cue.map_name] = {}
             events = {
                 event: {
-                    "song_id": song.song_id, 
+                    "song_id": song.song_id,
                     "original_id": cue.default_song.song_id
                 }
                 for event, song in events.items()
@@ -160,12 +162,14 @@ class CaverMusic:
             mapping[cue.map_name].update(events)
         return mapping
 
+
 class CaverMusicDefault(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
         return {
             cue: cue.assign_song(cue.default_song)
             for cue in CaverMusic.CUES
         }
+
 
 class CaverMusicShuffle(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
@@ -176,13 +180,14 @@ class CaverMusicShuffle(CaverMusic):
             song: shuffled[i % len(shuffled)]
             for i, song in enumerate(CSSong.songs_to_shuffle())
         }
-        
+
         return {
             cue: cue.assign_song(
                 mapping[cue.default_song]
             )
             for cue in CaverMusic.CUES
         }
+
 
 class CaverMusicRandom(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:
@@ -193,6 +198,7 @@ class CaverMusicRandom(CaverMusic):
             )
             for cue in CaverMusic.CUES
         }
+
 
 class CaverMusicChaos(CaverMusic):
     def shuffle(self, rng: Random, cosmetic: CSCosmeticPatches) -> dict[CaverCue, dict[str, CSSong]]:

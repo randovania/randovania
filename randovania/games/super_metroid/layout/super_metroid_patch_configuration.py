@@ -1,8 +1,8 @@
 import dataclasses
-from typing import Iterator
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
+
 
 @dataclasses.dataclass(frozen=True)
 class SuperPatchConfiguration(BitPackDataclass, JsonDataclass):

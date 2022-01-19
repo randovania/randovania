@@ -5,7 +5,6 @@ from PySide2.QtWidgets import QComboBox
 
 import randovania.games.prime2.patcher.claris_patcher
 from randovania.game_description import default_database
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import ConfigurableNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame

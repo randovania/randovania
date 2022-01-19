@@ -318,6 +318,7 @@ def _migrate_v5(data: dict) -> dict:
 
     return data
 
+
 def _migrate_v6(data: dict) -> dict:
     lore_types = {
         "luminoth-lore": "requires-item",
@@ -330,6 +331,7 @@ def _migrate_v6(data: dict) -> dict:
                 if node["node_type"] == "logbook":
                     node["lore_type"] = lore_types.get(node["lore_type"], node["lore_type"])
     return data
+
 
 def _migrate_v7(data: dict) -> dict:
     if data["minimal_logic"] is not None:

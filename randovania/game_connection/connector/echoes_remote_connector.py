@@ -7,8 +7,8 @@ from randovania.game_connection.executor.memory_operation import MemoryOperation
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world import World
-from randovania.patching.prime import (all_prime_dol_patches)
 from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
+from randovania.patching.prime import (all_prime_dol_patches)
 
 
 def format_received_item(item_name: str, player_name: str) -> str:
@@ -67,7 +67,6 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
     async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
                                    ) -> List[MemoryOperation]:
-
         player_state_pointer = self.version.cstate_manager_global + 0x150c
         return [
             MemoryOperation(

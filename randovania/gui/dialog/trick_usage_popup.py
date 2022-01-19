@@ -16,7 +16,6 @@ from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.preset import Preset
 
 
@@ -98,7 +97,8 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
             return
 
         # Update
-        trick_resources = self._game_description.game.data.generator.bootstrap.trick_resources_for_configuration(trick_level, database)
+        trick_resources = self._game_description.game.data.generator.bootstrap.trick_resources_for_configuration(
+            trick_level, database)
 
         lines = []
 

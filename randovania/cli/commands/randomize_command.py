@@ -10,7 +10,6 @@ def randomize_command_logic(args):
 async def randomize_command_logic_async(args):
     from randovania.patching.patcher_provider import PatcherProvider
     from randovania.generator import generator
-    from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.layout_description import LayoutDescription
     from randovania.layout.permalink import Permalink
@@ -41,7 +40,8 @@ async def randomize_command_logic_async(args):
     patcher = patcher_provider.patcher_for_game(preset.game)
 
     patch_data = patcher.create_patch_data(layout_description, players_config, cosmetic_patches)
-    patcher.patch_game(args.input_file, args.output_file, patch_data, internal_copies_path, lambda x, _: status_update(x))
+    patcher.patch_game(args.input_file, args.output_file, patch_data, internal_copies_path,
+                       lambda x, _: status_update(x))
 
 
 def add_randomize_command(sub_parsers):

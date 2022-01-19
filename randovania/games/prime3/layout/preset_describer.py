@@ -1,7 +1,9 @@
 from typing import Dict, List
-from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, message_for_required_mains
+
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
+    message_for_required_mains
 
 
 def corruption_format_params(configuration: CorruptionConfiguration) -> Dict[str, List[str]]:

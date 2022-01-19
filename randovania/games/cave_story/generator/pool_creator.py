@@ -1,4 +1,5 @@
 from random import Random
+
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -6,14 +7,13 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.generator.item_pool import PoolResults
-from randovania.generator.item_pool.pool_creator import _extend_pool_results
-from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
-def pool_creator(results: PoolResults, configuration: CSConfiguration, db: ResourceDatabase, base_patches: GamePatches, rng: Random) -> None:
+def pool_creator(results: PoolResults, configuration: CSConfiguration, db: ResourceDatabase, base_patches: GamePatches,
+                 rng: Random) -> None:
     if base_patches is None or rng is None:
         return
-    
+
     def get_valid_indices(indices):
         return [p for p in indices if p not in results.assignment.keys()]
 
@@ -36,14 +36,14 @@ def pool_creator(results: PoolResults, configuration: CSConfiguration, db: Resou
 
         bubble_sn = db.get_by_type_and_index(ResourceType.TRICK, "SNBubbler")
         missile_sn = db.get_by_type_and_index(ResourceType.TRICK, "SNMissiles")
-        
+
         if configuration.trick_level.level_for_trick(bubble_sn).is_enabled:
             sn_weapons.append("Bubbler")
         if configuration.trick_level.level_for_trick(missile_sn).is_enabled:
             sn_weapons.extend({"Missile Launcher", "Super Missile Launcher", "Progressive Missile Launcher"})
-        
+
         sn_weapons = get_valid_pickups(sn_weapons)
-        
+
         first_cave_indices = get_valid_indices(FIRST_CAVE_INDICES)
         if first_cave_indices and sn_weapons:
             index = rng.choice(first_cave_indices)
@@ -51,7 +51,7 @@ def pool_creator(results: PoolResults, configuration: CSConfiguration, db: Resou
 
             results.pickups.remove(weapon)
             results.assignment[index] = weapon
-    
+
     # strong weapon and life capsule in camp
     if base_patches.starting_location.area_name == "Camp":
         strong_weapons = get_valid_pickups(STRONG_WEAPONS)

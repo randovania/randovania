@@ -6,13 +6,13 @@ from typing import Optional
 from PySide2 import QtWidgets
 from PySide2.QtCore import Signal
 
-from randovania.patching.patcher import Patcher
-from randovania.patching.patchers.exceptions import ExportFailure
 from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
+from randovania.patching.patcher import Patcher
+from randovania.patching.patchers.exceptions import ExportFailure
 
 
 async def export_game(
