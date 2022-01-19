@@ -33,8 +33,8 @@ def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):
 
     preset = MagicMock()
     preset.game = game
-    layout_description.permalink.player_count = 4
-    layout_description.permalink.get_preset = MagicMock(return_value=preset)
+    layout_description.player_count = 4
+    layout_description.get_preset = MagicMock(return_value=preset)
 
     players_config = PlayersConfiguration(
         args.player_index,

@@ -59,7 +59,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
 
     options = MagicMock()
     description = MagicMock()
-    description.permalink.player_count = 1
+    description.player_count = 1
     description.permalink.as_base64_str = "<permalink>"
     description.permalink.spoiler = False
 
@@ -70,7 +70,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     window.update_layout_description(description)
 
     # Assert
-    mock_describer.assert_called_once_with(description.permalink.get_preset.return_value)
+    mock_describer.assert_called_once_with(description.get_preset.return_value)
     mock_merge.assert_has_calls([
         call(["a", "c"]),
         call(["b", "d"]),

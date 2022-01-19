@@ -37,7 +37,7 @@ def _create_patch_data(test_files_dir, mocker, in_file, out_file, cosmetic):
     players_config = PlayersConfiguration(0, {0: "Cave Story"})
 
     mocker.patch(
-        "randovania.layout.layout_description.LayoutDescription._shareable_hash_bytes",
+        "randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
         new_callable=PropertyMock,
         return_value=b'\x00\x00\x00\x00\x00'
     )

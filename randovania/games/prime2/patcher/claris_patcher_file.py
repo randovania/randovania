@@ -465,10 +465,10 @@ def create_patcher_file(description: LayoutDescription,
     :param cosmetic_patches:
     :return:
     """
-    preset = description.permalink.get_preset(players_config.player_index)
+    preset = description.get_preset(players_config.player_index)
     configuration = typing.cast(EchoesConfiguration, preset.configuration)
     patches = description.all_patches[players_config.player_index]
-    rng = Random(description.permalink.seed_number)
+    rng = Random(description.get_seed_for_player(players_config.player_index))
     area_namers = {index: hint_lib.AreaNamer(default_database.game_description_for(preset.game).world_list)
                    for index, preset in description.permalink.presets.items()}
 
