@@ -1,4 +1,3 @@
-from test.conftest import generic_item_category
 from unittest.mock import Mock
 
 import pytest

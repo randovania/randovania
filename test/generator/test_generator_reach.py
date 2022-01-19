@@ -18,7 +18,6 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.generator import base_patches_factory
 from randovania.generator.generator_reach import (
     GeneratorReach)
 from randovania.generator.item_pool import pool_creator
@@ -35,13 +34,15 @@ from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 def run_bootstrap(preset: Preset):
     game = default_database.game_description_for(preset.game).make_mutable_copy()
-    game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database, preset.configuration)
+    game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database,
+                                                                                        preset.configuration)
     permalink = Permalink(
         seed_number=15000,
         spoiler=True,
         presets={0: preset},
     )
-    patches = game.game.data.generator.base_patches_factory.create_base_patches(preset.configuration, Random(15000), game, False, player_index=0)
+    patches = game.game.data.generator.base_patches_factory.create_base_patches(preset.configuration, Random(15000),
+                                                                                game, False, player_index=0)
     _, state = game.game.data.generator.bootstrap.logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
@@ -78,7 +79,8 @@ def _compare_actions(first_reach: GeneratorReach,
 
 @pytest.mark.parametrize(("game_enum", "preset_name", "ignore_events", "ignore_pickups"), [
     (RandovaniaGame.METROID_PRIME_ECHOES, "Starter Preset", {"Event91", "Event92", "Event97"}, set()),  # Echoes
-    (RandovaniaGame.METROID_PRIME_CORRUPTION, "Starter Preset", {"Event1", "Event146", "Event147", "Event148", "Event154"}, {0, 1, 2}),  # Corruption
+    (RandovaniaGame.METROID_PRIME_CORRUPTION, "Starter Preset",
+     {"Event1", "Event146", "Event147", "Event148", "Event154"}, {0, 1, 2}),  # Corruption
     (RandovaniaGame.METROID_PRIME, "Starter Preset", {"Event33"}, set())  # Prime
 ])
 def test_database_collectable(preset_manager, game_enum, preset_name, ignore_events, ignore_pickups):
@@ -95,7 +97,8 @@ def test_database_collectable(preset_manager, game_enum, preset_name, ignore_eve
     for trick in game.resource_database.trick:
         initial_state.resources[trick] = LayoutTrickLevel.maximum().as_number
 
-    expected_events = sorted([event for event in game.resource_database.event if event.short_name not in ignore_events], key=lambda it:it.short_name)
+    expected_events = sorted([event for event in game.resource_database.event if event.short_name not in ignore_events],
+                             key=lambda it: it.short_name)
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
     reach = _create_reach_with_unsafe(game, initial_state.heal())
@@ -211,8 +214,9 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
             game=RandovaniaGame.METROID_PRIME_ECHOES,
         )
     )
-    patches = game.game.data.generator.base_patches_factory.create_base_patches(layout_configuration, Random(15000), game,
-                                                       False, player_index=0)
+    patches = game.game.data.generator.base_patches_factory.create_base_patches(layout_configuration, Random(15000),
+                                                                                game,
+                                                                                False, player_index=0)
     state = game.game.data.generator.bootstrap.calculate_starting_state(game, patches, default_layout_configuration)
     state.resources[item("Combat Visor")] = 1
     state.resources[item("Amber Translator")] = 1

@@ -3,15 +3,15 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     RelativeDataArea, RelativeDataItem
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.world.node import LogbookNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import LogbookNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
@@ -132,7 +132,8 @@ def _make_pickup(item_category: ItemCategory):
 @pytest.mark.parametrize("precise_distance", [False, True])
 @pytest.mark.parametrize("location_precision", [HintLocationPrecision.RELATIVE_TO_AREA,
                                                 HintLocationPrecision.RELATIVE_TO_INDEX])
-def test_add_relative_hint(echoes_game_description, empty_patches, precise_distance, location_precision, echoes_item_database):
+def test_add_relative_hint(echoes_game_description, empty_patches, precise_distance, location_precision,
+                           echoes_item_database):
     # Setup
     rng = Random(5000)
     target_precision = MagicMock(spec=HintItemPrecision)

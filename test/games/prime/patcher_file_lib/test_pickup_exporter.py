@@ -4,21 +4,21 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY
-from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY
+from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
     ConditionalResources, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
-from randovania.patching.prime.patcher_file_lib import pickup_exporter
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
+from randovania.patching.prime.patcher_file_lib import pickup_exporter
 
 
 def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resource_database):
@@ -115,7 +115,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
                            unlocks_resource=True,
                            resource_lock=ResourceLock(resource_a, resource_a, useless_resource))
 
-    useless_pickup = PickupEntry("P-Useless", model_0, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY, progression=((useless_resource, 1),))
+    useless_pickup = PickupEntry("P-Useless", model_0, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY,
+                                 progression=((useless_resource, 1),))
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): PickupTarget(pickup_a, 0),
         PickupIndex(2): PickupTarget(pickup_b, 0),
@@ -207,13 +208,14 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     model_2 = MagicMock(spec=PickupModel)
     useless_model = PickupModel(game=RandovaniaGame.METROID_PRIME_CORRUPTION, name="Useless")
 
-    pickup_a = PickupEntry("A", model_1, generic_item_category, generic_item_category, 
-                            progression=tuple())
+    pickup_a = PickupEntry("A", model_1, generic_item_category, generic_item_category,
+                           progression=tuple())
     pickup_b = PickupEntry("B", model_2, generic_item_category, generic_item_category,
-                            progression=((resource_b, 1), (resource_b, 1)))
-    pickup_c = PickupEntry("C", model_2, generic_item_category, generic_item_category, 
-                            progression=tuple())
-    useless_pickup = PickupEntry("Useless", useless_model, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY, progression=tuple())
+                           progression=((resource_b, 1), (resource_b, 1)))
+    pickup_c = PickupEntry("C", model_2, generic_item_category, generic_item_category,
+                           progression=tuple())
+    useless_pickup = PickupEntry("Useless", useless_model, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY,
+                                 progression=tuple())
 
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(0): PickupTarget(pickup_a, 0),

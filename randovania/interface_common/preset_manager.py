@@ -1,5 +1,4 @@
 import asyncio
-import json
 import logging
 import os
 import typing
@@ -25,7 +24,6 @@ def read_preset_list() -> List[Path]:
 
 
 def _commit(message: str, file_path: Path, repository: Path, remove: bool):
-
     with dulwich.porcelain.open_repo_closing(repository) as r:
         r = typing.cast(dulwich.repo.Repo, r)
         # Detect invalid index

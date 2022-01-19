@@ -3,12 +3,12 @@ import itertools
 from typing import FrozenSet, List, Tuple, Set
 
 from randovania.game_description import game_description
-from randovania.game_description.world.node import ResourceNode
 from randovania.game_description.requirements import RequirementList, ResourceRequirement, RequirementSet
 from randovania.game_description.resources import resource_info
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.node import ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
 from randovania.resolver.state import State

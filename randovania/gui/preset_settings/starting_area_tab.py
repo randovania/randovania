@@ -1,4 +1,5 @@
 from typing import Callable
+
 from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
@@ -13,7 +14,6 @@ from randovania.layout.preset import Preset
 
 
 class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
-
     _starting_location_for_world: dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
 
@@ -40,9 +40,11 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
         self.create_quick_fill_buttons()
 
     def create_quick_fill_buttons(self):
-        self.starting_area_quick_fill_default = self._quick_fill_button("Default", self._starting_location_on_select_default)
-    
-    def _quick_fill_button(self, text: str, connection: Callable[["PresetStartingArea"], None]) -> QtWidgets.QPushButton:
+        self.starting_area_quick_fill_default = self._quick_fill_button("Default",
+                                                                        self._starting_location_on_select_default)
+
+    def _quick_fill_button(self, text: str,
+                           connection: Callable[["PresetStartingArea"], None]) -> QtWidgets.QPushButton:
         self._num_quick_fill_buttons += 1
         button = QtWidgets.QPushButton(text)
         self.starting_area_quick_fill_layout.addWidget(button)
@@ -59,7 +61,8 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
 
     @property
     def quick_fill_description(self) -> str:
-        default_name = self.game_description.world_list.correct_area_identifier_name(self.game_description.starting_location)
+        default_name = self.game_description.world_list.correct_area_identifier_name(
+            self.game_description.starting_location)
         return f"Default: Just {default_name}, the vanilla location."
 
     def _on_starting_area_check_changed(self, world_areas, checked: bool):
@@ -91,7 +94,8 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
 class PresetMetroidStartingArea(PresetStartingArea):
     def create_quick_fill_buttons(self):
         super().create_quick_fill_buttons()
-        self.starting_area_quick_fill_save_station = self._quick_fill_button("Save Station", self._starting_location_on_select_save_station)
+        self.starting_area_quick_fill_save_station = self._quick_fill_button("Save Station",
+                                                                             self._starting_location_on_select_save_station)
 
     def _starting_location_on_select_save_station(self):
         world_list = self.game_description.world_list

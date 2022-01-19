@@ -1,12 +1,12 @@
 import dataclasses
 from enum import Enum
+
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-
-from randovania.game_description.requirements import Requirement
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
+
 
 class CSObjective(BitPackEnum, Enum):
     BAD_ENDING = 0
@@ -14,7 +14,7 @@ class CSObjective(BitPackEnum, Enum):
     BEST_ENDING = 2
     ALL_BOSSES = 3
     HUNDRED_PERCENT = 4
-    
+
     @property
     def long_name(self) -> str:
         if self == CSObjective.BAD_ENDING:
@@ -28,11 +28,11 @@ class CSObjective(BitPackEnum, Enum):
         if self == CSObjective.HUNDRED_PERCENT:
             return "100% Completion"
         raise ValueError(f"No name for objective {self}")
-    
+
     @property
     def enters_hell(self) -> bool:
         return self.value >= CSObjective.BEST_ENDING.value
-    
+
     @property
     def script(self) -> str:
         if self == CSObjective.BAD_ENDING:
@@ -47,9 +47,11 @@ class CSObjective(BitPackEnum, Enum):
             return "<FL+6004<IT+0005"
         raise ValueError(f"No script for objective {self}")
 
+
 @dataclasses.dataclass(frozen=True)
 class HintConfiguration(BitPackDataclass, DataclassPostInitTypeCheck, JsonDataclass):
     item_hints: bool = True
+
 
 @dataclasses.dataclass(frozen=True)
 class CSConfiguration(BaseConfiguration):

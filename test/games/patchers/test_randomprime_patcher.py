@@ -4,15 +4,14 @@ from unittest.mock import MagicMock, ANY, PropertyMock
 
 import pytest
 
-import randovania
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher, prime1_pickup_details_to_patcher
-from randovania.patching.prime.patcher_file_lib import pickup_exporter
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
+from randovania.patching.prime.patcher_file_lib import pickup_exporter
 
 
 @pytest.mark.parametrize("other_player", [False, True])
@@ -64,7 +63,8 @@ def test_create_patch_data(test_files_dir, mocker):
     description = LayoutDescription.from_file(file)
     patcher = RandomprimePatcher()
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
-    cosmetic_patches = PrimeCosmeticPatches(use_hud_color=True, hud_color=(255,0,0), suit_color_rotations=(0, 40, 350, 12))
+    cosmetic_patches = PrimeCosmeticPatches(use_hud_color=True, hud_color=(255, 0, 0),
+                                            suit_color_rotations=(0, 40, 350, 12))
 
     mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash_bytes",
                  new_callable=PropertyMock,
@@ -85,6 +85,7 @@ def test_create_patch_data(test_files_dir, mocker):
     expected_data["gameConfig"]["mainMenuMessage"] = expected_data["gameConfig"]["mainMenuMessage"].split("\n")[1]
 
     assert data == expected_data
+
 
 def test_patch_game(mocker, tmp_path):
     mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={

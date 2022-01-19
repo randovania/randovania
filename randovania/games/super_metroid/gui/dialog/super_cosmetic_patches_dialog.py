@@ -1,11 +1,12 @@
 import dataclasses
 import functools
 
-from PySide2.QtWidgets import QCheckBox, QWidget
+from PySide2.QtWidgets import QWidget
 
-from randovania.gui.generated.super_cosmetic_patches_dialog_ui import Ui_SuperCosmeticPatchesDialog
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches, MusicMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.generated.super_cosmetic_patches_dialog_ui import Ui_SuperCosmeticPatchesDialog
+
 
 class SuperCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_SuperCosmeticPatchesDialog):
     _cosmetic_patches: SuperMetroidCosmeticPatches

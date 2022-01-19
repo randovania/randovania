@@ -68,4 +68,3 @@ def test_apply_patches(mock_find_version_for_dol: MagicMock,
 
 def test_get_dol_path():
     assert echoes_dol_patcher._get_dol_path(Path("foo")) == Path("foo", "sys", "main.dol")
-

@@ -4,8 +4,9 @@ from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
 from randovania.games.prime2.generator.item_pool.pool_creator import echoes_specific_pool
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.preset_describer import echoes_format_params, echoes_unexpected_items, \
+    echoes_expected_items
 from randovania.games.prime2.patcher.claris_patcher import ClarisPatcher
-from randovania.games.prime2.layout.preset_describer import echoes_format_params, echoes_unexpected_items, echoes_expected_items
 
 
 def _echoes_gui():

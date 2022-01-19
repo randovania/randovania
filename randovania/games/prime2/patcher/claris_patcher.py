@@ -4,17 +4,18 @@ import json
 import shutil
 from pathlib import Path
 from typing import Optional, List
+
 from mp2hudcolor import mp2hudcolor_c
 
 from randovania import get_data_path
-from randovania.patching.patcher import Patcher
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher import claris_randomizer, claris_patcher_file
-from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 from randovania.interface_common import game_workdir
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.lib import status_update_lib
+from randovania.patching.patcher import Patcher
+from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
 
 class ClarisPatcher(Patcher):
@@ -128,8 +129,8 @@ class ClarisPatcher(Patcher):
                 hud_color[1] / 255,
                 hud_color[2] / 255,
             ]
-            ntwk_file = str(contents_files_path.joinpath("files","Standard.ntwk"))
-            mp2hudcolor_c(ntwk_file, ntwk_file, hud_color[0], hud_color[1], hud_color[2]) # RGB 0.0-1.0
+            ntwk_file = str(contents_files_path.joinpath("files", "Standard.ntwk"))
+            mp2hudcolor_c(ntwk_file, ntwk_file, hud_color[0], hud_color[1], hud_color[2])  # RGB 0.0-1.0
 
         # Pack ISO
         iso_packager.pack_iso(

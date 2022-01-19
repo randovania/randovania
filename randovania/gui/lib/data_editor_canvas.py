@@ -128,7 +128,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def update_world_bounds(self):
         if self.world is None:
             return
-        
+
         min_x, min_y = math.inf, math.inf
         max_x, max_y = -math.inf, -math.inf
 
@@ -157,7 +157,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.area = area
         if area is None:
             return
-        
+
         if "total_boundings" in area.extra:
             min_x, max_x, min_y, max_y = [area.extra["total_boundings"][k] for k in ["x1", "x2", "y1", "y2"]]
         else:
@@ -170,14 +170,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 min_y = min(min_y, node.location.y)
                 max_x = max(max_x, node.location.x)
                 max_y = max(max_y, node.location.y)
-        
-        image_path = self.game.data_path.joinpath("assets", "maps", f"{area.map_name}.png") if self.game is not None else None
+
+        image_path = self.game.data_path.joinpath("assets", "maps",
+                                                  f"{area.map_name}.png") if self.game is not None else None
         if image_path is not None and image_path.exists():
             self._background_image = QtGui.QImage(os.fspath(image_path))
-            min_x=area.extra.get("map_min_x", 0)
-            min_y=area.extra.get("map_min_y", 0)
-            max_x=self._background_image.width() - area.extra.get("map_max_x", 0)
-            max_y=self._background_image.height() - area.extra.get("map_max_y", 0)
+            min_x = area.extra.get("map_min_x", 0)
+            min_y = area.extra.get("map_min_y", 0)
+            max_x = self._background_image.width() - area.extra.get("map_max_x", 0)
+            max_y = self._background_image.height() - area.extra.get("map_max_y", 0)
             self.image_bounds = BoundsInt(min_x, min_y, max_x, max_y)
             self.world_bounds = BoundsFloat(min_x, min_y, max_x, max_y)
         else:

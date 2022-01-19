@@ -8,15 +8,11 @@ import pid
 from PySide2.QtCore import QObject
 from qasync import asyncSlot
 
-from randovania.bitpacking import bitpacking
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.network_client.game_session import GameSessionPickups
-from randovania.network_common.pickup_serializer import BitPackPickupEntry
 
 
 class BackendInUse(Exception):

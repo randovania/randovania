@@ -1,7 +1,9 @@
 from typing import Dict, List
-from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, message_for_required_mains
+
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, \
+    message_for_required_mains
 
 _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.MAJOR: "Major cutscene removal",

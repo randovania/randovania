@@ -1,25 +1,24 @@
 import dataclasses
 import json
-from pathlib import Path
 import uuid
-from randovania.game_description.item.item_category import ItemCategory
+from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
-from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 
 import randovania.games.prime2.patcher.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset import Preset
 
 
@@ -44,6 +43,7 @@ def preset_manager(tmp_path) -> PresetManager:
 def default_preset() -> Preset:
     return PresetManager(None).default_preset.get_preset()
 
+
 @pytest.fixture(scope="session")
 def customized_preset(default_preset) -> Preset:
     return Preset(
@@ -55,6 +55,7 @@ def customized_preset(default_preset) -> Preset:
         configuration=default_preset.configuration
     )
 
+
 @pytest.fixture(scope="session")
 def default_prime_preset() -> Preset:
     return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset()
@@ -64,19 +65,23 @@ def default_prime_preset() -> Preset:
 def default_echoes_preset() -> Preset:
     return PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
 
+
 @pytest.fixture(scope="session")
 def default_cs_preset() -> Preset:
     return PresetManager(None).default_preset_for_game(RandovaniaGame.CAVE_STORY).get_preset()
+
 
 @pytest.fixture(scope="session")
 def default_layout_configuration(default_echoes_preset) -> EchoesConfiguration:
     assert isinstance(default_echoes_preset.configuration, EchoesConfiguration)
     return default_echoes_preset.configuration
 
+
 @pytest.fixture(scope="session")
 def default_cs_configuration(default_cs_preset) -> CSConfiguration:
     assert isinstance(default_cs_preset.configuration, CSConfiguration)
     return default_cs_preset.configuration
+
 
 @pytest.fixture(scope="session")
 def prime1_resource_database() -> ResourceDatabase:
@@ -120,7 +125,7 @@ def dread_game_description() -> GameDescription:
 
 @pytest.fixture(scope="session")
 def randomizer_data() -> dict:
-    return  randovania.games.prime2.patcher.claris_patcher.decode_randomizer_data()
+    return randovania.games.prime2.patcher.claris_patcher.decode_randomizer_data()
 
 
 @pytest.fixture(params=RandovaniaGame)
@@ -136,6 +141,7 @@ def generic_item_category() -> ItemCategory:
         hint_details=("an ", "unspecified item"),
         is_major=False
     )
+
 
 @pytest.fixture()
 def blank_pickup(echoes_item_database) -> PickupEntry:

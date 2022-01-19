@@ -1,14 +1,10 @@
-import struct
-
 import pytest
 from PySide2.QtCore import Qt
 from mock import patch, MagicMock, AsyncMock
 
-from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector, DolRemotePatch
-from randovania.game_connection.executor.memory_operation import MemoryOperation
-from randovania.patching.prime import all_prime_dol_patches
 from randovania.gui.debug_backend_window import DebugExecutorWindow
+from randovania.patching.prime import all_prime_dol_patches
 
 
 def _echoes_powerup_offset(item_index: int) -> int:

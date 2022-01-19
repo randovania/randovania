@@ -1,4 +1,3 @@
-import dataclasses
 import functools
 
 from PySide2 import QtWidgets, QtCore
@@ -14,10 +13,8 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.layout.preset import Preset
 from randovania.lib import enum_lib
-from randovania.gui.lib import common_qt_lib
 
 
 class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):

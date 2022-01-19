@@ -2,7 +2,6 @@ import pytest
 from mock import MagicMock
 
 from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
-from randovania.games.game import RandovaniaGame
 from randovania.gui.auto_tracker_window import AutoTrackerWindow
 
 

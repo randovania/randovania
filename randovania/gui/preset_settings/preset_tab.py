@@ -1,7 +1,8 @@
 import dataclasses
-from randovania.interface_common.preset_editor import PresetEditor
+
 from PySide2 import QtWidgets
 
+from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 
 
@@ -26,12 +27,14 @@ class PresetTab(QtWidgets.QMainWindow):
         def persist(index: int):
             with self.editor as options:
                 options.set_configuration_field(attribute_name, combo.itemData(index))
+
         return persist
 
     def _persist_bool_layout_field(self, field_name: str):
         def bound(value: int):
             with self.editor as options:
                 options.set_configuration_field(field_name, bool(value))
+
         return bound
 
     def _persist_bool_major_configuration_field(self, field_name: str):
@@ -39,6 +42,7 @@ class PresetTab(QtWidgets.QMainWindow):
             with self.editor as options:
                 kwargs = {field_name: bool(value)}
                 options.major_items_configuration = dataclasses.replace(options.major_items_configuration, **kwargs)
+
         return bound
 
     def _persist_option_then_notify(self, attribute_name: str):

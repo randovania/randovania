@@ -11,7 +11,6 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world_list import WorldList
-from randovania.generator import base_patches_factory
 from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, UnableToGenerate
 from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
 from randovania.generator.item_pool import pool_creator
@@ -36,10 +35,12 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 def create_player_pool(rng: Random, configuration: BaseConfiguration,
                        player_index: int, num_players: int) -> PlayerPool:
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
-    game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database, configuration)
+    game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database,
+                                                                                        configuration)
 
-    base_patches = game.game.data.generator.base_patches_factory.create_base_patches(configuration, rng, game, num_players > 1,
-                                                            player_index=player_index)
+    base_patches = game.game.data.generator.base_patches_factory.create_base_patches(configuration, rng, game,
+                                                                                     num_players > 1,
+                                                                                     player_index=player_index)
 
     item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,
                                                                                       game.resource_database,

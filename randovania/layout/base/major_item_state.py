@@ -40,7 +40,8 @@ class MajorItemState:
 
         for ammo_index, ammo in zip(item.ammo_index, self.included_ammo):
             if ammo > db.get_item(ammo_index).max_capacity:
-                raise ValueError(f"Including more than maximum capacity for ammo {ammo_index}. Included: {ammo}; Max: {db.get_item(ammo_index).max_capacity}")
+                raise ValueError(
+                    f"Including more than maximum capacity for ammo {ammo_index}. Included: {ammo}; Max: {db.get_item(ammo_index).max_capacity}")
 
     @property
     def as_json(self) -> dict:

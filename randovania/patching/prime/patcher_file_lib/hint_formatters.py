@@ -1,11 +1,11 @@
 import typing
 
 from randovania.game_description import node_search
-from randovania.game_description.world.area import Area
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision, RelativeDataArea, HintRelativeAreaName
-from randovania.game_description.world.node import PickupNode
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.patching.prime.patcher_file_lib import hint_lib
 
@@ -28,7 +28,8 @@ class GuardianFormatter(LocationFormatter):
 
 
 class TemplatedFormatter(LocationFormatter):
-    def __init__(self, template: str, area_namer: hint_lib.AreaNamer, upper_pickup: bool = False, text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
+    def __init__(self, template: str, area_namer: hint_lib.AreaNamer, upper_pickup: bool = False,
+                 text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
         self.template = template
         self.hint_name_creator = area_namer
         self.upper_pickup = upper_pickup
@@ -48,7 +49,8 @@ class TemplatedFormatter(LocationFormatter):
 
 
 class RelativeFormatter(LocationFormatter):
-    def __init__(self, world_list: WorldList, patches: GamePatches, text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
+    def __init__(self, world_list: WorldList, patches: GamePatches,
+                 text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
         self.world_list = world_list
         self.patches = patches
         self.text_color = text_color
@@ -63,7 +65,8 @@ class RelativeFormatter(LocationFormatter):
         return node_search.distances_to_node(self.world_list, source,
                                              patches=self.patches, ignore_elevators=False)[target]
 
-    def relative_format(self, determiner: hint_lib.Determiner, pickup: str, hint: Hint, other_area: Area, other_name: str,
+    def relative_format(self, determiner: hint_lib.Determiner, pickup: str, hint: Hint, other_area: Area,
+                        other_name: str,
                         ) -> str:
         distance = self._calculate_distance(hint.target, other_area) + (hint.precision.relative.distance_offset or 0)
         if distance == 1:

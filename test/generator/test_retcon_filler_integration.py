@@ -34,7 +34,8 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
     configuration = FillerConfiguration(major_mode, 0, 0, exclusion, False, LayoutLogicalResourceAction.RANDOMLY)
 
     # Run
-    indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(world_list, configuration)
+    indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(world_list,
+                                                                                                      configuration)
 
     # Assert
     if major_mode == RandomizationMode.FULL:

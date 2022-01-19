@@ -1,6 +1,6 @@
 from randovania.games.game import RandovaniaGame
-from randovania.patching.prime.all_prime_dol_patches import StringDisplayPatchAddresses, PowerupFunctionsAddresses
 from randovania.games.prime3.patcher.corruption_dol_patches import CorruptionDolVersion
+from randovania.patching.prime.all_prime_dol_patches import PowerupFunctionsAddresses
 
 ALL_VERSIONS = [
     CorruptionDolVersion(

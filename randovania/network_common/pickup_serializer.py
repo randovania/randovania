@@ -1,9 +1,8 @@
-from randovania.game_description.item.item_category import ItemCategory
 from typing import Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
-from randovania.game_description import default_database
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock, \
     PickupModel
@@ -67,6 +66,7 @@ class DatabaseBitPackHelper:
             temporary_item=self._decode_item(decoder),
         )
 
+
 # Item categories encoding & decoding
 def _encode_item_category(category: ItemCategory):
     yield from bitpacking.encode_string(category.name)
@@ -75,6 +75,7 @@ def _encode_item_category(category: ItemCategory):
     yield from bitpacking.encode_string(category.hint_details[1])
     yield from bitpacking.encode_bool(category.is_major)
     yield from bitpacking.encode_bool(category.is_key)
+
 
 def _decode_item_category(decoder: BitPackDecoder) -> ItemCategory:
     return ItemCategory(
@@ -89,7 +90,7 @@ def _decode_item_category(decoder: BitPackDecoder) -> ItemCategory:
 class BitPackPickupEntry:
     value: PickupEntry
     database: ResourceDatabase
-    
+
     def __init__(self, value: PickupEntry, database: ResourceDatabase):
         self.value = value
         self.database = database

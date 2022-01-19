@@ -131,9 +131,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         player_pool = generator.create_player_pool(Random(0), self.game_configuration, 0, 1)
         pool_patches = player_pool.patches
         self.game_description, self._initial_state = self.game_configuration.game.data.generator.bootstrap.logic_bootstrap(
-                                                                     preset.configuration,
-                                                                     player_pool.game,
-                                                                     pool_patches)
+            preset.configuration,
+            player_pool.game,
+            pool_patches)
         self.logic = Logic(self.game_description, preset.configuration)
         self.map_canvas.select_game(self.game_description.game)
 
@@ -565,7 +565,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def setup_elevators(self):
         self._elevator_id_to_combo = {}
-        
+
         if not hasattr(self.game_configuration, "elevators"):
             return
 

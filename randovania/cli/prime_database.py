@@ -2,7 +2,6 @@ import argparse
 import dataclasses
 import json
 import logging
-import re
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
@@ -82,10 +81,11 @@ def create_convert_database_command(sub_parsers):
 
     parser.set_defaults(func=convert_database_command_logic)
 
+
 def export_videos_command_logic(args):
     from randovania.cli.commands.export_db_videos import export_videos
     games = list()
-    
+
     if args.game is not None:
         games.append(RandovaniaGame(args.game))
     else:
@@ -93,6 +93,7 @@ def export_videos_command_logic(args):
 
     for game in games:
         export_videos(game, args.output_dir)
+
 
 def create_export_videos_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
@@ -113,6 +114,7 @@ def create_export_videos_command(sub_parsers):
         help="Game to export videos for.",
     )
     parser.set_defaults(func=export_videos_command_logic)
+
 
 def view_area_command_logic(args):
     from randovania.game_description import pretty_print

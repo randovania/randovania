@@ -13,13 +13,13 @@ from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.node import PickupNode
 from randovania.games.game import RandovaniaGame
-from randovania.patching.prime import all_prime_dol_patches
 from randovania.games.prime2.patcher import echoes_dol_versions
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow
 from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.qt_network_client import handle_network_errors
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.network_common.admin_actions import SessionAdminUserAction
+from randovania.patching.prime import all_prime_dol_patches
 
 
 class DebugGameBackendChoice:

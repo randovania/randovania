@@ -3,8 +3,7 @@ import dataclasses
 import pytest
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import ConditionalResources, ResourceConversion, PickupEntry, \
-    ResourceLock
+from randovania.game_description.resources.pickup_entry import ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources, \
     add_resources_into_another, convert_resource_gain_to_current_resources
@@ -65,6 +64,7 @@ def test_convert_resource_gain_to_current_resources(resource_gain, expected):
 
     # Assert
     assert result == expected
+
 
 def test_resource_type_from_index():
     # Run

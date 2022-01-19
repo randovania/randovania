@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 import dataclasses
+from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
 from frozendict import frozendict

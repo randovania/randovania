@@ -14,14 +14,16 @@ def test_cs_objective():
         except ValueError:
             pass
 
+
 def test_cs_cosmetic_patches():
     patches = CSCosmeticPatches.default()
     assert patches.game() == RandovaniaGame.CAVE_STORY
 
     assert {mychar for mychar in MyChar if mychar.description is not None} == {MyChar.CUSTOM, MyChar.RANDOM}
-        
+
     for music in MusicRandoType:
         assert isinstance(music.description, str)
+
 
 def test_cs_preset_describer():
     hash_bytes = b'\x00\x00\x00\x00\x00'
