@@ -1,7 +1,3 @@
-# USAGE
-# - No arguments to export all games to ./exported_db_videos
-# - Single argument to export 1 game to ./exported_db_videos/{game}
-
 import os
 import datetime
 
