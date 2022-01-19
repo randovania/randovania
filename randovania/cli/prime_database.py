@@ -82,6 +82,31 @@ def create_convert_database_command(sub_parsers):
 
     parser.set_defaults(func=convert_database_command_logic)
 
+def export_videos_command_logic(args):
+    from randovania.cli.commands.export_db_videos import export_videos
+    games = list()
+    
+    if args.game is not None:
+        games.append(RandovaniaGame(args.game))
+    else:
+        games = [g for g in RandovaniaGame]
+
+    for game in games:
+        export_videos(game, args.output_dir)
+
+def create_export_videos_command(sub_parsers):
+    parser: ArgumentParser = sub_parsers.add_parser(
+        "export-videos",
+        help="Create HTML pages for easy vewing of YouTube video comments.",
+        formatter_class=argparse.MetavarTypeHelpFormatter
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default="exported_videos",
+        help="Folder to write html file to.",
+    )
+    parser.set_defaults(func=export_videos_command_logic)
 
 def view_area_command_logic(args):
     from randovania.game_description import pretty_print
@@ -570,7 +595,6 @@ def create_subparsers(sub_parsers):
         "--game",
         type=str,
         choices=[game.value for game in iterate_enum(RandovaniaGame)],
-        default=RandovaniaGame.METROID_PRIME_ECHOES.value,
         help="Use the included database for the given game.",
     )
     group.add_argument(
@@ -589,6 +613,7 @@ def create_subparsers(sub_parsers):
     render_worlds_graph(sub_parsers)
     pickups_per_area_command(sub_parsers)
     rename_docks_command(sub_parsers)
+    create_export_videos_command(sub_parsers)
 
     def check_command(args):
         if args.database_command is None:

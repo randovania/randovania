@@ -3,9 +3,10 @@
 # - Single argument to export 1 game to ./exported_db_videos/{game}
 
 import os
-import sys
-import json
 import datetime
+
+from randovania.games.game import RandovaniaGame
+from randovania.games import default_data
 
 # (tab title, page title, time)
 HTML_HEADER_FORMAT = '''
@@ -41,7 +42,7 @@ HTML_HEADER_FORMAT = '''
 	</head>
 	<body>
         <h1>%s</h1>
-        <p>Date Generated: %s</p>
+        <p><i>File generated on %s by <a href="https://github.com/randovania/randovania">Randovania</a></i></p>
 '''
 
 HTML_AREA_FORMAT = '''
@@ -61,36 +62,8 @@ HTML_FOOTER = '''
 </html>
 '''
 
-FULL_GAME_NAMES = {
-    "cave_story": "Cave Story",
-    "dread": "Metroid Dread",
-    "prime1": "Metroid Prime",
-    "prime2": "Metroid Prime 2: Echoes",
-    "prime3": "Metroid Prime 3: Corruption",
-    "super_metroid": "Super Metroid",
-}
-
-def full_game_name(game):
-    if game not in FULL_GAME_NAMES.keys():
-        return game
-    return FULL_GAME_NAMES[game]
-
 def get_date():
     return str(datetime.datetime.now()).split('.')[0].split(" ")[0]
-
-def games_dir():
-    return os.path.abspath(__file__ + "/../../randovania/games")
-
-def all_games():
-    games = list()
-    for _, dirs, _ in os.walk(games_dir()):
-        for game in dirs:
-            if game.startswith("__"):
-                continue
-            games.append(game)
-        break
-
-    return games
 
 def get_yt_ids(item, ids):
     if item["type"] != "and" and item["type"] != "or":
@@ -109,38 +82,29 @@ def get_yt_ids(item, ids):
     for i in data["items"]:
         get_yt_ids(i, ids)
 
-def collect_game_info(game):
-    json_data_dir = os.path.join(games_dir(), game, "json_data")
-
-    world_names = list()
-    for _, _, files in os.walk(json_data_dir):
-        for file in files:
-            if file.endswith(".json") and "header" not in file:
-                world_names.append(file.split(".json")[0])
-
+def collect_game_info(game: RandovaniaGame):
+    data = default_data.read_json_then_binary(game)[1]
     worlds = dict()
-    for world in world_names:
-        file = open(os.path.join(json_data_dir, world + ".json"), "r")
-        data = json.loads(file.read())
-        file.close()
-
+    for world in data["worlds"]:
         areas = dict()
-        for area in data["areas"]:
+        for area_name in world["areas"]:
+            area = world["areas"][area_name]
             nodes = dict()
-            for node in data["areas"][area]["nodes"]:
+            for node_name in area["nodes"]:
+                node = area["nodes"][node_name]
                 connections = dict()
-                for connection in data["areas"][area]["nodes"][node]["connections"]:
+                for connection_name in node["connections"]:
+                    connection = node["connections"][connection_name]
                     yt_ids = list()
-                    connection_data = data["areas"][area]["nodes"][node]["connections"][connection]
-                    get_yt_ids(connection_data, yt_ids)
+                    get_yt_ids(connection, yt_ids)
                     if len(yt_ids) > 0:
-                        connections[connection] = yt_ids
+                        connections[connection_name] = yt_ids
                 if len(connections) > 0:
-                    nodes[node] = connections
+                    nodes[node_name] = connections
             if len(nodes) > 0:
-                areas[area] = nodes
+                areas[area_name] = nodes
         if len(areas) > 0:
-            worlds[world] = areas
+            worlds[world["name"]] = areas
     return worlds
 
 def generate_world_html(name, areas):
@@ -187,15 +151,25 @@ def generate_world_html(name, areas):
     
     return header + toc + body + HTML_FOOTER
 
-def export_game(game, out_dir):
+def export_videos(game: RandovaniaGame, out_dir):
     worlds = collect_game_info(game)
+    if len(worlds) == 0:
+        return # no youtube videos in this game's database
+
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
+
+    out_dir_game = os.path.join(out_dir, game.long_name)
+    if not os.path.exists(out_dir_game):
+        os.makedirs(out_dir_game)
+
     for world in worlds:
         html = generate_world_html(world, worlds[world])
-        file = open(os.path.join(out_dir, world + ".html"), "w")
+        file = open(os.path.join(out_dir_game, world + ".html"), "w")
         file.write(html)
         file.close()
     
-    full_name = full_game_name(game)
+    full_name = game.long_name
     header = HTML_HEADER_FORMAT % (full_name, full_name, get_date())
     html = HTML_HEADER_FORMAT % ("Index - " + full_name, full_name, get_date())
     
@@ -220,22 +194,6 @@ def export_game(game, out_dir):
 
     html += HTML_FOOTER
 
-    file = open(os.path.join(out_dir, "index.html"), "w")
+    file = open(os.path.join(out_dir_game, "index.html"), "w")
     file.write(html)
     file.close()
-
-def main():
-    do_all = len(sys.argv) < 2
-    games = list()
-    if do_all:
-        games = all_games()
-    else:
-        games.append(sys.argv[1])
-    for game in games:
-        export_dir = os.path.abspath(__file__ + "/../exported_db_videos" + "/" + game)
-        if not os.path.exists(export_dir):
-            os.makedirs(export_dir)
-        export_game(game, export_dir)
-
-if __name__ == "__main__":
-    main()
