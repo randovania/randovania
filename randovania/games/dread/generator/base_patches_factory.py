@@ -36,7 +36,7 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
 
             result[game.world_list.identifier_for_node(node)] = RequirementAnd([
                 requirement_for_type[block_type]
-                for block_type in node.extra["tile_types"]
+                for block_type in ("tile_types" in node.extra and node.extra["tile_types"] or [])
             ]).simplify()
 
         return result
