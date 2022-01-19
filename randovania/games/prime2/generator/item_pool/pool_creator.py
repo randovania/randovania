@@ -1,11 +1,12 @@
 from random import Random
+
 from randovania.game_description.game_patches import GamePatches
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime2.generator.item_pool.dark_temple_keys import add_dark_temple_keys
 from randovania.games.prime2.generator.item_pool.sky_temple_keys import add_sky_temple_key_distribution_logic
-from randovania.generator.item_pool.pool_creator import _extend_pool_results
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator.item_pool import PoolResults
-from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.generator.item_pool.pool_creator import _extend_pool_results
 
 
 def echoes_specific_pool(results: PoolResults, configuration: EchoesConfiguration, db: ResourceDatabase, base_patches: GamePatches, rng: Random):

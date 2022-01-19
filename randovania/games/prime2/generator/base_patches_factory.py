@@ -6,15 +6,14 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (Hint, HintDarkTemple,
                                               HintItemPrecision,
-                                              HintLocationPrecision, HintType,
-                                              PrecisionPair)
+                                              HintLocationPrecision, HintType)
 from randovania.game_description.requirements import (RequirementAnd,
                                                       ResourceRequirement)
 from randovania.game_description.resources import search
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node import (ConfigurableNode,
-                                                    LogbookNode, LoreType)
+                                                    LogbookNode)
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.prime2.layout.echoes_configuration import \
     EchoesConfiguration

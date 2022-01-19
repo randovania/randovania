@@ -5,10 +5,10 @@ from PySide2 import QtWidgets
 from qasync import asyncSlot
 
 from randovania import get_data_path
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.executor.nintendont_executor import NintendontExecutor
 from randovania.game_connection.game_connection import GameConnection
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.gui.lib import async_dialog
 from randovania.interface_common.options import Options, InfoAlert
 

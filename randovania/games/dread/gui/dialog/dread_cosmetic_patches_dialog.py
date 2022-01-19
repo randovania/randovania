@@ -1,6 +1,7 @@
 import dataclasses
 
 from PySide2.QtWidgets import QWidget
+
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.dread_cosmetic_patches_dialog_ui import Ui_DreadCosmeticPatchesDialog

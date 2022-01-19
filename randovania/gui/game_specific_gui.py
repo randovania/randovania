@@ -5,6 +5,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
+
 def create_dialog_for_cosmetic_patches(
         parent: QtWidgets.QWidget,
         initial_patches: BaseCosmeticPatches,

@@ -31,11 +31,11 @@ from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
+from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
-from randovania.layout import preset_describer
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
     GameSessionAuditLog

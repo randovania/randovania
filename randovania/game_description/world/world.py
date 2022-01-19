@@ -1,6 +1,6 @@
 import dataclasses
 import typing
-from typing import Iterator, Optional, Dict
+from typing import Iterator, Optional
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area

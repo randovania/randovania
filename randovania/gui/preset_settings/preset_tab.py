@@ -1,7 +1,8 @@
 import dataclasses
-from randovania.interface_common.preset_editor import PresetEditor
+
 from PySide2 import QtWidgets
 
+from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 
 

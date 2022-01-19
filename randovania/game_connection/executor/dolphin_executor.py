@@ -2,9 +2,9 @@ from typing import List, Optional, Dict
 
 import dolphin_memory_engine
 
-from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.game_connection.executor.memory_operation import (MemoryOperationException, MemoryOperation,
                                                                   MemoryOperationExecutor)
+from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
 MEM1_START = 0x80000000
 MEM1_END = 0x81800000

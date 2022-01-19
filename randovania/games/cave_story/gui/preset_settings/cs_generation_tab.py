@@ -1,9 +1,12 @@
 from typing import Iterable, Optional
+
 from PySide2.QtWidgets import *
+
 from randovania.game_description.game_description import GameDescription
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
+
 
 class PresetCSGeneration(PresetGeneration):
     def __init__(self, editor: PresetEditor, game_description: GameDescription) -> None:
@@ -28,4 +31,3 @@ class PresetCSGeneration(PresetGeneration):
         anywhere = self._puppy_widget.isChecked()
         with self._editor as editor:
             editor.set_configuration_field("puppies_anywhere", anywhere)
-    

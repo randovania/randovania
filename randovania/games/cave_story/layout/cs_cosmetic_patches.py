@@ -1,14 +1,14 @@
 import dataclasses
-import logging
-from random import Random
-from enum import Enum, auto, unique
+from enum import Enum, unique
 from pathlib import Path
+from random import Random
 from typing import Optional
+
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
-
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+
 
 @unique
 class MyChar(BitPackEnum, Enum):

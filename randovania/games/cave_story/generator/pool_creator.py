@@ -1,4 +1,5 @@
 from random import Random
+
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -6,8 +7,6 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.generator.item_pool import PoolResults
-from randovania.generator.item_pool.pool_creator import _extend_pool_results
-from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
 def pool_creator(results: PoolResults, configuration: CSConfiguration, db: ResourceDatabase, base_patches: GamePatches, rng: Random) -> None:

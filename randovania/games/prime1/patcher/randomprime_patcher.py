@@ -18,12 +18,12 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher

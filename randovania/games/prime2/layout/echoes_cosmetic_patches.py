@@ -1,8 +1,8 @@
 import dataclasses
 
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
+from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 DEFAULT_HUD_COLOR = (102, 174, 225)
 

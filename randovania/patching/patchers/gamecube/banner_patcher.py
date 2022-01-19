@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from construct.core import Byte
-
 
 def patch_game_name_and_id(game_files_path: Path, new_name: str, publisher_id: str):
     b = new_name.encode("ASCII")

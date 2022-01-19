@@ -1,4 +1,5 @@
 from random import Random
+
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration

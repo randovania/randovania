@@ -1,10 +1,10 @@
 import dataclasses
-import logging
-from functools import partial
-from PySide2.QtGui import QPixmap
 
+from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QWidget
-from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches, CSSong, MusicRandoType, MyChar, SongGame
+
+from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches, CSSong, MusicRandoType, MyChar, \
+    SongGame
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.cs_cosmetic_patches_dialog_ui import Ui_CSCosmeticPatchesDialog
 from randovania.gui.lib.common_qt_lib import set_combo_with_value

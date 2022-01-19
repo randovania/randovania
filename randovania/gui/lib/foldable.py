@@ -1,5 +1,5 @@
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QGridLayout, QLayout, QToolButton, QVBoxLayout, QWidget, QFrame, QScrollArea, QSizePolicy
+from PySide2.QtWidgets import QGridLayout, QLayout, QToolButton, QWidget, QFrame, QScrollArea, QSizePolicy
 
 class Foldable(QWidget):
     _mainLayout: QGridLayout

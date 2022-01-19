@@ -2,7 +2,6 @@ import argparse
 import dataclasses
 import json
 import logging
-import re
 import typing
 from argparse import ArgumentParser
 from pathlib import Path

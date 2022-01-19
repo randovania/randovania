@@ -4,9 +4,9 @@ from typing import Dict, List
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.patching.prime.patcher_file_lib import hint_lib
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.patching.prime.patcher_file_lib import hint_lib
 
 
 def locations_for_major_pickups_and_keys(

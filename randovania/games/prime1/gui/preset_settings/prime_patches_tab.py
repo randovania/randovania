@@ -2,12 +2,12 @@ import typing
 
 from PySide2 import QtWidgets
 
+from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode
 from randovania.gui.generated.preset_prime_patches_ui import Ui_PresetPrimePatches
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
-from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode
 
 _FIELDS = [
     "warp_to_start",

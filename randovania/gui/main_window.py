@@ -14,7 +14,6 @@ from qasync import asyncSlot
 from randovania import VERSION, get_data_path, get_readme
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
-from randovania.patching.patcher_provider import PatcherProvider
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.common_qt_lib import open_directory_in_explorer
@@ -26,6 +25,7 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.enum_lib import iterate_enum
+from randovania.patching.patcher_provider import PatcherProvider
 from randovania.resolver import debug
 
 _DISABLE_VALIDATION_WARNING = """

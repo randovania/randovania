@@ -1,20 +1,19 @@
 import collections
-
 import typing
 from typing import Tuple, Optional
 
-from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY, ItemCategory
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision, Hint, RelativeDataItem
+from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.patching.prime.patcher_file_lib import hint_lib
 from randovania.patching.prime.patcher_file_lib.hint_formatters import RelativeFormatter
 from randovania.patching.prime.patcher_file_lib.hint_lib import Determiner
-from randovania.interface_common.players_configuration import PlayersConfiguration
 
 _DET_AN = [
     "Annihilator Beam",
