@@ -76,9 +76,9 @@ class OpenDreadPatcher(Patcher):
                           cosmetic_patches: DreadCosmeticPatches):
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-        configuration = description.permalink.get_preset(players_config.player_index).configuration
+        configuration = description.get_preset(players_config.player_index).configuration
         assert isinstance(configuration, DreadConfiguration)
-        rng = Random(description.permalink.seed_number)
+        rng = Random(description.get_seed_for_player(players_config.player_index))
 
         def _calculate_starting_inventory(resources: CurrentResources):
             result = {}

@@ -169,9 +169,9 @@ class SuperDuperMetroidPatcher(Patcher):
         """
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.SUPER_METROID)
-        preset = description.permalink.get_preset(players_config.player_index)
+        preset = description.get_preset(players_config.player_index)
         configuration = typing.cast(SuperMetroidConfiguration, preset.configuration)
-        rng = Random(description.permalink.seed_number)
+        rng = Random(description.get_seed_for_player(players_config.player_index))
 
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
                                       players_config.player_index)

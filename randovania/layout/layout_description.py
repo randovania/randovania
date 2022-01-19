@@ -14,16 +14,37 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.layout import game_patches_serializer, description_migration
 from randovania.layout.permalink import Permalink
+from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 
 
 @lru_cache(maxsize=1)
-def _shareable_hash_words() -> Dict[RandovaniaGame, typing.List[str]]:
+def _all_hash_words() -> Dict[RandovaniaGame, typing.List[str]]:
     with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
         return {
             RandovaniaGame(key): words
             for key, words in json.load(hash_words_file).items()
         }
+
+
+def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
+    rng = Random(sum([hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(hash_bytes)]))
+    words = _all_hash_words()
+
+    games_left = []
+    selected_words = []
+    for _ in range(3):
+        if not games_left:
+            games_left = list(all_games)
+        selected_game = rng.choice(games_left)
+        games_left = [game for game in games_left if game != selected_game]
+
+        game_word_list = words.get(selected_game, [])
+        if not game_word_list:
+            game_word_list = list(itertools.chain.from_iterable(words.values()))
+        selected_words.append(rng.choice(game_word_list))
+
+    return " ".join(selected_words)
 
 
 @dataclass(frozen=True)
@@ -73,8 +94,15 @@ class LayoutDescription:
         with json_path.open("r") as open_file:
             return cls.from_json_dict(json.load(open_file))
 
-    def get_preset(self, player_index: int):
+    @property
+    def player_count(self) -> int:
+        return self.permalink.player_count
+
+    def get_preset(self, player_index: int) -> Preset:
         return self.permalink.get_preset(player_index)
+
+    def get_seed_for_player(self, player_index: int) -> int:
+        return self.permalink.seed_number + player_index
 
     @property
     def _serialized_patches(self):
@@ -118,50 +146,25 @@ class LayoutDescription:
         return frozenset(preset.game for preset in self.permalink.presets.values())
 
     @property
-    def _shareable_hash_bytes(self) -> bytes:
+    def shareable_hash_bytes(self) -> bytes:
         bytes_representation = json.dumps(self._serialized_patches).encode()
         return hashlib.blake2b(bytes_representation, digest_size=5).digest()
 
     @property
     def shareable_hash(self) -> str:
-        return base64.b32encode(self._shareable_hash_bytes).decode()
+        return base64.b32encode(self.shareable_hash_bytes).decode()
 
     @property
     def shareable_word_hash(self) -> str:
-        rng = Random(sum([hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(self._shareable_hash_bytes)]))
-        words = _shareable_hash_words()
-
         # We're not using self.all_games because we want multiple copies of a given game in the list,
         # so a game that has more players is more likely to have words in the hash
         all_games = [preset.game for preset in self.permalink.presets.values()]
 
-        games_left = []
-        selected_words = []
-        for _ in range(3):
-            if not games_left:
-                games_left = list(all_games)
-            selected_game = rng.choice(games_left)
-            games_left = [game for game in games_left if game != selected_game]
-
-            game_word_list = words.get(selected_game, [])
-            if not game_word_list:
-                game_word_list = list(itertools.chain.from_iterable(words.values()))
-            selected_words.append(rng.choice(game_word_list))
-
-        return " ".join(selected_words)
+        return shareable_word_hash(
+            self.shareable_hash_bytes,
+            all_games,
+        )
 
     def save_to_file(self, json_path: Path):
         with json_path.open("w") as open_file:
             json.dump(self.as_json, open_file, indent=4, separators=(',', ': '))
-
-    @property
-    def without_item_order(self) -> "LayoutDescription":
-        """
-        A solver path is way too big to reasonably store for test purposes, so use LayoutDescriptions with an empty one.
-        :return:
-        """
-        return LayoutDescription(
-            permalink=self.permalink,
-            version=self.version,
-            all_patches=self.all_patches,
-            item_order=())
