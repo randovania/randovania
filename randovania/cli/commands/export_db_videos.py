@@ -73,10 +73,11 @@ def get_yt_ids(item, ids):
     if data["comment"] is not None:
         comment = data["comment"]
         if "youtu" in comment:
-            video_id = comment.split("/")[-1].split("watch?v=")[-1].split(" ")[0].split("?t=")[0]
+            video_id = comment.split("/")[-1].split("watch?v=")[-1].split(" ")[0]
             start_time = 0
             if "?t=" in comment:
-                start_time = int(comment.split("?t=")[-1])
+                start_time = int(video_id.split("?t=")[-1])
+            video_id = video_id.split("?t=")[0]
             ids.append((video_id, start_time))
 
     for i in data["items"]:
