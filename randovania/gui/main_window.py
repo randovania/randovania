@@ -35,6 +35,7 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 </p><p align="center">Are you sure you want to disable validation?</p></body></html>
 """
 
+
 def _t(key: str, disambiguation: Optional[str] = None):
     return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
 
@@ -564,7 +565,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         from randovania.gui.corruption_layout_editor import CorruptionLayoutEditor
         self.corruption_editor = CorruptionLayoutEditor()
         self.corruption_editor.show()
-    
+
     def setup_about_text(self):
         ABOUT_TEXT = "\n".join([
             "# Randovania",
@@ -579,7 +580,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         ])
 
         about_document: QtGui.QTextDocument = self.about_text_browser.document()
-        
+
         # Populate from README.md
         community = get_readme_section("COMMUNITY")
         credit = get_readme_section("CREDITS")
@@ -590,7 +591,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         cursor: QtGui.QTextCursor = self.about_text_browser.textCursor()
         cursor.setPosition(0)
         self.about_text_browser.setTextCursor(cursor)
-    
+
     def setup_welcome_text(self):
         self.intro_label.setText(self.intro_label.text().format(version=VERSION))
 
@@ -601,13 +602,14 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.games_supported_label.setText(supported)
         self.games_experimental_label.setText(experimental)
         self.intro_welcome_label.setText(welcome)
-    
+
     def set_icon_data_paths(self, label: QtWidgets.QLabel):
         image_pattern = re.compile('<img src="data/(.*?)"/>')
 
         repl = f'<img src="{get_data_path().as_posix()}/\g<1>"/>'
         new_text = image_pattern.sub(repl, label.text())
         label.setText(new_text)
+
 
 def get_readme_section(section: str) -> str:
     readme = get_readme().read_text()

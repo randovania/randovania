@@ -1,4 +1,3 @@
-
 from random import Random
 
 from randovania.generator.filler import retcon

@@ -12,4 +12,3 @@ def local_data_dir() -> Path:
 
 def roaming_data_dir() -> Path:
     return Path(roaming_dirs.user_config_dir)
-

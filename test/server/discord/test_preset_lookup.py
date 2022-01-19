@@ -1,7 +1,7 @@
 from typing import Optional
 
 import pytest
-from mock import MagicMock, AsyncMock, call, ANY
+from mock import MagicMock, AsyncMock, call
 
 import randovania
 from randovania.games.game import RandovaniaGame

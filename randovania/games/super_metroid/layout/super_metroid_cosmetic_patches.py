@@ -11,6 +11,7 @@ class MusicMode(BitPackEnum, Enum):
     RANDOMIZED = "random_music"
     OFF = "no_music"
 
+
 @dataclasses.dataclass(frozen=True)
 class SuperMetroidCosmeticPatches(BaseCosmeticPatches):
     music: MusicMode = MusicMode.VANILLA

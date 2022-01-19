@@ -233,7 +233,8 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
 
 
 @pytest.mark.asyncio
-async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker, generic_item_category):
+async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker,
+                                  generic_item_category):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(
         "randovania.patching.prime.all_prime_dol_patches.adjust_item_amount_and_capacity_patch")

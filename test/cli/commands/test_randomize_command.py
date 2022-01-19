@@ -3,11 +3,10 @@ from mock import MagicMock, ANY, AsyncMock
 
 from randovania.cli.commands import randomize_command
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-from randovania.interface_common.options import Options
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.interface_common.options import Options
+from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 @pytest.mark.parametrize(["game", "cosmetic_class"], [

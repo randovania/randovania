@@ -8,7 +8,7 @@ from randovania.gui.generated.widget_location_pool_row_ui import Ui_LocationPool
 class LocationPoolRowWidget(QDialog, Ui_LocationPoolRowWidget):
     changed = Signal()
     node: PickupNode
-    
+
     def __init__(self, node: PickupNode, location_name: str):
         super().__init__()
         self.setupUi(self)

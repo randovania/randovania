@@ -49,7 +49,7 @@ class LocationHintCreator:
 
         else:
             assert hint.hint_type == HintType.LOCATION
-            
+
             pickup_target = patches.pickup_assignment.get(hint.target)
             determiner, pickup_name = create_pickup_hint(patches.pickup_assignment,
                                                          self.world_list,

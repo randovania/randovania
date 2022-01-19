@@ -38,6 +38,7 @@ class RaceEntry:
             game=game,
         )
 
+
 _SUPPORTED_GAME_URLS = {
     RandovaniaGame.METROID_PRIME: "https://racetime.gg/mpr/data",
     RandovaniaGame.METROID_PRIME_ECHOES: "https://racetime.gg/mp2r/data",

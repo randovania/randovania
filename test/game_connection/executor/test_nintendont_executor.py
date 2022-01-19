@@ -181,4 +181,3 @@ async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use
     # Assert
     assert executor._socket_error is x.value
     executor.disconnect.assert_awaited_once_with()
-

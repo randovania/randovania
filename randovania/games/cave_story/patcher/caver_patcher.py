@@ -38,24 +38,24 @@ class CaverPatcher(Patcher):
     @property
     def is_busy(self) -> bool:
         return self._busy
-    
+
     @property
     def export_can_be_aborted(self) -> bool:
         return False
-    
+
     @property
     def uses_input_file_directly(self) -> bool:
         return False
-    
+
     def has_internal_copy(self, game_files_path: Path) -> bool:
         return False
-    
+
     def delete_internal_copy(self, game_files_path: Path):
         pass
-    
+
     def default_output_file(self, seed_hash: str) -> str:
         return f"Cave Story Randomizer"
-    
+
     @property
     def requires_input_file(self) -> bool:
         return False
@@ -63,7 +63,7 @@ class CaverPatcher(Patcher):
     @property
     def valid_input_file_types(self) -> list[str]:
         return None
-    
+
     @property
     def valid_output_file_types(self) -> list[str]:
         return [""]
@@ -101,32 +101,34 @@ class CaverPatcher(Patcher):
             if target.player != players_config.player_index:
                 # TODO: will need to figure out what scripts to insert for other player's items
                 pass
-            
+
             node = game_description.world_list.node_from_pickup_index(index)
             area = game_description.world_list.nodes_to_area(node)
 
             mapname = node.extra.get("event_map", area.extra["map_name"])
             event = node.extra["event"]
-            
+
             if target == nothing_item:
                 pickup_script = nothing_item_script
             else:
-                pickup_script = item_database.get_item_with_name(target.pickup.name).extra.get("script", nothing_item_script)
+                pickup_script = item_database.get_item_with_name(target.pickup.name).extra.get("script",
+                                                                                               nothing_item_script)
             pickups[mapname][event] = pickup_script
 
         music = CaverMusic.get_shuffled_mapping(music_rng, cosmetic_patches)
 
-        entrances = {} # TODO: entrance rando
+        entrances = {}  # TODO: entrance rando
 
         hints_for_asset = get_hints(description.all_patches, players_config, hint_rng)
         hints = {}
         for logbook_node in game_description.world_list.all_nodes:
             if not isinstance(logbook_node, LogbookNode):
                 continue
-                
-            mapname = logbook_node.extra.get("event_map", game_description.world_list.nodes_to_area(logbook_node).extra["map_name"])
+
+            mapname = logbook_node.extra.get("event_map",
+                                             game_description.world_list.nodes_to_area(logbook_node).extra["map_name"])
             event = logbook_node.extra["event"]
-            
+
             if hints.get(mapname) is None:
                 hints[mapname] = {}
             hints[mapname][event] = {
@@ -149,7 +151,8 @@ class CaverPatcher(Patcher):
         if configuration.no_blocks:
             starting_script += "<FL+1351"
         # rocket skip enabled
-        if configuration.trick_level.level_for_trick(db.get_by_type_and_index(ResourceType.TRICK, "Dboost")).as_number >= 4:
+        if configuration.trick_level.level_for_trick(
+                db.get_by_type_and_index(ResourceType.TRICK, "Dboost")).as_number >= 4:
             starting_script += "<FL+6400"
         # initialize HP counter
         starting_script += set_flag(4011, configuration.starting_hp, bits=6)
@@ -161,7 +164,7 @@ class CaverPatcher(Patcher):
         # Starting Items
         if len(patches.starting_items):
             starting_script += "\r\n<PRI<MSG<TUR"
-        
+
         equip_num = 0
         items_extra = ""
         trades = {
@@ -176,7 +179,8 @@ class CaverPatcher(Patcher):
         }
         life = 0
 
-        missile = next((res for res in patches.starting_items.keys() if res.short_name in {"missile", "tempMissile"}), None)
+        missile = next((res for res in patches.starting_items.keys() if res.short_name in {"missile", "tempMissile"}),
+                       None)
         for item in patches.starting_items.keys():
             if item.resource_type != ResourceType.ITEM or item == missile:
                 continue
@@ -188,11 +192,11 @@ class CaverPatcher(Patcher):
             if item.short_name == "puppies":
                 num_puppies = patches.starting_items[item]
 
-                flags = "".join([f"<FL+{num_to_tsc_value(5001+i).decode('utf-8')}" for i in range(num_puppies)])
+                flags = "".join([f"<FL+{num_to_tsc_value(5001 + i).decode('utf-8')}" for i in range(num_puppies)])
                 flags += "<FL+0274"
                 if num_puppies == 5:
                     flags += "<FL+0593"
-                
+
                 words = {
                     1: "a =Puppy=",
                     2: "two =Puppies=",
@@ -248,7 +252,7 @@ class CaverPatcher(Patcher):
         if len(patches.starting_items):
             starting_script += items_extra
             starting_script += f"<EQ+{num_to_tsc_value(equip_num).decode('utf-8')}\r\n"
-            
+
             if life > 0:
                 starting_script += (
                     f"<GIT1006Got a =Life Capsule=!<ML+{num_to_tsc_value(life).decode('utf-8')}\r\n"
@@ -264,14 +268,14 @@ class CaverPatcher(Patcher):
                     "with the =Blade= and vice-versa\r\n"
                     "at the computer in Arthur's House.<WAI0025<NOD<FL+2811\r\n<CLR"
                 )
-            
+
             if trades["fireball"] >= 2:
                 starting_script += (
                     "You may trade the =Fireball=\r\n"
                     "with the =Snake= and vice-versa\r\n"
                     "at the computer in Arthur's House.<WAI0025<NOD<FL+2802\r\n<CLR"
                 )
-            
+
             # Consolidation items
             if trades["keys"] >= 2:
                 starting_script += "<IT+0040"
@@ -301,18 +305,20 @@ class CaverPatcher(Patcher):
             if patches.starting_location.world_name == "Labyrinth" and patches.starting_location.area_name not in waterway:
                 # started near camp; disable camp collision
                 starting_script += "<FL+6202"
-            elif (patches.starting_location.world_name != "Mimiga Village" and patches.starting_location.area_name not in waterway) or patches.starting_location.area_name == "Arthur's House":
+            elif (
+                    patches.starting_location.world_name != "Mimiga Village" and patches.starting_location.area_name not in waterway) or patches.starting_location.area_name == "Arthur's House":
                 # started outside mimiga village
                 starting_script += "<FL+6201"
-        
-        starting_script += game_description.world_list.area_by_area_location(patches.starting_location).extra["starting_script"]
-        
+
+        starting_script += game_description.world_list.area_by_area_location(patches.starting_location).extra[
+            "starting_script"]
+
         maps["Start"]["pickups"]["0201"] = starting_script
 
         # Configurable missile ammo
         small_missile_ammo = item_database.ammo["Missile Expansion"]
         hell_missile_ammo = item_database.ammo["Large Missile Expansion"]
-        
+
         ammo_state = configuration.ammo_configuration.items_state
         small_missile = ammo_state[small_missile_ammo].ammo_count[0]
         hell_missile = ammo_state[hell_missile_ammo].ammo_count[0]
@@ -320,13 +326,13 @@ class CaverPatcher(Patcher):
         missile_id = "0005"
         supers_id = "0010"
         missile_events = {
-            "0030": (missile_id, small_missile+base_missiles),  # normal launcher
-            "0031": (missile_id, small_missile),                # normal expansion
-            "0032": (supers_id,  small_missile),                # supers expansion
-            "0035": (missile_id, hell_missile+base_missiles),   # normal hell launcher
-            "0036": (missile_id, hell_missile),                 # normal hell expansion
-            "0037": (supers_id,  hell_missile),                 # supers hell expansion
-            "0038": (supers_id,  base_missiles)                 # supers launcher
+            "0030": (missile_id, small_missile + base_missiles),  # normal launcher
+            "0031": (missile_id, small_missile),  # normal expansion
+            "0032": (supers_id, small_missile),  # supers expansion
+            "0035": (missile_id, hell_missile + base_missiles),  # normal hell launcher
+            "0036": (missile_id, hell_missile),  # normal hell expansion
+            "0037": (supers_id, hell_missile),  # supers hell expansion
+            "0038": (supers_id, base_missiles)  # supers launcher
         }
         head = {}
         for event, m_ammo in missile_events.items():
@@ -335,9 +341,11 @@ class CaverPatcher(Patcher):
                 "script": f"<AM+{m_ammo[0]}:{num_to_tsc_value(m_ammo[1]).decode('utf-8')}"
             }
 
-        life_capsules = [("Small Life Capsule", "0012"), ("Medium Life Capsule", "0013"), ("Large Life Capsule", "0014")]
+        life_capsules = [("Small Life Capsule", "0012"), ("Medium Life Capsule", "0013"),
+                         ("Large Life Capsule", "0014")]
         for name, event in life_capsules:
-            amount = configuration.major_items_configuration.items_state[item_database.major_items[name]].included_ammo[0]
+            amount = configuration.major_items_configuration.items_state[item_database.major_items[name]].included_ammo[
+                0]
             head[event] = {
                 "needle": f".!<ML%+....",
                 "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}"
@@ -351,8 +359,9 @@ class CaverPatcher(Patcher):
             "mychar": cosmetic_patches.mychar.mychar_bmp(mychar_rng),
             "hash": get_ingame_hash(description.shareable_hash_bytes)
         }
-    
-    def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict, internal_copies_path: Path, progress_update: ProgressUpdateCallable):
+
+    def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict, internal_copies_path: Path,
+                   progress_update: ProgressUpdateCallable):
         self._busy = True
         try:
             caver_patcher.patch_files(patch_data, output_file, progress_update)
@@ -360,10 +369,13 @@ class CaverPatcher(Patcher):
             json.dump(patch_data, output_file.joinpath("data", "patcher_data.json").open("w"))
             self._busy = False
 
-def create_loc_formatters(area_namer: hint_lib.AreaNamer, world_list: WorldList, patches: GamePatches, players_config: PlayersConfiguration) -> dict[HintLocationPrecision, LocationFormatter]:
+
+def create_loc_formatters(area_namer: hint_lib.AreaNamer, world_list: WorldList, patches: GamePatches,
+                          players_config: PlayersConfiguration) -> dict[HintLocationPrecision, LocationFormatter]:
     return {
         HintLocationPrecision.MALCO: TemplatedFormatter(
-            "BUT ALL I KNOW HOW TO DO IS MAKE {determiner.upper}{pickup}...", area_namer, upper_pickup=True, text_color=None
+            "BUT ALL I KNOW HOW TO DO IS MAKE {determiner.upper}{pickup}...", area_namer, upper_pickup=True,
+            text_color=None
         ),
         HintLocationPrecision.JENKA: TemplatedFormatter(
             "perhaps I'll give you {determiner}{pickup} in return...", area_namer, text_color=None
@@ -382,14 +394,15 @@ def create_loc_formatters(area_namer: hint_lib.AreaNamer, world_list: WorldList,
         HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches, players_config, None),
     }
 
+
 def get_hints(all_patches: dict[int, GamePatches], players_config: PlayersConfiguration, hint_rng: Random):
     game_description = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
     area_namers = {index: hint_lib.AreaNamer(game_description.world_list, include_world=False)
                    for index in players_config.player_names.keys()}
-        
-        
-    hints_for_asset = get_hints_for_asset(all_patches, players_config, game_description.world_list, area_namers, hint_rng, create_loc_formatters, RandovaniaGame.CAVE_STORY, None, None)
-    
+
+    hints_for_asset = get_hints_for_asset(all_patches, players_config, game_description.world_list, area_namers,
+                                          hint_rng, create_loc_formatters, RandovaniaGame.CAVE_STORY, None, None)
+
     starts = ["I hear that", "Rumour has it,", "They say"]
     mids = ["can be found", "is", "is hidden"]
     return {

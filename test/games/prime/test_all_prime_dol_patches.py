@@ -75,7 +75,8 @@ def test_create_remote_execution_body(string_display: all_prime_dol_patches.Stri
     # Run
     patch_address, patch_bytes = all_prime_dol_patches.create_remote_execution_body(string_display, [
         *all_prime_dol_patches.call_display_hud_patch(string_display),
-        *all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address, RandovaniaGame.METROID_PRIME_ECHOES, 3, 12),
+        *all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address,
+                                                                     RandovaniaGame.METROID_PRIME_ECHOES, 3, 12),
     ])
 
     # Assert
@@ -124,7 +125,8 @@ def test_call_display_hud_patch(string_display: all_prime_dol_patches.StringDisp
 
 def test_give_item_patch(powerup_address: all_prime_dol_patches.PowerupFunctionsAddresses):
     # Run
-    patch = all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address, RandovaniaGame.METROID_PRIME_ECHOES, 10, 5)
+    patch = all_prime_dol_patches.adjust_item_amount_and_capacity_patch(powerup_address,
+                                                                        RandovaniaGame.METROID_PRIME_ECHOES, 10, 5)
     data = bytes(assembler.assemble_instructions(0x80008020, patch))
 
     # Assert

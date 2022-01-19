@@ -6,6 +6,7 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 DEFAULT_HUD_COLOR = (102, 174, 225)
 
+
 @dataclasses.dataclass(frozen=True)
 class EchoesCosmeticPatches(BaseCosmeticPatches):
     disable_hud_popup: bool = True

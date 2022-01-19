@@ -9,7 +9,8 @@ from randovania.resolver.bootstrap import MetroidBootstrap
 
 
 class EchoesBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[str]:
+    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[
+        str]:
         enabled_resources = set()
         allow_vanilla = {
             "allow_jumping_on_dark_water": "DarkWaterJump",
@@ -34,9 +35,9 @@ class EchoesBootstrap(MetroidBootstrap):
         if configuration.safe_zone.prevents_dark_aether:
             # Safe Zone
             enabled_resources.add("SafeZone")
-        
+
         return enabled_resources
-    
+
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
         damage_reductions = copy.copy(db.damage_reductions)
         damage_reductions[db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1")] = [

@@ -1,6 +1,3 @@
-from PySide2 import QtCore
-
-import pytest
 import json
 
 from randovania.games.super_metroid.gui.preset_settings.super_patches_tab import PresetSuperPatchConfiguration

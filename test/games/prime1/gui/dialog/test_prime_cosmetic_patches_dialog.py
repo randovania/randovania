@@ -1,6 +1,7 @@
 from PySide2 import QtCore
 
-from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog, hue_rotate_color
+from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog, \
+    hue_rotate_color
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 
 

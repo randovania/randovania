@@ -28,4 +28,5 @@ def test_click_on_link(echoes_game_description,
     popup._on_click_link_to_data_editor(f"data-editor://{world_name}/{area_name}")
 
     # Assert
-    main_window.open_data_visualizer_at.assert_called_once_with(world_name, area_name, game=RandovaniaGame.METROID_PRIME_ECHOES)
+    main_window.open_data_visualizer_at.assert_called_once_with(world_name, area_name,
+                                                                game=RandovaniaGame.METROID_PRIME_ECHOES)

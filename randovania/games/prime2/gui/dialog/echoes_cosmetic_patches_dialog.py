@@ -122,7 +122,7 @@ class EchoesCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_EchoesCosmeticPa
         style = 'background-color: rgb({},{},{})'.format(*color)
         self.custom_hud_color_square.setStyleSheet(style)
 
-    def _add_preview_color_square_to_layout(self, layout: QLayout, default_color: tuple[int,int,int]):
+    def _add_preview_color_square_to_layout(self, layout: QLayout, default_color: tuple[int, int, int]):
         color_square = QFrame(self.game_changes_box)
         color_square.setMinimumSize(QSize(22, 22))
         color_square.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))

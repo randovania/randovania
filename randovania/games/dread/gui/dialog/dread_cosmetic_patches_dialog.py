@@ -17,7 +17,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
-    
+
     def connect_signals(self):
         super().connect_signals()
 
@@ -34,11 +34,12 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
                 self._cosmetic_patches,
                 **{attribute_name: bool(value)}
             )
+
         return persist
 
     @property
     def cosmetic_patches(self) -> DreadCosmeticPatches:
         return self._cosmetic_patches
-    
+
     def reset(self):
         self.on_new_cosmetic_patches(DreadCosmeticPatches())

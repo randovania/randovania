@@ -18,4 +18,3 @@ async def test_add_then_delete_preset(tmp_path, default_preset):
     assert manager.preset_for_uuid(p.uuid) == p
     manager.delete_preset(p)
     assert manager.preset_for_uuid(p.uuid) is None
-

@@ -152,11 +152,14 @@ def _migrate_v6(json_dict: dict) -> dict:
             if area_name in game["locations"]:
                 if identify_game == "prime1":
                     game["locations"]["Frigate Orpheon"] = dict()
-                    game["teleporters"]["Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"] = "Tallon Overworld/Landing Site"
-                    game["teleporters"]["Impact Crater/Metroid Prime Lair/Teleporter to Credits"] = "End of Game/Credits"
+                    game["teleporters"][
+                        "Frigate Orpheon/Exterior Docking Hangar/Teleport to Landing Site"] = "Tallon Overworld/Landing Site"
+                    game["teleporters"][
+                        "Impact Crater/Metroid Prime Lair/Teleporter to Credits"] = "End of Game/Credits"
                 game["game"] = identify_game
                 break
     return json_dict
+
 
 def _migrate_v7(json_dict: dict) -> dict:
     renamed_items = {
@@ -170,10 +173,11 @@ def _migrate_v7(json_dict: dict) -> dict:
         if game["game"] != "cave_story":
             continue
         for world, locations in game["locations"].items():
-            game["locations"][world] = {k: renamed_items.get(v, v) for k,v in locations.items()}
+            game["locations"][world] = {k: renamed_items.get(v, v) for k, v in locations.items()}
         game["starting_items"]["Missiles"] = 5
 
     return json_dict
+
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v2.2.0-6-gbfd37022

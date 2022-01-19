@@ -2,9 +2,9 @@ from unittest.mock import MagicMock, call, ANY
 
 import pytest
 from PySide2.QtCore import QPoint
+
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
-
 from randovania.gui.lib.data_editor_canvas import DataEditorCanvas
 
 
@@ -74,9 +74,10 @@ def test_contextMenuEvent(skip_qtbot, canvas, mocker):
     event.globalPos.assert_has_calls([call(), call()])
     mock_qmenu.return_value.exec_.assert_called_once_with(QPoint(100, 200))
 
+
 def test_area_maps(skip_qtbot, canvas: DataEditorCanvas, mocker):
     canvas.select_game(RandovaniaGame.CAVE_STORY)
-    
+
     for world in default_database.game_description_for(RandovaniaGame.CAVE_STORY).world_list.worlds:
         canvas.select_world(world)
         for area in world.areas:

@@ -3,7 +3,6 @@ import json
 
 import pytest
 
-from randovania import get_data_path
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.game import RandovaniaGame
@@ -44,7 +43,8 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
     ],
     name="prime2_data")
 def _prime2_data(request):
-    return (request.param["encoded"], *_create_config_for(RandovaniaGame.METROID_PRIME_ECHOES, request.param["replace"]))
+    return (
+    request.param["encoded"], *_create_config_for(RandovaniaGame.METROID_PRIME_ECHOES, request.param["replace"]))
 
 
 @pytest.fixture(
@@ -53,7 +53,8 @@ def _prime2_data(request):
     ],
     name="prime3_data")
 def _prime3_data(request):
-    return (request.param["encoded"], *_create_config_for(RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]))
+    return (
+    request.param["encoded"], *_create_config_for(RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]))
 
 
 def test_decode_prime2(prime2_data):

@@ -13,7 +13,7 @@ def dread_format_params(configuration: DreadConfiguration) -> Dict[str, List[str
 
     if configuration.energy_per_tank != 100:
         template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
-    
+
     extra_message_tree = {
         "Item Pool": [
             {
@@ -35,7 +35,9 @@ def dread_format_params(configuration: DreadConfiguration) -> Dict[str, List[str
 
     return template_strings
 
+
 dread_expected_items = {"Missiles"}
+
 
 def dread_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
     unexpected_items = dread_expected_items.copy()
@@ -69,13 +71,13 @@ def dread_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
         unexpected_items.add("Gravity Suit")
     else:
         unexpected_items.add("Progressive Suit")
-    
+
     if has_shuffled_item(configuration, "Progressive Bomb"):
         unexpected_items.add("Bomb")
         unexpected_items.add("Cross Bomb")
     else:
         unexpected_items.add("Progressive Bomb")
-    
+
     if has_shuffled_item(configuration, "Progressive Spin"):
         unexpected_items.add("Spin Boost")
         unexpected_items.add("Space Jump")
@@ -83,4 +85,3 @@ def dread_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
         unexpected_items.add("Progressive Spin")
 
     return unexpected_items
-

@@ -21,7 +21,6 @@ from randovania.layout.preset import Preset
 
 
 class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
-
     _starting_location_for_world: Dict[str, QtWidgets.QCheckBox]
     _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
     _row_widget_for_node: Dict[Node, LocationPoolRowWidget]
@@ -37,7 +36,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
         self._row_widget_for_node = {}
 
         world_list = self.game_description.world_list
-        
+
         nodes_by_world = collections.defaultdict(list)
         node_names = {}
         pickup_match = re.compile(r"Pickup \(([^\)]+)\)")
@@ -60,7 +59,7 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
         for world_name in sorted(nodes_by_world.keys()):
             spoiler = Foldable(world_name)
             vbox_layout = QtWidgets.QVBoxLayout()
-            
+
             first_node = True
             for node in sorted(nodes_by_world[world_name], key=node_names.get):
                 if not first_node:
@@ -81,8 +80,8 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
 
             spoiler.set_content_layout(vbox_layout)
             self.locations_scroll_area_layout.addWidget(spoiler)
-        
-        self.locations_scroll_area_layout.addItem(QSpacerItem(5,5, QSizePolicy.Expanding, QSizePolicy.Expanding))
+
+        self.locations_scroll_area_layout.addItem(QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding))
 
     @property
     def uses_patches_tab(self) -> bool:
@@ -117,7 +116,6 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
                 else:
                     row_widget.setEnabled(True)
                     row_widget.set_can_have_progression(True)
-                    
 
     def _on_location_changed(self, row_widget: LocationPoolRowWidget):
         if self._during_batch_update:

@@ -105,4 +105,3 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def _persist_dangerous_tank(self, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field("dangerous_energy_tank", checked)
-

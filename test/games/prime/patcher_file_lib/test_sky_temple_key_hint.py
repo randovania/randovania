@@ -7,10 +7,9 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_items
-from randovania.patching.prime.patcher_file_lib import sky_temple_key_hint, hint_lib
-from randovania.patching.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.patching.prime.patcher_file_lib import sky_temple_key_hint, hint_lib
 
 
 def _create_hint_text(hide_area: bool,

@@ -129,8 +129,8 @@ class ClarisPatcher(Patcher):
                 hud_color[1] / 255,
                 hud_color[2] / 255,
             ]
-            ntwk_file = str(contents_files_path.joinpath("files","Standard.ntwk"))
-            mp2hudcolor_c(ntwk_file, ntwk_file, hud_color[0], hud_color[1], hud_color[2]) # RGB 0.0-1.0
+            ntwk_file = str(contents_files_path.joinpath("files", "Standard.ntwk"))
+            mp2hudcolor_c(ntwk_file, ntwk_file, hud_color[0], hud_color[1], hud_color[2])  # RGB 0.0-1.0
 
         # Pack ISO
         iso_packager.pack_iso(

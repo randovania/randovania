@@ -1,6 +1,7 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QGridLayout, QLayout, QToolButton, QWidget, QFrame, QScrollArea, QSizePolicy
 
+
 class Foldable(QWidget):
     _mainLayout: QGridLayout
     _toggleButton: QToolButton
@@ -49,7 +50,7 @@ class Foldable(QWidget):
 
     def _on_click(self, checked: bool):
         if self._folded:
-            self._unfold()   
+            self._unfold()
         else:
             self._fold()
 

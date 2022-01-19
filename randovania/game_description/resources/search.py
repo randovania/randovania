@@ -14,7 +14,8 @@ def find_resource_info_with_id(info_list: List[T], short_name: str, resource_typ
     for info in info_list:
         if info.short_name == short_name:
             return info
-    raise MissingResource(f"{resource_type} Resource with short_name '{short_name}' not found in {len(info_list)} resources")
+    raise MissingResource(
+        f"{resource_type} Resource with short_name '{short_name}' not found in {len(info_list)} resources")
 
 
 def find_resource_info_with_long_name(info_list: List[T], long_name: str) -> T:

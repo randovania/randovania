@@ -95,17 +95,20 @@ class BasePatchesFactory:
     @property
     def num_joke_hints(self) -> int:
         return 2
-    
-    def indices_with_hint(self, configuration: BaseConfiguration, game: GameDescription, rng: Random, patches: GamePatches, world_list: WorldList) -> list[HintTargetPrecision]:
+
+    def indices_with_hint(self, configuration: BaseConfiguration, game: GameDescription, rng: Random,
+                          patches: GamePatches, world_list: WorldList) -> list[HintTargetPrecision]:
         return []
-    
+
     def add_other_hints(self, patches: GamePatches, all_logbook_nodes: list[LogbookNode]) -> GamePatches:
         return patches
 
     def get_specific_location_precisions(self) -> dict[str, Tuple[HintLocationPrecision, HintItemPrecision]]:
         return {}
-    
-    def add_default_hints_to_patches(self, configuration: BaseConfiguration, game: GameDescription, rng: Random, patches: GamePatches, world_list: WorldList, num_joke: int, is_multiworld: bool) -> GamePatches:
+
+    def add_default_hints_to_patches(self, configuration: BaseConfiguration, game: GameDescription, rng: Random,
+                                     patches: GamePatches, world_list: WorldList, num_joke: int,
+                                     is_multiworld: bool) -> GamePatches:
         """
         Adds hints that are present on all games.
         :param rng:
@@ -120,19 +123,20 @@ class BasePatchesFactory:
 
         for node in world_list.all_nodes:
             if isinstance(node, LogbookNode) and node.lore_type == LoreType.SPECIFIC_PICKUP:
-                location, item = specific_location_precisions.get(node.name, (HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY))
+                location, item = specific_location_precisions.get(node.name, (
+                HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY))
                 patches = patches.assign_hint(node.resource(),
                                               Hint(HintType.LOCATION,
-                                              PrecisionPair(location, item, include_owner=True),
-                                              PickupIndex(node.hint_index)))
+                                                   PrecisionPair(location, item, include_owner=True),
+                                                   PickupIndex(node.hint_index)))
 
         all_logbook_nodes = [node
-                            for node in world_list.all_nodes
-                            if isinstance(node, LogbookNode)
-                            and node.resource() not in patches.hints
-                            and node.lore_type.holds_generic_hint]
+                             for node in world_list.all_nodes
+                             if isinstance(node, LogbookNode)
+                             and node.resource() not in patches.hints
+                             and node.lore_type.holds_generic_hint]
         rng.shuffle(all_logbook_nodes)
-        
+
         # Specific Pickup/any LogbookNode Hints
         indices_with_hint = self.indices_with_hint(configuration, game, rng, patches, world_list)
         rng.shuffle(indices_with_hint)
@@ -147,7 +151,7 @@ class BasePatchesFactory:
                 PrecisionPair(location_precision, item_precision, include_owner=False),
                 index
             ))
-        
+
         # Other hints
         patches = self.add_other_hints(patches, all_logbook_nodes)
 

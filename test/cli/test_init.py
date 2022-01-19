@@ -97,4 +97,3 @@ def test_run_pytest(mocker):
     # Assert
     mock_main.assert_called_once_with(["c", "d"], plugins=ANY)
     mock_exit.assert_called_once_with(mock_main.return_value)
-

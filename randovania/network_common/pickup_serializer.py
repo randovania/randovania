@@ -66,6 +66,7 @@ class DatabaseBitPackHelper:
             temporary_item=self._decode_item(decoder),
         )
 
+
 # Item categories encoding & decoding
 def _encode_item_category(category: ItemCategory):
     yield from bitpacking.encode_string(category.name)
@@ -74,6 +75,7 @@ def _encode_item_category(category: ItemCategory):
     yield from bitpacking.encode_string(category.hint_details[1])
     yield from bitpacking.encode_bool(category.is_major)
     yield from bitpacking.encode_bool(category.is_key)
+
 
 def _decode_item_category(decoder: BitPackDecoder) -> ItemCategory:
     return ItemCategory(
@@ -88,7 +90,7 @@ def _decode_item_category(decoder: BitPackDecoder) -> ItemCategory:
 class BitPackPickupEntry:
     value: PickupEntry
     database: ResourceDatabase
-    
+
     def __init__(self, value: PickupEntry, database: ResourceDatabase):
         self.value = value
         self.database = database

@@ -2,14 +2,15 @@ import dataclasses
 import uuid
 
 import pytest
-
 from PySide2.QtWidgets import *
+
 from randovania.game_description import default_database
+from randovania.games.cave_story.gui.preset_settings.cs_generation_tab import PresetCSGeneration
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.games.cave_story.gui.preset_settings.cs_generation_tab import PresetCSGeneration
-from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration
+
 
 @pytest.mark.parametrize("game_data", [
     (RandovaniaGame.METROID_PRIME, True, True, PresetPrimeGeneration),

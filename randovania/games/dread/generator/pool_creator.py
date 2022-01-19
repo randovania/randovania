@@ -6,5 +6,6 @@ from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.item_pool import PoolResults
 
 
-def pool_creator(results: PoolResults, configuration: DreadConfiguration, db: ResourceDatabase, base_patches: GamePatches, rng: Random) -> None:
+def pool_creator(results: PoolResults, configuration: DreadConfiguration, db: ResourceDatabase,
+                 base_patches: GamePatches, rng: Random) -> None:
     pass

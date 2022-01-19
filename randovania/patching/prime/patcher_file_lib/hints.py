@@ -62,15 +62,15 @@ def create_location_formatters(
 
 
 def get_hints_for_asset(all_patches: Dict[int, GamePatches],
-                    players_config: PlayersConfiguration,
-                    world_list: WorldList,
-                    area_namers: Dict[int, hint_lib.AreaNamer],
-                    rng: Random,
-                    create_loc_formatters = create_location_formatters,
-                    game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
-                    item_text_color: hint_lib.TextColor = hint_lib.TextColor.ITEM,
-                    joke_text_color: hint_lib.TextColor = hint_lib.TextColor.JOKE
-                    ) -> dict[int, str]:
+                        players_config: PlayersConfiguration,
+                        world_list: WorldList,
+                        area_namers: Dict[int, hint_lib.AreaNamer],
+                        rng: Random,
+                        create_loc_formatters=create_location_formatters,
+                        game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
+                        item_text_color: hint_lib.TextColor = hint_lib.TextColor.ITEM,
+                        joke_text_color: hint_lib.TextColor = hint_lib.TextColor.JOKE
+                        ) -> dict[int, str]:
     """
     Creates the string patches entries that changes the Lore scans in the game for item pickups
     :param all_patches:
@@ -89,9 +89,11 @@ def get_hints_for_asset(all_patches: Dict[int, GamePatches],
 
     hints_for_asset: dict[int, str] = {}
     for asset, hint in patches.hints.items():
-        hints_for_asset[asset.asset_id] = hint_name_creator.create_message_for_hint(hint, all_patches, players_config,   
-                                                                            location_formatters, game, item_text_color, joke_text_color)
+        hints_for_asset[asset.asset_id] = hint_name_creator.create_message_for_hint(hint, all_patches, players_config,
+                                                                                    location_formatters, game,
+                                                                                    item_text_color, joke_text_color)
     return hints_for_asset
+
 
 def create_hints(all_patches: Dict[int, GamePatches],
                  players_config: PlayersConfiguration,

@@ -1,5 +1,3 @@
-import struct
-
 import pytest
 
 from randovania.dol_patching.dol_file import DolFile, DolHeader, Section, _NUM_SECTIONS

@@ -1,5 +1,4 @@
 from unittest.mock import MagicMock
-from randovania.game_description import default_database
 
 from randovania.game_description.requirements import RequirementSet, RequirementList, ResourceRequirement
 from randovania.game_description.resources import search
@@ -12,9 +11,9 @@ def test_requirement_lists_without_satisfied_resources(echoes_game_description, 
         return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
 
     state = echoes_game_description.game.data.generator.bootstrap.calculate_starting_state(
-                                               echoes_game_description,
-                                               echoes_game_description.create_game_patches(),
-                                               default_echoes_preset.configuration)
+        echoes_game_description,
+        echoes_game_description.create_game_patches(),
+        default_echoes_preset.configuration)
     state.resources[item("Seeker Launcher")] = 1
     state.resources[item("Space Jump Boots")] = 1
     uncollected_resources = []
@@ -74,6 +73,7 @@ def test_requirement_lists_without_satisfied_resources(echoes_game_description, 
 def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     def item(name):
         return search.find_resource_info_with_long_name(echoes_game_description.resource_database.item, name)
+
     mock_req_lists: MagicMock = mocker.patch(
         "randovania.generator.filler.pickup_list._requirement_lists_without_satisfied_resources")
 
@@ -110,4 +110,3 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     mock_req_lists.assert_called_once_with(reach.state, [possible_set],
                                            [uncollected_resource_nodes[0].resource.return_value])
     assert result == tuple()
-

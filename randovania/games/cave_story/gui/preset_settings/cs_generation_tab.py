@@ -16,17 +16,18 @@ class PresetCSGeneration(PresetGeneration):
     @property
     def game_specific_widgets(self) -> Optional[Iterable[QWidget]]:
         yield self._puppy_widget
-    
+
     def on_preset_changed(self, preset: Preset):
         super().on_preset_changed(preset)
         self._puppy_widget.setChecked(preset.configuration.puppies_anywhere)
 
     def _create_puppy_checkbox(self):
         puppy = QCheckBox("Shuffle puppies anywhere")
-        puppy.setToolTip("When disabled, puppies will only be shuffled within the Sand Zone. When enabled, puppies can be placed in any valid location.")
+        puppy.setToolTip(
+            "When disabled, puppies will only be shuffled within the Sand Zone. When enabled, puppies can be placed in any valid location.")
         puppy.stateChanged.connect(self._on_puppy_changed)
         self._puppy_widget = puppy
-    
+
     def _on_puppy_changed(self):
         anywhere = self._puppy_widget.isChecked()
         with self._editor as editor:

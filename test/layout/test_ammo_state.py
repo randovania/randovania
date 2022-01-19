@@ -2,7 +2,6 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description.item.ammo import Ammo
 from randovania.layout.base.ammo_state import AmmoState
 
 

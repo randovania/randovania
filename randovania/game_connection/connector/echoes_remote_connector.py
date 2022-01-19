@@ -67,7 +67,6 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
 
     async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
                                    ) -> List[MemoryOperation]:
-
         player_state_pointer = self.version.cstate_manager_global + 0x150c
         return [
             MemoryOperation(
