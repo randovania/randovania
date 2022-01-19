@@ -106,6 +106,12 @@ def create_export_videos_command(sub_parsers):
         default="exported_videos",
         help="Folder to write html file to.",
     )
+    parser.add_argument(
+        "--game",
+        type=str,
+        default=None,
+        help="Game to export videos for.",
+    )
     parser.set_defaults(func=export_videos_command_logic)
 
 def view_area_command_logic(args):
