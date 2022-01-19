@@ -234,9 +234,9 @@ class RandomprimePatcher(Patcher):
                           cosmetic_patches: PrimeCosmeticPatches):
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
-        preset = description.permalink.get_preset(players_config.player_index)
-        configuration = typing.cast(PrimeConfiguration, preset.configuration)
-        rng = Random(description.permalink.seed_number)
+        configuration = description.get_preset(players_config.player_index).configuration
+        assert isinstance(configuration, PrimeConfiguration)
+        rng = Random(description.get_seed_for_player(players_config.player_index))
 
         area_namers = {
             index: hint_lib.AreaNamer(default_database.game_description_for(player_preset.game).world_list)
@@ -374,7 +374,7 @@ class RandomprimePatcher(Patcher):
         }
 
         return {
-            "seed": description.permalink.seed_number + players_config.player_index,
+            "seed": description.get_seed_for_player(players_config.player_index),
             "preferences": {
                 "defaultGameOptions" : default_game_options,
                 "qolGameBreaking": configuration.qol_game_breaking,

@@ -13,10 +13,10 @@ def validate_command_logic(args):
 
     description = LayoutDescription.from_file(args.layout_file)
 
-    if description.permalink.player_count != 1:
+    if description.player_count != 1:
         raise ValueError(f"Validator does not support layouts with more than 1 player.")
 
-    configuration = description.permalink.presets[0].configuration
+    configuration = description.get_preset(0).configuration
     patches = description.all_patches[0]
 
     before = time.perf_counter()

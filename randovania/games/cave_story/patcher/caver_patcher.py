@@ -72,19 +72,22 @@ class CaverPatcher(Patcher):
     def valid_output_file_types(self) -> list[str]:
         return [""]
 
-    def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration, cosmetic_patches: CSCosmeticPatches) -> dict:
+    def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
+                          cosmetic_patches: CSCosmeticPatches) -> dict:
         if players_config.is_multiworld:
             raise NotImplementedError("Multiworld is not supported for Cave Story")
 
-        configuration: CSConfiguration = description.permalink.get_preset(players_config.player_index).configuration
+        configuration = description.get_preset(players_config.player_index).configuration
+        assert isinstance(configuration, CSConfiguration)
         patches = description.all_patches[players_config.player_index]
         db = default_database.resource_database_for(RandovaniaGame.CAVE_STORY)
         game_description = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
         item_database = default_database.item_database_for_game(RandovaniaGame.CAVE_STORY)
-        
-        music_rng = Random(description.permalink.seed_number)
-        mychar_rng = Random(description.permalink.seed_number)
-        hint_rng = Random(description.permalink.seed_number)
+
+        seed_number = description.get_seed_for_player(players_config.player_index)
+        music_rng = Random(seed_number)
+        mychar_rng = Random(seed_number)
+        hint_rng = Random(seed_number)
 
         nothing_item = PickupTarget(PickupEntry(
             "Nothing",
@@ -350,7 +353,7 @@ class CaverPatcher(Patcher):
                 "Head": head
             },
             "mychar": cosmetic_patches.mychar.mychar_bmp(mychar_rng),
-            "hash": get_ingame_hash(description._shareable_hash_bytes)
+            "hash": get_ingame_hash(description.shareable_hash_bytes)
         }
     
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict, internal_copies_path: Path, progress_update: ProgressUpdateCallable):
