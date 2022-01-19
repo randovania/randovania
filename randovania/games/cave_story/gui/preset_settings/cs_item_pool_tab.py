@@ -1,5 +1,3 @@
-import dataclasses
-from PySide2 import QtWidgets
 from randovania.games.cave_story.layout.cs_configuration import CSObjective
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.interface_common.preset_editor import PresetEditor

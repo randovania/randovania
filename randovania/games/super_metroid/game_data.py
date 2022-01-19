@@ -1,7 +1,7 @@
+from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout
 from randovania.games.super_metroid.generator.item_pool.pool_creator import super_metroid_specific_pool
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout
 from randovania.games.super_metroid.patcher.super_duper_metroid_patcher import SuperDuperMetroidPatcher
 from randovania.generator.base_patches_factory import BasePatchesFactory
 from randovania.resolver.bootstrap import Bootstrap

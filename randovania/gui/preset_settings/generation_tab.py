@@ -1,11 +1,13 @@
 import dataclasses
 from typing import Iterable, Optional
+
 from PySide2.QtWidgets import *
+
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
+from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab, PresetEditor
-from randovania.gui.generated.preset_generation_ui import Ui_PresetGeneration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction

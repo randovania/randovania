@@ -4,15 +4,15 @@ from random import Random
 from typing import List, Tuple, Callable, TypeVar, Set, Dict, FrozenSet, Union, Iterator, Optional
 
 from randovania.game_description import node_search
-from randovania.game_description.world.area import Area
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintRelativeAreaName, RelativeDataArea, RelativeDataItem
-from randovania.game_description.world.node import LogbookNode, PickupNode
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.area import Area
+from randovania.game_description.world.node import LogbookNode, PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.generator.filler.filler_configuration import FillerConfiguration

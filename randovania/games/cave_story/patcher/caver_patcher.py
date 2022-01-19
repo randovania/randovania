@@ -2,38 +2,34 @@ import json
 from pathlib import Path
 from random import Random
 from typing import Optional
-import typing
+
+from caver import patcher as caver_patcher
+from tsc_utils.flags import set_flag
+from tsc_utils.numbers import num_to_tsc_value
+
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
-from randovania.game_description.resources.resource_info import ResourceGainTuple
-from randovania.game_description.world import world_list
-from randovania.game_description.world.node import LogbookNode
-from randovania.patching.prime.patcher_file_lib.hint_formatters import LocationFormatter
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.node import LogbookNode
 from randovania.game_description.world.world_list import WorldList
-from randovania.games.game import RandovaniaGame
-from randovania.game_description import default_database
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
 from randovania.games.cave_story.patcher.caver_music_shuffle import CaverMusic
+from randovania.games.game import RandovaniaGame
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
-from randovania.interface_common.players_configuration import PlayersConfiguration
-
-from caver import patcher as caver_patcher
 from randovania.patching.prime.patcher_file_lib import hint_lib
+from randovania.patching.prime.patcher_file_lib.hint_formatters import LocationFormatter
 from randovania.patching.prime.patcher_file_lib.hint_formatters import RelativeAreaFormatter, TemplatedFormatter
-
-from randovania.patching.prime.patcher_file_lib.hints import create_location_formatters, get_hints_for_asset
+from randovania.patching.prime.patcher_file_lib.hints import get_hints_for_asset
 from randovania.patching.prime.patcher_file_lib.item_hints import RelativeItemFormatter
-
-from tsc_utils.numbers import num_to_tsc_value, tsc_value_to_num
-from tsc_utils.flags import set_flag
 
 
 class CaverPatcher(Patcher):

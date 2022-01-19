@@ -1,9 +1,10 @@
 from collections import defaultdict
-from randovania.game_description import default_database
-from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
+
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
-from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, has_vanilla_item, message_for_required_mains
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
+    message_for_required_mains
 
 
 def cs_format_params(configuration: CSConfiguration) -> dict[str, list[str]]:

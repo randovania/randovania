@@ -2,9 +2,9 @@ import dataclasses
 
 from PySide2.QtWidgets import QWidget
 
+from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches, CorruptionSuit
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.corruption_cosmetic_patches_dialog_ui import Ui_CorruptionCosmeticPatchesDialog
-from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches, CorruptionSuit
 
 
 class CorruptionCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CorruptionCosmeticPatchesDialog):

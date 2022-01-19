@@ -1,9 +1,8 @@
-from randovania.game_description.item.item_category import ItemCategory
 from typing import Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
-from randovania.game_description import default_database
+from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceConversion, ResourceLock, \
     PickupModel

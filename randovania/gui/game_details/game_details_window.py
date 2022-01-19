@@ -1,8 +1,7 @@
 import copy
-import copy
 import dataclasses
 import typing
-from typing import Dict, Optional, Set
+from typing import Dict, Optional
 
 from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import Qt

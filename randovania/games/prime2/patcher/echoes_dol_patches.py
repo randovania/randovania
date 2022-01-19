@@ -8,12 +8,12 @@ from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
+from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 from randovania.patching.prime.all_prime_dol_patches import (
     BasePrimeDolVersion, HealthCapacityAddresses,
     DangerousEnergyTankAddresses
 )
-from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
-from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
 
 
 @dataclasses.dataclass(frozen=True)

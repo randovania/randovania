@@ -1,4 +1,5 @@
 from typing import Callable
+
 from PySide2 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription

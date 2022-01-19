@@ -1,5 +1,4 @@
 import dataclasses
-from typing import List
 
 from PySide2 import QtWidgets
 

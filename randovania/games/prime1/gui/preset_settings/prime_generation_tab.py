@@ -1,9 +1,12 @@
 from typing import Iterable, Optional
+
 from PySide2.QtWidgets import *
+
 from randovania.game_description.game_description import GameDescription
 from randovania.gui.preset_settings.generation_tab import PresetGeneration
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
+
 
 class PresetPrimeGeneration(PresetGeneration):
     def __init__(self, editor: PresetEditor, game_description: GameDescription) -> None:
@@ -29,4 +32,3 @@ class PresetPrimeGeneration(PresetGeneration):
                 "artifact_minimum_progression",
                 self.min_progression_spin.value(),
             )
-    

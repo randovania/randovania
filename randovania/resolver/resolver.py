@@ -1,12 +1,11 @@
 import asyncio
-import copy
 from typing import Optional, Tuple, Callable, FrozenSet
 
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.node import PickupNode, ResourceNode, EventNode, Node
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.world.node import PickupNode, ResourceNode, EventNode, Node
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug, event_pickup
 from randovania.resolver.event_pickup import EventPickupNode

@@ -1,7 +1,6 @@
 import collections
 import dataclasses
 import functools
-from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 import re
 from typing import Dict
 
@@ -12,9 +11,9 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import Node, PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
-from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.area_list_helper import AreaListHelper, dark_world_flags
+from randovania.gui.lib.foldable import Foldable
+from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.available_locations import RandomizationMode

@@ -1,9 +1,9 @@
 from random import Random
+
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import Hint, HintItemPrecision, HintLocationPrecision, HintType, PrecisionPair
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node import LogbookNode, LoreType, PickupNode
+from randovania.game_description.hint import HintItemPrecision, HintLocationPrecision
+from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
 from randovania.generator.base_patches_factory import BasePatchesFactory, HintTargetPrecision

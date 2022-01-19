@@ -1,30 +1,26 @@
-import os
-import shutil
-import typing
-import json
 import dataclasses
+import typing
+from io import BytesIO
 from pathlib import Path
 from random import Random
 from typing import List, Optional
-from io import BytesIO
 
 import SuperDuperMetroid.ROM_Patcher
 import SuperDuperMetroid.SM_Constants
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.patching.patcher import Patcher
-from randovania.patching.prime.patcher_file_lib import pickup_exporter
+from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
+from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches, MusicMode
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
-from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches, MusicMode
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.patching.patcher import Patcher
+from randovania.patching.prime.patcher_file_lib import pickup_exporter
 
 _multiplier_for_item = {
     "Energy Tank": 100, "Reserve Tank": 100,

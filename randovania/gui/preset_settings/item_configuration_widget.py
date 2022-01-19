@@ -6,7 +6,6 @@ from PySide2.QtWidgets import QGraphicsOpacityEffect, QWidget
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.generated.item_configuration_popup_ui import Ui_ItemConfigurationPopup
-from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.layout.base.major_item_state import MajorItemState
 
 

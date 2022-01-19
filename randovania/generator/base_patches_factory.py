@@ -1,14 +1,14 @@
 import copy
 import dataclasses
 from random import Random
-from typing import Tuple, Union
-from randovania.game_description.hint import HintLocationPrecision
+from typing import Tuple
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import NodeConfigurationAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintItemPrecision, HintType, PrecisionPair
+from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import LogbookNode, LoreType

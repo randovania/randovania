@@ -1,15 +1,14 @@
 import dataclasses
 from functools import partial
 
-from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QCheckBox, QSlider, QLabel
-
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QColor
+from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QSizePolicy, QWidget, QCheckBox, QSlider, QLabel
 
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences, SoundMode
+from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.generated.echoes_cosmetic_patches_dialog_ui import Ui_EchoesCosmeticPatchesDialog
 
 
 def update_label_with_slider(label: QLabel, slider: QSlider):

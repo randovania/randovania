@@ -1,12 +1,12 @@
 import dataclasses
 from enum import Enum
+
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-
-from randovania.game_description.requirements import Requirement
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
+
 
 class CSObjective(BitPackEnum, Enum):
     BAD_ENDING = 0

@@ -1,10 +1,10 @@
 from PySide2 import QtCore
 
+from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 from randovania.gui.generated.preset_prime_goal_ui import Ui_PresetPrimeGoal
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
-from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
 
 
 class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):

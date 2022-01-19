@@ -1,8 +1,8 @@
-import os
 import datetime
+import os
 
-from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
+from randovania.games.game import RandovaniaGame
 
 # (tab title, page title, time)
 HTML_HEADER_FORMAT = '''

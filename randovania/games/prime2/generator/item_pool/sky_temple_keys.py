@@ -4,9 +4,9 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, add_resource_gain_to_current_resources
+from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pickup_creator import create_sky_temple_key
-from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.resolver.exceptions import InvalidConfiguration
 
 

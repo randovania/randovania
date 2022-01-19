@@ -16,7 +16,6 @@ from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
-from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
 from randovania.layout.preset import Preset
 
 

@@ -3,13 +3,13 @@ from functools import partial
 
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QColor
+from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QLabel, QSlider, \
+    QCheckBox
 
-from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QLabel, QSlider, QCheckBox
-
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode
+from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
 
 SUIT_DEFAULT_COLORS = [
     [ (255, 173, 50), (220, 25, 45), (132, 240, 60) ], # Power

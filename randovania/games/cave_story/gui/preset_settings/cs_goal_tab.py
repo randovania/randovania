@@ -1,11 +1,10 @@
-import dataclasses
 from PySide2 import QtCore
 
+from randovania.games.cave_story.layout.cs_configuration import CSObjective
 from randovania.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
-from randovania.games.cave_story.layout.cs_configuration import CSObjective
 from randovania.layout.preset import Preset
 
 
@@ -44,4 +43,3 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
     def on_preset_changed(self, preset: Preset):
         set_combo_with_value(self.goal_combo, preset.configuration.objective)
         self.b2_check.setChecked(preset.configuration.no_blocks)
-    

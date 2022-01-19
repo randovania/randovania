@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from typing import Iterable
 from random import Random
+from typing import Iterable
 
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSSong, CSCosmeticPatches, MusicRandoType, SONGS
+
 
 @dataclass(frozen=True)
 class CaverCue:

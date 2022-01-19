@@ -4,10 +4,10 @@ from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.games.prime1.layout.artifact_mode import LayoutArtifactMode
-from randovania.layout.lib.teleporters import TeleporterConfiguration
 from randovania.games.prime1.layout.hint_configuration import HintConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
 class LayoutCutsceneMode(BitPackEnum, Enum):
