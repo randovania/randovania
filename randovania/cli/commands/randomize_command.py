@@ -32,8 +32,8 @@ async def randomize_command_logic_async(args):
 
     players_config = PlayersConfiguration(args.player_index,
                                           {i: f"Player {i + 1}"
-                                           for i in range(layout_description.permalink.player_count)})
-    preset = layout_description.permalink.get_preset(players_config.player_index)
+                                           for i in range(layout_description.player_count)})
+    preset = layout_description.get_preset(players_config.player_index)
 
     internal_copies_path = Options.with_default_data_dir().internal_copies_path
     patcher_provider = PatcherProvider()

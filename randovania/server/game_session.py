@@ -266,7 +266,7 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
             if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
                 preset = VersionedPreset.with_preset(permalink_preset)
                 if preset.game not in session.allowed_games:
-                    raise InvalidAction(f"Only {preset.game} preset not allowed.")
+                    raise InvalidAction(f"{preset.game} preset not allowed.")
                 preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)
 
@@ -475,7 +475,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             player_index=membership.row,
             player_names=player_names,
         )
-        preset = layout_description.permalink.get_preset(players_config.player_index)
+        preset = layout_description.get_preset(players_config.player_index)
         cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(arg)
         patcher = sio.patcher_provider.patcher_for_game(preset.game)
 
