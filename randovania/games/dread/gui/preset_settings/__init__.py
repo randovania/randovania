@@ -10,7 +10,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
     from randovania.gui.preset_settings.elevators_tab import PresetElevators
-    from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
+    from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
@@ -18,7 +18,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetElevators(editor, game_description),
-        PresetStartingArea(editor, game_description),
+        PresetMetroidStartingArea(editor, game_description),
         PresetGeneration(editor, game_description),
         PresetLocationPool(editor, game_description),
         MetroidPresetItemPool(editor)

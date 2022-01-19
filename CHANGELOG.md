@@ -113,6 +113,16 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Beginner L-Jump to reach Main Quarry Save Station
 - Added: Main Quarry Crane Platform to Waste Disposal NSJ Advanced Combat Dash
 - Added: Main Quarry Crane Platform to Item Intermediate Scan Dash
+- Added: Expert Gravity Wallboost to get to Tower Chamber
+- Added: Beginner Gravity Wallboost to get to Watery Hall
+- Added: Expert Trick for NSJ+Boost Crossway
+- Added: Movement (Intermediate) to skip Spider Ball in Crossway
+- Added: L-Jump to skip SJ on 3rd tier of ore processing puzzle
+- Added: NSJ Ore Processing with Spider+Bombs (Expert)
+- Added: Bombless Ore Processing Puzzle with Wallboost(Advanced)
+- Added: Phendrana Canyon Hypermode Boost
+- Added: NSJ Combat Dash (Expert) to Temple Entryway from lower part of room
+- Added: Various tricks in Uncrashed Frigate
 - Added: Ore Processing Door To Elevator Access A to Storage Depot B Standable L-Jump with Power Bombs
 - Added: Combat logic for Dynamo Access and Elite Control Elite Pirate fights
 - Added: Intermediate/Advanced Standables to enter/escape Elite Control after/without triggering Elite Pirate
@@ -140,6 +150,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Elite Research Spinners without Boost from Advanced to Intermediate
 - Changed: Ore Processing Door To Elevator Access A to Storage Depot B Standable difficulty from Intermediate to Advanced
 - Changed: Sun Tower Early Wild now requires Intermediate Knowledge on all methods
+- Changed: Less damage required for Watery Hall with Gravity Suit
 
 ### Metroid Prime 2: Echoes
 
