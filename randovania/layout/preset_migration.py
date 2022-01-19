@@ -8,6 +8,7 @@ from randovania.lib import migration_lib
 
 CURRENT_VERSION = 20
 
+
 def _migrate_v1(preset: dict) -> dict:
     layout_configuration = preset["layout_configuration"]
     layout_configuration["beam_configuration"] = {
@@ -476,6 +477,7 @@ def _migrate_v15(preset: dict) -> dict:
 
     return preset
 
+
 def _migrate_v16(preset: dict) -> dict:
     if preset["game"] == "prime1":
         art_hints = {"artifacts": "precise"}
@@ -483,23 +485,25 @@ def _migrate_v16(preset: dict) -> dict:
 
     return preset
 
+
 def _migrate_v17(preset: dict) -> dict:
     if preset["game"] == "prime1":
         preset["configuration"]["elevators"]["excluded_teleporters"].append(
-                {
-                    "world_name": "Impact Crater",
-                    "area_name": "Metroid Prime Lair",
-                    "node_name": "Teleporter to Credits"
-                }
+            {
+                "world_name": "Impact Crater",
+                "area_name": "Metroid Prime Lair",
+                "node_name": "Teleporter to Credits"
+            }
         )
         preset["configuration"]["elevators"]["excluded_teleporters"].append(
-                {
-                    "world_name": "Frigate Orpheon",
-                    "area_name": "Exterior Docking Hangar",
-                    "node_name": "Teleport to Landing Site"
-                }
+            {
+                "world_name": "Frigate Orpheon",
+                "area_name": "Exterior Docking Hangar",
+                "node_name": "Teleport to Landing Site"
+            }
         )
     return preset
+
 
 def _migrate_v18(preset: dict) -> dict:
     if preset["game"] == "prime1":
@@ -507,15 +511,16 @@ def _migrate_v18(preset: dict) -> dict:
         preset["configuration"]["items_every_room"] = False
     return preset
 
+
 def _migrate_v19(preset: dict) -> dict:
     if preset["game"] == "cave_story":
         itemconfig = preset["configuration"]["major_items_configuration"]["items_state"]
         ammoconfig = preset["configuration"]["ammo_configuration"]["items_state"]
-        
+
         if itemconfig.get("Base Missiles") is not None:
             # handles presets which were hand-migrated before this func was written
             return preset
-        
+
         itemconfig["Base Missiles"] = {
             "num_included_in_starting_items": 1,
             "included_ammo": [5],
@@ -524,7 +529,7 @@ def _migrate_v19(preset: dict) -> dict:
         itemconfig["Missile Launcher"].pop("included_ammo", None)
         itemconfig["Super Missile Launcher"].pop("included_ammo", None)
         itemconfig["Progressive Missile Launcher"].pop("included_ammo", None)
-        
+
         itemconfig["Small Life Capsule"] = itemconfig.pop("3HP Life Capsule")
         itemconfig["Medium Life Capsule"] = itemconfig.pop("4HP Life Capsule")
         itemconfig["Large Life Capsule"] = itemconfig.pop("5HP Life Capsule")
@@ -535,6 +540,7 @@ def _migrate_v19(preset: dict) -> dict:
         preset["configuration"]["ammo_configuration"]["items_state"] = ammoconfig
 
     return preset
+
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69

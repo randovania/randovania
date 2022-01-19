@@ -58,8 +58,10 @@ HTML_FOOTER = '''
 </html>
 '''
 
+
 def get_date():
     return str(datetime.datetime.now()).split('.')[0].split(" ")[0]
+
 
 def get_yt_ids(item, ids):
     if item["type"] != "and" and item["type"] != "or":
@@ -78,6 +80,7 @@ def get_yt_ids(item, ids):
 
     for i in data["items"]:
         get_yt_ids(i, ids)
+
 
 def collect_game_info(game: RandovaniaGame):
     data = default_data.read_json_then_binary(game)[1]
@@ -104,8 +107,8 @@ def collect_game_info(game: RandovaniaGame):
             worlds[world["name"]] = areas
     return worlds
 
-def generate_world_html(name, areas):
 
+def generate_world_html(name, areas):
     body = ""
     toc = """
     <div id="toc_container">
@@ -145,13 +148,14 @@ def generate_world_html(name, areas):
     """
 
     header = HTML_HEADER_FORMAT % (name, name, get_date())
-    
+
     return header + toc + body + HTML_FOOTER
+
 
 def export_videos(game: RandovaniaGame, out_dir):
     worlds = collect_game_info(game)
     if len(worlds) == 0:
-        return # no youtube videos in this game's database
+        return  # no youtube videos in this game's database
 
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
@@ -165,11 +169,11 @@ def export_videos(game: RandovaniaGame, out_dir):
         file = open(os.path.join(out_dir_game, world + ".html"), "w")
         file.write(html)
         file.close()
-    
+
     full_name = game.long_name
     header = HTML_HEADER_FORMAT % (full_name, full_name, get_date())
     html = HTML_HEADER_FORMAT % ("Index - " + full_name, full_name, get_date())
-    
+
     toc = """
     <div>
         <ul>

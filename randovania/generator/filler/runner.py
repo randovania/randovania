@@ -344,7 +344,8 @@ async def run_filler(rng: Random,
         rng.shuffle(major_items)
         rng.shuffle(player_expansions[index])
 
-        new_game, state = pool.game.game.data.generator.bootstrap.logic_bootstrap(pool.configuration, pool.game, pool.patches)
+        new_game, state = pool.game.game.data.generator.bootstrap.logic_bootstrap(pool.configuration, pool.game,
+                                                                                  pool.patches)
 
         major_configuration = pool.configuration.major_items_configuration
         player_states.append(PlayerState(

@@ -109,6 +109,7 @@ _LOCATIONS_GROUPED_TOGETHER = [
     ({52, 53}, None),  # Research Lab Aether
 ]
 
+
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
                                      rng: Random) -> dict:
@@ -276,7 +277,7 @@ class RandomprimePatcher(Patcher):
             "rumble": cosmetic_patches.user_preferences.rumble,
             "swapBeamControls": cosmetic_patches.user_preferences.swap_beam_controls,
         }
-        
+
         for world in db.world_list.worlds:
             if world.name == "End of Game":
                 continue
@@ -365,7 +366,7 @@ class RandomprimePatcher(Patcher):
         for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, cosmetic_patches.suit_color_rotations):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
-        
+
         starting_room = _name_for_location(db.world_list, patches.starting_location)
 
         starting_items = {
@@ -376,7 +377,7 @@ class RandomprimePatcher(Patcher):
         return {
             "seed": description.get_seed_for_player(players_config.player_index),
             "preferences": {
-                "defaultGameOptions" : default_game_options,
+                "defaultGameOptions": default_game_options,
                 "qolGameBreaking": configuration.qol_game_breaking,
                 "qolCosmetic": cosmetic_patches.qol_cosmetic,
                 "qolPickupScans": configuration.qol_pickup_scans,

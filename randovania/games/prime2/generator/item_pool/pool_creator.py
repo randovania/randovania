@@ -9,7 +9,8 @@ from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.pool_creator import _extend_pool_results
 
 
-def echoes_specific_pool(results: PoolResults, configuration: EchoesConfiguration, db: ResourceDatabase, base_patches: GamePatches, rng: Random):
+def echoes_specific_pool(results: PoolResults, configuration: EchoesConfiguration, db: ResourceDatabase,
+                         base_patches: GamePatches, rng: Random):
     # Adding Dark Temple Keys to pool
     _extend_pool_results(results, add_dark_temple_keys(db))
 

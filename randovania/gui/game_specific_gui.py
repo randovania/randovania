@@ -14,5 +14,6 @@ def create_dialog_for_cosmetic_patches(
     dialog_class = game.data.gui().cosmetic_dialog
     return dialog_class(parent, initial_patches)
 
+
 def preset_editor_tabs_for(editor: PresetEditor, window_manager: WindowManager):
     return editor.game.data.gui().tab_provider(editor, window_manager)

@@ -11,7 +11,8 @@ from randovania.resolver.bootstrap import MetroidBootstrap
 
 
 class PrimeBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[str]:
+    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[
+        str]:
         enabled_resources = set()
 
         logical_patches = {
@@ -23,15 +24,15 @@ class PrimeBootstrap(MetroidBootstrap):
             "backwards_lower_mines": "backwards_lower_mines",
             "phazon_elite_without_dynamo": "phazon_elite_without_dynamo",
             "small_samus": "small",
-            "shuffle_item_pos":"shuffle_item_pos",
-            "items_every_room":"items_every_room",
+            "shuffle_item_pos": "shuffle_item_pos",
+            "items_every_room": "items_every_room",
         }
         for name, index in logical_patches.items():
             if getattr(configuration, name):
                 enabled_resources.add(index)
-        
+
         return enabled_resources
-    
+
     def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: CurrentResources):
         num_suits = sum(current_resources.get(db.get_item_by_name(suit), 0)
                         for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"])
@@ -44,7 +45,6 @@ class PrimeBootstrap(MetroidBootstrap):
         else:
             return 1
 
-
     def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: CurrentResources):
         if current_resources.get(db.get_item_by_name("Phazon Suit"), 0) > 0:
             return 0.5
@@ -54,7 +54,7 @@ class PrimeBootstrap(MetroidBootstrap):
             return 0.9
         else:
             return 1
-    
+
     def patch_resource_database(self, db: ResourceDatabase, configuration: BaseConfiguration) -> ResourceDatabase:
         base_damage_reduction = db.base_damage_reduction
         damage_reductions = copy.copy(db.damage_reductions)
@@ -63,7 +63,7 @@ class PrimeBootstrap(MetroidBootstrap):
         suits = [db.get_item_by_name("Varia Suit")]
         if configuration.heat_protection_only_varia:
             requirement_template["Heat-Resisting Suit"] = ResourceRequirement(db.get_item_by_name("Varia Suit"),
-                                                                            1, False)
+                                                                              1, False)
         else:
             suits.extend([db.get_item_by_name("Gravity Suit"), db.get_item_by_name("Phazon Suit")])
 
@@ -77,4 +77,4 @@ class PrimeBootstrap(MetroidBootstrap):
             base_damage_reduction = self.prime1_absolute_damage_reduction
 
         return dataclasses.replace(db, damage_reductions=damage_reductions, base_damage_reduction=base_damage_reduction,
-                                requirement_template=requirement_template)
+                                   requirement_template=requirement_template)

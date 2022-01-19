@@ -16,9 +16,9 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         for obj in CSObjective:
             if obj == CSObjective.HUNDRED_PERCENT:
-                continue # disabled for now
+                continue  # disabled for now
             self.goal_combo.setItemData(obj.value, obj)
-        
+
         self.goal_combo.currentIndexChanged.connect(self._on_objective_changed)
         self.b2_check.stateChanged.connect(self._on_blocks_changed)
 
@@ -28,18 +28,18 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
     @property
     def uses_patches_tab(self) -> bool:
         return False
-    
+
     def _on_objective_changed(self):
         combo_enum = self.goal_combo.currentData()
         with self._editor as editor:
             editor.set_configuration_field("objective", combo_enum)
             self.b2_check.setVisible(combo_enum.enters_hell)
-    
+
     def _on_blocks_changed(self):
         disabled = self.b2_check.isChecked()
         with self._editor as editor:
             editor.set_configuration_field("no_blocks", disabled)
-    
+
     def on_preset_changed(self, preset: Preset):
         set_combo_with_value(self.goal_combo, preset.configuration.objective)
         self.b2_check.setChecked(preset.configuration.no_blocks)

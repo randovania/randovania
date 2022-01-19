@@ -9,15 +9,15 @@ class CSPresetItemPool(PresetItemPool):
     def __init__(self, editor: PresetEditor):
         super().__init__(editor)
         self.previousObj = CSObjective.NORMAL_ENDING
-    
+
     def on_preset_changed(self, preset: Preset):
         super().on_preset_changed(preset)
-        
+
         if self.previousObj != preset.configuration.objective:
             if self.previousObj == CSObjective.BAD_ENDING or preset.configuration.objective == CSObjective.BAD_ENDING:
                 self._update_explosive(preset.configuration.objective == CSObjective.BAD_ENDING)
             self.previousObj = preset.configuration.objective
-    
+
     def _update_explosive(self, bad_ending: bool):
         items = self._boxes_for_category["items"][2]
         explosive = next(item for item in items.keys() if item.name == "Explosive")

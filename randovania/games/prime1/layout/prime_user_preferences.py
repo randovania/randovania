@@ -8,10 +8,12 @@ def _int_field(default: int, min_value: int, max_value: int, display_as_percenta
     return dataclasses.field(default=default, metadata={"min": min_value, "max": max_value,
                                                         "display_as_percentage": display_as_percentage})
 
+
 class SoundMode(IntEnum):
     MONO = 0
     STEREO = 1
     SURROUND = 2
+
 
 @dataclasses.dataclass(frozen=True)
 class PrimeUserPreferences(JsonDataclass):

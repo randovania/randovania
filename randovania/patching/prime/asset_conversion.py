@@ -339,7 +339,7 @@ def convert_prime2_pickups():
     for asset in converter.converted_assets.values():
         assetdata = format_for(asset.type).build(asset.resource, target_game=Game.PRIME)
         if len(assetdata) % 32 != 0:
-            assetdata += b"\xFF" * (32-(len(assetdata) % 32))
+            assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
         Path("converted").joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
             assetdata
         )

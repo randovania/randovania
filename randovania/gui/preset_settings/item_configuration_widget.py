@@ -48,7 +48,8 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
                 break
 
         if item.ammo_index:
-            ammo_names = " and ".join(resources_database.get_item(ammo_index).long_name for ammo_index in item.ammo_index)
+            ammo_names = " and ".join(
+                resources_database.get_item(ammo_index).long_name for ammo_index in item.ammo_index)
             self.provided_ammo_label.setText(
                 "<html><head/><body><p>{} provided by {}</p></body></html>".format(ammo_names, item.name)
             )

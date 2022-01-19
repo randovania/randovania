@@ -10,7 +10,7 @@ from randovania.layout.base.pickup_model import PickupModelDataSource, PickupMod
 
 class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
     Changed = Signal()
-    
+
     def __init__(self, parent: QWidget, editor: PresetEditor):
         super().__init__(parent)
         self.setupUi(self)
@@ -33,6 +33,7 @@ class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
         def persist(index: int):
             with self._editor as options:
                 options.set_configuration_field(attribute_name, combo.itemData(index))
+
         return persist
 
     def update(self, layout: BaseConfiguration):
@@ -40,4 +41,3 @@ class PickupStyleWidget(QDialog, Ui_PickupStyleWidget):
         self.pickup_data_source_combo.setCurrentIndex(
             self.pickup_data_source_combo.findData(layout.pickup_model_data_source))
         self.pickup_data_source_combo.setEnabled(layout.pickup_model_style != PickupModelStyle.ALL_VISIBLE)
-

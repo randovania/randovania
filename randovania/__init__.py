@@ -11,6 +11,7 @@ CONFIGURATION_FILE_PATH: Optional[Path] = None
 def is_frozen() -> bool:
     return getattr(sys, "frozen", False)
 
+
 def get_file_path() -> Path:
     if is_frozen():
         file_dir = Path(getattr(sys, "_MEIPASS"))
@@ -18,10 +19,12 @@ def get_file_path() -> Path:
         file_dir = Path(__file__).parent
     return file_dir
 
+
 def get_readme() -> Path:
     if is_frozen():
         return get_data_path().joinpath("README.md")
     return get_file_path().parent.joinpath("README.md")
+
 
 def get_data_path() -> Path:
     return get_file_path().joinpath("data")

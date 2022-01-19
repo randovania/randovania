@@ -24,6 +24,7 @@ _FIELDS = [
     "items_every_room",
 ]
 
+
 class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
 
     def __init__(self, editor: PresetEditor):

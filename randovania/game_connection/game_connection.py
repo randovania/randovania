@@ -70,4 +70,3 @@ class GameConnection(QObject, ConnectionBackend):
     def set_location_collected_listener(self, listener: Optional[LocationListener]):
         super(ConnectionBackend, self).set_location_collected_listener(listener)
         self.checking_for_collected_index = listener is not None
-
