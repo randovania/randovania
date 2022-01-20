@@ -352,7 +352,7 @@
                                 "items": []
                             }
                         },
-                        "Morph Launcher Entrance": {
+                        "Dock to Ammo Refill Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -422,44 +422,12 @@
                         }
                     }
                 },
-                "Morph Launcher Entrance": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -149.33430162188347,
-                        "y": -308.21834906802223,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "connections": {
-                        "Tile Group (BOMB) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Dock to Ammo Refill Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Dock to Ammo Refill Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1382.26,
-                        "y": -2086.12,
+                        "x": -200.0,
+                        "y": -350.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -467,11 +435,19 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Ammo Refill Room",
-                        "node_name": "Dock to Purple Drapes"
+                        "node_name": "Dock from Purple Drapes"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
-                    "connections": {}
+                    "dock_weakness": "Morph Ball Launcher",
+                    "connections": {
+                        "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -761,17 +737,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -838,7 +804,15 @@
                         "start_point_actor_name": "SP_Checkpoint_PlasmaBeam",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Plasma Beam Room (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
@@ -1046,7 +1020,7 @@
                         }
                     }
                 },
-                "Dock to Purple Drapes": {
+                "Dock from Purple Drapes": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1062,7 +1036,7 @@
                         "node_name": "Dock to Ammo Refill Room"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Blocked Passage",
                     "connections": {
                         "Door to Plasma Beam Room (Upper)": {
                             "type": "and",
@@ -1106,23 +1080,13 @@
                         "node_name": "Dock to Ammo Refill Room"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Door to Plasma Beam Room (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -2138,7 +2102,7 @@
                             }
                         },
                         "Dock to Bottom Morph Launcher": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -2262,10 +2226,10 @@
                         "node_name": "Dock to Fan Room"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Tile Group (POWERBEAM)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -3875,32 +3839,13 @@
                         "node_name": "Dock to Bottom Morph Launcher"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Dock to Ammo Refill Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -3921,32 +3866,13 @@
                         "node_name": "Dock to Bottom Morph Launcher"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Dock to Fan Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Bomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
