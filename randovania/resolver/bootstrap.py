@@ -19,10 +19,11 @@ class EnergyConfig(NamedTuple):
     starting_energy: int
     energy_per_tank: int
 
+
 class Bootstrap:
     def trick_resources_for_configuration(self, configuration: TrickLevelConfiguration,
-                                        resource_database: ResourceDatabase,
-                                        ) -> CurrentResources:
+                                          resource_database: ResourceDatabase,
+                                          ) -> CurrentResources:
         """
         :param configuration:
         :param resource_database:
@@ -40,11 +41,10 @@ class Bootstrap:
 
         return static_resources
 
-
     def _add_minimal_logic_initial_resources(self, resources: CurrentResources,
-                                            game: GameDescription,
-                                            major_items: MajorItemsConfiguration,
-                                            ) -> None:
+                                             game: GameDescription,
+                                             major_items: MajorItemsConfiguration,
+                                             ) -> None:
         resource_database = game.resource_database
 
         if game.minimal_logic is None:
@@ -71,7 +71,8 @@ class Bootstrap:
     def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:
         return EnergyConfig(99, 100)
 
-    def calculate_starting_state(self, game: GameDescription, patches: GamePatches, configuration: BaseConfiguration) -> "State":
+    def calculate_starting_state(self, game: GameDescription, patches: GamePatches,
+                                 configuration: BaseConfiguration) -> "State":
         starting_node = game.world_list.resolve_teleporter_connection(patches.starting_location)
         initial_resources = copy.copy(patches.starting_items)
 
@@ -80,7 +81,7 @@ class Bootstrap:
         if isinstance(starting_node, PlayerShipNode):
             add_resource_gain_to_current_resources(
                 starting_node.resource_gain_on_collect(patches, initial_resources, game.world_list.all_nodes,
-                                                    game.resource_database),
+                                                       game.resource_database),
                 initial_resources,
             )
 
@@ -110,8 +111,8 @@ class Bootstrap:
 
         return starting_state
 
-
-    def version_resources_for_game(self,  configuration: BaseConfiguration, resource_database: ResourceDatabase) -> CurrentResources:
+    def version_resources_for_game(self, configuration: BaseConfiguration,
+                                   resource_database: ResourceDatabase) -> CurrentResources:
         """
         Determines which Version resources should be enabled, according to the configuration.
         Override as needed.
@@ -122,16 +123,16 @@ class Bootstrap:
             for resource in resource_database.version
         }
 
-
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[str]:
+    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[
+        str]:
         """
         Returns a set of strings corresponding to Misc resource short names which should be enabled.
         Override as needed.
         """
         return set()
-    
+
     def misc_resources_for_configuration(self, configuration: BaseConfiguration,
-                                        resource_database: ResourceDatabase) -> CurrentResources:
+                                         resource_database: ResourceDatabase) -> CurrentResources:
         """
         Determines which Misc resources should be enabled, according to the configuration.
         """
@@ -148,7 +149,6 @@ class Bootstrap:
         Override as needed.
         """
         return db
-
 
     def logic_bootstrap(self,
                         configuration: BaseConfiguration,
@@ -169,11 +169,11 @@ class Bootstrap:
 
         if configuration.trick_level.minimal_logic:
             self._add_minimal_logic_initial_resources(starting_state.resources,
-                                                game,
-                                                configuration.major_items_configuration)
+                                                      game,
+                                                      configuration.major_items_configuration)
 
         static_resources = self.trick_resources_for_configuration(configuration.trick_level,
-                                                            game.resource_database)
+                                                                  game.resource_database)
         static_resources.update(self.version_resources_for_game(configuration, game.resource_database))
         static_resources.update(self.misc_resources_for_configuration(configuration, game.resource_database))
 
@@ -183,6 +183,7 @@ class Bootstrap:
         game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
         return game, starting_state
+
 
 class MetroidBootstrap(Bootstrap):
     def energy_config(self, configuration: BaseConfiguration) -> EnergyConfig:

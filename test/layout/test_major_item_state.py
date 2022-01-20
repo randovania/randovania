@@ -17,15 +17,18 @@ from randovania.layout.base.major_item_state import MajorItemState
 
         # Energy Tank
         {"encoded": b'\x92\x80', "bit_count": 12, "progression": "EnergyTank", "json": {"num_shuffled_pickups": 6,
-                                                                        "num_included_in_starting_items": 10}},
+                                                                                        "num_included_in_starting_items": 10}},
 
         # Ammo
         {"encoded": b'\x17', "bit_count": 8, "ammo_index": ("PowerBomb",), "json": {"included_ammo": [7]}},
         {"encoded": b'\x00', "bit_count": 4, "ammo_index": ("DarkAmmo",), "json": {"included_ammo": [0]}},
         {"encoded": b'\x10P', "bit_count": 12, "ammo_index": ("DarkAmmo",), "json": {"included_ammo": [5]}},
-        {"encoded": b'\x00', "bit_count": 4, "ammo_index": ("DarkAmmo", "LightAmmo"), "json": {"included_ammo": [0, 0]}},
-        {"encoded": b'\x1c\xb0', "bit_count": 13, "ammo_index": ("DarkAmmo", "LightAmmo"), "json": {"included_ammo": [150, 150]}},
-        {"encoded": b'\x176@', "bit_count": 21, "ammo_index": ("DarkAmmo", "LightAmmo"), "json": {"included_ammo": [230, 200]}},
+        {"encoded": b'\x00', "bit_count": 4, "ammo_index": ("DarkAmmo", "LightAmmo"),
+         "json": {"included_ammo": [0, 0]}},
+        {"encoded": b'\x1c\xb0', "bit_count": 13, "ammo_index": ("DarkAmmo", "LightAmmo"),
+         "json": {"included_ammo": [150, 150]}},
+        {"encoded": b'\x176@', "bit_count": 21, "ammo_index": ("DarkAmmo", "LightAmmo"),
+         "json": {"included_ammo": [230, 200]}},
     ],
     name="major_item_state")
 def _major_item_state(request, echoes_item_database, generic_item_category):

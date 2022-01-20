@@ -75,19 +75,19 @@ class Determiner:
             return self.s.title()
         else:
             return self.s
-    
+
     @property
     def capitalize(self):
         return self.s.capitalize()
-    
+
     @property
     def capitalize_title(self):
         return self.title.capitalize()
-    
+
     @property
     def upper(self):
         return self.s.upper()
-    
+
     @property
     def upper_title(self):
         return self.title.upper()

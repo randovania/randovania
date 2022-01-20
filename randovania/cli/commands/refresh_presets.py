@@ -1,5 +1,5 @@
-from argparse import ArgumentParser
 import logging
+from argparse import ArgumentParser
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset

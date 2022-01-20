@@ -1,6 +1,7 @@
 import dataclasses
 
 from PySide2.QtWidgets import QWidget
+
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.dread_cosmetic_patches_dialog_ui import Ui_DreadCosmeticPatchesDialog
@@ -16,7 +17,7 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
 
         self.on_new_cosmetic_patches(current)
         self.connect_signals()
-    
+
     def connect_signals(self):
         super().connect_signals()
 
@@ -33,11 +34,12 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
                 self._cosmetic_patches,
                 **{attribute_name: bool(value)}
             )
+
         return persist
 
     @property
     def cosmetic_patches(self) -> DreadCosmeticPatches:
         return self._cosmetic_patches
-    
+
     def reset(self):
         self.on_new_cosmetic_patches(DreadCosmeticPatches())

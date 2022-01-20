@@ -12,7 +12,7 @@ async def test_resolver_with_log_file(test_files_dir, seed_name: str):
     debug.set_level(2)
 
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", seed_name))
-    configuration = description.permalink.presets[0].configuration
+    configuration = description.get_preset(0).configuration
     patches = description.all_patches[0]
 
     # Run

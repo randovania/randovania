@@ -1,13 +1,13 @@
 import dataclasses
 
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 
 
 class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
@@ -105,4 +105,3 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def _persist_dangerous_tank(self, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field("dangerous_energy_tank", checked)
-

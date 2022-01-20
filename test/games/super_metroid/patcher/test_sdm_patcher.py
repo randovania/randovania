@@ -1,10 +1,10 @@
-import pytest
 import json
 
-from randovania.layout.layout_description import LayoutDescription
+from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 from randovania.games.super_metroid.patcher.super_duper_metroid_patcher import SuperDuperMetroidPatcher
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
+from randovania.layout.layout_description import LayoutDescription
+
 
 def test_patch_data_creation(test_files_dir):
     # Load the RDV game
@@ -25,5 +25,3 @@ def test_patch_data_creation(test_files_dir):
     expected_json = json.load(json_file)
     json_file.close()
     assert expected_json == patch_data
-
-

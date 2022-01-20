@@ -5,11 +5,11 @@ from PySide2 import QtWidgets, QtCore
 from mock import MagicMock, AsyncMock, call, ANY
 
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
 from randovania.gui.game_details.game_details_window import GameDetailsWindow
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
 
 
 @pytest.mark.asyncio
@@ -59,7 +59,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
 
     options = MagicMock()
     description = MagicMock()
-    description.permalink.player_count = 1
+    description.player_count = 1
     description.permalink.as_base64_str = "<permalink>"
     description.permalink.spoiler = False
 
@@ -70,7 +70,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     window.update_layout_description(description)
 
     # Assert
-    mock_describer.assert_called_once_with(description.permalink.get_preset.return_value)
+    mock_describer.assert_called_once_with(description.get_preset.return_value)
     mock_merge.assert_has_calls([
         call(["a", "c"]),
         call(["b", "d"]),

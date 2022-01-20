@@ -73,4 +73,3 @@ def test_refresh_all_logic(check, mocker):
         mock_find_database_errors.assert_not_called()
         mock_write_human_readable_game.assert_has_calls([call(ANY, ANY) for _ in RandovaniaGame])
         mock_write_as_split_files.assert_has_calls([call(ANY, ANY) for _ in RandovaniaGame])
-

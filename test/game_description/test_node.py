@@ -1,8 +1,8 @@
 import pytest
 
-from randovania.game_description.world.node import LogbookNode, LoreType
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
+from randovania.game_description.world.node import LogbookNode, LoreType
 
 
 @pytest.fixture(

@@ -7,8 +7,8 @@ import pytest
 
 from randovania.games.prime2.patcher import claris_randomizer
 from randovania.interface_common import persistence
-from randovania.patching.patchers.exceptions import ExportFailure
 from randovania.layout.layout_description import LayoutDescription
+from randovania.patching.patchers.exceptions import ExportFailure
 
 LayoutDescriptionMock = Union[MagicMock, LayoutDescription]
 
@@ -251,7 +251,8 @@ def test_apply_patcher_file(
     game_root = valid_tmp_game_root
     progress_update = MagicMock()
     status_update = mock_create_progress_update_from_successive_messages.return_value
-    mock_data_from_json = mocker.patch("randovania.games.prime2.patcher.echoes_dol_patcher.EchoesDolPatchesData.from_json")
+    mock_data_from_json = mocker.patch(
+        "randovania.games.prime2.patcher.echoes_dol_patcher.EchoesDolPatchesData.from_json")
 
     patcher_data = {
         "menu_mod": include_menu_mod,

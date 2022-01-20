@@ -3,20 +3,21 @@ from functools import partial
 
 from PySide2.QtCore import QSize
 from PySide2.QtGui import QColor
+from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QLabel, QSlider, \
+    QCheckBox
 
-from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QLabel, QSlider, QCheckBox
-
-from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
-from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.layout.prime_user_preferences import PrimeUserPreferences, SoundMode
+from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+from randovania.gui.generated.prime_cosmetic_patches_dialog_ui import Ui_PrimeCosmeticPatchesDialog
 
 SUIT_DEFAULT_COLORS = [
-    [ (255, 173, 50), (220, 25, 45), (132, 240, 60) ], # Power
-    [ (255, 173, 50), (220, 25, 45), (255, 125, 50), (132, 240, 60) ], # Varia
-    [ (170, 170, 145), (70, 25, 50), (40, 20, 90), (140, 240, 240) ], # Gravity
-    [ (50, 50, 50), (20, 20, 20), (230, 50, 62) ] # Phazon
+    [(255, 173, 50), (220, 25, 45), (132, 240, 60)],  # Power
+    [(255, 173, 50), (220, 25, 45), (255, 125, 50), (132, 240, 60)],  # Varia
+    [(170, 170, 145), (70, 25, 50), (40, 20, 90), (140, 240, 240)],  # Gravity
+    [(50, 50, 50), (20, 20, 20), (230, 50, 62)]  # Phazon
 ]
+
 
 def update_label_with_slider(label: QLabel, slider: QSlider):
     if label.display_as_percentage:
@@ -26,7 +27,8 @@ def update_label_with_slider(label: QLabel, slider: QSlider):
     else:
         label.setText(str(slider.value()))
 
-def hue_rotate_color(original_color: tuple[int,int,int], rotation: int):
+
+def hue_rotate_color(original_color: tuple[int, int, int], rotation: int):
     color = QColor.fromRgb(*original_color)
     h = color.hue() + rotation
     s = color.saturation()
@@ -70,8 +72,8 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
             self.sound_mode_combo.addItem(sound_mode.name, sound_mode)
 
         # Build dynamically preview color squares for suits
-        suit_layouts = [ 
-            self.power_suit_color_layout, self.varia_suit_color_layout, 
+        suit_layouts = [
+            self.power_suit_color_layout, self.varia_suit_color_layout,
             self.gravity_suit_color_layout, self.phazon_suit_color_layout
         ]
         self.suit_color_preview_squares = []
@@ -142,27 +144,28 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
         return persist
 
     def _persist_suit_color_rotations(self):
-        suit_color_rotations_tuple=(
+        suit_color_rotations_tuple = (
             self.power_suit_rotation_field.value(),
             self.varia_suit_rotation_field.value(),
             self.gravity_suit_rotation_field.value(),
             self.phazon_suit_rotation_field.value()
         )
-        self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, suit_color_rotations=suit_color_rotations_tuple)
+        self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches,
+                                                     suit_color_rotations=suit_color_rotations_tuple)
         self._update_color_squares()
 
     def _open_color_picker(self):
         init_color = self._cosmetic_patches.hud_color
         color = QColorDialog.getColor(QColor(*init_color))
-        
+
         if color.isValid():
             color_tuple = (color.red(), color.green(), color.blue())
             estimated_ingame_alpha = max(color_tuple)
             if estimated_ingame_alpha < 150:
-                QMessageBox.warning(self, "Dangerous preset", 
-                    ("Be careful, desaturated colors like this one tend to produce a transparent HUD.\n"
-                    "Use at your own risk.")
-                )
+                QMessageBox.warning(self, "Dangerous preset",
+                                    ("Be careful, desaturated colors like this one tend to produce a transparent HUD.\n"
+                                     "Use at your own risk.")
+                                    )
             self._cosmetic_patches = dataclasses.replace(self._cosmetic_patches, hud_color=color_tuple)
             self._update_color_squares()
 
@@ -177,7 +180,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
                 style = 'background-color: rgb({},{},{})'.format(*color)
                 self.suit_color_preview_squares[i][j].setStyleSheet(style)
 
-    def _add_preview_color_square_to_layout(self, layout: QLayout, default_color: tuple[int,int,int]):
+    def _add_preview_color_square_to_layout(self, layout: QLayout, default_color: tuple[int, int, int]):
         color_square = QFrame(self.game_changes_box)
         color_square.setMinimumSize(QSize(22, 22))
         color_square.setSizePolicy(QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed))

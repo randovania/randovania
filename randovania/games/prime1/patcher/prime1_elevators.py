@@ -12,8 +12,10 @@ RANDOM_PRIME_CUSTOM_NAMES = {
     ("Magmoor Caverns", "Transport to Chozo Ruins North"): 'Magmoor Caverns North\0(Lava Lake)',  # 31
     ("Magmoor Caverns", "Transport to Phendrana Drifts North"): 'Magmoor Caverns West\0(Monitor Station)',  # 852002
     ("Magmoor Caverns", "Transport to Tallon Overworld West"): 'Magmoor Caverns East\0(Twin Fires)',  # 1048608
-    ("Magmoor Caverns", "Transport to Phazon Mines West"): 'Magmoor Caverns South\0(Magmoor Workstation, Debris)',  # 1703972
-    ("Magmoor Caverns", "Transport to Phendrana Drifts South"): 'Magmoor Caverns South\0(Magmoor Workstation, Save Station)',  # 1769512
+    ("Magmoor Caverns", "Transport to Phazon Mines West"): 'Magmoor Caverns South\0(Magmoor Workstation, Debris)',
+    # 1703972
+    ("Magmoor Caverns",
+     "Transport to Phendrana Drifts South"): 'Magmoor Caverns South\0(Magmoor Workstation, Save Station)',  # 1769512
 
     ("Phazon Mines", "Transport to Tallon Overworld South"): 'Phazon Mines East\0(Main Quarry)',  # 28
     ("Phazon Mines", "Transport to Magmoor Caverns South"): 'Phazon Mines West\0(Phazon Processing Center)',  # 1638417
@@ -21,13 +23,16 @@ RANDOM_PRIME_CUSTOM_NAMES = {
     ("Tallon Overworld", "Transport to Chozo Ruins West"): 'Tallon Overworld North\0(Tallon Canyon)',  # 917509
     ("Tallon Overworld", "Transport to Chozo Ruins East"): 'Tallon Overworld East\0(Frigate Crash Site)',  # 1441848
     ("Tallon Overworld", "Transport to Magmoor Caverns East"): 'Tallon Overworld West\0(Root Cave)',  # 1507378
-    ("Tallon Overworld", "Transport to Chozo Ruins South"): 'Tallon Overworld South\0(Great Tree Hall, Upper)',  # 2687012
-    ("Tallon Overworld", "Transport to Phazon Mines East"): 'Tallon Overworld South\0(Great Tree Hall, Lower)',  # 2818083
+    ("Tallon Overworld", "Transport to Chozo Ruins South"): 'Tallon Overworld South\0(Great Tree Hall, Upper)',
+    # 2687012
+    ("Tallon Overworld", "Transport to Phazon Mines East"): 'Tallon Overworld South\0(Great Tree Hall, Lower)',
+    # 2818083
     ("Tallon Overworld", "Artifact Temple"): 'Artifact Temple',  # 1049306
 
     ("Chozo Ruins", "Transport to Tallon Overworld North"): 'Chozo Ruins West\0(Main Plaza)',  # 125
     ("Chozo Ruins", "Transport to Magmoor Caverns North"): 'Chozo Ruins North\0(Sun Tower)',  # 1572903
-    ("Chozo Ruins", "Transport to Tallon Overworld East"): 'Chozo Ruins East\0(Reflecting Pool, Save Station)',  # 4063276
+    ("Chozo Ruins", "Transport to Tallon Overworld East"): 'Chozo Ruins East\0(Reflecting Pool, Save Station)',
+    # 4063276
     ("Chozo Ruins", "Transport to Tallon Overworld South"): 'Chozo Ruins South\0(Reflecting Pool, Far End)',  # 4128808
 
     ("End of Game", "Credits"): 'Credits',

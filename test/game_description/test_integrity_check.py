@@ -1,5 +1,3 @@
-import pprint
-
 import pytest
 
 from randovania.game_description import default_database, integrity_check, data_reader

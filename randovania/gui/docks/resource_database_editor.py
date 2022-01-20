@@ -228,7 +228,7 @@ class ResourceDatabaseEditor(QtWidgets.QDockWidget, Ui_ResourceDatabaseEditor):
     @property
     def _all_tabs(self):
         return [self.tab_item, self.tab_event, self.tab_trick, self.tab_damage,
-                    self.tab_version, self.tab_misc]
+                self.tab_version, self.tab_misc]
 
     def _on_data_changed(self, model: ResourceDatabaseGenericModel, top_left: QtCore.QModelIndex,
                          bottom_right: QtCore.QModelIndex, roles):

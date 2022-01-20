@@ -3,8 +3,8 @@ from typing import Dict
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.prime2.patcher import echoes_items
-from randovania.patching.prime.patcher_file_lib import hint_lib, guaranteed_item_hint
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.patching.prime.patcher_file_lib import hint_lib, guaranteed_item_hint
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [
     0xD97685FE,

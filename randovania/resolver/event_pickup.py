@@ -3,10 +3,10 @@ from typing import Tuple, List
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.node import EventNode, PickupNode, ResourceNode, Node
 from randovania.game_description.requirements import ResourceRequirement, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGain, CurrentResources, ResourceInfo
+from randovania.game_description.world.node import EventNode, PickupNode, ResourceNode, Node
 
 
 @dataclasses.dataclass(frozen=True)

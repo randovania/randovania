@@ -10,8 +10,8 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.gui.preset_settings.elevators_tab import PresetElevators
-    from randovania.gui.preset_settings.starting_area_tab import PresetStartingArea
-    from randovania.gui.preset_settings.logic_damage_tab import PresetLogicDamage
+    from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
+    from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.games.prime2.gui.preset_settings.echoes_goal_tab import PresetEchoesGoal
     from randovania.games.prime2.gui.preset_settings.echoes_hints_tab import PresetEchoesHints
     from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import PresetEchoesTranslators
@@ -23,8 +23,8 @@ def prime2_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         PresetTrickLevel(editor, game_description, window_manager),
         PresetPatcherEnergy(editor, game_enum),
         PresetElevators(editor, game_description),
-        PresetStartingArea(editor, game_description),
-        PresetLogicDamage(editor),
+        PresetMetroidStartingArea(editor, game_description),
+        PresetGeneration(editor, game_description),
         PresetEchoesGoal(editor),
         PresetEchoesHints(editor),
         PresetEchoesTranslators(editor),

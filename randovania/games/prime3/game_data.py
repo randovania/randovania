@@ -2,7 +2,8 @@ from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, 
 from randovania.games.prime3.generator.item_pool.pool_creator import corruption_specific_pool
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
-from randovania.games.prime3.layout.preset_describer import corruption_format_params, corruption_unexpected_items, corruption_expected_items
+from randovania.games.prime3.layout.preset_describer import corruption_format_params, corruption_unexpected_items, \
+    corruption_expected_items
 from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
 from randovania.resolver.bootstrap import MetroidBootstrap
 

@@ -1,6 +1,5 @@
 import functools
-import traceback
-from typing import List, Callable, FrozenSet, Dict
+from typing import List, Callable, Dict
 
 from PySide2 import QtWidgets, QtCore
 

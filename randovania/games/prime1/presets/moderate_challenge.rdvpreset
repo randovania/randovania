@@ -1,19 +1,79 @@
 {
-    "schema_version": 17,
-    "name": "Fewest Changes",
-    "uuid": "da2537a8-0e2e-4365-aab5-9162b3f21c7e",
-    "description": "This preset keeps the game as close as possible to how the original game operates. Only crashes are fixed.",
+    "schema_version": 20,
+    "name": "Moderate Challenge",
+    "uuid": "7c57ecf6-ff1c-4ab9-bc84-802ac70e980a",
+    "description": "Generates seeds which can require some tricks to complete. A moderate amount of practice, knowledge and wit is required to overcome the typical seed.<br/><br/>Elevator connections are randomized and the game can start in almost any Save Station.",
     "base_preset_uuid": null,
     "game": "prime1",
     "configuration": {
         "trick_level": {
             "minimal_logic": false,
-            "specific_levels": {}
+            "specific_levels": {
+                "BJ": "beginner",
+                "ClipThruObjects": "beginner",
+                "Combat": "intermediate",
+                "Dash": "beginner",
+                "Knowledge": "beginner",
+                "LJump": "intermediate",
+                "Movement": "beginner",
+                "RJump": "beginner",
+                "SJump": "intermediate",
+                "Standable": "intermediate",
+                "UnderwaterMovement": "beginner"
+            }
         },
         "starting_location": [
             {
+                "world_name": "Chozo Ruins",
+                "area_name": "Save Station 1"
+            },
+            {
+                "world_name": "Chozo Ruins",
+                "area_name": "Save Station 2"
+            },
+            {
+                "world_name": "Chozo Ruins",
+                "area_name": "Save Station 3"
+            },
+            {
+                "world_name": "Magmoor Caverns",
+                "area_name": "Save Station Magmoor A"
+            },
+            {
+                "world_name": "Magmoor Caverns",
+                "area_name": "Save Station Magmoor B"
+            },
+            {
+                "world_name": "Phazon Mines",
+                "area_name": "Save Station Mines B"
+            },
+            {
+                "world_name": "Phazon Mines",
+                "area_name": "Save Station Mines C"
+            },
+            {
+                "world_name": "Phendrana Drifts",
+                "area_name": "Save Station A"
+            },
+            {
+                "world_name": "Phendrana Drifts",
+                "area_name": "Save Station B"
+            },
+            {
+                "world_name": "Phendrana Drifts",
+                "area_name": "Save Station C"
+            },
+            {
+                "world_name": "Phendrana Drifts",
+                "area_name": "Save Station D"
+            },
+            {
                 "world_name": "Tallon Overworld",
                 "area_name": "Landing Site"
+            },
+            {
+                "world_name": "Tallon Overworld",
+                "area_name": "Savestation"
             }
         ],
         "available_locations": {
@@ -50,7 +110,7 @@
                     "num_included_in_starting_items": 1
                 },
                 "Scan Visor": {
-                    "num_included_in_starting_items": 1
+                    "num_shuffled_pickups": 1
                 },
                 "Thermal Visor": {
                     "num_shuffled_pickups": 1
@@ -107,12 +167,9 @@
                     "num_shuffled_pickups": 1
                 }
             },
-            "default_items": {
-                "visor": "Combat Visor",
-                "beam": "Power Beam"
-            },
+            "default_items": {},
             "minimum_random_starting_items": 0,
-            "maximum_random_starting_items": 0
+            "maximum_random_starting_items": 2
         },
         "ammo_configuration": {
             "items_state": {
@@ -135,20 +192,30 @@
         "damage_strictness": 1.5,
         "pickup_model_style": "all-visible",
         "pickup_model_data_source": "etm",
-        "multi_pickup_placement": false,
+        "multi_pickup_placement": true,
         "logical_resource_action": "randomly",
         "elevators": {
-            "mode": "vanilla",
+            "mode": "randomized",
             "excluded_teleporters": [
                 {
-                    "world_name": "Tallon Overworld",
-                    "area_name": "Artifact Temple",
-                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
+                    "world_name": "Frigate Orpheon",
+                    "area_name": "Exterior Docking Hangar",
+                    "node_name": "Teleport to Landing Site"
                 },
                 {
                     "world_name": "Impact Crater",
                     "area_name": "Crater Entry Point",
                     "node_name": "Teleport to Artifact Temple"
+                },
+                {
+                    "world_name": "Impact Crater",
+                    "area_name": "Metroid Prime Lair",
+                    "node_name": "Teleporter to Credits"
+                },
+                {
+                    "world_name": "Tallon Overworld",
+                    "area_name": "Artifact Temple",
+                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
                 }
             ],
             "excluded_targets": [],
@@ -159,22 +226,24 @@
             "artifacts": "precise"
         },
         "energy_per_tank": 100,
-        "artifact_target": 12,
+        "artifact_target": 9,
         "artifact_minimum_progression": 6,
         "heat_damage": 10.0,
-        "warp_to_start": false,
-        "heat_protection_only_varia": false,
-        "progressive_damage_reduction": false,
+        "warp_to_start": true,
+        "heat_protection_only_varia": true,
+        "progressive_damage_reduction": true,
         "allow_underwater_movement_without_gravity": false,
         "small_samus": false,
-        "main_plaza_door": false,
-        "backwards_frigate": false,
-        "backwards_labs": false,
-        "backwards_upper_mines": false,
+        "shuffle_item_pos": false,
+        "items_every_room": false,
+        "main_plaza_door": true,
+        "backwards_frigate": true,
+        "backwards_labs": true,
+        "backwards_upper_mines": true,
         "backwards_lower_mines": false,
-        "phazon_elite_without_dynamo": false,
-        "qol_game_breaking": false,
-        "qol_pickup_scans": false,
-        "qol_cutscenes": "original"
+        "phazon_elite_without_dynamo": true,
+        "qol_game_breaking": true,
+        "qol_pickup_scans": true,
+        "qol_cutscenes": "competitive"
     }
 }

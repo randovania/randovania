@@ -278,14 +278,14 @@ class LogbookNode(ResourceNode):
         """
         if current_resources.get(self.resource(), 0) != 0:
             return False
-        
+
         if self.scan_visor is not None:
             if current_resources.get(self.scan_visor, 0) == 0:
                 return False
 
         if self.required_translator is not None:
             return current_resources.get(self.required_translator, 0) > 0
-        
+
         return True
 
     def resource_gain_on_collect(self, patches: GamePatches, current_resources: CurrentResources,

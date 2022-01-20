@@ -433,7 +433,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     patcher = sio.patcher_provider.patcher_for_game.return_value
-    mock_layout_description.return_value.permalink.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
+    mock_layout_description.return_value.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
 
     cosmetic = EchoesCosmeticPatches(open_map=False)
 
@@ -442,7 +442,7 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
         result = game_session.game_session_admin_player(sio, 1, 1234, "create_patcher_file", cosmetic.as_json)
 
     # Assert
-    mock_layout_description.return_value.permalink.get_preset.assert_called_once_with(2)
+    mock_layout_description.return_value.get_preset.assert_called_once_with(2)
     sio.patcher_provider.patcher_for_game.assert_called_once_with(RandovaniaGame.METROID_PRIME_ECHOES)
     patcher.create_patch_data.assert_called_once_with(
         mock_layout_description.return_value,

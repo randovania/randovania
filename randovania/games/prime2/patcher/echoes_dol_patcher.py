@@ -5,10 +5,10 @@ from pathlib import Path
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.dol_patching.dol_file import DolFile
 from randovania.dol_patching.dol_version import find_version_for_dol
-from randovania.games.prime2.patcher import echoes_dol_versions, echoes_dol_patches
-from randovania.patching.prime import all_prime_dol_patches
-from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion, BeamConfiguration
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
+from randovania.games.prime2.patcher import echoes_dol_versions, echoes_dol_patches
+from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion, BeamConfiguration
+from randovania.patching.prime import all_prime_dol_patches
 
 
 @dataclasses.dataclass(frozen=True)

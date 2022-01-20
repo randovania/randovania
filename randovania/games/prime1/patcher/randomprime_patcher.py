@@ -18,12 +18,12 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
@@ -108,6 +108,7 @@ _LOCATIONS_GROUPED_TOGETHER = [
     ({15, 16}, None),  # Ruined Gallery
     ({52, 53}, None),  # Research Lab Aether
 ]
+
 
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
@@ -234,9 +235,9 @@ class RandomprimePatcher(Patcher):
                           cosmetic_patches: PrimeCosmeticPatches):
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
-        preset = description.permalink.get_preset(players_config.player_index)
-        configuration = typing.cast(PrimeConfiguration, preset.configuration)
-        rng = Random(description.permalink.seed_number)
+        configuration = description.get_preset(players_config.player_index).configuration
+        assert isinstance(configuration, PrimeConfiguration)
+        rng = Random(description.get_seed_for_player(players_config.player_index))
 
         area_namers = {
             index: hint_lib.AreaNamer(default_database.game_description_for(player_preset.game).world_list)
@@ -276,7 +277,7 @@ class RandomprimePatcher(Patcher):
             "rumble": cosmetic_patches.user_preferences.rumble,
             "swapBeamControls": cosmetic_patches.user_preferences.swap_beam_controls,
         }
-        
+
         for world in db.world_list.worlds:
             if world.name == "End of Game":
                 continue
@@ -365,7 +366,7 @@ class RandomprimePatcher(Patcher):
         for attribute, hue_rotation in zip(SUIT_ATTRIBUTES, cosmetic_patches.suit_color_rotations):
             if hue_rotation != 0:
                 suit_colors[attribute] = hue_rotation
-        
+
         starting_room = _name_for_location(db.world_list, patches.starting_location)
 
         starting_items = {
@@ -374,9 +375,9 @@ class RandomprimePatcher(Patcher):
         }
 
         return {
-            "seed": description.permalink.seed_number,
+            "seed": description.get_seed_for_player(players_config.player_index),
             "preferences": {
-                "defaultGameOptions" : default_game_options,
+                "defaultGameOptions": default_game_options,
                 "qolGameBreaking": configuration.qol_game_breaking,
                 "qolCosmetic": cosmetic_patches.qol_cosmetic,
                 "qolPickupScans": configuration.qol_pickup_scans,

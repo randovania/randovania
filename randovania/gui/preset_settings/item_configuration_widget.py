@@ -6,7 +6,6 @@ from PySide2.QtWidgets import QGraphicsOpacityEffect, QWidget
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.generated.item_configuration_popup_ui import Ui_ItemConfigurationPopup
-from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.layout.base.major_item_state import MajorItemState
 
 
@@ -49,7 +48,8 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
                 break
 
         if item.ammo_index:
-            ammo_names = " and ".join(resources_database.get_item(ammo_index).long_name for ammo_index in item.ammo_index)
+            ammo_names = " and ".join(
+                resources_database.get_item(ammo_index).long_name for ammo_index in item.ammo_index)
             self.provided_ammo_label.setText(
                 "<html><head/><body><p>{} provided by {}</p></body></html>".format(ammo_names, item.name)
             )

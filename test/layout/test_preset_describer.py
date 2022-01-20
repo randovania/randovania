@@ -1,8 +1,6 @@
 import dataclasses
 
 from randovania.games.game import RandovaniaGame
-
-from randovania.layout import preset_describer
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 
 
@@ -15,7 +13,7 @@ def test_echoes_format_params(default_layout_configuration):
 
     # Run
     result = RandovaniaGame.METROID_PRIME_ECHOES.data.layout.preset_describer.format_params(layout_configuration)
-    
+
     # Assert
     assert result == {
         'Difficulty': [
@@ -29,7 +27,7 @@ def test_echoes_format_params(default_layout_configuration):
             'Starting Location: Temple Grounds - Landing Site',
             'Translator Gates: Vanilla (Colors)',
         ],
-        'Item Placement': [
+        'Logic Settings': [
             'All tricks disabled',
             'Dangerous Actions: Randomly',
         ],

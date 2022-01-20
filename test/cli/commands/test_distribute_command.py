@@ -1,7 +1,7 @@
 from pathlib import Path
-from mock import MagicMock, ANY, AsyncMock
 
 import pytest
+from mock import MagicMock, ANY, AsyncMock
 
 import randovania.cli.commands.distribute
 from randovania.games.game import RandovaniaGame

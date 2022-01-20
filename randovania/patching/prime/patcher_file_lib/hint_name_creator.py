@@ -5,11 +5,11 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintType, Hint, HintLocationPrecision
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.patching.prime.patcher_file_lib import hint_lib
 from randovania.patching.prime.patcher_file_lib.hint_formatters import LocationFormatter
 from randovania.patching.prime.patcher_file_lib.item_hints import create_pickup_hint
 from randovania.patching.prime.patcher_file_lib.temple_key_hint import create_temple_key_hint
-from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 class LocationHintCreator:
@@ -49,7 +49,7 @@ class LocationHintCreator:
 
         else:
             assert hint.hint_type == HintType.LOCATION
-            
+
             pickup_target = patches.pickup_assignment.get(hint.target)
             determiner, pickup_name = create_pickup_hint(patches.pickup_assignment,
                                                          self.world_list,

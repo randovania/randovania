@@ -3,11 +3,10 @@ from mock import MagicMock, ANY, AsyncMock
 
 from randovania.cli.commands import randomize_command
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-from randovania.interface_common.options import Options
-from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.interface_common.options import Options
+from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 @pytest.mark.parametrize(["game", "cosmetic_class"], [
@@ -33,8 +32,8 @@ def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):
 
     preset = MagicMock()
     preset.game = game
-    layout_description.permalink.player_count = 4
-    layout_description.permalink.get_preset = MagicMock(return_value=preset)
+    layout_description.player_count = 4
+    layout_description.get_preset = MagicMock(return_value=preset)
 
     players_config = PlayersConfiguration(
         args.player_index,

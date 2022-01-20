@@ -8,18 +8,18 @@ import pytest
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
+from randovania.games.prime2.layout.hint_configuration import HintConfiguration
+from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.base_configuration import StartingLocationList
-from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
-from randovania.games.prime2.layout.hint_configuration import HintConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
-from randovania.layout.lib.teleporters import TeleporterConfiguration
-from randovania.games.prime2.layout.translator_configuration import TranslatorConfiguration
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
+from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 T = TypeVar("T")
 
@@ -96,7 +96,8 @@ def _layout_config_with_data(request, default_layout_configuration):
         for key, cls in types_to_mock.items():
             assert key in data
             data[key] = stack.enter_context(make_dummy(cls))
-        yield request.param["encoded"], EchoesConfiguration.from_json(data, game=RandovaniaGame.METROID_PRIME_ECHOES), data
+        yield request.param["encoded"], EchoesConfiguration.from_json(data,
+                                                                      game=RandovaniaGame.METROID_PRIME_ECHOES), data
 
 
 def test_decode(layout_config_with_data):

@@ -18,6 +18,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.games.prime2.patcher import claris_patcher_file
@@ -513,8 +514,9 @@ def test_create_claris_patcher_file(test_files_dir):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     player_index = 0
-    preset = description.permalink.get_preset(player_index)
+    preset = description.get_preset(player_index)
     cosmetic_patches = EchoesCosmeticPatches()
+    assert isinstance(preset.configuration, EchoesConfiguration)
 
     # Run
     result = claris_patcher_file.create_patcher_file(description, PlayersConfiguration(player_index, {0: "you"}),

@@ -1,28 +1,28 @@
 import dataclasses
-import logging
-from random import Random
-from enum import Enum, auto, unique
+from enum import Enum, unique
 from pathlib import Path
+from random import Random
 from typing import Optional
+
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass
-
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
+
 @unique
 class MyChar(BitPackEnum, Enum):
-    QUOTE="Quote"
-    CURLY="Curly"
-    SUE="Sue"
-    TOROKO="Toroko"
-    KING="King"
-    CHACO="Chaco"
-    KANPACHI="Kanpachi"
-    MISERY="Misery"
-    FROG="Frog"
-    RANDOM="Random"
-    CUSTOM="Custom"
+    QUOTE = "Quote"
+    CURLY = "Curly"
+    SUE = "Sue"
+    TOROKO = "Toroko"
+    KING = "King"
+    CHACO = "Chaco"
+    KANPACHI = "Kanpachi"
+    MISERY = "Misery"
+    FROG = "Frog"
+    RANDOM = "Random"
+    CUSTOM = "Custom"
 
     def mychar_bmp(self, rng: Random) -> Optional[Path]:
         if self == MyChar.CUSTOM:
@@ -33,30 +33,30 @@ class MyChar(BitPackEnum, Enum):
             options.remove(MyChar.CUSTOM)
             return rng.choice(options).mychar_bmp(rng)
         return str(RandovaniaGame.CAVE_STORY.data_path.joinpath(f"assets/mychar/{self.value}.bmp"))
-    
+
     @property
     def ui_icon(self) -> Path:
         return RandovaniaGame.CAVE_STORY.data_path.joinpath(f"assets/icon/{self.value}.png")
-    
+
     @property
     def description(self) -> Optional[str]:
         if self == MyChar.RANDOM:
             return "Select a random MyChar for each seed."
         if self == MyChar.CUSTOM:
             return "Provide your own MyChar! Place it in your data folder."
-    
+
     def next_mychar(self, reverse: bool) -> "MyChar":
         upcoming = list(MyChar)
         offset = -1 if reverse else 1
         return upcoming[(upcoming.index(self) + offset) % len(upcoming)]
-        
+
 
 @unique
 class MusicRandoType(BitPackEnum, Enum):
-    DEFAULT="Vanilla"
-    SHUFFLE="Shuffle"
-    RANDOM="Random"
-    CHAOS="Chaos"
+    DEFAULT = "Vanilla"
+    SHUFFLE = "Shuffle"
+    RANDOM = "Random"
+    CHAOS = "Chaos"
 
     @property
     def description(self) -> str:
@@ -69,17 +69,20 @@ class MusicRandoType(BitPackEnum, Enum):
         if self == MusicRandoType.CHAOS:
             return "Remap every `<CMU` to a new song. For example, teleporting to the Egg Corridor plays *Charge*, but entering Egg Corridor from Cthulhu's Abode plays *Run!*"
 
+
 @unique
 class SongType(BitPackEnum, Enum):
-    NULL="Null"
-    SONG="Song"
-    JINGLE="Jingle"
+    NULL = "Null"
+    SONG = "Song"
+    JINGLE = "Jingle"
+
 
 @unique
 class SongGame(BitPackEnum, Enum):
     CS = "Cave Story"
     BETA = "Cave Story (Beta)"
     KERO = "Kero Blaster"
+
 
 @dataclasses.dataclass(frozen=True)
 class CSSong(BitPackDataclass, JsonDataclass):
@@ -91,26 +94,27 @@ class CSSong(BitPackDataclass, JsonDataclass):
     @property
     def is_valid(self) -> bool:
         return self.song_type == SongType.SONG
-    
+
     @classmethod
     def valid_songs(cls, enabled: dict[str, bool]) -> list["CSSong"]:
         return [song for song in SONGS.values() if song.is_valid and enabled[song.song_name]]
-    
+
     @classmethod
     def songs_to_shuffle(cls) -> list["CSSong"]:
         return [song for song in SONGS.values() if song.is_valid and song.source_game == SongGame.CS]
-    
+
     @classmethod
     def defaults(cls) -> dict[str, bool]:
         return {song.song_name: song.is_valid and song.source_game == SongGame.CS for song in SONGS.values()}
-    
+
     @classmethod
     def all_songs_enabled(cls) -> dict[str, bool]:
         return {song.song_name: song.is_valid for song in SONGS.values()}
-    
+
     @classmethod
     def from_name(cls, name: str) -> "CSSong":
         return next(song for song in SONGS.values() if song.song_name == name)
+
 
 SONGS = {
     "xxxx": CSSong("XXXX", "0000", SongType.NULL),
@@ -168,7 +172,7 @@ SONGS = {
     "shoppingCart": CSSong("Shopping Cart", "0050", SongType.SONG, SongGame.KERO),
     "prothallium": CSSong("Prothallium", "0051", SongType.SONG, SongGame.KERO),
     "hardCording": CSSong("Hard Cording", "0052", SongType.SONG, SongGame.KERO),
-    "newItem": CSSong("New Item!", "0053", SongType.SONG, SongGame.KERO), # kind of jingle, kind of not?
+    "newItem": CSSong("New Item!", "0053", SongType.SONG, SongGame.KERO),  # kind of jingle, kind of not?
     "checkinOut": CSSong("Check'IN Out", "0054", SongType.SONG, SongGame.KERO),
     "sukima": CSSong("SUKIMA", "0055", SongType.SONG, SongGame.KERO),
     "relaxation": CSSong("Relaxation", "0056", SongType.SONG, SongGame.KERO),
@@ -190,6 +194,7 @@ SONGS = {
     # "excuseMe": CSSong("Excuse Me...", "0071", SongType.SONG, SongGame.KERO),
 }
 
+
 @dataclasses.dataclass(frozen=True)
 class CSMusic(BitPackDataclass, JsonDataclass):
     randomization_type: MusicRandoType
@@ -198,6 +203,7 @@ class CSMusic(BitPackDataclass, JsonDataclass):
     @classmethod
     def default(cls) -> "CSMusic":
         return cls(MusicRandoType.DEFAULT, CSSong.defaults())
+
 
 @dataclasses.dataclass(frozen=True)
 class CSCosmeticPatches(BaseCosmeticPatches):

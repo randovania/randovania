@@ -14,11 +14,10 @@ class PresetCSHP(PresetTab, Ui_PresetCSHP):
     @property
     def uses_patches_tab(self) -> bool:
         return True
-    
+
     def _on_starting_hp_changed(self):
         with self._editor as editor:
             editor.set_configuration_field("starting_hp", int(self.starting_hp_spin_box.value()))
-    
+
     def on_preset_changed(self, preset: Preset):
         self.starting_hp_spin_box.setValue(preset.configuration.starting_hp)
-    

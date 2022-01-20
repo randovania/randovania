@@ -4,8 +4,8 @@ from unittest.mock import MagicMock
 import pytest
 from PySide2 import QtCore
 
-from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.games.game import RandovaniaGame
+from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.interface_common.options import Options
 
 

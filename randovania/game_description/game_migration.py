@@ -5,7 +5,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 7
+CURRENT_VERSION = 8
 
 
 def _migrate_v1(data: dict) -> dict:
@@ -318,6 +318,7 @@ def _migrate_v5(data: dict) -> dict:
 
     return data
 
+
 def _migrate_v6(data: dict) -> dict:
     lore_types = {
         "luminoth-lore": "requires-item",
@@ -332,6 +333,12 @@ def _migrate_v6(data: dict) -> dict:
     return data
 
 
+def _migrate_v7(data: dict) -> dict:
+    if data["minimal_logic"] is not None:
+        data["minimal_logic"]["description"] = "Unknown text"
+    return data
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -339,6 +346,7 @@ _MIGRATIONS = {
     4: _migrate_v4,
     5: _migrate_v5,
     6: _migrate_v6,
+    7: _migrate_v7,
 }
 
 
