@@ -257,6 +257,10 @@ class WorldList:
         area = world.area_by_name(identifier.area_name)
         return world, area
 
+    def correct_area_identifier_name(self, identifier: AreaIdentifier) -> str:
+        world, area = self.world_and_area_by_area_identifier(identifier)
+        return f"{world.correct_name(area.in_dark_aether)} - {area.name}"
+
     def identifier_for_area(self, area: Area) -> AreaIdentifier:
         world = self.world_with_area(area)
         return AreaIdentifier(world_name=world.name, area_name=area.name)

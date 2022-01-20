@@ -3,14 +3,17 @@ from enum import IntEnum
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 
+
 def _int_field(default: int, min_value: int, max_value: int, display_as_percentage: bool = True):
     return dataclasses.field(default=default, metadata={"min": min_value, "max": max_value,
                                                         "display_as_percentage": display_as_percentage})
+
 
 class SoundMode(IntEnum):
     MONO = 0
     STEREO = 1
     SURROUND = 2
+
 
 @dataclasses.dataclass(frozen=True)
 class PrimeUserPreferences(JsonDataclass):

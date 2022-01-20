@@ -14,19 +14,19 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
-from randovania.patching.prime.patcher_file_lib import item_names
 from randovania.generator.item_pool import pool_creator
 from randovania.gui.generated.preset_item_pool_ui import Ui_PresetItemPool
-from randovania.gui.lib import common_qt_lib, signal_handling
+from randovania.gui.lib import common_qt_lib
 from randovania.gui.lib.foldable import Foldable
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox, ScrollProtectedSpinBox
 from randovania.gui.preset_settings.item_configuration_widget import ItemConfigurationWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
+from randovania.gui.preset_settings.progressive_item_widget import ProgressiveItemWidget
 from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
+from randovania.patching.prime.patcher_file_lib import item_names
 from randovania.resolver.exceptions import InvalidConfiguration
 
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = ("A total of {total} will be available."
@@ -71,10 +71,6 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def on_preset_changed(self, preset: Preset):
         layout = preset.configuration
         major_configuration = layout.major_items_configuration
-
-        # General
-        self.multi_pickup_placement_check.setChecked(layout.multi_pickup_placement)
-        signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
 
         # Random Starting Items
         self.minimum_starting_spinbox.setValue(major_configuration.minimum_random_starting_items)
@@ -160,10 +156,6 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         except InvalidConfiguration as invalid_config:
             self.item_pool_count_label.setText("Invalid Configuration: {}".format(invalid_config))
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, True)
-
-    def _persist_multi_pickup_placement(self, value: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("multi_pickup_placement", value)
 
     # Random Starting
     def _register_random_starting_events(self):

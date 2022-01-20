@@ -3,9 +3,6 @@ from typing import Dict
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintDarkTemple
-from randovania.game_description.world.node import PickupNode
-from randovania.game_description.resources import resource_info
-from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_items
 from randovania.patching.prime.patcher_file_lib import hint_lib, guaranteed_item_hint

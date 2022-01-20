@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 from dataclasses import dataclass
-from typing import Dict, Tuple, Iterator, Optional
+from typing import Tuple, Iterator, Optional
 
 from randovania.game_description.assignment import PickupAssignment, NodeConfigurationAssignment, PickupTarget
 from randovania.game_description.hint import Hint

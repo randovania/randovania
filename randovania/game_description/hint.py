@@ -4,8 +4,8 @@ from typing import Optional
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.area_identifier import AreaIdentifier
 
 
 class HintType(Enum):

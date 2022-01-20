@@ -48,6 +48,7 @@ def has_shuffled_item(configuration: MajorItemsConfiguration, item_name: str) ->
             return state.num_shuffled_pickups > 0
     return False
 
+
 def has_vanilla_item(configuration: MajorItemsConfiguration, item_name: str) -> bool:
     for item, state in configuration.items_state.items():
         if item.name == item_name:
@@ -126,18 +127,18 @@ def _format_params_base(configuration: BaseConfiguration,
             major_items.maximum_random_starting_items,
         )
 
-    template_strings["Item Placement"].append(configuration.trick_level.pretty_description)
+    template_strings["Logic Settings"].append(configuration.trick_level.pretty_description)
+    template_strings["Logic Settings"].append(f"Dangerous Actions: {configuration.logical_resource_action.long_name}")
 
     if randomization_mode != RandomizationMode.FULL:
         template_strings["Item Placement"].append(f"Randomization Mode: {randomization_mode.value}")
-
-    template_strings["Item Placement"].append(f"Dangerous Actions: {configuration.logical_resource_action.long_name}")
-
-    if random_starting_items != "0":
-        template_strings["Item Placement"].append(f"Random Starting Items: {random_starting_items}")
+    if configuration.multi_pickup_placement:
+        template_strings["Item Placement"].append("Multi-pickup placement")
 
     # Starting Items
-    template_strings["Starting Items"] = _calculate_starting_items(configuration.game, major_items.items_state)
+    if random_starting_items != "0":
+        template_strings["Starting Items"].append(f"Random Starting Items: {random_starting_items}")
+    template_strings["Starting Items"].extend(_calculate_starting_items(configuration.game, major_items.items_state))
 
     # Item Pool
     item_pool = _calculate_item_pool(configuration.game, major_items)
@@ -184,9 +185,6 @@ def describe(preset: Preset) -> Iterable[PresetDescription]:
     configuration = preset.configuration
 
     template_strings = (preset.game.data.layout.preset_describer.format_params or _format_params_base)(configuration)
-
-    if configuration.multi_pickup_placement:
-        template_strings["Item Placement"].append("Multi-pickup placement")
 
     for category, entries in template_strings.items():
         if entries:

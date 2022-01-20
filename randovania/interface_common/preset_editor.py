@@ -1,16 +1,16 @@
 import dataclasses
 import uuid
-from typing import Optional, Callable, Union
+from typing import Optional, Callable
 
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
-from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.preset import Preset
 from randovania.layout.lib.teleporters import TeleporterConfiguration
+from randovania.layout.preset import Preset
 
 
 class PresetEditor:

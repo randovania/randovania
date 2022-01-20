@@ -17,7 +17,6 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
@@ -266,7 +265,7 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
             if _get_preset(json.loads(preset_row.preset)).get_preset() != permalink_preset:
                 preset = VersionedPreset.with_preset(permalink_preset)
                 if preset.game not in session.allowed_games:
-                    raise InvalidAction(f"Only {preset.game} preset not allowed.")
+                    raise InvalidAction(f"{preset.game} preset not allowed.")
                 preset_row.preset = json.dumps(preset.as_json)
                 rows_to_update.append(preset_row)
 
@@ -475,7 +474,7 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
             player_index=membership.row,
             player_names=player_names,
         )
-        preset = layout_description.permalink.get_preset(players_config.player_index)
+        preset = layout_description.get_preset(players_config.player_index)
         cosmetic_patches = preset.game.data.layout.cosmetic_patches.from_json(arg)
         patcher = sio.patcher_provider.patcher_for_game(preset.game)
 

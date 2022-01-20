@@ -15,7 +15,7 @@ class ResourceType(str, Enum):
     GATE_INDEX = "gate_index"
     LOGBOOK_INDEX = "logbook_index"
     SHIP_NODE = "ship_node"
-    
+
     @classmethod
     def indices(cls) -> Dict["ResourceType", int]:
         return {
@@ -31,11 +31,11 @@ class ResourceType(str, Enum):
             ResourceType.LOGBOOK_INDEX: 9,
             ResourceType.SHIP_NODE: 10
         }
-    
+
     @classmethod
     def from_index(cls, index: int) -> "ResourceType":
-        return cls({v:k for k,v in cls.indices().items()}[index])
-    
+        return cls({v: k for k, v in cls.indices().items()}[index])
+
     @property
     def negated_prefix(self) -> str:
         if self is ResourceType.EVENT:

@@ -11,6 +11,7 @@ from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.preset import Preset
 
+
 def dark_world_flags(world: World):
     yield False
     if world.dark_name is not None:

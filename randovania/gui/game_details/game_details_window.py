@@ -1,8 +1,7 @@
 import copy
-import copy
 import dataclasses
 import typing
-from typing import Dict, Optional, Set
+from typing import Dict, Optional
 
 from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import Qt
@@ -117,7 +116,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         QApplication.clipboard().setText(self.layout_description.permalink.as_base64_str)
 
     def _export_log(self):
-        all_games: Set[RandovaniaGame] = {preset.game for preset in self.layout_description.permalink.presets.values()}
+        all_games = self.layout_description.all_games
         if len(all_games) > 1:
             game_name = "Crossgame Multiworld"
         else:
@@ -131,14 +130,14 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             self.layout_description.save_to_file(json_path)
 
     def _export_preset(self):
-        preset = self.layout_description.permalink.get_preset(self.current_player_index)
+        preset = self.layout_description.get_preset(self.current_player_index)
         output_path = common_qt_lib.prompt_user_for_preset_file(self, new_file=True)
         if output_path is not None:
             VersionedPreset.with_preset(preset).save_to_file(output_path)
 
     def _view_trick_usages(self):
         from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup
-        preset = self.layout_description.permalink.get_preset(self.current_player_index)
+        preset = self.layout_description.get_preset(self.current_player_index)
         self._trick_usage_popup = TrickUsagePopup(self, self._window_manager, preset)
         self._trick_usage_popup.setWindowModality(QtCore.Qt.WindowModal)
         self._trick_usage_popup.open()
@@ -154,7 +153,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         )
         configuration = typing.cast(
             CorruptionConfiguration,
-            self.layout_description.permalink.get_preset(self.current_player_index).configuration,
+            self.layout_description.get_preset(self.current_player_index).configuration,
         )
         patches = self.layout_description.all_patches[self.current_player_index]
         game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_CORRUPTION)
@@ -200,7 +199,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     @property
     def current_player_game(self) -> RandovaniaGame:
-        return self.layout_description.permalink.get_preset(self.current_player_index).configuration.game
+        return self.layout_description.get_preset(self.current_player_index).game
 
     @asyncSlot()
     async def _export_iso(self):
@@ -241,7 +240,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._can_stop_background_process = True
 
     def _open_map_tracker(self):
-        current_preset = self.layout_description.permalink.presets[self.current_player_index]
+        current_preset = self.layout_description.get_preset(self.current_player_index)
         self._window_manager.open_map_tracker(current_preset)
 
     # Layout Visualization
@@ -255,22 +254,22 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         self._player_names = {
             i: f"Player {i + 1}"
-            for i in range(description.permalink.player_count)
+            for i in range(description.player_count)
         }
 
-        self.export_iso_button.setEnabled(description.permalink.player_count == 1)
-        if description.permalink.player_count > 1:
+        self.export_iso_button.setEnabled(description.player_count == 1)
+        if description.player_count > 1:
             self.export_iso_button.setToolTip("Multiworld games can only be exported from a game session")
         else:
             self.export_iso_button.setToolTip("")
 
-        self.customize_user_preferences_button.setVisible(description.permalink.player_count == 1)
+        self.customize_user_preferences_button.setVisible(description.player_count == 1)
 
         self.player_index_combo.clear()
-        for i in range(description.permalink.player_count):
+        for i in range(description.player_count):
             self.player_index_combo.addItem(self._player_names[i], i)
         self.player_index_combo.setCurrentIndex(0)
-        self.player_index_combo.setVisible(description.permalink.player_count > 1)
+        self.player_index_combo.setVisible(description.player_count > 1)
 
         if description.permalink.spoiler:
             action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
@@ -283,11 +282,11 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     def _update_current_player(self):
         description = self.layout_description
         current_player = self.current_player_index
-        preset = description.permalink.get_preset(current_player)
+        preset = description.get_preset(current_player)
 
         self.permalink_edit.setText(description.permalink.as_base64_str)
 
-        ingame_hash = preset.game.data.layout.get_ingame_hash(description._shareable_hash_bytes)
+        ingame_hash = preset.game.data.layout.get_ingame_hash(description.shareable_hash_bytes)
         ingame_hash_str = f"In-game Hash: {ingame_hash}<br/>" if ingame_hash is not None else ""
         title_text = """
         <p>

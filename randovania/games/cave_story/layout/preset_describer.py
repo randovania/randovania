@@ -1,9 +1,10 @@
 from collections import defaultdict
-from randovania.game_description import default_database
-from randovania.games.cave_story.layout.cs_configuration import CSConfiguration, CSObjective
+
+from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
-from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, has_vanilla_item, message_for_required_mains
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
+    message_for_required_mains
 
 
 def cs_format_params(configuration: CSConfiguration) -> dict[str, list[str]]:
@@ -33,7 +34,9 @@ def cs_format_params(configuration: CSConfiguration) -> dict[str, list[str]]:
 
     return template_strings
 
+
 cs_expected_items = set()
+
 
 def cs_unexpected_items(configuration: MajorItemsConfiguration) -> list[str]:
     unexpected_items = cs_expected_items.copy()
@@ -42,20 +45,21 @@ def cs_unexpected_items(configuration: MajorItemsConfiguration) -> list[str]:
         unexpected_items.add("Spur")
     else:
         unexpected_items.add("Progressive Polar Star")
-    
+
     if has_shuffled_item(configuration, "Progressive Booster"):
         unexpected_items.add("Booster 0.8")
         unexpected_items.add("Booster 2.0")
     else:
         unexpected_items.add("Progressive Booster")
-    
+
     if has_shuffled_item(configuration, "Progressive Missile Launcher"):
         unexpected_items.add("Missile Launcher")
         unexpected_items.add("Super Missile Launcher")
     else:
         unexpected_items.add("Super Missile Launcher")
-    
+
     return unexpected_items
+
 
 hash_items = {
     1: "Arthur's Key",
@@ -98,22 +102,27 @@ hash_items = {
     38: "Whimsical Star",
     39: "Iron Bond"
 }
+
+
 def get_ingame_hash_str(hash_bytes: bytes) -> str:
     ids = get_ingame_hash(hash_bytes)
+
     def get_str(x):
         name = hash_items[x]
         path = str(RandovaniaGame.CAVE_STORY.data_path.joinpath("assets", "icon", f"{name}.png"))
         return f"""<img src="{path}" alt="{name}" width="32" height="16">"""
+
     return "".join([get_str(i) for i in ids])
+
 
 def get_ingame_hash(hash_bytes: bytes) -> list[int]:
     NUM_HASH_ITEMS = 39
 
     num = int.from_bytes(hash_bytes, 'big', signed=False)
-    num %= NUM_HASH_ITEMS**5
+    num %= NUM_HASH_ITEMS ** 5
 
     out = list()
     for i in range(5):
-        out.append((num%NUM_HASH_ITEMS)+1)
+        out.append((num % NUM_HASH_ITEMS) + 1)
         num //= NUM_HASH_ITEMS
     return out

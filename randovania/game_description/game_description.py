@@ -1,8 +1,7 @@
 """Classes that describes the raw data of a game world."""
 import copy
 import dataclasses
-import typing
-from typing import Iterator, FrozenSet, Dict, Optional, List, Tuple
+from typing import Iterator, FrozenSet, Dict, Optional, List
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import SatisfiableRequirements, Requirement
@@ -11,7 +10,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
+from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
@@ -48,6 +47,7 @@ class MinimalLogicData:
     items_to_exclude: List[IndexWithReason]
     custom_item_amount: Dict[int, int]
     events_to_exclude: List[IndexWithReason]
+    description: str
 
 
 class GameDescription:

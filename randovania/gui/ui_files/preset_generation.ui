@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PresetGeneration</class>
+ <widget class="QMainWindow" name="PresetGeneration">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>505</width>
+    <height>463</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Generation</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>471</width>
+         <height>733</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QGroupBox" name="game_specific_group">
+          <property name="title">
+           <string>Game-specific Settings</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <layout class="QVBoxLayout" name="game_specific_layout"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="randomization_mode_group">
+          <property name="title">
+           <string>Item Placement</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QCheckBox" name="check_major_minor">
+             <property name="text">
+              <string>Enable major/minor split</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="major_minor_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this setting is enabled, major items (i.e., major upgrades, Energy Tanks, Dark Temple Keys, and Energy Transfer Modules) and minor items (i.e, expansions) will be shuffled separately.&lt;br/&gt;Major items in excess of the number of major locations will be placed in minor locations, and vice versa.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="multi_pickup_placement_check">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use the new version of the pickup placement logic, which is able to place multiple pickups at once to solve a requirement, like both Seeker Launcher and Dark Visor. Not tested yet.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="text">
+              <string>Use multi-pickup placement [Experimental]</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="multi_pickup_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this setting is enabled, the generator will consider placing multiple items in multiple locations (e.g. Morph Ball and Bombs) in order to determine progression, rather than only a single item at a time as it is by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="logic_group">
+          <property name="title">
+           <string>Logic Settings</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <layout class="QHBoxLayout" name="dangerous_layout">
+             <item>
+              <widget class="QLabel" name="dangerous_label">
+               <property name="text">
+                <string>Dangerous actions:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="dangerous_combo">
+               <item>
+                <property name="text">
+                 <string>Randomly</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Last Resort</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="dangerous_description">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A dangerous action is the act of moving past a lock without the appropriate items needed to head backwards, or doing an action that can only be done once.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Randomly&lt;/span&gt;: Dangerous actions might be required by logic.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Last Resort&lt;/span&gt;: Only allows dangerous actions to be required if no other option is available for progression.&lt;br/&gt;Warning: Due to how item placement works, certain locations will have progression extremely less often or even never.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="minimal_logic_line">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="trick_level_minimal_logic_check">
+             <property name="text">
+              <string>Use Minimal Logic</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="trick_level_minimal_logic_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;/p&gt;&lt;p&gt;Minimal Logic is a setting that checks for the bare minimum items to create an almost pure random layout. This setting assumes the player has extensive knowledge of the game and will likely require Out of Bounds to complete.&lt;/p&gt;&lt;p&gt;There are no guarantees that a seed will be possible in this case.&lt;/p&gt;&lt;p&gt;{game_specific_text}&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="damage_strictness_group">
+          <property name="title">
+           <string>Damage strictness</string>
+          </property>
+          <layout class="QVBoxLayout" name="damage_strictness_layout">
+           <item>
+            <widget class="QLabel" name="damage_strictness_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Certain locations, such as rooms without safe zones in Dark Aether or bosses, requires a certain number of energy tanks (or suits).&lt;/p&gt;&lt;p&gt;This setting controls how much energy the logic will expect you to have to reach these locations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="damage_strictness_combo">
+             <property name="currentText">
+              <string>Strict (1×)</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Strict (1×)</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Medium (1.5×)</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Lenient (2×)</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
