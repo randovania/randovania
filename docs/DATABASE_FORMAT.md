@@ -76,36 +76,28 @@ Sometimes, areas exist in which every node connects to every other node in some 
 ## TRICK DIFFICULTY  
 The question of what difficulty a trick should be given comes up frequently, and this is because it is a complex question to consider. There are many aspects to consider when assigning a trick to one of the difficulty tiers. The tiers, and the role they serve in the database, are as follows  
   
-#### Disabled  
-This "trick" isn't a trick at all. Its use here is obvious to both the player and the developer, was clearly intended as a way to traverse this section, and conforms closely to the game's difficulty. A trick with this difficulty level can't actually be toggled off by the player - as the name might suggest, this trick may still be required even when the trick is "disabled", so you should not actually assign this difficulty to a trick.  
+### Disabled  
+This "trick" isn't a trick at all. A trick with this difficulty level can't actually be toggled off by the player - as the name might suggest, this trick may still be required of the player even when the trick is "disabled", so you should never actually assign this difficulty to a trick.  
   
-#### Beginner  
-Beginner tricks are something a novice can perform with ease. Most beginner tricks require only knowledge of the trick's existence to be performed, with muscle memory and skill not being required to perform the trick. Tricks which involve abuse of intended mechanics may also fall in this category, as they are likely to be more familiar to someone who has already become familiar with the game in a casual setting.  
+### Standard difficulties  
+The standard difficulties, in order of relative difficulty, are Beginner, Intermediate, Advanced, and Expert. Beginner tricks represent the easiest possible iteration of any trick category. A beginner trick isn't necessarily approachable, easy, or even beginner friendly - rather, it's just that these tricks are the easiest and best for practice *in their category*. Each difficulty afterwards simply represents a step up in challenge, Expert representing the hardest tricks within a category that can be performed within reason. Trick difficulties are not absolute - a beginner trick in one trick category may be harder than an advanced trick in another.  
   
-#### Intermediate  
-Intermediate represents a mere step above beginner. While beginner tricks can be performed easily by just about anyone who has heard of them, Intermediate tricks present more of a challenge, if only slightly. The player may not need to practice to land one of these tricks consistently, but it's not something that a new player will be likely to get on their first try. Often, knowledge of the general trick is easily transferable from one location to the next, making it easy to pick up new implementations of the trick.  
+### Hypermode  
+Hypermode tricks aren't fair. They are placed in their own difficulty so that players who wish to challenge their skill at the highest level can save themselves from the frustration these tricks inevitably bring. Hypermode tricks are stupid, inconsistent, random, or otherwise painful to perform. They may require a degree of precision which isn't possible for a human to provide with consistency, and may cause permanent and lasting problems for a player when attempted or even when completed successfully, such as causing them to lose items or corrupting their save data. Hypermode tricks may actually be easier than an expert or even advanced trick of their category to perform, but are so obscure, unpredictable, annoying, or punishing that players just don't like them.  
   
-#### Advanced  
-Advanced tricks require a good deal of skill to execute consistently, and players will need to practice with the trick both in general and at the specific location which calls for it to retain any degree of consistency. This trick could still be performed by a beginner, but only if they have an external guide open and take some real time trying to land it even once, at least about 10-20 minutes, and it would be ill-advised for them to attempt this trick in a speed setting without this degree of familiarity. If this trick is failed, it might come at the cost of a significant time or resource expenditure, further penalizing players.  
+### Difficulty Considerations  
   
-#### Expert  
-Expert tricks cannot be performed by a beginner until they cease to be a beginner. These tricks require a precise and exacting knowledge of the game's mechanics, and cannot be performed first-try even by those who pour hundreds of hours into the game. They may take a long time to set up, carry enormous attempt costs, or have great penalties for failure, such as causing the player to die, fall to a previous area, softlock, or even crash the game. The trick is still a fair challenge, but one that should be regarded with caution by all but the most experienced players.  
-  
-#### Hypermode  
-Hypermode tricks aren't fair. They are placed in their own difficulty so that players who wish to challenge their skill at the highest level can save themselves some frustration. Hypermode tricks are stupid, inconsistent, random, or otherwise painful to perform. They may require a degree of precision which isn't possible for a human to provide with consistency, and may cause permanent and lasting problems for a player when attempted or even when completed successfully, such as causing them to lose items or corrupting their save data. Hypermode tricks may actually be easier than an expert or even advanced trick to perform, but are so obscure, unpredictable, annoying, or punishing that players just don't like them.  
-  
-  
-As has been discussed, there are many different criteria for deciding a trick's difficulty, and some of them are a little subjective. Every time you add or modify a trick, you should ask yourself:  
+As has been discussed, there are many different criteria for deciding a trick's difficulty, and the task is ultimately very subjective. Remember that there's more worth considering than strictly the amount of "skill" the player must put in to perform the trick. Every time you add or modify a trick, you should ask yourself:  
   
 How familiar does a player need to be with a trick to perform it?  
 Is the trick consistent?  
 Are there consequences for attempting the trick?  
-How long does the trick take?  
-How quickly can the player re-attempt the trick?  
-Is the trick fun or flashy to perform?  
+How long does the trick take to attempt?  
+How long does it take before the player can try again?  
+Is the trick fun or flashy to perform, or does it feel like a drag on gameplay?  
 Could a player intuit this trick on their own?  
+How quickly could a player learn this trick?  
 How similar is this trick to other tricks of the same type?  
-Are players who play the game outside a randomizer setting likely to know the trick?  
   
   
 ## NAMING CONVENTIONS  
