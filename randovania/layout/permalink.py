@@ -1,9 +1,10 @@
 import base64
 import binascii
+import dataclasses
 import json
 import operator
 from dataclasses import dataclass
-from typing import Iterator, Tuple, Dict, Iterable
+from typing import Iterator, Tuple, Dict, Iterable, Optional, Union
 
 import bitstruct
 
@@ -41,7 +42,7 @@ def rotate_bytes(data: Iterable[int], rotation: int, per_byte_adjustment: int,
 
 
 @dataclass(frozen=True)
-class Permalink(BitPackValue):
+class GeneratorParameters(BitPackValue):
     seed_number: int
     spoiler: bool
     presets: Dict[int, Preset]
@@ -53,14 +54,7 @@ class Permalink(BitPackValue):
             raise ValueError("Invalid seed number: {}".format(self.seed_number))
         object.__setattr__(self, "__cached_as_bytes", None)
 
-    @classmethod
-    def current_version(cls) -> int:
-        # When this reaches _PERMALINK_MAX_VERSION, we need to change how we decode to avoid breaking version detection
-        # for previous Randovania versions
-        return 12
-
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        yield self.current_version(), _PERMALINK_MAX_VERSION
         yield self.seed_number, _PERMALINK_MAX_SEED
         yield from bitpacking.encode_bool(self.spoiler)
         yield from bitpacking.encode_int_with_limits(self.player_count, _PERMALINK_PLAYER_COUNT_LIMITS)
@@ -78,10 +72,8 @@ class Permalink(BitPackValue):
                 yield from preset.bit_pack_encode({"manager": manager})
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Permalink":
-        version, seed_number = decoder.decode(_PERMALINK_MAX_VERSION, _PERMALINK_MAX_SEED)
-        cls._raise_if_different_version(version)
-
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "GeneratorParameters":
+        seed_number = decoder.decode_single(_PERMALINK_MAX_SEED)
         spoiler = bitpacking.decode_bool(decoder)
         player_count = bitpacking.decode_int_with_limits(decoder, _PERMALINK_PLAYER_COUNT_LIMITS)
         manager = PresetManager(None)
@@ -98,61 +90,82 @@ class Permalink(BitPackValue):
                 previous_unique_presets.append(preset)
             presets[index] = preset
 
-        return Permalink(seed_number, spoiler, presets)
+        return GeneratorParameters(seed_number, spoiler, presets)
+
+    @property
+    def as_bytes(self) -> bytes:
+        key = "__cached_as_bytes"
+        result = object.__getattribute__(self, key)
+        if result is None:
+            result = bitpacking.pack_value(self)
+            object.__setattr__(self, key, result)
+
+        return result
 
     @classmethod
-    def _raise_if_different_version(cls, version: int):
-        if version != cls.current_version():
+    def from_bytes(cls, b: bytes) -> "GeneratorParameters":
+        decoder = BitPackDecoder(b)
+        return GeneratorParameters.bit_pack_unpack(decoder, {})
+
+    @property
+    def player_count(self) -> int:
+        return len(self.presets)
+
+    def get_preset(self, index: int) -> Preset:
+        return self.presets[index]
+
+
+@dataclasses.dataclass(frozen=True)
+class Permalink:
+    parameters: GeneratorParameters
+    seed_hash: Optional[bytes]
+
+    # Either an index of the releases array, or a short git commit hash
+    version: Union[int, bytes]
+
+    @classmethod
+    def current_schema_version(cls) -> int:
+        # When this reaches _PERMALINK_MAX_VERSION, we need to change how we decode to avoid breaking version detection
+        # for previous Randovania versions
+        return 12
+
+    @classmethod
+    def _raise_if_different_schema_version(cls, version: int):
+        if version != cls.current_schema_version():
             raise ValueError("Given permalink has version {}, but this Randovania "
-                             "support only permalink of version {}.".format(version, cls.current_version()))
+                             "support only permalink of version {}.".format(version, cls.current_schema_version()))
 
     @classmethod
     def validate_version(cls, b: bytes):
         version = BitPackDecoder(b).peek(_PERMALINK_MAX_VERSION)[0]
-        cls._raise_if_different_version(version)
-
-    @property
-    def as_bytes(self) -> bytes:
-        cached_result = object.__getattribute__(self, "__cached_as_bytes")
-        if cached_result is not None:
-            return cached_result
-
-        encoded = bitpacking.pack_value(self)
-        # Add extra bytes so the base64 encoding never uses == at the end
-        encoded += b"\x00" * (3 - (len(encoded) + 1) % 3)
-
-        # Rotate bytes, so the slightest change causes a cascading effect.
-        # But skip the first byte so the version check can be done early in decoding.
-        byte_hash = single_byte_hash(encoded)
-        new_bytes = [encoded[0]]
-        new_bytes.extend(rotate_bytes(encoded[1:], byte_hash, byte_hash, inverse=False))
-
-        # Append the hash, so the rotation can be reversed and the checksum verified
-        new_bytes.append(byte_hash)
-
-        result = bytes(new_bytes)
-        object.__setattr__(self, "__cached_as_bytes", result)
-        return result
+        cls._raise_if_different_schema_version(version)
 
     @classmethod
-    def from_bytes(cls, b: bytes) -> "Permalink":
-        Permalink.validate_version(b)
-
-        byte_hash = b[-1]
-        new_bytes = [b[0]]
-        new_bytes.extend(rotate_bytes(b[1:-1], byte_hash, byte_hash, inverse=True))
-
-        decoded = bytes(new_bytes)
-        if single_byte_hash(decoded) != byte_hash:
-            raise ValueError("Incorrect checksum")
-
-        decoder = BitPackDecoder(decoded)
-        return Permalink.bit_pack_unpack(decoder, {})
+    def from_parameters(cls, parameters: GeneratorParameters) -> "Permalink":
+        return Permalink(
+            parameters=parameters,
+            seed_hash=None,
+            version=0,
+        )
 
     @property
     def as_base64_str(self) -> str:
         try:
-            return base64.b64encode(self.as_bytes, altchars=b'-_').decode("utf-8")
+            encoded = self.parameters.as_bytes
+
+            # Add extra bytes so the base64 encoding never uses == at the end
+            encoded += b"\x00" * (3 - (len(encoded) + 1) % 3)
+
+            # Rotate bytes, so the slightest change causes a cascading effect.
+            # But skip the first byte so the version check can be done early in decoding.
+            byte_hash = single_byte_hash(encoded)
+            new_bytes = [encoded[0]]
+            new_bytes.extend(rotate_bytes(encoded[1:], byte_hash, byte_hash, inverse=False))
+
+            # Append the hash, so the rotation can be reversed and the checksum verified
+            new_bytes.append(byte_hash)
+
+            return base64.b64encode(bytes(new_bytes), altchars=b'-_').decode("utf-8")
         except ValueError as e:
             return "Unable to create Permalink: {}".format(e)
 
@@ -163,17 +176,24 @@ class Permalink(BitPackValue):
             if len(b) < 2:
                 raise ValueError("Data too small")
 
-            return cls.from_bytes(b)
+            cls.validate_version(b)
+
+            byte_hash = b[-1]
+            new_bytes = [b[0]]
+            new_bytes.extend(rotate_bytes(b[1:-1], byte_hash, byte_hash, inverse=True))
+
+            decoded = bytes(new_bytes)
+            if single_byte_hash(decoded) != byte_hash:
+                raise ValueError("Incorrect checksum")
+
+            return Permalink(
+                parameters=GeneratorParameters.from_bytes(decoded),
+                seed_hash=None,
+                version=0,
+            )
 
         except (binascii.Error, bitstruct.Error) as e:
             raise ValueError("Unable to base64 decode '{permalink}': {error}".format(
                 permalink=param,
                 error=e,
             ))
-
-    @property
-    def player_count(self) -> int:
-        return len(self.presets)
-
-    def get_preset(self, index: int) -> Preset:
-        return self.presets[index]

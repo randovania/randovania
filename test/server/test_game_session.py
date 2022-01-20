@@ -620,8 +620,8 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
     layout_description.as_json = "some_json_string"
-    layout_description.permalink.player_count = 2
-    layout_description.permalink.presets = {i: new_preset for i in (0, 1)}
+    layout_description.generator_parameters.player_count = 2
+    layout_description.generator_parameters.presets = {i: new_preset for i in (0, 1)}
     layout_description.shareable_word_hash = "Hash Words"
 
     # Run
@@ -722,7 +722,7 @@ def test_game_session_admin_session_download_layout_description_no_spoiler(mock_
     database.GameSessionMembership.create(user=user1, session=session, row=None, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
-    mock_layout_description.return_value.permalink.spoiler = False
+    mock_layout_description.return_value.generator_parameters.spoiler = False
 
     # Run
     with pytest.raises(InvalidAction), flask_app.test_request_context():
@@ -846,9 +846,9 @@ def session_update_fixture(clean_database, mocker):
     target.pickup.name = "The Pickup"
     mock_layout.return_value.shareable_word_hash = "Words of O-Lir"
     mock_layout.return_value.shareable_hash = "ABCDEFG"
-    mock_layout.return_value.permalink.spoiler = True
-    mock_layout.return_value.permalink.as_base64_str = "<permalink>"
-    mock_layout.return_value.permalink.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
+    mock_layout.return_value.generator_parameters.spoiler = True
+    mock_layout.return_value.generator_parameters.as_base64_str = "<permalink>"
+    mock_layout.return_value.generator_parameters.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
 
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")

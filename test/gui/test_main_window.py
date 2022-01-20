@@ -10,6 +10,7 @@ from mock import AsyncMock, MagicMock, ANY
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
+from randovania.layout.permalink import Permalink, GeneratorParameters
 
 
 def create_window(options: Union[Options, MagicMock],
@@ -106,7 +107,9 @@ async def test_browse_racetime(default_main_window, mocker):
 
 @pytest.mark.asyncio
 async def test_generate_seed_from_permalink(default_main_window, mocker):
-    permalink = MagicMock()
+    permalink = MagicMock(spec=Permalink)
+    permalink.seed_hash = None
+    permalink.parameters = MagicMock(spec=GeneratorParameters)
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout",
                                                    autospec=True)
     default_main_window.open_game_details = MagicMock()
@@ -116,7 +119,7 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
 
     # Assert
     mock_generate_layout.assert_called_once_with(progress_update=ANY,
-                                                 permalink=permalink,
+                                                 parameters=permalink.parameters,
                                                  options=default_main_window._options)
     default_main_window.open_game_details.assert_called_once_with(mock_generate_layout.return_value)
 

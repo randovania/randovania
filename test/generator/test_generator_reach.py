@@ -27,7 +27,7 @@ from randovania.generator.reach_lib import filter_pickup_nodes, collectable_reso
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import GeneratorParameters
 from randovania.layout.preset import Preset
 from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
@@ -36,7 +36,7 @@ def run_bootstrap(preset: Preset):
     game = default_database.game_description_for(preset.game).make_mutable_copy()
     game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database,
                                                                                         preset.configuration)
-    permalink = Permalink(
+    permalink = GeneratorParameters(
         seed_number=15000,
         spoiler=True,
         presets={0: preset},

@@ -6,7 +6,7 @@ import pytest
 
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import GeneratorParameters
 from randovania.layout.preset import Preset
 
 
@@ -14,7 +14,7 @@ from randovania.layout.preset import Preset
 def test_encode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
     # Setup
     mock_dictionary_byte_hash.return_value = 120
-    link = Permalink(
+    link = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
         presets={0: default_echoes_preset},
@@ -38,7 +38,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
 ])
 def test_decode_invalid(invalid: str):
     with pytest.raises(ValueError):
-        Permalink.from_str(invalid)
+        GeneratorParameters.from_str(invalid)
 
 
 @pytest.mark.parametrize("spoiler", [False, True])
@@ -69,14 +69,14 @@ def test_round_trip(spoiler: bool,
         configuration=dataclasses.replace(default_echoes_preset.configuration, **layout),
     )
 
-    link = Permalink(
+    link = GeneratorParameters(
         seed_number=1000,
         spoiler=spoiler,
         presets={0: preset},
     )
 
     # Run
-    after = Permalink.from_str(link.as_base64_str)
+    after = GeneratorParameters.from_str(link.as_base64_str)
 
     # Assert
     assert link == after
@@ -89,9 +89,9 @@ def test_round_trip(spoiler: bool,
 ])
 def test_decode_old_version(permalink: str, version: int):
     with pytest.raises(ValueError) as exp:
-        Permalink.from_str(permalink)
+        GeneratorParameters.from_str(permalink)
     assert str(exp.value) == ("Given permalink has version {}, but this Randovania "
-                              "support only permalink of version {}.".format(version, Permalink.current_version()))
+                              "support only permalink of version {}.".format(version, GeneratorParameters.current_version()))
 
 
 @patch("randovania.layout.preset._dictionary_byte_hash", autospec=True)
@@ -103,7 +103,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
     # When this happens, we must bump the permalink version and change the tests
     encoded = "wA0apEhozlsN"
 
-    expected = Permalink(
+    expected = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
         presets={0: default_echoes_preset},
@@ -114,7 +114,7 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
     # print(expected.as_base64_str)
 
     # Run
-    link = Permalink.from_str(encoded)
+    link = GeneratorParameters.from_str(encoded)
 
     # Assert
     assert link == expected
@@ -135,7 +135,7 @@ def test_decode_mock_other(encoded, num_players, mocker):
     mock_preset_unpack: MagicMock = mocker.patch("randovania.layout.preset.Preset.bit_pack_unpack",
                                                  side_effect=read_values)
 
-    expected = Permalink(
+    expected = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
         presets={i: preset for i in range(num_players)},
@@ -148,7 +148,7 @@ def test_decode_mock_other(encoded, num_players, mocker):
 
     # Run
     round_trip = expected.as_base64_str
-    link = Permalink.from_str(encoded)
+    link = GeneratorParameters.from_str(encoded)
 
     # Assert
     assert link == expected
@@ -161,7 +161,7 @@ def test_permalink_as_str_caches(mock_bit_pack_encode: MagicMock,
                                  default_echoes_preset):
     # Setup
     mock_bit_pack_encode.return_value = []
-    link = Permalink(
+    link = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
         presets={0: default_echoes_preset},

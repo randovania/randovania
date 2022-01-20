@@ -262,7 +262,7 @@ def _change_layout_description(sio: ServerApp, session: GameSession, description
 
         _verify_no_layout_description(session)
         description = LayoutDescription.from_json_dict(description_json)
-        permalink = description.permalink
+        permalink = description.generator_parameters
         if permalink.player_count != session.num_rows:
             raise InvalidAction(f"Description is for a {permalink.player_count} players,"
                                 f" while the session is for {session.num_rows}.")
@@ -298,7 +298,7 @@ def _download_layout_description(sio: ServerApp, session: GameSession):
     if session.layout_description_json is None:
         raise InvalidAction("Session does not contain a game")
 
-    if not session.layout_description.permalink.spoiler:
+    if not session.layout_description.generator_parameters.spoiler:
         raise InvalidAction("Session does not contain a spoiler")
 
     _add_audit_entry(sio, session, f"Requested the spoiler log")
@@ -587,7 +587,7 @@ def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locat
 
 
 def _get_resource_database(description: LayoutDescription, player: int) -> ResourceDatabase:
-    return default_database.resource_database_for(description.permalink.get_preset(player).game)
+    return default_database.resource_database_for(description.generator_parameters.get_preset(player).game)
 
 
 def _get_pickup_target(description: LayoutDescription, provider: int, location: int) -> Optional[PickupTarget]:

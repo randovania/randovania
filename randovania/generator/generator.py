@@ -17,7 +17,7 @@ from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import GeneratorParameters
 from randovania.layout.preset import Preset
 from randovania.resolver import resolver
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration, ImpossibleForSolver
@@ -175,20 +175,20 @@ def _distribute_remaining_items(rng: Random,
     # }
 
 
-async def _create_description(permalink: Permalink,
+async def _create_description(generator_params: GeneratorParameters,
                               status_update: Callable[[str], None],
                               attempts: int,
                               ) -> LayoutDescription:
     """
-    :param permalink:
+    :param generator_params:
     :param status_update:
     :return:
     """
-    rng = Random(permalink.as_bytes)
+    rng = Random(generator_params.as_bytes)
 
     presets = {
-        i: permalink.get_preset(i)
-        for i in range(permalink.player_count)
+        i: generator_params.get_preset(i)
+        for i in range(generator_params.player_count)
     }
 
     retrying = tenacity.AsyncRetrying(
@@ -201,14 +201,14 @@ async def _create_description(permalink: Permalink,
 
     all_patches = _distribute_remaining_items(rng, filler_results.player_results)
     return LayoutDescription(
-        permalink=permalink,
+        generator_parameters=generator_params,
         version=VERSION,
         all_patches=all_patches,
         item_order=filler_results.action_log,
     )
 
 
-async def generate_and_validate_description(permalink: Permalink,
+async def generate_and_validate_description(generator_params: GeneratorParameters,
                                             status_update: Optional[Callable[[str], None]],
                                             validate_after_generation: bool,
                                             timeout: Optional[int] = 600,
@@ -216,7 +216,7 @@ async def generate_and_validate_description(permalink: Permalink,
                                             ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the given Permalink.
-    :param permalink:
+    :param generator_params:
     :param status_update:
     :param validate_after_generation:
     :param timeout: Abort generation after this many seconds.
@@ -228,17 +228,17 @@ async def generate_and_validate_description(permalink: Permalink,
 
     try:
         result = await _create_description(
-            permalink=permalink,
+            generator_params=generator_params,
             status_update=status_update,
             attempts=attempts,
         )
     except UnableToGenerate as e:
         raise GenerationFailure("Could not generate a game with the given settings",
-                                permalink=permalink, source=e) from e
+                                generator_params=generator_params, source=e) from e
 
-    if validate_after_generation and permalink.player_count == 1:
+    if validate_after_generation and generator_params.player_count == 1:
         final_state_async = resolver.resolve(
-            configuration=permalink.presets[0].configuration,
+            configuration=generator_params.presets[0].configuration,
             patches=result.all_patches[0],
             status_update=status_update,
         )
@@ -246,10 +246,10 @@ async def generate_and_validate_description(permalink: Permalink,
             final_state_by_resolve = await asyncio.wait_for(final_state_async, timeout)
         except asyncio.TimeoutError as e:
             raise GenerationFailure("Timeout reached when validating possibility",
-                                    permalink=permalink, source=e) from e
+                                    generator_params=generator_params, source=e) from e
 
         if final_state_by_resolve is None:
             raise GenerationFailure("Generated game was considered impossible by the solver",
-                                    permalink=permalink, source=ImpossibleForSolver())
+                                    generator_params=generator_params, source=ImpossibleForSolver())
 
     return result

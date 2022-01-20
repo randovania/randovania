@@ -204,7 +204,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     @asyncSlot()
     async def _export_iso(self):
         layout = self.layout_description
-        has_spoiler = layout.permalink.spoiler
+        has_spoiler = layout.generator_parameters.spoiler
         options = self._options
 
         if not options.is_alert_displayed(InfoAlert.FAQ):
@@ -250,7 +250,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.layout_info_tab.show()
 
         self.setWindowTitle(f"Game Details: {description.shareable_word_hash}")
-        self.export_log_button.setEnabled(description.permalink.spoiler)
+        self.export_log_button.setEnabled(description.generator_parameters.spoiler)
 
         self._player_names = {
             i: f"Player {i + 1}"
@@ -271,7 +271,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self.player_index_combo.setCurrentIndex(0)
         self.player_index_combo.setVisible(description.player_count > 1)
 
-        if description.permalink.spoiler:
+        if description.generator_parameters.spoiler:
             action_list_widget = QtWidgets.QListWidget(self.layout_info_tab)
             for item_order in description.item_order:
                 action_list_widget.addItem(item_order)
@@ -306,7 +306,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             self.layout_info_tab.removeTab(self.layout_info_tab.indexOf(tab.widget()))
         self._game_details_tabs.clear()
 
-        if description.permalink.spoiler:
+        if description.generator_parameters.spoiler:
             patches = description.all_patches[current_player]
             players_config = self.players_configuration
 

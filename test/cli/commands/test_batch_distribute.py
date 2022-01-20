@@ -1,7 +1,7 @@
 from mock import MagicMock, AsyncMock
 
 from randovania.cli.commands import batch_distribute
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import GeneratorParameters
 
 
 def test_batch_distribute_helper(mocker):
@@ -12,14 +12,15 @@ def test_batch_distribute_helper(mocker):
         new_callable=AsyncMock, return_value=description)
     mock_perf_counter = mocker.patch("time.perf_counter", autospec=False)  # TODO: pytest-qt bug
 
-    base_permalink = MagicMock()
+    base_permalink = MagicMock(spec=GeneratorParameters)
+    base_permalink.presets = MagicMock()
     seed_number = 5000
     validate = MagicMock()
     output_dir = MagicMock()
     timeout = 67
     description.file_extension.return_value = "rdvgame"
 
-    expected_permalink = Permalink(
+    expected_permalink = GeneratorParameters(
         seed_number=seed_number,
         spoiler=True,
         presets=base_permalink.presets,
@@ -31,7 +32,7 @@ def test_batch_distribute_helper(mocker):
     delta_time = batch_distribute.batch_distribute_helper(base_permalink, seed_number, timeout, validate, output_dir)
 
     # Assert
-    mock_generate_description.assert_awaited_once_with(permalink=expected_permalink, status_update=None,
+    mock_generate_description.assert_awaited_once_with(generator_params=expected_permalink, status_update=None,
                                                        validate_after_generation=validate, timeout=timeout,
                                                        attempts=0)
 

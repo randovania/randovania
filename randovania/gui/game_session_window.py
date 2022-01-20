@@ -33,7 +33,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import GeneratorParameters, Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
@@ -921,7 +921,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
         all_dangerous_settings = {}
-        for i, preset in permalink.presets.items():
+        for i, preset in permalink.parameters.presets.items():
             dangerous = preset.dangerous_settings()
             if dangerous:
                 all_dangerous_settings[i] = dangerous
@@ -955,14 +955,14 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             )
             self._options.mark_alert_as_displayed(InfoAlert.MULTI_ENERGY_ALERT)
 
-        permalink = Permalink(
+        permalink = Permalink.from_parameters(GeneratorParameters(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
             presets={
                 i: preset.get_preset()
                 for i, preset in enumerate(self._game_session.presets)
             },
-        )
+        ))
         return await self.generate_game_with_permalink(permalink, retries=retries)
 
     async def generate_game_with_permalink(self, permalink: Permalink, retries: Optional[int]):
@@ -971,7 +971,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         def generate_layout(progress_update: ProgressUpdateCallable):
             return simplified_patcher.generate_layout(progress_update=progress_update,
-                                                      permalink=permalink,
+                                                      parameters=permalink.parameters,
                                                       options=self._options,
                                                       retries=retries)
 

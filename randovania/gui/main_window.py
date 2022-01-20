@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 import functools
 import json
 import logging
 import os
 import re
+import typing
 from functools import partial
 from pathlib import Path
 from typing import Optional, List
@@ -27,6 +30,9 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.enum_lib import iterate_enum
 from randovania.patching.patcher_provider import PatcherProvider
 from randovania.resolver import debug
+
+if typing.TYPE_CHECKING:
+    from randovania.layout.permalink import Permalink
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -279,15 +285,18 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.help_corruption_tab_widget.setCurrentWidget(self.corruption_faq_tab)
         self.help_cs_tab_widget.setCurrentWidget(self.cs_faq_tab)
 
-    async def generate_seed_from_permalink(self, permalink):
+    async def generate_seed_from_permalink(self, permalink: Permalink):
         from randovania.lib.status_update_lib import ProgressUpdateCallable
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
 
         def work(progress_update: ProgressUpdateCallable):
             from randovania.interface_common import simplified_patcher
             layout = simplified_patcher.generate_layout(progress_update=progress_update,
-                                                        permalink=permalink,
+                                                        parameters=permalink.parameters,
                                                         options=self._options)
+            if permalink.seed_hash is not None and permalink.seed_hash != layout.shareable_hash_bytes:
+                # TODO: generated seed hash was different from expected
+                pass
             progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
             return layout
 

@@ -241,7 +241,7 @@ class RandomprimePatcher(Patcher):
 
         area_namers = {
             index: hint_lib.AreaNamer(default_database.game_description_for(player_preset.game).world_list)
-            for index, player_preset in description.permalink.presets.items()
+            for index, player_preset in description.generator_parameters.presets.items()
         }
 
         scan_visor = db.resource_database.get_item_by_name("Scan Visor")
@@ -441,7 +441,7 @@ class RandomprimePatcher(Patcher):
             },
             "tweaks": ctwk_config,
             "levelData": world_data,
-            "hasSpoiler": description.permalink.spoiler,
+            "hasSpoiler": description.generator_parameters.spoiler,
 
             # TODO
             # "externAssetsDir": path_to_converted_assets,
