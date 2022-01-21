@@ -5,7 +5,8 @@ from mock import MagicMock, ANY, AsyncMock
 
 import randovania.cli.commands.distribute
 from randovania.games.game import RandovaniaGame
-from randovania.layout.permalink import GeneratorParameters, Permalink
+from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 @pytest.mark.parametrize("preset_name", [None, "Starter Preset"])

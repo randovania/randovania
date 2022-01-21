@@ -11,7 +11,7 @@ from discord_slash.utils import manage_components
 import randovania
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import GeneratorParameters, Permalink
+from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.server.discord.bot import RandovaniaBot

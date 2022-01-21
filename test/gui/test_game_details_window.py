@@ -10,7 +10,7 @@ from randovania.gui.game_details.game_details_window import GameDetailsWindow
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 @pytest.mark.asyncio

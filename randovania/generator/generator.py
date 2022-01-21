@@ -17,7 +17,7 @@ from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset
 from randovania.resolver import resolver
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration, ImpossibleForSolver

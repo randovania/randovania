@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
-from randovania.layout.permalink import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 def test_generate_layout(mocker):

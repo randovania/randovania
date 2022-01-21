@@ -33,7 +33,8 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import GeneratorParameters, Permalink
+from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable

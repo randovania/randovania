@@ -12,7 +12,8 @@ from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_session_window import GameSessionWindow
-from randovania.layout.permalink import GeneratorParameters, Permalink
+from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction, \
     GameSessionActions, GameDetails
 from randovania.network_common.admin_actions import SessionAdminGlobalAction

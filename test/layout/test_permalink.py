@@ -6,7 +6,7 @@ import pytest
 
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
-from randovania.layout.permalink import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset
 
 

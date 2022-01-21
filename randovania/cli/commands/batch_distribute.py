@@ -10,7 +10,7 @@ from randovania.cli import echoes_lib
 from randovania.interface_common import sleep_inhibitor
 
 if typing.TYPE_CHECKING:
-    from randovania.layout.permalink import GeneratorParameters
+    from randovania.layout.generator_parameters import GeneratorParameters
 
 
 def batch_distribute_helper(base_params: "GeneratorParameters",

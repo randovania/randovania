@@ -1,7 +1,7 @@
 from mock import MagicMock, AsyncMock
 
 from randovania.cli.commands import batch_distribute
-from randovania.layout.permalink import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 def test_batch_distribute_helper(mocker):

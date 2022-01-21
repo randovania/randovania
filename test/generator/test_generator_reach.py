@@ -27,7 +27,7 @@ from randovania.generator.reach_lib import filter_pickup_nodes, collectable_reso
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
-from randovania.layout.permalink import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset
 from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 

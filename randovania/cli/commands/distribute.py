@@ -9,7 +9,8 @@ from randovania.resolver import debug
 
 
 def distribute_command_logic(args):
-    from randovania.layout.permalink import GeneratorParameters, Permalink
+    from randovania.layout.permalink import Permalink
+    from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.generator import generator
 
     async def _create_permalink(args_) -> Permalink:

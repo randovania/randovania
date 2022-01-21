@@ -6,7 +6,7 @@ from typing import Callable, Optional
 
 from randovania.generator import generator
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.resolver import debug
 
 
