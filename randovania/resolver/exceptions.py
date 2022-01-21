@@ -1,4 +1,4 @@
-from randovania.layout.permalink import GeneratorParameters
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 class GenerationFailure(Exception):

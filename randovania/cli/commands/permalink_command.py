@@ -3,7 +3,8 @@ import random
 from argparse import ArgumentParser
 
 from randovania.games.game import RandovaniaGame
-from randovania.layout.permalink import GeneratorParameters, Permalink
+from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 async def permalink_command_body(args):
