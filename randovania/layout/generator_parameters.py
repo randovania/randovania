@@ -101,7 +101,9 @@ class GeneratorParameters(BitPackValue):
     @classmethod
     def from_bytes(cls, b: bytes) -> "GeneratorParameters":
         decoder = BitPackDecoder(b)
-        return GeneratorParameters.bit_pack_unpack(decoder, {})
+        result = GeneratorParameters.bit_pack_unpack(decoder, {})
+        decoder.ensure_data_end()
+        return result
 
     @property
     def player_count(self) -> int:
