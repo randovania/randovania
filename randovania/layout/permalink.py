@@ -1,44 +1,24 @@
 import base64
 import binascii
 import dataclasses
+import hashlib
 import json
 import operator
-import struct
-from typing import Iterator, Iterable, Optional, Union
+from typing import Iterator, Iterable, Optional
 
 import bitstruct
 import construct
 
-from randovania.bitpacking.bitpacking import single_byte_hash, two_byte_hash
+import randovania
+from randovania.bitpacking.bitpacking import single_byte_hash
 from randovania.layout.generator_parameters import GeneratorParameters
 
+_CURRENT_SCHEMA_VERSION = 13
 _PERMALINK_MAX_VERSION = 256
 
 
 class UnsupportedPermalink(Exception):
     pass
-
-
-# Permalink format:
-# Byte 0: schema version
-# Byte 1-2: hash
-# Byte 3+, PermalinkBinary
-
-
-PermalinkBinary = construct.Struct(
-    header=construct.BitStruct(
-        has_seed_hash=construct.Rebuild(construct.Flag, construct.this._.seed_hash != None),
-        is_dev_version=construct.Flag,
-        _filler=construct.Const(b"\x00" * 6),
-    ),
-    seed_hash=construct.If(construct.this.header.has_seed_hash, construct.Bytes(5)),
-    version=construct.IfThenElse(
-        construct.this.header.is_dev_version,
-        construct.Bytes(4),  # short git hash
-        construct.Byte,  # index of releases array
-    ),
-    generator_params=construct.Prefixed(construct.VarInt, construct.GreedyBytes),
-)
 
 
 def _dictionary_byte_hash(data: dict) -> int:
@@ -64,17 +44,55 @@ def rotate_bytes(data: Iterable[int], rotation: int, per_byte_adjustment: int,
         rotation = (rotation + per_byte_adjustment) % 256
 
 
+def create_rotator(inverse: bool):
+    return lambda obj, ctx: bytes(rotate_bytes(obj, ctx.header.bytes_rotation, ctx.header.bytes_rotation, inverse))
+
+
+PermalinkBinary = construct.FocusedSeq(
+    "fields",
+    schema_version=construct.Const(_CURRENT_SCHEMA_VERSION, construct.Byte),
+    fields=construct.RawCopy(construct.Aligned(3, construct.Struct(
+        header=construct.BitStruct(
+            has_seed_hash=construct.Rebuild(construct.Flag, construct.this._.seed_hash != None),
+            bytes_rotation=construct.Rebuild(
+                construct.BitsInteger(7),
+                lambda ctx: single_byte_hash(ctx._.generator_params) >> 1,
+            )
+        ),
+        seed_hash=construct.If(construct.this.header.has_seed_hash, construct.Bytes(5)),
+        randovania_version=construct.Bytes(4),  # short git hash
+        generator_params=construct.ExprAdapter(
+            construct.Prefixed(construct.VarInt, construct.GreedyBytes),
+            # parsing
+            decoder=create_rotator(inverse=True),
+            # building
+            encoder=create_rotator(inverse=False),
+        ),
+    ))),
+    permalink_checksum=construct.Checksum(
+        construct.Bytes(2),
+        lambda data: hashlib.blake2b(data, digest_size=2).digest(),
+        construct.this.fields.data,
+    ),
+)
+
+
 @dataclasses.dataclass(frozen=True)
 class Permalink:
     parameters: GeneratorParameters
     seed_hash: Optional[bytes]
+    randovania_version: bytes
 
-    # Either an index of the releases array, or a short git commit hash
-    version: Union[int, bytes]
+    def __post_init__(self):
+        if len(self.randovania_version) != 4:
+            raise ValueError("randovania_version must be 4 bytes long, got {}".format(len(self.randovania_version)))
+
+        if self.seed_hash is not None and len(self.seed_hash) != 5:
+            raise ValueError("seed_hash must be 5 bytes long if present, got {}".format(len(self.seed_hash)))
 
     @classmethod
     def current_schema_version(cls) -> int:
-        return 13
+        return _CURRENT_SCHEMA_VERSION
 
     @classmethod
     def _raise_if_different_schema_version(cls, version: int):
@@ -91,31 +109,23 @@ class Permalink:
         return Permalink(
             parameters=parameters,
             seed_hash=seed_hash,
-            version=0,
+            randovania_version=randovania.GIT_HASH,
         )
 
     @property
     def as_base64_str(self) -> str:
         try:
             encoded = PermalinkBinary.build({
-                "header": {
-                    "is_dev_version": False,
-                },
-                "seed_hash": self.seed_hash,
-                "version": self.version,
-                "generator_params": self.parameters.as_bytes,
+                "value": {
+                    "header": {
+                        "is_dev_version": True,
+                    },
+                    "seed_hash": self.seed_hash,
+                    "randovania_version": self.randovania_version,
+                    "generator_params": self.parameters.as_bytes,
+                }
             })
-            # Add extra bytes so the base64 encoding never uses == at the end
-            encoded += b"\x00" * ((3 - len(encoded)) % 3)
-
-            # Rotate bytes, so the slightest change causes a cascading effect.
-            # But skip the first byte so the version check can be done early in decoding.
-            byte_hash = struct.unpack(">H", two_byte_hash(encoded))[0]
-            new_bytes = [encoded[0]]
-            new_bytes.extend(rotate_bytes(encoded[1:], byte_hash, byte_hash, inverse=False))
-
-            result = struct.pack(">BH", self.current_schema_version(), byte_hash) + bytes(new_bytes)
-            return base64.b64encode(result, altchars=b'-_').decode("utf-8")
+            return base64.b64encode(encoded, altchars=b'-_').decode("utf-8")
         except ValueError as e:
             return "Unable to create Permalink: {}".format(e)
 
@@ -127,15 +137,7 @@ class Permalink:
                 raise ValueError("String too short")
 
             cls.validate_version(b)
-            byte_hash = struct.unpack_from(">H", b, 1)[0]
-            new_bytes = [b[3]]
-            new_bytes.extend(rotate_bytes(b[4:], byte_hash, byte_hash, inverse=True))
-
-            decoded = bytes(new_bytes)
-            if struct.unpack(">H", two_byte_hash(decoded))[0] != byte_hash:
-                raise ValueError("Incorrect checksum")
-
-            data = PermalinkBinary.parse(decoded)
+            data = PermalinkBinary.parse(b).value
 
         except (binascii.Error, bitstruct.Error) as e:
             raise ValueError("Unable to base64 decode '{permalink}': {error}".format(
@@ -147,7 +149,7 @@ class Permalink:
             return Permalink(
                 parameters=GeneratorParameters.from_bytes(data.generator_params),
                 seed_hash=data.seed_hash,
-                version=data.version,
+                randovania_version=data.randovania_version,
             )
         except Exception as e:
             raise UnsupportedPermalink(param) from e
