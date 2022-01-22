@@ -18,7 +18,13 @@ _PERMALINK_MAX_VERSION = 256
 
 
 class UnsupportedPermalink(Exception):
-    pass
+    seed_hash: Optional[bytes]
+    randovania_version: bytes
+
+    def __init__(self, msg, seed_hash, version):
+        super().__init__(msg)
+        self.seed_hash = seed_hash
+        self.randovania_version = version
 
 
 def _dictionary_byte_hash(data: dict) -> int:
@@ -74,6 +80,7 @@ PermalinkBinary = construct.FocusedSeq(
         lambda data: hashlib.blake2b(data, digest_size=2).digest(),
         construct.this.fields.data,
     ),
+    end=construct.Terminated,
 )
 
 
@@ -97,19 +104,24 @@ class Permalink:
     @classmethod
     def _raise_if_different_schema_version(cls, version: int):
         if version != cls.current_schema_version():
-            raise ValueError("Given permalink has version {}, but this Randovania "
-                             "support only permalink of version {}.".format(version, cls.current_schema_version()))
+            raise ValueError(
+                "Given permalink has version {}, but this Randovania support only permalink of version {}.".format(
+                    version, cls.current_schema_version()))
 
     @classmethod
     def validate_version(cls, b: bytes):
         cls._raise_if_different_schema_version(b[0])
 
     @classmethod
+    def current_randovania_version(cls):
+        return randovania.GIT_HASH
+
+    @classmethod
     def from_parameters(cls, parameters: GeneratorParameters, seed_hash: Optional[bytes] = None) -> "Permalink":
         return Permalink(
             parameters=parameters,
             seed_hash=seed_hash,
-            randovania_version=randovania.GIT_HASH,
+            randovania_version=cls.current_randovania_version(),
         )
 
     @property
@@ -131,19 +143,28 @@ class Permalink:
 
     @classmethod
     def from_str(cls, param: str) -> "Permalink":
+        encoded_param = param.encode("utf-8")
+        encoded_param += b"=" * ((4 - len(encoded_param)) % 4)
+
         try:
-            b = base64.b64decode(param.encode("utf-8"), altchars=b'-_', validate=True)
+            b = base64.b64decode(encoded_param, altchars=b'-_', validate=True)
             if len(b) < 4:
                 raise ValueError("String too short")
 
             cls.validate_version(b)
             data = PermalinkBinary.parse(b).value
 
-        except (binascii.Error, bitstruct.Error) as e:
-            raise ValueError("Unable to base64 decode '{permalink}': {error}".format(
-                permalink=param,
-                error=e,
-            ))
+        except construct.core.TerminatedError:
+            raise ValueError("Extra text at the end")
+
+        except construct.core.StreamError:
+            raise ValueError("Missing text at the end")
+
+        except construct.core.ChecksumError:
+            raise ValueError("Incorrect checkum")
+
+        except (binascii.Error, bitstruct.Error, construct.ConstructError) as e:
+            raise ValueError(str(e))
 
         try:
             return Permalink(
@@ -152,4 +173,9 @@ class Permalink:
                 randovania_version=data.randovania_version,
             )
         except Exception as e:
-            raise UnsupportedPermalink(param) from e
+            if data.randovania_version != cls.current_randovania_version():
+                msg = "Detected version {}, current version is {}".format(data.randovania_version.hex(),
+                                                                          cls.current_randovania_version().hex())
+            else:
+                msg = f"Error decoding parameters - {e}"
+            raise UnsupportedPermalink(msg, data.seed_hash, data.randovania_version) from e

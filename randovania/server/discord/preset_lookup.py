@@ -11,7 +11,7 @@ from discord_slash.utils import manage_components
 import randovania
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import Permalink, UnsupportedPermalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.server.discord.bot import RandovaniaBot
@@ -32,7 +32,8 @@ async def look_for_permalinks(message: discord.Message):
     for word in possible_links_re.finditer(message.content):
         try:
             permalink = Permalink.from_str(word.group(1))
-        except ValueError:
+        except (ValueError, UnsupportedPermalink):
+            # TODO: handle the incorrect version permalink
             continue
 
         parameters = permalink.parameters
@@ -148,14 +149,14 @@ class PermalinkLookupCog(commands.Cog):
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 
-        except (IndexError, ValueError) as e:
+        except (IndexError, ValueError, UnsupportedPermalink) as e:
             logging.exception("Unable to find permalink on message that sent attach_presets_of_permalink")
             permalink = None
 
         files = []
 
         if permalink is not None:
-            for player, preset in permalink.presets.items():
+            for player, preset in permalink.parameters.presets.items():
                 data = io.BytesIO()
                 VersionedPreset.with_preset(preset).save_to_io(data)
                 data.seek(0)
