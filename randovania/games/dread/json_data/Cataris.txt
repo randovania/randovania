@@ -184,7 +184,7 @@ Extra - asset_id: collision_camera_004
   > Dock to Above Z-57 Fight (Bottom)
       After Cataris - First Thermal Device
   > Dock to Above Z-57 Fight (Tunnel)
-      Lay Bomb
+      Morph Ball
 
 > Door to collision_camera_007 (C) (doorpowerpower_004); Heals? False
   * Power Beam Door to collision_camera_007 (C)/Door to Thermal Device 1 Room (doorpowerpower_004)
@@ -235,12 +235,14 @@ Extra - asset_id: collision_camera_004
       Trivial
 
 > Dock to Above Z-57 Fight (Bottom); Heals? False
-  * Open Passage to Above Z-57 Fight/Dock to Thermal Device 1 Room (Bottom)
+  * Open Passage to Above Z-57 Fight/Dock to Thermal Device 1 Room
   > Door to Navigation Room Southeast
       After Cataris - First Thermal Device
 
 > Dock to Above Z-57 Fight (Tunnel); Heals? False
-  * Morph Ball Tunnel to Above Z-57 Fight/Dock to Thermal Device 1 Room (Tunnel)
+  * Morph Ball Launcher to Above Z-57 Fight/Dock from Thermal Device 1 Room
+  > Door to Navigation Room Southeast
+      Morph Ball
 
 ----------------
 collision_camera_006 (C)
@@ -453,18 +455,18 @@ Extra - asset_id: collision_camera_009
   > Door to collision_camera_021 (C)
       Morph Ball and After Cataris - breakablemag003
 
-> Dock to Thermal Device 1 Room (Bottom); Heals? False
+> Dock to Thermal Device 1 Room; Heals? False
   * Open Passage to Thermal Device 1 Room/Dock to Above Z-57 Fight (Bottom)
   > Z-57 Room
       After Cataris - First Thermal Device
 
-> Dock to Thermal Device 1 Room (Tunnel); Heals? False
-  * Morph Ball Tunnel to Thermal Device 1 Room/Dock to Above Z-57 Fight (Tunnel)
+> Dock from Thermal Device 1 Room; Heals? False
+  * Blocked Passage to Thermal Device 1 Room/Dock to Above Z-57 Fight (Tunnel)
   > Z-57 Room
       Trivial
 
 > Z-57 Room; Heals? False
-  > Dock to Thermal Device 1 Room (Bottom)
+  > Dock to Thermal Device 1 Room
       After Cataris - First Thermal Device
   > Between Thermal Gates
       All of the following:
@@ -1215,6 +1217,10 @@ Extra - asset_id: collision_camera_019
           Varia Suit or Heat Damage ≥ 20
 
 > Left Platform; Heals? False
+  > Tiny Alcove
+      All of the following:
+          Morph Ball and After Cataris - breakablemag004
+          Varia Suit or Heat Damage ≥ 100
   > Top Ledge
       All of the following:
           Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
@@ -1270,11 +1276,6 @@ Extra - asset_id: collision_camera_019
           Varia Suit or Heat Damage ≥ 20
   > Left Platform
       Varia Suit or Heat Damage ≥ 50
-  > Tiny Alcove
-      All of the following:
-          Morph Ball and After Cataris - breakablemag004
-          Varia Suit or Heat Damage ≥ 100
-          Simple IBJ or Use Spin Boost
 
 ----------------
 Green EMMI Introduction

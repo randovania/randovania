@@ -2335,7 +2335,7 @@
                     "extra": {},
                     "event_name": "GhavoranSupersRotatable",
                     "connections": {
-                        "Dock to Spider Magnet Elevator (Tunnel)": {
+                        "Dock to Spider Magnet Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2344,7 +2344,7 @@
                         }
                     }
                 },
-                "Dock to Spider Magnet Elevator (Cannon)": {
+                "Dock from Spider Magnet Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2360,7 +2360,7 @@
                         "node_name": "Dock to collision_camera_007 (G) (Cannon)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Blocked Passage",
                     "connections": {
                         "Door to collision_camera_029 (G)": {
                             "type": "resource",
@@ -2373,7 +2373,7 @@
                         }
                     }
                 },
-                "Dock to Spider Magnet Elevator (Tunnel)": {
+                "Dock to Spider Magnet Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8262,15 +8262,13 @@
                         "node_name": "Dock to Teleport to Burenia"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Dock to collision_camera_031 (G) (Bottom)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -8294,8 +8292,11 @@
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Dock to Spin Boost Room": {
-                            "type": "template",
-                            "data": "Lay Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -9995,8 +9996,13 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -10044,7 +10050,7 @@
                         "node_name": "Dock to Spin Boost Room"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Start Point": {
                             "type": "resource",
@@ -11813,11 +11819,21 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_007 (G)",
-                        "node_name": "Dock to Spider Magnet Elevator (Cannon)"
+                        "node_name": "Dock from Spider Magnet Elevator"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
-                    "connections": {}
+                    "dock_weakness": "Morph Ball Launcher",
+                    "connections": {
+                        "Dock to collision_camera_007 (G) (Tunnel)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "GhavoraSupersMagnetPlatformLowered",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Dock to collision_camera_007 (G) (Tunnel)": {
                     "node_type": "dock",
@@ -11832,7 +11848,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "collision_camera_007 (G)",
-                        "node_name": "Dock to Spider Magnet Elevator (Tunnel)"
+                        "node_name": "Dock to Spider Magnet Elevator"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -11871,10 +11887,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
                                     }
                                 ]
                             }
