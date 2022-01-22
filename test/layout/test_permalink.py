@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, ANY
 import pytest
 
 from randovania.layout.generator_parameters import GeneratorParameters
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
 
 @pytest.fixture(name="fake_generator_parameters")
@@ -97,6 +97,7 @@ def test_round_trip(seed_hash, fake_generator_parameters, mocker):
 def test_decode_old_version(permalink: str, version: int):
     with pytest.raises(ValueError) as exp:
         Permalink.from_str(permalink)
+
     assert str(exp.value) == (
-        "Given permalink has version {}, but this Randovania "
-        "support only permalink of version {}.".format(version, Permalink.current_schema_version()))
+        "Given permalink has version {}, but this Randovania support only permalink of version {}.".format(
+            version, Permalink.current_schema_version()))
