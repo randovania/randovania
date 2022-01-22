@@ -14,6 +14,11 @@ from randovania.layout.generator_parameters import GeneratorParameters
 
 _PERMALINK_MAX_VERSION = 256
 
+
+class UnsupportedPermalink(Exception):
+    pass
+
+
 # Permalink format:
 # Byte 0: schema version
 # Byte 1-2: hash
@@ -82,10 +87,10 @@ class Permalink:
         cls._raise_if_different_schema_version(b[0])
 
     @classmethod
-    def from_parameters(cls, parameters: GeneratorParameters) -> "Permalink":
+    def from_parameters(cls, parameters: GeneratorParameters, seed_hash: Optional[bytes] = None) -> "Permalink":
         return Permalink(
             parameters=parameters,
-            seed_hash=None,
+            seed_hash=seed_hash,
             version=0,
         )
 
@@ -119,7 +124,7 @@ class Permalink:
         try:
             b = base64.b64decode(param.encode("utf-8"), altchars=b'-_', validate=True)
             if len(b) < 4:
-                raise ValueError("Data too small")
+                raise ValueError("String too short")
 
             cls.validate_version(b)
             byte_hash = struct.unpack_from(">H", b, 1)[0]
@@ -132,14 +137,17 @@ class Permalink:
 
             data = PermalinkBinary.parse(decoded)
 
-            return Permalink(
-                parameters=GeneratorParameters.from_bytes(data.generator_params),
-                seed_hash=data.seed_hash,
-                version=data.version,
-            )
-
         except (binascii.Error, bitstruct.Error) as e:
             raise ValueError("Unable to base64 decode '{permalink}': {error}".format(
                 permalink=param,
                 error=e,
             ))
+
+        try:
+            return Permalink(
+                parameters=GeneratorParameters.from_bytes(data.generator_params),
+                seed_hash=data.seed_hash,
+                version=data.version,
+            )
+        except Exception as e:
+            raise UnsupportedPermalink(param) from e
