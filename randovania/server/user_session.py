@@ -29,6 +29,8 @@ def _create_client_side_session(sio: ServerApp, user: Optional[User]) -> dict:
     elif user.id != session["user-id"]:
         raise RuntimeError(f"Provided user does not match the session's user")
 
+    logger().info(f"Client at {sio.current_client_ip()} is user {user.name} ({user.id}).")
+
     return {
         "user": user.as_json,
         "sessions": [
@@ -111,7 +113,7 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: O
             user, result = _create_session_with_discord_token(sio, session["discord-access-token"])
         else:
             user = User.get_by_id(session["user-id"])
-            sio.get_server().save_session(flask.request.sid, session)
+            sio.save_session(session)
             result = _create_client_side_session(sio, user)
 
         if session_id is not None:
