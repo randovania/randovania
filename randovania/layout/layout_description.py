@@ -97,11 +97,7 @@ class LayoutDescription:
 
     @property
     def permalink(self):
-        return Permalink(
-            parameters=self.generator_parameters,
-            seed_hash=self.shareable_hash_bytes,
-            version=0,
-        )
+        return Permalink.from_parameters(self.generator_parameters, seed_hash=self.shareable_hash_bytes)
 
     @property
     def player_count(self) -> int:
