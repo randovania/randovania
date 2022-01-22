@@ -19,10 +19,6 @@ def single_byte_hash(data: bytes) -> int:
     return hashlib.blake2b(data, digest_size=1).digest()[0]
 
 
-def two_byte_hash(data: bytes) -> bytes:
-    return hashlib.blake2b(data, digest_size=2).digest()
-
-
 def _compile_format(*args):
     return bitstruct.CompiledFormat("".join("u{}".format(_bits_for_number(v)) for v in args))
 

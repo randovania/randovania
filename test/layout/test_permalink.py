@@ -1,34 +1,57 @@
-import dataclasses
-import uuid
-from unittest.mock import patch, MagicMock, ANY
+from unittest.mock import MagicMock, ANY
 
 import pytest
 
-from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset
 
 
-@patch("randovania.layout.preset._dictionary_byte_hash", autospec=True)
-def test_encode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
+@pytest.fixture(name="fake_generator_parameters")
+def _fake_generator_parameters() -> GeneratorParameters:
+    parameters = MagicMock(spec=GeneratorParameters)
+    parameters.as_bytes = b"\xA0\xB0\xC0"
+    return parameters
+
+
+def test_encode(fake_generator_parameters):
     # Setup
-    mock_dictionary_byte_hash.return_value = 120
-    link = Permalink.from_parameters(
-        parameters=GeneratorParameters(
-            seed_number=1000,
-            spoiler=True,
-            presets={0: default_echoes_preset},
-        )
+    link = Permalink(
+        parameters=fake_generator_parameters,
+        seed_hash=None,
+        randovania_version=b"0123"
     )
 
     # Run
     encoded = link.as_base64_str
 
     # Assert
-    mock_dictionary_byte_hash.assert_called_once_with(default_echoes_preset.configuration.game_data)
-    assert encoded == "DbhkAGTOLJD7Kf6Y"
+    assert encoded == "DX4wMTIzAx6sOvRw"
+
+
+def test_decode(mocker):
+    mock_from_bytes: MagicMock = mocker.patch("randovania.layout.generator_parameters.GeneratorParameters.from_bytes",
+                                              autospec=True)
+
+    # This test should break whenever we change how permalinks are created
+    # When this happens, we must bump the permalink version and change the tests
+    encoded = "DX4wMTIzAx6sOvRw"
+
+    expected = Permalink(
+        parameters=mock_from_bytes.return_value,
+        seed_hash=None,
+        randovania_version=b"0123",
+    )
+
+    # Uncomment this line to quickly get the new encoded permalink
+    # assert expected.as_base64_str == ""
+    # print(expected.as_base64_str)
+
+    # Run
+    link = Permalink.from_str(encoded)
+
+    # Assert
+    assert link == expected
+    mock_from_bytes.assert_called_once_with(b"\xA0\xB0\xC0")
 
 
 @pytest.mark.parametrize("invalid", [
@@ -44,45 +67,27 @@ def test_decode_invalid(invalid: str):
         Permalink.from_str(invalid)
 
 
-@pytest.mark.parametrize("spoiler", [False, True])
-@pytest.mark.parametrize("layout", [
-    {},
-    {
-        "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS,
-    },
-    {
-        "menu_mod": True,
-        "warp_to_start": False,
-    },
+@pytest.mark.parametrize("seed_hash", [
+    None,
+    b"12345",
+    b"67890",
 ])
-def test_round_trip(spoiler: bool,
-                    layout: dict,
-                    default_echoes_preset,
-                    mocker):
+def test_round_trip(seed_hash, fake_generator_parameters, mocker):
+    mock_from_bytes: MagicMock = mocker.patch("randovania.layout.generator_parameters.GeneratorParameters.from_bytes",
+                                              autospec=True, return_value=fake_generator_parameters)
     # Setup
-    random_uuid = uuid.uuid4()
-    mocker.patch("uuid.uuid4", return_value=random_uuid)
-
-    preset = Preset(
-        name="{} Custom".format(default_echoes_preset.name),
-        description="A customized preset.",
-        uuid=random_uuid,
-        base_preset_uuid=default_echoes_preset.uuid,
-        game=default_echoes_preset.game,
-        configuration=dataclasses.replace(default_echoes_preset.configuration, **layout),
+    link = Permalink(
+        parameters=fake_generator_parameters,
+        seed_hash=seed_hash,
+        randovania_version=b"0123"
     )
-
-    link = Permalink.from_parameters(GeneratorParameters(
-        seed_number=1000,
-        spoiler=spoiler,
-        presets={0: preset},
-    ))
 
     # Run
     after = Permalink.from_str(link.as_base64_str)
 
     # Assert
     assert link == after
+    mock_from_bytes.assert_called_once_with(b"\xA0\xB0\xC0")
 
 
 @pytest.mark.parametrize(["permalink", "version"], [
@@ -92,92 +97,6 @@ def test_round_trip(spoiler: bool,
 def test_decode_old_version(permalink: str, version: int):
     with pytest.raises(ValueError) as exp:
         Permalink.from_str(permalink)
-    assert str(exp.value) == ("Given permalink has version {}, but this Randovania "
-                              "support only permalink of version {}.".format(version,
-                                                                             Permalink.current_schema_version()))
-
-
-@patch("randovania.layout.preset._dictionary_byte_hash", autospec=True)
-def test_decode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
-    mock_dictionary_byte_hash.return_value = 120
-    # We're mocking the database hash to avoid breaking tests every single time we change the database
-
-    # This test should break whenever we change how permalinks are created
-    # When this happens, we must bump the permalink version and change the tests
-    encoded = "DbhkAGTOLJD7Kf6Y"
-
-    expected = Permalink.from_parameters(GeneratorParameters(
-        seed_number=1000,
-        spoiler=True,
-        presets={0: default_echoes_preset},
-    ))
-
-    # Uncomment this line to quickly get the new encoded permalink
-    # assert expected.as_base64_str == ""
-    # print(expected.as_base64_str)
-
-    # Run
-    link = Permalink.from_str(encoded)
-
-    # Assert
-    assert link == expected
-
-
-@pytest.mark.parametrize(["encoded", "num_players"], [
-    (b'\x00\x00\x07\xd1@\x02\x80', 1),
-    (b'\x00\x00\x07\xd1\x80\x00\x02\xc0', 2),
-    (b'\x00\x00\x07\xd1\x82\x00\x02\xff\xc0', 10),
-])
-def test_decode_mock_other(encoded, num_players, mocker):
-    preset = MagicMock()
-
-    def read_values(decoder: BitPackDecoder, metadata):
-        decoder.decode(100, 100)
-        return preset
-
-    mock_preset_unpack: MagicMock = mocker.patch("randovania.layout.preset.Preset.bit_pack_unpack",
-                                                 side_effect=read_values)
-
-    expected = GeneratorParameters(
-        seed_number=1000,
-        spoiler=True,
-        presets={i: preset for i in range(num_players)},
-    )
-    preset.bit_pack_encode.return_value = [(0, 100), (5, 100)]
-
-    # Uncomment this line to quickly get the new encoded permalink
-    # assert expected.as_bytes == b""
-    # print(expected.as_bytes)
-
-    # Run
-    round_trip = expected.as_bytes
-    link = GeneratorParameters.from_bytes(encoded)
-
-    # Assert
-    assert link == expected
-    assert round_trip == encoded
-    mock_preset_unpack.assert_called_once_with(ANY, {"manager": ANY})
-
-
-@patch("randovania.layout.generator_parameters.GeneratorParameters.bit_pack_encode", autospec=True)
-def test_permalink_as_str_caches(mock_bit_pack_encode: MagicMock,
-                                 default_echoes_preset):
-    # Setup
-    mock_bit_pack_encode.return_value = [
-        (5, 256)
-    ]
-    params = GeneratorParameters(
-        seed_number=1000,
-        spoiler=True,
-        presets={0: default_echoes_preset},
-    )
-
-    # Run
-    str1 = params.as_bytes
-    str2 = params.as_bytes
-
-    # Assert
-    assert str1 == b'\x05'
-    assert str1 == str2
-    assert object.__getattribute__(params, "__cached_as_bytes") is not None
-    mock_bit_pack_encode.assert_called_once_with(params, {})
+    assert str(exp.value) == (
+        "Given permalink has version {}, but this Randovania "
+        "support only permalink of version {}.".format(version, Permalink.current_schema_version()))
