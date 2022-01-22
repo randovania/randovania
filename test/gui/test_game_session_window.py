@@ -331,6 +331,7 @@ async def test_copy_permalink(window, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     game_session = MagicMock(spec=GameSessionEntry)
+    game_session.game_details = MagicMock()
     game_session.game_details.permalink = "<permalink>"
 
     window._game_session = game_session

@@ -3,19 +3,37 @@ import binascii
 import dataclasses
 import json
 import operator
+import struct
 from typing import Iterator, Iterable, Optional, Union
 
 import bitstruct
+import construct
 
-from randovania.bitpacking.bitpacking import BitPackDecoder, single_byte_hash
+from randovania.bitpacking.bitpacking import single_byte_hash, two_byte_hash
 from randovania.layout.generator_parameters import GeneratorParameters
 
 _PERMALINK_MAX_VERSION = 256
 
-
 # Permalink format:
-# Byte 0: version
+# Byte 0: schema version
 # Byte 1-2: hash
+# Byte 3+, PermalinkBinary
+
+
+PermalinkBinary = construct.Struct(
+    header=construct.BitStruct(
+        has_seed_hash=construct.Rebuild(construct.Flag, construct.this._.seed_hash != None),
+        is_dev_version=construct.Flag,
+        _filler=construct.Const(b"\x00" * 6),
+    ),
+    seed_hash=construct.If(construct.this.header.has_seed_hash, construct.Bytes(5)),
+    version=construct.IfThenElse(
+        construct.this.header.is_dev_version,
+        construct.Bytes(4),  # short git hash
+        construct.Byte,  # index of releases array
+    ),
+    generator_params=construct.Prefixed(construct.VarInt, construct.GreedyBytes),
+)
 
 
 def _dictionary_byte_hash(data: dict) -> int:
@@ -74,21 +92,25 @@ class Permalink:
     @property
     def as_base64_str(self) -> str:
         try:
-            encoded = self.parameters.as_bytes
-
+            encoded = PermalinkBinary.build({
+                "header": {
+                    "is_dev_version": False,
+                },
+                "seed_hash": self.seed_hash,
+                "version": self.version,
+                "generator_params": self.parameters.as_bytes,
+            })
             # Add extra bytes so the base64 encoding never uses == at the end
-            encoded += b"\x00" * (3 - (len(encoded) + 1) % 3)
+            encoded += b"\x00" * ((3 - len(encoded)) % 3)
 
             # Rotate bytes, so the slightest change causes a cascading effect.
             # But skip the first byte so the version check can be done early in decoding.
-            byte_hash = single_byte_hash(encoded)
+            byte_hash = struct.unpack(">H", two_byte_hash(encoded))[0]
             new_bytes = [encoded[0]]
             new_bytes.extend(rotate_bytes(encoded[1:], byte_hash, byte_hash, inverse=False))
 
-            # Append the hash, so the rotation can be reversed and the checksum verified
-            new_bytes.append(byte_hash)
-
-            return base64.b64encode(bytes(new_bytes), altchars=b'-_').decode("utf-8")
+            result = struct.pack(">BH", self.current_schema_version(), byte_hash) + bytes(new_bytes)
+            return base64.b64encode(result, altchars=b'-_').decode("utf-8")
         except ValueError as e:
             return "Unable to create Permalink: {}".format(e)
 
@@ -96,23 +118,24 @@ class Permalink:
     def from_str(cls, param: str) -> "Permalink":
         try:
             b = base64.b64decode(param.encode("utf-8"), altchars=b'-_', validate=True)
-            if len(b) < 2:
+            if len(b) < 4:
                 raise ValueError("Data too small")
 
             cls.validate_version(b)
-
-            byte_hash = b[-1]
-            new_bytes = [b[0]]
-            new_bytes.extend(rotate_bytes(b[1:-1], byte_hash, byte_hash, inverse=True))
+            byte_hash = struct.unpack_from(">H", b, 1)[0]
+            new_bytes = [b[3]]
+            new_bytes.extend(rotate_bytes(b[4:], byte_hash, byte_hash, inverse=True))
 
             decoded = bytes(new_bytes)
-            if single_byte_hash(decoded) != byte_hash:
+            if struct.unpack(">H", two_byte_hash(decoded))[0] != byte_hash:
                 raise ValueError("Incorrect checksum")
 
+            data = PermalinkBinary.parse(decoded)
+
             return Permalink(
-                parameters=GeneratorParameters.from_bytes(decoded),
-                seed_hash=None,
-                version=0,
+                parameters=GeneratorParameters.from_bytes(data.generator_params),
+                seed_hash=data.seed_hash,
+                version=data.version,
             )
 
         except (binascii.Error, bitstruct.Error) as e:

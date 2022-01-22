@@ -7,6 +7,7 @@ import pytest
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 
 
@@ -14,10 +15,12 @@ from randovania.layout.preset import Preset
 def test_encode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
     # Setup
     mock_dictionary_byte_hash.return_value = 120
-    link = GeneratorParameters(
-        seed_number=1000,
-        spoiler=True,
-        presets={0: default_echoes_preset},
+    link = Permalink.from_parameters(
+        parameters=GeneratorParameters(
+            seed_number=1000,
+            spoiler=True,
+            presets={0: default_echoes_preset},
+        )
     )
 
     # Run
@@ -25,7 +28,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
 
     # Assert
     mock_dictionary_byte_hash.assert_called_once_with(default_echoes_preset.configuration.game_data)
-    assert encoded == "wA0apEhozlsN"
+    assert encoded == "DbhkAGTOLJD7Kf6Y"
 
 
 @pytest.mark.parametrize("invalid", [
@@ -38,7 +41,7 @@ def test_encode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
 ])
 def test_decode_invalid(invalid: str):
     with pytest.raises(ValueError):
-        GeneratorParameters.from_str(invalid)
+        Permalink.from_str(invalid)
 
 
 @pytest.mark.parametrize("spoiler", [False, True])
@@ -69,29 +72,29 @@ def test_round_trip(spoiler: bool,
         configuration=dataclasses.replace(default_echoes_preset.configuration, **layout),
     )
 
-    link = GeneratorParameters(
+    link = Permalink.from_parameters(GeneratorParameters(
         seed_number=1000,
         spoiler=spoiler,
         presets={0: preset},
-    )
+    ))
 
     # Run
-    after = GeneratorParameters.from_str(link.as_base64_str)
+    after = Permalink.from_str(link.as_base64_str)
 
     # Assert
     assert link == after
 
 
 @pytest.mark.parametrize(["permalink", "version"], [
-    ("AAAAfR5QLERzIpgS4ICCAHw=", 0),
-    ("EAAAfReObArRHMClxLYgIIA+", 1),
-    ("MAAAfReKeBWiOYFLiWxAQQDk", 3),
+    ("CrhkAGTOLJD7Kf6Y", 10),
+    ("DLhkAGTOLJD7Kf6Y", 12),
 ])
 def test_decode_old_version(permalink: str, version: int):
     with pytest.raises(ValueError) as exp:
-        GeneratorParameters.from_str(permalink)
+        Permalink.from_str(permalink)
     assert str(exp.value) == ("Given permalink has version {}, but this Randovania "
-                              "support only permalink of version {}.".format(version, GeneratorParameters.current_version()))
+                              "support only permalink of version {}.".format(version,
+                                                                             Permalink.current_schema_version()))
 
 
 @patch("randovania.layout.preset._dictionary_byte_hash", autospec=True)
@@ -101,29 +104,29 @@ def test_decode(mock_dictionary_byte_hash: MagicMock, default_echoes_preset):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = "wA0apEhozlsN"
+    encoded = "DbhkAGTOLJD7Kf6Y"
 
-    expected = GeneratorParameters(
+    expected = Permalink.from_parameters(GeneratorParameters(
         seed_number=1000,
         spoiler=True,
         presets={0: default_echoes_preset},
-    )
+    ))
 
     # Uncomment this line to quickly get the new encoded permalink
     # assert expected.as_base64_str == ""
     # print(expected.as_base64_str)
 
     # Run
-    link = GeneratorParameters.from_str(encoded)
+    link = Permalink.from_str(encoded)
 
     # Assert
     assert link == expected
 
 
 @pytest.mark.parametrize(["encoded", "num_players"], [
-    ("wIQICSSUQJyE", 1),
-    ("wGPGpqTvUuEYe95j", 2),
-    ("wH369AyR7prkZeJ9", 10),
+    (b'\x00\x00\x07\xd1@\x02\x80', 1),
+    (b'\x00\x00\x07\xd1\x80\x00\x02\xc0', 2),
+    (b'\x00\x00\x07\xd1\x82\x00\x02\xff\xc0', 10),
 ])
 def test_decode_mock_other(encoded, num_players, mocker):
     preset = MagicMock()
@@ -143,12 +146,12 @@ def test_decode_mock_other(encoded, num_players, mocker):
     preset.bit_pack_encode.return_value = [(0, 100), (5, 100)]
 
     # Uncomment this line to quickly get the new encoded permalink
-    # assert expected.as_base64_str == ""
-    # print(expected.as_base64_str)
+    # assert expected.as_bytes == b""
+    # print(expected.as_bytes)
 
     # Run
-    round_trip = expected.as_base64_str
-    link = GeneratorParameters.from_str(encoded)
+    round_trip = expected.as_bytes
+    link = GeneratorParameters.from_bytes(encoded)
 
     # Assert
     assert link == expected
@@ -156,23 +159,25 @@ def test_decode_mock_other(encoded, num_players, mocker):
     mock_preset_unpack.assert_called_once_with(ANY, {"manager": ANY})
 
 
-@patch("randovania.layout.permalink.Permalink.bit_pack_encode", autospec=True)
+@patch("randovania.layout.generator_parameters.GeneratorParameters.bit_pack_encode", autospec=True)
 def test_permalink_as_str_caches(mock_bit_pack_encode: MagicMock,
                                  default_echoes_preset):
     # Setup
-    mock_bit_pack_encode.return_value = []
-    link = GeneratorParameters(
+    mock_bit_pack_encode.return_value = [
+        (5, 256)
+    ]
+    params = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
         presets={0: default_echoes_preset},
     )
 
     # Run
-    str1 = link.as_base64_str
-    str2 = link.as_base64_str
+    str1 = params.as_bytes
+    str2 = params.as_bytes
 
     # Assert
-    assert str1 == "AMXF"
+    assert str1 == b'\x05'
     assert str1 == str2
-    assert object.__getattribute__(link, "__cached_as_bytes") is not None
-    mock_bit_pack_encode.assert_called_once_with(link, {})
+    assert object.__getattribute__(params, "__cached_as_bytes") is not None
+    mock_bit_pack_encode.assert_called_once_with(params, {})
