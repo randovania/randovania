@@ -1,3 +1,4 @@
+import contextlib
 import dataclasses
 import uuid
 from unittest.mock import patch, MagicMock, ANY
@@ -51,7 +52,8 @@ def test_round_trip(spoiler: bool,
     assert params == after
 
 
-def test_decode(default_echoes_preset, mocker):
+@pytest.mark.parametrize("extra_data", [False, True])
+def test_decode(default_echoes_preset, mocker, extra_data):
     # We're mocking the database hash to avoid breaking tests every single time we change the database
     mocker.patch("randovania.layout.generator_parameters._game_db_hash", autospec=True,
                  return_value=120)
@@ -59,6 +61,8 @@ def test_decode(default_echoes_preset, mocker):
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
     encoded = b'\x00\x00\x07\xd1Bx'
+    if extra_data:
+        encoded += b"="
 
     expected = GeneratorParameters(
         seed_number=1000,
@@ -71,10 +75,17 @@ def test_decode(default_echoes_preset, mocker):
     # print(expected.as_bytes)
 
     # Run
-    link = GeneratorParameters.from_bytes(encoded)
+    if extra_data:
+        expectation = pytest.raises(ValueError)
+    else:
+        expectation = contextlib.nullcontext()
+
+    with expectation:
+        link = GeneratorParameters.from_bytes(encoded)
 
     # Assert
-    assert link == expected
+    if not extra_data:
+        assert link == expected
 
 
 @pytest.mark.parametrize(["encoded", "num_players"], [
