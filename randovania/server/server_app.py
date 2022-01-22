@@ -1,5 +1,5 @@
 import functools
-from typing import Optional
+from typing import Optional, Mapping
 
 import flask
 import flask_discord
@@ -37,11 +37,21 @@ class ServerApp:
     def get_server(self) -> socketio.Server:
         return self.sio.server
 
+    def get_environ(self) -> Mapping:
+        return self.get_server().get_environ(self._request_sid)
+
+    @property
+    def _request_sid(self):
+        return getattr(flask.request, "sid")
+
+    def save_session(self, session, namespace=None):
+        self.get_server().save_session(self._request_sid, session, namespace=namespace)
+
     def get_session(self, namespace=None):
-        return self.get_server().get_session(flask.request.sid, namespace=namespace)
+        return self.get_server().get_session(self._request_sid, namespace=namespace)
 
     def session(self, namespace=None):
-        return self.get_server().session(flask.request.sid, namespace=namespace)
+        return self.get_server().session(self._request_sid, namespace=namespace)
 
     def get_current_user(self) -> User:
         try:
@@ -103,3 +113,11 @@ class ServerApp:
             return _handler
 
         return decorator
+
+    def current_client_ip(self) -> str:
+        try:
+            environ = self.get_server().get_environ(self._request_sid)
+            forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
+            return f"{environ['REMOTE_ADDR']} ({forwarded_for})"
+        except KeyError as e:
+            return f"<unknown sid {e}>"
