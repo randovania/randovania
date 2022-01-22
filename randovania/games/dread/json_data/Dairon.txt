@@ -247,6 +247,8 @@ Extra - asset_id: collision_camera_002
 
 > Dock from Transport to Artaria; Heals? False
   * Blocked Passage to Transport to Artaria/Dock to collision_camera_002 (D)
+  > Door to Save Station East
+      Trivial
 
 ----------------
 East Transport to Ferenia
@@ -887,7 +889,7 @@ Extra - asset_id: collision_camera_011
   > Tile Group (POWERBEAM)
       Trivial
   > Dock to collision_camera_002 (D)
-      After Dairon - grapplepulloff1x2_006 and Lay Bomb
+      After Dairon - grapplepulloff1x2_006
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -928,7 +930,9 @@ Extra - asset_id: collision_camera_011
       Trivial
 
 > Dock to collision_camera_002 (D); Heals? False
-  * Morph Ball Tunnel to collision_camera_002 (D)/Dock from Transport to Artaria
+  * Morph Ball Launcher to collision_camera_002 (D)/Dock from Transport to Artaria
+  > Elevator to Artaria - Transport to Dairon
+      After Dairon - grapplepulloff1x2_006
 
 ----------------
 collision_camera_012 (D)
@@ -1785,7 +1789,7 @@ Extra - asset_id: collision_camera_021
   * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
       Morph Ball
-  > Center
+  > Dock to collision_camera_022 (D)
       Morph Ball
 
 > Tile Group (BOMB) 3; Heals? False
@@ -1796,19 +1800,15 @@ Extra - asset_id: collision_camera_021
   * Extra - tile_types: ('BOMB',)
   > Tile Group (BOMB) 1
       Trivial
-  > Center
+  > Dock to collision_camera_022 (D)
       Morph Ball
 
 > Dock to collision_camera_022 (D); Heals? False
-  * Morph Ball Tunnel to collision_camera_022 (D)/Dock from Bomb Room
-
-> Center; Heals? False
+  * Morph Ball Launcher to collision_camera_022 (D)/Dock from Bomb Room
   > Tile Group (BOMB) 2
       Morph Ball
   > Tile Group (BOMB) 3
       Morph Ball
-  > Dock to collision_camera_022 (D)
-      Lay Bomb
 
 ----------------
 collision_camera_022 (D)
@@ -2209,7 +2209,7 @@ Extra - asset_id: collision_camera_026
   > Dock to Shinespark Tutorial
       Morph Ball and After Dairon - grapplepulloff1x2
   > Dock to collision_camera_028 (D)
-      Lay Bomb
+      Trivial
 
 > Event - Pull Grapple Block (grapplepulloff1x2); Heals? False
   * Event Dairon - grapplepulloff1x2
@@ -2219,9 +2219,9 @@ Extra - asset_id: collision_camera_026
       Trivial
 
 > Dock to collision_camera_028 (D); Heals? False
-  * Morph Ball Tunnel to collision_camera_028 (D)/Dock from collision_camera_026 (D)
+  * Morph Ball Launcher to collision_camera_028 (D)/Dock from collision_camera_026 (D)
   > Door to collision_camera_022 (D)
-      Morph Ball
+      Trivial
 
 ----------------
 collision_camera_027 (D)
@@ -2375,7 +2375,7 @@ Extra - asset_id: collision_camera_030
   > Tile Group (POWERBEAM) 1
       Trivial
   > Dock to collision_camera_031 (D) (Bottom)
-      Lay Bomb
+      Trivial
 
 > Door to collision_camera_028 (D); Heals? False
   * Power Beam Door to collision_camera_028 (D)/Door to collision_camera_030 (D)
@@ -2388,7 +2388,7 @@ Extra - asset_id: collision_camera_030
   > Tile Group (POWERBEAM) 2
       Trivial
   > Dock to collision_camera_031 (D) (Top)
-      Lay Bomb
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 74; Major Location? False
@@ -2431,12 +2431,12 @@ Extra - asset_id: collision_camera_030
       Grapple Beam
 
 > Dock to collision_camera_031 (D) (Bottom); Heals? False
-  * Morph Ball Tunnel to collision_camera_031 (D)/Dock to collision_camera_030 (D) (Bottom)
+  * Morph Ball Launcher to collision_camera_031 (D)/Dock to collision_camera_030 (D) (Bottom)
   > Dock to collision_camera_029 (D)
       Trivial
 
 > Dock to collision_camera_031 (D) (Top); Heals? False
-  * Morph Ball Tunnel to collision_camera_031 (D)/Dock to collision_camera_030 (D) (Top)
+  * Morph Ball Launcher to collision_camera_031 (D)/Dock to collision_camera_030 (D) (Top)
   > Door to collision_camera_028 (D)
       Trivial
 
@@ -2456,7 +2456,7 @@ Extra - asset_id: collision_camera_031
   > Tile Group (BOMB) 1
       Morph Ball
   > Dock to collision_camera_030 (D) (Bottom)
-      Lay Bomb
+      Trivial
   > Dock to collision_camera_030 (D) (Top)
       Trivial
 
@@ -2490,12 +2490,12 @@ Extra - asset_id: collision_camera_031
       Morph Ball
 
 > Dock to collision_camera_030 (D) (Bottom); Heals? False
-  * Morph Ball Tunnel to collision_camera_030 (D)/Dock to collision_camera_031 (D) (Bottom)
+  * Morph Ball Launcher to collision_camera_030 (D)/Dock to collision_camera_031 (D) (Bottom)
   > Door to Save Station West
       Trivial
 
 > Dock to collision_camera_030 (D) (Top); Heals? False
-  * Morph Ball Tunnel to collision_camera_030 (D)/Dock to collision_camera_031 (D) (Top)
+  * Morph Ball Launcher to collision_camera_030 (D)/Dock to collision_camera_031 (D) (Top)
   > Door to Save Station West
       Trivial
 

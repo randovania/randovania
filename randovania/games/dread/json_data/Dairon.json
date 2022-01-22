@@ -1110,8 +1110,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 12316.63,
-                        "y": 477.72,
+                        "x": 14050.0,
+                        "y": 4200.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -1123,7 +1123,15 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
-                    "connections": {}
+                    "connections": {
+                        "Door to Save Station East": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4081,10 +4089,6 @@
                                             "amount": 1,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
                                     }
                                 ]
                             }
@@ -4219,8 +4223,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 12316.63,
-                        "y": 477.72,
+                        "x": 14800.0,
+                        "y": -1300.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -4231,8 +4235,18 @@
                         "node_name": "Dock from Transport to Artaria"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
-                    "connections": {}
+                    "dock_weakness": "Morph Ball Launcher",
+                    "connections": {
+                        "Elevator to Artaria - Transport to Dairon": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s030_baselab:default:grapplepulloff1x2_006",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -8235,7 +8249,7 @@
                                 "negate": false
                             }
                         },
-                        "Center": {
+                        "Dock to collision_camera_022 (D)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8271,7 +8285,7 @@
                                 "items": []
                             }
                         },
-                        "Center": {
+                        "Dock to collision_camera_022 (D)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8298,19 +8312,7 @@
                         "node_name": "Dock from Bomb Room"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
-                    "connections": {}
-                },
-                "Center": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4797.079037800688,
-                        "y": 6328.694158075601,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Tile Group (BOMB) 2": {
                             "type": "resource",
@@ -8329,10 +8331,6 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        },
-                        "Dock to collision_camera_022 (D)": {
-                            "type": "template",
-                            "data": "Lay Bomb"
                         }
                     }
                 }
@@ -8583,8 +8581,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -5765.99,
-                        "y": 5795.64,
+                        "x": -5900.0,
+                        "y": 5800.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -10535,8 +10533,11 @@
                             }
                         },
                         "Dock to collision_camera_028 (D)": {
-                            "type": "template",
-                            "data": "Lay Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -10568,8 +10569,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9750.0,
-                        "y": 2600.0,
+                        "x": -9800.0,
+                        "y": 2800.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -10580,15 +10581,13 @@
                         "node_name": "Dock from collision_camera_026 (D)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Door to collision_camera_022 (D)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -11306,8 +11305,11 @@
                             }
                         },
                         "Dock to collision_camera_031 (D) (Bottom)": {
-                            "type": "template",
-                            "data": "Lay Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -11344,8 +11346,11 @@
                             }
                         },
                         "Dock to collision_camera_031 (D) (Top)": {
-                            "type": "template",
-                            "data": "Lay Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -11528,8 +11533,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -15031.99,
-                        "y": -803.94,
+                        "x": -14840.0,
+                        "y": -800.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -11540,7 +11545,7 @@
                         "node_name": "Dock to collision_camera_030 (D) (Bottom)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Dock to collision_camera_029 (D)": {
                             "type": "and",
@@ -11555,8 +11560,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -14841.42,
-                        "y": -3.07,
+                        "x": -14840.0,
+                        "y": 0.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -11567,7 +11572,7 @@
                         "node_name": "Dock to collision_camera_030 (D) (Top)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Door to collision_camera_028 (D)": {
                             "type": "and",
@@ -11646,8 +11651,11 @@
                             }
                         },
                         "Dock to collision_camera_030 (D) (Bottom)": {
-                            "type": "template",
-                            "data": "Lay Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Dock to collision_camera_030 (D) (Top)": {
                             "type": "and",
@@ -11765,8 +11773,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -16200.0,
-                        "y": -803.94,
+                        "x": -16300.0,
+                        "y": -800.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -11777,7 +11785,7 @@
                         "node_name": "Dock to collision_camera_031 (D) (Bottom)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Door to Save Station West": {
                             "type": "and",
@@ -11804,7 +11812,7 @@
                         "node_name": "Dock to collision_camera_031 (D) (Top)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Door to Save Station West": {
                             "type": "and",
