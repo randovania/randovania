@@ -354,9 +354,9 @@ async def test_import_permalink(window, mocker):
     mock_warning.return_value = QtWidgets.QMessageBox.Yes
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
-    permalink.player_count = 2
-    permalink.presets = {0: MagicMock(), 1: MagicMock()}
-    permalink.presets[0].is_same_configuration.return_value = False
+    permalink.parameters.player_count = 2
+    permalink.parameters.presets = {0: MagicMock(), 1: MagicMock()}
+    permalink.parameters.presets[0].is_same_configuration.return_value = False
 
     game_session = MagicMock()
     game_session.num_rows = 2
