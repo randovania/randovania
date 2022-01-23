@@ -9,6 +9,7 @@ from pathlib import Path
 from random import Random
 from typing import Tuple, Dict
 
+import randovania
 from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
@@ -50,7 +51,8 @@ def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
 
 @dataclass(frozen=True)
 class LayoutDescription:
-    version: str
+    randovania_version_text: str
+    randovania_version_git: bytes
     generator_parameters: GeneratorParameters
     all_patches: Dict[int, GamePatches]
     item_order: Tuple[str, ...]
@@ -61,6 +63,20 @@ class LayoutDescription:
     @classmethod
     def file_extension(cls) -> str:
         return "rdvgame"
+
+    @classmethod
+    def create_new(cls,
+                   generator_parameters: GeneratorParameters,
+                   all_patches: Dict[int, GamePatches],
+                   item_order: Tuple[str, ...],
+                   ) -> "LayoutDescription":
+        return cls(
+            randovania_version_text=randovania.VERSION,
+            randovania_version_git=randovania.GIT_HASH,
+            generator_parameters=generator_parameters,
+            all_patches=all_patches,
+            item_order=item_order,
+        )
 
     @classmethod
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
@@ -80,7 +96,8 @@ class LayoutDescription:
         )
 
         return LayoutDescription(
-            version=json_dict["info"]["version"],
+            randovania_version_text=json_dict["info"]["randovania_version"],
+            randovania_version_git=bytes.fromhex(json_dict["info"]["randovania_version_git"]),
             generator_parameters=generator_parameters,
             all_patches=game_patches_serializer.decode(
                 json_dict["game_modifications"], {
@@ -97,11 +114,23 @@ class LayoutDescription:
 
     @property
     def permalink(self):
-        return Permalink.from_parameters(self.generator_parameters, seed_hash=self.shareable_hash_bytes)
+        return Permalink(
+            parameters=self.generator_parameters,
+            seed_hash=self.shareable_hash_bytes,
+            randovania_version=self.randovania_version_git,
+        )
+
+    @property
+    def has_spoiler(self) -> bool:
+        return self.generator_parameters.spoiler
 
     @property
     def player_count(self) -> int:
         return self.generator_parameters.player_count
+
+    @property
+    def all_presets(self) -> typing.Iterable[Preset]:
+        return self.generator_parameters.presets.values()
 
     def get_preset(self, player_index: int) -> Preset:
         return self.generator_parameters.get_preset(player_index)
@@ -117,7 +146,7 @@ class LayoutDescription:
                 self.all_patches,
                 {
                     index: preset.game
-                    for index, preset in self.generator_parameters.presets.items()
+                    for index, preset in enumerate(self.all_presets)
                 })
             object.__setattr__(self, "__cached_serialized_patches", cached_result)
 
@@ -128,19 +157,20 @@ class LayoutDescription:
         result = {
             "schema_version": description_migration.CURRENT_VERSION,
             "info": {
-                "version": self.version,
+                "randovania_version": self.randovania_version_text,
+                "randovania_version_git": self.randovania_version_git.hex(),
                 "permalink": self.permalink.as_base64_str,
                 "seed": self.generator_parameters.seed_number,
                 "hash": self.shareable_hash,
                 "word_hash": self.shareable_word_hash,
                 "presets": [
                     VersionedPreset.with_preset(preset).as_json
-                    for preset in self.generator_parameters.presets.values()
+                    for preset in self.all_presets
                 ],
             }
         }
 
-        if self.generator_parameters.spoiler:
+        if self.has_spoiler:
             result["game_modifications"] = self._serialized_patches
             result["item_order"] = self.item_order
 
@@ -148,7 +178,7 @@ class LayoutDescription:
 
     @property
     def all_games(self) -> typing.FrozenSet[RandovaniaGame]:
-        return frozenset(preset.game for preset in self.generator_parameters.presets.values())
+        return frozenset(preset.game for preset in self.all_presets)
 
     @property
     def shareable_hash_bytes(self) -> bytes:
@@ -163,7 +193,7 @@ class LayoutDescription:
     def shareable_word_hash(self) -> str:
         # We're not using self.all_games because we want multiple copies of a given game in the list,
         # so a game that has more players is more likely to have words in the hash
-        all_games = [preset.game for preset in self.generator_parameters.presets.values()]
+        all_games = [preset.game for preset in self.all_presets]
 
         return shareable_word_hash(
             self.shareable_hash_bytes,

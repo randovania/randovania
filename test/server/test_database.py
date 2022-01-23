@@ -15,7 +15,7 @@ def test_init(tmpdir):
 
 
 @pytest.mark.parametrize("has_description", [False, True])
-def test_GameSession_create_session_entry(clean_database, has_description, test_files_dir):
+def test_GameSession_create_session_entry(clean_database, has_description, test_files_dir, mocker):
     # Setup
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     someone = database.User.create(name="Someone")
@@ -25,7 +25,7 @@ def test_GameSession_create_session_entry(clean_database, has_description, test_
         s.layout_description = description
         s.save()
         game_details = {
-            'permalink': 'Df9uqXH9oVxqIzA1B9I6ucE8eXh5BvdEI4TRjHBxM_EDK2ssGHiv9nXsY_mv8F_cawoM6DaIHMAENhvQW-bMv8sAACRG',
+            'permalink': 'Dd9uqXH9oShJKRU155LaOS3KGRhXOjUI_1YpF08O_u0xOsl5cwqX6EekAWaTon3cvyalnG6Cpk_fa6NQMpQMSIsAAAqP',
             'seed_hash': 'N2UXD7NB',
             'spoiler': True,
             'word_hash': 'Temple Bridge Quad',

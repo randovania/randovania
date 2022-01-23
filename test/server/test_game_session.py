@@ -9,11 +9,13 @@ import pytest
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
-from randovania.lib.construct_lib import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.construct_lib import convert_to_raw_python
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.binary_formats import BinaryGameSessionEntry, BinaryGameSessionActions, \
     BinaryGameSessionAuditLog
@@ -612,6 +614,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     database.GameSessionMembership.create(user=user1, session=session, row=None, admin=True)
 
     new_preset = preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME_ECHOES).get_preset()
+    assert isinstance(new_preset.configuration, EchoesConfiguration)
     new_preset = dataclasses.replace(new_preset,
                                      configuration=dataclasses.replace(new_preset.configuration,
                                                                        menu_mod=False))
@@ -620,8 +623,8 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
     layout_description.as_json = "some_json_string"
-    layout_description.generator_parameters.player_count = 2
-    layout_description.generator_parameters.presets = {i: new_preset for i in (0, 1)}
+    layout_description.player_count = 2
+    layout_description.all_presets = [new_preset, new_preset]
     layout_description.shareable_word_hash = "Hash Words"
 
     # Run
@@ -722,7 +725,7 @@ def test_game_session_admin_session_download_layout_description_no_spoiler(mock_
     database.GameSessionMembership.create(user=user1, session=session, row=None, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
-    mock_layout_description.return_value.generator_parameters.spoiler = False
+    mock_layout_description.return_value.has_spoiler = False
 
     # Run
     with pytest.raises(InvalidAction), flask_app.test_request_context():
@@ -841,14 +844,19 @@ def test_verify_no_layout_description(clean_database, flask_app):
 
 @pytest.fixture(name="session_update")
 def session_update_fixture(clean_database, mocker):
-    mock_layout = mocker.patch("randovania.server.database.GameSession.layout_description", new_callable=PropertyMock)
-    target = mock_layout.return_value.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
+    mock_layout = MagicMock(spec=LayoutDescription)
+    mock_layout.shareable_word_hash = "Words of O-Lir"
+    mock_layout.shareable_hash = "ABCDEFG"
+    mock_layout.has_spoiler = True
+    mock_layout.permalink.as_base64_str = "<permalink>"
+    mock_layout.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
+
+    mock_layout.all_patches = MagicMock()
+    target = mock_layout.all_patches.__getitem__.return_value.pickup_assignment.__getitem__.return_value
     target.pickup.name = "The Pickup"
-    mock_layout.return_value.shareable_word_hash = "Words of O-Lir"
-    mock_layout.return_value.shareable_hash = "ABCDEFG"
-    mock_layout.return_value.generator_parameters.spoiler = True
-    mock_layout.return_value.generator_parameters.as_base64_str = "<permalink>"
-    mock_layout.return_value.generator_parameters.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
+
+    mocker.patch("randovania.server.database.GameSession.layout_description",
+                 new_callable=PropertyMock, return_value=mock_layout)
 
     user1 = database.User.create(id=1234, name="The Name")
     user2 = database.User.create(id=1235, name="Other")

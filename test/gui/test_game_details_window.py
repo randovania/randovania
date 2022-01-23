@@ -63,7 +63,7 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     description.player_count = 1
     description.permalink.as_base64_str = "<permalink>"
     description.generator_parameters = MagicMock(spec=GeneratorParameters)
-    description.generator_parameters.spoiler = False
+    description.has_spoiler = False
 
     window = GameDetailsWindow(None, options)
     skip_qtbot.addWidget(window)
