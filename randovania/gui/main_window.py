@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import functools
 import json
 import logging
@@ -294,13 +295,23 @@ class MainWindow(WindowManager, Ui_MainWindow):
             layout = simplified_patcher.generate_layout(progress_update=progress_update,
                                                         parameters=permalink.parameters,
                                                         options=self._options)
-            if permalink.seed_hash is not None and permalink.seed_hash != layout.shareable_hash_bytes:
-                # TODO: generated seed hash was different from expected
-                pass
             progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
             return layout
 
         new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
+
+        if permalink.seed_hash is not None and permalink.seed_hash == new_layout.shareable_hash_bytes:
+            response = await async_dialog.warning(
+                self, "Unexpected hash",
+                "Expected has to be {}. got {}. Do you wish to continue?".format(
+                    base64.b32encode(permalink.seed_hash).decode(),
+                    new_layout.shareable_hash,
+                ),
+                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            )
+            if response != QtWidgets.QMessageBox.Yes:
+                return
+
         self.open_game_details(new_layout)
 
     @asyncSlot()
