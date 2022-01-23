@@ -1037,7 +1037,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         if parameters.player_count != self._game_session.num_rows:
             return await async_dialog.warning(
                 self, "Incompatible permalink",
-                f"Given permalink is for {parameters} players, but "
+                f"Given permalink is for {parameters.player_count} players, but "
                 f"this session only have {self._game_session.num_rows} rows.")
 
         if any(not preset_p.is_same_configuration(preset_s.get_preset())

@@ -48,6 +48,7 @@ class GeneratorParameters(BitPackValue):
                 previous_unique_presets.append(preset)
                 yield from preset.bit_pack_encode({"manager": manager})
 
+        # Not using a set here as iterating over sets is not deterministic
         games = []
         for preset in self.presets.values():
             if preset.game not in games:

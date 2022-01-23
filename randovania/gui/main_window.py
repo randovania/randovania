@@ -300,7 +300,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
 
-        if permalink.seed_hash is not None and permalink.seed_hash == new_layout.shareable_hash_bytes:
+        if permalink.seed_hash is not None and permalink.seed_hash != new_layout.shareable_hash_bytes:
             response = await async_dialog.warning(
                 self, "Unexpected hash",
                 "Expected has to be {}. got {}. Do you wish to continue?".format(

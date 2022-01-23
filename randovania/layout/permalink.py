@@ -129,9 +129,7 @@ class Permalink:
         try:
             encoded = PermalinkBinary.build({
                 "value": {
-                    "header": {
-                        "is_dev_version": True,
-                    },
+                    "header": {},
                     "seed_hash": self.seed_hash,
                     "randovania_version": self.randovania_version,
                     "generator_params": self.parameters.as_bytes,
@@ -161,7 +159,7 @@ class Permalink:
             raise ValueError("Missing text at the end")
 
         except construct.core.ChecksumError:
-            raise ValueError("Incorrect checkum")
+            raise ValueError("Incorrect checksum")
 
         except (binascii.Error, bitstruct.Error, construct.ConstructError) as e:
             raise ValueError(str(e))
