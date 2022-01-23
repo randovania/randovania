@@ -1,11 +1,13 @@
 import pytest
 from PySide2 import QtWidgets
-from mock import MagicMock, AsyncMock
+from mock import MagicMock, AsyncMock, ANY
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.interface_common.options import Options
+from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.permalink import Permalink
 
 
 @pytest.fixture(name="tab")
@@ -100,3 +102,30 @@ def test_click_on_preset_tree(tab, preset_manager, game: RandovaniaGame, skip_qt
 
         # Assert
         assert tab._current_preset_data.get_preset() == preset.get_preset()
+
+
+def test_generate_new_seed(tab, preset_manager, mocker):
+    # Setup
+    mock_randint: MagicMock = mocker.patch("random.randint", return_value=12341234)
+
+    tab.window.create_preset_tree = MagicMock()
+    tab.window.create_preset_tree.current_preset_data = preset_manager.default_preset
+    tab.generate_seed_from_permalink = MagicMock()
+
+    spoiler = MagicMock(spec=bool)
+    retries = MagicMock(spec=int)
+
+    # Run
+    tab._generate_new_seed(spoiler, retries)
+
+    # Assert
+    tab.generate_seed_from_permalink.assert_called_once_with(
+        Permalink.from_parameters(
+            GeneratorParameters(
+                seed_number=12341234,
+                spoiler=spoiler,
+                presets=[preset_manager.default_preset.get_preset()],
+            )
+        ), retries=retries
+    )
+    mock_randint.assert_called_once_with(0, 2 ** 31)
