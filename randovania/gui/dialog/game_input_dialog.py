@@ -65,6 +65,7 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             self._selected_output_format = per_game.output_format
         else:
             self._selected_output_format = patcher.valid_output_file_types[0]
+
         if len(patcher.valid_output_file_types) > 1:
             layout = self.output_format_layout
             output_label = QLabel()
@@ -92,12 +93,10 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             self.input_file_edit.setText(str(per_game.input_path))
 
         if per_game.output_directory is not None:
+            output_path = per_game.output_directory
             if self._selected_output_format:
-                new_name = "{}.{}".format(self.default_output_name, self._selected_output_format)
-            else:
-                new_name = self.default_output_name
-
-            output_path = per_game.output_directory.joinpath(new_name)
+                output_path = output_path.joinpath("{}.{}".format(self.default_output_name,
+                                                                  self._selected_output_format))
             self.output_file_edit.setText(str(output_path))
 
         self._validate_input_file()
@@ -108,9 +107,13 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
+            output_directory = self.output_file
+            if self._selected_output_format:
+                output_directory = output_directory.parent
+
             per_game = options.options_for_game(self._game)
             per_game_changes = {
-                "output_directory": self.output_file.parent,
+                "output_directory": output_directory,
                 "output_format": self._selected_output_format,
             }
             if self._prompt_input_file:
@@ -202,11 +205,13 @@ class GameInputDialog(QDialog, Ui_GameInputDialog):
     def _on_output_file_button(self):
         if self._selected_output_format:
             suggested_name = "{}.{}".format(self.default_output_name, self._selected_output_format)
+
+            if self.output_file_edit.text() and self.output_file.parent.is_dir():
+                suggested_name = str(self.output_file.parent.joinpath(suggested_name))
         else:
             suggested_name = self.default_output_name
-
-        if self.output_file_edit.text() and self.output_file.parent.is_dir():
-            suggested_name = str(self.output_file.parent.joinpath(suggested_name))
+            if self.output_file_edit.text():
+                suggested_name = str(self.output_file)
 
         output_file = common_qt_lib.prompt_user_for_output_file(self, suggested_name,
                                                                 self.patcher.valid_output_file_types)
