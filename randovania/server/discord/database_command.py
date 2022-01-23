@@ -216,14 +216,14 @@ class DatabaseCommandCog(commands.Cog):
         area = valid_items[0]
         db = default_database.game_description_for(game)
 
-        embed = Embed(title="{}: {}".format(game.long_name, db.world_list.area_name(area)))
+        title = "{}: {}".format(game.long_name, db.world_list.area_name(area))
 
         select = manage_components.create_select(
             options=[
                 manage_components.create_select_option(node.name, value=node.name)
                 for i, node in sorted(enumerate(area.nodes), key=lambda it: it[1].name)
             ],
-            max_values=len(area.nodes),
+            max_values=min(10, len(area.nodes)),
             custom_id=f"{game.value}_world_{world_id}_{option_selected}",
             placeholder="Choose the room",
         )
@@ -237,8 +237,7 @@ class DatabaseCommandCog(commands.Cog):
 
         logging.info("Responding to area for %s with %d attachments.", area.name, len(files))
         await ctx.send(
-            content=f"Requested by {ctx.author.display_name}.",
-            embed=embed,
+            content=f"**{title}**\nRequested by {ctx.author.display_name}.",
             files=files,
             components=[
                 action_row,
@@ -251,9 +250,13 @@ class DatabaseCommandCog(commands.Cog):
     async def on_area_node_selection(self, ctx: ComponentContext, game: RandovaniaGame, area: Area):
         db = default_database.game_description_for(game)
 
-        embed = discord.Embed(title=ctx.origin_message.embeds[0].title)
+        def snipped_message(n: str) -> str:
+            return f"\n{n}: *Skipped*\n"
 
-        for i, node in enumerate(area.nodes):
+        body_by_node = {}
+        embeds = []
+
+        for node in sorted(area.nodes, key=lambda it: it.name):
             if node.name not in ctx.selected_options:
                 continue
 
@@ -265,6 +268,8 @@ class DatabaseCommandCog(commands.Cog):
 
             body = pretty_print.pretty_print_node_type(node, db.world_list) + "\n"
 
+            node_bodies = []
+
             for target_node, requirement in db.world_list.area_connections_from(node):
                 extra_lines = []
                 for level, text in pretty_print.pretty_print_requirement(requirement.simplify()):
@@ -272,21 +277,48 @@ class DatabaseCommandCog(commands.Cog):
 
                 inner = "\n".join(extra_lines)
                 new_entry = f"\n{target_node.name}:\n```\n{inner}\n```"
+                node_bodies.append([target_node.name, new_entry])
 
-                if len(body) + len(new_entry) < 1024:
-                    body += new_entry
+            space_left = 4096 - len(body)
+            for node_name, _ in node_bodies:
+                space_left -= len(snipped_message(node_name))
+
+            node_bodies.sort(key=lambda it: len(it[1]))
+            for node_i, (node_name, node_entry) in enumerate(node_bodies):
+                snipped = snipped_message(node_name)
+                space_left += len(snipped)
+                if len(node_entry) <= space_left:
+                    space_left -= len(node_entry)
                 else:
-                    logging.warning("Unable to add new entry: %d", len(new_entry))
+                    node_bodies[node_i][1] = snipped
 
-            embed.add_field(
-                name=name,
-                value=body,
-                inline=False,
-            )
+            node_bodies.sort(key=lambda it: it[0])
+            for _, node_entry in node_bodies:
+                body += node_entry
+
+            body_by_node[name] = body
+
+        snipped = "*(message too long, skipped)*"
+        space_left = 6000 - len(ctx.origin_message.content)
+        for name, body in body_by_node.items():
+            space_left -= len(name) + len(snipped)
+
+        for name, body in sorted(body_by_node.items(), key=lambda it: len(it[1])):
+            space_left += len(snipped)
+            if len(body) <= space_left:
+                space_left -= len(body)
+            else:
+                body_by_node[name] = snipped
+
+        for name, body in body_by_node.items():
+            embeds.append(discord.Embed(
+                title=name,
+                description=body,
+            ))
 
         logging.info("Updating visible nodes of %s: %s", area.name, str(ctx.selected_options))
         await ctx.edit_origin(
-            embed=embed,
+            embeds=embeds,
         )
 
 
