@@ -22,6 +22,7 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
     args.game = RandovaniaGame.METROID_PRIME_ECHOES.value
     args.preset_name = preset_name
     args.seed_number = 0
+    args.player_count = 1
     extra_args = {}
     if no_retry:
         extra_args["attempts"] = 0
@@ -31,7 +32,7 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
     else:
         args.permalink = None
         preset = preset_manager.included_preset_with(RandovaniaGame.METROID_PRIME_ECHOES, preset_name).get_preset()
-        generator_params = GeneratorParameters(0, True, {0: preset})
+        generator_params = GeneratorParameters(0, True, [preset])
 
     # Run
     randovania.cli.commands.distribute.distribute_command_logic(args)

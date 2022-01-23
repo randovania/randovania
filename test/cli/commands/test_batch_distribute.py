@@ -13,7 +13,7 @@ def test_batch_distribute_helper(mocker):
     mock_perf_counter = mocker.patch("time.perf_counter", autospec=False)  # TODO: pytest-qt bug
 
     base_permalink = MagicMock(spec=GeneratorParameters)
-    base_permalink.presets = MagicMock()
+    base_permalink.presets = [MagicMock()]
     seed_number = 5000
     validate = MagicMock()
     output_dir = MagicMock()

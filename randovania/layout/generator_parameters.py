@@ -4,6 +4,7 @@ from typing import Dict, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
+from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
@@ -22,13 +23,17 @@ def _game_db_hash(game: RandovaniaGame) -> int:
 class GeneratorParameters(BitPackValue):
     seed_number: int
     spoiler: bool
-    presets: Dict[int, Preset]
+    presets: list[Preset]
 
     def __post_init__(self):
         if self.seed_number is None:
             raise ValueError("Missing seed number")
         if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
             raise ValueError("Invalid seed number: {}".format(self.seed_number))
+
+        if not isinstance(self.presets, list):
+            raise ValueError("presets must be a list")
+
         object.__setattr__(self, "__cached_as_bytes", None)
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
@@ -39,7 +44,7 @@ class GeneratorParameters(BitPackValue):
         manager = PresetManager(None)
 
         previous_unique_presets = []
-        for preset in self.presets.values():
+        for preset in self.presets:
             already_encoded_preset = preset in previous_unique_presets
             yield from bitpacking.encode_bool(already_encoded_preset)
             if already_encoded_preset:
@@ -50,7 +55,7 @@ class GeneratorParameters(BitPackValue):
 
         # Not using a set here as iterating over sets is not deterministic
         games = []
-        for preset in self.presets.values():
+        for preset in self.presets:
             if preset.game not in games:
                 games.append(preset.game)
                 yield _game_db_hash(preset.game), 256
@@ -63,7 +68,7 @@ class GeneratorParameters(BitPackValue):
         manager = PresetManager(None)
 
         previous_unique_presets = []
-        presets = {}
+        presets = []
 
         for index in range(player_count):
             in_previous_presets = bitpacking.decode_bool(decoder)
@@ -72,10 +77,10 @@ class GeneratorParameters(BitPackValue):
             else:
                 preset = Preset.bit_pack_unpack(decoder, {"manager": manager})
                 previous_unique_presets.append(preset)
-            presets[index] = preset
+            presets.append(preset)
 
         games = []
-        for preset in presets.values():
+        for preset in presets:
             if preset.game not in games:
                 games.append(preset.game)
 

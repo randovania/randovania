@@ -39,7 +39,7 @@ def run_bootstrap(preset: Preset):
     permalink = GeneratorParameters(
         seed_number=15000,
         spoiler=True,
-        presets={0: preset},
+        presets=[preset],
     )
     patches = game.game.data.generator.base_patches_factory.create_base_patches(preset.configuration, Random(15000),
                                                                                 game, False, player_index=0)

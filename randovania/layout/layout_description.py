@@ -89,10 +89,10 @@ class LayoutDescription:
         generator_parameters = GeneratorParameters(
             seed_number=json_dict["info"]["seed"],
             spoiler=has_spoiler,
-            presets={
-                index: VersionedPreset(preset).get_preset()
-                for index, preset in enumerate(json_dict["info"]["presets"])
-            },
+            presets=[
+                VersionedPreset(preset).get_preset()
+                for preset in json_dict["info"]["presets"]
+            ],
         )
 
         return LayoutDescription(
@@ -102,7 +102,7 @@ class LayoutDescription:
             all_patches=game_patches_serializer.decode(
                 json_dict["game_modifications"], {
                     index: preset.configuration
-                    for index, preset in generator_parameters.presets.items()
+                    for index, preset in enumerate(generator_parameters.presets)
                 }),
             item_order=json_dict["item_order"],
         )
@@ -130,7 +130,7 @@ class LayoutDescription:
 
     @property
     def all_presets(self) -> typing.Iterable[Preset]:
-        return self.generator_parameters.presets.values()
+        return self.generator_parameters.presets
 
     def get_preset(self, player_index: int) -> Preset:
         return self.generator_parameters.get_preset(player_index)

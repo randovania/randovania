@@ -236,7 +236,7 @@ async def generate_and_validate_description(generator_params: GeneratorParameter
 
     if validate_after_generation and generator_params.player_count == 1:
         final_state_async = resolver.resolve(
-            configuration=generator_params.presets[0].configuration,
+            configuration=generator_params.get_preset(0).configuration,
             patches=result.all_patches[0],
             status_update=status_update,
         )

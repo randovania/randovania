@@ -42,7 +42,7 @@ def test_round_trip(spoiler: bool,
     params = GeneratorParameters(
         seed_number=1000,
         spoiler=spoiler,
-        presets={0: preset},
+        presets=[preset],
     )
 
     # Run
@@ -70,13 +70,13 @@ def test_decode(default_echoes_preset, mocker, extra_data):
     expected = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
-        presets={0: dataclasses.replace(
+        presets=[dataclasses.replace(
             default_echoes_preset,
             name="{} Custom".format(default_echoes_preset.game.long_name),
             description="A customized preset.",
             uuid=random_uuid,
             base_preset_uuid=default_echoes_preset.uuid,
-        )},
+        )],
     )
 
     # Uncomment this line to quickly get the new encoded permalink
@@ -119,7 +119,7 @@ def test_decode_mock_other(encoded, num_players, mocker):
     expected = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
-        presets={i: preset for i in range(num_players)},
+        presets=[preset] * num_players,
     )
     preset.bit_pack_encode.return_value = [(0, 100), (5, 100)]
 
@@ -147,7 +147,7 @@ def test_as_bytes_caches(mock_bit_pack_encode: MagicMock,
     params = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
-        presets={0: default_echoes_preset},
+        presets=[default_echoes_preset],
     )
 
     # Run

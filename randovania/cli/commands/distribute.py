@@ -23,7 +23,7 @@ def distribute_command_logic(args):
             GeneratorParameters(
                 args_.seed_number,
                 spoiler=True,
-                presets={i: preset for i in range(args_.player_count)},
+                presets=[preset] * args_.player_count,
             ),
         )
 
