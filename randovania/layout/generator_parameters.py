@@ -1,10 +1,9 @@
 import json
 from dataclasses import dataclass
-from typing import Dict, Iterator, Tuple
+from typing import Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
-from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.preset_manager import PresetManager
@@ -17,6 +16,14 @@ _PERMALINK_PLAYER_COUNT_LIMITS = (2, 256)
 def _game_db_hash(game: RandovaniaGame) -> int:
     data = default_data.read_json_then_binary(game)[1]
     return bitpacking.single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
+
+
+def _get_unique_games(presets: list[Preset]) -> Iterator[RandovaniaGame]:
+    games = set()
+    for preset in presets:
+        if preset.game not in games:
+            games.add(preset.game)
+            yield preset.game
 
 
 @dataclass(frozen=True)
@@ -42,23 +49,11 @@ class GeneratorParameters(BitPackValue):
         yield from bitpacking.encode_int_with_limits(self.player_count, _PERMALINK_PLAYER_COUNT_LIMITS)
 
         manager = PresetManager(None)
-
-        previous_unique_presets = []
         for preset in self.presets:
-            already_encoded_preset = preset in previous_unique_presets
-            yield from bitpacking.encode_bool(already_encoded_preset)
-            if already_encoded_preset:
-                yield from bitpacking.pack_array_element(preset, previous_unique_presets)
-            else:
-                previous_unique_presets.append(preset)
-                yield from preset.bit_pack_encode({"manager": manager})
+            yield from preset.bit_pack_encode({"manager": manager})
 
-        # Not using a set here as iterating over sets is not deterministic
-        games = []
-        for preset in self.presets:
-            if preset.game not in games:
-                games.append(preset.game)
-                yield _game_db_hash(preset.game), 256
+        for game in _get_unique_games(self.presets):
+            yield _game_db_hash(game), 256
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "GeneratorParameters":
@@ -67,30 +62,18 @@ class GeneratorParameters(BitPackValue):
         player_count = bitpacking.decode_int_with_limits(decoder, _PERMALINK_PLAYER_COUNT_LIMITS)
         manager = PresetManager(None)
 
-        previous_unique_presets = []
-        presets = []
-
-        for index in range(player_count):
-            in_previous_presets = bitpacking.decode_bool(decoder)
-            if in_previous_presets:
-                preset = decoder.decode_element(previous_unique_presets)
-            else:
-                preset = Preset.bit_pack_unpack(decoder, {"manager": manager})
-                previous_unique_presets.append(preset)
-            presets.append(preset)
-
-        games = []
-        for preset in presets:
-            if preset.game not in games:
-                games.append(preset.game)
-
-                included_data_hash = decoder.decode_single(256)
-                expected_data_hash = _game_db_hash(preset.game)
-                if included_data_hash != expected_data_hash:
-                    raise ValueError("Given permalink is for a Randovania {} database with hash '{}', "
-                                     "but current database has hash '{}'.".format(preset.game.long_name,
-                                                                                  included_data_hash,
-                                                                                  expected_data_hash))
+        presets = [
+            Preset.bit_pack_unpack(decoder, {"manager": manager})
+            for _ in range(player_count)
+        ]
+        for game in _get_unique_games(presets):
+            included_data_hash = decoder.decode_single(256)
+            expected_data_hash = _game_db_hash(game)
+            if included_data_hash != expected_data_hash:
+                raise ValueError("Given permalink is for a Randovania {} database with hash '{}', "
+                                 "but current database has hash '{}'.".format(game.long_name,
+                                                                              included_data_hash,
+                                                                              expected_data_hash))
 
         return GeneratorParameters(seed_number, spoiler, presets)
 
