@@ -1,6 +1,7 @@
+import functools
 import json
 from dataclasses import dataclass
-from typing import Iterator, Tuple
+from typing import Iterator, Tuple, Optional
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -26,6 +27,17 @@ def _get_unique_games(presets: list[Preset]) -> Iterator[RandovaniaGame]:
             yield preset.game
 
 
+def decode_game_list(decoder: BitPackDecoder) -> tuple[RandovaniaGame, ...]:
+    return bitpacking.decode_tuple(decoder, functools.partial(RandovaniaGame.bit_pack_unpack, metadata={}))
+
+
+def try_decode_game_list(data: bytes) -> Optional[tuple[RandovaniaGame, ...]]:
+    try:
+        return decode_game_list(BitPackDecoder(data))
+    except ValueError:
+        return None
+
+
 @dataclass(frozen=True)
 class GeneratorParameters(BitPackValue):
     seed_number: int
@@ -44,9 +56,10 @@ class GeneratorParameters(BitPackValue):
         object.__setattr__(self, "__cached_as_bytes", None)
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+        yield from bitpacking.encode_tuple(tuple(preset.game for preset in self.presets),
+                                           functools.partial(RandovaniaGame.bit_pack_encode, metadata={}))
         yield self.seed_number, _PERMALINK_MAX_SEED
         yield from bitpacking.encode_bool(self.spoiler)
-        yield from bitpacking.encode_int_with_limits(self.player_count, _PERMALINK_PLAYER_COUNT_LIMITS)
 
         manager = PresetManager(None)
         for preset in self.presets:
@@ -57,14 +70,14 @@ class GeneratorParameters(BitPackValue):
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "GeneratorParameters":
+        games = decode_game_list(decoder)
         seed_number = decoder.decode_single(_PERMALINK_MAX_SEED)
         spoiler = bitpacking.decode_bool(decoder)
-        player_count = bitpacking.decode_int_with_limits(decoder, _PERMALINK_PLAYER_COUNT_LIMITS)
-        manager = PresetManager(None)
 
+        manager = PresetManager(None)
         presets = [
-            Preset.bit_pack_unpack(decoder, {"manager": manager})
-            for _ in range(player_count)
+            Preset.bit_pack_unpack(decoder, {"manager": manager, "game": game})
+            for game in games
         ]
         for game in _get_unique_games(presets):
             included_data_hash = decoder.decode_single(256)

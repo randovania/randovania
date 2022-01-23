@@ -1,11 +1,12 @@
 import contextlib
 import dataclasses
 import uuid
-from unittest.mock import patch, MagicMock, ANY
+from unittest.mock import patch, MagicMock, ANY, call
 
 import pytest
 
 from randovania.bitpacking.bitpacking import BitPackDecoder
+from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset
@@ -63,7 +64,7 @@ def test_decode(default_echoes_preset, mocker, extra_data):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = b'\x00\x00\x07\xd1H\x00\x03\x0f\xfb\xc0'
+    encoded = b'$\x00\x00\x1fD\x00\x01\x87\xfd\xe0'
     if extra_data:
         encoded += b"="
 
@@ -98,9 +99,9 @@ def test_decode(default_echoes_preset, mocker, extra_data):
 
 
 @pytest.mark.parametrize(["encoded", "num_players"], [
-    (b'\x00\x00\x07\xd1@\x05x', 1),
-    (b'\x00\x00\x07\xd1\x80\x00\x05\x00\x15\xe0', 2),
-    (b'\x00\x00\x07\xd1\x82\x00\x05\x00\x14\x00P\x01@\x05\x00\x14\x00P\x01@\x05\x00\x15\xe0', 10),
+    (b'$\x00\x00\x1fD\x00W\x80', 1),
+    (b'D\x80\x00\x03\xe8\x80\n\x00+\xc0', 2),
+    (b'\x8cI$\x92H\x00\x00>\x88\x00\xa0\x02\x80\n\x00(\x00\xa0\x02\x80\n\x00(\x00\xa0\x02\xbc\x00', 10),
 ])
 def test_decode_mock_other(encoded, num_players, mocker):
     # We're mocking the database hash to avoid breaking tests every single time we change the database
@@ -108,6 +109,7 @@ def test_decode_mock_other(encoded, num_players, mocker):
                  return_value=120)
 
     preset = MagicMock()
+    preset.game = RandovaniaGame.METROID_PRIME_ECHOES
 
     def read_values(decoder: BitPackDecoder, metadata):
         decoder.decode(100, 100)
@@ -124,8 +126,8 @@ def test_decode_mock_other(encoded, num_players, mocker):
     preset.bit_pack_encode.return_value = [(0, 100), (5, 100)]
 
     # Uncomment this line to quickly get the new encoded permalink
-    assert expected.as_bytes == b""
-    print(expected.as_bytes)
+    # assert expected.as_bytes == b""
+    # print(expected.as_bytes)
 
     # Run
     round_trip = expected.as_bytes
@@ -134,7 +136,10 @@ def test_decode_mock_other(encoded, num_players, mocker):
     # Assert
     assert link == expected
     assert round_trip == encoded
-    mock_preset_unpack.assert_called_once_with(ANY, {"manager": ANY})
+    mock_preset_unpack.assert_has_calls([
+        call(ANY, {"manager": ANY, "game": RandovaniaGame.METROID_PRIME_ECHOES})
+        for _ in range(num_players)
+    ])
 
 
 @patch("randovania.layout.generator_parameters.GeneratorParameters.bit_pack_encode", autospec=True)
