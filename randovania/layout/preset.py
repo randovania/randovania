@@ -49,7 +49,6 @@ class Preset(BitPackValue):
         from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
 
-        yield from self.game.bit_pack_encode({})
         reference = manager.reference_preset_for_game(self.game).get_preset()
         yield from self.configuration.bit_pack_encode({"reference": reference.configuration})
 
@@ -57,8 +56,8 @@ class Preset(BitPackValue):
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Preset":
         from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
+        game: RandovaniaGame = metadata["game"]
 
-        game: RandovaniaGame = RandovaniaGame.bit_pack_unpack(decoder, {})
         reference = manager.reference_preset_for_game(game).get_preset()
 
         return Preset(
