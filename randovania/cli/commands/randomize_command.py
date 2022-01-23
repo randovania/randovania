@@ -22,7 +22,7 @@ async def randomize_command_logic_async(args):
     if args.permalink is not None:
         permalink = Permalink.from_str(args.permalink)
         layout_description = await generator.generate_and_validate_description(
-            permalink=permalink,
+            generator_params=permalink.parameters,
             status_update=status_update,
             validate_after_generation=True,
         )

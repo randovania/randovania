@@ -2,7 +2,7 @@ from PySide2.QtWidgets import QDialog, QApplication
 
 from randovania.gui.generated.permalink_dialog_ui import Ui_PermalinkDialog
 from randovania.gui.lib import common_qt_lib
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
 
 class PermalinkDialog(QDialog, Ui_PermalinkDialog):
@@ -38,8 +38,13 @@ class PermalinkDialog(QDialog, Ui_PermalinkDialog):
             if new_permalink.as_base64_str != self.permalink_edit.text():
                 raise ValueError("Imported permalink is different from text field.")
             self.accept_button.setEnabled(True)
-        except ValueError as e:
-            self.import_error_label.setText(f"Invalid permalink: {e}")
+
+        except (ValueError, UnsupportedPermalink) as e:
+            if isinstance(e, UnsupportedPermalink):
+                msg = f"Unsupported permalink: {e}"
+            else:
+                msg = f"Invalid permalink: {e}"
+            self.import_error_label.setText(msg)
             common_qt_lib.set_error_border_stylesheet(self.permalink_edit, True)
 
     def _on_paste_button(self):

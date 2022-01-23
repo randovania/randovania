@@ -24,7 +24,7 @@ class GenerationFailureHandler(QtWidgets.QWidget):
     async def _show_failed_generation_exception(self, exception: GenerationFailure):
         box = QtWidgets.QMessageBox(
             QtWidgets.QMessageBox.Critical,
-            "An error occurred while generating game for {0.permalink.as_base64_str}".format(exception),
+            "An error occurred while generating game",
             str(exception), QtWidgets.QMessageBox.Ok, self.parent)
         common_qt_lib.set_default_window_icon(box)
 

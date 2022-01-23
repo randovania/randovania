@@ -9,25 +9,29 @@ from pathlib import Path
 from randovania.cli import echoes_lib
 from randovania.interface_common import sleep_inhibitor
 
+if typing.TYPE_CHECKING:
+    from randovania.layout.generator_parameters import GeneratorParameters
 
-def batch_distribute_helper(base_permalink,
+
+def batch_distribute_helper(base_params: "GeneratorParameters",
                             seed_number: int,
                             timeout: int,
                             validate: bool,
                             output_dir: Path,
                             ) -> float:
     from randovania.generator import generator
-    from randovania.layout.permalink import Permalink
+    from randovania.layout.permalink import GeneratorParameters
+    assert isinstance(base_params, GeneratorParameters)
 
-    permalink = Permalink(
+    permalink = GeneratorParameters(
         seed_number=seed_number,
         spoiler=True,
-        presets=typing.cast(Permalink, base_permalink).presets,
+        presets=base_params.presets,
     )
 
     start_time = time.perf_counter()
     description = asyncio.run(generator.generate_and_validate_description(
-        permalink=permalink, status_update=None,
+        generator_params=permalink, status_update=None,
         validate_after_generation=validate, timeout=timeout,
         attempts=0,
     ))
@@ -51,7 +55,8 @@ def batch_distribute_command_logic(args):
     seed_count = args.seed_count
     num_digits = math.ceil(math.log10(seed_count + 1))
     number_format = "[{0:" + str(num_digits) + "d}/{1}] "
-    base_permalink = Permalink.from_str(args.permalink)
+    base_permalink = Permalink.from_str(args.generator_parameters)
+    base_params = base_permalink.parameters
 
     def report_update(msg: str):
         nonlocal finished_count
@@ -65,10 +70,10 @@ def batch_distribute_command_logic(args):
         report_update(f"Failed to generate seed: {e}")
 
     with multiprocessing.Pool(processes=args.process_count) as pool, sleep_inhibitor.get_inhibitor():
-        for seed_number in range(base_permalink.seed_number, base_permalink.seed_number + args.seed_count):
+        for seed_number in range(base_params.seed_number, base_params.seed_number + args.seed_count):
             pool.apply_async(
                 func=batch_distribute_helper,
-                args=(base_permalink, seed_number, timeout, validate, output_dir),
+                args=(base_params, seed_number, timeout, validate, output_dir),
                 callback=callback,
                 error_callback=error_callback,
             )

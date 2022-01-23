@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Optional
 
 from randovania.version import version
+from randovania.version_hash import git_hash
 
 CONFIGURATION_FILE_PATH: Optional[Path] = None
 
@@ -127,3 +128,4 @@ def setup_logging(default_level: str, log_to_file: Optional[Path]):
 
 __version__ = version
 VERSION = version
+GIT_HASH = git_hash
