@@ -1033,14 +1033,15 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return
 
         permalink = dialog.get_permalink_from_field()
-        if permalink.player_count != self._game_session.num_rows:
+        parameters = permalink.parameters
+        if parameters.player_count != self._game_session.num_rows:
             return await async_dialog.warning(
                 self, "Incompatible permalink",
-                f"Given permalink is for {permalink.player_count} players, but "
+                f"Given permalink is for {parameters} players, but "
                 f"this session only have {self._game_session.num_rows} rows.")
 
         if any(not preset_p.is_same_configuration(preset_s.get_preset())
-               for preset_p, preset_s in zip(permalink.presets.values(), self._game_session.presets)):
+               for preset_p, preset_s in zip(parameters.presets.values(), self._game_session.presets)):
             response = await async_dialog.warning(
                 self, "Different presets",
                 f"Given permalink has different presets compared to the session.\n"
