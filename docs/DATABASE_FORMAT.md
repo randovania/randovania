@@ -1,8 +1,10 @@
 # Instructions and Standards for the Development of Organized Logic Databases  
   
   
-## REGIONS, AREAS, AND NODES  
+## WORLDS, AREAS, AND NODES  
 There exist 3 tiers of "Location" in the Randovania logic database - Worlds, Areas, and Nodes.  
+  
+![Worlds, Areas, and Nodes](./img/world_area_node.png)  
   
 Worlds represent large swathes of the game's playable space, and a standard game will only have a few of these, often less than ten. Worlds contain many areas grouped together. The criteria for what is and isn't its own world are mostly arbitrary. Generally, areas within the same world should be geographically adjacent, rather than being disjoint, and worlds should have common themes to their design - in other words, areas within a world should feel as though they belong to the same group. In addition, worlds are usually drawn up as they are demarcated in the game itself, if a similar distinction exists within the game. Worlds usually have only a few connections to other worlds, such as elevators, portals, or teleporters, though standard docks can still connect areas between two different worlds.  
   
