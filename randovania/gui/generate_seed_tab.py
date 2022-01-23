@@ -309,10 +309,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         self.generate_seed_from_permalink(Permalink.from_parameters(GeneratorParameters(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
-            presets={
-                i: preset.get_preset()
-                for i in range(num_players)
-            },
+            presets=[preset.get_preset()] * num_players,
         )), retries=retries)
 
     def generate_seed_from_permalink(self, permalink: Permalink, retries: Optional[int] = None):
