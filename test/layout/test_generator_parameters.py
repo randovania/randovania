@@ -63,7 +63,7 @@ def test_decode(default_echoes_preset, mocker, extra_data):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = b'\x00\x00\x07\xd1D\x00\x01\x87\xfd\xe0'
+    encoded = b'\x00\x00\x07\xd1H\x00\x03\x0f\xfb\xc0'
     if extra_data:
         encoded += b"="
 
@@ -98,9 +98,9 @@ def test_decode(default_echoes_preset, mocker, extra_data):
 
 
 @pytest.mark.parametrize(["encoded", "num_players"], [
-    (b'\x00\x00\x07\xd1@\x02\xbc\x00', 1),
-    (b'\x00\x00\x07\xd1\x80\x00\x02\xde\x00', 2),
-    (b'\x00\x00\x07\xd1\x82\x00\x02\xff\xde\x00', 10),
+    (b'\x00\x00\x07\xd1@\x05x', 1),
+    (b'\x00\x00\x07\xd1\x80\x00\x05\x00\x15\xe0', 2),
+    (b'\x00\x00\x07\xd1\x82\x00\x05\x00\x14\x00P\x01@\x05\x00\x14\x00P\x01@\x05\x00\x15\xe0', 10),
 ])
 def test_decode_mock_other(encoded, num_players, mocker):
     # We're mocking the database hash to avoid breaking tests every single time we change the database
@@ -124,8 +124,8 @@ def test_decode_mock_other(encoded, num_players, mocker):
     preset.bit_pack_encode.return_value = [(0, 100), (5, 100)]
 
     # Uncomment this line to quickly get the new encoded permalink
-    # assert expected.as_bytes == b""
-    # print(expected.as_bytes)
+    assert expected.as_bytes == b""
+    print(expected.as_bytes)
 
     # Run
     round_trip = expected.as_bytes
