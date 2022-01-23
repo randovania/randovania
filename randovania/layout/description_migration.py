@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 8
+CURRENT_VERSION = 9
 
 
 def _migrate_v1(json_dict: dict) -> dict:
@@ -179,6 +179,13 @@ def _migrate_v7(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v8(json_dict: dict) -> dict:
+    json_dict["info"]["randovania_version"] = json_dict["info"].pop("version")
+    json_dict["info"]["randovania_version_git"] = "28492915"
+
+    return json_dict
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v2.2.0-6-gbfd37022
     2: _migrate_v2,  # v2.4.2-16-g735569fd
@@ -187,6 +194,7 @@ _MIGRATIONS = {
     5: _migrate_v5,  # v3.2.1-203-g6e303090
     6: _migrate_v6,
     7: _migrate_v7,  # v3.3.0dev721
+    8: _migrate_v8,
 }
 
 

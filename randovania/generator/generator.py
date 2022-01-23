@@ -4,7 +4,6 @@ from typing import Optional, Callable, List, Dict
 
 import tenacity
 
-from randovania import VERSION
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
@@ -16,8 +15,8 @@ from randovania.generator.filler.runner import run_filler, FillerPlayerResult, P
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.resolver import resolver
 from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration, ImpossibleForSolver
@@ -200,9 +199,8 @@ async def _create_description(generator_params: GeneratorParameters,
     filler_results = await retrying(_create_pools_and_fill, rng, presets, status_update)
 
     all_patches = _distribute_remaining_items(rng, filler_results.player_results)
-    return LayoutDescription(
+    return LayoutDescription.create_new(
         generator_parameters=generator_params,
-        version=VERSION,
         all_patches=all_patches,
         item_order=filler_results.action_log,
     )
