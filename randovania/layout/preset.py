@@ -1,9 +1,7 @@
 import dataclasses
-import json
 import uuid
 from typing import Optional, List, Iterator, Tuple
 
-from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -51,44 +49,25 @@ class Preset(BitPackValue):
         from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
 
-        # Is this a custom preset?
-        is_custom_preset = self.base_preset_uuid is not None
-        reference = self
-        if is_custom_preset:
-            while reference.base_preset_uuid is not None:
-                reference_versioned = manager.preset_for_uuid(reference.base_preset_uuid)
-                if reference_versioned is None:
-                    reference_versioned = manager.default_preset_for_game(reference.game)
-                reference = reference_versioned.get_preset()
-
-        included_preset_uuids = [versioned.uuid for versioned in manager.included_presets.values()]
-        yield from bitpacking.encode_bool(is_custom_preset)
-        yield from bitpacking.pack_array_element(reference.uuid, included_preset_uuids)
-        if is_custom_preset:
-            yield from self.configuration.bit_pack_encode({"reference": reference.configuration})
+        reference = manager.reference_preset_for_game(self.game).get_preset()
+        yield from self.configuration.bit_pack_encode({"reference": reference.configuration})
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Preset":
         from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
+        game: RandovaniaGame = metadata["game"]
 
-        included_presets = [versioned for versioned in manager.included_presets.values()]
+        reference = manager.reference_preset_for_game(game).get_preset()
 
-        is_custom_preset = bitpacking.decode_bool(decoder)
-        reference = decoder.decode_element(included_presets).get_preset()
-        if is_custom_preset:
-            preset = Preset(
-                name="{} Custom".format(reference.name),
-                description="A customized preset.",
-                uuid=uuid.uuid4(),
-                base_preset_uuid=reference.uuid,
-                game=reference.game,
-                configuration=reference.configuration.bit_pack_unpack(decoder, {"reference": reference.configuration}),
-            )
-        else:
-            preset = reference
-
-        return preset
+        return Preset(
+            name="{} Custom".format(game.long_name),
+            description="A customized preset.",
+            uuid=uuid.uuid4(),
+            base_preset_uuid=reference.uuid,
+            game=reference.game,
+            configuration=reference.configuration.bit_pack_unpack(decoder, {"reference": reference.configuration}),
+        )
 
     def fork(self) -> "Preset":
         return dataclasses.replace(self, name=f"{self.name} Copy",

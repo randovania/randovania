@@ -1,6 +1,7 @@
+import functools
 import json
 from dataclasses import dataclass
-from typing import Dict, Iterator, Tuple
+from typing import Iterator, Tuple, Optional
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -18,74 +19,77 @@ def _game_db_hash(game: RandovaniaGame) -> int:
     return bitpacking.single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
 
 
+def _get_unique_games(presets: list[Preset]) -> Iterator[RandovaniaGame]:
+    games = set()
+    for preset in presets:
+        if preset.game not in games:
+            games.add(preset.game)
+            yield preset.game
+
+
+def encode_game_list(games: tuple[RandovaniaGame, ...]):
+    yield from bitpacking.encode_tuple(games, functools.partial(RandovaniaGame.bit_pack_encode, metadata={}))
+
+
+def decode_game_list(decoder: BitPackDecoder) -> tuple[RandovaniaGame, ...]:
+    return bitpacking.decode_tuple(decoder, functools.partial(RandovaniaGame.bit_pack_unpack, metadata={}))
+
+
+def try_decode_game_list(data: bytes) -> Optional[tuple[RandovaniaGame, ...]]:
+    try:
+        return decode_game_list(BitPackDecoder(data))
+    except (ValueError, IndexError):
+        return None
+
+
 @dataclass(frozen=True)
 class GeneratorParameters(BitPackValue):
     seed_number: int
     spoiler: bool
-    presets: Dict[int, Preset]
+    presets: list[Preset]
 
     def __post_init__(self):
         if self.seed_number is None:
             raise ValueError("Missing seed number")
         if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
             raise ValueError("Invalid seed number: {}".format(self.seed_number))
+
+        if not isinstance(self.presets, list):
+            raise ValueError("presets must be a list")
+
         object.__setattr__(self, "__cached_as_bytes", None)
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+        yield from encode_game_list(tuple(preset.game for preset in self.presets))
         yield self.seed_number, _PERMALINK_MAX_SEED
         yield from bitpacking.encode_bool(self.spoiler)
-        yield from bitpacking.encode_int_with_limits(self.player_count, _PERMALINK_PLAYER_COUNT_LIMITS)
 
         manager = PresetManager(None)
+        for preset in self.presets:
+            yield from preset.bit_pack_encode({"manager": manager})
 
-        previous_unique_presets = []
-        for preset in self.presets.values():
-            already_encoded_preset = preset in previous_unique_presets
-            yield from bitpacking.encode_bool(already_encoded_preset)
-            if already_encoded_preset:
-                yield from bitpacking.pack_array_element(preset, previous_unique_presets)
-            else:
-                previous_unique_presets.append(preset)
-                yield from preset.bit_pack_encode({"manager": manager})
-
-        # Not using a set here as iterating over sets is not deterministic
-        games = []
-        for preset in self.presets.values():
-            if preset.game not in games:
-                games.append(preset.game)
-                yield _game_db_hash(preset.game), 256
+        for game in _get_unique_games(self.presets):
+            yield _game_db_hash(game), 256
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "GeneratorParameters":
+        games = decode_game_list(decoder)
         seed_number = decoder.decode_single(_PERMALINK_MAX_SEED)
         spoiler = bitpacking.decode_bool(decoder)
-        player_count = bitpacking.decode_int_with_limits(decoder, _PERMALINK_PLAYER_COUNT_LIMITS)
+
         manager = PresetManager(None)
-
-        previous_unique_presets = []
-        presets = {}
-
-        for index in range(player_count):
-            in_previous_presets = bitpacking.decode_bool(decoder)
-            if in_previous_presets:
-                preset = decoder.decode_element(previous_unique_presets)
-            else:
-                preset = Preset.bit_pack_unpack(decoder, {"manager": manager})
-                previous_unique_presets.append(preset)
-            presets[index] = preset
-
-        games = []
-        for preset in presets.values():
-            if preset.game not in games:
-                games.append(preset.game)
-
-                included_data_hash = decoder.decode_single(256)
-                expected_data_hash = _game_db_hash(preset.game)
-                if included_data_hash != expected_data_hash:
-                    raise ValueError("Given permalink is for a Randovania {} database with hash '{}', "
-                                     "but current database has hash '{}'.".format(preset.game.long_name,
-                                                                                  included_data_hash,
-                                                                                  expected_data_hash))
+        presets = [
+            Preset.bit_pack_unpack(decoder, {"manager": manager, "game": game})
+            for game in games
+        ]
+        for game in _get_unique_games(presets):
+            included_data_hash = decoder.decode_single(256)
+            expected_data_hash = _game_db_hash(game)
+            if included_data_hash != expected_data_hash:
+                raise ValueError("Given permalink is for a Randovania {} database with hash '{}', "
+                                 "but current database has hash '{}'.".format(game.long_name,
+                                                                              included_data_hash,
+                                                                              expected_data_hash))
 
         return GeneratorParameters(seed_number, spoiler, presets)
 

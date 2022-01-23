@@ -128,6 +128,13 @@ class PresetManager:
 
         return None
 
+    def reference_preset_for_game(self, game: RandovaniaGame) -> VersionedPreset:
+        reference_name = game.data.permalink_reference_preset
+        if reference_name is None:
+            return self.default_preset_for_game(game)
+        else:
+            return self.included_preset_with(game, reference_name)
+
     def preset_for_uuid(self, the_uid: uuid.UUID) -> Optional[VersionedPreset]:
         return self.included_presets.get(the_uid, self.custom_presets.get(the_uid))
 

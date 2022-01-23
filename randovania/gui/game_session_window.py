@@ -32,9 +32,9 @@ from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
-from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
@@ -921,12 +921,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 raise
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
-        all_dangerous_settings = {}
-        for i, preset in permalink.parameters.presets.items():
-            dangerous = preset.dangerous_settings()
-            if dangerous:
-                all_dangerous_settings[i] = dangerous
-
+        all_dangerous_settings = {
+            i: dangerous
+            for i, preset in enumerate(permalink.parameters.presets)
+            if (dangerous := preset.dangerous_settings())
+        }
         if all_dangerous_settings:
             player_names = {
                 i: widget.player.name
@@ -934,8 +933,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 if widget.player is not None
             }
 
+            def get_name(i):
+                return player_names.get(i, f'Player {i + 1}')
+
             warnings = "\n".join(
-                f"{player_names.get(i, f'Player {i + 1}')} - {self._game_session.presets[i].name}: {', '.join(dangerous)}"
+                f"{get_name(i)} - {self._game_session.presets[i].name}: {', '.join(dangerous)}"
                 for i, dangerous in all_dangerous_settings.items()
             )
             message = ("The following presets have settings that can cause an impossible game:\n"
@@ -959,10 +961,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         permalink = Permalink.from_parameters(GeneratorParameters(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
-            presets={
-                i: preset.get_preset()
-                for i, preset in enumerate(self._game_session.presets)
-            },
+            presets=[
+                preset.get_preset()
+                for preset in self._game_session.presets
+            ],
         ))
         return await self.generate_game_with_permalink(permalink, retries=retries)
 
@@ -1041,7 +1043,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 f"this session only have {self._game_session.num_rows} rows.")
 
         if any(not preset_p.is_same_configuration(preset_s.get_preset())
-               for preset_p, preset_s in zip(parameters.presets.values(), self._game_session.presets)):
+               for preset_p, preset_s in zip(parameters.presets, self._game_session.presets)):
             response = await async_dialog.warning(
                 self, "Different presets",
                 f"Given permalink has different presets compared to the session.\n"
