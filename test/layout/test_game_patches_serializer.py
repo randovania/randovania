@@ -224,7 +224,7 @@ async def test_round_trip_generated_patches(default_preset):
         generator_params=GeneratorParameters(
             seed_number=1000,
             spoiler=True,
-            presets={0: preset},
+            presets=[preset],
         ),
         status_update=lambda x: None,
         attempts=0,

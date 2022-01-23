@@ -116,6 +116,10 @@ class GameData:
     patcher: Optional[Patcher] = None
     """(Optional) The class responsible for patching a game and building a new .iso."""
 
+    permalink_reference_preset: Optional[str] = None
+    """(Optional) Name of the preset used as reference to encode permalinks of this game.
+    If unset, the first of the list is used."""
+
 
 class RandovaniaGame(BitPackEnum, Enum):
     METROID_PRIME = "prime1"

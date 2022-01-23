@@ -280,10 +280,10 @@ async def test_generate_game(window, mocker, preset_manager):
         parameters=GeneratorParameters(
             seed_number=mock_randint.return_value,
             spoiler=spoiler,
-            presets={
-                0: preset_manager.default_preset.get_preset(),
-                1: preset_manager.default_preset.get_preset(),
-            },
+            presets=[
+                preset_manager.default_preset.get_preset(),
+                preset_manager.default_preset.get_preset(),
+            ],
         ),
         options=window._options,
         retries=3,
@@ -311,7 +311,7 @@ async def test_check_dangerous_presets(window, mocker):
 
     permalink = MagicMock(spec=Permalink)
     permalink.parameters = MagicMock(spec=GeneratorParameters)
-    permalink.parameters.presets = {i: preset for i, preset in enumerate(game_session.presets)}
+    permalink.parameters.presets = list(game_session.presets)
 
     # Run
     result = await window._check_dangerous_presets(permalink)
@@ -355,7 +355,7 @@ async def test_import_permalink(window, mocker):
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
     permalink.parameters.player_count = 2
-    permalink.parameters.presets = {0: MagicMock(), 1: MagicMock()}
+    permalink.parameters.presets = [MagicMock(), MagicMock()]
     permalink.parameters.presets[0].is_same_configuration.return_value = False
 
     game_session = MagicMock()

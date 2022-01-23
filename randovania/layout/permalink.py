@@ -11,6 +11,8 @@ import construct
 
 import randovania
 from randovania.bitpacking.bitpacking import single_byte_hash
+from randovania.games.game import RandovaniaGame
+from randovania.layout import generator_parameters
 from randovania.layout.generator_parameters import GeneratorParameters
 
 _CURRENT_SCHEMA_VERSION = 13
@@ -20,11 +22,13 @@ _PERMALINK_MAX_VERSION = 256
 class UnsupportedPermalink(Exception):
     seed_hash: Optional[bytes]
     randovania_version: bytes
+    games: Optional[tuple[RandovaniaGame, ...]]
 
-    def __init__(self, msg, seed_hash, version):
+    def __init__(self, msg, seed_hash, version, games):
         super().__init__(msg)
         self.seed_hash = seed_hash
         self.randovania_version = version
+        self.games = games
 
 
 def _dictionary_byte_hash(data: dict) -> int:
@@ -171,9 +175,11 @@ class Permalink:
                 randovania_version=data.randovania_version,
             )
         except Exception as e:
+            games = generator_parameters.try_decode_game_list(data.generator_params)
+
             if data.randovania_version != cls.current_randovania_version():
                 msg = "Detected version {}, current version is {}".format(data.randovania_version.hex(),
                                                                           cls.current_randovania_version().hex())
             else:
                 msg = f"Error decoding parameters - {e}"
-            raise UnsupportedPermalink(msg, data.seed_hash, data.randovania_version) from e
+            raise UnsupportedPermalink(msg, data.seed_hash, data.randovania_version, games) from e
