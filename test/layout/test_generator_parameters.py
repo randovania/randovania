@@ -31,7 +31,7 @@ def test_round_trip(spoiler: bool,
     mocker.patch("uuid.uuid4", return_value=random_uuid)
 
     preset = Preset(
-        name="{} Custom".format(default_echoes_preset.name),
+        name="{} Custom".format(default_echoes_preset.game.long_name),
         description="A customized preset.",
         uuid=random_uuid,
         base_preset_uuid=default_echoes_preset.uuid,
@@ -58,16 +58,25 @@ def test_decode(default_echoes_preset, mocker, extra_data):
     mocker.patch("randovania.layout.generator_parameters._game_db_hash", autospec=True,
                  return_value=120)
 
+    random_uuid = uuid.uuid4()
+    mocker.patch("uuid.uuid4", return_value=random_uuid)
+
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = b'\x00\x00\x07\xd1Bx'
+    encoded = b'\x00\x00\x07\xd1D\x00\x01\x87\xfd\xe0'
     if extra_data:
         encoded += b"="
 
     expected = GeneratorParameters(
         seed_number=1000,
         spoiler=True,
-        presets={0: default_echoes_preset},
+        presets={0: dataclasses.replace(
+            default_echoes_preset,
+            name="{} Custom".format(default_echoes_preset.game.long_name),
+            description="A customized preset.",
+            uuid=random_uuid,
+            base_preset_uuid=default_echoes_preset.uuid,
+        )},
     )
 
     # Uncomment this line to quickly get the new encoded permalink
