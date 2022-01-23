@@ -156,7 +156,7 @@ class PermalinkLookupCog(commands.Cog):
         files = []
 
         if permalink is not None:
-            for player, preset in permalink.parameters.presets.items():
+            for player, preset in enumerate(permalink.parameters.presets):
                 data = io.BytesIO()
                 VersionedPreset.with_preset(preset).save_to_io(data)
                 data.seek(0)
