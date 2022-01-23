@@ -27,6 +27,10 @@ def _get_unique_games(presets: list[Preset]) -> Iterator[RandovaniaGame]:
             yield preset.game
 
 
+def encode_game_list(games: tuple[RandovaniaGame, ...]):
+    yield from bitpacking.encode_tuple(games, functools.partial(RandovaniaGame.bit_pack_encode, metadata={}))
+
+
 def decode_game_list(decoder: BitPackDecoder) -> tuple[RandovaniaGame, ...]:
     return bitpacking.decode_tuple(decoder, functools.partial(RandovaniaGame.bit_pack_unpack, metadata={}))
 
@@ -34,7 +38,7 @@ def decode_game_list(decoder: BitPackDecoder) -> tuple[RandovaniaGame, ...]:
 def try_decode_game_list(data: bytes) -> Optional[tuple[RandovaniaGame, ...]]:
     try:
         return decode_game_list(BitPackDecoder(data))
-    except ValueError:
+    except (ValueError, IndexError):
         return None
 
 
@@ -56,8 +60,7 @@ class GeneratorParameters(BitPackValue):
         object.__setattr__(self, "__cached_as_bytes", None)
 
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        yield from bitpacking.encode_tuple(tuple(preset.game for preset in self.presets),
-                                           functools.partial(RandovaniaGame.bit_pack_encode, metadata={}))
+        yield from encode_game_list(tuple(preset.game for preset in self.presets))
         yield self.seed_number, _PERMALINK_MAX_SEED
         yield from bitpacking.encode_bool(self.spoiler)
 
