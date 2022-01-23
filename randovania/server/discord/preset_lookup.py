@@ -81,7 +81,7 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
 
 async def reply_for_layout_description(message: discord.Message, description: LayoutDescription):
     embed = discord.Embed(
-        title="Spoiler file for Randovania {}".format(description.version),
+        title="Spoiler file for Randovania {}".format(description.randovania_version_text),
     )
 
     if description.player_count == 1:
@@ -89,7 +89,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
         embed.description = "{}, with preset {}".format(preset.game.long_name, preset.name)
         _add_preset_description_to_embed(embed, preset)
     else:
-        games = {preset.game.long_name for preset in description.generator_parameters.presets.values()}
+        games = {preset.game.long_name for preset in description.all_presets}
         game_names = sorted(games)
 
         last_game = game_names.pop()

@@ -53,9 +53,8 @@ async def test_create_patches(mock_random: MagicMock,
     mock_run_filler.assert_awaited_once_with(rng, {i: player_pools[i] for i in range(num_players)}, status_update)
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result.player_results)
 
-    assert result == LayoutDescription(
+    assert result == LayoutDescription.create_new(
         generator_parameters=generator_parameters,
-        version=randovania.VERSION,
         all_patches=mock_distribute_remaining_items.return_value,
         item_order=filler_result.action_log,
     )
