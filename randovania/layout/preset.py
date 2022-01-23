@@ -9,10 +9,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def _dictionary_byte_hash(data: dict) -> int:
-    return bitpacking.single_byte_hash(json.dumps(data, separators=(',', ':')).encode("UTF-8"))
-
-
 @dataclasses.dataclass(frozen=True)
 class Preset(BitPackValue):
     name: str
@@ -70,7 +66,6 @@ class Preset(BitPackValue):
         yield from bitpacking.pack_array_element(reference.uuid, included_preset_uuids)
         if is_custom_preset:
             yield from self.configuration.bit_pack_encode({"reference": reference.configuration})
-        yield _dictionary_byte_hash(self.configuration.game_data), 256
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "Preset":
@@ -93,11 +88,6 @@ class Preset(BitPackValue):
         else:
             preset = reference
 
-        included_data_hash = decoder.decode_single(256)
-        expected_data_hash = _dictionary_byte_hash(preset.configuration.game_data)
-        if included_data_hash != expected_data_hash:
-            raise ValueError("Given permalink is for a Randovania database with hash '{}', "
-                             "but current database has hash '{}'.".format(included_data_hash, expected_data_hash))
         return preset
 
     def fork(self) -> "Preset":

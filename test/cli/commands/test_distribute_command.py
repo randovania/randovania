@@ -5,7 +5,7 @@ from mock import MagicMock, ANY, AsyncMock
 
 import randovania.cli.commands.distribute
 from randovania.games.game import RandovaniaGame
-from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 @pytest.mark.parametrize("preset_name", [None, "Starter Preset"])
@@ -27,11 +27,11 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
         extra_args["attempts"] = 0
 
     if preset_name is None:
-        permalink = mock_from_str.return_value
+        generator_params: GeneratorParameters = mock_from_str.return_value.parameters
     else:
         args.permalink = None
         preset = preset_manager.included_preset_with(RandovaniaGame.METROID_PRIME_ECHOES, preset_name).get_preset()
-        permalink = Permalink(0, True, {0: preset})
+        generator_params = GeneratorParameters(0, True, {0: preset})
 
     # Run
     randovania.cli.commands.distribute.distribute_command_logic(args)
@@ -43,7 +43,7 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
         mock_from_str.assert_not_called()
 
     mock_generate.assert_awaited_once_with(
-        permalink=permalink,
+        generator_params=generator_params,
         status_update=ANY,
         validate_after_generation=args.validate,
         timeout=None,

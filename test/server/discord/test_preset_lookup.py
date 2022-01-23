@@ -60,8 +60,8 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     preset = MagicMock()
     preset.game = RandovaniaGame.METROID_PRIME_ECHOES
     permalink_1 = MagicMock()
-    permalink_1.player_count = 1 if is_solo else 2
-    permalink_1.get_preset.return_value = preset
+    permalink_1.parameters.player_count = 1 if is_solo else 2
+    permalink_1.parameters.get_preset.return_value = preset
 
     permalink_2 = MagicMock()
     embed = MagicMock()
@@ -98,14 +98,14 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
         mock_from_str.assert_called_once_with("yu4abbceWfLI-")
 
     if is_solo:
-        permalink_1.get_preset.assert_called_once_with(0)
+        permalink_1.parameters.get_preset.assert_called_once_with(0)
         mock_describe.assert_called_once_with(preset)
     else:
-        permalink_1.get_preset.assert_not_called()
+        permalink_1.parameters.get_preset.assert_not_called()
         mock_describe.assert_not_called()
 
     mock_embed.assert_called_once_with(
-        title="`yu4abbceWfLI-`", description=f"{permalink_1.player_count} player multiworld permalink",
+        title="`yu4abbceWfLI-`", description=f"{permalink_1.parameters.player_count} player multiworld permalink",
     )
     if is_solo:
         assert embed.description == "Metroid Prime 2: Echoes permalink for Randovania {}".format(randovania.VERSION)

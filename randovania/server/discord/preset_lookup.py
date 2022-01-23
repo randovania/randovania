@@ -11,7 +11,7 @@ from discord_slash.utils import manage_components
 import randovania
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import Permalink, UnsupportedPermalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.server.discord.bot import RandovaniaBot
@@ -32,18 +32,21 @@ async def look_for_permalinks(message: discord.Message):
     for word in possible_links_re.finditer(message.content):
         try:
             permalink = Permalink.from_str(word.group(1))
-        except ValueError:
+        except (ValueError, UnsupportedPermalink):
+            # TODO: handle the incorrect version permalink
             continue
+
+        parameters = permalink.parameters
 
         if embed is not None:
             multiple_permalinks = True
             continue
 
         embed = discord.Embed(title=f"`{word.group(1)}`",
-                              description="{} player multiworld permalink".format(permalink.player_count))
+                              description="{} player multiworld permalink".format(parameters.player_count))
 
-        if permalink.player_count == 1:
-            preset = permalink.get_preset(0)
+        if parameters.player_count == 1:
+            preset = parameters.get_preset(0)
             embed.description = "{} permalink for Randovania {}".format(preset.game.long_name,
                                                                         randovania.VERSION)
             _add_preset_description_to_embed(embed, preset)
@@ -86,7 +89,7 @@ async def reply_for_layout_description(message: discord.Message, description: La
         embed.description = "{}, with preset {}".format(preset.game.long_name, preset.name)
         _add_preset_description_to_embed(embed, preset)
     else:
-        games = {preset.game.long_name for preset in description.permalink.presets.values()}
+        games = {preset.game.long_name for preset in description.generator_parameters.presets.values()}
         game_names = sorted(games)
 
         last_game = game_names.pop()
@@ -146,14 +149,14 @@ class PermalinkLookupCog(commands.Cog):
             # Trim leading and trailing `s
             permalink = Permalink.from_str(title[1:-1])
 
-        except (IndexError, ValueError) as e:
+        except (IndexError, ValueError, UnsupportedPermalink) as e:
             logging.exception("Unable to find permalink on message that sent attach_presets_of_permalink")
             permalink = None
 
         files = []
 
         if permalink is not None:
-            for player, preset in permalink.presets.items():
+            for player, preset in permalink.parameters.presets.items():
                 data = io.BytesIO()
                 VersionedPreset.with_preset(preset).save_to_io(data)
                 data.seek(0)

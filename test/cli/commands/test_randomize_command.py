@@ -15,8 +15,8 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 ])
 @pytest.mark.parametrize("with_permalink", [False, True])
 def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):
-    mock_from_str = mocker.patch("randovania.layout.permalink.Permalink.from_str")
-    mock_from_file = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_file")
+    mock_from_str: MagicMock = mocker.patch("randovania.layout.permalink.Permalink.from_str")
+    mock_from_file: MagicMock = mocker.patch("randovania.layout.layout_description.LayoutDescription.from_file")
     mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)
 
@@ -59,7 +59,7 @@ def test_randomize_command_logic(mocker, with_permalink, game, cosmetic_class):
 
     if with_permalink:
         mock_from_str.assert_called_once_with(args.permalink)
-        mock_generate.assert_awaited_once_with(permalink=mock_from_str.return_value,
+        mock_generate.assert_awaited_once_with(generator_params=mock_from_str.return_value.parameters,
                                                status_update=ANY,
                                                validate_after_generation=True)
         mock_from_file.assert_not_called()

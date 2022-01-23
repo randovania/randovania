@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+import randovania.lib.construct_lib
 from randovania import get_data_path
 from randovania.game_description import data_reader, game_migration
 from randovania.games import binary_data
@@ -147,7 +148,7 @@ reqs_to_test.append({"type": "and", "data": {"comment": None, "items": list(reqs
 def test_encode_requirement_simple(req):
     # Run
     encoded = binary_data.ConstructRequirement.build(req)
-    decoded = binary_data.convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
+    decoded = randovania.lib.construct_lib.convert_to_raw_python(binary_data.ConstructRequirement.parse(encoded))
 
     # Assert
     assert req == decoded

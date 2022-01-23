@@ -158,10 +158,10 @@ class GameSession(BaseModel):
         game_details = None
         if description is not None:
             game_details = {
-                "spoiler": description.permalink.spoiler,
+                "spoiler": description.generator_parameters.spoiler,
                 "word_hash": description.shareable_word_hash,
                 "seed_hash": description.shareable_hash,
-                "permalink": description.permalink.as_base64_str,
+                "permalink": description.generator_parameters.as_base64_str,
             }
 
         return BinaryGameSessionEntry.build({

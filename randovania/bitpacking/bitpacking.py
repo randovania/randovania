@@ -51,6 +51,13 @@ class BitPackDecoder:
         compiled = _compile_format(*args)
         return compiled.unpack_from(self._data, self._offset)
 
+    def ensure_data_end(self):
+        try:
+            self.peek(256)
+            raise ValueError("At least one entire byte of data is still unread.")
+        except bitstruct.Error:
+            pass
+
 
 class BitPackValue:
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
