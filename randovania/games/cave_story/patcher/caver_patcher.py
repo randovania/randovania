@@ -302,16 +302,26 @@ class CaverPatcher(Patcher):
             # flags set during first cave in normal gameplay
             starting_script += "<FL+0301<FL+0302<FL+1641<FL+1642<FL+0320<FL+0321"
             waterway = {"Waterway", "Waterway Cabin", "Main Artery"}
-            if patches.starting_location.world_name == "Labyrinth" and patches.starting_location.area_name not in waterway:
+            world_name, area_name = patches.starting_location.as_tuple
+            if world_name == "Labyrinth" and area_name not in waterway:
                 # started near camp; disable camp collision
                 starting_script += "<FL+6202"
-            elif (
-                    patches.starting_location.world_name != "Mimiga Village" and patches.starting_location.area_name not in waterway) or patches.starting_location.area_name == "Arthur's House":
+            elif (world_name != "Mimiga Village" and area_name not in waterway) or area_name == "Arthur's House":
                 # started outside mimiga village
                 starting_script += "<FL+6201"
 
-        starting_script += game_description.world_list.area_by_area_location(patches.starting_location).extra[
-            "starting_script"]
+        tra = game_description.world_list.area_by_area_location(patches.starting_location).extra["starting_script"]
+        starting_script += tra
+
+        # Softlock debug cat warps
+        softlock_warps = {
+            mapname: area.extra["softlock_warp"]
+            for area in game_description.world_list.all_areas
+            if area.extra.get("softlock_warp") is not None
+            for mapname in area.extra.get("softlock_maps", [area.extra["map_name"]])
+        }
+        for mapname, event in softlock_warps.items():
+            maps[mapname]["pickups"][event] = tra
 
         maps["Start"]["pickups"]["0201"] = starting_script
 
