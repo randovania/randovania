@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.3.0] - Unreleased
 
-- **Major** - Added: Cave Story has been added as an Experimental Game.
+- **Major** - Added: Cave Story has been added with full single-player support.
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
 This feature comes with plenty of quality of life functionality for editing the database. 
 - Added: A new tab has been added to the preset editor, Generation Settings, consolidating various settings such as minimal logic, multi-pickup placement, dangerous actions, etc.
