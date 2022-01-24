@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pytest
 from mock import MagicMock, AsyncMock, call
 
@@ -25,34 +23,6 @@ async def test_on_message_from_bot(mocker):
     mock_look_for.assert_not_awaited()
 
 
-@pytest.mark.parametrize(["guild", "expected"], [
-    (None, True),
-    (0, False),
-    (1234, True),
-])
-@pytest.mark.asyncio
-async def test_on_message_wrong_place(mocker, guild: Optional[int], expected):
-    mock_look_for: AsyncMock = mocker.patch("randovania.server.discord.preset_lookup.look_for_permalinks",
-                                            new_callable=AsyncMock)
-    cog = preset_lookup.PermalinkLookupCog({"guild": 1234}, MagicMock())
-
-    message = MagicMock()
-    message.channel.name = "the_expected_name"
-    if guild is None:
-        message.guild = None
-    else:
-        message.guild.id = guild
-
-    # Run
-    await cog.on_message(message)
-
-    # Assert
-    if expected:
-        mock_look_for.assert_awaited_once_with(message)
-    else:
-        mock_look_for.assert_not_awaited()
-
-
 @pytest.mark.parametrize("is_solo", [False, True])
 @pytest.mark.parametrize("has_multiple", [False, True])
 @pytest.mark.asyncio
@@ -60,10 +30,13 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     preset = MagicMock()
     preset.game = RandovaniaGame.METROID_PRIME_ECHOES
     permalink_1 = MagicMock()
+    permalink_1.seed_hash = b"XXXXX"
+    permalink_1.randovania_version = randovania.GIT_HASH
     permalink_1.parameters.player_count = 1 if is_solo else 2
     permalink_1.parameters.get_preset.return_value = preset
-
+    permalink_1.parameters.presets = [preset] if is_solo else [preset, preset]
     permalink_2 = MagicMock()
+    permalink_2.randovania_version = randovania.GIT_HASH
     embed = MagicMock()
 
     mock_embed: MagicMock = mocker.patch("discord.Embed", side_effect=[embed])
@@ -107,8 +80,9 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     mock_embed.assert_called_once_with(
         title="`yu4abbceWfLI-`", description=f"{permalink_1.parameters.player_count} player multiworld permalink",
     )
+    suffix = f"for Randovania {randovania.VERSION}\nSeed Hash: Elevator Key Checkpoint (LBMFQWCY)"
     if is_solo:
-        assert embed.description == "Metroid Prime 2: Echoes permalink for Randovania {}".format(randovania.VERSION)
+        assert embed.description == "Metroid Prime 2: Echoes permalink {}".format(suffix)
         embed.add_field.assert_has_calls([
             call(name="General", value="Foo\nBar", inline=True),
             call(name="Other", value="X\nY", inline=True),
