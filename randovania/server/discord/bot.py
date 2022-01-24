@@ -7,7 +7,10 @@ import randovania
 class RandovaniaBot(discord.ext.commands.Bot):
     def __init__(self, configuration: dict):
         super().__init__("%unused-prefix%")
-        self.slash = SlashCommand(self)
+        self.slash = SlashCommand(
+            self,
+            debug_guild=configuration["debug_guild"],
+        )
         self.configuration = configuration
         self.load_extension("randovania.server.discord.preset_lookup")
         self.load_extension("randovania.server.discord.database_command")

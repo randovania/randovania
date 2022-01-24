@@ -90,9 +90,9 @@ class DatabaseCommandCog(commands.Cog):
     async def on_ready(self):
         self.bot.slash.add_slash_command(
             self.database_command,
-            name="database-inspect",
+            name=self.configuration.get("command_prefix", "") + "database-inspect",
             description="Consult the Randovania's logic database for one specific room.",
-            guild_ids=[self.configuration["guild"]],
+            guild_ids=None,
             options=[
                 manage_commands.create_option(
                     "game", "The game's database to check.",
