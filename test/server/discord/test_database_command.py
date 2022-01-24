@@ -23,7 +23,7 @@ async def test_on_ready():
         cog.database_command,
         name="database-inspect",
         description="Consult the Randovania's logic database for one specific room.",
-        guild_ids=[1234],
+        guild_ids=None,
         options=[ANY],
     )
     slash.add_component_callback.assert_called_once_with(
