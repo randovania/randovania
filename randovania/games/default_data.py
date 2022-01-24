@@ -1,6 +1,5 @@
 import functools
 from pathlib import Path
-from typing import Tuple
 
 from randovania import get_data_path
 from randovania.game_description import data_reader
@@ -9,7 +8,7 @@ from randovania.games.game import RandovaniaGame
 
 
 @functools.lru_cache()
-def read_json_then_binary(game: RandovaniaGame) -> Tuple[Path, dict]:
+def read_json_then_binary(game: RandovaniaGame) -> tuple[Path, dict]:
     dir_path = game.data_path.joinpath("json_data")
     if dir_path.exists():
         return dir_path, data_reader.read_split_file(dir_path)

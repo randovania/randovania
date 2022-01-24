@@ -1,8 +1,12 @@
+from __future__ import annotations
+
+import base64
 import functools
 import json
 import logging
 import os
 import re
+import typing
 from functools import partial
 from pathlib import Path
 from typing import Optional, List
@@ -27,6 +31,9 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.enum_lib import iterate_enum
 from randovania.patching.patcher_provider import PatcherProvider
 from randovania.resolver import debug
+
+if typing.TYPE_CHECKING:
+    from randovania.layout.permalink import Permalink
 
 _DISABLE_VALIDATION_WARNING = """
 <html><head/><body>
@@ -279,19 +286,32 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.help_corruption_tab_widget.setCurrentWidget(self.corruption_faq_tab)
         self.help_cs_tab_widget.setCurrentWidget(self.cs_faq_tab)
 
-    async def generate_seed_from_permalink(self, permalink):
+    async def generate_seed_from_permalink(self, permalink: Permalink):
         from randovania.lib.status_update_lib import ProgressUpdateCallable
         from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
 
         def work(progress_update: ProgressUpdateCallable):
             from randovania.interface_common import simplified_patcher
             layout = simplified_patcher.generate_layout(progress_update=progress_update,
-                                                        permalink=permalink,
+                                                        parameters=permalink.parameters,
                                                         options=self._options)
             progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)
             return layout
 
         new_layout = await BackgroundProcessDialog.open_for_background_task(work, "Creating a game...")
+
+        if permalink.seed_hash is not None and permalink.seed_hash != new_layout.shareable_hash_bytes:
+            response = await async_dialog.warning(
+                self, "Unexpected hash",
+                "Expected has to be {}. got {}. Do you wish to continue?".format(
+                    base64.b32encode(permalink.seed_hash).decode(),
+                    new_layout.shareable_hash,
+                ),
+                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+            )
+            if response != QtWidgets.QMessageBox.Yes:
+                return
+
         self.open_game_details(new_layout)
 
     @asyncSlot()

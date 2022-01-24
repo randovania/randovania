@@ -34,14 +34,14 @@ async def test_create_patches(mock_random: MagicMock,
 
     mock_create_player_pool.side_effect = player_pools
 
-    permalink = MagicMock()
-    permalink.get_preset.side_effect = lambda i: presets[i]
+    generator_parameters = MagicMock()
+    generator_parameters.get_preset.side_effect = lambda i: presets[i]
 
     # Run
-    result = await generator._create_description(permalink, status_update, 0)
+    result = await generator._create_description(generator_parameters, status_update, 0)
 
     # Assert
-    mock_random.assert_called_once_with(permalink.as_bytes)
+    mock_random.assert_called_once_with(generator_parameters.as_bytes)
     mock_create_player_pool.assert_has_calls([
         call(rng, presets[i].configuration, i, num_players)
         for i in range(num_players)
@@ -53,9 +53,8 @@ async def test_create_patches(mock_random: MagicMock,
     mock_run_filler.assert_awaited_once_with(rng, {i: player_pools[i] for i in range(num_players)}, status_update)
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result.player_results)
 
-    assert result == LayoutDescription(
-        permalink=permalink,
-        version=randovania.VERSION,
+    assert result == LayoutDescription.create_new(
+        generator_parameters=generator_parameters,
         all_patches=mock_distribute_remaining_items.return_value,
         item_order=filler_result.action_log,
     )

@@ -11,7 +11,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.racetime_browser_dialog_ui import Ui_RacetimeBrowserDialog
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.qt_network_client import handle_network_errors
-from randovania.layout.permalink import Permalink
+from randovania.layout.permalink import Permalink, UnsupportedPermalink
 
 
 @dataclasses.dataclass(frozen=True)
@@ -208,6 +208,8 @@ class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
             try:
                 permalink = Permalink.from_str(word)
             except ValueError:
+                continue
+            except UnsupportedPermalink:
                 continue
 
         if permalink is None:

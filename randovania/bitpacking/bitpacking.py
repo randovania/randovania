@@ -1,6 +1,7 @@
 import dataclasses
 import hashlib
 import math
+import typing
 from enum import Enum
 from typing import Iterator, Tuple, TypeVar, List, Optional, Callable
 
@@ -50,6 +51,13 @@ class BitPackDecoder:
         """Decodes values from the current buffer, *NOT* advancing the current pointer"""
         compiled = _compile_format(*args)
         return compiled.unpack_from(self._data, self._offset)
+
+    def ensure_data_end(self):
+        try:
+            self.peek(256)
+            raise ValueError("At least one entire byte of data is still unread.")
+        except bitstruct.Error:
+            pass
 
 
 class BitPackValue:
@@ -143,13 +151,14 @@ class BitPackEnum(BitPackValue):
     def __reduce__(self):
         return None
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
-        cls: Enum = self.__class__
+    def bit_pack_encode(self: Enum, metadata) -> Iterator[Tuple[int, int]]:
+        cls = self.__class__
         values = list(cls.__members__.values())
         yield from pack_array_element(self, values)
 
     @classmethod
-    def bit_pack_unpack(cls: "Enum", decoder: BitPackDecoder, metadata):
+    def bit_pack_unpack(cls: typing.Type[T], decoder: BitPackDecoder, metadata) -> T:
+        assert issubclass(cls, Enum)
         items = list(cls.__members__.values())
         return decoder.decode_element(items)
 

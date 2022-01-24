@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 async def permalink_command_body(args):
@@ -19,11 +20,11 @@ async def permalink_command_body(args):
         seed = random.randint(0, 2 ** 31)
 
     preset = versioned_preset.get_preset()
-    permalink = Permalink(
+    permalink = Permalink.from_parameters(GeneratorParameters(
         seed_number=seed,
         spoiler=not args.race,
         presets={i: preset for i in range(args.player_count)}
-    )
+    ))
     print(permalink.as_base64_str)
 
     Permalink.from_str(permalink.as_base64_str)

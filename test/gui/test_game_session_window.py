@@ -13,6 +13,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction, \
     GameSessionActions, GameDetails
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
@@ -276,13 +277,13 @@ async def test_generate_game(window, mocker, preset_manager):
     mock_randint.assert_called_once_with(0, 2 ** 31)
     mock_generate_layout.assert_called_once_with(
         progress_update=ANY,
-        permalink=Permalink(
+        parameters=GeneratorParameters(
             seed_number=mock_randint.return_value,
             spoiler=spoiler,
-            presets={
-                0: preset_manager.default_preset.get_preset(),
-                1: preset_manager.default_preset.get_preset(),
-            },
+            presets=[
+                preset_manager.default_preset.get_preset(),
+                preset_manager.default_preset.get_preset(),
+            ],
         ),
         options=window._options,
         retries=3,
@@ -308,8 +309,9 @@ async def test_check_dangerous_presets(window, mocker):
     window.team_players[0].player.name = "Crazy Person"
     window.team_players[1].player = None
 
-    permalink = MagicMock()
-    permalink.presets = {i: preset for i, preset in enumerate(game_session.presets)}
+    permalink = MagicMock(spec=Permalink)
+    permalink.parameters = MagicMock(spec=GeneratorParameters)
+    permalink.parameters.presets = list(game_session.presets)
 
     # Run
     result = await window._check_dangerous_presets(permalink)
@@ -328,7 +330,8 @@ async def test_check_dangerous_presets(window, mocker):
 async def test_copy_permalink(window, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    game_session = MagicMock()
+    game_session = MagicMock(spec=GameSessionEntry)
+    game_session.game_details = MagicMock()
     game_session.game_details.permalink = "<permalink>"
 
     window._game_session = game_session
@@ -351,9 +354,9 @@ async def test_import_permalink(window, mocker):
     mock_warning.return_value = QtWidgets.QMessageBox.Yes
 
     permalink = mock_permalink_dialog.return_value.get_permalink_from_field.return_value
-    permalink.player_count = 2
-    permalink.presets = {0: MagicMock(), 1: MagicMock()}
-    permalink.presets[0].is_same_configuration.return_value = False
+    permalink.parameters.player_count = 2
+    permalink.parameters.presets = [MagicMock(), MagicMock()]
+    permalink.parameters.presets[0].is_same_configuration.return_value = False
 
     game_session = MagicMock()
     game_session.num_rows = 2

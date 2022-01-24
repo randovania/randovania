@@ -23,7 +23,7 @@ async def test_on_ready():
         cog.database_command,
         name="database-inspect",
         description="Consult the Randovania's logic database for one specific room.",
-        guild_ids=[1234],
+        guild_ids=None,
         options=[ANY],
     )
     slash.add_component_callback.assert_called_once_with(
@@ -98,6 +98,7 @@ async def test_on_database_area_selected(echoes_game_description, mocker):
     ctx = AsyncMock()
     ctx.selected_options = [f"area_1"]
 
+    db = echoes_game_description
     world = echoes_game_description.world_list.worlds[2]
     area = world.areas[0]
     split_world = SplitWorld(world, "The World", [MagicMock(), area])
@@ -107,8 +108,7 @@ async def test_on_database_area_selected(echoes_game_description, mocker):
 
     # Assert
     ctx.send.assert_awaited_once_with(
-        content=f"Requested by {ctx.author.display_name}.",
-        embed=ANY,
+        content=f"**{db.game.long_name}: {db.world_list.area_name(area)}**\nRequested by {ctx.author.display_name}.",
         files=[mock_file.return_value],
         components=[ANY],
     )
@@ -139,17 +139,10 @@ async def test_on_area_node_selection(echoes_game_description, mocker):
     await cog.on_area_node_selection(ctx, RandovaniaGame.METROID_PRIME_ECHOES, area)
 
     # Assert
-    ctx.edit_origin.assert_awaited_once_with(embed=mock_embed.return_value)
-    mock_embed.assert_called_once_with(title=ctx.origin_message.embeds[0].title)
-    mock_embed.return_value.add_field.assert_has_calls([
-        call(
-            name=area.nodes[0].name,
-            value=ANY,
-            inline=False,
-        ),
-        call(
-            name=area.nodes[2].name,
-            value=ANY,
-            inline=False,
-        ),
+    ctx.edit_origin.assert_awaited_once_with(embeds=[mock_embed.return_value, mock_embed.return_value])
+    mock_embed.assert_has_calls([
+        call(title=area.nodes[0].name,
+             description=ANY),
+        call(title=area.nodes[2].name,
+             description=ANY),
     ])

@@ -10,6 +10,7 @@ from randovania.gui.game_details.game_details_window import GameDetailsWindow
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.generator_parameters import GeneratorParameters
 
 
 @pytest.mark.asyncio
@@ -58,10 +59,11 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     mock_merge = mocker.patch("randovania.layout.preset_describer.merge_categories", return_value="<description>")
 
     options = MagicMock()
-    description = MagicMock()
+    description = MagicMock(spec=LayoutDescription)
     description.player_count = 1
     description.permalink.as_base64_str = "<permalink>"
-    description.permalink.spoiler = False
+    description.generator_parameters = MagicMock(spec=GeneratorParameters)
+    description.has_spoiler = False
 
     window = GameDetailsWindow(None, options)
     skip_qtbot.addWidget(window)

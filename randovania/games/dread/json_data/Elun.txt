@@ -83,7 +83,7 @@ Extra - asset_id: collision_camera_002
   * Extra - tile_types: ('BOMB',)
   > Tile Group (BOMB) 2
       Trivial
-  > Morph Launcher Entrance
+  > Dock to Ammo Refill Room
       Trivial
 
 > Tile Group (BOMB) 2; Heals? False
@@ -102,14 +102,10 @@ Extra - asset_id: collision_camera_002
   > Door to Ammo Refill Room
       Trivial
 
-> Morph Launcher Entrance; Heals? False
+> Dock to Ammo Refill Room; Heals? False
+  * Morph Ball Launcher to Ammo Refill Room/Dock from Purple Drapes
   > Tile Group (BOMB) 1
       Trivial
-  > Dock to Ammo Refill Room
-      Lay Bomb
-
-> Dock to Ammo Refill Room; Heals? False
-  * Morph Ball Tunnel to Ammo Refill Room/Dock to Purple Drapes
 
 ----------------
 Ammo Refill Room
@@ -189,7 +185,7 @@ Extra - asset_id: collision_camera_003
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to Bottom Morph Launcher
-      Morph Ball
+      Trivial
 
 > Event - Elun - Ammo Recharge Room Blob; Heals? False
   * Event Elun - Ammo Recharge Room Blob
@@ -209,6 +205,8 @@ Extra - asset_id: collision_camera_003
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_PlasmaBeam
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Plasma Beam Room (Lower)
+      Trivial
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -254,17 +252,17 @@ Extra - asset_id: collision_camera_003
   > Tile Group (POWERBEAM)
       Morph Ball
 
-> Dock to Purple Drapes; Heals? False
-  * Morph Ball Tunnel to Purple Drapes/Dock to Ammo Refill Room
+> Dock from Purple Drapes; Heals? False
+  * Blocked Passage to Purple Drapes/Dock to Ammo Refill Room
   > Door to Plasma Beam Room (Upper)
       After Elun - Ammo Recharge Room Blob
   > Event - Elun - Ammo Recharge Room Blob
       Trivial
 
 > Dock to Bottom Morph Launcher; Heals? False
-  * Morph Ball Tunnel to Bottom Morph Launcher/Dock to Ammo Refill Room
+  * Morph Ball Launcher to Bottom Morph Launcher/Dock to Ammo Refill Room
   > Door to Plasma Beam Room (Lower)
-      Morph Ball
+      Trivial
 
 > Dock to Horizontal Bomb Maze; Heals? False
   * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Ammo Refill Room
@@ -532,7 +530,7 @@ Extra - asset_id: collision_camera_008
       Morph Ball
 
 > Dock to Bottom Morph Launcher; Heals? False
-  * Morph Ball Tunnel to Bottom Morph Launcher/Dock to Fan Room
+  * Morph Ball Launcher to Bottom Morph Launcher/Dock to Fan Room
   > Tile Group (POWERBEAM)
       Morph Ball
 
@@ -848,12 +846,12 @@ Extra - total_boundings: {'x1': 1300.0, 'x2': 9700.0, 'y1': -2700.0, 'y2': -1400
 Extra - polygon: [[9700.0, -1400.0], [7600.0, -1400.0], [7600.0, -2500.0], [3400.0, -2500.0], [3400.0, -1400.0], [1300.0, -1400.0], [1300.0, -2700.0], [9700.0, -2700.0]]
 Extra - asset_id: collision_camera_MBL_B
 > Dock to Fan Room; Heals? False
-  * Morph Ball Tunnel to Fan Room/Dock to Bottom Morph Launcher
+  * Morph Ball Launcher to Fan Room/Dock to Bottom Morph Launcher
   > Dock to Ammo Refill Room
-      Bomb and Morph Ball
+      Trivial
 
 > Dock to Ammo Refill Room; Heals? False
-  * Morph Ball Tunnel to Ammo Refill Room/Dock to Bottom Morph Launcher
+  * Morph Ball Launcher to Ammo Refill Room/Dock to Bottom Morph Launcher
   > Dock to Fan Room
-      Bomb and Morph Ball
+      Trivial
 

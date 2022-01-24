@@ -470,7 +470,7 @@ def create_patcher_file(description: LayoutDescription,
     patches = description.all_patches[players_config.player_index]
     rng = Random(description.get_seed_for_player(players_config.player_index))
     area_namers = {index: hint_lib.AreaNamer(default_database.game_description_for(preset.game).world_list)
-                   for index, preset in description.permalink.presets.items()}
+                   for index, preset in enumerate(description.all_presets)}
 
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
 

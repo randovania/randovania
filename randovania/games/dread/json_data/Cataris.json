@@ -816,8 +816,13 @@
                             }
                         },
                         "Dock to Above Z-57 Fight (Tunnel)": {
-                            "type": "template",
-                            "data": "Lay Bomb"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -987,7 +992,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "Above Z-57 Fight",
-                        "node_name": "Dock to Thermal Device 1 Room (Bottom)"
+                        "node_name": "Dock to Thermal Device 1 Room"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -1007,8 +1012,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4461.39,
-                        "y": -6304.1,
+                        "x": 5100.0,
+                        "y": -5400.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -1016,11 +1021,21 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "Above Z-57 Fight",
-                        "node_name": "Dock to Thermal Device 1 Room (Tunnel)"
+                        "node_name": "Dock from Thermal Device 1 Room"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
-                    "connections": {}
+                    "dock_weakness": "Morph Ball Launcher",
+                    "connections": {
+                        "Door to Navigation Room Southeast": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1887,7 +1902,7 @@
                         }
                     }
                 },
-                "Dock to Thermal Device 1 Room (Bottom)": {
+                "Dock to Thermal Device 1 Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1916,12 +1931,12 @@
                         }
                     }
                 },
-                "Dock to Thermal Device 1 Room (Tunnel)": {
+                "Dock from Thermal Device 1 Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 4461.39,
-                        "y": -6304.1,
+                        "x": 3600.0,
+                        "y": -6700.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -1932,7 +1947,7 @@
                         "node_name": "Dock to Above Z-57 Fight (Tunnel)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Blocked Passage",
                     "connections": {
                         "Z-57 Room": {
                             "type": "and",
@@ -1954,7 +1969,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to Thermal Device 1 Room (Bottom)": {
+                        "Dock to Thermal Device 1 Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -6141,6 +6156,58 @@
                     "description": "",
                     "extra": {},
                     "connections": {
+                        "Tiny Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s020_magma:default:breakablemag004",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 100,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Top Ledge": {
                             "type": "and",
                             "data": {
@@ -6643,74 +6710,6 @@
                                             "name": "Heat",
                                             "amount": 50,
                                             "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tiny Alcove": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s020_magma:default:breakablemag004",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 100,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
