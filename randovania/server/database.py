@@ -77,6 +77,10 @@ class GameSession(BaseModel):
     generation_in_progress = peewee.ForeignKeyField(User, null=True)
     dev_features = peewee.CharField(null=True)
 
+    @classmethod
+    def get_by_id(cls, pk) -> "GameSession":
+        return cls.get(cls._meta.primary_key == pk)
+
     @property
     def all_presets(self) -> List[Preset]:
         return [
@@ -158,7 +162,7 @@ class GameSession(BaseModel):
         game_details = None
         if description is not None:
             game_details = {
-                "spoiler": description.permalink.spoiler,
+                "spoiler": description.has_spoiler,
                 "word_hash": description.shareable_word_hash,
                 "seed_hash": description.shareable_hash,
                 "permalink": description.permalink.as_base64_str,

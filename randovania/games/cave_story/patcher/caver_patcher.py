@@ -162,9 +162,6 @@ class CaverPatcher(Patcher):
         starting_script += "<MP+0032<MP+0033<MP+0036"
 
         # Starting Items
-        if len(patches.starting_items):
-            starting_script += "\r\n<PRI<MSG<TUR"
-
         equip_num = 0
         items_extra = ""
         trades = {
@@ -179,6 +176,7 @@ class CaverPatcher(Patcher):
         }
         life = 0
 
+        starting_msg = ""
         missile = next((res for res in patches.starting_items.keys() if res.short_name in {"missile", "tempMissile"}),
                        None)
         for item in patches.starting_items.keys():
@@ -205,7 +203,7 @@ class CaverPatcher(Patcher):
                     5: "all five =Puppies="
                 }
 
-                starting_script += (
+                starting_msg += (
                     f"<IT+0014<GIT1014{flags}<SNP0136:0000:0000:0000\r\n"
                     f"Got {words[num_puppies]}!<WAI0010<NOD\r\n<CLR"
                 )
@@ -232,45 +230,45 @@ class CaverPatcher(Patcher):
             flag = num_to_tsc_value(item.extra["flag"]).decode('utf-8')
             text = item.extra["text"]
 
-            starting_script += f"<GIT{git}{plus}<FL+{flag}\r\n{text}<WAI0010<NOD\r\n<CLR"
+            starting_msg += f"<GIT{git}{plus}<FL+{flag}\r\n{text}<WAI0010<NOD\r\n<CLR"
 
             if trades[trade] >= 2:
                 # we do this mid-loop, even though it duplicates them for the keys.
                 # otherwise, starting with *everything* can cause some items to be
                 # missed due to inventory overflow
                 if trade == "keys":
-                    starting_script += "<IT-0001<IT-0003<IT-0009<IT-0010<IT-0017<IT-0025"
+                    starting_msg += "<IT-0001<IT-0003<IT-0009<IT-0010<IT-0017<IT-0025"
                 if trade == "medals":
-                    starting_script += "<IT-0031<IT-0036"
+                    starting_msg += "<IT-0031<IT-0036"
                 if trade == "lewd":
-                    starting_script += "<IT-0035<IT-0037"
+                    starting_msg += "<IT-0035<IT-0037"
                 if trade == "sprinklers":
-                    starting_script += "<IT-0028<IT-0029"
+                    starting_msg += "<IT-0028<IT-0029"
                 if trade == "mushrooms":
-                    starting_script += "<IT-0033<IT-0034"
+                    starting_msg += "<IT-0033<IT-0034"
 
         if len(patches.starting_items):
-            starting_script += items_extra
-            starting_script += f"<EQ+{num_to_tsc_value(equip_num).decode('utf-8')}\r\n"
+            starting_msg += items_extra
 
             if life > 0:
-                starting_script += (
+                starting_msg += (
                     f"<GIT1006Got a =Life Capsule=!<ML+{num_to_tsc_value(life).decode('utf-8')}\r\n"
                     f"Max health increased by\r\n"
                     f"{life}!<WAI0010<NOD\r\n<CLR"
                 )
 
-            starting_script += "<GIT0000\r\n"
+            if starting_msg:
+                starting_msg += "<GIT0000\r\n"
 
             if trades["blade"] >= 2:
-                starting_script += (
+                starting_msg += (
                     "You may trade the =Nemesis=\r\n"
                     "with the =Blade= and vice-versa\r\n"
                     "at the computer in Arthur's House.<WAI0025<NOD<FL+2811\r\n<CLR"
                 )
 
             if trades["fireball"] >= 2:
-                starting_script += (
+                starting_msg += (
                     "You may trade the =Fireball=\r\n"
                     "with the =Snake= and vice-versa\r\n"
                     "at the computer in Arthur's House.<WAI0025<NOD<FL+2802\r\n<CLR"
@@ -278,17 +276,20 @@ class CaverPatcher(Patcher):
 
             # Consolidation items
             if trades["keys"] >= 2:
-                starting_script += "<IT+0040"
+                starting_msg += "<IT+0040"
             if trades["medals"] >= 2:
-                starting_script += "<IT+0041"
+                starting_msg += "<IT+0041"
             if trades["lewd"] >= 2:
-                starting_script += "<IT+0042"
+                starting_msg += "<IT+0042"
             if trades["sprinklers"] >= 2:
-                starting_script += "<IT+0043"
+                starting_msg += "<IT+0043"
             if trades["mushrooms"] >= 2:
-                starting_script += "<IT+0044"
+                starting_msg += "<IT+0044"
 
-            starting_script += "<CLO"
+        if starting_msg:
+            starting_script += f"\r\n<PRI<MSG<TUR{starting_msg}<CLO"
+        
+        starting_script += f"<EQ+{num_to_tsc_value(equip_num).decode('utf-8')}\r\n"
 
         # Starting HP
         if configuration.starting_hp != 3 or life > 0:
@@ -302,16 +303,26 @@ class CaverPatcher(Patcher):
             # flags set during first cave in normal gameplay
             starting_script += "<FL+0301<FL+0302<FL+1641<FL+1642<FL+0320<FL+0321"
             waterway = {"Waterway", "Waterway Cabin", "Main Artery"}
-            if patches.starting_location.world_name == "Labyrinth" and patches.starting_location.area_name not in waterway:
+            world_name, area_name = patches.starting_location.as_tuple
+            if world_name == "Labyrinth" and area_name not in waterway:
                 # started near camp; disable camp collision
                 starting_script += "<FL+6202"
-            elif (
-                    patches.starting_location.world_name != "Mimiga Village" and patches.starting_location.area_name not in waterway) or patches.starting_location.area_name == "Arthur's House":
+            elif (world_name != "Mimiga Village" and area_name not in waterway) or area_name == "Arthur's House":
                 # started outside mimiga village
                 starting_script += "<FL+6201"
 
-        starting_script += game_description.world_list.area_by_area_location(patches.starting_location).extra[
-            "starting_script"]
+        tra = game_description.world_list.area_by_area_location(patches.starting_location).extra["starting_script"]
+        starting_script += tra
+
+        # Softlock debug cat warps
+        softlock_warps = {
+            mapname: area.extra["softlock_warp"]
+            for area in game_description.world_list.all_areas
+            if area.extra.get("softlock_warp") is not None
+            for mapname in area.extra.get("softlock_maps", [area.extra["map_name"]])
+        }
+        for mapname, event in softlock_warps.items():
+            maps[mapname]["pickups"][event] = tra
 
         maps["Start"]["pickups"]["0201"] = starting_script
 

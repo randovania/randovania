@@ -23,6 +23,7 @@ from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout import preset_describer
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
@@ -305,20 +306,17 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         preset = self._current_preset_data
         num_players = self.window.num_players_spin_box.value()
 
-        self.generate_seed_from_permalink(Permalink(
+        self.generate_seed_from_permalink(Permalink.from_parameters(GeneratorParameters(
             seed_number=random.randint(0, 2 ** 31),
             spoiler=spoiler,
-            presets={
-                i: preset.get_preset()
-                for i in range(num_players)
-            },
-        ), retries=retries)
+            presets=[preset.get_preset()] * num_players,
+        )), retries=retries)
 
     def generate_seed_from_permalink(self, permalink: Permalink, retries: Optional[int] = None):
         def work(progress_update: ProgressUpdateCallable):
             try:
                 layout = simplified_patcher.generate_layout(progress_update=progress_update,
-                                                            permalink=permalink,
+                                                            parameters=permalink.parameters,
                                                             options=self._options,
                                                             retries=retries)
                 progress_update(f"Success! (Seed hash: {layout.shareable_hash})", 1)

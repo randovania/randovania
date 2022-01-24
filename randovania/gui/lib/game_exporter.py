@@ -39,7 +39,7 @@ async def export_game(
         patcher.patch_game(input_file, output_file, patch_data, internal_copies_path,
                            progress_update=progress_update)
 
-        if auto_save_spoiler and layout_for_spoiler is not None and layout_for_spoiler.permalink.spoiler:
+        if auto_save_spoiler and layout_for_spoiler is not None and layout_for_spoiler.has_spoiler:
             layout_for_spoiler.save_to_file(output_file.with_suffix(f".{LayoutDescription.file_extension()}"))
 
         progress_update(f"Finished!", 1)

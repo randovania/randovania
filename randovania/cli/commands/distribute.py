@@ -10,6 +10,7 @@ from randovania.resolver import debug
 
 def distribute_command_logic(args):
     from randovania.layout.permalink import Permalink
+    from randovania.layout.generator_parameters import GeneratorParameters
     from randovania.generator import generator
 
     async def _create_permalink(args_) -> Permalink:
@@ -18,10 +19,12 @@ def distribute_command_logic(args):
         preset_manager = PresetManager(None)
         preset = preset_manager.included_preset_with(RandovaniaGame(args_.game), args_.preset_name).get_preset()
 
-        return Permalink(
-            args_.seed_number,
-            spoiler=True,
-            presets={i: preset for i in range(args_.player_count)},
+        return Permalink.from_parameters(
+            GeneratorParameters(
+                args_.seed_number,
+                spoiler=True,
+                presets=[preset] * args_.player_count,
+            ),
         )
 
     def status_update(s):
@@ -31,10 +34,10 @@ def distribute_command_logic(args):
     if args.permalink is not None:
         permalink = Permalink.from_str(args.permalink)
     else:
-        permalink = asyncio.run(_create_permalink(args))
+        permalink: Permalink = asyncio.run(_create_permalink(args))
         print(f"Permalink: {permalink.as_base64_str}")
 
-    if permalink.spoiler:
+    if permalink.parameters.spoiler:
         debug.set_level(args.debug)
 
     extra_args = {}
@@ -43,7 +46,8 @@ def distribute_command_logic(args):
 
     before = time.perf_counter()
     layout_description = asyncio.run(
-        generator.generate_and_validate_description(permalink=permalink, status_update=status_update,
+        generator.generate_and_validate_description(generator_params=permalink.parameters,
+                                                    status_update=status_update,
                                                     validate_after_generation=args.validate,
                                                     timeout=None, **extra_args))
     after = time.perf_counter()

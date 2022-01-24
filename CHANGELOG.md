@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.3.0] - Unreleased
 
-- **Major** - Added: Cave Story has been added as an Experimental Game.
+- **Major** - Added: Cave Story has been added with full single-player support.
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
 This feature comes with plenty of quality of life functionality for editing the database. 
 - Added: A new tab has been added to the preset editor, Generation Settings, consolidating various settings such as minimal logic, multi-pickup placement, dangerous actions, etc.
@@ -19,6 +19,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Items now have tooltips in the Auto-Tracker.
 - Added: One joke hint.
 - Added: Descriptions for Minimal Logic for each game, with a better definition of what Minimal Logic is.
+- Added: Randovania is now able to identify for what version of Randovania a given permalink is, if they're similar enough versions.
+- Added: Permalinks now contain the seed hash, so Randovania can detect if there's a hash mismatch when importing.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
 - Changed: Editing connections in the Data Editor now has an easier to use selector for non-item resources.
 - Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.

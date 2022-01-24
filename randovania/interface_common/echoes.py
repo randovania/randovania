@@ -6,7 +6,7 @@ from typing import Callable, Optional
 
 from randovania.generator import generator
 from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.permalink import Permalink
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.resolver import debug
 
 
@@ -22,7 +22,7 @@ def _generate_layout_worker(output_pipe: Connection,
     return asyncio.run(generator.generate_and_validate_description(status_update=status_update, **extra_args))
 
 
-def generate_description(permalink: Permalink,
+def generate_description(parameters: GeneratorParameters,
                          status_update: Callable[[str], None],
                          validate_after_generation: bool,
                          timeout_during_generation: bool,
@@ -31,7 +31,7 @@ def generate_description(permalink: Permalink,
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 
     debug_level = debug.debug_level()
-    if not permalink.spoiler:
+    if not parameters.spoiler:
         debug_level = 0
 
     def on_done(_):
@@ -39,7 +39,7 @@ def generate_description(permalink: Permalink,
 
     with ProcessPoolExecutor(max_workers=1) as executor:
         extra_args = {
-            "permalink": permalink,
+            "generator_params": parameters,
             "validate_after_generation": validate_after_generation,
         }
         if not timeout_during_generation:
