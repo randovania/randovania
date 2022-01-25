@@ -508,10 +508,24 @@
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
                         "Door to Chozo Soldier Arena": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -570,7 +584,7 @@
                         "Tile Group (BOMB) 1": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: Wall Jump",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
@@ -579,6 +593,31 @@
                                             "name": "Morph",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -697,6 +736,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Event - Elun - Ammo Recharge Room Blob": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Ammo Recharge": {
@@ -1056,11 +1104,8 @@
                             }
                         },
                         "Event - Elun - Ammo Recharge Room Blob": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Shoot Beam"
                         }
                     }
                 },
@@ -1276,7 +1321,15 @@
                         "start_point_actor_name": "SP_Checkpoint_Dead_ChozoWarriorX",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Spider Magnet Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Event - Chozo Soldier Fight": {
                     "node_type": "event",
@@ -1530,13 +1583,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1663,13 +1709,6 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (Plasma Beam)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Ammo Refill Room": {
                             "type": "and",
                             "data": {
@@ -1760,13 +1799,6 @@
                                     }
                                 ]
                             }
-                        },
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
@@ -1798,20 +1830,70 @@
                         "Door to Chozo Soldier Arena": {
                             "type": "and",
                             "data": {
-                                "comment": "TODO: Add wall jump trick or item requirement",
+                                "comment": null,
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         },
                         "Tile Group (BOMB)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1857,6 +1939,15 @@
                         ]
                     },
                     "connections": {
+                        "Dock to Gyroscope Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Dock to Vertical Bomb Maze": {
                             "type": "and",
                             "data": {
@@ -2138,33 +2229,14 @@
                         ]
                     },
                     "connections": {
-                        "Door to Gyroscope Room": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
-                        "Pickup (Missile Tank)": {
+                        "Tile Group (POWERBEAM)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2280,7 +2352,7 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Pickup (item_powerbombtank_000)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2296,21 +2368,13 @@
                     "pickup_index": 116,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (BOMB) 4": {
-                            "type": "or",
+                        "Grapple Block Alcove": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2330,23 +2394,6 @@
                     },
                     "event_name": "s060_quarantine:default:grapplepulloff1x2_000",
                     "connections": {
-                        "Tile Group (BOMB) 4": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Dock to Spider Magnet Room": {
                             "type": "and",
                             "data": {
@@ -2362,6 +2409,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Grapple Block Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2421,10 +2475,12 @@
                     },
                     "connections": {
                         "Tile Group (BOMB) 1": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2446,7 +2502,17 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Horizontal Bomb Maze (Lower)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (POWERBOMB) 1": {
                     "node_type": "configurable_node",
@@ -2520,6 +2586,15 @@
                         ]
                     },
                     "connections": {
+                        "Tile Group (WEIGHT)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Tile Group (POWERBOMB) 1": {
                             "type": "or",
                             "data": {
@@ -2555,23 +2630,6 @@
                             }
                         },
                         "Tile Group (POWERBEAM)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to Horizontal Bomb Maze (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2680,10 +2738,12 @@
                             }
                         },
                         "Tile Group (BOMB) 1": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Tile Group (BOMB) 2": {
@@ -2831,49 +2891,6 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_powerbombtank_000)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Breakable (grapplepulloff1x2_000)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Tile Group (BOMB) 3": {
                             "type": "or",
                             "data": {
@@ -2891,30 +2908,13 @@
                                 ]
                             }
                         },
-                        "Dock to Spider Magnet Room": {
-                            "type": "and",
+                        "Grapple Block Alcove": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3023,7 +3023,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Tile Group (BOMB) 4": {
+                        "Grapple Block Alcove": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3087,6 +3087,72 @@
                             }
                         }
                     }
+                },
+                "Grapple Block Alcove": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8000.0,
+                        "y": 570.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Breakable (grapplepulloff1x2_000)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 4": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Dock to Spider Magnet Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s060_quarantine:default:grapplepulloff1x2_000",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3137,21 +3203,13 @@
                     "pickup_index": 118,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (BOMB) 4": {
-                            "type": "or",
+                        "Tile Group (WEIGHT) 3": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Dock to Vertical Bomb Maze (Upper)": {
@@ -3181,21 +3239,13 @@
                         ]
                     },
                     "connections": {
-                        "Tile Group (BOMB) 3": {
-                            "type": "or",
+                        "Tile Group (WEIGHT) 2": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Dock to Ammo Refill Room": {
@@ -3234,7 +3284,17 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Dock to Ammo Refill Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (WEIGHT) 2": {
                     "node_type": "generic",
@@ -3253,7 +3313,17 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 2": {
                     "node_type": "configurable_node",
@@ -3273,24 +3343,16 @@
                         ]
                     },
                     "connections": {
-                        "Tile Group (BOMB) 3": {
-                            "type": "or",
+                        "Tile Group (WEIGHT) 1": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
-                        "Dock to Ammo Refill Room": {
+                        "Tile Group (BOMB) 3": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3380,7 +3442,17 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tile Group (BOMB) 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
                 },
                 "Tile Group (BOMB) 4": {
                     "node_type": "configurable_node",
