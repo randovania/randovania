@@ -85,10 +85,10 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 * Room data collected by Dyceron and [KirbymastaH](https://www.twitch.tv/kirbymastah).
 
 ### Super Metroid
-* Game Patching and Logic Database by [SolventMercury](https://github.com/SolventMercury)
-* Custom Item PLMs patch by [Kazuto](https://github.com/Kazuto88)
-* Skip Intro Saves patch by [PHOSPHOTiDYL](https://metroidconstruction.com/resource.php?id=265)
-* Other individual patches by [Total](https://github.com/tewtal), Foosda, Leodox, and others
+* Game Patching and Logic Database by [SolventMercury](https://github.com/SolventMercury).
+* Custom Item PLMs patch by [Kazuto](https://github.com/Kazuto88).
+* Skip Intro Saves patch by [PHOSPHOTiDYL](https://metroidconstruction.com/resource.php?id=265).
+* Other individual patches by [Total](https://github.com/tewtal), Foosda, Leodox, and others.
 
 ### Cave Story
 * Patcher and logic written by [duncathan_salt](https://twitter.com/duncathan_salt).
