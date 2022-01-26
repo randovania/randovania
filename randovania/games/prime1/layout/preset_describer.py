@@ -58,6 +58,9 @@ def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str
                 "Items Every Room": configuration.items_every_room,
             },
             {
+                "Spring Ball": configuration.spring_ball,
+            },
+            {
                 cutscene_removal: cutscene_removal is not None,
             }
         ],
