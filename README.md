@@ -149,4 +149,4 @@ Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 - Unfamiliar with a term? Check the [glossary](docs/GLOSSARY.md).
 - Adding a new game? Check the [dedicated guide](docs/NEW_GAME.md).
 - Changing a data format? Check the [migrations documentation](docs/MIGRATIONS.md).
-- Working with the logic database? Check the [guide](https://github.com/SolventMercury/randovania/blob/main/docs/DATABASE_FORMAT.md)
+- Working with the logic database? Check the [guide](https://github.com/SolventMercury/randovania/blob/main/docs/DATABASE_FORMAT.md).
