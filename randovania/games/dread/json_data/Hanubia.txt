@@ -75,21 +75,19 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Breakable (grapplepulloff1x2_000)
+  > Event - Breakable (Pull Grapple Block)
       Grapple Beam
   > Tile Group (BOMB) 1
       Trivial
   > Tile Group (SCREWATTACK) 2
       Morph Ball and After Hanubia - grapplepulloff1x2_000
 
-> Pickup (item_missiletank); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 136; Major Location? False
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (SCREWATTACK) 1
+  > Missile Tank Alcove
       Trivial
-  > Tile Group (BOMB) 2
-      Morph Ball
 
 > Dock to collision_camera_009 (H); Heals? False
   * Morph Ball Tunnel to collision_camera_009 (H)/Dock to Ferenia Shortcut
@@ -98,7 +96,7 @@ Extra - asset_id: collision_camera_002
   > Tile Group (BOMB) 4
       Trivial
 
-> Event - Breakable (grapplepulloff1x2_000); Heals? False
+> Event - Breakable (Pull Grapple Block); Heals? False
   * Event Hanubia - grapplepulloff1x2_000
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
@@ -130,23 +128,19 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: breakabletilegroup_041
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
-  > Pickup (item_missiletank)
-      Morph Ball
   > Tile Group (POWERBEAM)
       Morph Ball
-  > Tile Group (BOMB) 2
-      Morph Ball
+  > Missile Tank Alcove
+      Trivial
 
 > Tile Group (BOMB) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_042
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
-  > Pickup (item_missiletank)
-      Morph Ball
-  > Tile Group (SCREWATTACK) 1
-      Morph Ball
   > Tile Group (BOMB) 4
+      Morph Ball
+  > Missile Tank Alcove
       Morph Ball
 
 > Tile Group (SCREWATTACK) 2; Heals? False
@@ -176,6 +170,14 @@ Extra - asset_id: collision_camera_002
   * Extra - tile_types: ('BOMB',)
   > Dock to collision_camera_009 (H)
       Morph Ball
+  > Tile Group (BOMB) 2
+      Morph Ball
+
+> Missile Tank Alcove; Heals? False
+  > Pickup (Missile Tank)
+      Trivial
+  > Tile Group (SCREWATTACK) 1
+      Trivial
   > Tile Group (BOMB) 2
       Morph Ball
 
@@ -256,7 +258,7 @@ Extra - asset_id: collision_camera_004
   * Extra - right_shield_def: None
   > Door to Transport to Ghavoran
       Trivial
-  > Event - Breakable (block_pbtube)
+  > Event - Breakable (Glass Tube)
       Lay Power Bomb
   > Ammo Recharge
       Trivial
@@ -274,7 +276,7 @@ Extra - asset_id: collision_camera_004
   > Next to Hyper Block
       Trivial
 
-> Event - Breakable (block_pbtube); Heals? False
+> Event - Breakable (Glass Tube); Heals? False
   * Event Hanubia - block_pbtube
   * Extra - actor_name: block_pbtube
   * Extra - actor_def: actordef:actors/props/block_pbtube_001/charclasses/block_pbtube_001.bmsad
@@ -290,10 +292,12 @@ Extra - asset_id: collision_camera_004
 
 > Dock to Escape Room 3; Heals? False
   * Open Passage to Escape Room 3/Dock to Entrance Tall Room
-  > Event - Breakable (block_pbtube)
+  > Event - Breakable (Glass Tube)
       Space Jump and After Escape Sequence and Lay Bomb
   > Under Tile Groups at room top
-      Space Jump and Speed Booster and After Escape Sequence
+      All of the following:
+          After Escape Sequence
+          Space Jump or Speed Booster
 
 > Under Tile Groups at room top; Heals? False
   > Tile Group (SCREWATTACK)
@@ -347,7 +351,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: breakabletilegroup_031
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SCREWATTACK',)
-  > Event - Breakable (block_pbtube)
+  > Event - Breakable (Glass Tube)
       Lay Power Bomb
   > Next to Hyper Block
       Trivial
@@ -359,7 +363,7 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_name: breakabletilegroup_032
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('SPEEDBOOST',)
-  > Event - Breakable (block_pbtube)
+  > Event - Breakable (Glass Tube)
       Lay Power Bomb
   > Next to Hyper Block
       Trivial
@@ -416,7 +420,7 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Breakable (grapplepulloff1x2_001)
+  > Event - Pull Grapple Block (grapplepulloff1x2_001)
       Grapple Beam
   > Start Point
       Morph Ball and After Hanubia - grapplepulloff1x2_001
@@ -432,14 +436,14 @@ Extra - asset_id: collision_camera_006
   > Start Point
       Trivial
 
-> Pickup (item_missiletank_000); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 134; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tile Group (MISSILE)
       Morph Ball
 
-> Event - Breakable (grapplepulloff1x2_001); Heals? False
+> Event - Pull Grapple Block (grapplepulloff1x2_001); Heals? False
   * Event Hanubia - grapplepulloff1x2_001
   * Extra - actor_name: grapplepulloff1x2_001
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
@@ -471,7 +475,7 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_name: breakabletilegroup_049
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('MISSILE',)
-  > Pickup (item_missiletank_000)
+  > Pickup (Missile Tank)
       Morph Ball
   > Start Point
       Trivial
@@ -520,9 +524,7 @@ Extra - asset_id: collision_camera_008
 > Dock to Entrance Tall Room; Heals? False
   * Open Passage to Entrance Tall Room/Dock to Ship Room
   > Event - Ship
-      Any of the following:
-          Use Spin Boost
-          Infinite Bomb Jump (Beginner) and Lay Bomb
+      Simple IBJ or Use Spin Boost
 
 ----------------
 collision_camera_009 (H)
@@ -552,7 +554,7 @@ Extra - asset_id: collision_camera_009
   > Start Point 1
       Trivial
 
-> Pickup (item_powerbombtank_000); Heals? False
+> Pickup (Power Bomb Tank); Heals? False
   * Pickup 135; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
@@ -588,7 +590,7 @@ Extra - asset_id: collision_camera_009
   > Start Point 1
       Morph Ball and After Hanubia - grapplepulloff1x2
 
-> Event - Breakable (grapplepulloff1x2); Heals? False
+> Event - Pull Grapple Block (grapplepulloff1x2); Heals? False
   * Event Hanubia - grapplepulloff1x2
   * Extra - actor_name: grapplepulloff1x2
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
@@ -602,7 +604,7 @@ Extra - asset_id: collision_camera_009
       Trivial
   > Dock to Ferenia Shortcut
       Morph Ball and After Hanubia - grapplepulloff1x2
-  > Event - Breakable (grapplepulloff1x2)
+  > Event - Pull Grapple Block (grapplepulloff1x2)
       Grapple Beam
   > Tile Group (BOMB)
       Morph Ball
@@ -630,7 +632,7 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: breakabletilegroup_046
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB', 'SPEEDBOOST')
-  > Pickup (item_powerbombtank_000)
+  > Pickup (Power Bomb Tank)
       Morph Ball
   > Door from collision_camera_010 (H)
       Trivial
@@ -658,9 +660,7 @@ Extra - asset_id: collision_camera_010
   > Door from collision_camera_009 (H)
       Before Escape Sequence
   > Tile Group (BOMB)
-      Any of the following:
-          Use Spin Boost
-          Infinite Bomb Jump (Beginner) and Lay Bomb
+      Simple IBJ or Use Spin Boost
 
 > Dock to E.M.M.I. Zone Entrance (Top); Heals? False
   * EMMI Door to E.M.M.I. Zone Entrance/Dock to collision_camera_010 (H) (dooremmy_001)
@@ -786,15 +786,13 @@ Extra - asset_id: collision_camera_012
 > Dock to E.M.M.I. Zone Entrance; Heals? False
   * Morph Ball Tunnel to E.M.M.I. Zone Entrance/Dock to Central Unit Room
   > Start Point
-      Trivial
+      Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: centralunitmagmacontroller_000
   * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
   > Dock to collision_camera_013 (H)
-      Any of the following:
-          Use Spin Boost
-          Infinite Bomb Jump (Beginner) and Lay Bomb
+      Simple IBJ or Use Spin Boost
   > Dock to E.M.M.I. Zone Entrance
       Any of the following:
           Space Jump or Simple IBJ
@@ -809,8 +807,10 @@ Extra - asset_id: collision_camera_013
   * EMMI Door to collision_camera_015 (H)/Dock to collision_camera_013 (H) (dooremmy_002)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Event - Breakable (block_pbtube_2)
+  > Event - Break PB Tube (block_pbtube_2)
       Lay Power Bomb
+  > Dock to Central Unit Room
+      After Hanubia - block_pbtube_2
 
 > Dock to collision_camera_015 (H) (dooremmy_003); Heals? False
   * EMMI Door to collision_camera_015 (H)/Dock to collision_camera_013 (H) (dooremmy_003)
@@ -819,7 +819,7 @@ Extra - asset_id: collision_camera_013
   > Dock to Red E.M.M.I Arena
       Trivial
 
-> Event - Breakable (block_pbtube_2); Heals? False
+> Event - Break PB Tube (block_pbtube_2); Heals? False
   * Event Hanubia - block_pbtube_2
   * Extra - actor_name: block_pbtube_2
   * Extra - actor_def: actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad
@@ -830,7 +830,9 @@ Extra - asset_id: collision_camera_013
 
 > Dock to Central Unit Room; Heals? False
   * Morph Ball Tunnel to Central Unit Room/Dock to collision_camera_013 (H)
-  > Event - Breakable (block_pbtube_2)
+  > Dock to collision_camera_015 (H) (dooremmy_002)
+      After Hanubia - block_pbtube_2
+  > Event - Break PB Tube (block_pbtube_2)
       Lay Power Bomb
 
 > Dock to Red E.M.M.I Arena; Heals? False
@@ -941,6 +943,8 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: breakabletilegroup_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
+  > Dock to collision_camera_013 (H) (dooremmy_003)
+      Trivial
   > Dock to Escape Room 2
       Trivial
   > Tile Group (POWERBOMB) 1
@@ -977,7 +981,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
   > Tile Group (POWERBOMB) 1
-      Trivial
+      Simple IBJ or Use Spin Boost
   > Tile Group (POWERBOMB) 3
       Trivial
 
@@ -1069,7 +1073,9 @@ Extra - asset_id: collision_camera_016
   > Tile Group (SCREWATTACK) 4
       Space Jump
   > Tile Group (SCREWATTACK) 6
-      Use Spin Boost
+      Any of the following:
+          Use Spin Boost
+          Walljump (Beginner) and Simple IBJ
 
 > Tile Group (SCREWATTACK) 6; Heals? False
   * Configurable Node
@@ -1252,7 +1258,7 @@ Extra - asset_id: collision_camera_020
   * Extra - start_point_actor_name: SP_Checkpoint_Escape
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Tile Group (POWERBOMB)
-      Space Jump or Speed Booster
+      Space Jump or Speed Booster or Simple IBJ
 
 > Raven Beak X Checkpoint; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_CommanderX
