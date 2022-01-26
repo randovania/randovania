@@ -7956,12 +7956,28 @@
                                                     "data": "Shoot Charge Beam"
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                },
+                                                {
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Refill missile ammo by shooting beam",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Beam"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Missiles",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -7983,6 +7999,10 @@
                                                                 "data": {
                                                                     "comment": null,
                                                                     "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Lay Bomb"
+                                                                        },
                                                                         {
                                                                             "type": "and",
                                                                             "data": {
