@@ -10,6 +10,7 @@ Welcome to Randovania, a randomizer platform for a multitude of games.
  - Metroid Prime
  - Metroid Prime 2: Echoes
  - Cave Story
+ - Super Metroid
 
 <!-- End SUPPORTED -->
 
@@ -18,7 +19,6 @@ Welcome to Randovania, a randomizer platform for a multitude of games.
 ### Experimental Games
  - Metroid Prime 3: Corruption
  - Metroid Dread
- - Super Metroid
 
 <!-- End EXPERIMENTAL -->
 
@@ -72,7 +72,7 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 
 ### Metroid Prime 1
 * Game patching via [randomprime](https://github.com/aprilwade/randomprime) from April Wade, with contributions from [UltiNaruto](https://github.com/UltiNaruto), BashPrime and toasterparty.
-* Room data collected by UltiNaruto, [EthanArmbrust](https://github.com/EthanArmbrust) and [samuelroy21](https://github.com/samuelroy21).
+* Room data collected by UltiNaruto, [EthanArmbrust](https://github.com/EthanArmbrust) and [SolventMercury](https://github.com/SolventMercury).
 
 ### Metroid Prime 2: Echoes
 * Game patching written by [Claris](https://www.twitch.tv/claris).
@@ -83,6 +83,12 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 ### Metroid Prime 3: Corruption
 * Game patching written by gollop.
 * Room data collected by Dyceron and [KirbymastaH](https://www.twitch.tv/kirbymastah).
+
+### Super Metroid
+* Game Patching and Logic Database by [SolventMercury](https://github.com/SolventMercury)
+* Custom Item PLMs patch by [Kazuto](https://github.com/Kazuto88)
+* Skip Intro Saves patch by [PHOSPHOTiDYL](https://metroidconstruction.com/resource.php?id=265)
+* Other individual patches by [Total](https://github.com/tewtal), Foosda, Leodox, and others
 
 ### Cave Story
 * Patcher and logic written by [duncathan_salt](https://twitter.com/duncathan_salt).
@@ -143,3 +149,4 @@ Suggested IDE: [PyCharm Community](https://www.jetbrains.com/pycharm/download/)
 - Unfamiliar with a term? Check the [glossary](docs/GLOSSARY.md).
 - Adding a new game? Check the [dedicated guide](docs/NEW_GAME.md).
 - Changing a data format? Check the [migrations documentation](docs/MIGRATIONS.md).
+- Working with the logic database? Check the [guide](https://github.com/SolventMercury/randovania/blob/main/docs/DATABASE_FORMAT.md)
