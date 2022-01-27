@@ -1,3 +1,4 @@
+import io
 from pathlib import Path
 from unittest.mock import MagicMock, AsyncMock, ANY, call
 
@@ -118,7 +119,10 @@ async def test_on_database_area_selected(echoes_game_description, mocker):
         for node in area.nodes
     ])
     dot.render.assert_called_once_with(format="png", cleanup=True)
-    mock_file.assert_called_once_with(Path("bar"))
+    mock_file.assert_called_once_with(ANY, filename=f"{area.name}_graph.png")
+    v = mock_file.call_args[0][0]
+    assert isinstance(v, io.BytesIO)
+    assert v.getvalue() == b"1234"
     assert not Path("bar").is_file()
 
 
