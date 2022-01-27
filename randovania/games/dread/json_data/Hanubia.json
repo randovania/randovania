@@ -294,7 +294,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Event - Breakable (grapplepulloff1x2_000)": {
+                        "Event - Breakable (Pull Grapple Block)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -338,7 +338,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -354,20 +354,11 @@
                     "pickup_index": 136,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (SCREWATTACK) 1": {
+                        "Missile Tank Alcove": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Tile Group (BOMB) 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -406,7 +397,7 @@
                         }
                     }
                 },
-                "Event - Breakable (grapplepulloff1x2_000)": {
+                "Event - Breakable (Pull Grapple Block)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -519,15 +510,6 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Tile Group (POWERBEAM)": {
                             "type": "resource",
                             "data": {
@@ -537,13 +519,11 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (BOMB) 2": {
-                            "type": "resource",
+                        "Missile Tank Alcove": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -565,25 +545,16 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (SCREWATTACK) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Tile Group (BOMB) 4": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Missile Tank Alcove": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -707,6 +678,42 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Missile Tank Alcove": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1231.574701516618,
+                        "y": -2261.0196837689577,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Tile Group (BOMB) 2": {
@@ -993,7 +1000,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Breakable (block_pbtube)": {
+                        "Event - Breakable (Glass Tube)": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
@@ -1047,7 +1054,7 @@
                         }
                     }
                 },
-                "Event - Breakable (block_pbtube)": {
+                "Event - Breakable (Glass Tube)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1113,7 +1120,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Event - Breakable (block_pbtube)": {
+                        "Event - Breakable (Glass Tube)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1158,21 +1165,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1429,7 +1444,7 @@
                         ]
                     },
                     "connections": {
-                        "Event - Breakable (block_pbtube)": {
+                        "Event - Breakable (Glass Tube)": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
@@ -1468,7 +1483,7 @@
                         ]
                     },
                     "connections": {
-                        "Event - Breakable (block_pbtube)": {
+                        "Event - Breakable (Glass Tube)": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         },
@@ -1679,7 +1694,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Event - Breakable (grapplepulloff1x2_001)": {
+                        "Event - Pull Grapple Block (grapplepulloff1x2_001)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1750,7 +1765,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_000)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1777,7 +1792,7 @@
                         }
                     }
                 },
-                "Event - Breakable (grapplepulloff1x2_001)": {
+                "Event - Pull Grapple Block (grapplepulloff1x2_001)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -1908,7 +1923,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_000)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2127,25 +2142,8 @@
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -2261,7 +2259,7 @@
                         }
                     }
                 },
-                "Pickup (item_powerbombtank_000)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2409,7 +2407,7 @@
                         }
                     }
                 },
-                "Event - Breakable (grapplepulloff1x2)": {
+                "Event - Pull Grapple Block (grapplepulloff1x2)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -2480,7 +2478,7 @@
                                 ]
                             }
                         },
-                        "Event - Breakable (grapplepulloff1x2)": {
+                        "Event - Pull Grapple Block (grapplepulloff1x2)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2578,7 +2576,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_powerbombtank_000)": {
+                        "Pickup (Power Bomb Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2703,25 +2701,8 @@
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -3236,10 +3217,12 @@
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Start Point": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -3274,16 +3257,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "data": "Simple IBJ"
                                                 }
                                             ]
                                         }
@@ -3402,9 +3376,18 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Event - Breakable (block_pbtube_2)": {
+                        "Event - Break PB Tube (block_pbtube_2)": {
                             "type": "template",
                             "data": "Lay Power Bomb"
+                        },
+                        "Dock to Central Unit Room": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s080_shipyard:default:block_pbtube_2",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -3438,7 +3421,7 @@
                         }
                     }
                 },
-                "Event - Breakable (block_pbtube_2)": {
+                "Event - Break PB Tube (block_pbtube_2)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -3487,7 +3470,16 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Event - Breakable (block_pbtube_2)": {
+                        "Dock to collision_camera_015 (H) (dooremmy_002)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s080_shipyard:default:block_pbtube_2",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Break PB Tube (block_pbtube_2)": {
                             "type": "template",
                             "data": "Lay Power Bomb"
                         }
@@ -3948,6 +3940,13 @@
                         ]
                     },
                     "connections": {
+                        "Dock to collision_camera_013 (H) (dooremmy_003)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Dock to Escape Room 2": {
                             "type": "and",
                             "data": {
@@ -4128,10 +4127,19 @@
                     },
                     "connections": {
                         "Tile Group (POWERBOMB) 1": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    }
+                                ]
                             }
                         },
                         "Tile Group (POWERBOMB) 3": {
@@ -4434,8 +4442,37 @@
                             }
                         },
                         "Tile Group (SCREWATTACK) 6": {
-                            "type": "template",
-                            "data": "Use Spin Boost"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -5154,6 +5191,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }

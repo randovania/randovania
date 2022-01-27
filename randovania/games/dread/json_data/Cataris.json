@@ -13775,11 +13775,8 @@
                     "dock_weakness": "Access Open",
                     "connections": {
                         "Event - Cataris Central Unit": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Destroy Central Unit"
                         }
                     }
                 },
@@ -22588,7 +22585,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Kraid": {
+                        "Before Kraid Fight": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -22870,8 +22867,8 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -15744.22,
-                        "y": -6381.71,
+                        "x": -15000.0,
+                        "y": -5500.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -22883,6 +22880,120 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Before Kraid Fight": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16000.0,
+                        "y": -5500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Event - Kraid": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "Kraid cannon kill. Cross Bombs & Power Bombs do NOT work.",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Requirement for getting to Kraid's mouth in phase 2",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Magnet",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Damage requirements",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Charge Beam"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Shoot Beam required to farm for Missiles",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Beam"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missiles",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }

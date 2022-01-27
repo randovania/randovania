@@ -1042,7 +1042,7 @@ Extra - asset_id: collision_camera_017
 > Dock to Blue EMMI Fight; Heals? False
   * EMMI Door to Blue EMMI Fight/Dock to Central Unit Room
   > Event - Ghavoran Central Unit
-      Trivial
+      Destroy Central Unit
 
 > Event - Ghavoran Central Unit; Heals? False
   * Event Ghavoran - Central Unit
@@ -1987,7 +1987,48 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
   > Event - Golzuna
-      Trivial
+      All of the following:
+          Any of the following:
+              # Requirements for dodging attacks. Not needed if at least beginner combat.
+              Combat (Beginner)
+              All of the following:
+                  All of the following:
+                      # Dodge its slam attack
+                      Can Slide
+                  Any of the following:
+                      # Dodge its zappy attacks
+                      Use Spin Boost
+                      Flash Shift and Walljump (Beginner)
+          Any of the following:
+              # Requirements for killing Golzuna
+              Screw Attack or Shoot Charge Beam
+              Speed Booster and Combat (Advanced)
+              All of the following:
+                  Combat (Intermediate)
+                  Any of the following:
+                      All of the following:
+                          # Minimum: 35 Ice Missiles
+                          Shoot Ice Missile
+                          Any of the following:
+                              Missiles ≥ 40
+                              All of the following:
+                                  # Minimum: 18 Ice Missiles + 1 Shinespark
+                                  Missiles ≥ 20 and Speed Booster
+                      All of the following:
+                          # Minimum: 94 Super Missiles
+                          Shoot Super Missile
+                          Any of the following:
+                              Missiles ≥ 100
+                              All of the following:
+                                  # Minimum: 47 Super Missiles + 1 Shinespark
+                                  Missiles ≥ 50 and Speed Booster
+                      All of the following:
+                          # Minimum: 280 Normal Missiles
+                          Any of the following:
+                              Missiles ≥ 300
+                              All of the following:
+                                  # Minimum: 140 Normal Missiles + 1 Shinespark
+                                  Missiles ≥ 150 and Speed Booster
 
 > Dock to Above Golzuna; Heals? False
   * Morph Ball Tunnel to Above Golzuna/Dock to Golzuna Arena
