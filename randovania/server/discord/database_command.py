@@ -1,11 +1,14 @@
 import functools
+import io
 import logging
 import math
 from pathlib import Path
 from typing import List, Dict, Optional, NamedTuple
 
+import PIL.Image
 import discord
 import graphviz
+from PIL import ImageDraw
 from discord import Embed
 from discord.ext import commands
 from discord_slash import SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle
@@ -14,6 +17,7 @@ from discord_slash.utils import manage_commands, manage_components
 from randovania.game_description import default_database, pretty_print
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.node import NodeLocation, Node
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
@@ -26,7 +30,7 @@ class SplitWorld(NamedTuple):
     areas: List[Area]
 
 
-def render_area_with_graphviz(area: Area) -> Optional[Path]:
+def render_area_with_graphviz(area: Area) -> Optional[io.BytesIO]:
     dot = graphviz.Digraph(comment=area.name)
     for node in area.nodes:
         dot.node(node.name)
@@ -44,10 +48,61 @@ def render_area_with_graphviz(area: Area) -> Optional[Path]:
                 known_edges.add((source.name, target_node.name))
 
     try:
-        return Path(dot.render(format="png", cleanup=True))
+        p = Path(dot.render(format="png", cleanup=True))
     except graphviz.backend.ExecutableNotFound as e:
         logging.info("Unable to render graph for %s: %s", area.name, str(e))
         return None
+
+    try:
+        return io.BytesIO(p.read_bytes())
+    finally:
+        p.unlink()
+
+
+def render_area_with_pillow(area: Area, data_path: Path) -> Optional[io.BytesIO]:
+    image_path = data_path.joinpath("assets", "maps", f"{area.map_name}.png")
+    if not image_path.exists():
+        return None
+
+    with PIL.Image.open(image_path) as im:
+        assert isinstance(im, PIL.Image.Image)
+
+        def location_to_pos(loc: NodeLocation):
+            return loc.x, im.height - loc.y
+
+        draw = ImageDraw.Draw(im)
+
+        def draw_connections_from(source_node: Node):
+            for target_node, requirement in area.connections[source_node].items():
+                source = location_to_pos(source_node.location)
+                target = location_to_pos(target_node.location)
+
+                if sum((a - b) ** 2 for a, b in zip(source, target)) < 4:
+                    continue
+
+                draw.line(source + target, width=2, fill=(255, 255, 255, 255))
+                draw.line(source + target, width=1, fill=(0, 0, 0, 255))
+
+        for node in area.nodes:
+            draw_connections_from(node)
+
+        for node in area.nodes:
+            if node.location is None:
+                return None
+
+            p = location_to_pos(node.location)
+            draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(255, 255, 255, 255), width=5)
+            draw.ellipse((p[0] - 5, p[1] - 5, p[0] + 5, p[1] + 5), fill=(0, 0, 0, 255), width=4)
+            draw.text((p[0] - draw.textlength(node.name) / 2, p[1] + 15), node.name, stroke_width=2,
+                      stroke_fill=(255, 255, 255, 255))
+            draw.text((p[0] - draw.textlength(node.name) / 2, p[1] + 15), node.name, stroke_width=1,
+                      stroke_fill=(0, 0, 0, 255))
+
+        result = io.BytesIO()
+        im.save(result, "PNG")
+
+    result.seek(0)
+    return result
 
 
 async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
@@ -231,9 +286,13 @@ class DatabaseCommandCog(commands.Cog):
 
         files = []
 
-        image_path = render_area_with_graphviz(area)
-        if image_path is not None:
-            files.append(discord.File(image_path))
+        area_image = render_area_with_pillow(area, game.data_path)
+        if area_image is not None:
+            files.append(discord.File(area_image, filename=f"{area.name}_image.png"))
+
+        area_graph = render_area_with_graphviz(area)
+        if area_graph is not None:
+            files.append(discord.File(area_graph, filename=f"{area.name}_graph.png"))
 
         logging.info("Responding to area for %s with %d attachments.", area.name, len(files))
         await ctx.send(
@@ -243,9 +302,6 @@ class DatabaseCommandCog(commands.Cog):
                 action_row,
             ],
         )
-
-        if image_path is not None:
-            image_path.unlink()
 
     async def on_area_node_selection(self, ctx: ComponentContext, game: RandovaniaGame, area: Area):
         db = default_database.game_description_for(game)
