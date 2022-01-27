@@ -126,6 +126,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
 
+        if self.game_description.game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES,
+                                          RandovaniaGame.METROID_PRIME_CORRUPTION}:
+            self.area_view_dock.hide()
+
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
             self.world_selector_box.addItem(name, userData=world)
