@@ -3665,7 +3665,7 @@ Extra - asset_id: collision_camera_051
       Shoot Diffusion or Wave
   > Above Tutorial Blob
       All of the following:
-          Morph Ball and After Cataris - db_reg_mg_021
+          Morph Ball and After Cataris - db_dif_mg_001
           Varia Suit or Heat Damage ≥ 120
 
 > Dock to Kraid Eyedoor Room; Heals? False
@@ -3754,8 +3754,8 @@ Extra - asset_id: collision_camera_052
   > Event - Breakable (db_hdoor_mg_002)
       Shoot Beam
 
-> Dock to collision_camera_053 (C) (1); Heals? False
-  * Not Determined to collision_camera_053 (C)/Dock to collision_camera_052 (C) (1)
+> Door from collision_camera_053 (C); Heals? False
+  * Access Closed to collision_camera_053 (C)/Door to collision_camera_052 (C)
   * Extra - actor_name: doorclosedpower_001
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3775,9 +3775,9 @@ Extra - asset_id: collision_camera_052
   * Extra - right_shield_def: None
   > Dock to Green EMMI Introduction
       Trivial
-  > Dock to collision_camera_053 (C) (1)
+  > Door from collision_camera_053 (C)
       Trivial
-  > Dock to collision_camera_053 (C) (2)
+  > Dock to collision_camera_053 (C)
       Trivial
 
 > Event - Breakable (db_hdoor_mg_002); Heals? False
@@ -3793,8 +3793,8 @@ Extra - asset_id: collision_camera_052
   > Dock to Green EMMI Introduction
       Trivial
 
-> Dock to collision_camera_053 (C) (2); Heals? False
-  * Morph Ball Tunnel to collision_camera_053 (C)/Dock to collision_camera_052 (C) (2)
+> Dock to collision_camera_053 (C); Heals? False
+  * Morph Ball Tunnel to collision_camera_053 (C)/Dock to collision_camera_052 (C)
   > Door to Teleport to Dairon
       Trivial
 
@@ -3803,8 +3803,8 @@ collision_camera_053 (C)
 Extra - total_boundings: {'x1': -4700.0, 'x2': -1600.0, 'y1': -6900.0, 'y2': -3600.0}
 Extra - polygon: [[-1600.0, -3600.0], [-4700.0, -3600.0], [-4700.0, -6900.0], [-1600.0, -6900.0]]
 Extra - asset_id: collision_camera_053
-> Dock to collision_camera_052 (C) (1); Heals? False
-  * Not Determined to collision_camera_052 (C)/Dock to collision_camera_053 (C) (1)
+> Door to collision_camera_052 (C); Heals? False
+  * Wave Beam Door to collision_camera_052 (C)/Door from collision_camera_053 (C)
   * Extra - actor_name: doorclosedpower_001
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3858,7 +3858,7 @@ Extra - asset_id: collision_camera_053
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Dock to collision_camera_052 (C) (1)
+  > Door to collision_camera_052 (C)
       Varia Suit or Heat Damage ≥ 10
   > Above Lava
       All of the following:
@@ -3873,7 +3873,7 @@ Extra - asset_id: collision_camera_053
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (POWERBEAM) 3
       Trivial
-  > Dock to collision_camera_052 (C) (2)
+  > Dock to collision_camera_052 (C)
       Trivial
 
 > Tile Group (POWERBEAM) 3; Heals? False
@@ -3908,9 +3908,9 @@ Extra - asset_id: collision_camera_053
   > Tile Group (POWERBEAM) 3
       Trivial
 
-> Dock to collision_camera_052 (C) (2); Heals? False
-  * Slide Tunnel to collision_camera_052 (C)/Dock to collision_camera_053 (C) (2)
-  > Dock to collision_camera_052 (C) (1)
+> Dock to collision_camera_052 (C); Heals? False
+  * Slide Tunnel to collision_camera_052 (C)/Dock to collision_camera_053 (C)
+  > Door to collision_camera_052 (C)
       All of the following:
           # TODO: After proper blast shield logic is implemented, adjust this. This is a temporary connection.
           Wave Beam
@@ -3920,7 +3920,7 @@ Extra - asset_id: collision_camera_053
 > Dock to collision_camera_054 (C); Heals? False
   * Open Passage to collision_camera_054 (C)/Dock to collision_camera_053 (C)
   > Tile Group (SPEEDBOOST) 1
-      Gravity Suit or Cold Damage ≥ 400
+      Gravity Suit or Lava Damage ≥ 400
 
 ----------------
 collision_camera_054 (C)
