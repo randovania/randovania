@@ -993,6 +993,11 @@
                 "long_name": "Walljump",
                 "description": "",
                 "extra": {}
+            },
+            "SSC": {
+                "long_name": "Shinesink Clip",
+                "description": "",
+                "extra": {}
             }
         },
         "damage": {
@@ -1796,6 +1801,41 @@
                             "data": {
                                 "type": "items",
                                 "name": "MissileAmmo",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Can SSC": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
                                 "amount": 1,
                                 "negate": false
                             }
