@@ -10,7 +10,6 @@ Welcome to Randovania, a randomizer platform for a multitude of games.
  - Metroid Prime
  - Metroid Prime 2: Echoes
  - Cave Story
- - Super Metroid
 
 <!-- End SUPPORTED -->
 
@@ -19,6 +18,7 @@ Welcome to Randovania, a randomizer platform for a multitude of games.
 ### Experimental Games
  - Metroid Prime 3: Corruption
  - Metroid Dread
+ - Super Metroid
 
 <!-- End EXPERIMENTAL -->
 
