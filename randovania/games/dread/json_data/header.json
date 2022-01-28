@@ -62,8 +62,8 @@
                     "item_id": "ITEM_WEAPON_GRAPPLE_BEAM"
                 }
             },
-            "Missiles": {
-                "long_name": "Missiles",
+            "MissileLauncher": {
+                "long_name": "Missile Launcher",
                 "max_capacity": 1,
                 "extra": {}
             },
@@ -156,8 +156,8 @@
                     "item_id": "ITEM_WEAPON_LINE_BOMB"
                 }
             },
-            "PBs": {
-                "long_name": "Power Bomb",
+            "MainPB": {
+                "long_name": "Main Power Bomb",
                 "max_capacity": 1,
                 "extra": {
                     "item_id": "ITEM_WEAPON_POWER_BOMB"
@@ -213,7 +213,7 @@
                 }
             },
             "MissileAmmo": {
-                "long_name": "Missile Ammo",
+                "long_name": "Missiles",
                 "max_capacity": 275,
                 "extra": {
                     "item_id": "ITEM_WEAPON_MISSILE_CURRENT",
@@ -221,7 +221,7 @@
                 }
             },
             "PBAmmo": {
-                "long_name": "Power Bomb Ammo",
+                "long_name": "Power Bombs",
                 "max_capacity": 15,
                 "extra": {
                     "item_id": "ITEM_WEAPON_POWER_BOMB_CURRENT",
@@ -1238,13 +1238,8 @@
                     "comment": null,
                     "items": [
                         {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Shoot Missile"
                         },
                         {
                             "type": "or",
@@ -1281,13 +1276,8 @@
                     "comment": null,
                     "items": [
                         {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missiles",
-                                "amount": 1,
-                                "negate": false
-                            }
+                            "type": "template",
+                            "data": "Shoot Missile"
                         },
                         {
                             "type": "resource",
@@ -1331,7 +1321,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "Missiles",
+                                "name": "MissileAmmo",
                                 "amount": 15,
                                 "negate": false
                             }
@@ -1435,7 +1425,16 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "PBs",
+                                "name": "MainPB",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "PBAmmo",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1722,7 +1721,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Missiles",
+                                            "name": "MissileAmmo",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -1773,6 +1772,32 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    ]
+                }
+            },
+            "Shoot Missile": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileLauncher",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MissileAmmo",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     ]
@@ -1911,7 +1936,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "items",
-                                "name": "Missiles",
+                                "name": "MissileAmmo",
                                 "amount": 1,
                                 "negate": false
                             }
