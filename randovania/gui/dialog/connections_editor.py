@@ -306,6 +306,7 @@ class RequirementEditor:
         self._editor = None
         self._last_resource = None
         self._last_items = ()
+        self._last_comment = None
 
         self.line_layout = QHBoxLayout()
         self.line_layout.setAlignment(Qt.AlignLeft)
@@ -355,6 +356,7 @@ class RequirementEditor:
 
         elif isinstance(current_requirement, RequirementArrayBase):
             self._last_items = current_requirement.items
+            self._last_comment = current_requirement.comment
 
         elif isinstance(current_requirement, RequirementTemplate):
             pass
@@ -371,7 +373,7 @@ class RequirementEditor:
         elif new_class == RequirementTemplate:
             new_requirement = _create_default_template_requirement(self.resource_database)
         else:
-            new_requirement = new_class(self._last_items)
+            new_requirement = new_class(self._last_items, self._last_comment)
 
         self.create_specialized_editor(new_requirement)
 
