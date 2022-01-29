@@ -4,26 +4,26 @@ Transport to Burenia
 Extra - total_boundings: {'x1': -11000.0, 'x2': -7900.0, 'y1': -5800.0, 'y2': -4642.0}
 Extra - polygon: [[-7900.0, -4642.0], [-11000.0, -4642.0], [-11000.0, -5800.0], [-7900.0, -5800.0]]
 Extra - asset_id: collision_camera_000
-> Door to collision_camera_003 (G); Heals? False
-  * Plasma Beam Door to collision_camera_003 (G)/Door to Transport to Burenia
+> Door to Left Entrance; Heals? False
+  * Plasma Beam Door to Left Entrance/Door to Transport to Burenia
   * Extra - actor_name: doorpowerpower_018
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Door to collision_camera_001 (G)
+  > Door to Right Entrance
       Trivial
 
-> Door to collision_camera_001 (G); Heals? False
-  * Grapple Beam Door to collision_camera_001 (G)/Door to Transport to Burenia
+> Door to Right Entrance; Heals? False
+  * Grapple Beam Door to Right Entrance/Door to Transport to Burenia
   * Extra - actor_name: doorgrapplegrapple_001
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_003 (G)
+  > Door to Left Entrance
       Trivial
   > Elevator to Burenia - Transport to Ghavoran
       Trivial
@@ -31,7 +31,7 @@ Extra - asset_id: collision_camera_000
 > Start Point; Heals? False
   * Extra - start_point_actor_name: StartPoint0
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to collision_camera_001 (G)
+  > Door to Right Entrance
       Trivial
 
 > Elevator to Burenia - Transport to Ghavoran; Heals? False; Spawn Point
@@ -42,17 +42,17 @@ Extra - asset_id: collision_camera_000
   * Extra - target_spawn_point: elevator_forest_000_platform
   * Extra - start_point_actor_name: elevator_aqua_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
-  > Door to collision_camera_001 (G)
+  > Door to Right Entrance
       Trivial
 
 ----------------
-collision_camera_001 (G)
+Right Entrance
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -8000.0, 'x2': -4900.0, 'y1': -6500.0, 'y2': -3000.0}
 Extra - polygon: [[-4900.0, -3000.0], [-7600.0, -3000.0], [-7600.0, -4400.0], [-8000.0, -5029.77978515625], [-8000.0, -6500.0], [-4900.0, -6500.0]]
 Extra - asset_id: collision_camera_001
 > Door to Robot Fight Arena; Heals? False
-  * Power Beam Door to Robot Fight Arena/Door to collision_camera_001 (G)
+  * Power Beam Door to Robot Fight Arena/Door to Right Entrance
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -63,7 +63,7 @@ Extra - asset_id: collision_camera_001
       Trivial
 
 > Door to Spider Magnet Elevator; Heals? False
-  * Power Beam Door to Spider Magnet Elevator/Door to collision_camera_001 (G)
+  * Power Beam Door to Spider Magnet Elevator/Door to Right Entrance
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000
@@ -76,7 +76,7 @@ Extra - asset_id: collision_camera_001
       After Ghavoran - grapplepulloff1x2_000 and Can Slide
 
 > Door to Super Missile Room; Heals? False
-  * Power Beam Door to Super Missile Room/Door to collision_camera_001 (G)
+  * Power Beam Door to Super Missile Room/Door to Right Entrance
   * Extra - actor_name: doorpowerpower_012
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -98,7 +98,7 @@ Extra - asset_id: collision_camera_001
       Morph Ball
 
 > Door to Transport to Burenia; Heals? False
-  * Grapple Beam Door to Transport to Burenia/Door to collision_camera_001 (G)
+  * Grapple Beam Door to Transport to Burenia/Door to Right Entrance
   * Extra - actor_name: doorgrapplegrapple_001
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -138,6 +138,8 @@ Extra - asset_id: collision_camera_001
   * Extra - tile_types: ('MISSILE',)
   > Pickup (item_missiletank_000)
       Morph Ball
+  > Door to Transport to Burenia
+      Trivial
 
 > Grapple Block Alcove; Heals? False
   > Door to Spider Magnet Elevator
@@ -160,48 +162,48 @@ Robot Fight Arena
 Extra - total_boundings: {'x1': -11000.0, 'x2': -7500.0, 'y1': -4600.0, 'y2': -3000.0}
 Extra - polygon: [[-7500.0, -3000.0], [-11000.0, -3000.0], [-11000.0, -4600.0], [-7500.0, -4600.0]]
 Extra - asset_id: collision_camera_002
-> Door to collision_camera_001 (G); Heals? False
-  * Power Beam Door to collision_camera_001 (G)/Door to Robot Fight Arena
+> Door to Right Entrance; Heals? False
+  * Power Beam Door to Right Entrance/Door to Robot Fight Arena
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_003 (G)
+  > Door to Left Entrance
       Trivial
 
-> Door to collision_camera_003 (G); Heals? False
-  * Power Beam Door to collision_camera_003 (G)/Door to Robot Fight Arena
+> Door to Left Entrance; Heals? False
+  * Power Beam Door to Left Entrance/Door to Robot Fight Arena
   * Extra - actor_name: doorpowerpower_017
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_001 (G)
+  > Door to Right Entrance
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoRobotSoldier
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to collision_camera_003 (G)
+  > Door to Left Entrance
       Trivial
 
 ----------------
-collision_camera_003 (G)
+Left Entrance
 Extra - total_boundings: {'x1': -15400.0, 'x2': -10900.0, 'y1': -6000.0, 'y2': -700.0}
 Extra - polygon: [[-10900.0, -700.0], [-13000.0, -700.0], [-13000.0, -3700.0], [-15400.0, -3700.0], [-15400.0, -6000.0], [-10900.0, -6000.0]]
 Extra - asset_id: collision_camera_003
 > Dock to Blue EMMI Introduction; Heals? False
-  * EMMI Door to Blue EMMI Introduction/Dock to collision_camera_003 (G)
+  * EMMI Door to Blue EMMI Introduction/Dock to Left Entrance
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Floating Platform
       Trivial
 
 > Door to Transport to Burenia; Heals? False
-  * Plasma Beam Door to Transport to Burenia/Door to collision_camera_003 (G)
+  * Plasma Beam Door to Transport to Burenia/Door to Left Entrance
   * Extra - actor_name: doorpowerpower_018
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
@@ -216,7 +218,7 @@ Extra - asset_id: collision_camera_003
               Flash Shift or Use Spin Boost
 
 > Door to Robot Fight Arena; Heals? False
-  * Power Beam Door to Robot Fight Arena/Door to collision_camera_003 (G)
+  * Power Beam Door to Robot Fight Arena/Door to Left Entrance
   * Extra - actor_name: doorpowerpower_017
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -314,8 +316,8 @@ Blue EMMI Introduction
 Extra - total_boundings: {'x1': -11000.0, 'x2': -7900.0, 'y1': -3000.0, 'y2': 400.0}
 Extra - polygon: [[-7900.0, 400.0], [-11000.0, 400.0], [-11000.0, -3000.0], [-7900.0, -3000.0]]
 Extra - asset_id: collision_camera_004
-> Dock to collision_camera_003 (G); Heals? False
-  * EMMI Door to collision_camera_003 (G)/Dock to Blue EMMI Introduction
+> Dock to Left Entrance; Heals? False
+  * EMMI Door to Left Entrance/Dock to Blue EMMI Introduction
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to collision_camera_011 (G)
@@ -333,7 +335,7 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to collision_camera_003 (G)
+  > Dock to Left Entrance
       Trivial
   > Dock to collision_camera_011 (G)
       Morph Ball and After Ghavoran - Central Unit
@@ -647,8 +649,8 @@ Super Missile Room
 Extra - total_boundings: {'x1': -5000.0, 'x2': -2900.0, 'y1': -6000.0, 'y2': -3900.0}
 Extra - polygon: [[-2900.0, -3900.0], [-5000.0, -3900.0], [-5000.0, -6000.0], [-2900.0, -6000.0]]
 Extra - asset_id: collision_camera_010
-> Door to collision_camera_001 (G); Heals? False
-  * Power Beam Door to collision_camera_001 (G)/Door to Super Missile Room
+> Door to Right Entrance; Heals? False
+  * Power Beam Door to Right Entrance/Door to Super Missile Room
   * Extra - actor_name: doorpowerpower_012
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -666,7 +668,7 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_002
   * Extra - right_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
-  > Door to collision_camera_001 (G)
+  > Door to Right Entrance
       Trivial
   > Dock to collision_camera_009 (G)
       All of the following:
@@ -2584,8 +2586,8 @@ Spider Magnet Elevator
 Extra - total_boundings: {'x1': -5000.0, 'x2': -2900.0, 'y1': -4000.0, 'y2': -2000.0}
 Extra - polygon: [[-2900.0, -2000.0], [-5000.0, -2000.0], [-5000.0, -4000.0], [-2900.0, -4000.0]]
 Extra - asset_id: collision_camera_035
-> Door to collision_camera_001 (G); Heals? False
-  * Power Beam Door to collision_camera_001 (G)/Door to Spider Magnet Elevator
+> Door to Right Entrance; Heals? False
+  * Power Beam Door to Right Entrance/Door to Spider Magnet Elevator
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000
@@ -2607,7 +2609,7 @@ Extra - asset_id: collision_camera_035
 
 > Dock to collision_camera_007 (G) (Tunnel); Heals? False
   * Morph Ball Tunnel to collision_camera_007 (G)/Dock to Spider Magnet Elevator
-  > Door to collision_camera_001 (G)
+  > Door to Right Entrance
       After Ghavoran - Super Missiles Magnet Platform Lowered and Can Slide
   > Dock to collision_camera_007 (G) (Cannon)
       After Ghavoran - Super Missiles Magnet Platform Lowered

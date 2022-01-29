@@ -165,7 +165,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 
 #### Logic Database
 
-- Nothing.
+- Changed: Shrine Access Seeker Door without Seekers is now Hypermode (from Expert).
 
 
 ## [3.2.2] - Unreleased
