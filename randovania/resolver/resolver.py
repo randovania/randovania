@@ -58,8 +58,7 @@ def _should_check_if_action_is_safe(state: State,
     :return:
     """
     if any(resource in dangerous_resources
-           for resource in action.resource_gain_on_collect(state.patches, state.resources, all_nodes,
-                                                           state.resource_database)):
+           for resource in action.resource_gain_on_collect(state.context_for(action))):
         return False
 
     if isinstance(action, EventNode):
