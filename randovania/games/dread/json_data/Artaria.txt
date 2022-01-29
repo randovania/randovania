@@ -4,8 +4,8 @@ First Tutorial
 Extra - total_boundings: {'x1': -1000.0, 'x2': 6900.0, 'y1': -10200.0, 'y2': -6600.0}
 Extra - polygon: [[6900.0, -6600.0], [1800.0, -6600.0], [1800.0, -8200.0], [1400.0, -8300.0], [400.0, -8300.0], [-200.00100708007812, -7700.0], [-1000.0, -7700.0], [-1000.0, -10000.0], [-400.0, -10000.0], [1900.0, -10000.0], [2700.0, -10200.0], [5900.0, -10200.0], [5900.0, -8200.0], [6900.0, -8100.0]]
 Extra - asset_id: collision_camera_000
-> Door to collision_camera_001 (A); Heals? False
-  * Charge Beam Door to collision_camera_001 (A)/Door to First Tutorial
+> Door to Charge Tutorial; Heals? False
+  * Charge Beam Door to Charge Tutorial/Door to First Tutorial
   * Extra - actor_name: Door006 (CG-CG)
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -34,7 +34,7 @@ Extra - asset_id: collision_camera_000
   * Event Artaria - First Tutorial Blob
   * Extra - actor_name: PRP_DB_CV_006
   * Extra - actor_def: actordef:actors/props/breakablecave006/charclasses/breakablecave006.bmsad
-  > Door to collision_camera_001 (A)
+  > Door to Charge Tutorial
       Trivial
 
 > Ammo Recharge; Heals? False
@@ -127,11 +127,11 @@ Extra - asset_id: collision_camera_000
 
 > Dock to Intro Room; Heals? False
   * Open Passage to Intro Room/Dock to First Tutorial
-  > Door to collision_camera_001 (A)
+  > Door to Charge Tutorial
       Can Slide
 
 > Above Breakable; Heals? False
-  > Door to collision_camera_001 (A)
+  > Door to Charge Tutorial
       After Artaria - First Tutorial Blob
   > Event - First Tutorial Blob
       Wave Beam or Shoot Diffusion Beam
@@ -176,12 +176,12 @@ Extra - asset_id: collision_camera_000_Init
       Trivial
 
 ----------------
-collision_camera_001 (A)
+Charge Tutorial
 Extra - total_boundings: {'x1': 5800.0, 'x2': 8900.0, 'y1': -9600.0, 'y2': -7800.0}
 Extra - polygon: [[8900.0, -7800.0], [5800.0, -7800.0], [5800.0, -9600.0], [8900.0, -9600.0]]
 Extra - asset_id: collision_camera_001
 > Door to First Tutorial; Heals? False
-  * Charge Beam Door to First Tutorial/Door to collision_camera_001 (A)
+  * Charge Beam Door to First Tutorial/Door to Charge Tutorial
   * Extra - actor_name: Door006 (CG-CG)
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -192,7 +192,7 @@ Extra - asset_id: collision_camera_001
       Trivial
 
 > Door to Melee Tutorial West; Heals? False
-  * Charge Beam Door to Melee Tutorial West/Door to collision_camera_001 (A)
+  * Charge Beam Door to Melee Tutorial West/Door to Charge Tutorial
   * Extra - actor_name: Door007 (CG-CG)
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -216,8 +216,8 @@ Melee Tutorial West
 Extra - total_boundings: {'x1': 8800.0, 'x2': 10900.0, 'y1': -8400.0, 'y2': -6800.0}
 Extra - polygon: [[10900.0, -6800.0], [8800.0, -6800.0], [8800.0, -8400.0], [10900.0, -8400.0]]
 Extra - asset_id: collision_camera_002
-> Door to collision_camera_001 (A); Heals? False
-  * Charge Beam Door to collision_camera_001 (A)/Door to Melee Tutorial West
+> Door to Charge Tutorial; Heals? False
+  * Charge Beam Door to Charge Tutorial/Door to Melee Tutorial West
   * Extra - actor_name: Door007 (CG-CG)
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -237,12 +237,12 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_001 (A)
+  > Door to Charge Tutorial
       Trivial
 
 > Dock to Melee Tutorial Room; Heals? False
   * Slide Tunnel to Melee Tutorial Room/Dock to Melee Tutorial West
-  > Door to collision_camera_001 (A)
+  > Door to Charge Tutorial
       Trivial
 
 ----------------
@@ -355,7 +355,9 @@ Extra - asset_id: collision_camera_003
   > Door from Proto EMMI Introduction
       Trivial
   > Near Missile Tank 1
-      Space Jump or Simple IBJ
+      Any of the following:
+          Space Jump or Simple IBJ
+          Speed Booster and Speedbooster Conservation (Intermediate)
 
 > Event - Proto EMMI Blob (West Side); Heals? False
   * Event Artaria - Proto EMMI Blob
@@ -680,8 +682,8 @@ Teleport to Dairon
 Extra - total_boundings: {'x1': 5800.0, 'x2': 8900.0, 'y1': 300.0, 'y2': 4400.0}
 Extra - polygon: [[8900.0, 4400.0], [5800.0, 4400.0], [5800.0, 300.0], [8900.0, 300.0]]
 Extra - asset_id: collision_camera_008
-> Door to collision_camera_009 (A) (Bottom); Heals? False
-  * Power Beam Door to collision_camera_009 (A)/Door to Teleport to Dairon
+> Door to EMMI Zone North Exit (Bottom); Heals? False
+  * Power Beam Door to EMMI Zone North Exit/Door to Teleport to Dairon
   * Extra - actor_name: Door020 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -712,7 +714,7 @@ Extra - asset_id: collision_camera_008
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_009 (A) (Bottom)
+  > Door to EMMI Zone North Exit (Bottom)
       Trivial
   > Door to EMMI First Chase End (DoorPowerPower_001)
       Trivial
@@ -723,7 +725,7 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI First Chase End (DoorPowerPower_001)
       Trivial
-  > Dock to collision_camera_009 (A)
+  > Dock to EMMI Zone North Exit
       Morph Ball and Speed Booster
 
 > Dock to Arbitrary Enky Room (DoorEmmy07); Heals? False
@@ -768,8 +770,8 @@ Extra - asset_id: collision_camera_008
   > Door to First EMMI Chase (Lower)
       Can Slide
 
-> Door to collision_camera_009 (A) (Upper); Heals? False
-  * Wide Beam Door to collision_camera_009 (A)/Dock from Teleport to Dairon
+> Door to EMMI Zone North Exit (Upper); Heals? False
+  * Wide Beam Door to EMMI Zone North Exit/Dock from Teleport to Dairon
   * Extra - actor_name: Door028
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -787,7 +789,7 @@ Extra - asset_id: collision_camera_008
   * Extra - target_spawn_point: teleport_cave_000_platform
   * Extra - start_point_actor_name: teleport_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Door to collision_camera_009 (A) (Upper)
+  > Door to EMMI Zone North Exit (Upper)
       Trivial
 
 > Tile Group (BOMB MISSILE); Heals? False
@@ -836,31 +838,31 @@ Extra - asset_id: collision_camera_008
   > Tile Group (BOMB) 1
       Morph Ball
 
-> Dock to collision_camera_009 (A); Heals? False
-  * Morph Ball Tunnel to collision_camera_009 (A)/Dock to Teleport to Dairon
+> Dock to EMMI Zone North Exit; Heals? False
+  * Morph Ball Tunnel to EMMI Zone North Exit/Dock to Teleport to Dairon
   > Dock to Arbitrary Enky Room (DoorEmmy07)
       Movement (Beginner)
 
 ----------------
-collision_camera_009 (A)
+EMMI Zone North Exit
 Extra - total_boundings: {'x1': 699.9979858398438, 'x2': 5900.0, 'y1': 1800.0, 'y2': 4900.0}
 Extra - polygon: [[700.0, 4900.0], [699.9979858398438, 1800.0], [5900.0, 1800.0], [5900.0, 4900.0]]
 Extra - asset_id: collision_camera_009
 > Door to Teleport to Dairon; Heals? False
-  * Power Beam Door to Teleport to Dairon/Door to collision_camera_009 (A) (Bottom)
+  * Power Beam Door to Teleport to Dairon/Door to EMMI Zone North Exit (Bottom)
   * Extra - actor_name: Door020 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_048 (A)
+  > Door to EMMI Zone Dome
       Trivial
   > Dock from Teleport to Dairon
       Trivial
 
-> Door to collision_camera_048 (A); Heals? False
-  * Power Beam Door to collision_camera_048 (A)/Door to collision_camera_009 (A)
+> Door to EMMI Zone Dome; Heals? False
+  * Power Beam Door to EMMI Zone Dome/Door to EMMI Zone North Exit
   * Extra - actor_name: Door025 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -871,11 +873,11 @@ Extra - asset_id: collision_camera_009
       Trivial
   > Dock to Teleport to Dairon
       Trivial
-  > Dock to collision_camera_048 (A)
+  > Dock to EMMI Zone Dome
       Morph Ball
 
 > Dock to Shinespark Tower to Grapple; Heals? False
-  * EMMI Door to Shinespark Tower to Grapple/Dock to collision_camera_009 (A)
+  * EMMI Door to Shinespark Tower to Grapple/Dock to EMMI Zone North Exit
   * Extra - actor_name: DoorEmmy05
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (POWERBEAM)
@@ -891,7 +893,7 @@ Extra - asset_id: collision_camera_009
       Trivial
 
 > Dock from Teleport to Dairon; Heals? False
-  * Blocked Passage to Teleport to Dairon/Door to collision_camera_009 (A) (Upper)
+  * Blocked Passage to Teleport to Dairon/Door to EMMI Zone North Exit (Upper)
   * Extra - actor_name: Door028
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -935,24 +937,24 @@ Extra - asset_id: collision_camera_009
       Trivial
 
 > Dock to Teleport to Dairon; Heals? False
-  * Slide Tunnel to Teleport to Dairon/Dock to collision_camera_009 (A)
-  > Door to collision_camera_048 (A)
+  * Slide Tunnel to Teleport to Dairon/Dock to EMMI Zone North Exit
+  > Door to EMMI Zone Dome
       Trivial
   > Tile Group (SPEEDBOOST) 1
       Trivial
 
-> Dock to collision_camera_048 (A); Heals? False
-  * Morph Ball Tunnel to collision_camera_048 (A)/Dock to collision_camera_009 (A)
-  > Door to collision_camera_048 (A)
+> Dock to EMMI Zone Dome; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Dome/Dock to EMMI Zone North Exit
+  > Door to EMMI Zone Dome
       Morph Ball
 
 ----------------
-collision_camera_010 (A)
+EMMI Zone Hub
 Extra - total_boundings: {'x1': -5200.0, 'x2': -1200.0, 'y1': -6200.0, 'y2': 2700.0}
 Extra - polygon: [[-1200.0, 2200.0], [-5200.0, 2200.0], [-5200.0, -5600.0], [-4800.0, -5600.0], [-3300.0, -6200.0], [-1200.0, -6200.0]]
 Extra - asset_id: collision_camera_010
 > Door to collision_camera_051 (A); Heals? False
-  * Wave Beam Door to collision_camera_051 (A)/Dock from collision_camera_010 (A)
+  * Wave Beam Door to collision_camera_051 (A)/Dock from EMMI Zone Hub
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -965,7 +967,7 @@ Extra - asset_id: collision_camera_010
       Morph Ball and Knowledge (Beginner)
 
 > Door to collision_camera_075 (A) (DoorFrame_004); Heals? False
-  * Access Open to collision_camera_075 (A)/Door to collision_camera_010 (A) (DoorFrame_004)
+  * Access Open to collision_camera_075 (A)/Door to EMMI Zone Hub (DoorFrame_004)
   * Extra - actor_name: DoorFrame_004
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -978,7 +980,7 @@ Extra - asset_id: collision_camera_010
       Trivial
 
 > Door to collision_camera_075 (A) (DoorFrame_005); Heals? False
-  * Access Open to collision_camera_075 (A)/Door to collision_camera_010 (A) (DoorFrame_005)
+  * Access Open to collision_camera_075 (A)/Door to EMMI Zone Hub (DoorFrame_005)
   * Extra - actor_name: DoorFrame_005
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -993,7 +995,7 @@ Extra - asset_id: collision_camera_010
       Trivial
 
 > Door to collision_camera_069 (A) (DoorFrame_006); Heals? False
-  * Access Open to collision_camera_069 (A)/Door to collision_camera_010 (A) (DoorFrame_006)
+  * Access Open to collision_camera_069 (A)/Door to EMMI Zone Hub (DoorFrame_006)
   * Extra - actor_name: DoorFrame_006
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1008,7 +1010,7 @@ Extra - asset_id: collision_camera_010
       Trivial
 
 > Door to collision_camera_069 (A) (DoorFrame_007); Heals? False
-  * Access Open to collision_camera_069 (A)/Door to collision_camera_010 (A) (DoorFrame_007)
+  * Access Open to collision_camera_069 (A)/Door to EMMI Zone Hub (DoorFrame_007)
   * Extra - actor_name: DoorFrame_007
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1030,7 +1032,7 @@ Extra - asset_id: collision_camera_010
       Flash Shift or Grapple Beam or Spider Magnet or Space Jump
 
 > Door to collision_camera_053 (A); Heals? False
-  * Access Open to collision_camera_053 (A)/Door to collision_camera_010 (A)
+  * Access Open to collision_camera_053 (A)/Door to EMMI Zone Hub
   * Extra - actor_name: DoorFrame_017
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1058,22 +1060,22 @@ Extra - asset_id: collision_camera_010
       Trivial
 
 > Dock to collision_camera_069 (A); Heals? False
-  * Morph Ball Tunnel to collision_camera_069 (A)/Dock to collision_camera_010 (A)
+  * Morph Ball Tunnel to collision_camera_069 (A)/Dock to EMMI Zone Hub
   > Door to collision_camera_069 (A) (DoorFrame_006)
       Trivial
 
 > Dock to collision_camera_051 (A); Heals? False
-  * Morph Ball Tunnel to collision_camera_051 (A)/Dock to collision_camera_010 (A)
+  * Morph Ball Tunnel to collision_camera_051 (A)/Dock to EMMI Zone Hub
   > Door to collision_camera_075 (A) (DoorFrame_004)
       Trivial
 
-> Dock to collision_camera_061 (A) (Upper); Heals? False
-  * Open Passage to collision_camera_061 (A)/Dock to collision_camera_010 (A) (1)
+> Dock to EMMI Zone South Exit (Upper); Heals? False
+  * Open Passage to EMMI Zone South Exit/Dock to EMMI Zone Hub (1)
   > Next to Water Device
       Trivial
 
-> Dock to collision_camera_061 (A) (Slide Tunnel); Heals? False
-  * Slide Tunnel to collision_camera_061 (A)/Dock to collision_camera_010 (A) (2)
+> Dock to EMMI Zone South Exit (Slide Tunnel); Heals? False
+  * Slide Tunnel to EMMI Zone South Exit/Dock to EMMI Zone Hub (2)
   > Next to Water Device
       Morph Ball and Speed Booster and Speedbooster Conservation (Beginner)
 
@@ -1082,9 +1084,9 @@ Extra - asset_id: collision_camera_010
       Trivial
   > Event - Water Device
       Trivial
-  > Dock to collision_camera_061 (A) (Upper)
+  > Dock to EMMI Zone South Exit (Upper)
       Simple IBJ or Use Spin Boost
-  > Dock to collision_camera_061 (A) (Slide Tunnel)
+  > Dock to EMMI Zone South Exit (Slide Tunnel)
       Any of the following:
           Morph Ball
           Slide and After Artaria - EMMI Zone Water Device
@@ -1161,7 +1163,7 @@ Extra - asset_id: collision_camera_011
   * Event Artaria - Early SA Shortcut Blob
   * Extra - actor_name: db_reg_cv_023
   * Extra - actor_def: actordef:actors/props/db_reg_cv_022/charclasses/db_reg_cv_022.bmsad
-  > Life Recharge
+  > Energy Recharge
       Trivial
 
 > Door to collision_camera_028 (A); Heals? False
@@ -1172,10 +1174,10 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Life Recharge
+  > Energy Recharge
       After Artaria - Thermal Device
 
-> Life Recharge; Heals? True
+> Energy Recharge; Heals? True
   * Extra - actor_name: PRP_CV_EnergyStation002
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
   * Extra - start_point_actor_name: PRP_CV_EnergyStation002_WeightPlate
@@ -1201,7 +1203,7 @@ Extra - asset_id: collision_camera_011
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Event - Post Chain Reaction Debris
       Shoot Diffusion or Wave
-  > Life Recharge
+  > Energy Recharge
       Walljump (Beginner) or Simple IBJ or Use Spin Boost
   > Tile Group (POWERBEAM)
       All of the following:
@@ -1231,7 +1233,7 @@ Extra - asset_id: collision_camera_011
   * Extra - tile_types: ('BOMB',)
   > Event - Early SA Shortcut Blob
       Morph Ball and Lay Bomb
-  > Life Recharge
+  > Energy Recharge
       Morph Ball and After Artaria - Early SA Shortcut Blob
   > Dock to collision_camera_051 (A) (Early SA Shortcut)
       Morph Ball
@@ -1378,15 +1380,15 @@ Extra - asset_id: collision_camera_013
   * Extra - right_shield_def: None
   > Door to Charge Beam Room
       Trivial
-  > Door to Cold Introduction (Side Tunnel)
+  > Door from Cold Introduction
       Trivial
   > Tile Group (POWERBOMB)
       Trivial
   > Dock to Charge Beam Room
       Trivial
 
-> Door to Cold Introduction (Side Tunnel); Heals? False
-  * Power Beam Door to Cold Introduction/Door to Charge Beam Access (Side Tunnel)
+> Door from Cold Introduction; Heals? False
+  * Access Closed to Cold Introduction/Door to Charge Beam Access (Side Tunnel)
   * Extra - actor_name: Door003 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door003_missileShield
@@ -1396,7 +1398,7 @@ Extra - asset_id: collision_camera_013
   > Door to Intro Room
       Trivial
 
-> Door to Cold Introduction (Cold); Heals? False
+> Door to Cold Introduction; Heals? False
   * Power Beam Door to Cold Introduction/Door to Charge Beam Access (Cold)
   * Extra - actor_name: Door004 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
@@ -1408,7 +1410,7 @@ Extra - asset_id: collision_camera_013
       Trivial
   > Dock to Cold Introduction (Side Tunnel)
       After Artaria - Charge Beam Access Blob
-  > Dock to collision_camera_054 (A)
+  > Dock to Energy Recharge South
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -1424,7 +1426,7 @@ Extra - asset_id: collision_camera_013
   * Event Artaria - Charge Beam Access Blob
   * Extra - actor_name: PRP_DB_CV_010
   * Extra - actor_def: actordef:actors/props/breakablecave010/charclasses/breakablecave010.bmsad
-  > Door to Cold Introduction (Cold)
+  > Door to Cold Introduction
       Trivial
 
 > Tile Group (POWERBOMB); Heals? False
@@ -1450,12 +1452,12 @@ Extra - asset_id: collision_camera_013
 
 > Dock to Cold Introduction (Side Tunnel); Heals? False
   * Open Passage to Cold Introduction/Dock to Charge Beam Access (Side Tunnel)
-  > Door to Cold Introduction (Cold)
+  > Door to Cold Introduction
       After Artaria - Charge Beam Access Blob
 
-> Dock to collision_camera_054 (A); Heals? False
-  * Open Passage to collision_camera_054 (A)/Dock to Charge Beam Access
-  > Door to Cold Introduction (Cold)
+> Dock to Energy Recharge South; Heals? False
+  * Open Passage to Energy Recharge South/Dock to Charge Beam Access
+  > Door to Cold Introduction
       Trivial
 
 ----------------
@@ -1489,6 +1491,8 @@ Extra - asset_id: collision_camera_014
       Trivial
   > Pickup (Charge Beam)
       Trivial
+  > Dock to Charge Beam Access
+      Morph Ball and Movement (Intermediate)
 
 > Dock to Charge Beam Access; Heals? False
   * Morph Ball Tunnel to Charge Beam Access/Dock to Charge Beam Room
@@ -2487,6 +2491,11 @@ Extra - asset_id: collision_camera_032
           All of the following:
               Grapple Beam
               Spider Magnet or Movement (Beginner)
+          All of the following:
+              Flash Shift
+              Any of the following:
+                  Walljump (Intermediate)
+                  Spider Magnet and Movement (Beginner)
   > Door to Grapple Beam Tutorial
       Trivial
 
@@ -2511,10 +2520,12 @@ Extra - asset_id: collision_camera_032
   * Extra - right_shield_def: None
   > Door to Save Station North
       Any of the following:
-          Space Jump or Simple IBJ
+          Space Jump or Walljump (Intermediate) or Simple IBJ
           All of the following:
               Spider Magnet
               Grapple Beam or Use Spin Boost
+          Grapple Beam and Movement (Beginner)
+          Flash Shift and Walljump (Beginner)
 
 ----------------
 Grapple Beam Room
@@ -2591,8 +2602,8 @@ collision_camera_045 (A)
 Extra - total_boundings: {'x1': -1300.0, 'x2': 1900.0, 'y1': -8000.0, 'y2': -6858.0}
 Extra - polygon: [[1900.0, -6858.0], [-1300.0, -6858.0], [-1300.0, -8000.0], [1900.0, -8000.0]]
 Extra - asset_id: collision_camera_045
-> Door to collision_camera_054 (A); Heals? False
-  * Power Beam Door to collision_camera_054 (A)/Door to collision_camera_045 (A)
+> Door to Energy Recharge South; Heals? False
+  * Power Beam Door to Energy Recharge South/Door to collision_camera_045 (A)
   * Extra - actor_name: Door005 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2604,16 +2615,16 @@ Extra - asset_id: collision_camera_045
 
 > Dock to First Tutorial; Heals? False
   * Morph Ball Tunnel to First Tutorial/Dock to collision_camera_045 (A)
-  > Door to collision_camera_054 (A)
+  > Door to Energy Recharge South
       Trivial
 
 ----------------
-collision_camera_048 (A)
+EMMI Zone Dome
 Extra - total_boundings: {'x1': -5200.0, 'x2': 800.0, 'y1': 1500.0, 'y2': 5200.0}
 Extra - polygon: [[800.0, 3900.0], [-1200.0, 3900.0], [-1200.0, 5200.0], [-5200.0, 5200.0], [-5200.0, 2100.0], [-1000.0, 2100.0], [-1000.0, 1500.0], [500.0, 1500.0], [800.0, 1500.0]]
 Extra - asset_id: collision_camera_048
-> Door to collision_camera_009 (A); Heals? False
-  * Power Beam Door to collision_camera_009 (A)/Door to collision_camera_048 (A)
+> Door to EMMI Zone North Exit; Heals? False
+  * Power Beam Door to EMMI Zone North Exit/Door to EMMI Zone Dome
   * Extra - actor_name: Door025 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2621,12 +2632,14 @@ Extra - asset_id: collision_camera_048
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Dock to collision_camera_051 (A)
-      Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Beginner)
   > Event - EMMI Single Use Slide
       Before Artaria - EMMI Single Use Slide and Can Slide
 
 > Door to collision_camera_051 (A); Heals? False
-  * Access Open to collision_camera_051 (A)/Door to collision_camera_048 (A)
+  * Access Open to collision_camera_051 (A)/Door to EMMI Zone Dome
   * Extra - actor_name: DoorFrame_001
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2677,8 +2690,8 @@ Extra - asset_id: collision_camera_048
       Trivial
 
 > Dock to collision_camera_051 (A); Heals? False
-  * Open Passage to collision_camera_051 (A)/Dock to collision_camera_048 (A)
-  > Door to collision_camera_009 (A)
+  * Open Passage to collision_camera_051 (A)/Dock to EMMI Zone Dome
+  > Door to EMMI Zone North Exit
       Simple IBJ or Use Spin Boost
 
 > Below Slide; Heals? False
@@ -2686,21 +2699,21 @@ Extra - asset_id: collision_camera_048
       Shoot Beam
   > Tile Group (POWERBEAM) 3
       Trivial
-  > Dock to collision_camera_009 (A)
+  > Dock to EMMI Zone North Exit
       Morph Ball and After Artaria - Slide Alternative Blob
   > Event - EMMI Single Use Slide
       All of the following:
           # TODO: Take a look at what happens if Samus rolls through the one-use slide tunnel, then create a new nde for that if appropriate
           Morph Ball and Before Artaria - EMMI Single Use Slide
 
-> Dock to collision_camera_009 (A); Heals? False
-  * Morph Ball Tunnel to collision_camera_009 (A)/Dock to collision_camera_048 (A)
+> Dock to EMMI Zone North Exit; Heals? False
+  * Morph Ball Tunnel to EMMI Zone North Exit/Dock to EMMI Zone Dome
   > Below Slide
       Morph Ball and After Artaria - Slide Alternative Blob
 
 > Event - EMMI Single Use Slide; Heals? False
   * Event Artaria - EMMI Single Use Slide
-  > Door to collision_camera_009 (A)
+  > Door to EMMI Zone North Exit
       Morph Ball
   > Below Slide
       Can Slide
@@ -2834,17 +2847,17 @@ Extra - asset_id: collision_camera_051
   * EMMI Door to Teleport to Cataris/Dock to collision_camera_051 (A) (EMMI)
   * Extra - actor_name: DoorEmmy03
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock from collision_camera_010 (A)
+  > Dock from EMMI Zone Hub
       Flash Shift or Simple IBJ or Use Spin Boost
-  > Door to collision_camera_048 (A)
+  > Door to EMMI Zone Dome
       Trivial
   > Dock to Teleport to Cataris (Early SA Shortcut)
       Lay Bomb
-  > Dock to collision_camera_048 (A)
+  > Dock to EMMI Zone Dome
       Space Jump or Simple IBJ
 
-> Dock from collision_camera_010 (A); Heals? False
-  * Blocked Passage to collision_camera_010 (A)/Door to collision_camera_051 (A)
+> Dock from EMMI Zone Hub; Heals? False
+  * Blocked Passage to EMMI Zone Hub/Door to collision_camera_051 (A)
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2854,8 +2867,8 @@ Extra - asset_id: collision_camera_051
   > Dock to Teleport to Cataris (EMMI)
       Trivial
 
-> Door to collision_camera_048 (A); Heals? False
-  * Access Open to collision_camera_048 (A)/Door to collision_camera_051 (A)
+> Door to EMMI Zone Dome; Heals? False
+  * Access Open to EMMI Zone Dome/Door to collision_camera_051 (A)
   * Extra - actor_name: DoorFrame_001
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2880,7 +2893,7 @@ Extra - asset_id: collision_camera_051
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (SPEEDBOOST)
       Morph Ball
-  > Dock to collision_camera_010 (A)
+  > Dock to EMMI Zone Hub
       Morph Ball
 
 > Tile Group (SPEEDBOOST); Heals? False
@@ -2894,8 +2907,8 @@ Extra - asset_id: collision_camera_051
   > Tile Group (POWERBEAM)
       Morph Ball
 
-> Dock to collision_camera_010 (A); Heals? False
-  * Morph Ball Tunnel to collision_camera_010 (A)/Dock to collision_camera_051 (A)
+> Dock to EMMI Zone Hub; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Hub/Dock to collision_camera_051 (A)
   > Tile Group (POWERBEAM)
       Morph Ball
 
@@ -2904,8 +2917,8 @@ Extra - asset_id: collision_camera_051
   > Dock to Teleport to Cataris (EMMI)
       Trivial
 
-> Dock to collision_camera_048 (A); Heals? False
-  * Open Passage to collision_camera_048 (A)/Dock to collision_camera_051 (A)
+> Dock to EMMI Zone Dome; Heals? False
+  * Open Passage to EMMI Zone Dome/Dock to collision_camera_051 (A)
   > Dock to Teleport to Cataris (EMMI)
       Trivial
 
@@ -2922,11 +2935,11 @@ Extra - asset_id: collision_camera_053
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_010 (A)
+  > Door to EMMI Zone Hub
       Trivial
 
-> Door to collision_camera_010 (A); Heals? False
-  * Access Open to collision_camera_010 (A)/Door to collision_camera_053 (A)
+> Door to EMMI Zone Hub; Heals? False
+  * Access Open to EMMI Zone Hub/Door to collision_camera_053 (A)
   * Extra - actor_name: DoorFrame_017
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2944,69 +2957,61 @@ Extra - asset_id: collision_camera_053
   * Extra - tile_types: ('POWERBEAM',)
 
 ----------------
-collision_camera_054 (A)
+Energy Recharge South
 Extra - total_boundings: {'x1': -5200.0, 'x2': -1200.0, 'y1': -7600.0, 'y2': -6000.0}
 Extra - polygon: [[-1200.0, -6000.0], [-5200.0, -6000.0], [-5200.0, -7600.0], [-1200.0, -7600.0]]
 Extra - asset_id: collision_camera_054
 > Door to collision_camera_045 (A); Heals? False
-  * Power Beam Door to collision_camera_045 (A)/Door to collision_camera_054 (A)
+  * Power Beam Door to collision_camera_045 (A)/Door to Energy Recharge South
   * Extra - actor_name: Door005 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Life Recharge
+  > Energy Recharge
       Trivial
 
-> Dock to collision_camera_061 (A); Heals? False
-  * EMMI Door to collision_camera_061 (A)/Dock to collision_camera_054 (A)
+> Dock to EMMI Zone South Exit; Heals? False
+  * EMMI Door to EMMI Zone South Exit/Dock to Energy Recharge South
   * Extra - actor_name: DoorEmmy01
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Top Right
+  > Pickup (Missile Tank)
+      Flash Shift
+  > Energy Recharge
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 22; Major Location? False
   * Extra - actor_name: Item_MissileTank010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Top Left
+  > Dock to EMMI Zone South Exit
+      Flash Shift
+  > Energy Recharge
       Trivial
 
-> Life Recharge; Heals? True; Spawn Point
+> Energy Recharge; Heals? True; Spawn Point
   * Extra - actor_name: PRP_CV_EnergyStation001
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
   * Extra - start_point_actor_name: PRP_CV_EnergyStation001_WeightPlate
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
   > Door to collision_camera_045 (A)
       Trivial
+  > Dock to EMMI Zone South Exit
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Beginner)
+  > Pickup (Missile Tank)
+      Any of the following:
+          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Beginner)
   > Dock to Charge Beam Access
       Trivial
-  > Top Left
-      Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
-  > Top Right
-      Simple IBJ or Use Spin Boost
 
 > Dock to Charge Beam Access; Heals? False
-  * Open Passage to Charge Beam Access/Dock to collision_camera_054 (A)
-  > Life Recharge
+  * Open Passage to Charge Beam Access/Dock to Energy Recharge South
+  > Energy Recharge
       Trivial
-
-> Top Left; Heals? False
-  > Pickup (Missile Tank)
-      Trivial
-  > Life Recharge
-      Trivial
-  > Top Right
-      Flash Shift
-
-> Top Right; Heals? False
-  > Dock to collision_camera_061 (A)
-      Trivial
-  > Life Recharge
-      Trivial
-  > Top Left
-      Flash Shift
 
 ----------------
 Chain Reaction Access
@@ -3357,27 +3362,27 @@ Extra - asset_id: collision_camera_060
       Trivial
 
 ----------------
-collision_camera_061 (A)
+EMMI Zone South Exit
 Extra - total_boundings: {'x1': -1300.0, 'x2': 800.0, 'y1': -6800.0, 'y2': -3700.0}
 Extra - polygon: [[800.0, -3700.0], [-1300.0, -3700.0], [-1300.0, -6800.0], [800.0, -6800.0]]
 Extra - asset_id: collision_camera_061
-> Dock to collision_camera_054 (A); Heals? False
-  * EMMI Door to collision_camera_054 (A)/Dock to collision_camera_061 (A)
+> Dock to Energy Recharge South; Heals? False
+  * EMMI Door to Energy Recharge South/Dock to EMMI Zone South Exit
   * Extra - actor_name: DoorEmmy01
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock to collision_camera_010 (A) (1)
+  > Dock to EMMI Zone Hub (1)
       Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
-  > Dock to collision_camera_010 (A) (2)
+  > Dock to EMMI Zone Hub (2)
       Morph Ball and Speed Booster and Movement (Beginner)
 
-> Dock to collision_camera_010 (A) (1); Heals? False
-  * Open Passage to collision_camera_010 (A)/Dock to collision_camera_061 (A) (Upper)
-  > Dock to collision_camera_054 (A)
+> Dock to EMMI Zone Hub (1); Heals? False
+  * Open Passage to EMMI Zone Hub/Dock to EMMI Zone South Exit (Upper)
+  > Dock to Energy Recharge South
       Trivial
 
-> Dock to collision_camera_010 (A) (2); Heals? False
-  * Morph Ball Tunnel to collision_camera_010 (A)/Dock to collision_camera_061 (A) (Slide Tunnel)
-  > Dock to collision_camera_054 (A)
+> Dock to EMMI Zone Hub (2); Heals? False
+  * Morph Ball Tunnel to EMMI Zone Hub/Dock to EMMI Zone South Exit (Slide Tunnel)
+  > Dock to Energy Recharge South
       Trivial
 
 ----------------
@@ -3386,7 +3391,7 @@ Extra - total_boundings: {'x1': -9200.0, 'x2': -7100.0, 'y1': -8800.0, 'y2': -69
 Extra - polygon: [[-7100.0, -6900.0], [-9200.0, -6900.0], [-9200.0, -8800.0], [-7100.0, -8800.0]]
 Extra - asset_id: collision_camera_062
 > Door to Charge Beam Access (Side Tunnel); Heals? False
-  * Missile Door to Charge Beam Access/Door to Cold Introduction (Side Tunnel)
+  * Missile Door to Charge Beam Access/Door from Cold Introduction
   * Extra - actor_name: Door003 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door003_missileShield
@@ -3397,18 +3402,18 @@ Extra - asset_id: collision_camera_062
       Trivial
 
 > Door to Charge Beam Access (Cold); Heals? False
-  * Power Beam Door to Charge Beam Access/Door to Cold Introduction (Cold)
+  * Power Beam Door to Charge Beam Access/Door to Cold Introduction
   * Extra - actor_name: Door004 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Hidden Plus Between Cold
+  > Door to Speed Hallway
       Gravity Suit or Cold Damage ≥ 40
 
-> Door to Hidden Plus Between Cold; Heals? False
-  * Power Beam Door to Hidden Plus Between Cold/Door to Cold Introduction
+> Door to Speed Hallway; Heals? False
+  * Power Beam Door to Speed Hallway/Door to Cold Introduction
   * Extra - actor_name: Door004 (PW-PW)_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3418,14 +3423,14 @@ Extra - asset_id: collision_camera_062
   > Door to Charge Beam Access (Cold)
       Gravity Suit or Cold Damage ≥ 40
 
-> Dock to Hidden Plus Between Cold; Heals? False
-  * Morph Ball Tunnel to Hidden Plus Between Cold/Dock to Cold Introduction
+> Dock to Speed Hallway; Heals? False
+  * Morph Ball Tunnel to Speed Hallway/Dock to Cold Introduction
   > Dock to Charge Beam Access (Speed Tunnel)
       Morph Ball
 
 > Dock to Charge Beam Access (Speed Tunnel); Heals? False
   * Morph Ball Tunnel to Charge Beam Access/Dock to Cold Introduction (Speed Tunnel)
-  > Dock to Hidden Plus Between Cold
+  > Dock to Speed Hallway
       Morph Ball
 
 > Dock to Charge Beam Access (Side Tunnel); Heals? False
@@ -3716,32 +3721,32 @@ collision_camera_069 (A)
 Extra - total_boundings: {'x1': -1300.0, 'x2': 800.0, 'y1': -3300.0, 'y2': -1100.0}
 Extra - polygon: [[800.0, -1100.0], [-1300.0, -1100.0], [-1300.0, -3300.0], [800.0, -3300.0]]
 Extra - asset_id: collision_camera_069
-> Door to collision_camera_010 (A) (DoorFrame_006); Heals? False
-  * Access Open to collision_camera_010 (A)/Door to collision_camera_069 (A) (DoorFrame_006)
+> Door to EMMI Zone Hub (DoorFrame_006); Heals? False
+  * Access Open to EMMI Zone Hub/Door to collision_camera_069 (A) (DoorFrame_006)
   * Extra - actor_name: DoorFrame_006
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_010 (A) (DoorFrame_007)
+  > Door to EMMI Zone Hub (DoorFrame_007)
       After Artaria - EMMI Wide Beam Block
   > Event - EMMI Wide Beam Block
       All of the following:
           Push Wide Beam Block
           Spider Magnet or Movement (Beginner)
-  > Dock to collision_camera_010 (A)
+  > Dock to EMMI Zone Hub
       Trivial
 
-> Door to collision_camera_010 (A) (DoorFrame_007); Heals? False
-  * Access Open to collision_camera_010 (A)/Door to collision_camera_069 (A) (DoorFrame_007)
+> Door to EMMI Zone Hub (DoorFrame_007); Heals? False
+  * Access Open to EMMI Zone Hub/Door to collision_camera_069 (A) (DoorFrame_007)
   * Extra - actor_name: DoorFrame_007
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_010 (A) (DoorFrame_006)
+  > Door to EMMI Zone Hub (DoorFrame_006)
       After Artaria - EMMI Wide Beam Block
   > Door to collision_camera_015 (A)
       Trivial
@@ -3754,17 +3759,17 @@ Extra - asset_id: collision_camera_069
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to collision_camera_010 (A) (DoorFrame_007)
+  > Door to EMMI Zone Hub (DoorFrame_007)
       Trivial
 
 > Event - EMMI Wide Beam Block; Heals? False
   * Event Artaria - EMMI Wide Beam Block
-  > Door to collision_camera_010 (A) (DoorFrame_006)
+  > Door to EMMI Zone Hub (DoorFrame_006)
       Trivial
 
-> Dock to collision_camera_010 (A); Heals? False
-  * Slide Tunnel to collision_camera_010 (A)/Dock to collision_camera_069 (A)
-  > Door to collision_camera_010 (A) (DoorFrame_006)
+> Dock to EMMI Zone Hub; Heals? False
+  * Slide Tunnel to EMMI Zone Hub/Dock to collision_camera_069 (A)
+  > Door to EMMI Zone Hub (DoorFrame_006)
       Trivial
 
 ----------------
@@ -4038,13 +4043,13 @@ Extra - asset_id: collision_camera_075
   * EMMI Door to Water Reservoir/Dock to collision_camera_075 (A)
   * Extra - actor_name: DoorEmmy02
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to collision_camera_010 (A) (DoorFrame_004)
+  > Door to EMMI Zone Hub (DoorFrame_004)
       Simple IBJ or Use Spin Boost
-  > Door to collision_camera_010 (A) (DoorFrame_005)
+  > Door to EMMI Zone Hub (DoorFrame_005)
       Can Slide
 
-> Door to collision_camera_010 (A) (DoorFrame_004); Heals? False
-  * Access Open to collision_camera_010 (A)/Door to collision_camera_075 (A) (DoorFrame_004)
+> Door to EMMI Zone Hub (DoorFrame_004); Heals? False
+  * Access Open to EMMI Zone Hub/Door to collision_camera_075 (A) (DoorFrame_004)
   * Extra - actor_name: DoorFrame_004
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4053,11 +4058,11 @@ Extra - asset_id: collision_camera_075
   * Extra - right_shield_def: None
   > Dock to Water Reservoir
       Trivial
-  > Door to collision_camera_010 (A) (DoorFrame_005)
+  > Door to EMMI Zone Hub (DoorFrame_005)
       Trivial
 
-> Door to collision_camera_010 (A) (DoorFrame_005); Heals? False
-  * Access Open to collision_camera_010 (A)/Door to collision_camera_075 (A) (DoorFrame_005)
+> Door to EMMI Zone Hub (DoorFrame_005); Heals? False
+  * Access Open to EMMI Zone Hub/Door to collision_camera_075 (A) (DoorFrame_005)
   * Extra - actor_name: DoorFrame_005
   * Extra - actor_def: actordef:actors/props/doorframe/charclasses/doorframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4066,7 +4071,7 @@ Extra - asset_id: collision_camera_075
   * Extra - right_shield_def: None
   > Dock to Water Reservoir
       Morph Ball
-  > Door to collision_camera_010 (A) (DoorFrame_004)
+  > Door to EMMI Zone Hub (DoorFrame_004)
       Trivial
 
 ----------------
@@ -4654,11 +4659,11 @@ Extra - asset_id: collision_camera_083
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
-  > Dock to Hidden Plus Between Cold
+  > Dock to Speed Hallway
       Trivial
 
-> Dock to Hidden Plus Between Cold; Heals? False
-  * Open Passage to Hidden Plus Between Cold/Dock to Speed Booster Bonus Room
+> Dock to Speed Hallway; Heals? False
+  * Open Passage to Speed Hallway/Dock to Speed Booster Bonus Room
   > Tile Group (SPEEDBOOST)
       Trivial
 
@@ -4697,7 +4702,7 @@ Extra - asset_id: collision_camera_085
       Trivial
 
 ----------------
-Hidden Plus Between Cold
+Speed Hallway
 Extra - total_boundings: {'x1': -14900.0, 'x2': -9100.0, 'y1': -8800.0, 'y2': -5700.0}
 Extra - polygon: [[-9100.0, -5700.0], [-14900.0, -5700.0], [-14900.0, -7800.0], [-14800.0, -7800.0], [-12000.0, -8800.0], [-9100.0, -8800.0]]
 Extra - asset_id: collision_camera_086
@@ -4716,7 +4721,7 @@ Extra - asset_id: collision_camera_086
       Trivial
 
 > Door to Cold Introduction; Heals? False
-  * Power Beam Door to Cold Introduction/Door to Hidden Plus Between Cold
+  * Power Beam Door to Cold Introduction/Door to Speed Hallway
   * Extra - actor_name: Door004 (PW-PW)_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4731,7 +4736,7 @@ Extra - asset_id: collision_camera_086
       Trivial
 
 > Door to Red Chozo Arena; Heals? False
-  * Power Beam Door to Red Chozo Arena/Door to Hidden Plus Between Cold
+  * Power Beam Door to Red Chozo Arena/Door to Speed Hallway
   * Extra - actor_name: Door078
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4816,12 +4821,12 @@ Extra - asset_id: collision_camera_086
       Morph Ball
 
 > Dock to Speed Booster Bonus Room; Heals? False
-  * Open Passage to Speed Booster Bonus Room/Dock to Hidden Plus Between Cold
+  * Open Passage to Speed Booster Bonus Room/Dock to Speed Hallway
   > Door to Red Chozo Arena
       Trivial
 
 > Dock to Cold Introduction; Heals? False
-  * Morph Ball Tunnel to Cold Introduction/Dock to Hidden Plus Between Cold
+  * Morph Ball Tunnel to Cold Introduction/Dock to Speed Hallway
   > Tile Group (SPEEDBOOST) 5
       Morph Ball
 
@@ -4830,8 +4835,8 @@ Shinespark Tower to Grapple
 Extra - total_boundings: {'x1': -1300.0, 'x2': 800.0, 'y1': 3900.0, 'y2': 8000.0}
 Extra - polygon: [[800.0, 8000.0], [-1300.0, 8000.0], [-1300.0, 3900.0], [800.0, 3900.0]]
 Extra - asset_id: collision_camera_088
-> Dock to collision_camera_009 (A); Heals? False
-  * EMMI Door to collision_camera_009 (A)/Dock to Shinespark Tower to Grapple
+> Dock to EMMI Zone North Exit; Heals? False
+  * EMMI Door to EMMI Zone North Exit/Dock to Shinespark Tower to Grapple
   * Extra - actor_name: DoorEmmy05
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (POWERBEAM) 5
@@ -4898,7 +4903,7 @@ Extra - asset_id: collision_camera_088
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Dock to collision_camera_009 (A)
+  > Dock to EMMI Zone North Exit
       Trivial
   > Tile Group (POWERBEAM) 4
       Trivial
@@ -4988,11 +4993,11 @@ Extra - asset_id: collision_camera_091
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Hidden Plus Between Cold
+  > Door to Speed Hallway
       Gravity Suit or Cold Damage ≥ 50
 
-> Door to Hidden Plus Between Cold; Heals? False
-  * Power Beam Door to Hidden Plus Between Cold/Door to Red Chozo Arena
+> Door to Speed Hallway; Heals? False
+  * Power Beam Door to Speed Hallway/Door to Red Chozo Arena
   * Extra - actor_name: Door078
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -5007,7 +5012,7 @@ Extra - asset_id: collision_camera_091
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Freezer
       Gravity Suit or Cold Damage ≥ 20
-  > Door to Hidden Plus Between Cold
+  > Door to Speed Hallway
       Gravity Suit or Cold Damage ≥ 20
 
 > Tile Group (WEIGHT); Heals? False
