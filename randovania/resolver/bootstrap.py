@@ -7,7 +7,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
-from randovania.game_description.world.node import PlayerShipNode
+from randovania.game_description.world.node import PlayerShipNode, NodeContext
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -80,8 +80,11 @@ class Bootstrap:
 
         if isinstance(starting_node, PlayerShipNode):
             add_resource_gain_to_current_resources(
-                starting_node.resource_gain_on_collect(patches, initial_resources, game.world_list.all_nodes,
-                                                       game.resource_database),
+                starting_node.resource_gain_on_collect(NodeContext(
+                    game.world_list.identifier_for_node(starting_node),
+                    patches, initial_resources, game.world_list.all_nodes,
+                    game.resource_database,
+                )),
                 initial_resources,
             )
 

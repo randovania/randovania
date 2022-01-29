@@ -127,7 +127,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
         if isinstance(node, EventNode):
             # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = convert_resource_gain_to_current_resources(node.resource_gain_on_collect(None, None, None, None))
+            current = convert_resource_gain_to_current_resources(node.resource_gain_on_collect(None))
             if game.victory_condition.satisfied(current, 0, game.resource_database):
                 continue
 
