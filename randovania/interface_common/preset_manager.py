@@ -66,7 +66,8 @@ class PresetManager:
         all_files = self._data_dir.glob(f"*.{VersionedPreset.file_extension()}")
         user_presets = await asyncio.gather(*[VersionedPreset.from_file(f) for f in all_files])
         for preset in typing.cast(List[VersionedPreset], user_presets):
-            self.custom_presets[preset.uuid] = preset
+            if preset.is_for_known_game():
+                self.custom_presets[preset.uuid] = preset
 
     @property
     def default_preset(self) -> VersionedPreset:

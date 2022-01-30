@@ -6,7 +6,51 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [3.3.0] - Unreleased
+## [4.1.0] - Unreleased
+
+- Nothing yet.
+
+### Cave Story
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime 1
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime 2: Echoes
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+## [4.0.1] - Unreleased
+
+- Nothing yet.
+
+## [4.0.0] - 2022-01-30
 
 - **Major** - Added: Cave Story has been added with full single-player support.
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
@@ -45,6 +89,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Updated "Starter Preset" to better match community preferences.
 
 #### Known Issues:
+
+- Nothing.
 
 #### Patcher Changes
 
@@ -168,9 +214,9 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Shrine Access Seeker Door without Seekers is now Hypermode (from Expert).
 
 
-## [3.2.2] - Unreleased
+## [3.2.2] - 2022-01-17
 
-- Nothing.
+- Fixed: Presets for unknown games (for example, from a dev version of Randovania) are now properly ignored.
 
 ## [3.2.1] - 2021-10-23
 
