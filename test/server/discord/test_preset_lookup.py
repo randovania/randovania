@@ -1,3 +1,5 @@
+import subprocess
+
 import pytest
 from mock import MagicMock, AsyncMock, call
 
@@ -21,6 +23,30 @@ async def test_on_message_from_bot(mocker):
 
     # Assert
     mock_look_for.assert_not_awaited()
+
+
+@pytest.mark.parametrize(["is_dev", "git_result", "expected_result"], [
+    (False, "v3.2.2-902-gc361caae\n", None),
+    (True, "v3.2.2-902-gc361caae\n", "3.3.0.dev902"),
+    (False, "v4.0.0\n", "4.0.0"),
+])
+def test_get_version_success(mocker, is_dev, git_result, expected_result):
+    mocker.patch("randovania.server.discord.preset_lookup._is_dev_version", return_value=is_dev)
+    mocker.patch("subprocess.run", return_value=subprocess.CalledProcessError(0, [], output=git_result))
+    result = preset_lookup.get_version("foo", b'J/A')
+    assert result == expected_result
+
+
+def test_get_version_failure_missing(mocker):
+    mocker.patch("subprocess.run", side_effect=FileNotFoundError)
+    result = preset_lookup.get_version("foo", b'J/A')
+    assert result == f"(Unknown version: 4a2f41)"
+
+
+def test_get_version_failure_unknown(mocker):
+    mocker.patch("subprocess.run", side_effect=subprocess.CalledProcessError(0, []))
+    result = preset_lookup.get_version("foo", b'J/A')
+    assert result is None
 
 
 @pytest.mark.parametrize("is_solo", [False, True])
