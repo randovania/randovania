@@ -1,19 +1,17 @@
-import contextlib
 import datetime
-import sys
+import datetime
 import typing
 
 import pytest
 from PySide2 import QtWidgets
-from PySide2.QtWidgets import QMessageBox
 from mock import MagicMock, AsyncMock, ANY
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_session_window import GameSessionWindow
-from randovania.layout.permalink import Permalink
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.permalink import Permalink
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction, \
     GameSessionActions, GameDetails
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
@@ -374,19 +372,14 @@ async def test_import_permalink(window, mocker):
     window.generate_game_with_permalink.assert_awaited_once_with(permalink, retries=None)
 
 
-@pytest.mark.parametrize(["expecting_kick", "already_kicked"], [
-    (False, True),
-    (False, False),
-    (True, False),
-])
+@pytest.mark.parametrize("already_kicked", [True, False])
 @pytest.mark.asyncio
-async def test_on_kicked(skip_qtbot, window, mocker, expecting_kick, already_kicked):
+async def test_on_kicked(skip_qtbot, window, mocker, already_kicked):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
     window.network_client.leave_game_session = AsyncMock()
     window._game_session = MagicMock()
     window._already_kicked = already_kicked
-    window._expecting_kick = expecting_kick
     window.close = MagicMock(return_value=None)
 
     # Run
@@ -401,45 +394,8 @@ async def test_on_kicked(skip_qtbot, window, mocker, expecting_kick, already_kic
         window.close.assert_not_called()
     else:
         window.network_client.leave_game_session.assert_awaited_once_with(False)
-        if expecting_kick:
-            mock_warning.assert_not_awaited()
-        else:
-            mock_warning.assert_awaited_once()
+        mock_warning.assert_awaited_once()
         window.close.assert_called_once_with()
-
-
-@pytest.mark.parametrize("exception", [False, True])
-@pytest.mark.parametrize("accept", [False, True])
-@pytest.mark.asyncio
-async def test_delete_session(window, mocker, accept, exception, monkeypatch):
-    mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
-    mock_warning.return_value = QtWidgets.QMessageBox.Yes if accept else QtWidgets.QMessageBox.No
-
-    window.network_client.session_admin_global = AsyncMock()
-    if exception and accept:
-        def re_raise_exception(_, v, __):
-            raise v
-
-        monkeypatch.setattr(sys, "excepthook", re_raise_exception)
-
-        window.network_client.session_admin_global.side_effect = RuntimeError("error")
-        expectation = pytest.raises(RuntimeError, match="error")
-    else:
-        expectation = contextlib.nullcontext()
-
-    # Run
-    with expectation:
-        await window.delete_session()
-
-    # Assert
-    mock_warning.assert_awaited_once()
-    if accept:
-        window.network_client.session_admin_global.assert_awaited_once_with(SessionAdminGlobalAction.DELETE_SESSION,
-                                                                            None)
-        assert window._expecting_kick != exception
-    else:
-        window.network_client.session_admin_global.assert_not_awaited()
-        assert not window._expecting_kick
 
 
 @pytest.mark.parametrize("accept", [False, True])
@@ -494,36 +450,23 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
     )
 
 
-@pytest.mark.parametrize("dialog_response", [QMessageBox.Yes, QMessageBox.No, QMessageBox.Cancel])
 @pytest.mark.parametrize("is_member", [False, True])
 @pytest.mark.asyncio
-async def test_on_close_event(window: GameSessionWindow, mocker, dialog_response, is_member):
+async def test_on_close_event(window: GameSessionWindow, mocker, is_member):
     # Setup
-    execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock,
-                                  return_value=dialog_response)
     super_close_event = mocker.patch("PySide2.QtWidgets.QMainWindow.closeEvent")
     event = MagicMock()
     window._game_session = MagicMock()
     window._game_session.players = [window.network_client.current_user.id] if is_member else []
     window.network_client.leave_game_session = AsyncMock()
-    window.network_client.connection_state.is_disconnected = dialog_response == QMessageBox.Yes
+    window.network_client.connection_state.is_disconnected = False
 
     # Run
     await window._on_close_event(event)
+    event.ignore.assert_not_called()
+    super_close_event.assert_called_once_with(event)
 
     if is_member:
-        execute_dialog.assert_awaited_once()
-    else:
-        execute_dialog.assert_not_awaited()
-
-    if is_member and dialog_response == QMessageBox.Cancel:
-        event.ignore.assert_called_once_with()
-        super_close_event.assert_not_called()
-    else:
-        event.ignore.assert_not_called()
-        super_close_event.assert_called_once_with(event)
-
-    if is_member and dialog_response != QMessageBox.Cancel:
-        window.network_client.leave_game_session.assert_awaited_once_with(dialog_response == QMessageBox.Yes)
+        window.network_client.leave_game_session.assert_awaited_once_with(False)
     else:
         window.network_client.leave_game_session.assert_not_awaited()
