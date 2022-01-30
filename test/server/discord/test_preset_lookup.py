@@ -80,9 +80,11 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     mock_embed.assert_called_once_with(
         title="`yu4abbceWfLI-`", description=f"{permalink_1.parameters.player_count} player multiworld permalink",
     )
-    suffix = f"for Randovania {randovania.VERSION}\nSeed Hash: Elevator Key Checkpoint (LBMFQWCY)"
+    suffix = f"Seed Hash: Elevator Key Checkpoint (LBMFQWCY)"
     if is_solo:
-        assert embed.description == "Metroid Prime 2: Echoes permalink {}".format(suffix)
+        split_desc = embed.description.split("\n")
+        split_desc[0] = split_desc[0].split(" for Randovania")[0]
+        assert split_desc == ["Metroid Prime 2: Echoes permalink", suffix]
         embed.add_field.assert_has_calls([
             call(name="General", value="Foo\nBar", inline=True),
             call(name="Other", value="X\nY", inline=True),
