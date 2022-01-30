@@ -3539,7 +3539,7 @@
                         }
                     }
                 },
-                "Door to Main Hub Tower": {
+                "Door to Main Hub Tower Top": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3558,7 +3558,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Top",
                         "node_name": "Door to Teleport to Ferenia"
                     },
                     "dock_type": "door",
@@ -4000,7 +4000,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Main Hub Tower": {
+                        "Door to Main Hub Tower Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4027,7 +4027,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Main Hub Tower": {
+                        "Door to Main Hub Tower Top": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4326,14 +4326,14 @@
                 }
             }
         },
-        "Main Hub Tower": {
+        "Main Hub Tower Top": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
                     "x1": -5000.0,
                     "x2": -900.0,
-                    "y1": -11800.0,
+                    "y1": -2115.0,
                     "y2": 3700.0
                 },
                 "polygon": [
@@ -4347,24 +4347,61 @@
                     ],
                     [
                         -5000.0,
-                        -10700.0
-                    ],
-                    [
-                        -4700.0,
-                        -11200.0
-                    ],
-                    [
-                        -4700.0,
-                        -11800.0
+                        -2115.0
                     ],
                     [
                         -900.0,
-                        -11800.0
+                        -2115.0
                     ]
-                ],
-                "asset_id": "collision_camera_010"
+                ]
             },
             "nodes": {
+                "Dock to Main Hub Tower Middle (Left)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3331.35,
+                        "y": -2109.66,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Main Hub Tower Middle",
+                        "node_name": "Dock to Main Hub Tower Top (Left)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Door to Save Station Middle": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Main Hub Tower Middle (Right)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1414.3,
+                        "y": -2109.66,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Main Hub Tower Middle",
+                        "node_name": "Dock to Main Hub Tower Top (Right)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {}
+                },
                 "Door to collision_camera_012 (B)": {
                     "node_type": "dock",
                     "heal": false,
@@ -4385,7 +4422,7 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "collision_camera_012 (B)",
-                        "node_name": "Door to Main Hub Tower"
+                        "node_name": "Door to Main Hub Tower Top"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Phase Shift Door",
@@ -4419,7 +4456,7 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "Teleport to Ferenia",
-                        "node_name": "Door to Main Hub Tower"
+                        "node_name": "Door to Main Hub Tower Top"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -4502,19 +4539,19 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "Save Station Middle",
-                        "node_name": "Door to Main Hub Tower"
+                        "node_name": "Door to Main Hub Tower Top"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Upper Left Magnet Wall": {
+                        "Dock to Main Hub Tower Middle (Left)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Left of Central Grapple Block": {
+                        "Upper Left Magnet Wall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4543,7 +4580,7 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "Flash Shift Room",
-                        "node_name": "Door to Main Hub Tower"
+                        "node_name": "Door to Main Hub Tower Top"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Phase Shift Door",
@@ -4569,391 +4606,16 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "Flash Shift Room",
-                        "node_name": "Door from Main Hub Tower"
+                        "node_name": "Door from Main Hub Tower Top"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door from Teleport to Ghavoran (Plasma)": {
+                        "Dock to Main Hub Tower Middle (Right)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to collision_camera_013 (B) (Upper)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4950.0,
-                        "y": -4600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorpowerpower_013",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_003",
-                        "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
-                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002",
-                        "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "collision_camera_013 (B)",
-                        "node_name": "Door to Main Hub Tower (Upper)"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Plasma Beam Door",
-                    "connections": {
-                        "Door from Teleport to Ghavoran (Charge)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BureniaHubMagnetPlatform",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Horizontal Water Movement"
-                                    }
-                                ]
-                            }
-                        },
-                        "Missile Tank Plus Platform": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "BureniaHubMagnetPlatform",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Door to collision_camera_013 (B) (Lower)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4950.0,
-                        "y": -7600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorpowerpower_014",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "collision_camera_013 (B)",
-                        "node_name": "Door to Main Hub Tower (Lower)"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
-                    "connections": {
-                        "Alcove across grapple block": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s040_aqua:default:db_reg_aq_003",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Ledge above Grapple Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Shoot Blob from above (db_reg_aq_003)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Door to collision_camera_026 (B) (doorpowerpower_022)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4950.0,
-                        "y": -8100.0,
-                        "z": -0.006835999898612499
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorpowerpower_022",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "collision_camera_026 (B)",
-                        "node_name": "Door to Main Hub Tower (doorpowerpower_022)"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
-                    "connections": {
-                        "Alcove across grapple block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to collision_camera_026 (B) (doorpowerpower_023)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4950.0,
-                        "y": -9200.0,
-                        "z": -0.006835999898612499
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorpowerpower_023",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "collision_camera_026 (B)",
-                        "node_name": "Door to Main Hub Tower (doorpowerpower_023)"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
-                    "connections": {
-                        "Tile Group (SCREWATTACK)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Water Space Jump Platform": {
-                            "type": "template",
-                            "data": "Horizontal Water Movement"
-                        }
-                    }
-                },
-                "Door to collision_camera_025 (B)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -950.0,
-                        "y": -10200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorpowerpower_024",
-                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "collision_camera_025 (B)",
-                        "node_name": "Door to Main Hub Tower"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
-                    "connections": {
-                        "Alcove across grapple block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Horizontal Water Movement"
-                                    }
-                                ]
-                            }
-                        },
-                        "Ledge above Grapple Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Water Space Jump Platform": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Door from Teleport to Ghavoran (Charge)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -950.0,
-                        "y": -4600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorclosedcharge_002",
-                        "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "Teleport to Ghavoran",
-                        "node_name": "Door to Main Hub Tower (Charge)"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Access Closed",
-                    "connections": {
-                        "Door to collision_camera_013 (B) (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "BureniaHubMagnetPlatform",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Horizontal Water Movement"
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to Teleport to Ghavoran (Lower Tunnel)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Lower Magnet Wall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Magnet",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Horizontal Water Movement"
-                                    }
-                                ]
                             }
                         }
                     }
@@ -5036,195 +4698,6 @@
                         }
                     }
                 },
-                "Pickup (item_missiletankplus_001)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4000.0,
-                        "y": -5480.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "item_missiletankplus_001",
-                        "actor_def": "actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad"
-                    },
-                    "pickup_index": 89,
-                    "major_location": false,
-                    "connections": {
-                        "Missile Tank Plus Platform": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door from Teleport to Ghavoran (Plasma)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -950.0,
-                        "y": -2800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorclosedpower",
-                        "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004",
-                        "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
-                    },
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "Teleport to Ghavoran",
-                        "node_name": "Door to Main Hub Tower (Plasma)"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Access Closed",
-                    "connections": {
-                        "Door to Flash Shift Room (Lower)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Dock to Teleport to Ghavoran (Upper Tunnel)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Left of Central Grapple Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s040_aqua:default:grapplepulloff1x2_005",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Pickup (item_missiletank_007)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2950.0,
-                        "y": -3400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "item_missiletank_007",
-                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
-                    },
-                    "pickup_index": 94,
-                    "major_location": false,
-                    "connections": {
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Shoot Blob from alcove (db_reg_aq_003)": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3500.0,
-                        "y": -8400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "db_reg_aq_003",
-                        "actor_def": "actordef:actors/props/db_reg_aq_003/charclasses/db_reg_aq_003.bmsad"
-                    },
-                    "event_name": "s040_aqua:default:db_reg_aq_003",
-                    "connections": {
-                        "Alcove across grapple block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Pull Lower-Right Grapple Block (grapplepulloff1x2_003)": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2250.0,
-                        "y": -8550.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "grapplepulloff1x2_003",
-                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
-                    },
-                    "event_name": "s040_aqua:default:grapplepulloff1x2_003",
-                    "connections": {
-                        "Alcove across grapple block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Pull Central Grapple Block (grapplepulloff1x2_005)": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2950.0,
-                        "y": -3050.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "grapplepulloff1x2_005",
-                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
-                    },
-                    "event_name": "s040_aqua:default:grapplepulloff1x2_005",
-                    "connections": {
-                        "Left of Central Grapple Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Start Point": {
                     "node_type": "generic",
                     "heal": false,
@@ -5266,190 +4739,6 @@
                         ]
                     },
                     "connections": {}
-                },
-                "Tile Group (SCREWATTACK)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4100.0,
-                        "y": -10300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_008",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SCREWATTACK"
-                        ]
-                    },
-                    "connections": {
-                        "Door to collision_camera_026 (B) (doorpowerpower_023)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to collision_camera_024 (B)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Dock to collision_camera_025 (B)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Water Space Jump Platform": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3100.0,
-                        "y": -3400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_024",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (item_missiletank_007)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Giant Water Bottom": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Upper Water Ledge - Left": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
                 },
                 "Tile Group (WEIGHT)": {
                     "node_type": "generic",
@@ -5514,140 +4803,6 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Dock to Teleport to Ghavoran (Upper Tunnel)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -855.64,
-                        "y": -3608.63,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "Teleport to Ghavoran",
-                        "node_name": "Dock to Main Hub Tower (Upper)"
-                    },
-                    "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
-                    "connections": {
-                        "Door from Teleport to Ghavoran (Plasma)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Magnet",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WBJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Upper Water Ledge - Right": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WBJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Dock to Teleport to Ghavoran (Lower Tunnel)": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -821.02,
-                        "y": -5218.34,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Burenia",
-                        "area_name": "Teleport to Ghavoran",
-                        "node_name": "Dock to Main Hub Tower (Lower)"
-                    },
-                    "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
-                    "connections": {
-                        "Door from Teleport to Ghavoran (Charge)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Missile Tank Plus Platform": {
-                            "type": "template",
-                            "data": "Horizontal Water Movement"
-                        },
-                        "Giant Water Bottom": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -5831,6 +4986,524 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "Main Hub Tower Middle": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5000.0,
+                    "x2": -900.0,
+                    "y1": -7000.0,
+                    "y2": -2115.0
+                },
+                "polygon": [
+                    [
+                        -900.0,
+                        -2115.0
+                    ],
+                    [
+                        -5000.0,
+                        -2115.0
+                    ],
+                    [
+                        -5000.0,
+                        -7000.0
+                    ],
+                    [
+                        -900.0,
+                        -7000.0
+                    ]
+                ],
+                "asset_id": "collision_camera_010"
+            },
+            "nodes": {
+                "Door to collision_camera_013 (B)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4950.0,
+                        "y": -4600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_013",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_003",
+                        "left_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad",
+                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002",
+                        "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "collision_camera_013 (B)",
+                        "node_name": "Door to Main Hub Tower Middle"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Plasma Beam Door",
+                    "connections": {
+                        "Door from Teleport to Ghavoran (Charge)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BureniaHubMagnetPlatform",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Horizontal Water Movement"
+                                    }
+                                ]
+                            }
+                        },
+                        "Missile Tank Plus Platform": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "BureniaHubMagnetPlatform",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door from Teleport to Ghavoran (Charge)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -950.0,
+                        "y": -4600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorclosedcharge_002",
+                        "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Teleport to Ghavoran",
+                        "node_name": "Door to Main Hub Tower Middle (Charge)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
+                    "connections": {
+                        "Door to collision_camera_013 (B)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "BureniaHubMagnetPlatform",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Horizontal Water Movement"
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Teleport to Ghavoran (Lower Tunnel)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Lower Magnet Wall": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Magnet",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Horizontal Water Movement"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (item_missiletankplus_001)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4000.0,
+                        "y": -5480.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "item_missiletankplus_001",
+                        "actor_def": "actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad"
+                    },
+                    "pickup_index": 89,
+                    "major_location": false,
+                    "connections": {
+                        "Missile Tank Plus Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door from Teleport to Ghavoran (Plasma)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -950.0,
+                        "y": -2800.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorclosedpower",
+                        "actor_def": "actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004",
+                        "right_shield_def": "actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Teleport to Ghavoran",
+                        "node_name": "Door to Main Hub Tower Middle (Plasma)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
+                    "connections": {
+                        "Dock to Teleport to Ghavoran (Upper Tunnel)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Left of Central Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:grapplepulloff1x2_005",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to Main Hub Tower Top (Right)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (item_missiletank_007)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2950.0,
+                        "y": -3400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "item_missiletank_007",
+                        "actor_def": "actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad"
+                    },
+                    "pickup_index": 94,
+                    "major_location": false,
+                    "connections": {
+                        "Tile Group (SPEEDBOOST)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Pull Central Grapple Block (grapplepulloff1x2_005)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2950.0,
+                        "y": -3050.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "grapplepulloff1x2_005",
+                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
+                    },
+                    "event_name": "s040_aqua:default:grapplepulloff1x2_005",
+                    "connections": {
+                        "Left of Central Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tile Group (SPEEDBOOST)": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3100.0,
+                        "y": -3400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_024",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SPEEDBOOST"
+                        ]
+                    },
+                    "connections": {
+                        "Pickup (item_missiletank_007)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Giant Water Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Upper Water Ledge - Left": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Teleport to Ghavoran (Upper Tunnel)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -855.64,
+                        "y": -3608.63,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Teleport to Ghavoran",
+                        "node_name": "Dock to Main Hub Tower Middle (Upper)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Door from Teleport to Ghavoran (Plasma)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Magnet",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WBJ",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Upper Water Ledge - Right": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WBJ",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Dock to Teleport to Ghavoran (Lower Tunnel)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -821.02,
+                        "y": -5218.34,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Teleport to Ghavoran",
+                        "node_name": "Dock to Main Hub Tower Middle (Lower)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Morph Ball Tunnel",
+                    "connections": {
+                        "Door from Teleport to Ghavoran (Charge)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Missile Tank Plus Platform": {
+                            "type": "template",
+                            "data": "Horizontal Water Movement"
+                        },
+                        "Giant Water Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Mid-Left Spider Magnet Pit": {
                     "node_type": "generic",
@@ -5843,82 +5516,6 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Save Station Middle": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Walljump",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Left of Central Grapple Block": {
                             "type": "or",
                             "data": {
@@ -6001,6 +5598,82 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Main Hub Tower Top (Left)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -6070,7 +5743,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_013 (B) (Upper)": {
+                        "Door to collision_camera_013 (B)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6543,6 +6216,497 @@
                         }
                     }
                 },
+                "Dock to Main Hub Tower Top (Left)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3331.35,
+                        "y": -2109.66,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Main Hub Tower Top",
+                        "node_name": "Dock to Main Hub Tower Middle (Left)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Left of Central Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to Main Hub Tower Top (Right)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1414.3,
+                        "y": -2109.66,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Main Hub Tower Top",
+                        "node_name": "Dock to Main Hub Tower Middle (Right)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Door from Teleport to Ghavoran (Plasma)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Main Hub Tower Bottom": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "total_boundings": {
+                    "x1": -5000.0,
+                    "x2": -900.0,
+                    "y1": -11800.0,
+                    "y2": -7000.0
+                },
+                "polygon": [
+                    [
+                        -900.0,
+                        -7000.0
+                    ],
+                    [
+                        -5000.0,
+                        -7000.0
+                    ],
+                    [
+                        -5000.0,
+                        -10700.0
+                    ],
+                    [
+                        -4700.0,
+                        -11200.0
+                    ],
+                    [
+                        -4700.0,
+                        -11800.0
+                    ],
+                    [
+                        -900.0,
+                        -11800.0
+                    ]
+                ]
+            },
+            "nodes": {
+                "Door to collision_camera_013 (B)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4950.0,
+                        "y": -7600.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_014",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "collision_camera_013 (B)",
+                        "node_name": "Door to Main Hub Tower Bottom"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
+                    "connections": {
+                        "Alcove across grapple block": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s040_aqua:default:db_reg_aq_003",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Ledge above Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Shoot Blob from above (db_reg_aq_003)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Wave",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to collision_camera_026 (B) (doorpowerpower_022)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4950.0,
+                        "y": -8100.0,
+                        "z": -0.006835999898612499
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_022",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "collision_camera_026 (B)",
+                        "node_name": "Door to Main Hub Tower Bottom (doorpowerpower_022)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
+                    "connections": {
+                        "Alcove across grapple block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to collision_camera_026 (B) (doorpowerpower_023)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4950.0,
+                        "y": -9200.0,
+                        "z": -0.006835999898612499
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_023",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "collision_camera_026 (B)",
+                        "node_name": "Door to Main Hub Tower Bottom (doorpowerpower_023)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
+                    "connections": {
+                        "Tile Group (SCREWATTACK)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Water Space Jump Platform": {
+                            "type": "template",
+                            "data": "Horizontal Water Movement"
+                        }
+                    }
+                },
+                "Door to collision_camera_025 (B)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -950.0,
+                        "y": -10200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorpowerpower_024",
+                        "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "collision_camera_025 (B)",
+                        "node_name": "Door to Main Hub Tower Bottom"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Power Beam Door",
+                    "connections": {
+                        "Alcove across grapple block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Horizontal Water Movement"
+                                    }
+                                ]
+                            }
+                        },
+                        "Ledge above Grapple Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Water Space Jump Platform": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s040_aqua:default:grapplepulloff1x2_003",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Shoot Blob from alcove (db_reg_aq_003)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3500.0,
+                        "y": -8400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "db_reg_aq_003",
+                        "actor_def": "actordef:actors/props/db_reg_aq_003/charclasses/db_reg_aq_003.bmsad"
+                    },
+                    "event_name": "s040_aqua:default:db_reg_aq_003",
+                    "connections": {
+                        "Alcove across grapple block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Pull Lower-Right Grapple Block (grapplepulloff1x2_003)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2250.0,
+                        "y": -8550.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "grapplepulloff1x2_003",
+                        "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
+                    },
+                    "event_name": "s040_aqua:default:grapplepulloff1x2_003",
+                    "connections": {
+                        "Alcove across grapple block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tile Group (SCREWATTACK)": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4100.0,
+                        "y": -10300.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_008",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "SCREWATTACK"
+                        ]
+                    },
+                    "connections": {
+                        "Door to collision_camera_026 (B) (doorpowerpower_023)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Dock to collision_camera_024 (B)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to collision_camera_025 (B)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Water Space Jump Platform": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
                 "Dock to collision_camera_024 (B)": {
                     "node_type": "dock",
                     "heal": false,
@@ -6556,7 +6720,7 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "collision_camera_024 (B)",
-                        "node_name": "Dock to Main Hub Tower"
+                        "node_name": "Dock to Main Hub Tower Bottom"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -6670,7 +6834,7 @@
                     "destination": {
                         "world_name": "Burenia",
                         "area_name": "collision_camera_025 (B)",
-                        "node_name": "Dock to Main Hub Tower"
+                        "node_name": "Dock to Main Hub Tower Bottom"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -6779,7 +6943,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_013 (B) (Lower)": {
+                        "Door to collision_camera_013 (B)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6910,7 +7074,7 @@
                     "extra": {},
                     "event_name": "s040_aqua:default:db_reg_aq_003",
                     "connections": {
-                        "Door to collision_camera_013 (B) (Lower)": {
+                        "Door to collision_camera_013 (B)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7030,7 +7194,7 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Door to Main Hub Tower": {
+                "Door to Main Hub Tower Top": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7049,7 +7213,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Top",
                         "node_name": "Door to Save Station Middle"
                     },
                     "dock_type": "door",
@@ -7080,7 +7244,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
                     "connections": {
-                        "Door to Main Hub Tower": {
+                        "Door to Main Hub Tower Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7122,7 +7286,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Door to Main Hub Tower": {
+                "Door to Main Hub Tower Top": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7141,7 +7305,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Top",
                         "node_name": "Door to collision_camera_012 (B)"
                     },
                     "dock_type": "door",
@@ -7181,7 +7345,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Main Hub Tower": {
+                        "Door to Main Hub Tower Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7223,7 +7387,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door to Main Hub Tower (Upper)": {
+                "Door to Main Hub Tower Middle": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7242,13 +7406,13 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
-                        "node_name": "Door to collision_camera_013 (B) (Upper)"
+                        "area_name": "Main Hub Tower Middle",
+                        "node_name": "Door to collision_camera_013 (B)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
-                        "Door to Main Hub Tower (Lower)": {
+                        "Door to Main Hub Tower Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7271,7 +7435,7 @@
                         }
                     }
                 },
-                "Door to Main Hub Tower (Lower)": {
+                "Door to Main Hub Tower Bottom": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7290,13 +7454,13 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
-                        "node_name": "Door to collision_camera_013 (B) (Lower)"
+                        "area_name": "Main Hub Tower Bottom",
+                        "node_name": "Door to collision_camera_013 (B)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Main Hub Tower (Upper)": {
+                        "Door to Main Hub Tower Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7363,7 +7527,7 @@
                     "pickup_index": 77,
                     "major_location": false,
                     "connections": {
-                        "Door to Main Hub Tower (Lower)": {
+                        "Door to Main Hub Tower Bottom": {
                             "type": "template",
                             "data": "Can Slide Underwater"
                         },
@@ -7394,7 +7558,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad"
                     },
                     "connections": {
-                        "Door to Main Hub Tower (Upper)": {
+                        "Door to Main Hub Tower Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7421,7 +7585,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Main Hub Tower (Upper)": {
+                        "Door to Main Hub Tower Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7505,7 +7669,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door to Main Hub Tower": {
+                "Door to Main Hub Tower Top": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7524,13 +7688,13 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Top",
                         "node_name": "Door to Flash Shift Room (Upper)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Phase Shift Door",
                     "connections": {
-                        "Door from Main Hub Tower": {
+                        "Door from Main Hub Tower Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7539,7 +7703,7 @@
                         }
                     }
                 },
-                "Door from Main Hub Tower": {
+                "Door from Main Hub Tower Top": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7558,13 +7722,13 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Top",
                         "node_name": "Door to Flash Shift Room (Lower)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
                     "connections": {
-                        "Door to Main Hub Tower": {
+                        "Door to Main Hub Tower Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7596,7 +7760,7 @@
                     "pickup_index": 78,
                     "major_location": true,
                     "connections": {
-                        "Door from Main Hub Tower": {
+                        "Door from Main Hub Tower Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7619,7 +7783,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door from Main Hub Tower": {
+                        "Door from Main Hub Tower Top": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7742,7 +7906,7 @@
                         }
                     }
                 },
-                "Door to Main Hub Tower (Charge)": {
+                "Door to Main Hub Tower Middle (Charge)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7761,7 +7925,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Middle",
                         "node_name": "Door from Teleport to Ghavoran (Charge)"
                     },
                     "dock_type": "door",
@@ -7805,7 +7969,7 @@
                                 ]
                             }
                         },
-                        "Dock to Main Hub Tower (Lower)": {
+                        "Dock to Main Hub Tower Middle (Lower)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7816,7 +7980,7 @@
                         }
                     }
                 },
-                "Door to Main Hub Tower (Plasma)": {
+                "Door to Main Hub Tower Middle (Plasma)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7835,7 +7999,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Middle",
                         "node_name": "Door from Teleport to Ghavoran (Plasma)"
                     },
                     "dock_type": "door",
@@ -7884,7 +8048,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
                     "connections": {
-                        "Door to Main Hub Tower (Plasma)": {
+                        "Door to Main Hub Tower Middle (Plasma)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7978,7 +8142,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Main Hub Tower (Plasma)": {
+                        "Door to Main Hub Tower Middle (Plasma)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8119,7 +8283,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Main Hub Tower (Charge)": {
+                        "Door to Main Hub Tower Middle (Charge)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8130,7 +8294,7 @@
                             "type": "template",
                             "data": "Shoot Beam"
                         },
-                        "Dock to Main Hub Tower (Upper)": {
+                        "Dock to Main Hub Tower Middle (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8170,7 +8334,7 @@
                     "extra": {},
                     "event_name": "s040_aqua:default:db_reg_aq_012",
                     "connections": {
-                        "Door to Main Hub Tower (Plasma)": {
+                        "Door to Main Hub Tower Middle (Plasma)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8179,7 +8343,7 @@
                         }
                     }
                 },
-                "Dock to Main Hub Tower (Upper)": {
+                "Dock to Main Hub Tower Middle (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8191,7 +8355,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Middle",
                         "node_name": "Dock to Teleport to Ghavoran (Upper Tunnel)"
                     },
                     "dock_type": "other",
@@ -8225,7 +8389,7 @@
                         }
                     }
                 },
-                "Dock to Main Hub Tower (Lower)": {
+                "Dock to Main Hub Tower Middle (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8237,13 +8401,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Middle",
                         "node_name": "Dock to Teleport to Ghavoran (Lower Tunnel)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to Main Hub Tower (Charge)": {
+                        "Door to Main Hub Tower Middle (Charge)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11906,7 +12070,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Dock to Main Hub Tower": {
+                        "Dock to Main Hub Tower Bottom": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11935,7 +12099,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Dock to Main Hub Tower": {
+                        "Dock to Main Hub Tower Bottom": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11946,7 +12110,7 @@
                         }
                     }
                 },
-                "Dock to Main Hub Tower": {
+                "Dock to Main Hub Tower Bottom": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11958,7 +12122,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Bottom",
                         "node_name": "Dock to collision_camera_024 (B)"
                     },
                     "dock_type": "other",
@@ -12012,7 +12176,7 @@
                 "asset_id": "collision_camera_025"
             },
             "nodes": {
-                "Door to Main Hub Tower": {
+                "Door to Main Hub Tower Bottom": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12031,7 +12195,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Bottom",
                         "node_name": "Door to collision_camera_025 (B)"
                     },
                     "dock_type": "door",
@@ -12154,7 +12318,7 @@
                     "pickup_index": 95,
                     "major_location": false,
                     "connections": {
-                        "Door to Main Hub Tower": {
+                        "Door to Main Hub Tower Bottom": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -12183,7 +12347,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Main Hub Tower": {
+                        "Door to Main Hub Tower Bottom": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -12192,7 +12356,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Main Hub Tower": {
+                        "Dock to Main Hub Tower Bottom": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -12203,7 +12367,7 @@
                         }
                     }
                 },
-                "Dock to Main Hub Tower": {
+                "Dock to Main Hub Tower Bottom": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12215,7 +12379,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Bottom",
                         "node_name": "Dock to collision_camera_025 (B)"
                     },
                     "dock_type": "other",
@@ -12244,7 +12408,7 @@
                     "extra": {},
                     "event_name": "BureniaStormMissileGateEtank",
                     "connections": {
-                        "Door to Main Hub Tower": {
+                        "Door to Main Hub Tower Bottom": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12311,7 +12475,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Main Hub Tower (doorpowerpower_022)": {
+                        "Door to Main Hub Tower Bottom (doorpowerpower_022)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12320,7 +12484,7 @@
                         }
                     }
                 },
-                "Door to Main Hub Tower (doorpowerpower_022)": {
+                "Door to Main Hub Tower Bottom (doorpowerpower_022)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12339,7 +12503,7 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Bottom",
                         "node_name": "Door to collision_camera_026 (B) (doorpowerpower_022)"
                     },
                     "dock_type": "door",
@@ -12352,13 +12516,13 @@
                                 "items": []
                             }
                         },
-                        "Door to Main Hub Tower (doorpowerpower_023)": {
+                        "Door to Main Hub Tower Bottom (doorpowerpower_023)": {
                             "type": "template",
                             "data": "Can Slide Underwater"
                         }
                     }
                 },
-                "Door to Main Hub Tower (doorpowerpower_023)": {
+                "Door to Main Hub Tower Bottom (doorpowerpower_023)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12377,13 +12541,13 @@
                     },
                     "destination": {
                         "world_name": "Burenia",
-                        "area_name": "Main Hub Tower",
+                        "area_name": "Main Hub Tower Bottom",
                         "node_name": "Door to collision_camera_026 (B) (doorpowerpower_023)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Main Hub Tower (doorpowerpower_022)": {
+                        "Door to Main Hub Tower Bottom (doorpowerpower_022)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",

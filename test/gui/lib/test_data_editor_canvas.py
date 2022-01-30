@@ -13,15 +13,14 @@ def _canvas(skip_qtbot, dread_game_description):
     canvas = DataEditorCanvas()
     skip_qtbot.addWidget(canvas)
 
-    for world in dread_game_description.world_list.worlds:
-        canvas.select_world(world)
-        for area in world.areas:
-            canvas.select_area(area)
-            for node in area.nodes:
-                canvas.highlight_node(node)
-                break
-            break
-        break
+    world = dread_game_description.world_list.world_with_name("Artaria")
+    area = world.area_by_name("First Tutorial")
+
+    canvas.select_world(world)
+    canvas.select_area(area)
+
+    canvas.highlight_node(area.nodes[0])
+
     return canvas
 
 
@@ -45,7 +44,7 @@ def test_mouseDoubleClickEvent_node(skip_qtbot, canvas):
     event.globalPos.return_value = QPoint(532, 319)
     canvas._update_scale_variables()
 
-    expected_node = canvas.area.node_with_name("Door to collision_camera_001 (A)")
+    expected_node = canvas.area.node_with_name("Door to Charge Tutorial")
 
     canvas.SelectNodeRequest = MagicMock()
     canvas.SelectAreaRequest = MagicMock()

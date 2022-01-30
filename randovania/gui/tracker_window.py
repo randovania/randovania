@@ -479,7 +479,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                                                                  and is_collected)
 
                     if self._show_only_resource_nodes:
-                        is_visible = is_visible and node.is_resource_node
+                        is_visible = is_visible and node.is_resource_node and not isinstance(node, ConfigurableNode)
 
                     node_item = self._node_to_item[node]
                     node_item.setHidden(not is_visible)
