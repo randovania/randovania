@@ -170,7 +170,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 
 ## [3.2.2] - Unreleased
 
-- Nothing.
+- Fixed: Presets for unknown games (for example, from a dev version of Randovania) are now properly ignored.
 
 ## [3.2.1] - 2021-10-23
 
