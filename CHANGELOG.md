@@ -69,6 +69,8 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Changed: Editing connections in the Data Editor now has an easier to use selector for non-item resources.
 - Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
 - Fixed: Data Editor now properly handles areas without nodes.
+- Removed: It's no longer possible to delete a game session.
+- Removed: It's no longer possible to leave the session when closing the window.
 
 ### Metroid Prime
 
