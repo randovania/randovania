@@ -65,10 +65,13 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Descriptions for Minimal Logic for each game, with a better definition of what Minimal Logic is.
 - Added: Randovania is now able to identify for what version of Randovania a given permalink is, if they're similar enough versions.
 - Added: Permalinks now contain the seed hash, so Randovania can detect if there's a hash mismatch when importing.
+- Changed: In the Game Session Window, the observers tab is now visible by default.
 - Changed: The rdvgame file is now considerably more technical in order to require less game-specific code.
 - Changed: Editing connections in the Data Editor now has an easier to use selector for non-item resources.
 - Fixed: Data Visualizer no longer hides the comment for a single-element Or/And entry.
 - Fixed: Data Editor now properly handles areas without nodes.
+- Removed: It's no longer possible to delete a game session.
+- Removed: It's no longer possible to leave the session when closing the window.
 
 ### Metroid Prime
 
