@@ -244,7 +244,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         # tab stuff
         self.splitDockWidget(self.players_dock, self.game_dock, Qt.Vertical)
-        self.tabifyDockWidget(self.game_dock, self.observers_dock)
+        self.splitDockWidget(self.game_dock, self.observers_dock, Qt.Horizontal)
         self.tabifyDockWidget(self.game_dock, self.history_dock)
         self.tabifyDockWidget(self.game_dock, self.audit_dock)
         self.game_dock.raise_()
