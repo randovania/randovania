@@ -32,6 +32,9 @@ game_data: GameData = GameData(
         }
     ],
 
+    faq={
+    }.items(),
+
     layout=GameLayout(
         configuration=CorruptionConfiguration,
         cosmetic_patches=CorruptionCosmeticPatches,

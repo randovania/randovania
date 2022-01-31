@@ -33,6 +33,9 @@ game_data: GameData = GameData(
         }
     ],
 
+    faq={
+    }.items(),
+
     layout=GameLayout(
         configuration=DreadConfiguration,
         cosmetic_patches=DreadCosmeticPatches,

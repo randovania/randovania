@@ -14,6 +14,7 @@ class RandovaniaBot(discord.ext.commands.Bot):
         self.configuration = configuration
         self.load_extension("randovania.server.discord.preset_lookup")
         self.load_extension("randovania.server.discord.database_command")
+        self.load_extension("randovania.server.discord.faq_command")
 
 
 def run():
