@@ -37,6 +37,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         else:
             self.dark_aether_box.setVisible(False)
             self.safe_zone_box.setVisible(False)
+            self.dangerous_tank_check.setVisible(False)
 
         if self.game_enum == RandovaniaGame.METROID_PRIME:
             config_fields = {
