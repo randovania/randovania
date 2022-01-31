@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.1.0] - Unreleased
 
-- Nothing yet.
+- Added: /randovania-faq command was added to the Discord bot, which sends FAQ messages.
 
 ### Cave Story
 
