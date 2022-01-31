@@ -39,6 +39,9 @@ game_data: GameData = GameData(
         }
     ],
 
+    faq={
+    }.items(),
+
     layout=GameLayout(
         configuration=CSConfiguration,
         cosmetic_patches=CSCosmeticPatches,

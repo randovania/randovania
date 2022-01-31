@@ -29,6 +29,9 @@ game_data: GameData = GameData(
         }
     ],
 
+    faq={
+    }.items(),
+
     layout=GameLayout(
         configuration=SuperMetroidConfiguration,
         cosmetic_patches=SuperMetroidCosmeticPatches

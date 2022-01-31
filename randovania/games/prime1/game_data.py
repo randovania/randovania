@@ -36,6 +36,9 @@ game_data: GameData = GameData(
         },
     ],
 
+    faq={
+    }.items(),
+
     layout=GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,
