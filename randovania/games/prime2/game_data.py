@@ -43,6 +43,9 @@ game_data: GameData = GameData(
         }
     ],
 
+    faq={
+    }.items(),
+
     layout=GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,

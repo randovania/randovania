@@ -101,6 +101,9 @@ class GameData:
     presets: Iterable[dict[str, str]]
     """List of at least one dict mapping the key "path" to a path to the given preset."""
 
+    faq: Iterable[tuple[str, str]]
+    """List of question to markdown-formatted response of FAQ entries."""
+
     layout: GameLayout
     """Contains game-specific settings available for presets."""
 
