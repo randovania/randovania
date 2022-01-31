@@ -12,20 +12,17 @@ from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.resources.resource_database import \
-        ResourceDatabase
+    from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.item_pool import PoolResults
-    from randovania.gui.dialog.base_cosmetic_patches_dialog import \
-        BaseCosmeticPatchesDialog
+    from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-    from randovania.layout.base.major_items_configuration import \
-        MajorItemsConfiguration
+    from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
     from randovania.patching.patcher import Patcher
     from randovania.resolver.bootstrap import Bootstrap
 
@@ -39,7 +36,7 @@ class GamePresetDescriber:
     """Items not expected to be shuffled.
     Includes `expected_items` as well as configurable items such as progressive items."""
 
-    format_params: Optional[Callable[[BaseConfiguration], None]] = None
+    format_params: Optional[Callable[[BaseConfiguration], dict[str, list[str]]]] = None
     """Function providing any game-specific information to display in presets such as the goal."""
 
 
@@ -54,7 +51,7 @@ class GameLayout:
     preset_describer: GamePresetDescriber = GamePresetDescriber()
     """(Optional) Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
-    get_ingame_hash: Callable[[bytes], Optional[str]] = lambda hash: None
+    get_ingame_hash: Callable[[bytes], Optional[str]] = lambda h: None
     """(Optional) Takes a layout hash bytes and produces a string representing how the game will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
 
 
