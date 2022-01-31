@@ -48,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.0.1] - Unreleased
 
-- Nothing yet.
+- Changed: The UI for 1HP Mode now only shows up for Echoes.
 
 ## [4.0.0] - 2022-01-30
 
