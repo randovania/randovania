@@ -6891,32 +6891,13 @@
                         "node_name": "Dock to collision_camera_017 (D) (Tunnel)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
                         "Lower-Right Corner": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DaironCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -6964,21 +6945,20 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "events",
-                                            "name": "DaironCU",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
                                     }
                                 ]
                             }
@@ -7379,15 +7359,13 @@
                         "node_name": "Dock to Yellow EMMI Introduction (Tunnel)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
                         "Lower-Left Area": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DaironCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -7418,12 +7396,10 @@
                             }
                         },
                         "Dock to collision_camera_017 (D) (Tunnel)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DaironCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -10727,12 +10703,10 @@
                             }
                         },
                         "Dock to collision_camera_029 (D) (Tunnel)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DaironCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -10843,15 +10817,13 @@
                         "node_name": "Dock to collision_camera_027 (D) (Tunnel)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_029 (D)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "DaironCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -11081,26 +11053,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DaironCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -11213,32 +11166,13 @@
                         "node_name": "Dock to collision_camera_029 (D) (Tunnel)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
                         "Dock to collision_camera_030 (D)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DaironCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -13003,8 +12937,34 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Yellow EMMI Fight": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
+                },
+                "Dock to Yellow EMMI Fight": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14542.81,
+                        "y": -4467.05,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Dairon",
+                        "area_name": "Yellow EMMI Fight",
+                        "node_name": "Dock to collision_camera_036 (D)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Dairon EMMI Tunnel",
+                    "connections": {}
                 }
             }
         },
@@ -13375,26 +13335,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DaironCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -13493,8 +13434,8 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -12718.81,
-                        "y": -6857.66,
+                        "x": -11600.0,
+                        "y": -6400.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -13505,7 +13446,7 @@
                         "node_name": "Dock to collision_camera_037 (D)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {}
                 }
             }
@@ -14062,32 +14003,40 @@
                         "node_name": "Dock to Yellow EMMI Fight"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_037 (D) (doorchargecharge_000)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "DaironCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock to collision_camera_036 (D)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -14542.81,
+                        "y": -4467.05,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Dairon",
+                        "area_name": "collision_camera_036 (D)",
+                        "node_name": "Dock to Yellow EMMI Fight"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Dairon EMMI Tunnel",
+                    "connections": {
+                        "Door to Central Unit Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
