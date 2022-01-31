@@ -2,12 +2,15 @@ from collections import defaultdict
 
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
     message_for_required_mains
 
 
-def cs_format_params(configuration: CSConfiguration) -> dict[str, list[str]]:
+def cs_format_params(configuration: BaseConfiguration) -> dict[str, list[str]]:
+    assert isinstance(configuration, CSConfiguration)
+
     template_strings = defaultdict(list)
     template_strings["Objective"].append(configuration.objective.long_name)
     template_strings.update(_format_params_base(configuration))
@@ -38,8 +41,9 @@ def cs_format_params(configuration: CSConfiguration) -> dict[str, list[str]]:
 cs_expected_items = set()
 
 
-def cs_unexpected_items(configuration: MajorItemsConfiguration) -> list[str]:
+def cs_unexpected_items(configuration: MajorItemsConfiguration) -> set[str]:
     unexpected_items = cs_expected_items.copy()
+
     if has_shuffled_item(configuration, "Progressive Polar Star"):
         unexpected_items.add("Polar Star")
         unexpected_items.add("Spur")
