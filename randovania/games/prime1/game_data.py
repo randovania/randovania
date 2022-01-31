@@ -36,8 +36,31 @@ game_data: GameData = GameData(
         },
     ],
 
-    faq={
-    }.items(),
+    faq=[
+        ("An item collection message sometimes shows up when collecting items, even when disabled. Why?",
+
+         "In a multiworld, you must not collect items for other players too quickly. "
+         "To avoid issues, the message box is forced in situations a problem could happen. "
+         "For more details on the problem, check *Randovania Help -> Multiworld*."),
+
+        ("What is a Shiny Missile Expansion?",
+
+         "Missile Expansions have a 1 in 1024 of being Pokémon-style shiny: "
+         "they look different but behave entirely the same as normal.\n"
+         "In a multiworld game, only your own Missile Expansions can be shiny."),
+
+        ("What versions of the game are supported?",
+
+         "All Gamecube versions are supported. If it plays with tank controls, it can be randomized. "
+         "Wii/Trilogy version is not supported at this time."),
+
+        ("Won't seeds requiring glitches be incompletable on PAL, JP, and Player's Choice "
+         "due to the version differences from NTSC 0-00?",
+
+         "When the output ISO is generated, the input version is automatically detected, and any bug or sequence break "
+         "fixes present on that version are undone. This reverts the game to be functionally equivalent to NTSC 0-00, "
+         "meaning that all versions of Prime are guaranteed to be logically completable when randomized."),
+    ],
 
     layout=GameLayout(
         configuration=PrimeConfiguration,
