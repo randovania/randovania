@@ -12,11 +12,12 @@ import dulwich.repo
 import randovania
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
+from randovania.lib import enum_lib
 
 
 def read_preset_list() -> List[Path]:
     preset_list = []
-    for game in RandovaniaGame:
+    for game in enum_lib.iterate_enum(RandovaniaGame):
         base_path = game.data_path.joinpath("presets")
         preset_list.extend([base_path.joinpath(preset["path"]) for preset in game.data.presets])
 
