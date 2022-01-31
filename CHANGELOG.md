@@ -46,9 +46,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing.
 
+## [4.0.2] - Unreleased
+
+- Nothing yet.
+
 ## [4.0.1] - Unreleased
 
 - Changed: The UI for 1HP Mode now only shows up for Echoes.
+- Fixed: Support for non-NTSC Metroid Prime 1 ISOs restored.
 
 ## [4.0.0] - 2022-01-30
 
