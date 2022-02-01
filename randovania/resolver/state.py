@@ -10,7 +10,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another, convert_resource_gain_to_current_resources
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import ResourceNode, Node
+from randovania.game_description.world.node import ResourceNode, Node, NodeContext
 from randovania.game_description.world.world_list import WorldList
 
 
@@ -124,14 +124,12 @@ class State:
         :return:
         """
 
-        if not node.can_collect(self.patches, self.resources, self.world_list.all_nodes, self.resource_database):
+        if not node.can_collect(self.context_for(node)):
             raise ValueError(
                 "Trying to collect an uncollectable node'{}'".format(node))
 
         new_resources = copy.copy(self.resources)
-        add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.patches, self.resources,
-                                                                             self.world_list.all_nodes,
-                                                                             self.resource_database),
+        add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.context_for(node)),
                                                new_resources)
 
         energy = new_energy
@@ -193,6 +191,15 @@ class State:
             new_patches,
             self,
             self.game_data,
+        )
+
+    def context_for(self, node: Node) -> NodeContext:
+        return NodeContext(
+            self.game_data.world_list.identifier_for_node(node),
+            self.patches,
+            self.resources,
+            self.game_data.world_list.all_nodes,
+            self.resource_database,
         )
 
 
