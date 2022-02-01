@@ -144,7 +144,8 @@ class PlayerState:
                        for resource in interesting_resources_for_reach(self.reach)
                        if resource.resource_type == ResourceType.ITEM}
 
-        return ("At {0} after {1} actions and {2} pickups, with {3} collected locations.\n\n"
+        return ("At {0} after {1} actions and {2} pickups, with {3} collected locations,"
+                " {6} nodes in reach and {7} safe nodes.\n\n"
                 "Pickups still available: {4}\n\nResources to progress: {5}").format(
             self.game.world_list.node_name(self.reach.state.node, with_world=True, distinguish_dark_aether=True),
             self.num_actions,
@@ -153,6 +154,8 @@ class PlayerState:
             ", ".join(name if quantity == 1 else f"{name} x{quantity}"
                       for name, quantity in sorted(pickups_by_name_and_quantity.items())),
             ", ".join(sorted(to_progress)),
+            sum(1 for n in self.reach.all_nodes if self.reach.is_reachable_node(n)),
+            sum(1 for n in self.reach.all_nodes if self.reach.is_safe_node(n)),
         )
 
 
