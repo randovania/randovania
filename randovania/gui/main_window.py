@@ -11,6 +11,7 @@ from functools import partial
 from pathlib import Path
 from typing import Optional, List
 
+import markdown
 from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import QUrl, Signal, Qt
 from qasync import asyncSlot
@@ -242,6 +243,19 @@ class MainWindow(WindowManager, Ui_MainWindow):
         # Remove pointless Prime 1/3 help tabs
         self.prime_differences_tab.deleteLater()
         self.corruption_differences_tab.deleteLater()
+
+        # Update FAQ text
+
+        def format_game_faq(widget: QtWidgets.QLabel, game: RandovaniaGame):
+            widget.setTextFormat(Qt.MarkdownText)
+            widget.setText("\n\n&nbsp;\n".join(
+                "### {}\n{}".format(question, answer)
+                for question, answer in game.data.faq
+            ))
+
+        format_game_faq(self.prime_faq_label, RandovaniaGame.METROID_PRIME)
+        format_game_faq(self.echoes_faq_label, RandovaniaGame.METROID_PRIME_ECHOES)
+        format_game_faq(self.super_metroid_faq_label, RandovaniaGame.SUPER_METROID)
 
         # Update hints text
         logging.info("Will _update_hints_text")

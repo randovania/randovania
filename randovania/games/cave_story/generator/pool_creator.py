@@ -7,10 +7,15 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.generator.item_pool import PoolResults
+from randovania.layout.base.base_configuration import BaseConfiguration
 
 
-def pool_creator(results: PoolResults, configuration: CSConfiguration, db: ResourceDatabase, base_patches: GamePatches,
+def pool_creator(results: PoolResults,
+                 configuration: BaseConfiguration,
+                 db: ResourceDatabase,
+                 base_patches: GamePatches,
                  rng: Random) -> None:
+    assert isinstance(configuration, CSConfiguration)
     if base_patches is None or rng is None:
         return
 

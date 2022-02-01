@@ -22,7 +22,7 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         requirement_for_type = {
             "POWERBEAM": rsb.requirement_template["Shoot Beam"],
             "BOMB": rsb.requirement_template["Lay Bomb"],
-            "MISSILE": ResourceRequirement(rsb.get_item("Missiles"), 1, False),
+            "MISSILE": rsb.requirement_template["Shoot Missile"],
             "SUPERMISSILE": rsb.requirement_template["Shoot Super Missile"],
             "POWERBOMB": rsb.requirement_template["Lay Power Bomb"],
             "SCREWATTACK": ResourceRequirement(rsb.get_item("Screw"), 1, False),

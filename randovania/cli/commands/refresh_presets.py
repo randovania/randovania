@@ -3,10 +3,11 @@ from argparse import ArgumentParser
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib import enum_lib
 
 
 def refresh_presets_command_logic(args):
-    for game in RandovaniaGame:
+    for game in enum_lib.iterate_enum(RandovaniaGame):
         logging.info(f"Refreshing presets for {game.long_name}")
         base_path = game.data_path.joinpath("presets")
 

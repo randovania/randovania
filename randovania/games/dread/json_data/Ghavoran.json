@@ -39,7 +39,7 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Door to collision_camera_003 (G)": {
+                "Door to Left Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -58,13 +58,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_003 (G)",
+                        "area_name": "Left Entrance",
                         "node_name": "Door to Transport to Burenia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
-                        "Door to collision_camera_001 (G)": {
+                        "Door to Right Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -73,7 +73,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_001 (G)": {
+                "Door to Right Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -92,13 +92,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_001 (G)",
+                        "area_name": "Right Entrance",
                         "node_name": "Door to Transport to Burenia"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
                     "connections": {
-                        "Door to collision_camera_003 (G)": {
+                        "Door to Left Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -128,7 +128,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_001 (G)": {
+                        "Door to Right Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -161,7 +161,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to collision_camera_001 (G)": {
+                        "Door to Right Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -172,7 +172,7 @@
                 }
             }
         },
-        "collision_camera_001 (G)": {
+        "Right Entrance": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -231,7 +231,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Robot Fight Arena",
-                        "node_name": "Door to collision_camera_001 (G)"
+                        "node_name": "Door to Right Entrance"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -265,7 +265,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Spider Magnet Elevator",
-                        "node_name": "Door to collision_camera_001 (G)"
+                        "node_name": "Door to Right Entrance"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -320,7 +320,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Super Missile Room",
-                        "node_name": "Door to collision_camera_001 (G)"
+                        "node_name": "Door to Right Entrance"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -441,7 +441,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Transport to Burenia",
-                        "node_name": "Door to collision_camera_001 (G)"
+                        "node_name": "Door to Right Entrance"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -647,6 +647,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Door to Transport to Burenia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -794,7 +801,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door to collision_camera_001 (G)": {
+                "Door to Right Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -813,13 +820,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_001 (G)",
+                        "area_name": "Right Entrance",
                         "node_name": "Door to Robot Fight Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_003 (G)": {
+                        "Door to Left Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -828,7 +835,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_003 (G)": {
+                "Door to Left Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -847,13 +854,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_003 (G)",
+                        "area_name": "Left Entrance",
                         "node_name": "Door to Robot Fight Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_001 (G)": {
+                        "Door to Right Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -876,7 +883,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_003 (G)": {
+                        "Door to Left Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -887,7 +894,7 @@
                 }
             }
         },
-        "collision_camera_003 (G)": {
+        "Left Entrance": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -942,7 +949,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Blue EMMI Introduction",
-                        "node_name": "Dock to collision_camera_003 (G)"
+                        "node_name": "Dock to Left Entrance"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -976,7 +983,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Transport to Burenia",
-                        "node_name": "Door to collision_camera_003 (G)"
+                        "node_name": "Door to Left Entrance"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
@@ -1080,7 +1087,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Robot Fight Arena",
-                        "node_name": "Door to collision_camera_003 (G)"
+                        "node_name": "Door to Left Entrance"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1544,7 +1551,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Dock to collision_camera_003 (G)": {
+                "Dock to Left Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1559,7 +1566,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_003 (G)",
+                        "area_name": "Left Entrance",
                         "node_name": "Dock to Blue EMMI Introduction"
                     },
                     "dock_type": "other",
@@ -1660,7 +1667,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
-                        "Dock to collision_camera_003 (G)": {
+                        "Dock to Left Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1671,26 +1678,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Right Alcove": {
@@ -1769,32 +1757,13 @@
                         "node_name": "Dock to Blue EMMI Introduction"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Ghavoran EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_011 (G)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -3115,7 +3084,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Door to collision_camera_001 (G)": {
+                "Door to Right Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3134,7 +3103,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_001 (G)",
+                        "area_name": "Right Entrance",
                         "node_name": "Door to Super Missile Room"
                     },
                     "dock_type": "door",
@@ -3174,7 +3143,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_001 (G)": {
+                        "Door to Right Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3656,26 +3625,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -3696,32 +3646,13 @@
                         "node_name": "Dock to collision_camera_011 (G)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Ghavoran EMMI Tunnel",
                     "connections": {
                         "Dock to collision_camera_014 (G)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -4568,32 +4499,13 @@
                         "node_name": "Dock to collision_camera_014 (G)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Ghavoran EMMI Tunnel",
                     "connections": {
                         "Upper Platform": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -4627,26 +4539,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -5162,26 +5055,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -5302,9 +5176,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -7957.035175879397,
-                        "y": 2792.2110552763816,
-                        "z": 0
+                        "x": -7957.04,
+                        "y": 2792.21,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
@@ -5314,32 +5188,13 @@
                         "node_name": "Dock to collision_camera_018 (G)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "Ghavoran EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_014 (G) (doorgrapplegrapple_006)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -9456,7 +9311,7 @@
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "items",
-                                                                                                        "name": "Missiles",
+                                                                                                        "name": "MissileAmmo",
                                                                                                         "amount": 40,
                                                                                                         "negate": false
                                                                                                     }
@@ -9470,7 +9325,7 @@
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
                                                                                                                     "type": "items",
-                                                                                                                    "name": "Missiles",
+                                                                                                                    "name": "MissileAmmo",
                                                                                                                     "amount": 20,
                                                                                                                     "negate": false
                                                                                                                 }
@@ -9511,7 +9366,7 @@
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "items",
-                                                                                                        "name": "Missiles",
+                                                                                                        "name": "MissileAmmo",
                                                                                                         "amount": 100,
                                                                                                         "negate": false
                                                                                                     }
@@ -9525,7 +9380,7 @@
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
                                                                                                                     "type": "items",
-                                                                                                                    "name": "Missiles",
+                                                                                                                    "name": "MissileAmmo",
                                                                                                                     "amount": 50,
                                                                                                                     "negate": false
                                                                                                                 }
@@ -9562,7 +9417,7 @@
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "items",
-                                                                                                        "name": "Missiles",
+                                                                                                        "name": "MissileAmmo",
                                                                                                         "amount": 300,
                                                                                                         "negate": false
                                                                                                     }
@@ -9576,7 +9431,7 @@
                                                                                                                 "type": "resource",
                                                                                                                 "data": {
                                                                                                                     "type": "items",
-                                                                                                                    "name": "Missiles",
+                                                                                                                    "name": "MissileAmmo",
                                                                                                                     "amount": 150,
                                                                                                                     "negate": false
                                                                                                                 }
@@ -12015,7 +11870,7 @@
                 "asset_id": "collision_camera_035"
             },
             "nodes": {
-                "Door to collision_camera_001 (G)": {
+                "Door to Right Entrance": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12034,7 +11889,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_001 (G)",
+                        "area_name": "Right Entrance",
                         "node_name": "Door to Spider Magnet Elevator"
                     },
                     "dock_type": "door",
@@ -12159,7 +12014,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to collision_camera_001 (G)": {
+                        "Door to Right Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,

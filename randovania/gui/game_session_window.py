@@ -171,7 +171,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     _logic_settings_window: Optional[LogicSettingsWindow] = None
     _window_manager: WindowManager
     _generating_game: bool = False
-    _expecting_kick = False
     _already_kicked = False
     _can_stop_background_process = True
 
@@ -195,11 +194,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
         self.rename_session_action = QtWidgets.QAction("Change title", self.advanced_options_menu)
         self.change_password_action = QtWidgets.QAction("Change password", self.advanced_options_menu)
-        self.delete_session_action = QtWidgets.QAction("Delete session", self.advanced_options_menu)
 
         self.advanced_options_menu.addAction(self.rename_session_action)
         self.advanced_options_menu.addAction(self.change_password_action)
-        self.advanced_options_menu.addAction(self.delete_session_action)
         self.advanced_options_tool.setMenu(self.advanced_options_menu)
 
         # Save ISO Button
@@ -247,7 +244,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         # tab stuff
         self.splitDockWidget(self.players_dock, self.game_dock, Qt.Vertical)
-        self.tabifyDockWidget(self.game_dock, self.observers_dock)
+        self.splitDockWidget(self.game_dock, self.observers_dock, Qt.Horizontal)
         self.tabifyDockWidget(self.game_dock, self.history_dock)
         self.tabifyDockWidget(self.game_dock, self.audit_dock)
         self.game_dock.raise_()
@@ -260,7 +257,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         # Advanced Options
         self.rename_session_action.triggered.connect(self.rename_session)
         self.change_password_action.triggered.connect(self.change_password)
-        self.delete_session_action.triggered.connect(self.delete_session)
 
         # Save ISO Button
         self.copy_permalink_action.triggered.connect(self.copy_permalink)
@@ -324,24 +320,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         return await self._on_close_event(event)
 
     async def _on_close_event(self, event: QtGui.QCloseEvent):
-        user_response = QMessageBox.No
-
         is_kicked = self.network_client.current_user.id not in self._game_session.players
-        if not is_kicked:
-            user_response = await async_dialog.warning(
-                self,
-                "Leaving Game Session",
-                ("Do you want to also leave the session?\n\n"
-                 "Yes: Leave permanently, freeing a spot for others.\n"
-                 "No: Close the window, but stay in the session. You can rejoin later.\n"
-                 "Cancel: Do nothing\n"),
-                QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel,
-                QMessageBox.No
-            )
-
-        if user_response == QMessageBox.Cancel:
-            event.ignore()
-            return
 
         await self.multiworld_client.stop()
         try:
@@ -358,9 +337,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             logging.exception(f"Unable to disconnect: {e}")
 
         try:
-            if user_response == QMessageBox.Yes or (not is_kicked and
-                                                    not self.network_client.connection_state.is_disconnected):
-                await self.network_client.leave_game_session(user_response == QMessageBox.Yes)
+            if not is_kicked and not self.network_client.connection_state.is_disconnected:
+                await self.network_client.leave_game_session(False)
         finally:
             for d in [self.players_dock, self.game_dock, self.observers_dock, self.history_dock]:
                 d.close()
@@ -682,14 +660,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return
         self._already_kicked = True
         leave_session = self.network_client.leave_game_session(False)
-        if not self._expecting_kick:
-            if self._game_session.players:
-                message = "Kicked", "You have been kicked out of the session."
-            else:
-                message = "Session deleted", "The session has been deleted."
-            await asyncio.gather(async_dialog.warning(self, *message), leave_session)
+        if self._game_session.players:
+            message = "Kicked", "You have been kicked out of the session."
         else:
-            await leave_session
+            message = "Session deleted", "The session has been deleted."
+        await asyncio.gather(async_dialog.warning(self, *message), leave_session)
         return QTimer.singleShot(0, self.close)
 
     def sync_rows_to_game_session(self):
@@ -904,21 +879,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         dialog.setTextEchoMode(QtWidgets.QLineEdit.Password)
         if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
             await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, dialog.textValue())
-
-    @asyncSlot()
-    @handle_network_errors
-    async def delete_session(self):
-        result = await async_dialog.warning(self, "Delete session",
-                                            "Are you sure you want to delete this session?",
-                                            QMessageBox.Yes | QMessageBox.No,
-                                            QMessageBox.No)
-        if result == QMessageBox.Yes:
-            self._expecting_kick = True
-            try:
-                await self._admin_global_action(SessionAdminGlobalAction.DELETE_SESSION, None)
-            except Exception:
-                self._expecting_kick = False
-                raise
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
         all_dangerous_settings = {

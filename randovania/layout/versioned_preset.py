@@ -70,6 +70,13 @@ class VersionedPreset:
             return self.get_preset() == other.get_preset()
         return False
 
+    def is_for_known_game(self):
+        try:
+            # self.game is never None, but it might raise ValueError in case the preset is for an unknown game
+            return self.game is not None
+        except ValueError:
+            return False
+
     @property
     def _converted(self):
         return self._preset is not None or self.exception is not None

@@ -6788,12 +6788,10 @@
                             }
                         },
                         "Dock to collision_camera_046 (C) (Bottom)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Center Alcove": {
@@ -6924,12 +6922,10 @@
                             }
                         },
                         "Dock to collision_camera_046 (C) (Upper)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Center Alcove": {
@@ -7114,7 +7110,7 @@
                         "node_name": "Dock to Green EMMI Introduction"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_059 (C)": {
                             "type": "resource",
@@ -7143,15 +7139,13 @@
                         "node_name": "Dock to Green EMMI Introduction (Bottom)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Dock to collision_camera_052 (C)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -7172,15 +7166,13 @@
                         "node_name": "Dock to Green EMMI Introduction (Upper)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_059 (C)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -7613,7 +7605,7 @@
                             }
                         },
                         "Dock to collision_camera_035 (C)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -7621,45 +7613,14 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Morph",
+                                            "name": "Space",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "IBJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -7682,32 +7643,13 @@
                         "node_name": "Dock to collision_camera_022 (C)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Dock to Map Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -10892,26 +10834,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -11114,42 +11037,25 @@
                         "node_name": "Dock to collision_camera_028 (C)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Upper Ledge": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
+                                            "type": "items",
+                                            "name": "Space",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -11172,15 +11078,13 @@
                         "node_name": "Dock to collision_camera_028 (C)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Upper Ledge": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -11201,32 +11105,13 @@
                         "node_name": "Dock to collision_camera_028 (C)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_029 (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -11260,35 +11145,14 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Dock to collision_camera_029 (C)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -11534,32 +11398,15 @@
                         "node_name": "Dock to collision_camera_029 (C)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Tunnel Center": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -11580,32 +11427,15 @@
                         "node_name": "Dock to collision_camera_029 (C)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Tunnel Center": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -11657,55 +11487,21 @@
                             }
                         },
                         "Dock to Green EMMI Introduction": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Dock to collision_camera_028 (C)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -12640,12 +12436,10 @@
                             }
                         },
                         "Dock to collision_camera_046 (C) (2)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -12765,15 +12559,13 @@
                         "node_name": "Dock to collision_camera_032 (C) (2)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Door from collision_camera_010 (C)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -13106,26 +12898,7 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -13217,32 +12990,13 @@
                         "node_name": "Dock to collision_camera_035 (C)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Dock to Moving Magnet Walls (Small)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "CatarisCU",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -13472,7 +13226,7 @@
                         "node_name": "Dock to Green EMMI Fight"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Dock to collision_camera_035 (C)": {
                             "type": "and",
@@ -16940,12 +16694,10 @@
                             }
                         },
                         "Dock to Green EMMI Introduction (Bottom)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to collision_camera_032 (C) (2)": {
@@ -17121,12 +16873,10 @@
                             "data": "Can Slide"
                         },
                         "Dock to Green EMMI Introduction (Upper)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to collision_camera_032 (C) (2)": {
@@ -17200,15 +16950,13 @@
                         "node_name": "Dock to collision_camera_046 (C) (Bottom)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_032 (C) (doorpowerpower_015)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -17229,15 +16977,13 @@
                         "node_name": "Dock to collision_camera_046 (C) (Upper)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Door to Green EMMI Introduction (doorshutter_001)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -17258,7 +17004,7 @@
                         "node_name": "Dock to collision_camera_046 (C) (2)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_032 (C) (doorpowerpower_015)": {
                             "type": "and",
@@ -19201,7 +18947,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s020_magma:default:db_reg_mg_021",
+                                            "name": "s020_magma:default:db_dif_mg_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -19877,7 +19623,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_053 (C) (1)": {
+                "Door from collision_camera_053 (C)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -19897,10 +19643,10 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_053 (C)",
-                        "node_name": "Dock to collision_camera_052 (C) (1)"
+                        "node_name": "Door to collision_camera_052 (C)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Door to Teleport to Dairon": {
                             "type": "and",
@@ -19943,14 +19689,14 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_053 (C) (1)": {
+                        "Door from collision_camera_053 (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_053 (C) (2)": {
+                        "Dock to collision_camera_053 (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20006,7 +19752,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_053 (C) (2)": {
+                "Dock to collision_camera_053 (C)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -20019,7 +19765,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_053 (C)",
-                        "node_name": "Dock to collision_camera_052 (C) (2)"
+                        "node_name": "Dock to collision_camera_052 (C)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -20066,7 +19812,7 @@
                 "asset_id": "collision_camera_053"
             },
             "nodes": {
-                "Dock to collision_camera_052 (C) (1)": {
+                "Door to collision_camera_052 (C)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -20086,10 +19832,10 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_052 (C)",
-                        "node_name": "Dock to collision_camera_053 (C) (1)"
+                        "node_name": "Door from collision_camera_053 (C)"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_type": "door",
+                    "dock_weakness": "Wave Beam Door",
                     "connections": {
                         "Tile Group (POWERBEAM) 1": {
                             "type": "or",
@@ -20341,7 +20087,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_052 (C) (1)": {
+                        "Door to collision_camera_052 (C)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -20437,7 +20183,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_052 (C) (2)": {
+                        "Dock to collision_camera_052 (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20671,7 +20417,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_052 (C) (2)": {
+                "Dock to collision_camera_052 (C)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -20684,12 +20430,12 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "collision_camera_052 (C)",
-                        "node_name": "Dock to collision_camera_053 (C) (2)"
+                        "node_name": "Dock to collision_camera_053 (C)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
-                        "Dock to collision_camera_052 (C) (1)": {
+                        "Door to collision_camera_052 (C)": {
                             "type": "and",
                             "data": {
                                 "comment": "TODO: After proper blast shield logic is implemented, adjust this. This is a temporary connection.",
@@ -20751,7 +20497,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "damage",
-                                            "name": "Cold",
+                                            "name": "Lava",
                                             "amount": 400,
                                             "negate": false
                                         }
@@ -21406,12 +21152,10 @@
                             }
                         },
                         "Dock to collision_camera_028 (C)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -21432,15 +21176,13 @@
                         "node_name": "Dock to collision_camera_059 (C)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Morph Ball Tunnel",
+                    "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
                         "Door to collision_camera_028 (C)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "CatarisCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -22979,7 +22721,7 @@
                                                                             "type": "resource",
                                                                             "data": {
                                                                                 "type": "items",
-                                                                                "name": "Missiles",
+                                                                                "name": "MissileAmmo",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
