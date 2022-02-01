@@ -2,6 +2,10 @@
 
 Index of terminology used in Randovania. Some terms are used only in the GUI, with more technical ones being used in code or CLI.
 
+## Action
+
+Anything the [Generator](#generator) or [Solver](#solver) can do which alters the game's state. Actions include obtaining [Resources](#resouce), crossing [Connections](#connection) between [Nodes](#node), and using [Docks](#dock) or [Teleporters](#teleporter).
+
 ## Area
 
 A small chunk of a game's playable space, often only a single room. May contain one or more [Nodes](#node).
@@ -10,25 +14,49 @@ Examples:
 - Phazon Mining Tunnel in Metroid Prime
 - Big Pink in Super Metroid
 
+## Burger King / BK
+
+A strictly informal term used to describe the situation of being unable to progress in a [Multiworld](#multiworld) [Session](#session). This occurs when a player has exhausted all readily available [Checks](#item-check) and must wait for another player to send them [Progression](#progression) before they can continue. The term was coined after a player in this state left to get food from the eponymous restaurant and had yet to obtain Progression by the time they returned.
+
 ## Configuration
 
 Has two meanings:
 
-- Colloquially, a term referring to the many types of settings a player may use when generating a game. This includes trick settings, item pool settings, starting items and location, [Gameplay and Cosmetic Patches](#game-patches), and many other things.
+- Colloquially, a term referring to the many types of settings a player may use when generating a game. This includes trick settings, [Pickup Pool](#pickup-pool) settings, starting items and location, [Gameplay and Cosmetic Patches](#game-patches), and many other things.
 
 - In code, the Configuration class that each game must provide, derived from the BaseConfiguration class. This is where game-specific parts of the [Preset](#preset) are defined.
 
+## Connection
+
+Connects two [Nodes](#node) in the same area. Contains a set of [Logical Requirements](#requirement) that define whether the [Generator](#generator) and [Solver](#solver) are allowed to cross it.
+
 ## Dangerous Action
 
-Any action that the [Generator](#generator) might take which could potentially leave it stranded; a one-way action. See also [Point of No Return](#point-of-no-return).
+Any action that the [Generator](#generator) might take which could potentially leave it stranded; a one-way action. Specifically, performing a Dangerous Action may leave the Generator unable to access [Pickups](#pickup) or other [Progression](#progression) which they would have been able to obtain before.
+
+An Action is not Dangerous if it is the only available Action which would allow them to progress, as in this scenario the Generator was unable to obtain other Checks even before they performed the Action. See also [Point of No Return](#point-of-no-return).
+
+## Dangerous Logic
+[Logic](#logic) that allows Actions to be performed which may place the game in an unbeatable state. Different from a [Point of No Return](#point-of-no-return) in that this is a primarily player-oriented issue; the game can still be beatable, but performing Actions in the wrong order can cause a player to experience this issue even though the [Seed](#seed) is valid.
+
+Examples:
+- Collecting the Gravity Suit in Metroid Prime, which makes Underwater Slope Jumps impossible
 
 ## Database
 
 The collection of data that represents a game's [Logic](#logic), including the layout of [Worlds](#world) and [Areas](#area), the [Resources](#resource) a player has to progress, the locations of [Pickups](#pickup) and spawn points, and other information.
 
+## Dock
+
+Represents some link between two [Areas](#area) that are directly adjacent. Docks usually represent things like doors, bridges, or other direct connections between areas, unlike [Teleporters](#teleporter), which represent means of travelling between two distant or disjointed Areas. Usually used to link two Areas within the same [World](#world), although it is possible for Docks to connect Areas between different Worlds.
+
 ## Event
 
 A logical [Resource](#resource) representing an event that may be triggered in game. Events can only be completed once, and cannot be undone.
+
+## Experimental
+
+Any system or feature of Randovania which is not ready for public use.
 
 ## Game Patches
 
@@ -40,7 +68,7 @@ Has two meainings:
 
 ## Generator
 
-The part of Randovania that takes the [Database](#database), the [Preset](#preset) settings, a [Random Number Generator](#rng) and decides which [Pickups](#pickup) should be placed where, as well as everything else that is randomly decided in the [Layout](#layout). This is also where [Game Patches](#game-patches) are applied.
+The part of Randovania that takes the [Database](#database), the [Preset](#preset) settings, a [Random Number Generator](#rng) and decides how [Pickups](#pickup) should be shuffled in the [Layout](#layout). This is also where [Game Patches](#game-patches) and other game modifications are applied.
 
 ## Hint
 
@@ -72,17 +100,23 @@ Colloquial term for a [LayoutDescription](#layout) serialized to a .rdvgame file
 
 ## Logic
 
-Colloquial term for how a randomizer works. Can mean one of:
-- Most often, the rules that govern what you need to reach certain in-game location. See [Database](#database) and [Requirement](#requirement).
-- Predicting [Pickup](#pickup) placement based on the [Generator](#generator) tells.
+A colloquial term for how a randomizer decides what actions to perform during generation. Can mean one of the following:
+- Most often, the rules that govern what you need to reach certain in-game locations See [Database](#database) and [Requirement](#requirement).
+- Predicting [Pickup](#pickup) placement based on patterns observed in the behavior of the [Generator](#generator).
 
 ## Multiworld
 
-A multiplayer randomizer session in which the [Pickup](#pickup) pool for each player is shuffled together as a single pool, with pickups for any player being placed in a given player's [Layout](#layout). Each player will have a unique layout, and the required [Progression](#progression) will often jump back and forth between players.
+A multiplayer randomizer session in which the [Pickup Pool](#pickup-pool) for each player is shuffled together as a single pool, with [Pickups](#pickup) for any player being placed in a given player's [Layout](#layout). Each player will have a unique layout, and the required [Progression](#progression) will often jump back and forth between players.
 
 ## Node
 
-Represents a point of interest within an area, such as a door or a pickup.
+Represents a point of interest within an [Area](#area), and may contain [Resources](#resource), such as [Docks](#dock) or [Pickups](#pickup). Nodes have [Connections](#connection) to all other Nodes in the same Area.
+
+Nodes always refer to a specific point in space, sometimes with explicit coordinates.
+
+## Nothing / Nothing Pickup
+
+A [Pickup](#pickup) that, while physically present in the game world, grants the player nothing whatsoever upon being obtained. Players with obfuscated viewmodels will only be able to tell a Nothing apart from the other Pickups by collecting it.
 
 ## Patcher
 
@@ -90,22 +124,22 @@ The code responsible for making the actual game modifications, generally accordi
 
 ## Permalink
 
-String with all data necessary to generate a game/[LayoutDescription](#layout). Support for permalinks are only guaranteed if using the same specific version, or when using stable releases, the same major.minor series.
+String with all data necessary to generate a game/[LayoutDescription](#layout). Support for Permalinks are only guaranteed if using the same specific version, or when using stable releases, the same major.minor series.
 
 For code: Contains one 32-bit int and one [Preset](#preset) for each player.
 
 ## Pickup
 
-Represents something that can be collected. Gives a quantity of any number of [Items](#item). Can also be progressive, giving some item based on which items the player has.
-When starting the [Generator](#generator), a pool of pickups is created based on the [Preset](#preset).
+Represents something that can be collected. Gives a quantity of any number of [Items](#item). Can also be progressive, giving some Item based on which Items the player has.
+When starting the [Generator](#generator), a [Pool of Pickups](#pickup-pool) is created based on the [Preset](#preset).
 
 ## Pickup Pool
 
-The available pool of items that can be placed as pickups during generation, and rules governing how they should be placed. Also includes information about [Starting Items](#starting-items).
+The available pool of [Items](#item) that can be placed as [Pickups](#pickup) during generation, and rules governing how they should be placed. Also includes information about [Starting Items](#starting-items).
 
 ## Pickup Location / Pickup Node
 
-Represents a place the in the game map where a [Pickup](#pickup) can be found. All locations will be assigned a pickup during the generation.
+Represents a [Node](#node) where a [Pickup](#pickup) can be found. All locations will be assigned a Pickup during generation.
 
 ## Plandomizer
 
@@ -113,7 +147,7 @@ A game where generation has been performed by hand, rather than by using the ran
 
 ## Point of No Return
 
-A point of no return (PONR) is a colloquial term for a [Dangerous Action](#dangerous-action). It is sometimes used to more specifically refer to dangerous actions involving travelling from one [Node](#node) to another, not including actions such as collecting [Events](#event) or [Pickups](#pickup) which are otherwise dangerous.
+A Point of No Return (PONR) is a colloquial term for a [Dangerous Action](#dangerous-action). It is sometimes used to more specifically refer to Dangerous Actions involving travelling from one [Node](#node) to another, not including actions such as collecting [Events](#event) or [Pickups](#pickup) which are otherwise dangerous.
 
 ## Preset
 
@@ -145,19 +179,27 @@ Commonly used to refer to a [Layout](#layout).
 
 Internally, this is used only to refer to the value used to initialize a [Random Number Generator](#rng).
 
+## Session
+
+An instance of [Multiworld](#multiworld) play.
+
 ## Solver
 
 The part of Randovania that takes a [Layout](#layout) and determines a path that can reach the [Victory Condition](#victory-condition).
 
-By default runs for all single-player layouts after generation.
+By default, this process is run for all single-player Layouts after generation.
 
 ## Starting Items
 
 [Items](#item) which a player is granted immediately upon starting the game.
 
+## Teleporter
+
+Any system that connects two conceptually disjointed [Areas](#area) of the game. Unlike [Docks](#dock), the areas they connect are not directly adjacent to one another. Teleporters are used to represent things like elevators, portals, fast-travel points, and, of course, actual teleporters. Teleporters are sually used to connect two distinct [Worlds](#world), though a Teleporter can also connect two Areas in the same World.
+
 ## Trick
 
-A [Resource](#resource) that represents some non-trivial gameplay feat, usually by exploiting some mechanic or glitch.
+A [Resource](#resource) that represents some non-trivial gameplay feat, usually achieved by exploiting some mechanic or glitch.
 
 Examples:
 - Slope Jumps in the Metroid Primes.
@@ -165,6 +207,10 @@ Examples:
 ## Trivial
 
 A [Logical Requirement](#requirement) which is always considered possible to meet, regardless of the player's current [Resources](#resource).
+
+## Vanilla
+
+An unmodified copy of the game.
 
 ## Victory Condition
 
@@ -176,7 +222,7 @@ Examples:
 
 ## World
 
-The largest subdivision used when mapping a game in Randovania. Worlds contain many [Areas](#area), and there are usually only a few worlds per game.
+The largest subdivision used when mapping a game in Randovania. Worlds contain many [Areas](#area), and there are usually only a few Worlds per game.
 
 Examples:
 - Chozo Ruins in Metroid Prime
