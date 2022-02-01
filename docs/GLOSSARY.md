@@ -28,7 +28,7 @@ Has two meanings:
 
 ## Connection
 
-Connects two [Nodes](#node) in the same area. Contains a set of [Logical Requirements](#requirement) that define whether the [Generator](#generator) and [Solver](#solver) are allowed to cross it.
+Connects two [Nodes](#node) in the same area. Contains a set of [Requirements](#requirement) that define whether the [Generator](#generator) and [Solver](#solver) are allowed to cross it.
 
 ## Dangerous Action
 
@@ -44,7 +44,7 @@ Examples:
 
 ## Database
 
-The collection of data that represents a game's [Logic](#logic), including the layout of [Worlds](#world) and [Areas](#area), the [Resources](#resource) a player has to progress, the locations of [Pickups](#pickup) and spawn points, and other information.
+The sum total of all data that represents a game within Randovania. Contains a list of [Worlds](#world), a [Resource Database](#resource-database), a [Victory Condition](#victory-condition), and any other information necessary to represent the game.
 
 ## Dock
 
@@ -52,7 +52,11 @@ Represents some link between two [Areas](#area) that are directly adjacent. Dock
 
 ## Event
 
-A logical [Resource](#resource) representing an event that may be triggered in game. Events can only be completed once, and cannot be undone.
+A [Resource](#resource) representing something a player may do to access more of the game. Events can only be completed once, and cannot be undone.
+
+Examples:
+- Activating a switch that unlocks a door elsewhere
+- Defeating a boss which causes the states of other rooms to change
 
 ## Experimental
 
@@ -72,7 +76,7 @@ The part of Randovania that takes the [Database](#database), the [Preset](#prese
 
 ## Hint
 
-A piece of text placed in the game world which may give the player information about how [Pickups](#pickup) were placed. This is distinct from [Log Files](#log-file), which contain all details of a generated game, and are generally considered to be a form of cheating in most competitive settings.
+A piece of text placed in the game world which may give the player information about their game. This is distinct from [Log Files](#log-file), which contain all details of a generated game, and are generally considered to be a form of cheating in most competitive settings.
 
 ## Item
 
@@ -168,6 +172,10 @@ Some in-game construct that the [Generator](#generator) or [Solver](#solver) mus
 
 See [Items](#item), [Events](#event), and [Tricks](#trick) for examples.
 
+## Resource Database
+
+The part of the [Database](#database) which defines all [Resources](#resource) relevant to the game. Can be visualized and modified in the [Data Editor](#data-editor).
+
 ## RNG
 
 Acronym for "Random Number Generator". Commonly used in speedrunning communities as an alias to random/randomness.
@@ -206,7 +214,7 @@ Examples:
 
 ## Trivial
 
-A [Logical Requirement](#requirement) which is always considered possible to meet, regardless of the player's current [Resources](#resource).
+A [Requirement](#requirement) which is always considered possible to meet, regardless of the player's current [Resources](#resource).
 
 ## Vanilla
 
