@@ -12,11 +12,15 @@ Examples:
 
 ## Configuration
 
-A colloquial term referring to the many types of settings a player may use when generating a game. This includes trick settings, item pool settings, starting items and location, [Gameplay and Cosmetic Patches](#game-patches), and many other things.
+Has two meanings:
+
+- Colloquially, a term referring to the many types of settings a player may use when generating a game. This includes trick settings, item pool settings, starting items and location, [Gameplay and Cosmetic Patches](#game-patches), and many other things.
+
+- In code, the Configuration class that each game must provide, derived from the BaseConfiguration class. This is where game-specific parts of the [Preset](#preset) are defined.
 
 ## Dangerous Action
 
-Any action that the [Solver](#solver) might take which it might not be able to backtrack from; a one-way action. See also [Point of No Return](#point-of-no-return).
+Any action that the [Generator](#generator) might take which could potentially leave it stranded; a one-way action. See also [Point of No Return](#point-of-no-return).
 
 ## Database
 
@@ -28,11 +32,15 @@ A logical [Resource](#resource) representing an event that may be triggered in g
 
 ## Game Patches
 
-A modification made to the game. Usually refers to specific changes made to the game, such as cutscene alterations, and not to the randomization process itself.
+Has two meainings:
+
+- Colloquially, any modification made to the game. Usually refers to specific changes made to the game, such as cutscene alterations, and not to the randomization process itself.
+
+- In code, refers to the GamePatches class, which holds all per-layout game modifications for a single player. Crucially, this does not include cosmetic patches.
 
 ## Generator
 
-The part of Randovania that takes the [Database](#database), the [Preset](#preset) settings, a [Random Number Generator](#rng) and decides which [Pickups](#pickup) should be placed where, as well as everything else that is randomly decided in the [Layout](#layout).
+The part of Randovania that takes the [Database](#database), the [Preset](#preset) settings, a [Random Number Generator](#rng) and decides which [Pickups](#pickup) should be placed where, as well as everything else that is randomly decided in the [Layout](#layout). This is also where [Game Patches](#game-patches) are applied.
 
 ## Hint
 
@@ -45,10 +53,6 @@ A kind of [Resource](#resource) that represents something a player has during th
 Examples:
 - Space Jump Boots in Metroid Prime 1/2.
 - Missiles in Metroid games.
-
-## Item Pool
-
-The available pool of items that can be placed as pickups during generation, and rules governing how they should be placed. Also includes information about [Starting Items](#starting-items).
 
 ## Item Check
 
@@ -78,7 +82,7 @@ A multiplayer randomizer session in which the [Pickup](#pickup) pool for each pl
 
 ## Node
 
-Represents the smallest discrete region of playable game space, often only a single in-game object, like a door or a pickup.
+Represents a point of interest within an area, such as a door or a pickup.
 
 ## Patcher
 
@@ -94,6 +98,10 @@ For code: Contains one 32-bit int and one [Preset](#preset) for each player.
 
 Represents something that can be collected. Gives a quantity of any number of [Items](#item). Can also be progressive, giving some item based on which items the player has.
 When starting the [Generator](#generator), a pool of pickups is created based on the [Preset](#preset).
+
+## Pickup Pool
+
+The available pool of items that can be placed as pickups during generation, and rules governing how they should be placed. Also includes information about [Starting Items](#starting-items).
 
 ## Pickup Location / Pickup Node
 
@@ -139,7 +147,7 @@ Internally, this is used only to refer to the value used to initialize a [Random
 
 ## Solver
 
-The part of Randovania that takes a [Layout](#layout) and determines a path that can reach the [Victory Condition](#layout).
+The part of Randovania that takes a [Layout](#layout) and determines a path that can reach the [Victory Condition](#victory-condition).
 
 By default runs for all single-player layouts after generation.
 
