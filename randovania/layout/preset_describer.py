@@ -110,7 +110,7 @@ def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfigur
 
 
 def _format_params_base(configuration: BaseConfiguration,
-                        ) -> Dict[str, List[str]]:
+                        ) -> dict[str, list[str]]:
     game_description = default_database.game_description_for(configuration.game)
     major_items = configuration.major_items_configuration
 

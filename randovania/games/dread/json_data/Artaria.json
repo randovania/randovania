@@ -79,7 +79,7 @@
                 "asset_id": "collision_camera_000"
             },
             "nodes": {
-                "Door to collision_camera_001 (A)": {
+                "Door to Charge Tutorial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -98,7 +98,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_001 (A)",
+                        "area_name": "Charge Tutorial",
                         "node_name": "Door to First Tutorial"
                     },
                     "dock_type": "door",
@@ -172,7 +172,7 @@
                     },
                     "event_name": "s010_cave:default:PRP_DB_CV_006",
                     "connections": {
-                        "Door to collision_camera_001 (A)": {
+                        "Door to Charge Tutorial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -479,7 +479,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to collision_camera_001 (A)": {
+                        "Door to Charge Tutorial": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -496,7 +496,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_001 (A)": {
+                        "Door to Charge Tutorial": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -714,7 +714,7 @@
                 }
             }
         },
-        "collision_camera_001 (A)": {
+        "Charge Tutorial": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -765,7 +765,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "First Tutorial",
-                        "node_name": "Door to collision_camera_001 (A)"
+                        "node_name": "Door to Charge Tutorial"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -799,7 +799,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Melee Tutorial West",
-                        "node_name": "Door to collision_camera_001 (A)"
+                        "node_name": "Door to Charge Tutorial"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -872,7 +872,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door to collision_camera_001 (A)": {
+                "Door to Charge Tutorial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -891,7 +891,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_001 (A)",
+                        "area_name": "Charge Tutorial",
                         "node_name": "Door to Melee Tutorial West"
                     },
                     "dock_type": "door",
@@ -947,7 +947,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_001 (A)": {
+                        "Door to Charge Tutorial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -974,7 +974,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
-                        "Door to collision_camera_001 (A)": {
+                        "Door to Charge Tutorial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1452,6 +1452,32 @@
                                             "name": "Space",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2999,7 +3025,7 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door to collision_camera_009 (A) (Bottom)": {
+                "Door to EMMI Zone North Exit (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3018,7 +3044,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_009 (A)",
+                        "area_name": "EMMI Zone North Exit",
                         "node_name": "Door to Teleport to Dairon"
                     },
                     "dock_type": "door",
@@ -3096,7 +3122,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Artaria Thermal Door",
                     "connections": {
-                        "Door to collision_camera_009 (A) (Bottom)": {
+                        "Door to EMMI Zone North Exit (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3140,7 +3166,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_009 (A)": {
+                        "Dock to EMMI Zone North Exit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3304,7 +3330,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_009 (A) (Upper)": {
+                "Door to EMMI Zone North Exit (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3323,7 +3349,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_009 (A)",
+                        "area_name": "EMMI Zone North Exit",
                         "node_name": "Dock from Teleport to Dairon"
                     },
                     "dock_type": "door",
@@ -3362,7 +3388,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to collision_camera_009 (A) (Upper)": {
+                        "Door to EMMI Zone North Exit (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3538,7 +3564,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_009 (A)": {
+                "Dock to EMMI Zone North Exit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3550,7 +3576,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_009 (A)",
+                        "area_name": "EMMI Zone North Exit",
                         "node_name": "Dock to Teleport to Dairon"
                     },
                     "dock_type": "other",
@@ -3569,7 +3595,7 @@
                 }
             }
         },
-        "collision_camera_009 (A)": {
+        "EMMI Zone North Exit": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -3620,12 +3646,12 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Teleport to Dairon",
-                        "node_name": "Door to collision_camera_009 (A) (Bottom)"
+                        "node_name": "Door to EMMI Zone North Exit (Bottom)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_048 (A)": {
+                        "Door to EMMI Zone Dome": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3641,7 +3667,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_048 (A)": {
+                "Door to EMMI Zone Dome": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3660,8 +3686,8 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_048 (A)",
-                        "node_name": "Door to collision_camera_009 (A)"
+                        "area_name": "EMMI Zone Dome",
+                        "node_name": "Door to EMMI Zone North Exit"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3680,7 +3706,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_048 (A)": {
+                        "Dock to EMMI Zone Dome": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3707,7 +3733,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Shinespark Tower to Grapple",
-                        "node_name": "Dock to collision_camera_009 (A)"
+                        "node_name": "Dock to EMMI Zone North Exit"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -3773,7 +3799,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Teleport to Dairon",
-                        "node_name": "Door to collision_camera_009 (A) (Upper)"
+                        "node_name": "Door to EMMI Zone North Exit (Upper)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
@@ -3902,12 +3928,12 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Teleport to Dairon",
-                        "node_name": "Dock to collision_camera_009 (A)"
+                        "node_name": "Dock to EMMI Zone North Exit"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
-                        "Door to collision_camera_048 (A)": {
+                        "Door to EMMI Zone Dome": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3923,7 +3949,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_048 (A)": {
+                "Dock to EMMI Zone Dome": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3935,13 +3961,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_048 (A)",
-                        "node_name": "Dock to collision_camera_009 (A)"
+                        "area_name": "EMMI Zone Dome",
+                        "node_name": "Dock to EMMI Zone North Exit"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to collision_camera_048 (A)": {
+                        "Door to EMMI Zone Dome": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3954,7 +3980,7 @@
                 }
             }
         },
-        "collision_camera_010 (A)": {
+        "EMMI Zone Hub": {
             "default_node": "Event - Water Device",
             "valid_starting_location": false,
             "extra": {
@@ -4013,7 +4039,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_051 (A)",
-                        "node_name": "Dock from collision_camera_010 (A)"
+                        "node_name": "Dock from EMMI Zone Hub"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Wave Beam Door",
@@ -4073,7 +4099,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_075 (A)",
-                        "node_name": "Door to collision_camera_010 (A) (DoorFrame_004)"
+                        "node_name": "Door to EMMI Zone Hub (DoorFrame_004)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -4128,7 +4154,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_075 (A)",
-                        "node_name": "Door to collision_camera_010 (A) (DoorFrame_005)"
+                        "node_name": "Door to EMMI Zone Hub (DoorFrame_005)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -4185,7 +4211,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_069 (A)",
-                        "node_name": "Door to collision_camera_010 (A) (DoorFrame_006)"
+                        "node_name": "Door to EMMI Zone Hub (DoorFrame_006)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -4242,7 +4268,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_069 (A)",
-                        "node_name": "Door to collision_camera_010 (A) (DoorFrame_007)"
+                        "node_name": "Door to EMMI Zone Hub (DoorFrame_007)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -4375,7 +4401,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_053 (A)",
-                        "node_name": "Door to collision_camera_010 (A)"
+                        "node_name": "Door to EMMI Zone Hub"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -4518,7 +4544,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_069 (A)",
-                        "node_name": "Dock to collision_camera_010 (A)"
+                        "node_name": "Dock to EMMI Zone Hub"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -4545,7 +4571,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_051 (A)",
-                        "node_name": "Dock to collision_camera_010 (A)"
+                        "node_name": "Dock to EMMI Zone Hub"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -4559,7 +4585,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_061 (A) (Upper)": {
+                "Dock to EMMI Zone South Exit (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4571,8 +4597,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_061 (A)",
-                        "node_name": "Dock to collision_camera_010 (A) (1)"
+                        "area_name": "EMMI Zone South Exit",
+                        "node_name": "Dock to EMMI Zone Hub (1)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -4586,7 +4612,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_061 (A) (Slide Tunnel)": {
+                "Dock to EMMI Zone South Exit (Slide Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4598,8 +4624,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_061 (A)",
-                        "node_name": "Dock to collision_camera_010 (A) (2)"
+                        "area_name": "EMMI Zone South Exit",
+                        "node_name": "Dock to EMMI Zone Hub (2)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Slide Tunnel",
@@ -4666,7 +4692,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_061 (A) (Upper)": {
+                        "Dock to EMMI Zone South Exit (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4682,7 +4708,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_061 (A) (Slide Tunnel)": {
+                        "Dock to EMMI Zone South Exit (Slide Tunnel)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5065,7 +5091,7 @@
                     },
                     "event_name": "s010_cave:default:db_reg_cv_023",
                     "connections": {
-                        "Life Recharge": {
+                        "Energy Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5099,7 +5125,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Life Recharge": {
+                        "Energy Recharge": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -5110,7 +5136,7 @@
                         }
                     }
                 },
-                "Life Recharge": {
+                "Energy Recharge": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
@@ -5253,7 +5279,7 @@
                             "type": "template",
                             "data": "Shoot Diffusion or Wave"
                         },
-                        "Life Recharge": {
+                        "Energy Recharge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5436,7 +5462,7 @@
                                 ]
                             }
                         },
-                        "Life Recharge": {
+                        "Energy Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6086,7 +6112,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Cold Introduction (Side Tunnel)": {
+                        "Door from Cold Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6109,7 +6135,7 @@
                         }
                     }
                 },
-                "Door to Cold Introduction (Side Tunnel)": {
+                "Door from Cold Introduction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6132,7 +6158,7 @@
                         "node_name": "Door to Charge Beam Access (Side Tunnel)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Door to Intro Room": {
                             "type": "and",
@@ -6143,7 +6169,7 @@
                         }
                     }
                 },
-                "Door to Cold Introduction (Cold)": {
+                "Door to Cold Introduction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6184,7 +6210,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_054 (A)": {
+                        "Dock to Energy Recharge South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6244,7 +6270,7 @@
                     },
                     "event_name": "s010_cave:default:PRP_DB_CV_010",
                     "connections": {
-                        "Door to Cold Introduction (Cold)": {
+                        "Door to Cold Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6365,7 +6391,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to Cold Introduction (Cold)": {
+                        "Door to Cold Introduction": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -6376,7 +6402,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_054 (A)": {
+                "Dock to Energy Recharge South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6388,13 +6414,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_054 (A)",
+                        "area_name": "Energy Recharge South",
                         "node_name": "Dock to Charge Beam Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to Cold Introduction (Cold)": {
+                        "Door to Cold Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6521,6 +6547,32 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Dock to Charge Beam Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -7972,7 +8024,7 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "items",
-                                                                    "name": "Missiles",
+                                                                    "name": "MissileAmmo",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -8016,7 +8068,7 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "items",
-                                                                                            "name": "Missiles",
+                                                                                            "name": "MissileAmmo",
                                                                                             "amount": 10,
                                                                                             "negate": false
                                                                                         }
@@ -8037,7 +8089,7 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "items",
-                                                                                            "name": "Missiles",
+                                                                                            "name": "MissileAmmo",
                                                                                             "amount": 13,
                                                                                             "negate": false
                                                                                         }
@@ -8054,7 +8106,7 @@
                                                                                         "type": "resource",
                                                                                         "data": {
                                                                                             "type": "items",
-                                                                                            "name": "Missiles",
+                                                                                            "name": "MissileAmmo",
                                                                                             "amount": 40,
                                                                                             "negate": false
                                                                                         }
@@ -10897,6 +10949,66 @@
                                             "amount": 2,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Magnet",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -11020,6 +11132,67 @@
                                                                 "data": "Use Spin Boost"
                                                             }
                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Walljump",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -11326,7 +11499,7 @@
                 "asset_id": "collision_camera_045"
             },
             "nodes": {
-                "Door to collision_camera_054 (A)": {
+                "Door to Energy Recharge South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11345,7 +11518,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_054 (A)",
+                        "area_name": "Energy Recharge South",
                         "node_name": "Door to collision_camera_045 (A)"
                     },
                     "dock_type": "door",
@@ -11378,7 +11551,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to collision_camera_054 (A)": {
+                        "Door to Energy Recharge South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11389,7 +11562,7 @@
                 }
             }
         },
-        "collision_camera_048 (A)": {
+        "EMMI Zone Dome": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -11440,7 +11613,7 @@
                 "asset_id": "collision_camera_048"
             },
             "nodes": {
-                "Door to collision_camera_009 (A)": {
+                "Door to EMMI Zone North Exit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11459,8 +11632,8 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_009 (A)",
-                        "node_name": "Door to collision_camera_048 (A)"
+                        "area_name": "EMMI Zone North Exit",
+                        "node_name": "Door to EMMI Zone Dome"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -11494,6 +11667,41 @@
                                             "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -11542,7 +11750,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_051 (A)",
-                        "node_name": "Door to collision_camera_048 (A)"
+                        "node_name": "Door to EMMI Zone Dome"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -11695,12 +11903,12 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_051 (A)",
-                        "node_name": "Dock to collision_camera_048 (A)"
+                        "node_name": "Dock to EMMI Zone Dome"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to collision_camera_009 (A)": {
+                        "Door to EMMI Zone North Exit": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11740,7 +11948,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_009 (A)": {
+                        "Dock to EMMI Zone North Exit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11794,7 +12002,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_009 (A)": {
+                "Dock to EMMI Zone North Exit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11806,8 +12014,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_009 (A)",
-                        "node_name": "Dock to collision_camera_048 (A)"
+                        "area_name": "EMMI Zone North Exit",
+                        "node_name": "Dock to EMMI Zone Dome"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -11852,7 +12060,7 @@
                     "extra": {},
                     "event_name": "ArtariaEmmiSingleUseSlide",
                     "connections": {
-                        "Door to collision_camera_009 (A)": {
+                        "Door to EMMI Zone North Exit": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -12406,7 +12614,7 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Dock from collision_camera_010 (A)": {
+                        "Dock from EMMI Zone Hub": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12431,7 +12639,7 @@
                                 ]
                             }
                         },
-                        "Door to collision_camera_048 (A)": {
+                        "Door to EMMI Zone Dome": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12442,7 +12650,7 @@
                             "type": "template",
                             "data": "Lay Bomb"
                         },
-                        "Dock to collision_camera_048 (A)": {
+                        "Dock to EMMI Zone Dome": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -12465,7 +12673,7 @@
                         }
                     }
                 },
-                "Dock from collision_camera_010 (A)": {
+                "Dock from EMMI Zone Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12484,7 +12692,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
+                        "area_name": "EMMI Zone Hub",
                         "node_name": "Door to collision_camera_051 (A)"
                     },
                     "dock_type": "other",
@@ -12499,7 +12707,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_048 (A)": {
+                "Door to EMMI Zone Dome": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12518,7 +12726,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_048 (A)",
+                        "area_name": "EMMI Zone Dome",
                         "node_name": "Door to collision_camera_051 (A)"
                     },
                     "dock_type": "door",
@@ -12587,7 +12795,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_010 (A)": {
+                        "Dock to EMMI Zone Hub": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -12636,7 +12844,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_010 (A)": {
+                "Dock to EMMI Zone Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12648,7 +12856,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
+                        "area_name": "EMMI Zone Hub",
                         "node_name": "Dock to collision_camera_051 (A)"
                     },
                     "dock_type": "other",
@@ -12692,7 +12900,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_048 (A)": {
+                "Dock to EMMI Zone Dome": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12704,7 +12912,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_048 (A)",
+                        "area_name": "EMMI Zone Dome",
                         "node_name": "Dock to collision_camera_051 (A)"
                     },
                     "dock_type": "other",
@@ -12785,7 +12993,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
                     "connections": {
-                        "Door to collision_camera_010 (A)": {
+                        "Door to EMMI Zone Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12794,7 +13002,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_010 (A)": {
+                "Door to EMMI Zone Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12813,7 +13021,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
+                        "area_name": "EMMI Zone Hub",
                         "node_name": "Door to collision_camera_053 (A)"
                     },
                     "dock_type": "door",
@@ -12849,8 +13057,8 @@
                 }
             }
         },
-        "collision_camera_054 (A)": {
-            "default_node": "Life Recharge",
+        "Energy Recharge South": {
+            "default_node": "Energy Recharge",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -12900,12 +13108,12 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "collision_camera_045 (A)",
-                        "node_name": "Door to collision_camera_054 (A)"
+                        "node_name": "Door to Energy Recharge South"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Life Recharge": {
+                        "Energy Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12914,7 +13122,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_061 (A)": {
+                "Dock to EMMI Zone South Exit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12929,13 +13137,22 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_061 (A)",
-                        "node_name": "Dock to collision_camera_054 (A)"
+                        "area_name": "EMMI Zone South Exit",
+                        "node_name": "Dock to Energy Recharge South"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Top Right": {
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Flash",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Energy Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12960,7 +13177,16 @@
                     "pickup_index": 22,
                     "major_location": false,
                     "connections": {
-                        "Top Left": {
+                        "Dock to EMMI Zone South Exit": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Flash",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Energy Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12969,7 +13195,7 @@
                         }
                     }
                 },
-                "Life Recharge": {
+                "Energy Recharge": {
                     "node_type": "generic",
                     "heal": true,
                     "coordinates": {
@@ -12992,18 +13218,62 @@
                                 "items": []
                             }
                         },
-                        "Dock to Charge Beam Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Top Left": {
+                        "Dock to EMMI Zone South Exit": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Missile Tank)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -13022,31 +13292,39 @@
                                         "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
                             }
                         },
-                        "Top Right": {
-                            "type": "or",
+                        "Dock to Charge Beam Access": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    }
-                                ]
+                                "items": []
                             }
                         }
                     }
@@ -13064,88 +13342,16 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Charge Beam Access",
-                        "node_name": "Dock to collision_camera_054 (A)"
+                        "node_name": "Dock to Energy Recharge South"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Life Recharge": {
+                        "Energy Recharge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Top Left": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3951.0646535036776,
-                        "y": -6601.26467931346,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Life Recharge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Top Right": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Flash",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Top Right": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2454.0973028777903,
-                        "y": -6580.616853787586,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "connections": {
-                        "Dock to collision_camera_061 (A)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Life Recharge": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Top Left": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Flash",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -14634,7 +14840,7 @@
                 }
             }
         },
-        "collision_camera_061 (A)": {
+        "EMMI Zone South Exit": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -14665,7 +14871,7 @@
                 "asset_id": "collision_camera_061"
             },
             "nodes": {
-                "Dock to collision_camera_054 (A)": {
+                "Dock to Energy Recharge South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14680,13 +14886,13 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_054 (A)",
-                        "node_name": "Dock to collision_camera_061 (A)"
+                        "area_name": "Energy Recharge South",
+                        "node_name": "Dock to EMMI Zone South Exit"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Dock to collision_camera_010 (A) (1)": {
+                        "Dock to EMMI Zone Hub (1)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -14725,7 +14931,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_010 (A) (2)": {
+                        "Dock to EMMI Zone Hub (2)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14762,7 +14968,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_010 (A) (1)": {
+                "Dock to EMMI Zone Hub (1)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14774,13 +14980,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
-                        "node_name": "Dock to collision_camera_061 (A) (Upper)"
+                        "area_name": "EMMI Zone Hub",
+                        "node_name": "Dock to EMMI Zone South Exit (Upper)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Dock to collision_camera_054 (A)": {
+                        "Dock to Energy Recharge South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14789,7 +14995,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_010 (A) (2)": {
+                "Dock to EMMI Zone Hub (2)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14801,13 +15007,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
-                        "node_name": "Dock to collision_camera_061 (A) (Slide Tunnel)"
+                        "area_name": "EMMI Zone Hub",
+                        "node_name": "Dock to EMMI Zone South Exit (Slide Tunnel)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Dock to collision_camera_054 (A)": {
+                        "Dock to Energy Recharge South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14869,7 +15075,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Charge Beam Access",
-                        "node_name": "Door to Cold Introduction (Side Tunnel)"
+                        "node_name": "Door from Cold Introduction"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
@@ -14903,12 +15109,12 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Charge Beam Access",
-                        "node_name": "Door to Cold Introduction (Cold)"
+                        "node_name": "Door to Cold Introduction"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Hidden Plus Between Cold": {
+                        "Door to Speed Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -14936,7 +15142,7 @@
                         }
                     }
                 },
-                "Door to Hidden Plus Between Cold": {
+                "Door to Speed Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14955,7 +15161,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "Hidden Plus Between Cold",
+                        "area_name": "Speed Hallway",
                         "node_name": "Door to Cold Introduction"
                     },
                     "dock_type": "door",
@@ -14989,7 +15195,7 @@
                         }
                     }
                 },
-                "Dock to Hidden Plus Between Cold": {
+                "Dock to Speed Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15001,7 +15207,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "Hidden Plus Between Cold",
+                        "area_name": "Speed Hallway",
                         "node_name": "Dock to Cold Introduction"
                     },
                     "dock_type": "other",
@@ -15036,7 +15242,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Dock to Hidden Plus Between Cold": {
+                        "Dock to Speed Hallway": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -16101,7 +16307,7 @@
                 "asset_id": "collision_camera_069"
             },
             "nodes": {
-                "Door to collision_camera_010 (A) (DoorFrame_006)": {
+                "Door to EMMI Zone Hub (DoorFrame_006)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -16120,13 +16326,13 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
+                        "area_name": "EMMI Zone Hub",
                         "node_name": "Door to collision_camera_069 (A) (DoorFrame_006)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
                     "connections": {
-                        "Door to collision_camera_010 (A) (DoorFrame_007)": {
+                        "Door to EMMI Zone Hub (DoorFrame_007)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -16173,7 +16379,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_010 (A)": {
+                        "Dock to EMMI Zone Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16182,7 +16388,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_010 (A) (DoorFrame_007)": {
+                "Door to EMMI Zone Hub (DoorFrame_007)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -16201,13 +16407,13 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
+                        "area_name": "EMMI Zone Hub",
                         "node_name": "Door to collision_camera_069 (A) (DoorFrame_007)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
                     "connections": {
-                        "Door to collision_camera_010 (A) (DoorFrame_006)": {
+                        "Door to EMMI Zone Hub (DoorFrame_006)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -16250,7 +16456,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
                     "connections": {
-                        "Door to collision_camera_010 (A) (DoorFrame_007)": {
+                        "Door to EMMI Zone Hub (DoorFrame_007)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16271,7 +16477,7 @@
                     "extra": {},
                     "event_name": "ArtariaEmmiWideBeamBlock",
                     "connections": {
-                        "Door to collision_camera_010 (A) (DoorFrame_006)": {
+                        "Door to EMMI Zone Hub (DoorFrame_006)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16280,7 +16486,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_010 (A)": {
+                "Dock to EMMI Zone Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -16292,13 +16498,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
+                        "area_name": "EMMI Zone Hub",
                         "node_name": "Dock to collision_camera_069 (A)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
-                        "Door to collision_camera_010 (A) (DoorFrame_006)": {
+                        "Door to EMMI Zone Hub (DoorFrame_006)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17560,7 +17766,7 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_010 (A) (DoorFrame_004)": {
+                        "Door to EMMI Zone Hub (DoorFrame_004)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -17576,13 +17782,13 @@
                                 ]
                             }
                         },
-                        "Door to collision_camera_010 (A) (DoorFrame_005)": {
+                        "Door to EMMI Zone Hub (DoorFrame_005)": {
                             "type": "template",
                             "data": "Can Slide"
                         }
                     }
                 },
-                "Door to collision_camera_010 (A) (DoorFrame_004)": {
+                "Door to EMMI Zone Hub (DoorFrame_004)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17601,7 +17807,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
+                        "area_name": "EMMI Zone Hub",
                         "node_name": "Door to collision_camera_075 (A) (DoorFrame_004)"
                     },
                     "dock_type": "door",
@@ -17614,7 +17820,7 @@
                                 "items": []
                             }
                         },
-                        "Door to collision_camera_010 (A) (DoorFrame_005)": {
+                        "Door to EMMI Zone Hub (DoorFrame_005)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17623,7 +17829,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_010 (A) (DoorFrame_005)": {
+                "Door to EMMI Zone Hub (DoorFrame_005)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -17642,7 +17848,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_010 (A)",
+                        "area_name": "EMMI Zone Hub",
                         "node_name": "Door to collision_camera_075 (A) (DoorFrame_005)"
                     },
                     "dock_type": "door",
@@ -17657,7 +17863,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to collision_camera_010 (A) (DoorFrame_004)": {
+                        "Door to EMMI Zone Hub (DoorFrame_004)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20486,7 +20692,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Hidden Plus Between Cold": {
+                        "Dock to Speed Hallway": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -20495,7 +20701,7 @@
                         }
                     }
                 },
-                "Dock to Hidden Plus Between Cold": {
+                "Dock to Speed Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -20507,7 +20713,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "Hidden Plus Between Cold",
+                        "area_name": "Speed Hallway",
                         "node_name": "Dock to Speed Booster Bonus Room"
                     },
                     "dock_type": "other",
@@ -20659,7 +20865,7 @@
                 }
             }
         },
-        "Hidden Plus Between Cold": {
+        "Speed Hallway": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -20765,7 +20971,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Cold Introduction",
-                        "node_name": "Door to Hidden Plus Between Cold"
+                        "node_name": "Door to Speed Hallway"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -20810,7 +21016,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Red Chozo Arena",
-                        "node_name": "Door to Hidden Plus Between Cold"
+                        "node_name": "Door to Speed Hallway"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -21065,7 +21271,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Speed Booster Bonus Room",
-                        "node_name": "Dock to Hidden Plus Between Cold"
+                        "node_name": "Dock to Speed Hallway"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -21092,7 +21298,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Cold Introduction",
-                        "node_name": "Dock to Hidden Plus Between Cold"
+                        "node_name": "Dock to Speed Hallway"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -21141,7 +21347,7 @@
                 "asset_id": "collision_camera_088"
             },
             "nodes": {
-                "Dock to collision_camera_009 (A)": {
+                "Dock to EMMI Zone North Exit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -21156,7 +21362,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "collision_camera_009 (A)",
+                        "area_name": "EMMI Zone North Exit",
                         "node_name": "Dock to Shinespark Tower to Grapple"
                     },
                     "dock_type": "other",
@@ -21359,7 +21565,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_009 (A)": {
+                        "Dock to EMMI Zone North Exit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -21754,7 +21960,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Hidden Plus Between Cold": {
+                        "Door to Speed Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -21782,7 +21988,7 @@
                         }
                     }
                 },
-                "Door to Hidden Plus Between Cold": {
+                "Door to Speed Hallway": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -21801,7 +22007,7 @@
                     },
                     "destination": {
                         "world_name": "Artaria",
-                        "area_name": "Hidden Plus Between Cold",
+                        "area_name": "Speed Hallway",
                         "node_name": "Door to Red Chozo Arena"
                     },
                     "dock_type": "door",
@@ -21875,7 +22081,7 @@
                                 ]
                             }
                         },
-                        "Door to Hidden Plus Between Cold": {
+                        "Door to Speed Hallway": {
                             "type": "or",
                             "data": {
                                 "comment": null,
