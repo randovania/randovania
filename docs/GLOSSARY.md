@@ -18,6 +18,10 @@ Examples:
 
 A strictly informal term used to describe the situation of being unable to progress in a [Multiworld](#multiworld) [Session](#session). This occurs when a player has exhausted all readily available [Checks](#item-check) and must wait for another player to send them [Progression](#progression) before they can continue. The term was coined after a player in this state left to get food from the eponymous restaurant and had yet to obtain Progression by the time they returned.
 
+In Logical BK, a player may technically be able to perform more Checks, but none will be expected of them from the game's Logic.
+
+In Full BK, there is absolutely no way for the player to progress on their own, and they are forced to wait until another player finds their Progression before they can continue.
+
 ## Configuration
 
 Has two meanings:
@@ -110,7 +114,7 @@ A colloquial term for how a randomizer decides what actions to perform during ge
 
 ## Multiworld
 
-A multiplayer randomizer session in which the [Pickup Pool](#pickup-pool) for each player is shuffled together as a single pool, with [Pickups](#pickup) for any player being placed in a given player's [Layout](#layout). Each player will have a unique layout, and the required [Progression](#progression) will often jump back and forth between players.
+A multiplayer randomizer [Session](#session) in which the [Pickup Pool](#pickup-pool) for each player is shuffled together as a single pool, with [Pickups](#pickup) for any player being placed in a given player's [Layout](#layout). Each player will have a unique layout, and the required [Progression](#progression) will often jump back and forth between players.
 
 ## Node
 
