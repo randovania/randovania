@@ -76,7 +76,7 @@ Has two meainings:
 
 ## Generator
 
-The part of Randovania that takes the [Database](#database), the [Preset](#preset) settings, a [Random Number Generator](#rng) and decides how [Pickups](#pickup) should be shuffled in the [Layout](#layout). This is also where [Game Patches](#game-patches) and other game modifications are applied.
+The part of Randovania responsible for placing [#Pickups] in randomized games, as well as determing details like [Starting Items](#starting-items).
 
 ## Hint
 
