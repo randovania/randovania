@@ -238,6 +238,8 @@ Extra - starting_script: <TRA0073:0094:0008:0009
   * Door to Waterway/Door to Waterway Cabin
   > Event - Drained Curly
       After Picked up Curly (Core)
+  > Bed
+      Trivial
 
 > Event - Drained Curly; Heals? True
   * Event Saved Curly
@@ -541,6 +543,8 @@ Extra - starting_script: <TRA0040:0094:0014:0009
       Trivial
 
 > Room Spawn; Heals? False; Spawn Point
+  > Door to Labyrinth W (Lower)
+      Trivial
   > Event - Camp
       Trivial
 
@@ -550,7 +554,8 @@ Extra - starting_script: <TRA0040:0094:0014:0009
 
 > Event - Camp; Heals? False
   * Event Start in Camp
-  > Door to Labyrinth W (Lower)
+  * Extra - different_strongly_connected_component: True
+  > Room Spawn
       Trivial
 
 ----------------

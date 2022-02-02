@@ -4,36 +4,6 @@
         "asset_id": 4010992506757754735
     },
     "areas": {
-        "!!00_gfship_dsrebirth": {
-            "default_node": null,
-            "valid_starting_location": true,
-            "extra": {
-                "asset_id": 3586057064387876334
-            },
-            "nodes": {
-                "Door to Gunship": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -64.44425964355469,
-                        "y": 2.5,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "dock_index": 0
-                    },
-                    "destination": {
-                        "world_name": "G.F.S. Olympus",
-                        "area_name": "Gunship",
-                        "node_name": "Door to !!00_gfship_dsrebirth"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Normal Door",
-                    "connections": {}
-                }
-            }
-        },
         "Docking Bay 4": {
             "default_node": "Door to Docking Bay Access",
             "valid_starting_location": true,
@@ -1534,13 +1504,14 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.0,
+                        "x": 0.0,
                         "y": -42.57,
                         "z": 7.58
                     },
                     "description": "",
                     "extra": {
-                        "dock_index": 0
+                        "dock_index": 0,
+                        "different_strongly_connected_component": true
                     },
                     "destination": {
                         "world_name": "G.F.S. Olympus",
@@ -1604,7 +1575,9 @@
                     "heal": false,
                     "coordinates": null,
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
                     "pickup_index": 1,
                     "major_location": true,
                     "connections": {
@@ -1790,7 +1763,7 @@
             }
         },
         "Gunship": {
-            "default_node": "Door to !!00_gfship_dsrebirth",
+            "default_node": "Door to Docking Bay 5",
             "valid_starting_location": true,
             "extra": {
                 "asset_id": 15628730931753443250
@@ -1816,35 +1789,6 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {}
-                },
-                "Door to !!00_gfship_dsrebirth": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 42.5,
-                        "y": 79.5,
-                        "z": 28.500003814697266
-                    },
-                    "description": "",
-                    "extra": {
-                        "dock_index": 1
-                    },
-                    "destination": {
-                        "world_name": "G.F.S. Olympus",
-                        "area_name": "!!00_gfship_dsrebirth",
-                        "node_name": "Door to Gunship"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Normal Door",
-                    "connections": {
-                        "Door to Docking Bay 5": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
