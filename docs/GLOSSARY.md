@@ -4,7 +4,7 @@ Index of terminology used in Randovania. Some terms are used only in the GUI, wi
 
 ## Action
 
-Anything the [Generator](#generator) or [Solver](#solver) can do which alters the game's state. Actions include obtaining [Resources](#resouce), crossing [Connections](#connection) between [Nodes](#node), and using [Docks](#dock) or [Teleporters](#teleporter).
+Actions are steps taken by the generator. Consist of either assigning [Pickups](#pickup) or collecting any unsafe Resource Node.
 
 ## Area
 
@@ -36,9 +36,7 @@ Connects two [Nodes](#node) in the same area. Contains a set of [Requirements](#
 
 ## Dangerous Action
 
-Any action that the [Generator](#generator) might take which could potentially leave it stranded; a one-way action. Specifically, performing a Dangerous Action may leave the Generator unable to access [Pickups](#pickup) or other [Progression](#progression) which they would have been able to obtain before.
-
-An Action is not Dangerous if it is the only available Action which would allow them to progress, as in this scenario the Generator was unable to obtain other Checks even before they performed the Action. See also [Point of No Return](#point-of-no-return).
+Any action which, upon being performed, cuts off access to nodes that were previously accessible.
 
 ## Dangerous Logic
 [Logic](#logic) that allows Actions to be performed which may place the game in an unbeatable state. Different from a [Point of No Return](#point-of-no-return) in that this is a primarily player-oriented issue; the game can still be beatable, but performing Actions in the wrong order can cause a player to experience this issue even though the [Seed](#seed) is valid.
