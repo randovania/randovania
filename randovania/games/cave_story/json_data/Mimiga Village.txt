@@ -3,8 +3,9 @@ Start Point
 (Valid Starting Location)
 Extra - map_name: Start
 Extra - starting_script: <EVE0091
-> Door to First Cave; Heals? False; Spawn Point
+> Door to First Cave; Heals? False
   * Door to First Cave/Door to Start Point
+  * Extra - different_strongly_connected_component: True
   > Save Point
       Trivial
 
@@ -15,6 +16,9 @@ Extra - starting_script: <EVE0091
       Trivial
 
 > Room Spawn; Heals? False
+  * Extra - different_strongly_connected_component: True
+  > Door to First Cave
+      Trivial
   > Event - Start Point
       Trivial
 
@@ -22,9 +26,9 @@ Extra - starting_script: <EVE0091
   > Save Point
       Trivial
 
-> Event - Start Point; Heals? False
+> Event - Start Point; Heals? False; Spawn Point
   * Event Start in Start Point
-  > Door to First Cave
+  > Room Spawn
       Trivial
 
 ----------------
