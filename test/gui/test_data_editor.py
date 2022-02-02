@@ -116,7 +116,7 @@ def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot,
     mock_write_human_readable_game.assert_not_called()
     mock_critical_message.assert_called_once_with(
         window, "Integrity Check",
-        "Database has the following errors:\n\nDB Errors",
-        QMessageBox.Ok,
+        "Database has the following errors:\n\nDB Errors\n\nIgnore?",
+        QMessageBox.Yes | QMessageBox.No,
         QMessageBox.No
     )
