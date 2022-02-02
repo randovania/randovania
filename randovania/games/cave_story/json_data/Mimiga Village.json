@@ -3,7 +3,7 @@
     "extra": {},
     "areas": {
         "Start Point": {
-            "default_node": "Door to First Cave",
+            "default_node": "Event - Start Point",
             "valid_starting_location": true,
             "extra": {
                 "map_name": "Start",
@@ -19,7 +19,9 @@
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
                     "destination": {
                         "world_name": "Mimiga Village",
                         "area_name": "First Cave",
@@ -68,13 +70,22 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 167.6417146513116,
-                        "y": 121.73000639795265,
-                        "z": 0
+                        "x": 167.64,
+                        "y": 121.73,
+                        "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
                     "connections": {
+                        "Door to First Cave": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Start Point": {
                             "type": "and",
                             "data": {
@@ -116,7 +127,7 @@
                     "extra": {},
                     "event_name": "startPoint",
                     "connections": {
-                        "Door to First Cave": {
+                        "Room Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,

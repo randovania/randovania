@@ -512,12 +512,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self._warning_dialogs_disabled:
             return True
 
+        options = QMessageBox.Yes | QMessageBox.No
         message = "Database has the following errors:\n\n" + "\n".join(errors)
-
-        options = QMessageBox.Ok
-        if self.game_description.game.data.experimental:
-            options = QMessageBox.Yes | QMessageBox.No
-            message += "\n\nIgnore?"
+        message += "\n\nIgnore?"
 
         user_response = QMessageBox.critical(
             self, "Integrity Check",
