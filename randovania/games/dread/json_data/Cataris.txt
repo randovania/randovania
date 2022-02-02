@@ -44,12 +44,6 @@ Extra - asset_id: collision_camera_000
   > Dock to collision_camera_007 (C)
       Trivial
 
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: StartPoint0
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Elevator to Artaria - Transport to Cataris
-      Trivial
-
 > Elevator to Artaria - Transport to Cataris; Heals? False; Spawn Point
   * Teleporter to Artaria - Transport to Cataris
   * Extra - actor_name: LE_Elevator_FromCave
@@ -61,12 +55,6 @@ Extra - asset_id: collision_camera_000
   > Door to collision_camera_006 (C)
       Trivial
   > Tile Group (POWERBEAM) 2
-      Trivial
-
-> Start Point 2; Heals? False
-  * Extra - start_point_actor_name: SP_AccessPoint_3
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Navigation Room Southeast
       Trivial
 
 > Tile Group (POWERBEAM) 1; Heals? False
@@ -1186,7 +1174,7 @@ Extra - asset_id: collision_camera_019
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002b_000
   * Extra - right_shield_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
   > Top Ledge
-      After Cataris - db_hdoor_mg_002
+      After Cataris - Ghavoran Teleporter Upper-right Tunnel Blob
 
 > Event - First Tunnel Blob (breakablemag004); Heals? False
   * Event Cataris - breakablemag004
@@ -1248,13 +1236,13 @@ Extra - asset_id: collision_camera_019
           Varia Suit or Heat Damage ≥ 20
 
 > Event - Door Blob (db_hdoor_mg_002); Heals? False
-  * Event Cataris - db_hdoor_mg_002
+  * Event Cataris - Ghavoran Teleporter Upper-right Tunnel Blob
   > Top Ledge
       Trivial
 
 > Top Ledge; Heals? False
   > Door to collision_camera_052 (C)
-      After Cataris - db_hdoor_mg_002
+      After Cataris - Ghavoran Teleporter Upper-right Tunnel Blob
   > Left Platform
       Varia Suit or Heat Damage ≥ 10
   > Event - Door Blob (db_hdoor_mg_002)
@@ -1768,12 +1756,12 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_def: None
   > Door to Navigation Room Northwest
       Spider Magnet or Space Jump
-  > Event - Morph Tunnel Blob (db_dside_mg_003)
+  > Event - Morph Tunnel Blob
       Shoot Beam
   > Tile Group (BOMB)
       Trivial
   > Dock to Teleport to Ghavoran
-      After Cataris - db_dside_mg_003
+      After Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
 
 > Door to Navigation Room Northwest; Heals? False
   * Power Beam Door to Navigation Room Northwest/Door to Teleport to Artaria (Red)
@@ -1804,8 +1792,8 @@ Extra - asset_id: collision_camera_025
   > Door to collision_camera_043 (C)
       Morph Ball
 
-> Event - Morph Tunnel Blob (db_dside_mg_003); Heals? False
-  * Event Cataris - db_dside_mg_003
+> Event - Morph Tunnel Blob; Heals? False
+  * Event Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
   * Extra - actor_name: db_dside_mg_002b_000
   * Extra - actor_def: actordef:actors/props/db_dside_mg_002b/charclasses/db_dside_mg_002b.bmsad
   > Door to collision_camera_064 (C)
@@ -1822,12 +1810,6 @@ Extra - asset_id: collision_camera_025
   > Tile Group (BOMB)
       Morph Ball
   > Tile Group (WEIGHT) 2
-      Trivial
-
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: SP_AccessPoint_3_B
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Navigation Room Northwest
       Trivial
 
 > Tile Group (BOMB); Heals? False
@@ -1862,7 +1844,7 @@ Extra - asset_id: collision_camera_025
 > Dock to Teleport to Ghavoran; Heals? False
   * Slide Tunnel to Teleport to Ghavoran/Dock to Teleport to Artaria (Red)
   > Door to collision_camera_064 (C)
-      After Cataris - db_dside_mg_002b_000
+      After Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
 
 ----------------
 Teleport to Ghavoran
@@ -1886,8 +1868,8 @@ Extra - asset_id: collision_camera_026
   > Tile Group (SPEEDBOOST)
       Gravity Suit
 
-> Event - Lower-left Tunnel Blob (db_dside_mg_003); Heals? False
-  * Event Cataris - db_dside_mg_003
+> Event - Lower-left Tunnel Blob; Heals? False
+  * Event Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
   * Extra - actor_name: db_dside_mg_003
   * Extra - actor_def: actordef:actors/props/db_dside_mg_002/charclasses/db_dside_mg_002.bmsad
   > Lower Center
@@ -1900,8 +1882,8 @@ Extra - asset_id: collision_camera_026
   > Top room
       Trivial
 
-> Event - Green Teleport Grapple Block (grapplepulloff1x2_001); Heals? False
-  * Event Cataris - grapplepulloff1x2_001
+> Event - Green Teleport Grapple Block; Heals? False
+  * Event Cataris - Green Teleport Grapple Block
   * Extra - actor_name: grapplepulloff1x2_001
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Teleporter to Ghavoran - Teleport to Cataris
@@ -1915,7 +1897,7 @@ Extra - asset_id: collision_camera_026
   * Extra - target_spawn_point: teleporter_magma_000_platform
   * Extra - start_point_actor_name: teleporter_forest_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Event - Green Teleport Grapple Block (grapplepulloff1x2_001)
+  > Event - Green Teleport Grapple Block
       All of the following:
           Grapple Beam
           Varia Suit or Heat Damage ≥ 20
@@ -1925,7 +1907,7 @@ Extra - asset_id: collision_camera_026
           Varia Suit or Heat Damage ≥ 20
   > Top room
       All of the following:
-          Morph Ball and After Cataris - grapplepulloff1x2_001
+          Morph Ball and After Cataris - Green Teleport Grapple Block
           Varia Suit or Heat Damage ≥ 50
 
 > Tile Group (POWERBEAM) 1; Heals? False
@@ -1971,7 +1953,7 @@ Extra - asset_id: collision_camera_026
       Trivial
 
 > Lower Center; Heals? False
-  > Event - Lower-left Tunnel Blob (db_dside_mg_003)
+  > Event - Lower-left Tunnel Blob
       Shoot Beam
   > Tile Group (SPEEDBOOST)
       Gravity Suit
@@ -1983,7 +1965,7 @@ Extra - asset_id: collision_camera_026
           Grapple Beam or Infinite Bomb Jump (Beginner) or Use Spin Boost
   > Dock to Teleport to Artaria (Red)
       All of the following:
-          After Cataris - db_dside_mg_003
+          After Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
           Varia Suit or Heat Damage ≥ 100
 
 > Top room; Heals? False
@@ -1995,8 +1977,10 @@ Extra - asset_id: collision_camera_026
       Shoot Beam
   > Teleporter to Ghavoran - Teleport to Cataris
       All of the following:
-          After Cataris - grapplepulloff1x2_001 and Can Slide
+          After Cataris - Green Teleport Grapple Block and Can Slide
           Varia Suit or Heat Damage ≥ 20
+  > Tile Group (POWERBEAM) 1
+      Trivial
   > Dock to collision_camera_027 (C)
       All of the following:
           After Cataris - db_dside_mg_002
@@ -2006,7 +1990,7 @@ Extra - asset_id: collision_camera_026
   * Slide Tunnel to Teleport to Artaria (Red)/Dock to Teleport to Ghavoran
   > Lower Center
       All of the following:
-          After Cataris - db_dside_mg_003
+          After Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
           Varia Suit or Heat Damage ≥ 100
 
 > Dock to collision_camera_027 (C); Heals? False
@@ -2566,13 +2550,7 @@ Extra - asset_id: collision_camera_036
   > Door to Central Unit Room
       Trivial
 
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Central Unit Room
-      Trivial
-
-> Start Point 2; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_MorphBall
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to collision_camera_028 (C)
@@ -2622,13 +2600,7 @@ Central Unit Room
 Extra - total_boundings: {'x1': -9700.0, 'x2': -7600.0, 'y1': 5100.0, 'y2': 6242.0}
 Extra - polygon: [[-7600.0, 6242.0], [-9700.0, 6242.0], [-9700.0, 5100.0], [-7600.0, 5100.0]]
 Extra - asset_id: collision_camera_037
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: centralunitmagmacontroller
-  * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
-  > Door to Green EMMI Fight
-      Trivial
-
-> Start Point 2; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyMagmaPhase2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Green EMMI Fight
@@ -2650,10 +2622,6 @@ collision_camera_038 (C)
 Extra - total_boundings: {'x1': -700.0, 'x2': 4500.0, 'y1': 4400.0, 'y2': 5875.0}
 Extra - polygon: [[4500.0, 5875.0], [-700.0, 5875.0], [-700.0, 4400.0], [4500.0, 4400.0]]
 Extra - asset_id: collision_camera_038
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: shootactivatormag01
-  * Extra - start_point_actor_def: actordef:actors/props/shootactivatormag01/charclasses/shootactivatormag01.bmsad
-
 > Start Point 2; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_PistonLeft
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
@@ -2754,7 +2722,7 @@ Extra - asset_id: collision_camera_040
       Trivial
 
 > Dock to collision_camera_042 (C) (Bottom); Heals? False
-  * Not Determined to collision_camera_042 (C)/Dock to Speedboost Maze before Transport to Dairon (Bottom)
+  * Open Passage to collision_camera_042 (C)/Dock to Speedboost Maze before Transport to Dairon (Bottom)
   > Dock to collision_camera_035 (C)
       Can Slide
 
@@ -2777,12 +2745,6 @@ Extra - asset_id: collision_camera_041
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Dairon - Transport to Cataris
-      Trivial
-
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_WideBeam
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Elevator to Dairon - Transport to Cataris
       Trivial
 
@@ -3503,6 +3465,8 @@ Extra - asset_id: collision_camera_048
       All of the following:
           After Cataris - Heated Wide Beam Block
           Varia Suit or Heat Damage ≥ 50
+  > Tile Group (BOMB) 2
+      Morph Ball
   > Tile Group (POWERBEAM) 2
       Varia Suit or Heat Damage ≥ 50
   > Event - Wide Beam Block
@@ -3737,14 +3701,14 @@ Extra - asset_id: collision_camera_052
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:db_hdoor_mg_002b_000
   * Extra - right_shield_def: actordef:actors/props/db_hdoor_mg_002b/charclasses/db_hdoor_mg_002b.bmsad
   > Dock to Green EMMI Introduction
-      After Cataris - db_hdoor_mg_002
+      After Cataris - Ghavoran Teleporter Upper-right Tunnel Blob
 
 > Dock to Green EMMI Introduction; Heals? False
   * EMMI Door to Green EMMI Introduction/Dock to collision_camera_052 (C)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to collision_camera_019 (C)
-      After Cataris - db_hdoor_mg_002
+      After Cataris - Ghavoran Teleporter Upper-right Tunnel Blob
   > Door to Teleport to Dairon
       Trivial
   > Event - Breakable (db_hdoor_mg_002)
@@ -3777,7 +3741,7 @@ Extra - asset_id: collision_camera_052
       Trivial
 
 > Event - Breakable (db_hdoor_mg_002); Heals? False
-  * Event Cataris - db_hdoor_mg_002
+  * Event Cataris - Ghavoran Teleporter Upper-right Tunnel Blob
   * Extra - actor_name: db_hdoor_mg_002
   * Extra - actor_def: actordef:actors/props/db_hdoor_mg_002/charclasses/db_hdoor_mg_002.bmsad
   > Dock to Green EMMI Introduction

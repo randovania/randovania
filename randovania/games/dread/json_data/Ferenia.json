@@ -73,29 +73,6 @@
                         }
                     }
                 },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3200.0,
-                        "y": -7500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "StartPoint0",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to collision_camera_002 (F)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Elevator to Dairon - East Transport to Ferenia": {
                     "node_type": "teleporter",
                     "heal": false,
@@ -1132,7 +1109,7 @@
             }
         },
         "Quiet Robe Room": {
-            "default_node": "Start Point 2",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1196,30 +1173,7 @@
                         }
                     }
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -10800.0,
-                        "y": -7150.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_ChozoRobotSanc",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to collision_camera_004 (F)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1715,29 +1669,6 @@
                         }
                     }
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11050.916015625,
-                        "y": -3100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_EmmySanc",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Dock to Purple EMMI Introduction": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Teleporter to Burenia - Teleport to Ferenia": {
                     "node_type": "teleporter",
                     "heal": false,
@@ -1763,29 +1694,6 @@
                     "editable": true,
                     "connections": {
                         "Dock to collision_camera_011 (F) (Lower)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11100.0,
-                        "y": -200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_TwoChozoRobots_BottomLeft",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Twin Robot Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3472,6 +3380,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Start Point 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3550,7 +3465,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
                     "connections": {
-                        "Pickup (itemsphere_spacejump)": {
+                        "Start Point 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3620,7 +3535,7 @@
                     "pickup_index": 119,
                     "major_location": true,
                     "connections": {
-                        "Door from collision_camera_015 (F)": {
+                        "Start Point 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3777,6 +3692,13 @@
                     },
                     "connections": {
                         "Door from collision_camera_015 (F)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (itemsphere_spacejump)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5968,6 +5890,13 @@
                             }
                         },
                         "Start Point 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
