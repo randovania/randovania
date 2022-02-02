@@ -122,8 +122,10 @@ Phazon Infusion Chamber
 (Valid Starting Location)
 Extra - asset_id: 1729456653
 > Dock to Subchamber One; Heals? False
-  * Open Passage to Subchamber One/Dock to Phazon Infusion Chamber
+  * Open Passage to Subchamber One/Dock from Phazon Infusion Chamber
   * Extra - dock_index: 0
+  > Door to Crater Tunnel B
+      Trivial
 
 > Door to Crater Tunnel B; Heals? False; Spawn Point
   * Plasma Door to Crater Tunnel B/Door to Phazon Infusion Chamber
@@ -134,8 +136,8 @@ Extra - asset_id: 1729456653
 ----------------
 Subchamber One
 Extra - asset_id: 3672049347
-> Dock to Phazon Infusion Chamber; Heals? False; Spawn Point
-  * Open Passage to Phazon Infusion Chamber/Dock to Subchamber One
+> Dock from Phazon Infusion Chamber; Heals? False; Spawn Point
+  * Closed Passage to Phazon Infusion Chamber/Dock to Subchamber One
   * Extra - dock_index: 0
   > Dock to Subchamber Two
       All of the following:
@@ -148,6 +150,8 @@ Extra - asset_id: 3672049347
 > Dock to Subchamber Two; Heals? False
   * Open Passage to Subchamber Two/Dock to Subchamber One
   * Extra - dock_index: 1
+  > Dock from Phazon Infusion Chamber
+      Trivial
 
 ----------------
 Subchamber Two
@@ -249,6 +253,7 @@ Extra - asset_id: 442920021
   * Teleporter to End of Game - Credits
   * Extra - scan_asset_id: None
   * Extra - teleporter_instance_id: 721282
+  * Extra - different_strongly_connected_component: True
   > Dock to Subchamber Five
       Trivial
 

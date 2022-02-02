@@ -879,11 +879,19 @@
                     "destination": {
                         "world_name": "Impact Crater",
                         "area_name": "Subchamber One",
-                        "node_name": "Dock to Phazon Infusion Chamber"
+                        "node_name": "Dock from Phazon Infusion Chamber"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
-                    "connections": {}
+                    "connections": {
+                        "Door to Crater Tunnel B": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Crater Tunnel B": {
                     "node_type": "dock",
@@ -917,13 +925,13 @@
             }
         },
         "Subchamber One": {
-            "default_node": "Dock to Phazon Infusion Chamber",
+            "default_node": "Dock from Phazon Infusion Chamber",
             "valid_starting_location": false,
             "extra": {
                 "asset_id": 3672049347
             },
             "nodes": {
-                "Dock to Phazon Infusion Chamber": {
+                "Dock from Phazon Infusion Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -941,7 +949,7 @@
                         "node_name": "Dock to Subchamber One"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Open Passage",
+                    "dock_weakness": "Closed Passage",
                     "connections": {
                         "Dock to Subchamber Two": {
                             "type": "and",
@@ -1076,7 +1084,15 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
-                    "connections": {}
+                    "connections": {
+                        "Dock from Phazon Infusion Chamber": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1886,7 +1902,8 @@
                     "description": "",
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": 721282
+                        "teleporter_instance_id": 721282,
+                        "different_strongly_connected_component": true
                     },
                     "destination": {
                         "world_name": "End of Game",
