@@ -113,10 +113,7 @@ _LOCATIONS_GROUPED_TOGETHER = [
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
                                      rng: Random) -> dict:
-    if detail.model.game == RandovaniaGame.METROID_PRIME:
-        model_name = detail.model.name
-    else:
-        model_name = _MODEL_MAPPING.get((detail.model.game, detail.model.name), "Nothing")
+    model = detail.model.as_json
 
     scan_text = detail.scan_text
     hud_text = detail.hud_text[0]
@@ -130,16 +127,16 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         count = quantity
         break
 
-    if (model_name == "Missile" and not detail.other_player
+    if (model["name"] == "Missile" and not detail.other_player
             and "Missile Expansion" in hud_text
             and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
-        model_name = "Shiny Missile"
+        model["name"] = "Shiny Missile"
         hud_text = hud_text.replace("Missile Expansion", "Shiny Missile Expansion")
         scan_text = scan_text.replace("Missile Expansion", "Shiny Missile Expansion")
 
     result = {
         "type": pickup_type,
-        "model": model_name,
+        "model": model,
         "scanText": scan_text,
         "hudmemoText": hud_text,
         "currIncrease": count,
@@ -468,6 +465,19 @@ class RandomprimePatcher(Patcher):
                 ],
                 symbols=symbols)
         )
+
+        #Replace models
+        for level in new_config["levelData"].values():
+            for room in level["rooms"].values():
+                for pickup in room["pickups"]:
+                    model = pickup.pop("model")
+                    if model["game"] == RandovaniaGame.METROID_PRIME.value:
+                        pickup['model'] = model["name"]
+                    elif model["game"] == RandovaniaGame.METROID_PRIME_ECHOES.value:
+                        #TODO: Echoes stuff goes here
+                        continue
+                    else:
+                        pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:

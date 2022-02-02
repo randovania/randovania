@@ -45,6 +45,20 @@ class PickupModel:
     game: RandovaniaGame
     name: str
 
+    @property
+    def as_json(self):
+        return {
+            "game": self.game.value,
+            "name": self.name
+        }
+
+    @classmethod
+    def from_json(cls, data) -> "PickupModel":
+        return PickupModel(
+            game=data["game"],
+            name=data["name"]
+        )
+
 
 @dataclass(frozen=True)
 class PickupEntry:
