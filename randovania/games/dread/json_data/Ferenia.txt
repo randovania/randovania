@@ -15,12 +15,6 @@ Extra - asset_id: collision_camera_000
   > Elevator to Dairon - East Transport to Ferenia
       Trivial
 
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: StartPoint0
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to collision_camera_002 (F)
-      Trivial
-
 > Elevator to Dairon - East Transport to Ferenia; Heals? False; Spawn Point
   * Teleporter to Dairon - East Transport to Ferenia
   * Extra - actor_name: elevator_baselab_000
@@ -234,13 +228,7 @@ Extra - asset_id: collision_camera_005
   > Event - Quiet Robe
       Trivial
 
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_ChozoRobotSanc
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to collision_camera_004 (F)
-      Trivial
-
-> Start Point 2; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoRobotSoldier
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to collision_camera_004 (F)
@@ -369,12 +357,6 @@ Extra - asset_id: collision_camera_007
   > Door to Cold Room (Small)
       Trivial
 
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_EmmySanc
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to Purple EMMI Introduction
-      Trivial
-
 > Teleporter to Burenia - Teleport to Ferenia; Heals? False; Spawn Point
   * Teleporter to Burenia - Teleport to Ferenia
   * Extra - actor_name: teleporter_000
@@ -384,12 +366,6 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_name: teleporter_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Dock to collision_camera_011 (F) (Lower)
-      Trivial
-
-> Start Point 2; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_TwoChozoRobots_BottomLeft
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Twin Robot Arena
       Trivial
 
 > Dock to collision_camera_011 (F) (Lower); Heals? False
@@ -755,6 +731,8 @@ Extra - asset_id: collision_camera_012
   * Extra - right_shield_def: None
   > Door to collision_camera_015 (F) (Bottom)
       Space Jump or Infinite Bomb Jump (Beginner)
+  > Start Point 2
+      Trivial
 
 > Door to collision_camera_015 (F) (Bottom); Heals? False
   * Power Beam Door to collision_camera_015 (F)/Door to Space Jump Room (Bottom)
@@ -777,7 +755,7 @@ Extra - asset_id: collision_camera_012
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Pickup (itemsphere_spacejump)
+  > Start Point 1
       Trivial
   > Underwater Bottom
       Can Slide
@@ -799,7 +777,7 @@ Extra - asset_id: collision_camera_012
   * Pickup 119; Major Location? True
   * Extra - actor_name: itemsphere_spacejump
   * Extra - actor_def: actordef:actors/items/itemsphere_spacejump/charclasses/itemsphere_spacejump.bmsad
-  > Door from collision_camera_015 (F)
+  > Start Point 1
       Trivial
 
 > Pickup (item_missiletank_002); Heals? False
@@ -840,6 +818,8 @@ Extra - asset_id: collision_camera_012
   * Extra - start_point_actor_name: SP_Checkpoint_SpaceJump
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door from collision_camera_015 (F)
+      Trivial
+  > Pickup (itemsphere_spacejump)
       Trivial
 
 > Start Point 2; Heals? False; Spawn Point
@@ -1309,6 +1289,8 @@ Extra - asset_id: collision_camera_017
   > Door to collision_camera_015 (F)
       Trivial
   > Start Point 1
+      Trivial
+  > Start Point 2
       Trivial
 
 > Door to collision_camera_015 (F); Heals? False

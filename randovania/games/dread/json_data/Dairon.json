@@ -1266,7 +1266,7 @@
             }
         },
         "Dairon Hub East": {
-            "default_node": "Start Point 2",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1542,30 +1542,7 @@
                         }
                     }
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6600.0,
-                        "y": 1200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_Blackout",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to collision_camera_009 (D)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -2633,29 +2610,6 @@
                     "event_name": "s030_baselab:default:db_dif_b1_001",
                     "connections": {
                         "Bottom-Left Corner": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1600.0,
-                        "y": 1400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_AfterDiffusion",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Teleporter to Cataris - Teleport to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7602,29 +7556,6 @@
                         }
                     }
                 },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2300.0,
-                        "y": 7100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_AfterProfessor",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Navigation Room North (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Event - Push Wide Beam Block": {
                     "node_type": "event",
                     "heal": false,
@@ -9816,6 +9747,15 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Freezer Center": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
+                            }
                         }
                     }
                 },
@@ -10300,6 +10240,41 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (SPEEDBOOST) 3": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tile Group (SPEEDBOOST) 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -13478,7 +13453,7 @@
             }
         },
         "Central Unit Room": {
-            "default_node": "Start Point 2",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -13508,30 +13483,7 @@
                 "asset_id": "collision_camera_038"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -11850.0,
-                        "y": -4950.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "centralunitmagmacontroller",
-                        "start_point_actor_def": "actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad"
-                    },
-                    "connections": {
-                        "Door to Yellow EMMI Fight": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -14455,29 +14407,6 @@
                         }
                     }
                 },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 23600.0,
-                        "y": 6000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "StartPoint0",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Teleport to Artaria": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Elevator to Cataris - Transport to Dairon": {
                     "node_type": "teleporter",
                     "heal": false,
@@ -14734,29 +14663,6 @@
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
-                    "connections": {
-                        "Door to collision_camera_041 (D)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -19750.0,
-                        "y": -9000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_AfterAqua",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
                     "connections": {
                         "Door to collision_camera_041 (D)": {
                             "type": "and",
