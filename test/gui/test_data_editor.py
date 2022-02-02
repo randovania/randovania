@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from PySide2.QtWidgets import QDialog, QMessageBox
+from PySide2 import QtWidgets
 from mock import AsyncMock, patch, ANY, MagicMock
 
 from randovania.game_description import data_reader, pretty_print
@@ -41,7 +41,7 @@ async def test_open_edit_connection(mock_connections_editor: MagicMock,
     skip_qtbot.addWidget(window)
 
     editor = mock_connections_editor.return_value
-    execute_dialog.return_value = QDialog.Accepted if accept else QDialog.Rejected
+    execute_dialog.return_value = QtWidgets.QDialog.Accepted if accept else QtWidgets.QDialog.Rejected
 
     # Run
     await window._open_edit_connection()
@@ -95,10 +95,10 @@ def test_create_node_and_save(tmp_path,
 def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot, mocker):
     # Setup
     mock_find_database_errors = mocker.patch("randovania.game_description.integrity_check.find_database_errors",
-                                             return_value=["DB Errors"])
+                                             return_value=["DB Errors", "Unknown"])
     mock_write_human_readable_game = mocker.patch("randovania.game_description.pretty_print.write_human_readable_game")
-    mock_critical_message = mocker.patch("PySide2.QtWidgets.QMessageBox.critical",
-                                         return_value=QMessageBox.No)
+    mock_create_new = mocker.patch("randovania.gui.lib.scroll_message_box.ScrollMessageBox.create_new")
+    mock_create_new.return_value.exec_.return_value = QtWidgets.QMessageBox.No
 
     tmp_path.joinpath("test-game", "game").mkdir(parents=True)
     tmp_path.joinpath("human-readable").mkdir()
@@ -114,9 +114,9 @@ def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot,
     # Assert
     mock_find_database_errors.assert_called_once_with(window.game_description)
     mock_write_human_readable_game.assert_not_called()
-    mock_critical_message.assert_called_once_with(
-        window, "Integrity Check",
-        "Database has the following errors:\n\nDB Errors\n\nIgnore?",
-        QMessageBox.Yes | QMessageBox.No,
-        QMessageBox.No
+    mock_create_new.assert_called_once_with(
+        window, QtWidgets.QMessageBox.Icon.Critical, "Integrity Check",
+        "Database has the following errors:\n\nDB Errors\n\nUnknown\n\nIgnore?",
+        QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
+        QtWidgets.QMessageBox.No
     )
