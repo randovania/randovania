@@ -1306,7 +1306,9 @@
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
                     "event_name": "eventNormalEnd",
                     "connections": {}
                 },
@@ -2119,7 +2121,15 @@
                     },
                     "dock_type": "exit",
                     "dock_weakness": "Exit",
-                    "connections": {}
+                    "connections": {
+                        "Door to Passage?": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2245,9 +2255,19 @@
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
                     "event_name": "eventBestEnd",
-                    "connections": {}
+                    "connections": {
+                        "Entrance from Corridor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         }
