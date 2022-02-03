@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e -x
-cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/.."
+cd -- "$( dirname -- "${BASH_SOURCE[0]}" )/.."
 
 python3.9 tools/test_py_version.py
 
