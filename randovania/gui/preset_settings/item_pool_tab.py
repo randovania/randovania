@@ -269,7 +269,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         }
 
         for ammo in item_database.ammo.values():
-            category_box, category_layout, _ = self._boxes_for_category[broad_to_category[ammo.broad_category.name]]
+            category_box, category_layout, _ = self._boxes_for_category[broad_to_category.get(ammo.broad_category.name,
+                                                                                              ammo.broad_category.name)]
 
             pickup_box = QtWidgets.QGroupBox(category_box)
             pickup_box.setSizePolicy(size_policy)
