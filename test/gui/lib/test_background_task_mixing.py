@@ -17,7 +17,6 @@ def _force_sync_mixin():
     return mixin
 
 
-@pytest.mark.asyncio
 async def test_run_in_background_success(force_sync_mixin):
     # Setup
     def target(progress_update):
@@ -30,7 +29,6 @@ async def test_run_in_background_success(force_sync_mixin):
     assert result == 5
 
 
-@pytest.mark.asyncio
 async def test_run_in_background_async_cancelled(force_sync_mixin):
     # Setup
     def target(progress_update):
@@ -41,7 +39,6 @@ async def test_run_in_background_async_cancelled(force_sync_mixin):
         await force_sync_mixin.run_in_background_async(target, "Hello World")
 
 
-@pytest.mark.asyncio
 async def test_run_in_background_async_exception(force_sync_mixin):
     class WeirdError(Exception):
         pass

@@ -21,7 +21,6 @@ def remote_connector(version: Prime1DolVersion):
 
 
 @pytest.mark.parametrize("artifact", [False, True])
-@pytest.mark.asyncio
 async def test_patches_for_pickup(connector: Prime1RemoteConnector, mocker, artifact: bool, generic_item_category):
     # Setup
     mock_item_patch: MagicMock = mocker.patch(

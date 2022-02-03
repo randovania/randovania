@@ -35,7 +35,6 @@ def test_add_new_preset(tab, preset_manager):
 
 
 @pytest.mark.parametrize("has_existing_window", [False, True])
-@pytest.mark.asyncio
 async def test_on_customize_button(tab, mocker, has_existing_window):
     mock_settings_window = mocker.patch("randovania.gui.generate_seed_tab.LogicSettingsWindow")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)

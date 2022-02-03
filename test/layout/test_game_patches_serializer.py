@@ -203,7 +203,6 @@ def test_bit_pack_pickup_entry(has_convert: bool, echoes_resource_database, gene
     assert pickup == decoded
 
 
-@pytest.mark.asyncio
 async def test_round_trip_generated_patches(default_preset):
     # Setup
     preset = dataclasses.replace(

@@ -13,7 +13,6 @@ def nintendont_executor():
     return executor
 
 
-@pytest.mark.asyncio
 async def test_perform_memory_operations_success(executor: NintendontExecutor):
     executor._socket = MagicMock()
     executor._socket.max_input = 120
@@ -43,7 +42,6 @@ async def test_perform_memory_operations_success(executor: NintendontExecutor):
     executor._socket.reader.read.assert_has_awaits([call(1024), call(1024)])
 
 
-@pytest.mark.asyncio
 async def test_perform_memory_operations_invalid(executor: NintendontExecutor):
     executor._socket = MagicMock()
     executor._socket.max_input = 120
@@ -70,7 +68,6 @@ async def test_perform_memory_operations_invalid(executor: NintendontExecutor):
     executor._socket.reader.read.assert_has_awaits([call(1024)])
 
 
-@pytest.mark.asyncio
 async def test_perform_single_giant_memory_operation(executor: NintendontExecutor):
     executor._socket = MagicMock()
     executor._socket.max_input = 120
@@ -97,7 +94,6 @@ async def test_perform_single_giant_memory_operation(executor: NintendontExecuto
     executor._socket.reader.read.assert_has_awaits([call(1024), call(1024)])
 
 
-@pytest.mark.asyncio
 async def test_connect(executor, mocker):
     reader, writer = MagicMock(), MagicMock()
     writer.drain = AsyncMock()
@@ -120,13 +116,11 @@ async def test_connect(executor, mocker):
     assert socket.max_addresses == 3
 
 
-@pytest.mark.asyncio
 async def test_connect_when_connected(executor: NintendontExecutor):
     executor._socket = True
     assert await executor.connect()
 
 
-@pytest.mark.asyncio
 async def test_connect_invalid_ip(executor: NintendontExecutor):
     # Setup
     executor._ip = "127..0.0.1"
@@ -140,13 +134,11 @@ async def test_connect_invalid_ip(executor: NintendontExecutor):
     assert "encoding with 'idna' codec failed" in str(executor._socket_error)
 
 
-@pytest.mark.asyncio
 async def test_disconnect_not_connected(executor: NintendontExecutor):
     await executor.disconnect()
     assert executor._socket is None
 
 
-@pytest.mark.asyncio
 async def test_disconnect_connected(executor: NintendontExecutor):
     # Setup
     socket = MagicMock()
@@ -161,7 +153,6 @@ async def test_disconnect_connected(executor: NintendontExecutor):
 
 
 @pytest.mark.parametrize("use_timeout", [False, True])
-@pytest.mark.asyncio
 async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use_timeout):
     # Setup
     socket = AsyncMock()

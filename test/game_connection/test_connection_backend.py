@@ -20,7 +20,6 @@ def dolphin_backend():
     return backend
 
 
-@pytest.mark.asyncio
 async def test_identify_game_ntsc(backend: ConnectionBackend):
     # Setup
     def side_effect(ops: List[MemoryOperation]):
@@ -44,7 +43,6 @@ async def test_identify_game_ntsc(backend: ConnectionBackend):
     assert connector.version is echoes_dol_versions.ALL_VERSIONS[0]
 
 
-@pytest.mark.asyncio
 async def test_identify_game_error(backend: ConnectionBackend):
     # Setup
     backend.executor.perform_memory_operations.side_effect = RuntimeError("not connected")
@@ -53,7 +51,6 @@ async def test_identify_game_error(backend: ConnectionBackend):
     assert not await backend._identify_game()
 
 
-@pytest.mark.asyncio
 async def test_identify_game_already_known(backend: ConnectionBackend):
     # Setup
     backend.connector = True
@@ -69,7 +66,6 @@ async def test_identify_game_already_known(backend: ConnectionBackend):
 
 @pytest.mark.parametrize("failure_at", [None, 1, 2])
 @pytest.mark.parametrize("depth", [0, 1, 2])
-@pytest.mark.asyncio
 async def test_interact_with_game(backend: ConnectionBackend, depth: int, failure_at: Optional[int]):
     # Setup
     backend.message_cooldown = 2
@@ -158,7 +154,6 @@ def test_current_status_in_game(backend: ConnectionBackend):
 
 
 @pytest.mark.parametrize("depth", [0, 1, 2])
-@pytest.mark.asyncio
 async def test_multiworld_interaction(backend: ConnectionBackend, depth: int):
     # Setup
     # depth 0: wrong game
@@ -214,7 +209,6 @@ async def test_multiworld_interaction(backend: ConnectionBackend, depth: int):
 @pytest.mark.parametrize("has_message", [False, True])
 @pytest.mark.parametrize("has_cooldown", [False, True])
 @pytest.mark.parametrize("has_patches", [False, True])
-@pytest.mark.asyncio
 async def test_multiworld_interaction_missing_remote_pickups(backend: ConnectionBackend, has_message: bool,
                                                              has_cooldown: bool, has_patches: bool):
     # Setup
@@ -253,7 +247,6 @@ async def test_multiworld_interaction_missing_remote_pickups(backend: Connection
 
 
 @pytest.mark.parametrize("depth", [0, 1, 2, 3])
-@pytest.mark.asyncio
 async def test_update(backend: ConnectionBackend, depth: int):
     # Setup
     # depth 0: not enabled
@@ -292,7 +285,6 @@ async def test_update(backend: ConnectionBackend, depth: int):
 @pytest.mark.parametrize("connected_game", [None, RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES])
 @pytest.mark.parametrize("expected_game", [None, RandovaniaGame.METROID_PRIME_ECHOES])
 @pytest.mark.parametrize("interact_fails", [False, True])
-@pytest.mark.asyncio
 async def test_update_calls_interact_with_game(backend: ConnectionBackend, interact_fails,
                                                expected_game, connected_game):
     # Setup

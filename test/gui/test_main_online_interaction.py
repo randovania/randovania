@@ -19,7 +19,6 @@ def _default_online_interactions(skip_qtbot, preset_manager) -> OnlineInteractio
     return OnlineInteractions(parent, preset_manager, MagicMock(), main_window, Options(MagicMock()))
 
 
-@pytest.mark.asyncio
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
 async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
                                        skip_qtbot, default_online_interactions, mocker):
@@ -51,7 +50,6 @@ async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
     mock_create_and_update.return_value.show.assert_called_once_with()
 
 
-@pytest.mark.asyncio
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
 async def test_host_game_session(mock_execute_dialog: AsyncMock,
                                  skip_qtbot, default_online_interactions, mocker):
@@ -80,7 +78,6 @@ async def test_host_game_session(mock_execute_dialog: AsyncMock,
     mock_create_and_update.return_value.show.assert_called_once_with()
 
 
-@pytest.mark.asyncio
 async def test_ensure_logged_in(default_online_interactions, mocker):
     # Setup
     mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")

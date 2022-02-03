@@ -28,7 +28,6 @@ def test_update_tracker_from_hook(window, echoes_resource_database):
                                             GameConnectionStatus.TrackerOnly,
                                             GameConnectionStatus.InGame])
 @pytest.mark.parametrize("correct_game", [False, True])
-@pytest.mark.asyncio
 async def test_on_timer_update(current_status: GameConnectionStatus, correct_game,
                                skip_qtbot, mocker):
     # Setup

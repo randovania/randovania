@@ -25,7 +25,6 @@ def test_select_area_by_name(echoes_game_data,
     assert window.current_area.name == "Forgotten Bridge"
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize("accept", [False, True])
 @patch("randovania.gui.data_editor.ConnectionsEditor")
 async def test_open_edit_connection(mock_connections_editor: MagicMock,

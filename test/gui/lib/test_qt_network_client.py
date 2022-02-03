@@ -18,7 +18,6 @@ def network_client_fixture(skip_qtbot, mocker, tmpdir):
     return qt_network_client.QtNetworkClient(Path(tmpdir))
 
 
-@pytest.mark.asyncio
 async def test_handle_network_errors_success(skip_qtbot, qapp):
     callee = AsyncMock()
     callee.return_value = MagicMock()
@@ -44,7 +43,6 @@ async def test_handle_network_errors_success(skip_qtbot, qapp):
             "Further attempts will wait for longer."
     ),
 ])
-@pytest.mark.asyncio
 async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, exception, title, message):
     mock_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     callee = AsyncMock()
@@ -61,7 +59,6 @@ async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, excepti
     mock_dialog.assert_awaited_once_with(qapp, title, message)
 
 
-@pytest.mark.asyncio
 async def test_login_to_discord(client):
     client.discord = MagicMock()
     client.discord.start = AsyncMock()
