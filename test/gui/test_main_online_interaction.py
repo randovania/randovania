@@ -28,6 +28,7 @@ async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
         "randovania.gui.main_online_interaction.GameSessionBrowserDialog", autospec=True)
     mock_create_and_update: AsyncMock = mocker.patch(
         "randovania.gui.main_online_interaction.GameSessionWindow.create_and_update", new_callable=AsyncMock)
+    mock_create_and_update.return_value = MagicMock()
     mock_get_game_connection = mocker.patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
     default_online_interactions._ensure_logged_in = AsyncMock(return_value=True)
     mock_execute_dialog.return_value = mock_game_session_browser.return_value.Accepted
@@ -57,6 +58,7 @@ async def test_host_game_session(mock_execute_dialog: AsyncMock,
     # Setup
     mock_create_and_update: AsyncMock = mocker.patch(
         "randovania.gui.main_online_interaction.GameSessionWindow.create_and_update", new_callable=AsyncMock)
+    mock_create_and_update.return_value = MagicMock()
     mock_get_game_connection = mocker.patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
     default_online_interactions._ensure_logged_in = AsyncMock(return_value=True)
     mock_execute_dialog.return_value = QDialog.Accepted

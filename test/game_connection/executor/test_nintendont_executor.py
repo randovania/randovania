@@ -165,6 +165,7 @@ async def test_disconnect_connected(executor: NintendontExecutor):
 async def test_send_requests_to_socket_timeout(executor: NintendontExecutor, use_timeout):
     # Setup
     socket = AsyncMock()
+    socket.writer.write = MagicMock()
     socket.writer.drain.side_effect = asyncio.TimeoutError() if use_timeout else OSError("test-exp")
     executor._socket = socket
     executor.disconnect = AsyncMock()

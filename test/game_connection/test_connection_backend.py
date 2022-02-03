@@ -198,7 +198,7 @@ async def test_multiworld_interaction(backend: ConnectionBackend, depth: int):
             call(game_enum, PickupIndex(2)),
             call(game_enum, PickupIndex(5)),
         ])
-        connector.execute_remote_patches(backend.executor, patches)
+        connector.execute_remote_patches.assert_awaited_once_with(backend.executor, patches)
     else:
         location_collected.assert_not_awaited()
         connector.execute_remote_patches.assert_not_awaited()
