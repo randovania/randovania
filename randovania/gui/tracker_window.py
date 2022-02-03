@@ -485,8 +485,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
                         resource_node = typing.cast(ResourceNode, node)
-                        node_item.setDisabled(not resource_node.can_collect(state.patches, state.resources, all_nodes,
-                                                                            state.resource_database))
+                        node_item.setDisabled(not resource_node.can_collect(state.context_for(resource_node)))
                         node_item.setCheckState(0, Qt.Checked if is_collected else Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
@@ -846,8 +845,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.patches, state.resources,
-                                                                                 all_nodes, state.resource_database),
+            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.context_for(node)),
                                                    state.resources)
 
         return state

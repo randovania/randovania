@@ -1331,6 +1331,13 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Bed": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -2940,6 +2947,13 @@
                     "description": "",
                     "extra": {},
                     "connections": {
+                        "Door to Labyrinth W (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Event - Camp": {
                             "type": "and",
                             "data": {
@@ -2978,10 +2992,12 @@
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
                     "event_name": "camp",
                     "connections": {
-                        "Door to Labyrinth W (Lower)": {
+                        "Room Spawn": {
                             "type": "and",
                             "data": {
                                 "comment": null,

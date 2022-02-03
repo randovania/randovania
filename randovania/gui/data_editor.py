@@ -27,6 +27,7 @@ from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
+from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 
 SHOW_WORLD_MIN_MAX_SPINNER = False
 
@@ -512,19 +513,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self._warning_dialogs_disabled:
             return True
 
-        message = "Database has the following errors:\n\n" + "\n".join(errors)
+        options = QMessageBox.Yes | QMessageBox.No
+        message = "Database has the following errors:\n\n" + "\n\n".join(errors)
+        message += "\n\nIgnore?"
 
-        options = QMessageBox.Ok
-        if self.game_description.game.data.experimental:
-            options = QMessageBox.Yes | QMessageBox.No
-            message += "\n\nIgnore?"
-
-        user_response = QMessageBox.critical(
-            self, "Integrity Check",
-            message,
-            options,
-            QMessageBox.No
-        )
+        box = ScrollMessageBox.create_new(self, QtWidgets.QMessageBox.Critical, "Integrity Check",
+                                          message, options, QMessageBox.No)
+        user_response = box.exec_()
 
         return user_response == QMessageBox.Yes
 

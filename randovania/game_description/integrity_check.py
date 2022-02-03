@@ -127,7 +127,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
         if isinstance(node, EventNode):
             # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = convert_resource_gain_to_current_resources(node.resource_gain_on_collect(None, None, None, None))
+            current = convert_resource_gain_to_current_resources(node.resource_gain_on_collect(None))
             if game.victory_condition.satisfied(current, 0, game.resource_database):
                 continue
 
@@ -141,10 +141,54 @@ def find_world_errors(game: GameDescription, world: World) -> Iterator[str]:
             yield f"{world.name} - {error}"
 
 
+def find_invalid_strongly_connected_components(game: GameDescription) -> Iterator[str]:
+    import networkx
+    graph = networkx.DiGraph()
+
+    for node in game.world_list.all_nodes:
+        graph.add_node(node)
+
+    for node in game.world_list.all_nodes:
+        for other, req in game.world_list.potential_nodes_from(node, game.create_game_patches()):
+            if req != Requirement.impossible():
+                graph.add_edge(node, other)
+
+    starting_node = game.world_list.resolve_teleporter_connection(game.starting_location)
+
+    for strong_comp in networkx.strongly_connected_components(graph):
+        components: set[Node] = strong_comp
+
+        # The starting location determines the default component
+        if starting_node in components:
+            continue
+
+        if any(node.extra.get("different_strongly_connected_component", False) for node in components):
+            continue
+
+        if len(components) == 1:
+            node = next(iter(components))
+
+            # If the component is a single node which is the default node of it's area, allow it
+            area = game.world_list.nodes_to_area(node)
+            if area.default_node == node.name:
+                continue
+
+            # We accept nodes that have no paths out or in.
+            if not graph.in_edges(node) and not graph.edges(node):
+                continue
+
+        names = sorted(
+            game.world_list.node_name(node, with_world=True)
+            for node in strong_comp
+        )
+        yield "Unknown strongly connected component detected containing {} nodes:\n{}".format(len(names), names)
+
+
 def find_database_errors(game: GameDescription) -> list[str]:
     result = []
 
     for world in game.world_list.worlds:
         result.extend(find_world_errors(game, world))
+    result.extend(find_invalid_strongly_connected_components(game))
 
     return result
