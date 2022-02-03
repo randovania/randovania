@@ -2,14 +2,14 @@ from typing import Dict, List
 
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
+from randovania.layout.preset_describer import format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
     has_vanilla_item
 
 
 def dread_format_params(configuration: DreadConfiguration) -> Dict[str, List[str]]:
     major_items = configuration.major_items_configuration
 
-    template_strings = _format_params_base(configuration)
+    template_strings = format_params_base(configuration)
 
     if configuration.energy_per_tank != 100:
         template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
