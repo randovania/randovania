@@ -69,7 +69,6 @@ def test_drop_event_layout(default_main_window, mocker):
     default_main_window.open_game_details.assert_called_once_with(mock_from_file.return_value)
 
 
-@pytest.mark.asyncio
 async def test_drop_event_preset(default_main_window):
     await default_main_window._initialize_post_show_body()
 
@@ -87,7 +86,6 @@ async def test_drop_event_preset(default_main_window):
     assert default_main_window.main_tab_widget.currentWidget() == default_main_window.tab_create_seed
 
 
-@pytest.mark.asyncio
 async def test_browse_racetime(default_main_window, mocker):
     mock_new_dialog = mocker.patch("randovania.gui.dialog.racetime_browser_dialog.RacetimeBrowserDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
@@ -106,7 +104,6 @@ async def test_browse_racetime(default_main_window, mocker):
     default_main_window.generate_seed_from_permalink.assert_awaited_once_with(dialog.permalink)
 
 
-@pytest.mark.asyncio
 async def test_generate_seed_from_permalink(default_main_window, mocker):
     permalink = MagicMock(spec=Permalink)
     permalink.seed_hash = None

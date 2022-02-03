@@ -5,7 +5,6 @@ from randovania.layout import preset_migration
 from randovania.layout.versioned_preset import VersionedPreset
 
 
-@pytest.mark.asyncio
 async def test_migration(test_files_dir):
     preset = await VersionedPreset.from_file(test_files_dir.joinpath("presets", "fewest_changes_v1.rdvpreset"))
     assert preset.data["schema_version"] == 1

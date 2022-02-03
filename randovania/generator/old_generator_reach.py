@@ -275,8 +275,7 @@ class OldGeneratorReach(GeneratorReach):
         all_nodes = self.all_nodes
         new_dangerous_resources = set(
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.state.patches, self.state.resources, all_nodes,
-                                                                    self.state.resource_database)
+            for resource, quantity in node.resource_gain_on_collect(self.state.context_for(node))
             if resource in self.game.dangerous_resources
         )
         new_state = self.state.act_on_node(node)

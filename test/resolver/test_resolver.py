@@ -6,7 +6,6 @@ from randovania.resolver import resolver, debug
 
 @pytest.mark.skip_resolver_tests
 @pytest.mark.parametrize("seed_name", ["seed_a.rdvgame", "corruption_seed_a.rdvgame"])
-@pytest.mark.asyncio
 async def test_resolver_with_log_file(test_files_dir, seed_name: str):
     # Setup
     debug.set_level(2)

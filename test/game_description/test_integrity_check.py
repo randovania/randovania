@@ -38,8 +38,8 @@ def test_invalid_db():
             "multiworld_magic_item_index": "Power"
         },
         "starting_location": {
-            "world_name": "Temple Grounds",
-            "area_name": "Landing Site"
+            "world_name": "World",
+            "area_name": "Area 2"
         },
         "initial_states": {
             "Default": []
@@ -162,7 +162,7 @@ def test_invalid_db():
                         }
                     },
                     "Area 2": {
-                        "default_node": None,
+                        "default_node": "Generic Node",
                         "valid_starting_location": False,
                         "extra": {},
                         "nodes": {
@@ -212,5 +212,14 @@ def test_invalid_db():
         " but that dock connects to 'world World/area Area 1/node Door to Area 2 (Generic)' instead.",
         "World - Area 2 - 'Door to Area 1' should be named 'Other to Area 1'",
         "World - Area 2 - 'Door to Area 1' connects to 'world World/area Area 1/node Door to Area 2 (Generic)',"
-        " but that dock connects to 'world World/area Area 2/node Generic Node' instead."
+        " but that dock connects to 'world World/area Area 2/node Generic Node' instead.",
+
+        "Unknown strongly connected component detected containing 1 nodes:\n"
+        "['World/Area 1/Event - Foo']",
+        "Unknown strongly connected component detected containing 1 nodes:\n"
+        "['World/Area 1/Door to Area 2 (Generic)']",
+        "Unknown strongly connected component detected containing 1 nodes:\n"
+        "['World/Area 2/Door to Area 1']",
+        "Unknown strongly connected component detected containing 1 nodes:\n"
+        "['World/Area 1/Door to Area 2 (Dock)']"
     ]

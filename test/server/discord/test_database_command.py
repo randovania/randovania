@@ -9,7 +9,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.server.discord.database_command import DatabaseCommandCog, SplitWorld
 
 
-@pytest.mark.asyncio
 async def test_on_ready():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
@@ -35,7 +34,6 @@ async def test_on_ready():
     slash.sync_all_commands.assert_awaited_once_with()
 
 
-@pytest.mark.asyncio
 async def test_database_command():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
@@ -57,7 +55,6 @@ async def test_database_command():
     )
 
 
-@pytest.mark.asyncio
 async def test_on_database_world_selected():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
@@ -85,7 +82,6 @@ async def test_on_database_world_selected():
     )
 
 
-@pytest.mark.asyncio
 async def test_on_database_area_selected(echoes_game_description, mocker):
     # Setup
     mock_file: MagicMock = mocker.patch("discord.File")
@@ -126,7 +122,6 @@ async def test_on_database_area_selected(echoes_game_description, mocker):
     assert not Path("bar").is_file()
 
 
-@pytest.mark.asyncio
 async def test_on_area_node_selection(echoes_game_description, mocker):
     # Setup
     mock_embed: MagicMock = mocker.patch("discord.Embed")

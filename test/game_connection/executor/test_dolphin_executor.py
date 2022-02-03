@@ -13,7 +13,6 @@ def dolphin_executor():
     return executor
 
 
-@pytest.mark.asyncio
 async def test_perform_memory_operations(executor: DolphinExecutor):
     executor.dolphin.follow_pointers.return_value = 0x80003000
     executor.dolphin.read_bytes.side_effect = [b"A" * 50, b"B" * 30, b"C" * 10]

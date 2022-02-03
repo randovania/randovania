@@ -8,7 +8,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.server.discord import preset_lookup
 
 
-@pytest.mark.asyncio
 async def test_on_message_from_bot(mocker):
     mock_look_for: AsyncMock = mocker.patch("randovania.server.discord.preset_lookup.look_for_permalinks",
                                             new_callable=AsyncMock)
@@ -51,7 +50,6 @@ def test_get_version_failure_unknown(mocker):
 
 @pytest.mark.parametrize("is_solo", [False, True])
 @pytest.mark.parametrize("has_multiple", [False, True])
-@pytest.mark.asyncio
 async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     preset = MagicMock()
     preset.game = RandovaniaGame.METROID_PRIME_ECHOES
@@ -127,7 +125,6 @@ async def test_look_for_permalinks(mocker, is_solo, has_multiple):
     )
 
 
-@pytest.mark.asyncio
 async def test_reply_for_preset(mocker):
     mock_describe: MagicMock = mocker.patch("randovania.layout.preset_describer.describe",
                                             return_value=[
