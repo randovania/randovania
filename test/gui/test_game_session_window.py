@@ -29,7 +29,6 @@ def _window(skip_qtbot):
     return window
 
 
-@pytest.mark.asyncio
 async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
     # Setup
     network_client = MagicMock()
@@ -87,7 +86,6 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
     )
 
 
-@pytest.mark.asyncio
 async def test_on_game_session_actions_update(window: GameSessionWindow, default_echoes_preset):
     # Setup
     game_session = MagicMock()
@@ -115,7 +113,6 @@ async def test_on_game_session_actions_update(window: GameSessionWindow, default
 
 
 @pytest.mark.parametrize("in_game", [False, True])
-@pytest.mark.asyncio
 async def test_update_multiworld_client_status(window, in_game):
     # Setup
     window._game_session = MagicMock()
@@ -137,7 +134,6 @@ async def test_update_multiworld_client_status(window, in_game):
     not_called.assert_not_awaited()
 
 
-@pytest.mark.asyncio
 async def test_row_show_preset_summary(window, mocker, preset_manager):
     # Setup
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
@@ -216,7 +212,6 @@ def test_sync_background_process_to_game_session_nothing(window):
 
 
 @pytest.mark.parametrize("has_game", [False, True])
-@pytest.mark.asyncio
 async def test_update_logic_settings_window(window, mocker, has_game):
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
@@ -237,7 +232,6 @@ async def test_update_logic_settings_window(window, mocker, has_game):
         execute_dialog.assert_not_awaited()
 
 
-@pytest.mark.asyncio
 async def test_change_password(window, mocker):
     def set_text_value(dialog: QtWidgets.QInputDialog):
         dialog.setTextValue("magoo")
@@ -255,7 +249,6 @@ async def test_change_password(window, mocker):
     window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.CHANGE_PASSWORD, "magoo")
 
 
-@pytest.mark.asyncio
 async def test_generate_game(window, mocker, preset_manager):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
@@ -289,7 +282,6 @@ async def test_generate_game(window, mocker, preset_manager):
     window._upload_layout_description.assert_awaited_once_with(mock_generate_layout.return_value)
 
 
-@pytest.mark.asyncio
 async def test_check_dangerous_presets(window, mocker):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     mock_warning.return_value = QtWidgets.QMessageBox.No
@@ -324,7 +316,6 @@ async def test_check_dangerous_presets(window, mocker):
     assert not result
 
 
-@pytest.mark.asyncio
 async def test_copy_permalink(window, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
@@ -343,7 +334,6 @@ async def test_copy_permalink(window, mocker):
     mock_set_clipboard.assert_called_once_with("<permalink>")
 
 
-@pytest.mark.asyncio
 async def test_import_permalink(window, mocker):
     mock_permalink_dialog = mocker.patch("randovania.gui.game_session_window.PermalinkDialog")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
@@ -373,7 +363,6 @@ async def test_import_permalink(window, mocker):
 
 
 @pytest.mark.parametrize("already_kicked", [True, False])
-@pytest.mark.asyncio
 async def test_on_kicked(skip_qtbot, window, mocker, already_kicked):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
@@ -399,7 +388,6 @@ async def test_on_kicked(skip_qtbot, window, mocker, already_kicked):
 
 
 @pytest.mark.parametrize("accept", [False, True])
-@pytest.mark.asyncio
 async def test_finish_session(window, accept, mocker):
     mock_warning = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     mock_warning.return_value = QtWidgets.QMessageBox.Yes if accept else QtWidgets.QMessageBox.No
@@ -418,7 +406,6 @@ async def test_finish_session(window, accept, mocker):
         window.network_client.session_admin_global.assert_not_awaited()
 
 
-@pytest.mark.asyncio
 async def test_save_iso(window, mocker, preset_manager, echoes_game_description):
     mock_input_dialog = mocker.patch("randovania.gui.game_session_window.GameInputDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
@@ -451,7 +438,6 @@ async def test_save_iso(window, mocker, preset_manager, echoes_game_description)
 
 
 @pytest.mark.parametrize("is_member", [False, True])
-@pytest.mark.asyncio
 async def test_on_close_event(window: GameSessionWindow, mocker, is_member):
     # Setup
     super_close_event = mocker.patch("PySide2.QtWidgets.QMainWindow.closeEvent")

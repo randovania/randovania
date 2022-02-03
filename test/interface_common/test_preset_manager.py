@@ -5,7 +5,6 @@ from randovania.interface_common import preset_manager
 from randovania.layout.versioned_preset import VersionedPreset
 
 
-@pytest.mark.asyncio
 async def test_add_then_delete_preset(tmp_path, default_preset):
     p = VersionedPreset.with_preset(default_preset.fork())
 

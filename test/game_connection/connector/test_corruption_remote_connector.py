@@ -16,7 +16,6 @@ def corruption_remote_connector():
 @pytest.mark.parametrize("has_cplayer", [False, True])
 @pytest.mark.parametrize("has_pending_op", [False, True])
 @pytest.mark.parametrize("has_world", [False, True])
-@pytest.mark.asyncio
 async def test_fetch_game_status(connector: CorruptionRemoteConnector, has_world, has_pending_op,
                                  has_cplayer, correct_vtable):
     # Setup

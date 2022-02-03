@@ -9,7 +9,6 @@ from randovania.network_client.game_session import GameSessionListEntry
 from randovania.network_common.session_state import GameSessionState
 
 
-@pytest.mark.asyncio
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
 async def test_attempt_join(mock_execute_dialog: AsyncMock,
                             skip_qtbot):

@@ -19,7 +19,6 @@ def _default_online_interactions(skip_qtbot, preset_manager) -> OnlineInteractio
     return OnlineInteractions(parent, preset_manager, MagicMock(), main_window, Options(MagicMock()))
 
 
-@pytest.mark.asyncio
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
 async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
                                        skip_qtbot, default_online_interactions, mocker):
@@ -28,6 +27,7 @@ async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
         "randovania.gui.main_online_interaction.GameSessionBrowserDialog", autospec=True)
     mock_create_and_update: AsyncMock = mocker.patch(
         "randovania.gui.main_online_interaction.GameSessionWindow.create_and_update", new_callable=AsyncMock)
+    mock_create_and_update.return_value = MagicMock()
     mock_get_game_connection = mocker.patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
     default_online_interactions._ensure_logged_in = AsyncMock(return_value=True)
     mock_execute_dialog.return_value = mock_game_session_browser.return_value.Accepted
@@ -50,13 +50,13 @@ async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
     mock_create_and_update.return_value.show.assert_called_once_with()
 
 
-@pytest.mark.asyncio
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
 async def test_host_game_session(mock_execute_dialog: AsyncMock,
                                  skip_qtbot, default_online_interactions, mocker):
     # Setup
     mock_create_and_update: AsyncMock = mocker.patch(
         "randovania.gui.main_online_interaction.GameSessionWindow.create_and_update", new_callable=AsyncMock)
+    mock_create_and_update.return_value = MagicMock()
     mock_get_game_connection = mocker.patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
     default_online_interactions._ensure_logged_in = AsyncMock(return_value=True)
     mock_execute_dialog.return_value = QDialog.Accepted
@@ -78,7 +78,6 @@ async def test_host_game_session(mock_execute_dialog: AsyncMock,
     mock_create_and_update.return_value.show.assert_called_once_with()
 
 
-@pytest.mark.asyncio
 async def test_ensure_logged_in(default_online_interactions, mocker):
     # Setup
     mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")

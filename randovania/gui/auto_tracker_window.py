@@ -169,6 +169,9 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
     @asyncSlot()
     async def _on_timer_update(self):
+        await self._on_timer_update_raw()
+
+    async def _on_timer_update_raw(self):
         try:
             current_status = self.game_connection.current_status
             if current_status not in {GameConnectionStatus.Disconnected, GameConnectionStatus.UnknownGame,

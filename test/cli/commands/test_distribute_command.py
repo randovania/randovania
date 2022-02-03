@@ -14,6 +14,7 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
     # Setup
     mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)
+    mock_generate.return_value = MagicMock()
     mock_from_str: MagicMock = mocker.patch("randovania.layout.permalink.Permalink.from_str", autospec=True)
 
     args = MagicMock()

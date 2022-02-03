@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e -x
-cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/.."
+cd -- "$( dirname -- "${BASH_SOURCE[0]}" )/.."
 
 source venv/bin/activate
 python setup.py build_ui

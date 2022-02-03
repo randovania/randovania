@@ -19,7 +19,6 @@ def debug_executor_window(skip_qtbot):
     return DebugExecutorWindow()
 
 
-@pytest.mark.asyncio
 async def test_display_message(executor: DebugExecutorWindow):
     # Setup
     await executor._ensure_initialized_game_memory()
@@ -37,7 +36,6 @@ async def test_display_message(executor: DebugExecutorWindow):
     assert executor.messages_list.findItems(message, Qt.MatchFlag.MatchExactly)
 
 
-@pytest.mark.asyncio
 async def test_update_inventory_label(executor: DebugExecutorWindow, echoes_resource_database):
     # Setup
     await executor._ensure_initialized_game_memory()
@@ -70,7 +68,6 @@ async def test_update_inventory_label(executor: DebugExecutorWindow, echoes_reso
     assert "Multiworld Magic Identifier x 0/2" in executor.inventory_label.text()
 
 
-@pytest.mark.asyncio
 @patch("randovania.gui.lib.common_qt_lib.get_network_client", autospec=True)
 async def test_setup_locations_combo(mock_get_network_client: MagicMock,
                                      executor: DebugExecutorWindow):

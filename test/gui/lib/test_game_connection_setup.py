@@ -23,7 +23,6 @@ def _setup(skip_qtbot):
 
 
 @pytest.mark.parametrize("nintendont_ip", [None, "localhost", "192.168.0.1"])
-@pytest.mark.asyncio
 async def test_on_use_nintendont_backend_accept(setup, mocker, nintendont_ip):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.Accepted)
@@ -47,7 +46,6 @@ async def test_on_use_nintendont_backend_accept(setup, mocker, nintendont_ip):
         assert setup.game_connection.executor is old_executor
 
 
-@pytest.mark.asyncio
 async def test_on_upload_nintendont_action_no_dol(setup, mocker, tmpdir):
     mocker.patch("randovania.gui.lib.game_connection_setup.get_data_path", return_value=Path(tmpdir))
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
@@ -59,7 +57,6 @@ async def test_on_upload_nintendont_action_no_dol(setup, mocker, tmpdir):
     execute_dialog.assert_awaited_once()
 
 
-@pytest.mark.asyncio
 async def test_on_upload_nintendont_action_with_dol(setup, mocker, tmpdir):
     mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")
     mocker.patch("randovania.gui.lib.game_connection_setup.get_data_path", return_value=Path(tmpdir))

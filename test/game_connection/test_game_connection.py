@@ -12,7 +12,6 @@ def _connection(skip_qtbot):
     return GameConnection(MagicMock())
 
 
-@pytest.mark.asyncio
 async def test_auto_update(skip_qtbot, qapp):
     # Setup
     update_mock = AsyncMock()

@@ -22,7 +22,6 @@ def _client(tmpdir):
     return NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
 
 
-@pytest.mark.asyncio
 async def test_on_connect_no_restore(tmpdir):
     client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
 
@@ -34,7 +33,6 @@ async def test_on_connect_no_restore(tmpdir):
 
 
 @pytest.mark.parametrize("valid_session", [False, True])
-@pytest.mark.asyncio
 async def test_on_connect_restore(tmpdir, valid_session: bool):
     client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000"})
     session_data_path = Path(tmpdir) / "9iwAGnskOkqzo_NZ" / "session_persistence.bin"
@@ -69,7 +67,6 @@ async def test_on_connect_restore(tmpdir, valid_session: bool):
         assert not session_data_path.is_file()
 
 
-@pytest.mark.asyncio
 async def test_on_connect_restore_timeout(client: NetworkClient):
     # Setup
     client._restore_session = AsyncMock(side_effect=ServerError())
@@ -84,7 +81,6 @@ async def test_on_connect_restore_timeout(client: NetworkClient):
     client.disconnect_from_server.assert_awaited_once_with()
 
 
-@pytest.mark.asyncio
 async def test_connect_to_server(tmpdir):
     # Setup
     client = NetworkClient(Path(tmpdir), {"server_address": "http://localhost:5000",
@@ -108,7 +104,6 @@ async def test_connect_to_server(tmpdir):
                                                 headers=connection_headers())
 
 
-@pytest.mark.asyncio
 async def test_session_admin_global(client):
     client._emit_with_result = AsyncMock()
     client._current_game_session_meta = MagicMock()
@@ -123,7 +118,6 @@ async def test_session_admin_global(client):
 
 
 @pytest.mark.parametrize("permanent", [False, True])
-@pytest.mark.asyncio
 async def test_leave_game_session(client: NetworkClient, permanent: bool):
     client._emit_with_result = AsyncMock()
     client._current_game_session_meta = MagicMock()
@@ -144,7 +138,6 @@ async def test_leave_game_session(client: NetworkClient, permanent: bool):
     assert client._current_game_session_meta is None
 
 
-@pytest.mark.asyncio
 async def test_emit_with_result_timeout(client: NetworkClient):
     # Setup
     client._connection_state = ConnectionState.Connected
@@ -186,7 +179,6 @@ def test_update_timeout_with_decrease_on_success(client: NetworkClient):
     assert client._current_timeout == 40
 
 
-@pytest.mark.asyncio
 async def test_refresh_received_pickups(client: NetworkClient, corruption_game_description, mocker):
     db = corruption_game_description.resource_database
 
@@ -245,7 +237,6 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
     assert pickup == expected_pickup
 
 
-@pytest.mark.asyncio
 async def test_session_self_update(client: NetworkClient):
     client._emit_without_result = AsyncMock()
     client._current_game_session_meta = MagicMock()

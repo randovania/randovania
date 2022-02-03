@@ -28,7 +28,6 @@ def test_update_tracker_from_hook(window, echoes_resource_database):
                                             GameConnectionStatus.TrackerOnly,
                                             GameConnectionStatus.InGame])
 @pytest.mark.parametrize("correct_game", [False, True])
-@pytest.mark.asyncio
 async def test_on_timer_update(current_status: GameConnectionStatus, correct_game,
                                skip_qtbot, mocker):
     # Setup
@@ -37,6 +36,7 @@ async def test_on_timer_update(current_status: GameConnectionStatus, correct_gam
     game_connection.pretty_current_status = "Pretty Status"
 
     window = AutoTrackerWindow(game_connection, MagicMock())
+    window._update_timer = MagicMock()
     window._update_tracker_from_hook = MagicMock()
 
     game_connection.get_current_inventory.return_value = inventory
@@ -46,13 +46,14 @@ async def test_on_timer_update(current_status: GameConnectionStatus, correct_gam
         window._current_tracker_game = game_connection.connector.game_enum
 
     # Run
-    await window._on_timer_update()
+    await window._on_timer_update_raw()
 
     # Assert
     if current_status != GameConnectionStatus.Disconnected and correct_game:
         window._update_tracker_from_hook.assert_called_once_with(inventory)
     else:
         window._update_tracker_from_hook.assert_not_called()
+    window._update_timer.start.assert_called_once_with()
 
 
 @pytest.mark.parametrize("name", ["Metroid Prime 1 - Pixel Art (Standard)", "Metroid Prime 2 - Game Art (Full)"])

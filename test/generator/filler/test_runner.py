@@ -17,7 +17,6 @@ from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
 
 
-@pytest.mark.asyncio
 async def test_run_filler(echoes_game_description,
                           default_layout_configuration,
                           mocker,

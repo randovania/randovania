@@ -6,7 +6,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.server.discord.faq_command import FaqCommandCog
 
 
-@pytest.mark.asyncio
 async def test_on_ready():
     # Setup
     cog = FaqCommandCog({"guild": 1234}, MagicMock())
@@ -22,7 +21,6 @@ async def test_on_ready():
     slash.sync_all_commands.assert_awaited_once_with()
 
 
-@pytest.mark.asyncio
 async def test_faq_game_command():
     # Setup
     cog = FaqCommandCog({}, MagicMock())

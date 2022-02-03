@@ -14,7 +14,6 @@ from randovania.resolver.exceptions import InvalidConfiguration
 @patch("randovania.generator.generator.create_player_pool", autospec=True)
 @patch("randovania.generator.generator._distribute_remaining_items", autospec=True)
 @patch("randovania.generator.generator.Random", autospec=False)
-@pytest.mark.asyncio
 async def test_create_patches(mock_random: MagicMock,
                               mock_distribute_remaining_items: MagicMock,
                               mock_create_player_pool: MagicMock,

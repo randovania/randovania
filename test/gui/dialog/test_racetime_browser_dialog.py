@@ -5,7 +5,6 @@ from randovania.gui.dialog.racetime_browser_dialog import RacetimeBrowserDialog
 
 
 @pytest.mark.parametrize("success", [False, True])
-@pytest.mark.asyncio
 async def test_attempt_join_success(skip_qtbot, mocker, success):
     # Setup
     permalink = MagicMock()

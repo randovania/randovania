@@ -27,7 +27,6 @@ def echoes_remote_connector(version: EchoesDolVersion):
     return connector
 
 
-@pytest.mark.asyncio
 async def test_is_this_version(connector: EchoesRemoteConnector):
     # Setup
     build_info = b"!#$MetroidBuildInfo!#$Build v1.028 10/18/2004 10:44:32"
@@ -43,7 +42,6 @@ async def test_is_this_version(connector: EchoesRemoteConnector):
     ("Magoo2", b'\x00M\x00a\x00g\x00o\x00o\x002\x00\x00\x00\x00', 0),
     ("Magoo", b'\x00M\x00a\x00g\x00o\x00o\x00 \x00\x00\x00\x00', 10),
 ])
-@pytest.mark.asyncio
 async def test_write_string_to_game_buffer(connector: EchoesRemoteConnector, version: EchoesDolVersion,
                                            message_original, message_encoded, previous_size):
     # Setup
@@ -57,7 +55,6 @@ async def test_write_string_to_game_buffer(connector: EchoesRemoteConnector, ver
                                      write_bytes=message_encoded)
 
 
-@pytest.mark.asyncio
 async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     # Setup
     executor = AsyncMock()
@@ -76,7 +73,6 @@ async def test_get_inventory_valid(connector: EchoesRemoteConnector):
     }
 
 
-@pytest.mark.asyncio
 async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
     # Setup
     custom_inventory = {"Darkburst": InventoryItem(0, 50)}
@@ -94,7 +90,6 @@ async def test_get_inventory_invalid_capacity(connector: EchoesRemoteConnector):
         await connector.get_inventory(executor)
 
 
-@pytest.mark.asyncio
 async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
     # Setup
     custom_inventory = {"Darkburst": InventoryItem(1, 0)}
@@ -113,7 +108,6 @@ async def test_get_inventory_invalid_amount(connector: EchoesRemoteConnector):
 
 
 @pytest.mark.parametrize("capacity", [0, 10])
-@pytest.mark.asyncio
 async def test_known_collected_locations_nothing(connector: EchoesRemoteConnector, capacity: int):
     # Setup
     executor = AsyncMock()
@@ -128,7 +122,6 @@ async def test_known_collected_locations_nothing(connector: EchoesRemoteConnecto
 
 
 @pytest.mark.parametrize("capacity", [0, 10])
-@pytest.mark.asyncio
 async def test_known_collected_locations_location(connector: EchoesRemoteConnector, version: EchoesDolVersion,
                                                   mocker, capacity):
     # Setup
@@ -151,7 +144,6 @@ async def test_known_collected_locations_location(connector: EchoesRemoteConnect
     assert patches == [DolRemotePatch([], mock_item_patch.return_value)]
 
 
-@pytest.mark.asyncio
 async def test_find_missing_remote_pickups_nothing(connector: EchoesRemoteConnector):
     # Setup
     executor = AsyncMock()
@@ -165,7 +157,6 @@ async def test_find_missing_remote_pickups_nothing(connector: EchoesRemoteConnec
     assert not has_message
 
 
-@pytest.mark.asyncio
 async def test_find_missing_remote_pickups_pending_location(connector: EchoesRemoteConnector):
     # Setup
     executor = AsyncMock()
@@ -180,7 +171,6 @@ async def test_find_missing_remote_pickups_pending_location(connector: EchoesRem
 
 
 @pytest.mark.parametrize("in_cooldown", [False, True])
-@pytest.mark.asyncio
 async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion,
                                                        mocker, in_cooldown):
     # Setup
@@ -232,7 +222,6 @@ async def test_find_missing_remote_pickups_give_pickup(connector: EchoesRemoteCo
     mock_call_display_hud_patch.assert_called_once_with(version.string_display)
 
 
-@pytest.mark.asyncio
 async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker,
                                   generic_item_category):
     # Setup
@@ -262,7 +251,6 @@ async def test_patches_for_pickup(connector: EchoesRemoteConnector, version: Ech
     assert message == "Received Pickup from Someone."
 
 
-@pytest.mark.asyncio
 async def test_execute_remote_patches(connector: EchoesRemoteConnector, version: EchoesDolVersion, mocker):
     # Setup
     patch_address, patch_bytes = MagicMock(), MagicMock()
@@ -296,7 +284,6 @@ async def test_execute_remote_patches(connector: EchoesRemoteConnector, version:
 @pytest.mark.parametrize("correct_vtable", [False, True])
 @pytest.mark.parametrize("has_pending_op", [False, True])
 @pytest.mark.parametrize("has_world", [False, True])
-@pytest.mark.asyncio
 async def test_fetch_game_status(connector: EchoesRemoteConnector, version: EchoesDolVersion,
                                  has_world, has_pending_op, correct_vtable):
     # Setup
