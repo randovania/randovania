@@ -397,6 +397,7 @@ class RandomprimePatcher(Patcher):
                 "startingRoom": starting_room,
                 "startingMemo": starting_memo,
                 "warpToStart": configuration.warp_to_start,
+                "springBall": configuration.spring_ball,
 
                 "nonvariaHeatDamage": configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": configuration.progressive_damage_reduction,
