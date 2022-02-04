@@ -9416,7 +9416,7 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
-                "Door from Varia Suit Tutorial": {
+                "Door to Varia Suit Tutorial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9439,9 +9439,9 @@
                         "node_name": "Door to Chain Reaction Room"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Access Closed",
+                    "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Start Point": {
+                        "Next to Door": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9602,49 +9602,6 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door from Varia Suit Tutorial": {
-                            "type": "and",
-                            "data": {
-                                "comment": "TODO: Segregate this room logically so heat logic is handled alongside the heat device event",
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Varia",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Heat",
-                                                        "amount": 300,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to collision_camera_028 (A)": {
                             "type": "and",
                             "data": {
@@ -9679,6 +9636,49 @@
                                                         "type": "damage",
                                                         "name": "Heat",
                                                         "amount": 50,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Next to Door": {
+                            "type": "and",
+                            "data": {
+                                "comment": "TODO: Segregate this room logically so heat logic is handled alongside the heat device event",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Varia",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 300,
                                                         "negate": false
                                                     }
                                                 }
@@ -9783,14 +9783,59 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "Slide Tunnel",
+                    "connections": {}
+                },
+                "Next to Door": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -8535.300668151447,
+                        "y": 8425.501113585746,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
-                        "Door from Varia Suit Tutorial": {
+                        "Door to Varia Suit Tutorial": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
                                 "name": "s010_cave:default:ev_chainreaction_deviceheat",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Dock to collision_camera_030 (A)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -9987,7 +10032,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Chain Reaction Room",
-                        "node_name": "Door from Varia Suit Tutorial"
+                        "node_name": "Door to Varia Suit Tutorial"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -10759,7 +10804,7 @@
                         "y": 9300.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Should be power beam door, but for logic it's missile\n\n",
                     "extra": {
                         "actor_name": "Door059",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -10774,7 +10819,7 @@
                         "node_name": "Door to Varia Suit Room"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Missile Door",
                     "connections": {
                         "Door to Varia Suit Tutorial": {
                             "type": "and",
@@ -19006,7 +19051,7 @@
             }
         },
         "Screw Attack Room": {
-            "default_node": "Start Point 2",
+            "default_node": "Teleporter to Cataris",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
