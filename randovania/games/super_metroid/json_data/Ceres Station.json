@@ -53,7 +53,8 @@
                     "description": "",
                     "extra": {
                         "scan_asset_id": null,
-                        "teleporter_instance_id": null
+                        "teleporter_instance_id": null,
+                        "different_strongly_connected_component": true
                     },
                     "destination": {
                         "world_name": "Crateria",
@@ -61,7 +62,15 @@
                     },
                     "keep_name_when_vanilla": false,
                     "editable": false,
-                    "connections": {}
+                    "connections": {
+                        "Door to Hallway A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },

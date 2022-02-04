@@ -27,14 +27,14 @@ Extra - asset_id: 67
   > Elevator - Elevator to Green Brinstar
       Trivial
 
-> Door from Etecoon Room; Heals? False
-  * Permanently Locked to Etecoon Room/Door to Green Brinstar Main Shaft
+> Door from Green Brinstar Main Shaft; Heals? False
+  * Permanently Locked to Green Brinstar Main Shaft/Door to Green Brinstar Main Shaft
   > Door to Green Brinstar Beetom Room
       Trivial
 
 > Door to Green Brinstar Beetom Room; Heals? False
   * Normal Door to Green Brinstar Beetom Room/Door to Green Brinstar Main Shaft
-  > Door from Etecoon Room
+  > Door from Green Brinstar Main Shaft
       Trivial
   > Elevator - Elevator to Green Brinstar
       Morph Ball and Power Bombs
@@ -55,6 +55,31 @@ Extra - asset_id: 67
       Trivial
   > Door to Green Brinstar Beetom Room
       Morph Ball and Power Bombs
+
+> Door to Green Brinstar Main Shaft; Heals? False
+  * Normal Door to Green Brinstar Main Shaft/Door from Green Brinstar Main Shaft
+  > Pickup (Power Bomb Expansion)
+      Morph Ball
+  > Part-Way up Etecoons Shaft
+      Trivial
+
+> Door to Etecoon Energy Tank Room; Heals? False
+  * Normal Door to Etecoon Energy Tank Room/Door to Green Brinstar Main Shaft
+  > Door to Green Brinstar Main Shaft
+      Space Jump or Wall Jumps (Beginner)
+
+> Pickup (Power Bomb Expansion); Heals? False
+  * Pickup 13; Major Location? False
+  > Part-Way up Etecoons Shaft
+      Morph Ball
+
+> Part-Way up Etecoons Shaft; Heals? False
+  > Door to Green Brinstar Beetom Room
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs ≥ 2
+  > Door to Etecoon Energy Tank Room
+      Trivial
 
 ----------------
 Green Brinstar Map Access
@@ -223,11 +248,11 @@ Extra - asset_id: 76
 
 > Door to Green Brinstar Lower Save Station; Heals? False
   * Normal Door to Green Brinstar Lower Save Station/Door to Etecoon Energy Tank Room
-  > Door to Etecoon Room
+  > Door to Green Brinstar Main Shaft
       Morph Ball
 
-> Door to Etecoon Room; Heals? False
-  * Normal Door to Etecoon Room/Door to Etecoon Energy Tank Room
+> Door to Green Brinstar Main Shaft; Heals? False
+  * Normal Door to Green Brinstar Main Shaft/Door to Etecoon Energy Tank Room
   > Door to Green Brinstar Lower Save Station
       Morph Ball
 
@@ -264,27 +289,6 @@ Extra - save_index: 2
 > Save Station; Heals? False; Spawn Point
   > Door to Etecoon Energy Tank Room
       Trivial
-
-----------------
-Etecoon Room
-Extra - map_name: 79AD9
-Extra - asset_id: 79
-> Door to Green Brinstar Main Shaft; Heals? False; Spawn Point
-  * Normal Door to Green Brinstar Main Shaft/Door from Etecoon Room
-  > Door to Etecoon Energy Tank Room
-      Trivial
-  > Pickup (Power Bomb Expansion)
-      Morph Ball
-
-> Door to Etecoon Energy Tank Room; Heals? False
-  * Normal Door to Etecoon Energy Tank Room/Door to Etecoon Room
-  > Door to Green Brinstar Main Shaft
-      Space Jump
-
-> Pickup (Power Bomb Expansion); Heals? False
-  * Pickup 13; Major Location? False
-  > Door to Green Brinstar Main Shaft
-      Morph Ball
 
 ----------------
 Dachora Room
@@ -345,10 +349,6 @@ Extra - asset_id: 82
       All of the following:
           Morph Ball
           Morph Ball Bombs or Power Bombs
-  > Door to Pink Brinstar Power Bomb Room
-      All of the following:
-          Morph Ball and Power Bombs
-          Grapple Beam or Space Jump
   > Door to Pink Brinstar Hopper Room
       Trivial
   > Door to Spore Spawn Farming Room
@@ -370,9 +370,13 @@ Extra - asset_id: 82
       All of the following:
           Morph Ball
           Morph Ball Bombs or Power Bombs
+  > Dock to Pink Brinstar Power Bomb Room
+      All of the following:
+          Morph Ball and Power Bombs
+          Grapple Beam or Space Jump
 
 > Door to Pink Brinstar Power Bomb Room; Heals? False
-  * Normal Door to Pink Brinstar Power Bomb Room/Door to Big Pink
+  * Normal Door to Pink Brinstar Power Bomb Room/Door to Big Pink (South)
   > Door to Dachora Room
       Trivial
 
@@ -420,6 +424,11 @@ Extra - asset_id: 82
           Morph Ball
           Morph Ball Bombs or Power Bombs
 
+> Dock to Pink Brinstar Power Bomb Room; Heals? False
+  * Open Passage to Pink Brinstar Power Bomb Room/Door to Big Pink (North)
+  > Door to Dachora Room
+      Trivial
+
 ----------------
 Big Pink Save Station
 (Valid Starting Location)
@@ -439,15 +448,20 @@ Extra - save_index: 0
 Pink Brinstar Power Bomb Room
 Extra - map_name: 79E11
 Extra - asset_id: 84
-> Door to Big Pink; Heals? False; Spawn Point
-  * Normal Door to Big Pink/Door to Pink Brinstar Power Bomb Room
+> Door to Big Pink (North); Heals? False; Spawn Point
+  * Normal Door to Big Pink/Dock to Pink Brinstar Power Bomb Room
   > Pickup (Power Bomb Expansion)
       Super Missile
 
 > Pickup (Power Bomb Expansion); Heals? False
   * Pickup 24; Major Location? False
-  > Door to Big Pink
-      Trivial
+  > Door to Big Pink (South)
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
+
+> Door to Big Pink (South); Heals? False
+  * Normal Door to Big Pink/Door to Pink Brinstar Power Bomb Room
 
 ----------------
 Pink Brinstar Hopper Room

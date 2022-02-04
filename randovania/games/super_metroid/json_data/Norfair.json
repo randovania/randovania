@@ -2471,6 +2471,66 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
+                        "Door to Grapple Beam Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpeedBooster",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
                             "data": {
@@ -5297,6 +5357,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Energy Refill Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -5563,27 +5630,27 @@
             }
         },
         "Single Chamber": {
-            "default_node": "Door to Double Chamber",
+            "default_node": "Door to Double Chamber (Upper)",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "7AD5E",
                 "asset_id": 224
             },
             "nodes": {
-                "Door to Double Chamber": {
+                "Door to Double Chamber (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 481.31835205992513,
-                        "y": 781.1036204744069,
-                        "z": 0
+                        "x": 472.03,
+                        "y": 1284.6,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Norfair",
                         "area_name": "Double Chamber",
-                        "node_name": "Door to Single Chamber"
+                        "node_name": "Door to Single Chamber (Upper)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
@@ -5631,13 +5698,21 @@
                                 ]
                             }
                         },
-                        "Door to Spiky Platforms Tunnel": {
-                            "type": "resource",
+                        "Door to Double Chamber (Lower)": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5660,7 +5735,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
-                        "Door to Double Chamber": {
+                        "Door to Double Chamber (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -5689,7 +5764,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
-                        "Door to Double Chamber": {
+                        "Door to Double Chamber (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5830,31 +5905,111 @@
                             }
                         }
                     }
+                },
+                "Door to Double Chamber (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 479.49,
+                        "y": 773.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Norfair",
+                        "area_name": "Double Chamber",
+                        "node_name": "Door to Single Chamber (Lower)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Double Chamber (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HiJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Spiky Platforms Tunnel": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
         "Double Chamber": {
-            "default_node": "Door to Single Chamber",
+            "default_node": "Door to Single Chamber (Upper)",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "7ADAD",
                 "asset_id": 225
             },
             "nodes": {
-                "Door to Single Chamber": {
+                "Door to Single Chamber (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 20.971550366045694,
-                        "y": 774.856083773515,
-                        "z": 0
+                        "x": 20.97,
+                        "y": 774.86,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Norfair",
                         "area_name": "Single Chamber",
-                        "node_name": "Door to Double Chamber"
+                        "node_name": "Door to Double Chamber (Upper)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
@@ -5866,6 +6021,13 @@
                                 "name": "Varia",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Door to Single Chamber (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -5888,13 +6050,82 @@
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
                     "connections": {
-                        "Door to Single Chamber": {
-                            "type": "resource",
+                        "Door to Single Chamber (Upper)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Single Chamber (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5912,13 +6143,21 @@
                     "pickup_index": 67,
                     "major_location": false,
                     "connections": {
-                        "Door to Single Chamber": {
-                            "type": "resource",
+                        "Door to Single Chamber (Upper)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Wave Beam Room": {
@@ -5956,6 +6195,95 @@
                                                         "name": "SpaceJump",
                                                         "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Single Chamber (Lower)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 30.91,
+                        "y": 258.8,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Norfair",
+                        "area_name": "Single Chamber",
+                        "node_name": "Door to Double Chamber (Lower)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Single Chamber (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Supers",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WallJump",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
