@@ -2174,15 +2174,15 @@ Chain Reaction Room
 Extra - total_boundings: {'x1': -12200.0, 'x2': -8100.0, 'y1': 4700.0, 'y2': 9200.0}
 Extra - polygon: [[-8100.0, 9200.0], [-12200.0, 9200.0], [-12200.0, 4700.0], [-8100.0, 4700.0]]
 Extra - asset_id: collision_camera_026
-> Door from Varia Suit Tutorial; Heals? False
-  * Access Closed to Varia Suit Tutorial/Door to Chain Reaction Room
+> Door to Varia Suit Tutorial; Heals? False
+  * Power Beam Door to Varia Suit Tutorial/Door to Chain Reaction Room
   * Extra - actor_name: Door057
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Next to Door
       Trivial
 
 > Door to Chain Reaction Access; Heals? False
@@ -2221,15 +2221,15 @@ Extra - asset_id: collision_camera_026
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_ChainReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door from Varia Suit Tutorial
-      All of the following:
-          # TODO: Segregate this room logically so heat logic is handled alongside the heat device event
-          After Artaria - Chain Reaction Device
-          Varia Suit or Heat Damage ≥ 300
   > Door to collision_camera_028 (A)
       All of the following:
           After Artaria - Chain Reaction Device
           Varia Suit or Heat Damage ≥ 50
+  > Next to Door
+      All of the following:
+          # TODO: Segregate this room logically so heat logic is handled alongside the heat device event
+          After Artaria - Chain Reaction Device
+          Varia Suit or Heat Damage ≥ 300
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -2261,8 +2261,14 @@ Extra - asset_id: collision_camera_026
 
 > Dock to collision_camera_030 (A); Heals? False
   * Slide Tunnel to collision_camera_030 (A)/Dock to Chain Reaction Room
-  > Door from Varia Suit Tutorial
+
+> Next to Door; Heals? False
+  > Door to Varia Suit Tutorial
       After Artaria - Chain Reaction Device
+  > Start Point
+      Trivial
+  > Dock to collision_camera_030 (A)
+      Morph Ball and Varia Suit
 
 ----------------
 collision_camera_028 (A)
@@ -2297,7 +2303,7 @@ Extra - total_boundings: {'x1': -8200.0, 'x2': -6100.0, 'y1': 8100.0, 'y2': 9900
 Extra - polygon: [[-6100.0, 9900.0], [-8200.0, 9900.0], [-8200.0, 8100.0], [-6100.0, 8100.0]]
 Extra - asset_id: collision_camera_029
 > Door to Chain Reaction Room; Heals? False
-  * Charge Beam Door to Chain Reaction Room/Door from Varia Suit Tutorial
+  * Charge Beam Door to Chain Reaction Room/Door to Varia Suit Tutorial
   * Extra - actor_name: Door057
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2452,7 +2458,10 @@ Extra - asset_id: collision_camera_031
       Trivial
 
 > Door to collision_camera_030 (A); Heals? False
-  * Power Beam Door to collision_camera_030 (A)/Door to Varia Suit Room
+  * Missile Door to collision_camera_030 (A)/Door to Varia Suit Room
+  * Should be power beam door, but for logic it's missile
+
+
   * Extra - actor_name: Door059
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door059_missileShield
@@ -4422,7 +4431,7 @@ Extra - asset_id: collision_camera_081
   > Tile Group (SCREWATTACK) 3
       Simple IBJ or Use Spin Boost
 
-> Teleporter to Cataris; Heals? False
+> Teleporter to Cataris; Heals? False; Spawn Point
   * Teleporter to Cataris - Teleport to Artaria (Blue)
   * Extra - actor_name: teleporter_magma_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
@@ -4435,7 +4444,7 @@ Extra - asset_id: collision_camera_081
   > Dock to Shortcut to Screw Attack
       After Artaria - Screw Attack Grapple Block
 
-> Start Point 2; Heals? False; Spawn Point
+> Start Point 2; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_Cooldown
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Freezer (Door075)
