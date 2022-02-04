@@ -460,6 +460,94 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        }
+                    }
+                },
+                "Door to Attic": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2306.56856187291,
+                        "y": 4040.0624303233,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Wrecked Ship",
+                        "area_name": "Attic",
+                        "node_name": "Door to Wrecked Ship Main Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Wrecked Ship Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Shaft Save Station": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2529.177257525084,
+                        "y": 2304.85618729097,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Wrecked Ship",
+                        "area_name": "Shaft Save Station",
+                        "node_name": "Door to Wrecked Ship Main Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Wrecked Ship Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Sponge Bath": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2523.47,
+                        "y": 1802.56,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Wrecked Ship",
+                        "area_name": "Sponge Bath",
+                        "node_name": "Door to Wrecked Ship Main Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Locked until Wrecked Ship Powered",
+                    "connections": {
+                        "Door to Wrecked Ship Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Wrecked Ship West Super Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Pickup (Missile Expansion)": {
                             "type": "and",
@@ -506,137 +594,12 @@
                         }
                     }
                 },
-                "Door to Attic": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2306.56856187291,
-                        "y": 4040.0624303233,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Wrecked Ship",
-                        "area_name": "Attic",
-                        "node_name": "Door to Wrecked Ship Main Shaft"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Normal Door",
-                    "connections": {
-                        "Door to Wrecked Ship Entrance": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to Wrecked Ship East Super Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Wrecked Ship West Super Room": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "Event5",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Door to Shaft Save Station": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2529.177257525084,
-                        "y": 2304.85618729097,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Wrecked Ship",
-                        "area_name": "Shaft Save Station",
-                        "node_name": "Door to Wrecked Ship Main Shaft"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Normal Door",
-                    "connections": {}
-                },
-                "Door to Sponge Bath": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2523.469342251951,
-                        "y": 1802.5596432552952,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Wrecked Ship",
-                        "area_name": "Sponge Bath",
-                        "node_name": "Door to Wrecked Ship Main Shaft"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Normal Door",
-                    "connections": {
-                        "Door to Wrecked Ship Entrance": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Door to Wrecked Ship East Super Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2055.4202898550725,
-                        "y": 769.4269788182837,
+                        "x": 3033.2495974235103,
+                        "y": 770.6108427267845,
                         "z": 0
                     },
                     "description": "",
@@ -717,74 +680,8 @@
                                     }
                                 ]
                             }
-                        }
-                    }
-                },
-                "Door to Wrecked Ship West Super Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3048.597547380156,
-                        "y": 769.4269788182837,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Wrecked Ship",
-                        "area_name": "Wrecked Ship West Super Room",
-                        "node_name": "Door to Wrecked Ship Main Shaft"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Normal Door",
-                    "connections": {
-                        "Door to Attic": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "SpaceJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "HiJump",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Door to Basement": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2300.8606465997773,
-                        "y": 67.35340022296577,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Wrecked Ship",
-                        "area_name": "Basement",
-                        "node_name": "Door to Wrecked Ship Main Shaft"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Super Missile Door",
-                    "connections": {
-                        "Door to Wrecked Ship Entrance": {
+                        },
+                        "Door to Wrecked Ship West Super Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -823,6 +720,122 @@
                                                 }
                                             ]
                                         }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Wrecked Ship West Super Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2083.45,
+                        "y": 770.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Wrecked Ship",
+                        "area_name": "Wrecked Ship West Super Room",
+                        "node_name": "Door to Wrecked Ship Main Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Locked until Wrecked Ship Powered",
+                    "connections": {
+                        "Door to Sponge Bath": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "HiJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpeedBooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Wrecked Ship East Super Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     },
                                     {
                                         "type": "or",
@@ -833,7 +846,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "HiJump",
+                                                        "name": "Bombs",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -842,7 +855,88 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "items",
-                                                        "name": "SpaceJump",
+                                                        "name": "PowerBomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Basement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Door to Basement": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2300.8606465997773,
+                        "y": 67.35340022296577,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Wrecked Ship",
+                        "area_name": "Basement",
+                        "node_name": "Door to Wrecked Ship Main Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Super Missile Door",
+                    "connections": {
+                        "Door to Wrecked Ship West Super Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpringBall",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -868,47 +962,13 @@
                     "pickup_index": 128,
                     "major_location": false,
                     "connections": {
-                        "Door to Wrecked Ship Entrance": {
-                            "type": "and",
+                        "Door to Wrecked Ship West Super Room": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "HiJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -1848,9 +1908,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 27.302861389818062,
-                        "y": 256.0000000000001,
-                        "z": 0
+                        "x": 27.3,
+                        "y": 256.0,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
@@ -1860,7 +1920,7 @@
                         "node_name": "Door to Attic"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Normal Door",
+                    "dock_weakness": "Locked until Wrecked Ship Powered",
                     "connections": {
                         "Door to Wrecked Ship Main Shaft": {
                             "type": "and",
@@ -1890,21 +1950,17 @@
                     "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to West Ocean": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event5",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Assembly Line": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "Event5",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1913,9 +1969,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 3556.6971386101823,
-                        "y": 262.6592344853216,
-                        "z": 0
+                        "x": 3556.7,
+                        "y": 262.66,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
@@ -1925,7 +1981,7 @@
                         "node_name": "Door to Attic"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Normal Door",
+                    "dock_weakness": "Locked until Wrecked Ship Powered",
                     "connections": {
                         "Door to Wrecked Ship Main Shaft": {
                             "type": "and",
