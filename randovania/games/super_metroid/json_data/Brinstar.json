@@ -147,19 +147,19 @@
                         }
                     }
                 },
-                "Door from Etecoon Room": {
+                "Door from Green Brinstar Main Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 473.24959742351047,
-                        "y": 2316.7793880837357,
-                        "z": 0
+                        "x": 473.25,
+                        "y": 2316.78,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Brinstar",
-                        "area_name": "Etecoon Room",
+                        "area_name": "Green Brinstar Main Shaft",
                         "node_name": "Door to Green Brinstar Main Shaft"
                     },
                     "dock_type": "door",
@@ -192,7 +192,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
-                        "Door from Etecoon Room": {
+                        "Door from Green Brinstar Main Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -306,6 +306,183 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Door to Green Brinstar Main Shaft": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 529.31,
+                        "y": 2303.59,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Brinstar",
+                        "area_name": "Green Brinstar Main Shaft",
+                        "node_name": "Door from Green Brinstar Main Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Pickup (Power Bomb Expansion)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Part-Way up Etecoons Shaft": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Etecoon Energy Tank Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1043.79,
+                        "y": 265.48,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Brinstar",
+                        "area_name": "Etecoon Energy Tank Room",
+                        "node_name": "Door to Green Brinstar Main Shaft"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Green Brinstar Main Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "WallJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "SpaceJump",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Pickup (Power Bomb Expansion)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1927.63,
+                        "y": 2231.03,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 13,
+                    "major_location": false,
+                    "connections": {
+                        "Part-Way up Etecoons Shaft": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Part-Way up Etecoons Shaft": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1225.17230273752,
+                        "y": 779.9549114331721,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Green Brinstar Beetom Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Etecoon Energy Tank Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1184,7 +1361,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
-                        "Door to Etecoon Room": {
+                        "Door to Green Brinstar Main Shaft": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1195,19 +1372,19 @@
                         }
                     }
                 },
-                "Door to Etecoon Room": {
+                "Door to Green Brinstar Main Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2544.80485096934,
-                        "y": 261.6626526603468,
-                        "z": 0
+                        "x": 2544.8,
+                        "y": 261.66,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Brinstar",
-                        "area_name": "Etecoon Room",
+                        "area_name": "Green Brinstar Main Shaft",
                         "node_name": "Door to Etecoon Energy Tank Room"
                     },
                     "dock_type": "door",
@@ -1359,105 +1536,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Etecoon Room": {
-            "default_node": "Door to Green Brinstar Main Shaft",
-            "valid_starting_location": false,
-            "extra": {
-                "map_name": "79AD9",
-                "asset_id": 79
-            },
-            "nodes": {
-                "Door to Green Brinstar Main Shaft": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 526.0161030595813,
-                        "y": 2316.7793880837357,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Brinstar",
-                        "area_name": "Green Brinstar Main Shaft",
-                        "node_name": "Door from Etecoon Room"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Normal Door",
-                    "connections": {
-                        "Door to Etecoon Energy Tank Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Pickup (Power Bomb Expansion)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Door to Etecoon Energy Tank Room": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1047.085346215781,
-                        "y": 265.48148148148175,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "destination": {
-                        "world_name": "Brinstar",
-                        "area_name": "Etecoon Energy Tank Room",
-                        "node_name": "Door to Etecoon Room"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Normal Door",
-                    "connections": {
-                        "Door to Green Brinstar Main Shaft": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "SpaceJump",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Pickup (Power Bomb Expansion)": {
-                    "node_type": "pickup",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1937.5201288244766,
-                        "y": 2237.6296296296296,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "pickup_index": 13,
-                    "major_location": false,
-                    "connections": {
-                        "Door to Green Brinstar Main Shaft": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
