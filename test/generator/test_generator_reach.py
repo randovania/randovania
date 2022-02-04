@@ -77,15 +77,37 @@ def _compare_actions(first_reach: GeneratorReach,
     return first_actions, second_actions
 
 
-@pytest.mark.parametrize(("game_enum", "preset_name", "ignore_events", "ignore_pickups"), [
-    (RandovaniaGame.METROID_PRIME_ECHOES, "Starter Preset", {"Event91", "Event92", "Event97"}, set()),  # Echoes
-    (RandovaniaGame.METROID_PRIME_CORRUPTION, "Starter Preset",
-     {"Event1", "Event146", "Event147", "Event148", "Event154"}, {0, 1, 2}),  # Corruption
-    (RandovaniaGame.METROID_PRIME, "Starter Preset", {"Event33"}, set())  # Prime
+_ignore_events_for_game = {
+    RandovaniaGame.METROID_PRIME: {"Event33"},
+    RandovaniaGame.METROID_PRIME_ECHOES: {"Event91", "Event92", "Event97"},
+    RandovaniaGame.METROID_PRIME_CORRUPTION: {"Event1", "Event146", "Event147", "Event148", "Event154"},
+    RandovaniaGame.SUPER_METROID: {"Event4", "Event6", "Event7", "Event8",
+                                   "Event13", "Event14", "Event15", "Event16", "Event17"},
+    RandovaniaGame.METROID_DREAD: {},
+    RandovaniaGame.CAVE_STORY: {'camp', 'eventBadEnd', 'eventBestEnd', 'eventCurly', 'eventCurly2',
+                                'eventCurly3', 'eventCurly4', 'eventHell4', 'eventPress'}
+}
+
+_ignore_pickups_for_game = {
+    # These 3 indices are in Olympus and are unreachable given the default preset
+    RandovaniaGame.METROID_PRIME_CORRUPTION: {0, 1, 2},
+
+    # Unknown reason why
+    RandovaniaGame.SUPER_METROID: {0, 11, 78, 129},
+    RandovaniaGame.CAVE_STORY: {30, 31, 41, 45},
+}
+
+
+@pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups"), [
+    pytest.param(
+        game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
+        marks=pytest.mark.xfail if game.data.experimental else []
+    )
+    for game in RandovaniaGame
 ])
-def test_database_collectable(preset_manager, game_enum, preset_name, ignore_events, ignore_pickups):
+def test_database_collectable(preset_manager, game_enum, ignore_events, ignore_pickups):
     game, initial_state, permalink = run_bootstrap(
-        preset_manager.included_preset_with(game_enum, preset_name).get_preset())
+        preset_manager.default_preset_for_game(game_enum).get_preset())
     all_pickups = set(filter_pickup_nodes(game.world_list.all_nodes))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
                                                        game.resource_database)
@@ -107,13 +129,15 @@ def test_database_collectable(preset_manager, game_enum, preset_name, ignore_eve
         reach = advance_reach_with_possible_unsafe_resources(reach)
 
     # print("\nCurrent reach:")
+    # print(game.world_list.node_name(reach.state.node, with_world=True))
     # for world in game.world_list.worlds:
     #     print(f"\n>> {world.name}")
     #     for node in world.all_nodes:
     #         print("[{!s:>5}, {!s:>5}, {!s:>5}] {}".format(
     #             reach.is_reachable_node(node), reach.is_safe_node(node),
-    #             reach.state.resources.get(node.resource(), 0) > 0 if isinstance(node, ResourceNode) else "",
-    #             game.world_list.node_name(node)))
+    #             reach.state.resources.get(node.resource(), 0) > 0
+    #             if isinstance(node, ResourceNode) else "",
+    #             game.world_list.node_name(node, with_world=True)))
 
     collected_indices = {
         resource
