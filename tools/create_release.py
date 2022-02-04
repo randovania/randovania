@@ -121,6 +121,10 @@ async def main():
         create_windows_zip(package_folder)
     elif platform.system() == "Darwin":
         create_macos_zip(app_folder)
+    elif platform.system() == "Linux":
+        create_linux_zip(package_folder)
+    else:
+        raise ValueError(f"Unknown system: {platform.system()}")
 
 
 def create_windows_zip(package_folder):
@@ -138,8 +142,19 @@ def create_windows_zip(package_folder):
 
 
 def create_macos_zip(folder_to_pack: Path):
+    output = f"dist/{zip_folder}-macos.tar.gz"
     with tarfile.open(_ROOT_FOLDER.joinpath(f"dist/{zip_folder}-macos.tar.gz"), "w:gz") as release_zip:
+        print(f"Creating {output} from {folder_to_pack}.")
         release_zip.add(folder_to_pack, f"{zip_folder}/Randovania.app")
+        print("Finished.")
+
+
+def create_linux_zip(folder_to_pack: Path):
+    output = _ROOT_FOLDER.joinpath(f"dist/{zip_folder}-linux.tar.gz")
+    with tarfile.open(output, "w:gz") as release_zip:
+        print(f"Creating {output} from {folder_to_pack}.")
+        release_zip.add(folder_to_pack, zip_folder)
+        print("Finished.")
 
 
 def add_readme_to_zip(release_zip):
