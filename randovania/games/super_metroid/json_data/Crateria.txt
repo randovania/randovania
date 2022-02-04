@@ -131,14 +131,16 @@ Extra - asset_id: 4
   > Pickup (Seafloor Missile Expansion)
       Gravity Suit and Morph Ball
 
-> Door to Bowling Alley Path; Heals? False
-  * Normal Door to Bowling Alley Path/Door to West Ocean
-  > Door to Bowling Alley
-      Trivial
+> Door to Bowling Alley Cave; Heals? False
+  * Normal Door to Bowling Alley Cave/Door to West Ocean
+  > Door to Attic
+      All of the following:
+          Charge Beam
+          Morph Ball Bombs or Power Bombs or Spring Ball
 
 > Door to Bowling Alley; Heals? False
-  * Normal Door to Bowling Alley/Door from West Ocean
-  > Door to Bowling Alley Path
+  * Normal Door to Bowling Alley/Door to West Ocean
+  > Door to Bowling Alley Cave
       Trivial
   > Door to Attic
       All of the following:
@@ -157,10 +159,12 @@ Extra - asset_id: 4
 
 > Door to Attic; Heals? False
   * Normal Door to Attic/Door to West Ocean
-  > Door to Bowling Alley Path
+  > Door to Bowling Alley Cave
       All of the following:
           Morph Ball
           Morph Ball Bombs or Power Bombs or Spring Ball
+  > Door to Bowling Alley
+      Trivial
   > Pickup (Topmost Missile Expansion)
       Hi-Jump Boots or Space Jump
   > Pickup (Morph Ball Maze Missile Expansion)
@@ -173,6 +177,10 @@ Extra - asset_id: 4
 
 > Pickup (Morph Ball Maze Missile Expansion); Heals? False
   * Pickup 3; Major Location? False
+  > Door to Moat
+      All of the following:
+          Morph Ball
+          Morph Ball Bombs or Power Bombs
   > Door to Attic
       Morph Ball and Super Missile
 
@@ -182,11 +190,32 @@ Extra - asset_id: 4
       Gravity Suit and Morph Ball
 
 ----------------
-Bowling Alley Path
+Bowling Alley Cave
 Extra - map_name: 79461
 Extra - asset_id: 5
 > Door to West Ocean; Heals? False; Spawn Point
-  * Normal Door to West Ocean/Door to Bowling Alley Path
+  * Normal Door to West Ocean/Door to Bowling Alley Cave
+  > Door to Bowling Alley Path
+      Trivial
+
+> Door to Bowling Alley Path; Heals? False
+  * Normal Door to Bowling Alley Path/Door to Bowling Alley Cave
+  > Door to West Ocean
+      Trivial
+
+----------------
+Bowling Alley Path
+Extra - map_name: 7968F
+Extra - asset_id: 5
+> Door to Bowling Alley Cave; Heals? False; Spawn Point
+  * Normal Door to Bowling Alley Cave/Door to Bowling Alley Path
+  > Door to Bowling Alley
+      Trivial
+
+> Door to Bowling Alley; Heals? False
+  * Normal Door to Bowling Alley/Door from Bowling Alley Path
+  > Door to Bowling Alley Cave
+      Trivial
 
 ----------------
 East Ocean

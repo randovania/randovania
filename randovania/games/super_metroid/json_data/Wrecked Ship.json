@@ -5,30 +5,30 @@
     },
     "areas": {
         "Bowling Alley": {
-            "default_node": "Door from West Ocean",
+            "default_node": "Door from Bowling Alley Path",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "7C98E",
                 "asset_id": 51
             },
             "nodes": {
-                "Door from West Ocean": {
+                "Door from Bowling Alley Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 29.11036789297672,
-                        "y": 762.2920847268673,
-                        "z": 0
+                        "x": 29.11,
+                        "y": 762.29,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Crateria",
-                        "area_name": "West Ocean",
+                        "area_name": "Bowling Alley Path",
                         "node_name": "Door to Bowling Alley"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Permanently Locked",
+                    "dock_weakness": "Locked after Wrecked Ship Powered",
                     "connections": {
                         "Door to Gravity Suit Room": {
                             "type": "and",
@@ -68,6 +68,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event5",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -131,6 +140,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event5",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     }
                                 ]
@@ -225,6 +243,24 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Shinespark",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event5",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -252,6 +288,25 @@
                             }
                         }
                     }
+                },
+                "Door to West Ocean": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1049.74,
+                        "y": 1289.67,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Crateria",
+                        "area_name": "West Ocean",
+                        "node_name": "Door to Bowling Alley"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
                 }
             }
         },
@@ -289,10 +344,12 @@
                             }
                         },
                         "Pickup (Gravity Suit)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "Event5",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -2031,10 +2088,12 @@
                     "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Missile Expansion)": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "Event5",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
