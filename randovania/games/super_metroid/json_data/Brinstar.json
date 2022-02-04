@@ -1879,58 +1879,6 @@
                                 ]
                             }
                         },
-                        "Door to Pink Brinstar Power Bomb Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "SpaceJump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Door to Pink Brinstar Hopper Room": {
                             "type": "and",
                             "data": {
@@ -2116,6 +2064,58 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Pink Brinstar Power Bomb Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "PowerBomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2123,16 +2123,16 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1032.657004830918,
-                        "y": 2815.5877616747184,
-                        "z": 0
+                        "x": 1032.66,
+                        "y": 2815.59,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Brinstar",
                         "area_name": "Pink Brinstar Power Bomb Room",
-                        "node_name": "Door to Big Pink"
+                        "node_name": "Door to Big Pink (South)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
@@ -2448,6 +2448,33 @@
                             }
                         }
                     }
+                },
+                "Dock to Pink Brinstar Power Bomb Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1071.13,
+                        "y": 3337.76,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Brinstar",
+                        "area_name": "Pink Brinstar Power Bomb Room",
+                        "node_name": "Door to Big Pink (North)"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Door to Dachora Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -2510,27 +2537,27 @@
             }
         },
         "Pink Brinstar Power Bomb Room": {
-            "default_node": "Door to Big Pink",
+            "default_node": "Door to Big Pink (North)",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "79E11",
                 "asset_id": 84
             },
             "nodes": {
-                "Door to Big Pink": {
+                "Door to Big Pink (North)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1005.0370370370371,
-                        "y": 771.9849704777241,
-                        "z": 0
+                        "x": 1005.04,
+                        "y": 771.98,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Brinstar",
                         "area_name": "Big Pink",
-                        "node_name": "Door to Pink Brinstar Power Bomb Room"
+                        "node_name": "Dock to Pink Brinstar Power Bomb Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
@@ -2559,14 +2586,69 @@
                     "pickup_index": 24,
                     "major_location": false,
                     "connections": {
-                        "Door to Big Pink": {
+                        "Door to Big Pink (South)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
+                },
+                "Door to Big Pink (South)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 991.65,
+                        "y": 262.49,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Brinstar",
+                        "area_name": "Big Pink",
+                        "node_name": "Door to Pink Brinstar Power Bomb Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {}
                 }
             }
         },
