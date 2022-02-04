@@ -64,6 +64,8 @@ Extra - asset_id: collision_camera_001
       Morph Ball
   > Door to Map Station
       Morph Ball and After Quiet Robe
+  > Start Point
+      Trivial
   > Dock to Transport to Ghavoran
       Morph Ball and After Quiet Robe
 
@@ -85,13 +87,7 @@ Extra - asset_id: collision_camera_001
   > Tile Group (MISSILE)
       Morph Ball
 
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: SP_AccessPoint_5
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Navigation Room North
-      Trivial
-
-> Start Point 2; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_DoorProfessor
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Room North
@@ -362,12 +358,6 @@ Extra - asset_id: collision_camera_003
   > Tram to Dairon - Upper Transport to Burenia
       Trivial
 
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: StartPoint0
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Burenia Hub to Dairon
-      Trivial
-
 > Tram to Dairon - Upper Transport to Burenia; Heals? False; Spawn Point
   * Teleporter to Dairon - Upper Transport to Burenia
   * Extra - actor_name: wagontrain_baselab_000
@@ -546,16 +536,12 @@ Extra - asset_id: collision_camera_006
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Dock to Underneath Drogyga (Upper)
-      Trivial
 
 > Tile Group (WEIGHT) 2; Heals? False
   * Extra - actor_name: breakabletilegroup_032
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Dock to Underneath Drogyga (Upper)
-      Trivial
 
 > Dock to Underneath Drogyga (Upper); Heals? False
   * Morph Ball Tunnel to Underneath Drogyga/Dock to Transport to Ghavoran (Upper)
@@ -901,6 +887,8 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
 
 > Dock to Main Hub Tower Middle (Right); Heals? False
   * Open Passage to Main Hub Tower Middle/Dock to Main Hub Tower Top (Right)
+  > Door to Flash Shift Room (Lower)
+      Trivial
 
 > Door to collision_camera_012 (B); Heals? False
   * Phase Shift Door to collision_camera_012 (B)/Door to Main Hub Tower Top
@@ -938,6 +926,8 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   * Extra - right_shield_def: None
   > Dock to Main Hub Tower Middle (Left)
       Trivial
+  > Door to Flash Shift Room (Upper)
+      Trivial
   > Upper Left Magnet Wall
       Trivial
 
@@ -949,6 +939,8 @@ Extra - polygon: [[-900.0, 3700.0], [-5000.0, 3700.0], [-5000.0, -2115.0], [-900
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Save Station Middle
+      Trivial
 
 > Door to Flash Shift Room (Lower); Heals? False
   * Power Beam Door to Flash Shift Room/Door from Main Hub Tower Top
@@ -1632,12 +1624,6 @@ Extra - asset_id: collision_camera_015
   > Door from Gravity Suit Tower
       Trivial
 
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_Trench
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Main Hub Tower Middle (Plasma)
-      Trivial
-
 > Tile Group (BOMB); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_003
@@ -1771,18 +1757,6 @@ Extra - asset_id: collision_camera_017
       Flash Shift or Gravity Suit or Water Bomb Jump (Beginner) or Use Spin Boost
   > Tile Group (SCREWATTACK) 1
       Morph Ball
-
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_Cooldown
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Elevator to Artaria - Transport to Burenia
-      Trivial
-
-> Start Point 2; Heals? False
-  * Extra - start_point_actor_name: SP_AccessPoint_9B
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Navigation Room South
-      Trivial
 
 > Tile Group (SCREWATTACK) 1; Heals? False
   * Configurable Node
@@ -2016,6 +1990,8 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 4
+      Trivial
   > Tile Group (SCREWATTACK) 2
       Flash Shift or Speed Booster or Simple IBJ or Use Spin Boost
   > Breakable Floor
@@ -2088,6 +2064,8 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point 1
+      Trivial
   > Breakable Floor
       After Burenia - Destroy Gravity Suit Floor
   > Dock to Ammo Recharge Room (Tunnel)
@@ -2146,6 +2124,8 @@ Extra - asset_id: collision_camera_021
 > Start Point 4; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_9
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Navigation Room South
+      Trivial
 
 > Tile Group (SCREWATTACK) 1; Heals? False
   * Configurable Node
@@ -2359,23 +2339,27 @@ Extra - total_boundings: {'x1': 2000.0, 'x2': 4100.0, 'y1': -12150.0, 'y2': -980
 Extra - polygon: [[4100.0, -9800.0], [2000.0, -9800.0], [2000.0, -12150.0], [3500.0, -12150.0], [3500.0, -12500.0], [4100.0, -12500.0]]
 Extra - asset_id: collision_camera_023_B
 > Door to Gravity Suit Tower (Upper); Heals? False
-  * Power Beam Door to Gravity Suit Tower/Door to Gravity Suit Room (Upper)
+  * Missile Door to Gravity Suit Tower/Door to Gravity Suit Room (Upper)
+  * Door is normally a Power Beam door, but it's a missile door right now to dodge
+the blast shield issue.
+
+
   * Extra - actor_name: doorpowerpower_015
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Pickup (Gravity Suit)
-      Trivial
   > Event - Blob from above (db_reg_aq_004)
       Shoot Diffusion or Wave
+  > Start Point
+      Trivial
 
 > Pickup (Gravity Suit); Heals? False
   * Pickup 79; Major Location? True
   * Extra - actor_name: itemsphere_gravitysuit
   * Extra - actor_def: actordef:actors/items/itemsphere_gravitysuit/charclasses/itemsphere_gravitysuit.bmsad
-  > Door to Gravity Suit Tower (Upper)
+  > Start Point
       Trivial
 
 > Pickup (item_powerbombtank_000); Heals? False
@@ -2409,6 +2393,8 @@ Extra - asset_id: collision_camera_023_B
   * Extra - start_point_actor_name: SP_Checkpoint_GravitySuit
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Gravity Suit Tower (Upper)
+      Trivial
+  > Pickup (Gravity Suit)
       Trivial
 
 > Tile Group (SPEEDBOOST); Heals? False
