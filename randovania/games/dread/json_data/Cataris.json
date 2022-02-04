@@ -207,29 +207,6 @@
                         }
                     }
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 12925.0,
-                        "y": -1675.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "StartPoint0",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Elevator to Artaria - Transport to Cataris": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Elevator to Artaria - Transport to Cataris": {
                     "node_type": "teleporter",
                     "heal": false,
@@ -262,29 +239,6 @@
                             }
                         },
                         "Tile Group (POWERBEAM) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 8700.0,
-                        "y": -5800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_AccessPoint_3",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Navigation Room Southeast": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9287,7 +9241,7 @@
                                 ]
                             }
                         },
-                        "Event - Morph Tunnel Blob (db_dside_mg_003)": {
+                        "Event - Morph Tunnel Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -9404,7 +9358,7 @@
                         }
                     }
                 },
-                "Event - Morph Tunnel Blob (db_dside_mg_003)": {
+                "Event - Morph Tunnel Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9462,29 +9416,6 @@
                             }
                         },
                         "Tile Group (WEIGHT) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -15000.0,
-                        "y": 5000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_AccessPoint_3_B",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Navigation Room Northwest": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9609,7 +9540,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s020_magma:default:db_dside_mg_002b_000",
+                                "name": "s020_magma:default:db_dside_mg_003",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -9741,7 +9672,7 @@
                         }
                     }
                 },
-                "Event - Lower-left Tunnel Blob (db_dside_mg_003)": {
+                "Event - Lower-left Tunnel Blob": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9789,7 +9720,7 @@
                         }
                     }
                 },
-                "Event - Green Teleport Grapple Block (grapplepulloff1x2_001)": {
+                "Event - Green Teleport Grapple Block": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9837,7 +9768,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Event - Green Teleport Grapple Block (grapplepulloff1x2_001)": {
+                        "Event - Green Teleport Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10148,7 +10079,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Event - Lower-left Tunnel Blob (db_dside_mg_003)": {
+                        "Event - Lower-left Tunnel Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -10390,6 +10321,13 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Tile Group (POWERBEAM) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Dock to collision_camera_027 (C)": {
@@ -13004,7 +12942,7 @@
             }
         },
         "Green EMMI Fight": {
-            "default_node": "Start Point 2",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -13164,30 +13102,7 @@
                         }
                     }
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -7000.0,
-                        "y": 5400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_CentralUnit",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Central Unit Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -13434,7 +13349,7 @@
             }
         },
         "Central Unit Room": {
-            "default_node": "Start Point 2",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -13464,30 +13379,7 @@
                 "asset_id": "collision_camera_037"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8650.0,
-                        "y": 5550.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "centralunitmagmacontroller",
-                        "start_point_actor_def": "actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad"
-                    },
-                    "connections": {
-                        "Door to Green EMMI Fight": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -13588,21 +13480,6 @@
                 "asset_id": "collision_camera_038"
             },
             "nodes": {
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1425.0,
-                        "y": 5250.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "shootactivatormag01",
-                        "start_point_actor_def": "actordef:actors/props/shootactivatormag01/charclasses/shootactivatormag01.bmsad"
-                    },
-                    "connections": {}
-                },
                 "Start Point 2": {
                     "node_type": "generic",
                     "heal": false,
@@ -14099,7 +13976,7 @@
                         "node_name": "Dock to Speedboost Maze before Transport to Dairon (Bottom)"
                     },
                     "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_weakness": "Open Passage",
                     "connections": {
                         "Dock to collision_camera_035 (C)": {
                             "type": "template",
@@ -14185,29 +14062,6 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
-                    "connections": {
-                        "Elevator to Dairon - Transport to Cataris": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2500.0,
-                        "y": 7800.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_WideBeam",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
                     "connections": {
                         "Elevator to Dairon - Transport to Cataris": {
                             "type": "and",
@@ -17943,6 +17797,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Tile Group (POWERBEAM) 2": {

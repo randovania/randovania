@@ -142,7 +142,7 @@
             }
         },
         "Upper Burenia Hub": {
-            "default_node": "Start Point 2",
+            "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -268,6 +268,13 @@
                                 ]
                             }
                         },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Dock to Transport to Ghavoran": {
                             "type": "and",
                             "data": {
@@ -371,30 +378,7 @@
                         }
                     }
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -2600.0,
-                        "y": 5000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_AccessPoint_5",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Navigation Room North": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1812,29 +1796,6 @@
                         }
                     }
                 },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6900.0,
-                        "y": 6000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "StartPoint0",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Burenia Hub to Dairon": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Tram to Dairon - Upper Transport to Burenia": {
                     "node_type": "teleporter",
                     "heal": false,
@@ -2644,15 +2605,7 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {
-                        "Dock to Underneath Drogyga (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 },
                 "Tile Group (WEIGHT) 2": {
                     "node_type": "generic",
@@ -2671,15 +2624,7 @@
                             "WEIGHT"
                         ]
                     },
-                    "connections": {
-                        "Dock to Underneath Drogyga (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
+                    "connections": {}
                 },
                 "Dock to Underneath Drogyga (Upper)": {
                     "node_type": "dock",
@@ -4400,7 +4345,15 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
-                    "connections": {}
+                    "connections": {
+                        "Door to Flash Shift Room (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to collision_camera_012 (B)": {
                     "node_type": "dock",
@@ -4551,6 +4504,13 @@
                                 "items": []
                             }
                         },
+                        "Door to Flash Shift Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Upper Left Magnet Wall": {
                             "type": "and",
                             "data": {
@@ -4584,7 +4544,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Phase Shift Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Save Station Middle": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Flash Shift Room (Lower)": {
                     "node_type": "dock",
@@ -8128,29 +8096,6 @@
                         }
                     }
                 },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 200.0,
-                        "y": -3000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_Trench",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Main Hub Tower Middle (Plasma)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Tile Group (BOMB)": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -8724,52 +8669,6 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 12800.0,
-                        "y": -8000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_Cooldown",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Elevator to Artaria - Transport to Burenia": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point 2": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 11400.0,
-                        "y": -7900.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_AccessPoint_9B",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Navigation Room South": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -10018,6 +9917,13 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
+                        "Start Point 4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tile Group (SCREWATTACK) 2": {
                             "type": "or",
                             "data": {
@@ -10325,6 +10231,13 @@
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
                     "connections": {
+                        "Start Point 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Breakable Floor": {
                             "type": "resource",
                             "data": {
@@ -10565,7 +10478,15 @@
                         "start_point_actor_name": "SP_AccessPoint_9",
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
-                    "connections": {}
+                    "connections": {
+                        "Door to Navigation Room South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tile Group (SCREWATTACK) 1": {
                     "node_type": "configurable_node",
@@ -11588,7 +11509,7 @@
                         "y": -11200.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Door is normally a Power Beam door, but it's a missile door right now to dodge\nthe blast shield issue.\n\n",
                     "extra": {
                         "actor_name": "doorpowerpower_015",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -11603,18 +11524,18 @@
                         "node_name": "Door to Gravity Suit Room (Upper)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Missile Door",
                     "connections": {
-                        "Pickup (Gravity Suit)": {
+                        "Event - Blob from above (db_reg_aq_004)": {
+                            "type": "template",
+                            "data": "Shoot Diffusion or Wave"
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Blob from above (db_reg_aq_004)": {
-                            "type": "template",
-                            "data": "Shoot Diffusion or Wave"
                         }
                     }
                 },
@@ -11634,7 +11555,7 @@
                     "pickup_index": 79,
                     "major_location": true,
                     "connections": {
-                        "Door to Gravity Suit Tower (Upper)": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11778,6 +11699,13 @@
                     },
                     "connections": {
                         "Door to Gravity Suit Tower (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Gravity Suit)": {
                             "type": "and",
                             "data": {
                                 "comment": null,

@@ -346,13 +346,7 @@ Extra - asset_id: collision_camera_004
   > Dock to collision_camera_002 (D) (Lower)
       Trivial
 
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_Blackout
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to collision_camera_009 (D)
-      Trivial
-
-> Start Point 2; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyBaseLab
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to Yellow EMMI Introduction
@@ -629,12 +623,6 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: db_dif_b1_001
   * Extra - actor_def: actordef:actors/props/db_dif_b1_001/charclasses/db_dif_b1_001.bmsad
   > Bottom-Left Corner
-      Trivial
-
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_AfterDiffusion
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Teleporter to Cataris - Teleport to Dairon
       Trivial
 
 > Teleporter to Cataris - Teleport to Dairon; Heals? False; Spawn Point
@@ -1626,12 +1614,6 @@ Extra - asset_id: collision_camera_019
   > Door to Navigation Room North (Upper)
       Trivial
 
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_AfterProfessor
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Navigation Room North (Upper)
-      Trivial
-
 > Event - Push Wide Beam Block; Heals? False
   * Event Dairon - Wide Beam Block Ferenia Elevator
   > Door to Navigation Room North (Lower)
@@ -2110,6 +2092,8 @@ Extra - asset_id: collision_camera_025
   * Extra - tile_types: ('SPEEDBOOST',)
   > Tile Group (SCREWATTACK)
       Trivial
+  > Freezer Center
+      Gravity Suit
 
 > Tile Group (SPEEDBOOST) 4; Heals? False
   * Configurable Node
@@ -2172,6 +2156,10 @@ Extra - asset_id: collision_camera_025
           Morph Ball and After Dairon - db_dif_b1_001
           Gravity Suit or Cold Damage ≥ 200
           Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+  > Tile Group (SPEEDBOOST) 3
+      Gravity Suit
+  > Tile Group (SPEEDBOOST) 4
+      Gravity Suit and Space Jump
   > Event - Hidden Blob through wall (db_reg_b1_001)
       Wave Beam
 
@@ -2865,13 +2853,7 @@ Central Unit Room
 Extra - total_boundings: {'x1': -12900.0, 'x2': -10800.0, 'y1': -5400.0, 'y2': -4258.0}
 Extra - polygon: [[-10800.0, -4258.0], [-12900.0, -4258.0], [-12900.0, -5400.0], [-10800.0, -5400.0]]
 Extra - asset_id: collision_camera_038
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: centralunitmagmacontroller
-  * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
-  > Door to Yellow EMMI Fight
-      Trivial
-
-> Start Point 2; Heals? False; Spawn Point
+> Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyLabPhase2
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Yellow EMMI Fight
@@ -3091,12 +3073,6 @@ Extra - asset_id: collision_camera_043
   > Elevator to Cataris - Transport to Dairon
       Trivial
 
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: StartPoint0
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Teleport to Artaria
-      Trivial
-
 > Elevator to Cataris - Transport to Dairon; Heals? False; Spawn Point
   * Teleporter to Cataris - Transport to Dairon
   * Extra - actor_name: wagontrain_magma_000
@@ -3170,12 +3146,6 @@ Extra - asset_id: collision_camera_045
   * Extra - target_spawn_point: wagontrain_baselab_001_platform
   * Extra - start_point_actor_name: wagontrain_aqua_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_train/charclasses/weightactivatedplatform_train.bmsad
-  > Door to collision_camera_041 (D)
-      Trivial
-
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_AfterAqua
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to collision_camera_041 (D)
       Trivial
 

@@ -28,12 +28,6 @@ Extra - asset_id: collision_camera_000
   > Elevator to Burenia - Transport to Ghavoran
       Trivial
 
-> Start Point; Heals? False
-  * Extra - start_point_actor_name: StartPoint0
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Right Entrance
-      Trivial
-
 > Elevator to Burenia - Transport to Ghavoran; Heals? False; Spawn Point
   * Teleporter to Burenia - Transport to Ghavoran
   * Extra - actor_name: elevator_aqua_000
@@ -379,6 +373,8 @@ Extra - asset_id: collision_camera_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to collision_camera_006 (G)
       Trivial
+  > Start Point 1
+      Trivial
 
 > Door to collision_camera_006 (G); Heals? False
   * Power Beam Door to collision_camera_006 (G)/Door to collision_camera_005 (G)
@@ -678,27 +674,32 @@ Extra - asset_id: collision_camera_010
               Flash Shift and Walljump (Beginner)
 
 > Door to collision_camera_009 (G) (Missile Lock); Heals? False
-  * Power Beam Door to collision_camera_009 (G)/Door to Super Missile Room (Missile Lock)
+  * Missile Door to collision_camera_009 (G)/Door to Super Missile Room (Missile Lock)
+  * Normally a Power Beam Door, but listed as a missile door for helping logic.
+
+
   * Extra - actor_name: doorpowerpower_007
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_000
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Pickup (itemsphere_supermissile)
+  > Start Point
       Trivial
 
 > Pickup (itemsphere_supermissile); Heals? False
   * Pickup 100; Major Location? True
   * Extra - actor_name: itemsphere_supermissile
   * Extra - actor_def: actordef:actors/items/itemsphere_supermissile/charclasses/itemsphere_supermissile.bmsad
-  > Door to collision_camera_009 (G) (Missile Lock)
+  > Start Point
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_SuperMissiles
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to collision_camera_009 (G) (Missile Lock)
+      Trivial
+  > Pickup (itemsphere_supermissile)
       Trivial
 
 > Dock to collision_camera_009 (G); Heals? False
@@ -1114,7 +1115,7 @@ Extra - asset_id: collision_camera_019
   * Extra - right_shield_def: None
   > Door to collision_camera_016 (G)
       Flash Shift or Spider Magnet or Space Jump
-  > Room Center (Start Point 2)
+  > Room Center
       Trivial
 
 > Door to collision_camera_020 (G) (doorpowerpower_011); Heals? False
@@ -1125,7 +1126,7 @@ Extra - asset_id: collision_camera_019
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Room Center (Start Point 2)
+  > Room Center
       Trivial
 
 > Door to collision_camera_016 (G); Heals? False
@@ -1138,7 +1139,7 @@ Extra - asset_id: collision_camera_019
   * Extra - right_shield_def: None
   > Door to collision_camera_020 (G) (doorpowerpower_010)
       Flash Shift or Space Jump
-  > Room Center (Start Point 2)
+  > Room Center
       Trivial
 
 > Dock to collision_camera_016 (G); Heals? False
@@ -1152,13 +1153,7 @@ Extra - asset_id: collision_camera_019
   > Dock to Central Unit Room
       Trivial
 
-> Start Point 1; Heals? False
-  * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to Central Unit Room
-      Trivial
-
-> Room Center (Start Point 2); Heals? False; Spawn Point
+> Room Center; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_IceMissiles
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to collision_camera_020 (G) (doorpowerpower_011)
@@ -1172,12 +1167,12 @@ Extra - asset_id: collision_camera_019
   * EMMI Door to Central Unit Room/Dock to Blue EMMI Fight
   > Dock to collision_camera_016 (G)
       Space Jump or Speed Booster or Simple IBJ
-  > Room Center (Start Point 2)
+  > Room Center
       Can Slide
 
 > Pickup (Ice Missiles); Heals? False
   * Pickup 146; Major Location? True
-  > Room Center (Start Point 2)
+  > Room Center
       Trivial
 
 ----------------
@@ -1914,6 +1909,8 @@ Extra - asset_id: collision_camera_025_B
       Morph Ball
   > Tile Group (WEIGHT) 1
       Trivial
+  > Tile Group (WEIGHT) 2
+      Trivial
 
 > Pickup (item_missiletank_007); Heals? False
   * Pickup 107; Major Location? False
@@ -2119,7 +2116,11 @@ Extra - total_boundings: {'x1': -1000.0, 'x2': 4100.0, 'y1': -3700.0, 'y2': -180
 Extra - polygon: [[4100.0, -1800.0], [-1000.0, -1800.0], [-1000.0, -3500.0], [-800.0, -3500.0], [-100.0, -3700.0], [4100.0, -3700.0]]
 Extra - asset_id: collision_camera_029
 > Door to collision_camera_007 (G); Heals? False
-  * Power Beam Door to collision_camera_007 (G)/Door to collision_camera_029 (G)
+  * Super Missile Door to collision_camera_007 (G)/Door to collision_camera_029 (G)
+  * Normally a power beam door, but listed as supers to prevent logic issues with
+blast shields
+
+
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_001
@@ -2725,6 +2726,8 @@ Extra - asset_id: collision_camera_039
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Start Point
+      Trivial
 
 > Pickup (item_missiletank_006); Heals? False
   * Pickup 106; Major Location? False

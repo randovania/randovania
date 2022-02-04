@@ -4,8 +4,8 @@
         "asset_id": "maps/levels/c10_samus/s050_forest/s050_forest.brfld",
         "map_min_x": 28,
         "map_max_x": 46,
-        "map_min_y": 25,
-        "map_max_y": 26
+        "map_min_y": 24,
+        "map_max_y": 66
     },
     "areas": {
         "Transport to Burenia": {
@@ -106,29 +106,6 @@
                             }
                         },
                         "Elevator to Burenia - Transport to Ghavoran": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -9000.0,
-                        "y": -5650.0,
-                        "z": -0.00024399999529123306
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "StartPoint0",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Right Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1893,6 +1870,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Start Point 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3228,7 +3212,7 @@
                         "y": -5900.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Normally a Power Beam Door, but listed as a missile door for helping logic.\n\n",
                     "extra": {
                         "actor_name": "doorpowerpower_007",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -3243,9 +3227,9 @@
                         "node_name": "Door to Super Missile Room (Missile Lock)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Missile Door",
                     "connections": {
-                        "Pickup (itemsphere_supermissile)": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3270,7 +3254,7 @@
                     "pickup_index": 100,
                     "major_location": true,
                     "connections": {
-                        "Door to collision_camera_009 (G) (Missile Lock)": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3294,6 +3278,13 @@
                     },
                     "connections": {
                         "Door to collision_camera_009 (G) (Missile Lock)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (itemsphere_supermissile)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5202,7 +5193,7 @@
             }
         },
         "Blue EMMI Fight": {
-            "default_node": "Room Center (Start Point 2)",
+            "default_node": "Room Center",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -5292,7 +5283,7 @@
                                 ]
                             }
                         },
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5326,7 +5317,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5386,7 +5377,7 @@
                                 ]
                             }
                         },
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5429,30 +5420,7 @@
                         }
                     }
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6500.0,
-                        "y": 4300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_CentralUnit",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Dock to Central Unit Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Room Center (Start Point 2)": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -5536,7 +5504,7 @@
                                 ]
                             }
                         },
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -5555,7 +5523,7 @@
                     "pickup_index": 146,
                     "major_location": true,
                     "connections": {
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8787,6 +8755,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tile Group (WEIGHT) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -9848,7 +9823,7 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Normally a power beam door, but listed as supers to prevent logic issues with\nblast shields\n\n",
                     "extra": {
                         "actor_name": "doorpowerpower_005",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -9863,7 +9838,7 @@
                         "node_name": "Door to collision_camera_029 (G)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Super Missile Door",
                     "connections": {
                         "Center Platform": {
                             "type": "or",
@@ -12490,7 +12465,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Pickup (item_missiletank_006)": {
                     "node_type": "pickup",
