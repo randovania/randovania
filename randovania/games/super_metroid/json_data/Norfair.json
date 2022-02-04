@@ -5698,13 +5698,21 @@
                                 ]
                             }
                         },
-                        "Door to Spiky Platforms Tunnel": {
-                            "type": "resource",
+                        "Door to Double Chamber (Lower)": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Varia",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5756,7 +5764,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
-                        "Door to Double Chamber (Upper)": {
+                        "Door to Double Chamber (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5915,7 +5923,68 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
-                    "connections": {}
+                    "connections": {
+                        "Door to Double Chamber (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "HiJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Spiky Platforms Tunnel": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
