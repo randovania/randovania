@@ -1864,10 +1864,20 @@
                     "dock_weakness": "Normal Door",
                     "connections": {
                         "Pickup (Energy Tank)": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event5",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
