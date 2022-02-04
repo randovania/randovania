@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, Iterator, Tuple
 
+from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, ResourceQuantity, \
@@ -41,23 +42,9 @@ class ConditionalResources:
 
 
 @dataclass(frozen=True)
-class PickupModel:
+class PickupModel(JsonDataclass):
     game: RandovaniaGame
     name: str
-
-    @property
-    def as_json(self):
-        return {
-            "game": self.game.value,
-            "name": self.name
-        }
-
-    @classmethod
-    def from_json(cls, data) -> "PickupModel":
-        return PickupModel(
-            game=data["game"],
-            name=data["name"]
-        )
 
 
 @dataclass(frozen=True)
