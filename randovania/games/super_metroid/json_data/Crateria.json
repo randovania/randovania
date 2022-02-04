@@ -3354,16 +3354,16 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 1516.5380116959063,
-                        "y": 771.9922027290445,
-                        "z": 0
+                        "x": 1516.54,
+                        "y": 771.99,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Crateria",
                         "area_name": "Crateria Super Missile Room",
-                        "node_name": "Door to Climb"
+                        "node_name": "Door to Climb (South)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Bomb Door",
@@ -3543,24 +3543,51 @@
                             }
                         }
                     }
+                },
+                "Door from Crateria Super Missile Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1502.61,
+                        "y": 4359.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Crateria",
+                        "area_name": "Crateria Super Missile Room",
+                        "node_name": "Door to Climb (North)"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Permanently Locked",
+                    "connections": {
+                        "Door to Parlor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Crateria Super Missile Room": {
-            "default_node": "Door to Climb",
+            "default_node": "Door to Climb (South)",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "799F9",
                 "asset_id": 27
             },
             "nodes": {
-                "Door to Climb": {
+                "Door to Climb (South)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 15.331757289204068,
-                        "y": 256.60520094562617,
-                        "z": 0
+                        "x": 15.33,
+                        "y": 256.61,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
@@ -3639,7 +3666,70 @@
                     "pickup_index": 11,
                     "major_location": false,
                     "connections": {
-                        "Door to Climb": {
+                        "Door to Climb (North)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Climb (North)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 28.03,
+                        "y": 3844.26,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Crateria",
+                        "area_name": "Climb",
+                        "node_name": "Door from Crateria Super Missile Room"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Pickup (Super Missile Expansion)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
