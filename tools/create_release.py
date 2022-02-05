@@ -105,13 +105,13 @@ async def main():
 
     await download_nintendont()
 
-    if platform.system() == "Darwin":
-        # HACK: pyintaller calls lipo/codesign on macOS and frequently timeout in github actions
-        print("Will patch timeout in PyInstaller compat")
-        import PyInstaller.compat
-        compat_path = Path(PyInstaller.compat.__file__)
-        compat_text = compat_path.read_text().replace("timeout=60", "timeout=180")
-        compat_path.write_text(compat_text)
+    # HACK: pyintaller calls lipo/codesign on macOS and frequently timeout in github actions
+    # There's also timeouts on Windows so we're expanding this to everyone
+    print("Will patch timeout in PyInstaller compat")
+    import PyInstaller.compat
+    compat_path = Path(PyInstaller.compat.__file__)
+    compat_text = compat_path.read_text().replace("timeout=60", "timeout=180")
+    compat_path.write_text(compat_text)
 
     subprocess.run([sys.executable, "-m", "PyInstaller",
                     "randovania.spec"],
