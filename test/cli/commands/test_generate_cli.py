@@ -1,16 +1,17 @@
 from pathlib import Path
+from typing import Optional
 
 import pytest
 from mock import MagicMock, ANY, AsyncMock
 
-import randovania.cli.commands.distribute
+import randovania.cli.commands.generate
 from randovania.games.game import RandovaniaGame
 from randovania.layout.generator_parameters import GeneratorParameters
 
 
 @pytest.mark.parametrize("preset_name", [None, "Starter Preset"])
 @pytest.mark.parametrize("no_retry", [False, True])
-def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, preset_manager):
+def test_generate_logic(no_retry: bool, preset_name: Optional[str], mocker, preset_manager):
     # Setup
     mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)
@@ -20,10 +21,16 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
     args = MagicMock()
     args.output_file = Path("asdfasdf/qwerqwerqwer/zxcvzxcv.json")
     args.no_retry = no_retry
-    args.game = RandovaniaGame.METROID_PRIME_ECHOES.value
-    args.preset_name = preset_name
-    args.seed_number = 0
-    args.player_count = 1
+
+    if preset_name is None:
+        # Permalink
+        args.permalink = "<the permalink>"
+    else:
+        args.game = RandovaniaGame.METROID_PRIME_ECHOES.value
+        args.preset_name = [preset_name]
+        args.seed_number = 0
+        args.race = False
+
     extra_args = {}
     if no_retry:
         extra_args["attempts"] = 0
@@ -36,7 +43,10 @@ def test_distribute_command_logic(no_retry: bool, preset_name: str, mocker, pres
         generator_params = GeneratorParameters(0, True, [preset])
 
     # Run
-    randovania.cli.commands.distribute.distribute_command_logic(args)
+    if preset_name is None:
+        randovania.cli.commands.generate.generate_from_permalink_logic(args)
+    else:
+        randovania.cli.commands.generate.generate_from_preset_logic(args)
 
     # Assert
     if preset_name is None:
