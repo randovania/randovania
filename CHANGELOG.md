@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Randovania now checks if the entire database is strongly connected, allowing for manual exceptions. 
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
+- Changed: Most command line arguments have been renamed.
 
 ### Cave Story
 

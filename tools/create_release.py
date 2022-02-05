@@ -14,7 +14,7 @@ import markdown
 import tenacity
 
 from randovania import VERSION
-from randovania.cli import prime_database
+from randovania.cli import database
 from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
 from randovania.lib.enum_lib import iterate_enum
@@ -87,7 +87,7 @@ async def main():
         shutil.rmtree(app_folder, ignore_errors=False)
 
     for game in iterate_enum(RandovaniaGame):
-        prime_database.export_as_binary(
+        database.export_as_binary(
             default_data.read_json_then_binary(game)[1],
             _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", f"{game.value}.bin"))
 
