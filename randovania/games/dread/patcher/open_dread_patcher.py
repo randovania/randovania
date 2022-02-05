@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from pathlib import Path
 from random import Random
@@ -9,6 +10,7 @@ import open_dread_rando
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import Node
@@ -26,7 +28,7 @@ from randovania.patching.prime.patcher_file_lib.pickup_exporter import ExportedP
 
 
 def _get_item_id_for_item(item: ItemResourceInfo) -> str:
-    if "item_capacity_id" in item.extra:
+    if "item_capacity_id" in item.extra and item.extra["item_id"] != "ITEM_WEAPON_POWER_BOMB":
         return item.extra["item_capacity_id"]
     return item.extra["item_id"]
 
@@ -111,15 +113,26 @@ class OpenDreadPatcher(Patcher):
             except KeyError as e:
                 raise KeyError(f"{node} has no extra {e}")
 
-        def _teleporter_ref_for(node: Node) -> dict:
+        def _level_name_for(node: Node) -> str:
             world = db.world_list.nodes_to_world(node)
-            level_name: str = os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
+            return os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
 
+        def _teleporter_ref_for(node: Node) -> dict:
             try:
                 return {
-                    "scenario": level_name,
+                    "scenario": _level_name_for(node),
                     "layer": node.extra.get("actor_layer", "default"),
                     "actor": node.extra["actor_name"],
+                }
+            except KeyError as e:
+                raise KeyError(f"{node} has no extra {e}")
+        
+        def _callback_ref_for(node: Node) -> dict:
+            try:
+                return {
+                    "scenario": _level_name_for(node),
+                    "function": node.extra["callback_function"],
+                    "args": node.extra.get("callback_args", 0)
                 }
             except KeyError as e:
                 raise KeyError(f"{node} has no extra {e}")
@@ -131,29 +144,46 @@ class OpenDreadPatcher(Patcher):
                 model_name = "itemsphere"
             else:
                 model_name = detail.model.name
+            
+            def get_resource(res: ConditionalResources) -> dict:
+                item_id = "ITEM_NONE"
+                quantity = 1
+                for r, q in res.resources:
+                    try:
+                        item_id = _get_item_id_for_item(r)
+                        quantity = q
+                        break
+                    except KeyError:
+                        continue
 
-            item_id = "ITEM_NONE"
-            quantity = 1
-            for r, q in detail.conditional_resources[0].resources:
-                try:
-                    item_id = _get_item_id_for_item(r)
-                    quantity = q
-                    break
-                except KeyError:
-                    continue
+                return {"item_id": item_id, "quantity": quantity}
+            
+            resources = [get_resource(res) for res in detail.conditional_resources]
 
-            if item_id is None:
-                raise ValueError(f"Missing item id: {detail.hud_text}")
+            pickup_node = db.world_list.node_from_pickup_index(detail.index)
+            pickup_type = pickup_node.extra.get("pickup_type", "actor")
+
+            details = {
+                "pickup_type": pickup_type,
+                "caption": "\n".join(detail.hud_text),
+                "resources": resources
+            }
 
             try:
-                return {
-                    "pickup_actor": _teleporter_ref_for(db.world_list.node_from_pickup_index(detail.index)),
-                    "caption": "\n".join(detail.hud_text),
-                    "item_id": item_id,
-                    "quantity": quantity,
-                    "model": model_name,
-                }
-            except KeyError:
+                if pickup_type == "actor":
+                    details.update({
+                        "pickup_actor": _teleporter_ref_for(pickup_node),
+                        "model": model_name,
+                    })
+                else:
+                    details.update({
+                        "pickup_actordef": pickup_node.extra["actor_def"],
+                        "pickup_string_key": pickup_node.extra["string_key"],
+                        "pickup_lua_callback": _callback_ref_for(pickup_node),
+                    })
+                return details
+            except KeyError as e:
+                logging.warn(e)
                 return None
 
         starting_location = _start_point_ref_for(_node_for(patches.starting_location))
