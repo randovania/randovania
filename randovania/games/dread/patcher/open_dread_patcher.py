@@ -28,7 +28,7 @@ from randovania.patching.prime.patcher_file_lib.pickup_exporter import ExportedP
 
 
 def _get_item_id_for_item(item: ItemResourceInfo) -> str:
-    if "item_capacity_id" in item.extra and item.extra["item_id"] != "ITEM_WEAPON_POWER_BOMB":
+    if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
     return item.extra["item_id"]
 
@@ -78,6 +78,7 @@ class OpenDreadPatcher(Patcher):
                           cosmetic_patches: DreadCosmeticPatches):
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
+        item_db = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
         configuration = description.get_preset(players_config.player_index).configuration
         assert isinstance(configuration, DreadConfiguration)
         rng = Random(description.get_seed_for_player(players_config.player_index))
@@ -145,9 +146,13 @@ class OpenDreadPatcher(Patcher):
             else:
                 model_name = detail.model.name
             
+            ammoconfig = configuration.ammo_configuration.items_state
+            pbammo = item_db.ammo["Power Bomb Expansion"]
+
             def get_resource(res: ConditionalResources) -> dict:
                 item_id = "ITEM_NONE"
                 quantity = 1
+                ids = [_get_item_id_for_item(r) for r, q in res.resources]
                 for r, q in res.resources:
                     try:
                         item_id = _get_item_id_for_item(r)
@@ -155,10 +160,21 @@ class OpenDreadPatcher(Patcher):
                         break
                     except KeyError:
                         continue
+                
+                if "ITEM_WEAPON_POWER_BOMB" in ids:
+                    item_id = "ITEM_WEAPON_POWER_BOMB"
+                
+                # non-required mains
+                if (item_id == "ITEM_WEAPON_POWER_BOMB_MAX"
+                    and not ammoconfig[pbammo].requires_major_item):
+                    item_id = "ITEM_WEAPON_POWER_BOMB"
 
                 return {"item_id": item_id, "quantity": quantity}
             
+            # ugly hack
             resources = [get_resource(res) for res in detail.conditional_resources]
+            if resources[0]["item_id"] == "ITEM_WEAPON_POWER_BOMB_MAX":
+                resources = [resources[-1]]
 
             pickup_node = db.world_list.node_from_pickup_index(detail.index)
             pickup_type = pickup_node.extra.get("pickup_type", "actor")
