@@ -3,8 +3,6 @@ import json
 from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashable, Any
 
-from frozendict import frozendict
-
 from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
 from randovania.game_description.requirements import (
@@ -29,12 +27,13 @@ from randovania.game_description.world.dock import (
 )
 from randovania.game_description.world.node import (
     GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
-    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode, wrap_frozen
+    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
 )
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.lib import frozen_lib
 
 X = TypeVar('X')
 Y = TypeVar('Y')
@@ -50,17 +49,17 @@ def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
 
 def read_resource_info(name: str, data: Dict, resource_type: ResourceType) -> SimpleResourceInfo:
     return SimpleResourceInfo(data["long_name"],
-                              name, resource_type, frozendict(data["extra"]))
+                              name, resource_type, frozen_lib.wrap(data["extra"]))
 
 
 def read_item_resource_info(name: str, data: Dict) -> ItemResourceInfo:
     return ItemResourceInfo(data["long_name"],
-                            name, data["max_capacity"], frozendict(data["extra"]))
+                            name, data["max_capacity"], frozen_lib.wrap(data["extra"]))
 
 
 def read_trick_resource_info(name: str, data: Dict) -> TrickResourceInfo:
     return TrickResourceInfo(data["long_name"],
-                             name, data["description"], frozendict(data["extra"]))
+                             name, data["description"], frozen_lib.wrap(data["extra"]))
 
 
 def read_resource_info_array(data: Dict[str, Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:
@@ -167,7 +166,7 @@ def read_resource_gain_tuple(data: List[Dict], database: "ResourceDatabase") -> 
 def read_dock_weakness(name: str, item: dict, resource_database: ResourceDatabase) -> DockWeakness:
     return DockWeakness(name,
                         DockLockType(item["lock_type"]),
-                        frozendict(item["extra"]),
+                        frozen_lib.wrap(item["extra"]),
                         read_requirement(item["requirement"], resource_database))
 
 
@@ -175,7 +174,7 @@ def read_dock_type(name: str, data: dict) -> DockType:
     return DockType(
         short_name=name,
         long_name=data["name"],
-        extra=frozendict(data["extra"]),
+        extra=frozen_lib.wrap(data["extra"]),
     )
 
 
@@ -252,7 +251,7 @@ class WorldReader:
                 "heal": data["heal"],
                 "location": location,
                 "description": data["description"],
-                "extra": wrap_frozen(data["extra"]),
+                "extra": frozen_lib.wrap(data["extra"]),
                 "index": self.generic_index,
             }
             node_type: int = data["node_type"]
@@ -367,7 +366,7 @@ class WorldReader:
         return World(
             data["name"],
             self.read_area_list(data["areas"]),
-            data["extra"]
+            frozen_lib.wrap(data["extra"]),
         )
 
     def read_world_list(self, data: List[Dict]) -> WorldList:
