@@ -51,13 +51,13 @@ def default_prime2_memo_data() -> dict:
             "r") as memo_data_file:
         memo_data = json.load(memo_data_file)
 
-    TEMPLE_KEYS = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]
+    temple_keys = ["Dark Agon Key", "Dark Torvus Key", "Ing Hive Key"]
 
     for i in range(1, 4):
-        for temple_key in TEMPLE_KEYS:
+        for temple_key in temple_keys:
             memo_data["{} {}".format(temple_key, i)] = memo_data[temple_key]
 
-    for temple_key in TEMPLE_KEYS:
+    for temple_key in temple_keys:
         memo_data.pop(temple_key)
 
     for i in range(1, 10):

@@ -19,23 +19,13 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.lib import frozen_lib
 
 
 class NodeLocation(NamedTuple):
     x: float
     y: float
     z: float
-
-
-def wrap_frozen(x):
-    if isinstance(x, dict):
-        return frozendict((key, wrap_frozen(value)) for key, value in x.items())
-
-    elif isinstance(x, list):
-        return tuple(wrap_frozen(value) for value in x)
-
-    else:
-        return x
 
 
 class NodeContext(NamedTuple):
@@ -65,7 +55,7 @@ class Node:
         if not isinstance(self.extra, frozendict):
             if not isinstance(self.extra, dict):
                 raise ValueError(f"Expected dict for extra, got {type(self.extra)}")
-            object.__setattr__(self, "extra", wrap_frozen(self.extra))
+            object.__setattr__(self, "extra", frozen_lib.wrap(self.extra))
 
     @property
     def is_resource_node(self) -> bool:
