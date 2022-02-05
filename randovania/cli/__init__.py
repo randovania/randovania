@@ -5,12 +5,14 @@ import sys
 from pathlib import Path
 
 import randovania
+from randovania.cli import development
 
 
 def create_subparsers(root_parser):
-    from randovania.cli import echoes, server, gui, prime_database
-    echoes.create_subparsers(root_parser)
-    prime_database.create_subparsers(root_parser)
+    from randovania.cli import layout, server, gui, database
+    layout.create_subparsers(root_parser)
+    database.create_subparsers(root_parser)
+    development.create_subparsers(root_parser)
     server.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
 
@@ -42,7 +44,7 @@ def _run_args(parser, args):
         raise SystemExit(1)
 
     logging.info("Executing from args...")
-    args.func(args)
+    return args.func(args) or 0
 
 
 def run_pytest(argv):
@@ -63,4 +65,4 @@ def run_cli(argv):
 
         logging.info("Creating parsers...")
         parser = _create_parser()
-        _run_args(parser, parser.parse_args(args))
+        raise SystemExit(_run_args(parser, parser.parse_args(args)))
