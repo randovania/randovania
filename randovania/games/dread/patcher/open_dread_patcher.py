@@ -179,9 +179,25 @@ class OpenDreadPatcher(Patcher):
             pickup_node = db.world_list.node_from_pickup_index(detail.index)
             pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
+            hud_text = detail.hud_text[0]
+            if len(detail.hud_text) > 1:
+                mapping = {
+                    "Varia Suit acquired.": "Progressive Suit acquired.",
+                    "Wide Beam acquired.": "Progressive Beam acquired.",
+                    "Charge Beam acquired.": "Progressive Charge acquired.",
+                    "Bomb acquired.": "Progressive Bomb acquired.",
+                    "Spin Boost acquired.": "Progressive Spin acquired.",
+                    "Super Missiles acquired.": "Progressive Missiles acquired.",
+                    "Locked Power Bomb Expansion acquired.": "Power Bomb Expansion acquired."
+                }
+                if hud_text in mapping:
+                    hud_text = mapping[hud_text]
+                else:
+                    hud_text = "\n".join(detail.hud_text)
+
             details = {
                 "pickup_type": pickup_type,
-                "caption": "\n".join(detail.hud_text),
+                "caption": hud_text,
                 "resources": resources
             }
 
@@ -215,7 +231,7 @@ class OpenDreadPatcher(Patcher):
             rng,
             configuration.pickup_model_style,
             configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(), players_config),
+            exporter=pickup_exporter.create_pickup_exporter(db, DreadAcquiredMemo(), players_config),
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
@@ -243,3 +259,7 @@ class OpenDreadPatcher(Patcher):
         with output_file.joinpath("patcher.json").open("w") as f:
             json.dump(patch_data, f, indent=4)
         open_dread_rando.patch(input_file, output_file, patch_data)
+
+class DreadAcquiredMemo(dict):
+    def __missing__(self, key):
+        return "{} acquired.".format(key)
