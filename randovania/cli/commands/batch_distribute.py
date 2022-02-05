@@ -6,7 +6,7 @@ import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
-from randovania.cli import echoes_lib
+from randovania.cli import cli_lib
 from randovania.interface_common import sleep_inhibitor
 
 if typing.TYPE_CHECKING:
@@ -84,7 +84,7 @@ def batch_distribute_command_logic(args):
 def add_batch_distribute_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
         "batch-distribute",
-        help="Generate multiple seeds in parallel"
+        help="Generate multiple layouts in parallel"
     )
 
     parser.add_argument("permalink", type=str, help="The permalink to use")
@@ -94,11 +94,11 @@ def add_batch_distribute_command(sub_parsers):
         type=int,
         default=90,
         help="How many seconds to wait before timing out a generation/validation.")
-    echoes_lib.add_validate_argument(parser)
+    cli_lib.add_validate_argument(parser)
     parser.add_argument(
         "seed_count",
         type=int,
-        help="How many seeds to generate.")
+        help="How many layouts to generate.")
     parser.add_argument(
         "output_dir",
         type=Path,
