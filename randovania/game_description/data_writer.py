@@ -19,6 +19,7 @@ from randovania.game_description.world.node import Node, GenericNode, DockNode, 
     ConfigurableNode, LogbookNode, LoreType, PlayerShipNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
+from randovania.lib import frozen_lib
 
 
 def write_resource_requirement(requirement: ResourceRequirement) -> dict:
@@ -89,7 +90,7 @@ def write_resource_gain(resource_gain: ResourceGain) -> list:
 def write_simple_resource(resource: SimpleResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
-        "extra": unwrap_frozen(resource.extra),
+        "extra": frozen_lib.unwrap(resource.extra),
     }
 
 
@@ -97,7 +98,7 @@ def write_item_resource(resource: ItemResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
         "max_capacity": resource.max_capacity,
-        "extra": unwrap_frozen(resource.extra),
+        "extra": frozen_lib.unwrap(resource.extra),
     }
 
 
@@ -105,7 +106,7 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
     return {
         "long_name": resource.long_name,
         "description": resource.description,
-        "extra": unwrap_frozen(resource.extra),
+        "extra": frozen_lib.unwrap(resource.extra),
     }
 
 
@@ -172,7 +173,7 @@ def write_resource_database(resource_database: ResourceDatabase):
 def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
     return {
         "lock_type": dock_weakness.lock_type.value,
-        "extra": dock_weakness.extra,
+        "extra": frozen_lib.unwrap(dock_weakness.extra),
         "requirement": write_requirement(dock_weakness.requirement)
     }
 
@@ -182,7 +183,7 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
         "types": {
             dock_type.short_name: {
                 "name": dock_type.long_name,
-                "extra": dock_type.extra,
+                "extra": frozen_lib.unwrap(dock_type.extra),
                 "items": {
                     name: write_dock_weakness(weakness)
                     for name, weakness in database.weaknesses[dock_type].items()
@@ -199,16 +200,6 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
 
 # World/Area/Nodes
 
-def unwrap_frozen(extra):
-    if isinstance(extra, tuple):
-        return [unwrap_frozen(value) for value in extra]
-
-    elif isinstance(extra, dict):
-        return {key: unwrap_frozen(value) for key, value in extra.items()}
-
-    else:
-        return extra
-
 
 def write_node(node: Node) -> dict:
     """
@@ -216,7 +207,7 @@ def write_node(node: Node) -> dict:
     :return:
     """
 
-    extra = unwrap_frozen(node.extra)
+    extra = frozen_lib.unwrap(node.extra)
     data = {}
     common_fields = {
         "heal": node.heal,
@@ -305,7 +296,7 @@ def write_area(area: Area) -> dict:
         raise ValueError("Area {} nodes has the following errors:\n* {}".format(
             area.name, "\n* ".join(errors)))
 
-    extra = unwrap_frozen(area.extra)
+    extra = frozen_lib.unwrap(area.extra)
     return {
         "default_node": area.default_node,
         "valid_starting_location": area.valid_starting_location,
@@ -327,10 +318,9 @@ def write_world(world: World) -> dict:
         raise ValueError("World {} has the following errors:\n> {}".format(
             world.name, "\n\n> ".join(errors)))
 
-    extra = unwrap_frozen(world.extra)
     return {
         "name": world.name,
-        "extra": extra,
+        "extra": frozen_lib.unwrap(world.extra),
         "areas": areas,
     }
 

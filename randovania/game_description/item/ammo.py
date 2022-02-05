@@ -8,6 +8,7 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import ResourceLock
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games.game import RandovaniaGame
+from randovania.lib import frozen_lib
 
 
 @dataclass(frozen=True, order=True)
@@ -39,20 +40,20 @@ class Ammo:
             game=game,
             name=name,
             model_name=value["model_name"],
-            items=tuple(value["items"]),
+            items=frozen_lib.wrap(value["items"]),
             broad_category=item_categories[value["broad_category"]],
             unlocked_by=value.get("unlocked_by"),
             temporary=value.get("temporary"),
-            extra=frozendict(value.get("extra", {}))
+            extra=frozen_lib.wrap(value.get("extra", {}))
         )
 
     @property
     def as_json(self) -> dict:
         result = {
             "model_name": self.model_name,
-            "items": list(self.items),
+            "items": frozen_lib.unwrap(self.items),
             "broad_category": self.broad_category.name,
-            "extra": self.extra
+            "extra": frozen_lib.unwrap(self.extra),
         }
         if self.unlocked_by is not None:
             result["temporary"] = self.temporary
