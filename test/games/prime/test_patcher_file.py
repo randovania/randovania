@@ -443,6 +443,7 @@ def test_run_validated_hud_text():
             name="EnergyTransferModule",
         ),
         other_player=False,
+        original_pickup=None,
     )
 
     # Run
