@@ -30,7 +30,10 @@ from randovania.patching.prime.patcher_file_lib.pickup_exporter import ExportedP
 def _get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
         return item.extra["item_capacity_id"]
-    return item.extra["item_id"]
+    try:
+        return item.extra["item_id"]
+    except KeyError as e:
+        raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
 class OpenDreadPatcher(Patcher):
