@@ -31,6 +31,7 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         conversion=[],
         model=PickupModel(RandovaniaGame.METROID_PRIME, "Missile"),
         other_player=other_player,
+        original_pickup=None,
     )
     if other_player:
         shiny_stuff = {
