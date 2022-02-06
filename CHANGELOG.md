@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
 - Changed: Most command line arguments have been renamed.
+- Changed: Changed how ConfigurableNodes (In Echoes, the Translator Gates) are handled in logic. This should have no visual differences, other than speeding up generation.
 
 ### Cave Story
 
