@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
+from randovania.layout.preset_describer import format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
     has_vanilla_item, message_for_required_mains
 
 
