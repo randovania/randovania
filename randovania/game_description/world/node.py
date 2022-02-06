@@ -174,7 +174,7 @@ class EventNode(ResourceNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class ConfigurableNode(ResourceNode):
+class ConfigurableNode(Node):
     self_identifier: NodeIdentifier
 
     def __repr__(self):
@@ -182,23 +182,6 @@ class ConfigurableNode(ResourceNode):
 
     def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
         return patches.configurable_nodes[self.self_identifier]
-
-    def resource(self) -> ResourceInfo:
-        return SimpleResourceInfo(f"Configurable Node {self.index}", f"Node{self.index}", ResourceType.GATE_INDEX)
-
-    def can_collect(self, context: NodeContext) -> bool:
-        """
-        Checks if this TranslatorGate can be opened with the given resources and translator gate mapping
-        :param context:
-        :return:
-        """
-        if context.current_resources.get(self.resource(), 0) != 0:
-            return False
-        return context.patches.configurable_nodes[context.self_identifier].satisfied(
-            context.current_resources, 0, context.database)
-
-    def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        yield self.resource(), 1
 
 
 class LoreType(Enum):
