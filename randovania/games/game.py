@@ -128,10 +128,13 @@ class RandovaniaGame(BitPackEnum, Enum):
     SUPER_METROID = "super_metroid"
     METROID_DREAD = "dread"
     CAVE_STORY = "cave_story"
+    BLANK = "blank"
 
     @property
     def data(self) -> GameData:
-        if self == RandovaniaGame.METROID_PRIME:
+        if self == RandovaniaGame.BLANK:
+            import randovania.games.blank.game_data as game_module
+        elif self == RandovaniaGame.METROID_PRIME:
             import randovania.games.prime1.game_data as game_module
         elif self == RandovaniaGame.METROID_PRIME_ECHOES:
             import randovania.games.prime2.game_data as game_module
