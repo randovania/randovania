@@ -1,0 +1,137 @@
+{
+    "schema_version": 8,
+    "game": "blank",
+    "resource_database": {
+        "items": {
+            "Weapon": {
+                "long_name": "Weapon",
+                "max_capacity": 1,
+                "extra": {}
+            },
+            "Ammo": {
+                "long_name": "Missile",
+                "max_capacity": 500,
+                "extra": {}
+            },
+            "Health": {
+                "long_name": "Health",
+                "max_capacity": 10,
+                "extra": {}
+            }
+        },
+        "events": {
+            "Boss": {
+                "long_name": "First Boss Killed",
+                "extra": {}
+            }
+        },
+        "tricks": {
+            "Combat": {
+                "long_name": "Combat",
+                "description": "If this trick is enabled, the player may be expected to defeat enemies and bosses with fewer items and less health.",
+                "extra": {}
+            }
+        },
+        "damage": {
+            "Damage": {
+                "long_name": "Normal Damage",
+                "extra": {}
+            }
+        },
+        "versions": {
+            "NTSC": {
+                "long_name": "NTSC",
+                "extra": {}
+            }
+        },
+        "misc": {},
+        "requirement_template": {},
+        "damage_reductions": [],
+        "energy_tank_item_index": "Health",
+        "item_percentage_index": null,
+        "multiworld_magic_item_index": null
+    },
+    "starting_location": {
+        "world_name": "Intro",
+        "area_name": "Starting Area"
+    },
+    "initial_states": {
+        "Default": []
+    },
+    "minimal_logic": {
+        "items_to_exclude": [],
+        "custom_item_amount": [],
+        "events_to_exclude": [
+            {
+                "name": "Boss",
+                "reason": "victory condition"
+            }
+        ],
+        "description": "Nothing is checked."
+    },
+    "victory_condition": {
+        "type": "resource",
+        "data": {
+            "type": "events",
+            "name": "Boss",
+            "amount": 1,
+            "negate": false
+        }
+    },
+    "dock_weakness_database": {
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            },
+            "other": {
+                "name": "Dock",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        }
+    },
+    "worlds": [
+        "Intro.json"
+    ]
+}

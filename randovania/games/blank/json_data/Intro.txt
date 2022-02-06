@@ -1,0 +1,42 @@
+----------------
+Starting Area
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Pickup (Weapon)
+      Trivial
+  > Door to Boss Arena
+      Missile and Weapon
+  > Pickup (Missile Expansion)
+      Trivial
+
+> Pickup (Weapon); Heals? False
+  * Pickup 0; Major Location? True
+  > Spawn Point
+      Trivial
+
+> Door to Boss Arena; Heals? False
+  * Normal Door to Boss Arena/Door to Starting Area
+  > Spawn Point
+      Trivial
+
+> Pickup (Missile Expansion); Heals? False
+  * Pickup 1; Major Location? False
+  > Spawn Point
+      Trivial
+
+----------------
+Boss Arena
+> Door to Starting Area; Heals? False
+  * Normal Door to Starting Area/Door to Boss Arena
+  > Event - Boss
+      All of the following:
+          Weapon
+          Any of the following:
+              Missile ≥ 4
+              Missile ≥ 2 and Combat (Beginner)
+
+> Event - Boss; Heals? False
+  * Event First Boss Killed
+  > Door to Starting Area
+      Trivial
+
