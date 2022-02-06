@@ -6,7 +6,6 @@ import typing
 
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtCore import Qt
-from frozendict import frozendict
 
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -20,6 +19,7 @@ from randovania.gui.generated.resource_database_editor_ui import Ui_ResourceData
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
 from randovania.gui.lib.foldable import Foldable
+from randovania.lib import frozen_lib
 
 
 @dataclasses.dataclass(frozen=True)
@@ -34,7 +34,7 @@ def encode_extra(qt_value):
     try:
         decoded = json.loads(qt_value)
         if isinstance(decoded, dict):
-            return True, frozendict(decoded)
+            return True, frozen_lib.wrap(decoded)
     except json.JSONDecodeError:
         return False, None
 
@@ -42,7 +42,7 @@ def encode_extra(qt_value):
 GENERIC_FIELDS = [
     FieldDefinition("Short Name", "short_name", lambda v: v, lambda v: (True, v)),
     FieldDefinition("Long Name", "long_name", lambda v: v, lambda v: (True, v)),
-    FieldDefinition("Extra", "extra", lambda v: json.dumps(v), encode_extra),
+    FieldDefinition("Extra", "extra", lambda v: json.dumps(frozen_lib.unwrap(v)), encode_extra),
 ]
 
 
@@ -117,7 +117,7 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         return False
 
     def _create_item(self, short_name) -> ResourceInfo:
-        return SimpleResourceInfo(short_name, short_name, self.resource_type, frozendict())
+        return SimpleResourceInfo(short_name, short_name, self.resource_type, frozen_lib.wrap({}))
 
     def append_item(self, resource: ResourceInfo) -> bool:
         row = self.rowCount()
@@ -150,7 +150,7 @@ class ResourceDatabaseItemModel(ResourceDatabaseGenericModel):
         return ITEM_FIELDS
 
     def _create_item(self, short_name) -> ItemResourceInfo:
-        return ItemResourceInfo(short_name, short_name, 1, frozendict())
+        return ItemResourceInfo(short_name, short_name, 1, frozen_lib.wrap({}))
 
 
 TRICK_FIELDS = copy.copy(GENERIC_FIELDS)
@@ -165,7 +165,7 @@ class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel):
         return TRICK_FIELDS
 
     def _create_item(self, short_name) -> TrickResourceInfo:
-        return TrickResourceInfo(short_name, short_name, "", frozendict())
+        return TrickResourceInfo(short_name, short_name, "", frozen_lib.wrap({}))
 
 
 @dataclasses.dataclass()
