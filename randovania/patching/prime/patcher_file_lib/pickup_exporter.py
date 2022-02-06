@@ -131,6 +131,7 @@ class ExportedPickupDetails:
     conversion: List[ResourceConversion]
     model: PickupModel
     other_player: bool
+    original_pickup: PickupEntry
 
 
 class PickupExporter:
@@ -180,6 +181,7 @@ class PickupExporterSolo(PickupExporter):
             conversion=list(pickup.convert_resources),
             model=model,
             other_player=False,
+            original_pickup=pickup,
         )
 
 
@@ -217,6 +219,7 @@ class PickupExporterMulti(PickupExporter):
                 conversion=[],
                 model=model,
                 other_player=True,
+                original_pickup=pickup_target.pickup,
             )
 
 

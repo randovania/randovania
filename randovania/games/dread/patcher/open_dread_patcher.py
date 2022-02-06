@@ -181,19 +181,7 @@ class OpenDreadPatcher(Patcher):
 
             hud_text = detail.hud_text[0]
             if len(detail.hud_text) > 1:
-                mapping = {
-                    "Varia Suit acquired.": "Progressive Suit acquired.",
-                    "Wide Beam acquired.": "Progressive Beam acquired.",
-                    "Charge Beam acquired.": "Progressive Charge acquired.",
-                    "Bomb acquired.": "Progressive Bomb acquired.",
-                    "Spin Boost acquired.": "Progressive Spin acquired.",
-                    "Super Missiles acquired.": "Progressive Missiles acquired.",
-                    "Locked Power Bomb Expansion acquired.": "Power Bomb Expansion acquired."
-                }
-                if hud_text in mapping:
-                    hud_text = mapping[hud_text]
-                else:
-                    hud_text = "\n".join(detail.hud_text)
+                hud_text = DreadAcquiredMemo()[detail.original_pickup.name]
 
             details = {
                 "pickup_type": pickup_type,
