@@ -292,6 +292,32 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
                                       key=lambda t: t[1], reverse=True)
     }
 
+
+    stddev_by_location = {
+        location: stddev
+        for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True)
+    }
+
+    ## Average standardized deviances for all locations
+    accumulated_stddev = 0
+    for stddev in stddev_by_location.items():
+        accumulated_stddev += stddev[1]
+    accumulated_stddev /= len(stddev_by_location)*2 # div by 2 because +1 deviance at one location always implies +1 everywhere else 
+
+    ## Accumulate deviances for all locations
+
+    # 100% unbiased logicless progression probablitity per location
+    pure_median = (total_progression_item_count / seed_count) / len(locations)
+
+    # Accumulate deviances
+    bias_index = 0
+    for location in location_progression_count:
+        bias_index += abs(location_progression_count[location] / seed_count - pure_median)
+
+    # Scale and account for the fact that 1% deviance in one location always results for 1% elsewhere
+    bias_index /= 2
+    print("bias_index=%f" % bias_index)
+
     for location in locations:
         if location not in location_progression_no_key_count.keys():
             location_progression_no_key_count[location] = 0
@@ -317,20 +343,10 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         for region in regions:
             regions[region] = regions[region] / total_progression_item_count
 
-    stddev_by_location = {
-        location: stddev
-        for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True)
-    }
-
-    # Average deviances for all locations
-    accumulated_stddev = 0
-    for stddev in stddev_by_location.items():
-        accumulated_stddev += stddev[1]
-    accumulated_stddev /= len(stddev_by_location)*2 # div by 2 because +1 deviance at one location always implies +1 everywhere else 
-
     final_results = {
         "seed_count": seed_count,
         "accumulated_stddev": accumulated_stddev,
+        "bias_index": bias_index,
         "regions": regions,
         "regions_weighted": regions_weighted,
         "stddev_by_location": stddev_by_location,
