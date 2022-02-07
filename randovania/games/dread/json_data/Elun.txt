@@ -256,10 +256,8 @@ Extra - asset_id: collision_camera_003
 
 > Dock from Purple Drapes; Heals? False
   * Blocked Passage to Purple Drapes/Dock to Ammo Refill Room
-  > Door to Plasma Beam Room (Upper)
-      After Elun - Ammo Recharge Room Blob
-  > Event - Elun - Ammo Recharge Room Blob
-      Shoot Beam
+  > Event - Release X
+      Trivial
 
 > Dock to Bottom Morph Launcher; Heals? False
   * Morph Ball Launcher to Bottom Morph Launcher/Dock to Ammo Refill Room
@@ -270,6 +268,22 @@ Extra - asset_id: collision_camera_003
   * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Ammo Refill Room
   > Tile Group (BOMB) 2
       Morph Ball
+
+> Alcove; Heals? False
+  > Door to Plasma Beam Room (Upper)
+      After Elun - Ammo Recharge Room Blob
+  > Event - Elun - Ammo Recharge Room Blob
+      Shoot Beam
+  > Dock from Purple Drapes
+      Trivial
+
+> Event - Release X; Heals? False
+  * Event Elun - Release X Parasites
+  * TODO: Verify exiting this morph ball launcher releases the X
+
+
+  > Alcove
+      Trivial
 
 ----------------
 Chozo Soldier Arena
@@ -661,13 +675,6 @@ Extra - asset_id: collision_camera_009
       Morph Ball
   > Grapple Block Alcove
       Morph Ball
-
-> Tile Group (); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_026
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ()
 
 > Dock to Horizontal Bomb Maze (Upper); Heals? False
   * Morph Ball Tunnel to Horizontal Bomb Maze/Dock to Vertical Bomb Maze (Upper)

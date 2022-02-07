@@ -913,6 +913,10 @@
             "DaironGrappleBlockElevatorFerenia": {
                 "long_name": "Dairon - Pull Grapple Block below Ferenia Elevator",
                 "extra": {}
+            },
+            "ElunReleaseX": {
+                "long_name": "Elun - Release X Parasites",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1932,8 +1936,37 @@
                         "lock_type": 3,
                         "extra": {},
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Charge Beam"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Charge Beam"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     },
                     "Wide Beam Door": {
