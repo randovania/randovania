@@ -316,7 +316,6 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     # Scale and account for the fact that 1% deviance in one location always results for 1% elsewhere
     bias_index /= 2
-    print("bias_index=%f" % bias_index)
 
     for location in locations:
         if location not in location_progression_no_key_count.keys():
