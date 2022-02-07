@@ -317,14 +317,23 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
         for region in regions:
             regions[region] = regions[region] / total_progression_item_count
 
+    stddev_by_location = {
+        location: stddev
+        for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True)
+    }
+
+    # Average deviances for all locations
+    accumulated_stddev = 0
+    for stddev in stddev_by_location.items():
+        accumulated_stddev += stddev[1]
+    accumulated_stddev /= len(stddev_by_location)*2 # div by 2 because +1 deviance at one location always implies +1 everywhere else 
+
     final_results = {
         "seed_count": seed_count,
+        "accumulated_stddev": accumulated_stddev,
         "regions": regions,
         "regions_weighted": regions_weighted,
-        "stddev_by_location": {
-            location: stddev
-            for location, stddev in sorted(stddev_by_location.items(), key=lambda t: t[1] or math.inf, reverse=True)
-        },
+        "stddev_by_location": stddev_by_location,
         "items": items,
         "locations": locations,
         "item_hints": item_hints,
