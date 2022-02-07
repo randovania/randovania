@@ -158,7 +158,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -359,7 +359,7 @@
                                 ]
                             }
                         },
-                        "Pickup (item_missiletank)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1579,7 +1579,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_008)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1707,7 +1707,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup (item_missiletank_008)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3102,6 +3102,41 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Activate Magnet Walls with Wave": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "CatarisMoveMagnetWallsButton",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -3362,6 +3397,27 @@
                             }
                         }
                     }
+                },
+                "Event - Activate Magnet Walls with Wave": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12177.53,
+                        "y": 2126.03,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "CatarisMoveMagnetWallsButton",
+                    "connections": {
+                        "Door to collision_camera_013 (C)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -3482,7 +3538,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_009)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3509,7 +3565,7 @@
                         }
                     }
                 },
-                "Pickup (item_powerbombtank_000)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -3621,7 +3677,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
                     "connections": {
-                        "Pickup (item_powerbombtank_000)": {
+                        "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4406,7 +4462,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_009)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8190,7 +8246,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_001)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -8336,7 +8392,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Pickup (item_missiletank_001)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -10275,7 +10331,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (item_missiletankplus_000)": {
+                        "Pickup (Missile+ Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -10436,7 +10492,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletankplus_000)": {
+                "Pickup (Missile+ Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -10689,7 +10745,7 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
-                "Pickup (item_missiletank_005)": {
+                "Pickup (Missile Tank - Top)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -10767,7 +10823,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_006)": {
+                "Pickup (Missile Tank - Bottom)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -11126,7 +11182,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_006)": {
+                        "Pickup (Missile Tank - Bottom)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11437,7 +11493,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup (item_missiletank_005)": {
+                        "Pickup (Missile Tank - Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12138,7 +12194,7 @@
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Pickup (item_missiletank_004)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12243,7 +12299,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_004)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -12437,7 +12493,7 @@
                 "asset_id": "collision_camera_029"
             },
             "nodes": {
-                "Pickup (item_powerbombtank_002)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -12614,7 +12670,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_powerbombtank_002)": {
+                        "Pickup (Power Bomb Tank)": {
                             "type": "template",
                             "data": "Ballspark"
                         },
@@ -14200,7 +14256,7 @@
                     "destination": {
                         "world_name": "Cataris",
                         "area_name": "Green EMMI Fight",
-                        "node_name": "Dock to collision_camera_035 (C)"
+                        "node_name": "Door from collision_camera_035 (C)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Wide Beam Door",
@@ -14281,7 +14337,7 @@
                 "asset_id": "collision_camera_036"
             },
             "nodes": {
-                "Dock to collision_camera_035 (C)": {
+                "Door from collision_camera_035 (C)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14289,7 +14345,7 @@
                         "y": 3600.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Door opens up after Green EMMI is defeated\n\n",
                     "extra": {
                         "actor_name": "doorpowerpower_030",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -14303,8 +14359,8 @@
                         "area_name": "collision_camera_035 (C)",
                         "node_name": "Door to Green EMMI Fight"
                     },
-                    "dock_type": "other",
-                    "dock_weakness": "Not Determined",
+                    "dock_type": "door",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Dock to collision_camera_028 (C)": {
                             "type": "and",
@@ -14452,7 +14508,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Cataris EMMI Tunnel",
                     "connections": {
-                        "Dock to collision_camera_035 (C)": {
+                        "Door from collision_camera_035 (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14472,7 +14528,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to collision_camera_035 (C)": {
+                        "Door from collision_camera_035 (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14529,7 +14585,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
                     "connections": {
-                        "Dock to collision_camera_035 (C)": {
+                        "Door from collision_camera_035 (C)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -14624,7 +14680,7 @@
                     "extra": {},
                     "event_name": "s020_magma:default:breakablemag008",
                     "connections": {
-                        "Dock to collision_camera_035 (C)": {
+                        "Door from collision_camera_035 (C)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15191,7 +15247,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_000)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -15265,7 +15321,7 @@
                             "type": "template",
                             "data": "Shoot Beam"
                         },
-                        "Pickup (item_missiletank_000)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15629,7 +15685,7 @@
                         }
                     }
                 },
-                "Pickup (item_energyfragment_001)": {
+                "Pickup (Energy Fragment)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -15654,7 +15710,7 @@
                         }
                     }
                 },
-                "Pickup (item_energytank_000)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -15749,7 +15805,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
-                        "Pickup (item_energyfragment_001)": {
+                        "Pickup (Energy Fragment)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15967,7 +16023,7 @@
                                 "negate": true
                             }
                         },
-                        "Pickup (item_energytank_000)": {
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16697,7 +16753,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
                     "connections": {
-                        "Pickup (itemsphere_diffusionbeam)": {
+                        "Pickup (Diffusion Beam)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -16815,7 +16871,7 @@
                         }
                     }
                 },
-                "Pickup (itemsphere_diffusionbeam)": {
+                "Pickup (Diffusion Beam)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -16876,7 +16932,7 @@
                         }
                     }
                 },
-                "Pickup (item_powerbombtank_001)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -17610,7 +17666,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup (item_powerbombtank_001)": {
+                        "Pickup (Power Bomb Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17753,7 +17809,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Pickup (item_missiletank_010)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -17818,7 +17874,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_010)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -17945,7 +18001,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup (item_missiletank_010)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -18501,7 +18557,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_007)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -18664,7 +18720,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_007)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -19764,7 +19820,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Pickup (item_missiletank_002)": {
+                        "Pickup (Missile Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -19867,7 +19923,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_002)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -20027,7 +20083,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_003)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -21158,7 +21214,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Pickup (item_missiletank_003)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -21943,7 +21999,7 @@
                         }
                     }
                 },
-                "Pickup (item_energyfragment_000)": {
+                "Pickup (Energy Fragment)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -22084,7 +22140,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_energyfragment_000)": {
+                        "Pickup (Energy Fragment)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -22866,7 +22922,7 @@
                 "asset_id": "collision_camera_055"
             },
             "nodes": {
-                "Pickup (item_missiletank_011)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -22949,7 +23005,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_011)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -23542,7 +23598,7 @@
                 "asset_id": "collision_camera_061"
             },
             "nodes": {
-                "Pickup (item_missiletank_012)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -23784,7 +23840,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_012)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
