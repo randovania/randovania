@@ -19,7 +19,7 @@ def dread_format_params(configuration: DreadConfiguration) -> Dict[str, List[str
             {
                 "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
                 "Progressive Charge Beam": has_shuffled_item(major_items, "Progressive Charge Beam"),
-                "Progressive Missiles": has_shuffled_item(major_items, "Progressive Missiles"),
+                "Progressive Missile": has_shuffled_item(major_items, "Progressive Missile"),
                 "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
                 "Progressive Spin": has_shuffled_item(major_items, "Progressive Spin")
             }
@@ -66,11 +66,11 @@ def dread_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
     else:
         unexpected_items.add("Progressive Charge Beam")
 
-    if has_shuffled_item(configuration, "Progressive Missiles"):
-        unexpected_items.add("Super Missiles")
-        unexpected_items.add("Ice Missiles")
+    if has_shuffled_item(configuration, "Progressive Missile"):
+        unexpected_items.add("Super Missile")
+        unexpected_items.add("Ice Missile")
     else:
-        unexpected_items.add("Progressive Missiles")
+        unexpected_items.add("Progressive Missile")
 
     if has_shuffled_item(configuration, "Progressive Suit"):
         unexpected_items.add("Varia Suit")
