@@ -55,7 +55,7 @@ def batch_distribute_command_logic(args):
     seed_count = args.seed_count
     num_digits = math.ceil(math.log10(seed_count + 1))
     number_format = "[{0:" + str(num_digits) + "d}/{1}] "
-    base_permalink = Permalink.from_str(args.generator_parameters)
+    base_permalink = Permalink.from_str(args.permalink)
     base_params = base_permalink.parameters
 
     def report_update(msg: str):
