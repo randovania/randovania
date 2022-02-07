@@ -130,7 +130,7 @@ class OpenDreadPatcher(Patcher):
                 }
             except KeyError as e:
                 raise KeyError(f"{node} has no extra {e}")
-        
+
         def _callback_ref_for(node: Node) -> dict:
             try:
                 return {
@@ -148,7 +148,7 @@ class OpenDreadPatcher(Patcher):
                 model_name = "itemsphere"
             else:
                 model_name = detail.model.name
-            
+
             ammoconfig = configuration.ammo_configuration.items_state
             pbammo = item_db.ammo["Power Bomb Expansion"]
 
@@ -163,17 +163,17 @@ class OpenDreadPatcher(Patcher):
                         break
                     except KeyError:
                         continue
-                
+
                 if "ITEM_WEAPON_POWER_BOMB" in ids:
                     item_id = "ITEM_WEAPON_POWER_BOMB"
-                
+
                 # non-required mains
                 if (item_id == "ITEM_WEAPON_POWER_BOMB_MAX"
-                    and not ammoconfig[pbammo].requires_major_item):
+                        and not ammoconfig[pbammo].requires_major_item):
                     item_id = "ITEM_WEAPON_POWER_BOMB"
 
                 return {"item_id": item_id, "quantity": quantity}
-            
+
             # ugly hack
             resources = [get_resource(res) for res in detail.conditional_resources]
             if resources[0]["item_id"] == "ITEM_WEAPON_POWER_BOMB_MAX":
@@ -249,7 +249,11 @@ class OpenDreadPatcher(Patcher):
         output_file.mkdir(parents=True, exist_ok=True)
         with output_file.joinpath("patcher.json").open("w") as f:
             json.dump(patch_data, f, indent=4)
-        open_dread_rando.patch(input_file, output_file, patch_data)
+        open_dread_rando.patch_with_status_update(
+            input_file, output_file, patch_data,
+            lambda progress, msg: progress_update(msg, progress),
+        )
+
 
 class DreadAcquiredMemo(dict):
     def __missing__(self, key):
