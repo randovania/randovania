@@ -8,7 +8,7 @@
         "map_max_y": 239
     },
     "areas": {
-        "Elun Gate": {
+        "Bridge Gate": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -52,7 +52,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Exterior Bridge",
-                        "node_name": "Dock to Elun Gate"
+                        "node_name": "Dock to Bridge Gate"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -79,7 +79,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Purple Drapes",
-                        "node_name": "Dock to Elun Gate"
+                        "node_name": "Dock to Bridge Gate"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -126,7 +126,7 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Door to Elun Save Station": {
+                "Door to Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -145,7 +145,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Elun Save Station",
+                        "area_name": "Save Station",
                         "node_name": "Door to Transport to Ghavoran"
                     },
                     "dock_type": "door",
@@ -188,7 +188,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Elun Save Station": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -221,7 +221,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to Elun Save Station": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -244,7 +244,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Elun Save Station": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -286,7 +286,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door to Ammo Refill Room": {
+                "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -305,7 +305,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Purple Drapes"
                     },
                     "dock_type": "door",
@@ -318,7 +318,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Elun Gate": {
+                        "Dock to Bridge Gate": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -352,7 +352,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Ammo Refill Room": {
+                        "Dock to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -379,7 +379,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -395,7 +395,7 @@
                         }
                     }
                 },
-                "Dock to Elun Gate": {
+                "Dock to Bridge Gate": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -407,13 +407,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Elun Gate",
+                        "area_name": "Bridge Gate",
                         "node_name": "Dock to Purple Drapes"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -422,7 +422,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Refill Room": {
+                "Dock to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -434,7 +434,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Dock from Purple Drapes"
                     },
                     "dock_type": "other",
@@ -451,7 +451,7 @@
                 }
             }
         },
-        "Ammo Refill Room": {
+        "Ammo Recharge Station": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -502,7 +502,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Purple Drapes",
-                        "node_name": "Door to Ammo Refill Room"
+                        "node_name": "Door to Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
@@ -550,7 +550,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Chozo Soldier Arena",
-                        "node_name": "Door to Ammo Refill Room"
+                        "node_name": "Door to Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -645,7 +645,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Gyroscope Room",
-                        "node_name": "Door to Ammo Refill Room"
+                        "node_name": "Door to Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -726,7 +726,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Plasma Beam Room",
-                        "node_name": "Door to Ammo Refill Room"
+                        "node_name": "Door to Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
@@ -776,7 +776,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Plasma Beam Room",
-                        "node_name": "Door from Ammo Refill Room"
+                        "node_name": "Door from Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
@@ -1081,7 +1081,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Purple Drapes",
-                        "node_name": "Dock to Ammo Refill Room"
+                        "node_name": "Dock to Ammo Recharge Station"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
@@ -1108,7 +1108,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Bottom Morph Launcher",
-                        "node_name": "Dock to Ammo Refill Room"
+                        "node_name": "Dock to Ammo Recharge Station"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Launcher",
@@ -1135,7 +1135,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Horizontal Bomb Maze",
-                        "node_name": "Dock to Ammo Refill Room"
+                        "node_name": "Dock to Ammo Recharge Station"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -1246,7 +1246,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Door to Ammo Refill Room": {
+                "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1265,7 +1265,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Chozo Soldier Arena"
                     },
                     "dock_type": "door",
@@ -1322,7 +1322,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1425,7 +1425,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door to Ammo Refill Room": {
+                "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1444,7 +1444,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Gyroscope Room"
                     },
                     "dock_type": "door",
@@ -1484,7 +1484,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1617,7 +1617,7 @@
                     "pickup_index": 115,
                     "major_location": true,
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1626,7 +1626,7 @@
                         }
                     }
                 },
-                "Door to Ammo Refill Room": {
+                "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1645,7 +1645,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Plasma Beam Room (Upper)"
                     },
                     "dock_type": "door",
@@ -1674,7 +1674,7 @@
                         }
                     }
                 },
-                "Door from Ammo Refill Room": {
+                "Door from Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1693,7 +1693,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Plasma Beam Room (Lower)"
                     },
                     "dock_type": "door",
@@ -1722,7 +1722,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1749,14 +1749,14 @@
                         ]
                     },
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door from Ammo Refill Room": {
+                        "Door from Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3271,7 +3271,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Ammo Refill Room": {
+                        "Dock to Ammo Recharge Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3308,7 +3308,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Ammo Refill Room": {
+                        "Dock to Ammo Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3531,7 +3531,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Refill Room": {
+                "Dock to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3543,7 +3543,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Dock to Horizontal Bomb Maze"
                     },
                     "dock_type": "other",
@@ -3675,7 +3675,7 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Door to Elun Save Station": {
+                "Door to Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3694,13 +3694,13 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Elun Save Station",
+                        "area_name": "Save Station",
                         "node_name": "Door to Exterior Bridge"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to Elun Gate": {
+                        "Dock to Bridge Gate": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3709,7 +3709,7 @@
                         }
                     }
                 },
-                "Dock to Elun Gate": {
+                "Dock to Bridge Gate": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3721,13 +3721,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Elun Gate",
+                        "area_name": "Bridge Gate",
                         "node_name": "Dock to Exterior Bridge"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to Elun Save Station": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3738,7 +3738,7 @@
                 }
             }
         },
-        "Elun Save Station": {
+        "Save Station": {
             "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
@@ -3789,7 +3789,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Exterior Bridge",
-                        "node_name": "Door to Elun Save Station"
+                        "node_name": "Door to Save Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3823,7 +3823,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Transport to Ghavoran",
-                        "node_name": "Door to Elun Save Station"
+                        "node_name": "Door to Save Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3936,7 +3936,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
-                        "Dock to Ammo Refill Room": {
+                        "Dock to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3945,7 +3945,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Refill Room": {
+                "Dock to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3957,7 +3957,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Dock to Bottom Morph Launcher"
                     },
                     "dock_type": "other",
