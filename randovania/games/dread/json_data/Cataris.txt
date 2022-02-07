@@ -30,7 +30,7 @@ Extra - asset_id: collision_camera_000
   > Mid-Level
       Simple IBJ or Use Spin Boost
 
-> Pickup (item_missiletank); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 36; Major Location? False
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -83,7 +83,7 @@ Extra - asset_id: collision_camera_000
   * Morph Ball Tunnel to collision_camera_007 (C)/Dock to Transport to Artaria
   > Door to Navigation Room Southeast
       Morph Ball and After Cataris - breakablemag002
-  > Pickup (item_missiletank)
+  > Pickup (Missile Tank)
       Trivial
   > Event - Missile Tank Blob (breakablemag002)
       Shoot Beam
@@ -384,7 +384,7 @@ Extra - asset_id: collision_camera_009
   > Dock to collision_camera_001 (C)
       After Cataris - breakablemag003 and Can Slide
 
-> Pickup (item_missiletank_008); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 37; Major Location? False
   * Extra - actor_name: item_missiletank_008
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -421,7 +421,7 @@ Extra - asset_id: collision_camera_009
       Trivial
 
 > Pickup Corner; Heals? False
-  > Pickup (item_missiletank_008)
+  > Pickup (Missile Tank)
       Morph Ball
   > Tile Group (SCREWATTACK) 1
       Trivial
@@ -662,6 +662,8 @@ Extra - asset_id: collision_camera_014
           All of the following:
               Spider Magnet
               Grapple Beam or After Cataris - Move Magnet Walls Button
+  > Event - Activate Magnet Walls with Wave
+      Wave Beam and Before Cataris - Move Magnet Walls Button and Knowledge (Advanced)
 
 > Door to collision_camera_045 (C); Heals? False
   * Power Beam Door to collision_camera_045 (C)/Door to Moving Magnet Walls (Tall)
@@ -728,6 +730,11 @@ Extra - asset_id: collision_camera_014
   > Door to Teleport to Artaria (Blue)
       Trivial
 
+> Event - Activate Magnet Walls with Wave; Heals? False
+  * Event Cataris - Move Magnet Walls Button
+  > Door to collision_camera_013 (C)
+      Trivial
+
 ----------------
 Teleport to Artaria (Blue)
 (Valid Starting Location)
@@ -747,14 +754,14 @@ Extra - asset_id: collision_camera_015
           Morph Ball
           Gravity Suit or Lava Damage ≥ 1000
 
-> Pickup (item_missiletank_009); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 45; Major Location? False
   * Extra - actor_name: item_missiletank_009
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tile Group (BOMB) 3
       Morph Ball
 
-> Pickup (item_powerbombtank_000); Heals? False
+> Pickup (Power Bomb Tank); Heals? False
   * Pickup 48; Major Location? False
   * Extra - actor_name: item_powerbombtank_000
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
@@ -773,7 +780,7 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Pickup (item_powerbombtank_000)
+  > Pickup (Power Bomb Tank)
       All of the following:
           Morph Ball and After Cataris - Lower Power Bomb Tank Ceiling
           Any of the following:
@@ -896,7 +903,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
-  > Pickup (item_missiletank_009)
+  > Pickup (Missile Tank)
       Morph Ball
   > Tile Group (BOMB) 2
       All of the following:
@@ -1507,7 +1514,7 @@ Extra - asset_id: collision_camera_021
   > Event - Open Passage Blob (breakablemag013)
       Shoot Beam
 
-> Pickup (item_missiletank_001); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 38; Major Location? False
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -1530,7 +1537,7 @@ Extra - asset_id: collision_camera_021
 
 > Dock to collision_camera_019 (C) (Tunnel); Heals? False
   * Morph Ball Tunnel to collision_camera_019 (C)/Dock to collision_camera_021 (C) (Tunnel)
-  > Pickup (item_missiletank_001)
+  > Pickup (Missile Tank)
       Morph Ball
 
 ----------------
@@ -1865,7 +1872,7 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_def: None
   > Door to Save Station West
       Trivial
-  > Pickup (item_missiletankplus_000)
+  > Pickup (Missile+ Tank)
       Morph Ball
   > Tile Group (BOMB)
       Morph Ball
@@ -1909,7 +1916,7 @@ Extra - asset_id: collision_camera_025
   > Door to collision_camera_043 (C)
       Trivial
 
-> Pickup (item_missiletankplus_000); Heals? False
+> Pickup (Missile+ Tank); Heals? False
   * Pickup 50; Major Location? False
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
@@ -1976,7 +1983,7 @@ Teleport to Ghavoran
 Extra - total_boundings: {'x1': -16500.0, 'x2': -12400.0, 'y1': 1200.0, 'y2': 4700.0}
 Extra - polygon: [[-12400.0, 4700.0], [-16000.0, 4700.0], [-16500.0, 4100.0], [-16500.0, 1200.0], [-12400.0, 1200.0]]
 Extra - asset_id: collision_camera_026
-> Pickup (item_missiletank_005); Heals? False
+> Pickup (Missile Tank - Top); Heals? False
   * Pickup 41; Major Location? False
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -1987,7 +1994,7 @@ Extra - asset_id: collision_camera_026
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
 
-> Pickup (item_missiletank_006); Heals? False
+> Pickup (Missile Tank - Bottom); Heals? False
   * Pickup 53; Major Location? False
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -2057,7 +2064,7 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (item_missiletank_006)
+  > Pickup (Missile Tank - Bottom)
       Gravity Suit
   > Lower Center
       Trivial
@@ -2105,7 +2112,7 @@ Extra - asset_id: collision_camera_026
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
 > Top room; Heals? False
-  > Pickup (item_missiletank_005)
+  > Pickup (Missile Tank - Top)
       All of the following:
           Morph Ball and Varia Suit and Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
           Simple IBJ or Use Spin Boost
@@ -2218,7 +2225,7 @@ Extra - asset_id: collision_camera_028
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to collision_camera_029 (C)
       Can Slide
-  > Pickup (item_missiletank_004)
+  > Pickup (Missile Tank)
       Trivial
 
 > Dock to Long Mouth Statue Room (dooremmy_009); Heals? False
@@ -2239,7 +2246,7 @@ Extra - asset_id: collision_camera_028
   > Upper Ledge
       Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
 
-> Pickup (item_missiletank_004); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 40; Major Location? False
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -2276,7 +2283,7 @@ collision_camera_029 (C)
 Extra - total_boundings: {'x1': -7650.0, 'x2': -4600.0, 'y1': 1000.0, 'y2': 3100.0}
 Extra - polygon: [[-4600.0, 3100.0], [-7650.0, 3100.0], [-7650.0, 1000.0], [-4600.0, 1000.0]]
 Extra - asset_id: collision_camera_029
-> Pickup (item_powerbombtank_002); Heals? False
+> Pickup (Power Bomb Tank); Heals? False
   * Pickup 33; Major Location? False
   * Extra - actor_name: item_powerbombtank_002
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
@@ -2328,7 +2335,7 @@ Extra - asset_id: collision_camera_029
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBOMB',)
-  > Pickup (item_powerbombtank_002)
+  > Pickup (Power Bomb Tank)
       Ballspark
   > Tunnel Center
       Morph Ball
@@ -2642,7 +2649,7 @@ Extra - asset_id: collision_camera_035
       Trivial
 
 > Door to Green EMMI Fight; Heals? False
-  * Wide Beam Door to Green EMMI Fight/Dock to collision_camera_035 (C)
+  * Wide Beam Door to Green EMMI Fight/Door from collision_camera_035 (C)
   * Extra - actor_name: doorpowerpower_030
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2665,8 +2672,11 @@ Green EMMI Fight
 Extra - total_boundings: {'x1': -7650.0, 'x2': -2600.0, 'y1': 3000.0, 'y2': 6500.0}
 Extra - polygon: [[-2600.0, 6500.0], [-7650.0, 6500.0], [-7650.0, 3000.0], [-2600.0, 3000.0]]
 Extra - asset_id: collision_camera_036
-> Dock to collision_camera_035 (C); Heals? False
-  * Not Determined to collision_camera_035 (C)/Door to Green EMMI Fight
+> Door from collision_camera_035 (C); Heals? False
+  * Access Closed to collision_camera_035 (C)/Door to Green EMMI Fight
+  * Door opens up after Green EMMI is defeated
+
+
   * Extra - actor_name: doorpowerpower_030
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2702,11 +2712,11 @@ Extra - asset_id: collision_camera_036
 
 > Dock to collision_camera_028 (C); Heals? False
   * Cataris EMMI Tunnel to collision_camera_028 (C)/Dock to Green EMMI Fight
-  > Dock to collision_camera_035 (C)
+  > Door from collision_camera_035 (C)
       Trivial
 
 > Upper-right Corner; Heals? False
-  > Dock to collision_camera_035 (C)
+  > Door from collision_camera_035 (C)
       Trivial
   > Event - Top Blob (breakablemag007)
       Shoot Beam
@@ -2715,7 +2725,7 @@ Extra - asset_id: collision_camera_036
 
 > Door to Central Unit Room; Heals? False
   * Access Open to Central Unit Room/Door to Green EMMI Fight
-  > Dock to collision_camera_035 (C)
+  > Door from collision_camera_035 (C)
       Any of the following:
           Morph Ball
           After Cataris - breakablemag008 and Can Slide
@@ -2730,7 +2740,7 @@ Extra - asset_id: collision_camera_036
 
 > Event - Central Unit Blob through wall; Heals? False
   * Event Cataris - breakablemag008
-  > Dock to collision_camera_035 (C)
+  > Door from collision_camera_035 (C)
       Trivial
 
 > Pickup (Morph Ball); Heals? False
@@ -2842,7 +2852,7 @@ Extra - asset_id: collision_camera_040
   > Event - Push Wide Beam Block
       Push Wide Beam Block
 
-> Pickup (item_missiletank_000); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 54; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -2866,7 +2876,7 @@ Extra - asset_id: collision_camera_040
   * Extra - tile_types: ('SPEEDBOOST',)
   > Dock to collision_camera_042 (C) (Top)
       Shoot Beam
-  > Pickup (item_missiletank_000)
+  > Pickup (Missile Tank)
       Trivial
 
 > Dock to collision_camera_042 (C) (Bottom); Heals? False
@@ -2953,14 +2963,14 @@ Extra - asset_id: collision_camera_042
   > Event - Thermal Device 1
       Trivial
 
-> Pickup (item_energyfragment_001); Heals? False
+> Pickup (Energy Fragment); Heals? False
   * Pickup 42; Major Location? True
   * Extra - actor_name: item_energyfragment_001
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Dock to collision_camera_038 (C) (Top)
       Trivial
 
-> Pickup (item_energytank_000); Heals? False
+> Pickup (Energy Tank); Heals? False
   * Pickup 49; Major Location? False
   * Extra - actor_name: item_energytank_000
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
@@ -2987,7 +2997,7 @@ Extra - asset_id: collision_camera_042
 
 > Dock to collision_camera_038 (C) (Top); Heals? False
   * Slide Tunnel to collision_camera_038 (C)/Dock to collision_camera_042 (C) (Top)
-  > Pickup (item_energyfragment_001)
+  > Pickup (Energy Fragment)
       Trivial
 
 > Dock to collision_camera_038 (C) (Bottom); Heals? False
@@ -3020,7 +3030,7 @@ Extra - asset_id: collision_camera_042
 > Past Magnet Floor; Heals? False
   > Door to Lone Recharge Room
       Before Cataris - deviceheat_002
-  > Pickup (item_energytank_000)
+  > Pickup (Energy Tank)
       Trivial
   > Dock to collision_camera_018 (C)
       After Cataris - Thermal Magnet Platform Lowered
@@ -3128,7 +3138,7 @@ Extra - asset_id: collision_camera_044
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Pickup (itemsphere_diffusionbeam)
+  > Pickup (Diffusion Beam)
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
@@ -3141,7 +3151,7 @@ Extra - asset_id: collision_camera_044
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
 
-> Pickup (itemsphere_diffusionbeam); Heals? False
+> Pickup (Diffusion Beam); Heals? False
   * Pickup 35; Major Location? True
   * Extra - actor_name: itemsphere_diffusionbeam
   * Extra - actor_def: actordef:actors/items/itemsphere_diffusionbeam/charclasses/itemsphere_diffusionbeam.bmsad
@@ -3150,7 +3160,7 @@ Extra - asset_id: collision_camera_044
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
-> Pickup (item_powerbombtank_001); Heals? False
+> Pickup (Power Bomb Tank); Heals? False
   * Pickup 51; Major Location? False
   * Extra - actor_name: item_powerbombtank_001
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
@@ -3304,7 +3314,7 @@ Extra - asset_id: collision_camera_044
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
 > Alcove; Heals? False
-  > Pickup (item_powerbombtank_001)
+  > Pickup (Power Bomb Tank)
       Morph Ball and After Cataris - grapplepulloff1x2
   > Event - PB Tank Grapple Block (grapplepulloff1x2)
       Grapple Beam
@@ -3337,7 +3347,7 @@ Extra - asset_id: collision_camera_045
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Pickup (item_missiletank_010)
+  > Pickup (Missile Tank)
       Morph Ball
   > Tile Group (POWERBEAM)
       Trivial
@@ -3357,7 +3367,7 @@ Extra - asset_id: collision_camera_045
   > Dock to Teleport to Artaria (Blue)
       After Cataris - db_dside_mg_004
 
-> Pickup (item_missiletank_010); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 46; Major Location? False
   * Extra - actor_name: item_missiletank_010
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -3390,7 +3400,7 @@ Extra - asset_id: collision_camera_045
       After Cataris - db_dside_mg_004
 
 > Pickup Corner; Heals? False
-  > Pickup (item_missiletank_010)
+  > Pickup (Missile Tank)
       Trivial
   > Tile Group (POWERBEAM)
       Trivial
@@ -3514,7 +3524,7 @@ Extra - asset_id: collision_camera_048
   > Left Floor
       After Cataris - db_hdoor_mg_001
 
-> Pickup (item_missiletank_007); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 43; Major Location? False
   * Extra - actor_name: item_missiletank_007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -3544,7 +3554,7 @@ Extra - asset_id: collision_camera_048
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Pickup (item_missiletank_007)
+  > Pickup (Missile Tank)
       Morph Ball
   > Tile Group (BOMB) 1
       Any of the following:
@@ -3700,7 +3710,7 @@ Extra - asset_id: collision_camera_049
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Pickup (item_missiletank_002)
+  > Pickup (Missile Tank)
       Any of the following:
           Gravity Suit and Speed Booster
           All of the following:
@@ -3709,7 +3719,7 @@ Extra - asset_id: collision_camera_049
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
               Simple IBJ or Use Spin Boost
 
-> Pickup (item_missiletank_002); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 52; Major Location? False
   * Extra - actor_name: item_missiletank_002
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -3735,7 +3745,7 @@ Extra - asset_id: collision_camera_051
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
 
-> Pickup (item_missiletank_003); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 39; Major Location? False
   * Extra - actor_name: item_missiletank_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -3893,7 +3903,7 @@ Extra - asset_id: collision_camera_051
       Trivial
 
 > Ledge above Teleport; Heals? False
-  > Pickup (item_missiletank_003)
+  > Pickup (Missile Tank)
       All of the following:
           Morph Ball
           Any of the following:
@@ -4026,7 +4036,7 @@ Extra - asset_id: collision_camera_053
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
 
-> Pickup (item_energyfragment_000); Heals? False
+> Pickup (Energy Fragment); Heals? False
   * Pickup 44; Major Location? True
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
@@ -4057,7 +4067,7 @@ Extra - asset_id: collision_camera_053
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (item_energyfragment_000)
+  > Pickup (Energy Fragment)
       All of the following:
           Gravity Suit and Morph Ball
           Space Jump or Speed Booster
@@ -4171,7 +4181,7 @@ collision_camera_055 (C)
 Extra - total_boundings: {'x1': 4400.0, 'x2': 8200.0, 'y1': 1700.0, 'y2': 2842.0}
 Extra - polygon: [[8200.0, 2842.0], [4400.0, 2842.0], [4400.0, 1700.0], [8200.0, 1700.0]]
 Extra - asset_id: collision_camera_055
-> Pickup (item_missiletank_011); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 47; Major Location? False
   * Extra - actor_name: item_missiletank_011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -4194,7 +4204,7 @@ Extra - asset_id: collision_camera_055
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
-  > Pickup (item_missiletank_011)
+  > Pickup (Missile Tank)
       Morph Ball
   > Main Room
       Trivial
@@ -4310,7 +4320,7 @@ Kraid Eyedoor Room
 Extra - total_boundings: {'x1': -12500.0, 'x2': -10400.0, 'y1': -4400.0, 'y2': -2400.0}
 Extra - polygon: [[-10400.0, -2400.0], [-12500.0, -2400.0], [-12500.0, -4400.0], [-10400.0, -4400.0]]
 Extra - asset_id: collision_camera_061
-> Pickup (item_missiletank_012); Heals? False
+> Pickup (Missile Tank); Heals? False
   * Pickup 34; Major Location? False
   * Extra - actor_name: item_missiletank_012
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
@@ -4358,7 +4368,7 @@ Extra - asset_id: collision_camera_061
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
-  > Pickup (item_missiletank_012)
+  > Pickup (Missile Tank)
       Morph Ball
   > Safe Ledge
       All of the following:

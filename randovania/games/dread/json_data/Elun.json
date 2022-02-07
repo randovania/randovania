@@ -1086,26 +1086,12 @@
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
                     "connections": {
-                        "Door to Plasma Beam Room (Upper)": {
+                        "Event - Release X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s060_quarantine:default:db_reg_qt_001",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
-                        },
-                        "Event - Elun - Ammo Recharge Room Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
                         }
                     }
                 },
@@ -1169,6 +1155,60 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Alcove": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1975.9073143495252,
+                        "y": -1890.089335566723,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Plasma Beam Room (Upper)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s060_quarantine:default:db_reg_qt_001",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Elun - Ammo Recharge Room Blob": {
+                            "type": "template",
+                            "data": "Shoot Beam"
+                        },
+                        "Dock from Purple Drapes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Release X": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1871.16,
+                        "y": -2099.58,
+                        "z": 0.0
+                    },
+                    "description": "TODO: Verify exiting this morph ball launcher releases the X\n\n",
+                    "extra": {},
+                    "event_name": "ElunReleaseX",
+                    "connections": {
+                        "Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2918,23 +2958,6 @@
                             }
                         }
                     }
-                },
-                "Tile Group ()": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9200.0,
-                        "y": 700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_026",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": []
-                    },
-                    "connections": {}
                 },
                 "Dock to Horizontal Bomb Maze (Upper)": {
                     "node_type": "dock",

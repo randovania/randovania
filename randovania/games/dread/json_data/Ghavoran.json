@@ -371,7 +371,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_000)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -616,7 +616,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_000)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1100,7 +1100,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_003)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1371,7 +1371,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (item_missiletank_003)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2473,7 +2473,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (item_missiletank_001)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2526,7 +2526,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_001)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2867,7 +2867,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletankplus_000)": {
+                "Pickup (Missile+ Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2941,7 +2941,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Pickup (item_missiletankplus_000)": {
+                        "Pickup (Missile+ Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3238,13 +3238,13 @@
                         }
                     }
                 },
-                "Pickup (itemsphere_supermissile)": {
+                "Pickup (Super Missile)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -4540.00048828125,
+                        "x": -4540.0,
                         "y": -5590.0,
-                        "z": 0.0012209999840706587
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {
@@ -3284,7 +3284,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (itemsphere_supermissile)": {
+                        "Pickup (Super Missile)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5703,12 +5703,29 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {
                         "Door to Blue EMMI Fight (doorpowerpower_011)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranCU",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -5773,8 +5790,25 @@
                     "dock_weakness": "Power Beam Door",
                     "connections": {
                         "Dock to Spin Boost Tower (dooremmy_007)": {
-                            "type": "template",
-                            "data": "Can Slide"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranCU",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Door to Blue EMMI Fight (doorpowerpower_010)": {
                             "type": "and",
@@ -5958,7 +5992,7 @@
                         }
                     }
                 },
-                "Pickup (item_powerbombtank_000)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -6083,7 +6117,7 @@
                         }
                     }
                 },
-                "Pickup (item_energyfragment_000)": {
+                "Pickup (Energy Fragment)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -6110,7 +6144,7 @@
                         }
                     }
                 },
-                "Pickup (item_energytank_000)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -6202,7 +6236,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_energyfragment_000)": {
+                        "Pickup (Energy Fragment)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6357,7 +6391,7 @@
                                 "negate": false
                             }
                         },
-                        "Pickup (item_energytank_000)": {
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6422,7 +6456,7 @@
                                 ]
                             }
                         },
-                        "Pickup (item_powerbombtank_000)": {
+                        "Pickup (Power Bomb Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -7111,7 +7145,7 @@
                         }
                     }
                 },
-                "Pickup (item_energyfragment)": {
+                "Pickup (Energy Fragment)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -7138,7 +7172,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -7210,7 +7244,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank)": {
+                        "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Ballspark"
                         },
@@ -7285,7 +7319,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_energyfragment)": {
+                        "Pickup (Energy Fragment)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8156,7 +8190,7 @@
                                 "negate": false
                             }
                         },
-                        "Pickup (item_missiletank_004)": {
+                        "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Lay Cross Comb"
                         }
@@ -8191,7 +8225,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_004)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -8770,7 +8804,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_007)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -8953,7 +8987,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Pickup (item_missiletank_007)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9065,35 +9099,12 @@
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Start Point": {
+                "Before Golzuna": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 8800.0,
-                        "y": 5231.7578125,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_LineBomb",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Event - Golzuna": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9600.0,
-                        "y": 6000.0,
+                        "x": 9500.0,
+                        "y": 5500.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -9456,7 +9467,7 @@
                     "heal": false,
                     "coordinates": {
                         "x": 9240.53,
-                        "y": 5300.33,
+                        "y": 5500.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -9490,6 +9501,64 @@
                     },
                     "pickup_index": 145,
                     "major_location": true,
+                    "connections": {
+                        "Door to Cross Bomb Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9600.0,
+                        "y": 6000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_011",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
+                    },
+                    "connections": {
+                        "Door to Cross Bomb Tutorial": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Before Golzuna": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8670.921985815603,
+                        "y": 5366.378691544769,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Cross Bomb Tutorial": {
                             "type": "and",
@@ -9626,7 +9695,7 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Pickup (item_missiletank_002)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -9702,7 +9771,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_002)": {
+                        "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Lay Cross Comb"
                         }
@@ -9939,7 +10008,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_009)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -9989,7 +10058,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_009)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11256,7 +11325,7 @@
                 "asset_id": "collision_camera_033"
             },
             "nodes": {
-                "Pickup (item_missiletank_005)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -11417,7 +11486,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_005)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12486,7 +12555,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_006)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -12620,7 +12689,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_006)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12651,7 +12720,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_006)": {
+                        "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Can Slide"
                         },
