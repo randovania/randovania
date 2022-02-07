@@ -110,7 +110,7 @@ class ClarisPatcher(Patcher):
         )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
-        if patch_data.pop("convert_other_game_assets", False):
+        if patch_data.pop("convert_other_game_assets", False) or True:
             from randovania.patching.prime import asset_conversion
             asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
 

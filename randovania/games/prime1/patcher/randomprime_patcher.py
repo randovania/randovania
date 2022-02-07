@@ -23,11 +23,12 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
+from randovania.interface_common.options import Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
-from randovania.patching.prime import all_prime_dol_patches
+from randovania.patching.prime import all_prime_dol_patches, asset_conversion
 from randovania.patching.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
     credits_spoiler
 
@@ -442,7 +443,7 @@ class RandomprimePatcher(Patcher):
             "hasSpoiler": description.has_spoiler,
 
             # TODO
-            # "externAssetsDir": path_to_converted_assets,
+            #"externAssetsDir": "/home/ethan/randovania/randovania/patching/prime/converted/",
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
@@ -466,7 +467,12 @@ class RandomprimePatcher(Patcher):
                 symbols=symbols)
         )
 
-        #Replace models
+        assets_path = Options.with_default_data_dir().internal_copies_path.joinpath("prime", "prime2_models")
+        assets_meta = asset_conversion.convert_prime2_pickups(assets_path, print)
+        use_external_assets = True
+        new_config["externAssetsDir"] = os.fspath(assets_path)
+
+        # Replace models
         for level in new_config["levelData"].values():
             for room in level["rooms"].values():
                 for pickup in room["pickups"]:
@@ -474,8 +480,14 @@ class RandomprimePatcher(Patcher):
                     if model["game"] == RandovaniaGame.METROID_PRIME.value:
                         pickup['model'] = model["name"]
                     elif model["game"] == RandovaniaGame.METROID_PRIME_ECHOES.value:
-                        #TODO: Echoes stuff goes here
-                        continue
+                        converted_model_name = "{}_{}".format(model["game"], model["name"])
+                        if assets_meta is not None and use_external_assets:
+                            if converted_model_name in assets_meta["items"]:
+                                pickup['model'] = converted_model_name
+                            else:
+                                pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+                        else:
+                            pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
                     else:
                         pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
 
