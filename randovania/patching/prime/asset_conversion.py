@@ -158,6 +158,7 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
                     scale=asset.scale,
                 )
         updaters[1]("Finished converting Prime 1 assets", 1)
+        #Cache these assets here
     end = time.time()
     # logging.debug(f"Time took: {end - start}")
 
@@ -224,7 +225,12 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
     # logging.debug(f"Time took: {end - start}")
 
 
-def convert_prime2_pickups():
+def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCallable):
+    metafile = output_path.joinpath("meta.json")
+    if metafile.is_file():
+        with open(metafile, "r") as md:
+            return json.load(md)
+
     next_id = 0xFFFF0000
 
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
@@ -252,17 +258,23 @@ def convert_prime2_pickups():
         logging.info(f"Finished loading PAKs: {time.time() - start}")
 
         result = {}
-        for data in randomizer_data["ModelData"]:
-            if data["Model"] != Game.ECHOES.invalid_asset_id and data["AnimSet"] != Game.ECHOES.invalid_asset_id:
-                try:
-                    result[data["Name"]] = Asset(
-                        ancs=converter.convert_id(data["AnimSet"], Game.ECHOES, missing_assets_as_invalid=False),
-                        cmdl=converter.convert_id(data["Model"], Game.ECHOES, missing_assets_as_invalid=False),
-                        character=data["Character"],
-                        scale=data["Scale"][0],
-                    )
-                except (InvalidAssetId, UnknownAssetId) as e:
-                    logging.error("Unable to convert {}: {}".format(data["Name"], e))
+        assets_to_change = [
+            data
+            for data in randomizer_data["ModelData"]
+            if data["Model"] != Game.ECHOES.invalid_asset_id and data["AnimSet"] != Game.ECHOES.invalid_asset_id
+        ]
+
+        for i, data in enumerate(assets_to_change):
+            try:
+                status_update(f"Converting {data['Name']} from Prime 2", i / len(assets_to_change))
+                result["{}_{}".format(RandovaniaGame.METROID_PRIME_ECHOES.value, data["Name"])] = Asset(
+                    ancs=converter.convert_id(data["AnimSet"], Game.ECHOES, missing_assets_as_invalid=False),
+                    cmdl=converter.convert_id(data["Model"], Game.ECHOES, missing_assets_as_invalid=False),
+                    character=data["Character"],
+                    scale=data["Scale"][0],
+                )
+            except (InvalidAssetId, UnknownAssetId) as e:
+                logging.error("Unable to convert {}: {}".format(data["Name"], e))
     end = time.time()
     logging.info(f"Time took: {end - start}")
 
@@ -310,9 +322,9 @@ def convert_prime2_pickups():
     for id in deleted_evnts:
         converter.converted_assets.pop(id)
 
-    Path("converted").mkdir(exist_ok=True)
-    with open("converted/meta.json", "w") as meta_out:
-        json.dump({
+    output_path.mkdir(exist_ok=True, parents=True)
+    with output_path.joinpath("meta.json").open("w") as meta_out:
+        metadata = {
             "items": {
                 name: {
                     "ancs": asset.ancs,
@@ -334,18 +346,20 @@ def convert_prime2_pickups():
                 }
                 for asset in converter.converted_assets.values()
             ],
-        }, meta_out, indent=4)
+        }
+        json.dump(metadata, meta_out, indent=4)
 
     for asset in converter.converted_assets.values():
         assetdata = format_for(asset.type).build(asset.resource, target_game=Game.PRIME)
         if len(assetdata) % 32 != 0:
             assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
-        Path("converted").joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
+        output_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
             assetdata
         )
 
     logging.info(f"Time took: {time.time() - start}")
+    return metadata
 
 
 if __name__ == '__main__':
-    convert_prime2_pickups()
+    convert_prime2_pickups(Path("converted"), print)

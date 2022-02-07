@@ -663,14 +663,19 @@ def _create_pickup_resources_for(resources: ResourceGain):
 
 
 def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails, rng: Random) -> dict:
+    '''
     if details.model.game == RandovaniaGame.METROID_PRIME_ECHOES:
         model_name = details.model.name
     else:
         model_name = f"{details.model.game.value}_{details.model.name}"
+    '''
+    model = details.model.as_json
 
-    if model_name == "MissileExpansion" and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
+    if model["name"] == "MissileExpansion"\
+            and model["game"] == RandovaniaGame.METROID_PRIME_ECHOES\
+            and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
         # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
-        model_name = "MissileExpansionPrime1"
+        model["name"] = "MissileExpansionPrime1"
 
     hud_text = details.hud_text
     if hud_text == ["Energy Transfer Module acquired!"] and (
@@ -698,7 +703,7 @@ def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDeta
         ],
         "hud_text": hud_text,
         "scan": details.scan_text,
-        "model_name": model_name,
+        "model": model,
     }
 
 
@@ -707,7 +712,12 @@ def adjust_model_name(patcher_data: dict, randomizer_data: dict):
     backup = _get_model_name_missing_backup()
 
     for pickup in patcher_data["pickups"]:
-        model_name = pickup.pop("model_name")
+        model = pickup.pop("model")
+        if model["game"] == RandovaniaGame.METROID_PRIME_ECHOES:
+            model_name == model["name"]
+        else:
+            model_name = "{}_{}".format(model["game"], model["name"])
+
         if model_name not in mapping.index:
             model_name = backup.get(model_name, "EnergyTransferModule")
 
