@@ -64,7 +64,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_002 (D)": {
+                        "Door to Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -80,7 +80,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_002 (D)": {
+                "Door to Hub Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -99,7 +99,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_002 (D)",
+                        "area_name": "Hub Access",
                         "node_name": "Door to Save Station East"
                     },
                     "dock_type": "door",
@@ -771,7 +771,7 @@
                 }
             }
         },
-        "collision_camera_002 (D)": {
+        "Hub Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -822,12 +822,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Save Station East",
-                        "node_name": "Door to collision_camera_002 (D)"
+                        "node_name": "Door to Hub Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_005 (D)": {
+                        "Dock to EMMI Zone Exit East": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -872,7 +872,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_005 (D)": {
+                "Dock to EMMI Zone Exit East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -887,8 +887,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_005 (D)",
-                        "node_name": "Dock to collision_camera_002 (D)"
+                        "area_name": "EMMI Zone Exit East",
+                        "node_name": "Dock to Hub Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -926,7 +926,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Dairon Hub East (Lower)": {
+                        "Dock to Big Hub (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -953,7 +953,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Dairon Hub East (Tunnel)": {
+                        "Dock to Big Hub (Tunnel)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -973,7 +973,7 @@
                         }
                     }
                 },
-                "Dock to Dairon Hub East (Lower)": {
+                "Dock to Big Hub (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -985,14 +985,14 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Dairon Hub East",
-                        "node_name": "Dock to collision_camera_002 (D) (Lower)"
+                        "area_name": "Big Hub",
+                        "node_name": "Dock to Hub Access (Lower)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {}
                 },
-                "Dock to Dairon Hub East (Tunnel)": {
+                "Dock to Big Hub (Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1004,8 +1004,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Dairon Hub East",
-                        "node_name": "Dock to collision_camera_002 (D) (Tunnel)"
+                        "area_name": "Big Hub",
+                        "node_name": "Dock to Hub Access (Tunnel)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -1097,7 +1097,7 @@
                     "extra": {},
                     "event_name": "DaironWideBeamBlockSave",
                     "connections": {
-                        "Dock to collision_camera_005 (D)": {
+                        "Dock to EMMI Zone Exit East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1119,7 +1119,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Transport to Artaria",
-                        "node_name": "Dock to collision_camera_002 (D)"
+                        "node_name": "Dock to Hub Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
@@ -1166,7 +1166,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Dock to collision_camera_005 (D)": {
+                "Dock to EMMI Zone Exit East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1181,7 +1181,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_005 (D)",
+                        "area_name": "EMMI Zone Exit East",
                         "node_name": "Dock to East Transport to Ferenia"
                     },
                     "dock_type": "other",
@@ -1231,7 +1231,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Dock to collision_camera_005 (D)": {
+                        "Dock to EMMI Zone Exit East": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -1254,7 +1254,7 @@
                     "extra": {},
                     "event_name": "DaironGrappleBlockElevatorFerenia",
                     "connections": {
-                        "Dock to collision_camera_005 (D)": {
+                        "Dock to EMMI Zone Exit East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1265,7 +1265,7 @@
                 }
             }
         },
-        "Dairon Hub East": {
+        "Big Hub": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -1312,7 +1312,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Yellow EMMI Introduction",
-                        "node_name": "Dock to Dairon Hub East"
+                        "node_name": "Dock to Big Hub"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -1372,7 +1372,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_002 (D) (Lower)": {
+                        "Dock to Hub Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1401,7 +1401,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Wide Beam Room",
-                        "node_name": "Door to Dairon Hub East"
+                        "node_name": "Door to Big Hub"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Wide Beam Door",
@@ -1415,7 +1415,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to collision_camera_009 (D)": {
+                        "Door to Total Recharge Station East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1428,7 +1428,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_009 (D)": {
+                "Door to Total Recharge Station East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1447,8 +1447,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_009 (D)",
-                        "node_name": "Door to Dairon Hub East"
+                        "area_name": "Total Recharge Station East",
+                        "node_name": "Door to Big Hub"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1460,7 +1460,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_002 (D) (Lower)": {
+                        "Dock to Hub Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1533,7 +1533,7 @@
                     },
                     "event_name": "s030_baselab:default:grapplepulloff1x2_007",
                     "connections": {
-                        "Dock to collision_camera_002 (D) (Lower)": {
+                        "Dock to Hub Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1583,7 +1583,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_002 (D) (Lower)": {
+                        "Dock to Hub Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1609,7 +1609,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_002 (D) (Tunnel)": {
+                        "Dock to Hub Access (Tunnel)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1620,7 +1620,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_002 (D) (Lower)": {
+                "Dock to Hub Access (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1632,8 +1632,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_002 (D)",
-                        "node_name": "Dock to Dairon Hub East (Lower)"
+                        "area_name": "Hub Access",
+                        "node_name": "Dock to Big Hub (Lower)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -1663,7 +1663,7 @@
                                 ]
                             }
                         },
-                        "Door to collision_camera_009 (D)": {
+                        "Door to Total Recharge Station East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1711,7 +1711,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_002 (D) (Tunnel)": {
+                "Dock to Hub Access (Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1723,8 +1723,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_002 (D)",
-                        "node_name": "Dock to Dairon Hub East (Tunnel)"
+                        "area_name": "Hub Access",
+                        "node_name": "Dock to Big Hub (Tunnel)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -1752,7 +1752,7 @@
                     "extra": {},
                     "event_name": "DaironWideBeamBlockHub",
                     "connections": {
-                        "Dock to collision_camera_002 (D) (Lower)": {
+                        "Dock to Hub Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1763,7 +1763,7 @@
                 }
             }
         },
-        "collision_camera_005 (D)": {
+        "EMMI Zone Exit East": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -1794,7 +1794,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Dock to collision_camera_002 (D)": {
+                "Dock to Hub Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1809,8 +1809,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_002 (D)",
-                        "node_name": "Dock to collision_camera_005 (D)"
+                        "area_name": "Hub Access",
+                        "node_name": "Dock to EMMI Zone Exit East"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -1847,7 +1847,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "East Transport to Ferenia",
-                        "node_name": "Dock to collision_camera_005 (D)"
+                        "node_name": "Dock to EMMI Zone Exit East"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -1881,12 +1881,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Yellow EMMI Introduction",
-                        "node_name": "Door to collision_camera_005 (D)"
+                        "node_name": "Door to EMMI Zone Exit East"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
                     "connections": {
-                        "Dock to collision_camera_002 (D)": {
+                        "Dock to Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1913,7 +1913,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_002 (D)": {
+                        "Dock to Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1962,7 +1962,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Door to Dairon Hub East": {
+                "Door to Big Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1981,7 +1981,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Dairon Hub East",
+                        "area_name": "Big Hub",
                         "node_name": "Door to Wide Beam Room"
                     },
                     "dock_type": "door",
@@ -2109,7 +2109,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Dairon Hub East": {
+                        "Door to Big Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2426,7 +2426,7 @@
                 "asset_id": "collision_camera_008"
             },
             "nodes": {
-                "Door to collision_camera_010 (D)": {
+                "Door to Early Grapple Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2445,7 +2445,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_010 (D)",
+                        "area_name": "Early Grapple Access",
                         "node_name": "Door to Teleport to Cataris"
                     },
                     "dock_type": "door",
@@ -2462,7 +2462,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_009 (D)": {
+                "Door to Total Recharge Station East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2481,7 +2481,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_009 (D)",
+                        "area_name": "Total Recharge Station East",
                         "node_name": "Door to Teleport to Cataris"
                     },
                     "dock_type": "door",
@@ -2578,7 +2578,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
                     "connections": {
-                        "Door to collision_camera_009 (D)": {
+                        "Door to Total Recharge Station East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2709,7 +2709,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_009 (D)": {
+                        "Door to Total Recharge Station East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2763,7 +2763,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_010 (D)": {
+                        "Door to Early Grapple Access": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2879,7 +2879,7 @@
                     "extra": {},
                     "event_name": "s030_baselab:default:db_dif_b1_001",
                     "connections": {
-                        "Door to collision_camera_009 (D)": {
+                        "Door to Total Recharge Station East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2890,7 +2890,7 @@
                 }
             }
         },
-        "collision_camera_009 (D)": {
+        "Total Recharge Station East": {
             "default_node": "Total Recharge",
             "valid_starting_location": false,
             "extra": {
@@ -2941,12 +2941,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Teleport to Cataris",
-                        "node_name": "Door to collision_camera_009 (D)"
+                        "node_name": "Door to Total Recharge Station East"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Dairon Hub East": {
+                        "Door to Big Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2955,7 +2955,7 @@
                         }
                     }
                 },
-                "Door to Dairon Hub East": {
+                "Door to Big Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2974,8 +2974,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Dairon Hub East",
-                        "node_name": "Door to collision_camera_009 (D)"
+                        "area_name": "Big Hub",
+                        "node_name": "Door to Total Recharge Station East"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3012,7 +3012,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad"
                     },
                     "connections": {
-                        "Door to Dairon Hub East": {
+                        "Door to Big Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3023,7 +3023,7 @@
                 }
             }
         },
-        "collision_camera_010 (D)": {
+        "Early Grapple Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -3054,7 +3054,7 @@
                 "asset_id": "collision_camera_010"
             },
             "nodes": {
-                "Door to collision_camera_012 (D)": {
+                "Door to Early Grapple Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3073,8 +3073,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_012 (D)",
-                        "node_name": "Door to collision_camera_010 (D)"
+                        "area_name": "Early Grapple Room",
+                        "node_name": "Door to Early Grapple Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3110,7 +3110,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Teleport to Cataris",
-                        "node_name": "Door to collision_camera_010 (D)"
+                        "node_name": "Door to Early Grapple Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3193,7 +3193,7 @@
                     "pickup_index": 64,
                     "major_location": true,
                     "connections": {
-                        "Door to collision_camera_013 (D)": {
+                        "Door to Heated Room West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3315,7 +3315,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_013 (D)": {
+                "Door to Heated Room West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3334,8 +3334,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_013 (D)",
-                        "node_name": "Door to collision_camera_010 (D)"
+                        "area_name": "Heated Room West",
+                        "node_name": "Door to Early Grapple Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -3599,7 +3599,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_012 (D)": {
+                        "Door to Early Grapple Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -3668,7 +3668,7 @@
                                 ]
                             }
                         },
-                        "Door to collision_camera_013 (D)": {
+                        "Door to Heated Room West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3912,7 +3912,7 @@
                                 ]
                             }
                         },
-                        "Door to collision_camera_013 (D)": {
+                        "Door to Heated Room West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4094,7 +4094,7 @@
                         }
                     }
                 },
-                "Door from collision_camera_012 (D)": {
+                "Door from Early Grapple Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4113,7 +4113,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_012 (D)",
+                        "area_name": "Early Grapple Room",
                         "node_name": "Door to Transport to Artaria"
                     },
                     "dock_type": "door",
@@ -4234,7 +4234,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_002 (D)": {
+                        "Dock to Hub Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4271,7 +4271,7 @@
                         ]
                     },
                     "connections": {
-                        "Door from collision_camera_012 (D)": {
+                        "Door from Early Grapple Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4314,7 +4314,7 @@
                                 "negate": false
                             }
                         },
-                        "Door from collision_camera_012 (D)": {
+                        "Door from Early Grapple Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4368,7 +4368,7 @@
                         ]
                     },
                     "connections": {
-                        "Door from collision_camera_012 (D)": {
+                        "Door from Early Grapple Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4377,7 +4377,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_002 (D)": {
+                "Dock to Hub Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4389,7 +4389,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_002 (D)",
+                        "area_name": "Hub Access",
                         "node_name": "Dock from Transport to Artaria"
                     },
                     "dock_type": "other",
@@ -4408,7 +4408,7 @@
                 }
             }
         },
-        "collision_camera_012 (D)": {
+        "Early Grapple Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -4483,7 +4483,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_010 (D)": {
+                "Door to Early Grapple Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4502,8 +4502,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_010 (D)",
-                        "node_name": "Door to collision_camera_012 (D)"
+                        "area_name": "Early Grapple Access",
+                        "node_name": "Door to Early Grapple Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -4839,7 +4839,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Transport to Artaria",
-                        "node_name": "Door from collision_camera_012 (D)"
+                        "node_name": "Door from Early Grapple Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -5153,7 +5153,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_010 (D)": {
+                        "Door to Early Grapple Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5434,7 +5434,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_010 (D)": {
+                        "Door to Early Grapple Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5636,7 +5636,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_010 (D)": {
+                        "Door to Early Grapple Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5774,7 +5774,7 @@
                 }
             }
         },
-        "collision_camera_013 (D)": {
+        "Heated Room West": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -5805,7 +5805,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door to Navigation Room South": {
+                "Door to Navigation Station South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5824,13 +5824,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Navigation Room South",
-                        "node_name": "Door to collision_camera_013 (D)"
+                        "area_name": "Navigation Station South",
+                        "node_name": "Door to Heated Room West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Door to collision_camera_010 (D)": {
+                        "Door to Early Grapple Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5875,7 +5875,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_010 (D)": {
+                "Door to Early Grapple Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5894,13 +5894,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_010 (D)",
-                        "node_name": "Door to collision_camera_013 (D)"
+                        "area_name": "Early Grapple Access",
+                        "node_name": "Door to Heated Room West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Door to Navigation Room South": {
+                        "Door to Navigation Station South": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5959,7 +5959,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Navigation Room South": {
+                        "Door to Navigation Station South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5970,7 +5970,7 @@
                 }
             }
         },
-        "Navigation Room South": {
+        "Navigation Station South": {
             "default_node": "Navigation Room",
             "valid_starting_location": false,
             "extra": {
@@ -6001,7 +6001,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door to collision_camera_015 (D)": {
+                "Door to Energy Recharge Station Middle": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6020,13 +6020,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_015 (D)",
-                        "node_name": "Door to Navigation Room South"
+                        "area_name": "Energy Recharge Station Middle",
+                        "node_name": "Door to Navigation Station South"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_013 (D)": {
+                        "Door to Heated Room West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6035,7 +6035,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_013 (D)": {
+                "Door to Heated Room West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6054,13 +6054,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_013 (D)",
-                        "node_name": "Door to Navigation Room South"
+                        "area_name": "Heated Room West",
+                        "node_name": "Door to Navigation Station South"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Door to collision_camera_015 (D)": {
+                        "Door to Energy Recharge Station Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6092,7 +6092,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_013 (D)": {
+                        "Door to Heated Room West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6103,7 +6103,7 @@
                 }
             }
         },
-        "collision_camera_015 (D)": {
+        "Energy Recharge Station Middle": {
             "default_node": "Life Recharge",
             "valid_starting_location": false,
             "extra": {
@@ -6150,12 +6150,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Shinespark Tutorial",
-                        "node_name": "Dock to collision_camera_015 (D)"
+                        "node_name": "Dock to Energy Recharge Station Middle"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to Navigation Room South": {
+                        "Door to Navigation Station South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6173,7 +6173,7 @@
                         }
                     }
                 },
-                "Door to Navigation Room South": {
+                "Door to Navigation Station South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6192,8 +6192,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Navigation Room South",
-                        "node_name": "Door to collision_camera_015 (D)"
+                        "area_name": "Navigation Station South",
+                        "node_name": "Door to Energy Recharge Station Middle"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -6302,7 +6302,7 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Dock to collision_camera_026 (D)": {
+                "Dock to Test Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6317,20 +6317,20 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_026 (D)",
+                        "area_name": "Test Chamber Access",
                         "node_name": "Dock to Shinespark Tutorial"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_017 (D)": {
+                        "Door to EMMI Zone Exit North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to collision_camera_027 (D)": {
+                        "Door to EMMI Zone Exit Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6339,7 +6339,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_015 (D)": {
+                "Dock to Energy Recharge Station Middle": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6354,7 +6354,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_015 (D)",
+                        "area_name": "Energy Recharge Station Middle",
                         "node_name": "Dock to Shinespark Tutorial"
                     },
                     "dock_type": "other",
@@ -6413,7 +6413,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_017 (D)": {
+                "Door to EMMI Zone Exit North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6432,13 +6432,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_017 (D)",
+                        "area_name": "EMMI Zone Exit North",
                         "node_name": "Door to Shinespark Tutorial"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_026 (D)": {
+                        "Dock to Test Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6486,7 +6486,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_027 (D)": {
+                "Door to EMMI Zone Exit Test Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6505,13 +6505,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_027 (D)",
+                        "area_name": "EMMI Zone Exit Test Chamber",
                         "node_name": "Door to Shinespark Tutorial"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_026 (D)": {
+                        "Dock to Test Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6606,7 +6606,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_015 (D)": {
+                        "Dock to Energy Recharge Station Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6640,7 +6640,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_015 (D)": {
+                        "Dock to Energy Recharge Station Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6674,7 +6674,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_017 (D)": {
+                        "Door to EMMI Zone Exit North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6708,14 +6708,14 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_015 (D)": {
+                        "Dock to Energy Recharge Station Middle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to collision_camera_017 (D)": {
+                        "Door to EMMI Zone Exit North": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6856,7 +6856,7 @@
                 }
             }
         },
-        "collision_camera_017 (D)": {
+        "EMMI Zone Exit North": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -6903,7 +6903,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "West Transport to Ferenia",
-                        "node_name": "Dock to collision_camera_017 (D)"
+                        "node_name": "Dock to EMMI Zone Exit North"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -6967,7 +6967,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Cross Bomb Puzzle Room",
-                        "node_name": "Dock to collision_camera_017 (D)"
+                        "node_name": "Dock to EMMI Zone Exit North"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -7008,7 +7008,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Shinespark Tutorial",
-                        "node_name": "Door to collision_camera_017 (D)"
+                        "node_name": "Door to EMMI Zone Exit North"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -7266,7 +7266,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Yellow EMMI Introduction",
-                        "node_name": "Dock to collision_camera_017 (D) (Speed)"
+                        "node_name": "Dock to EMMI Zone Exit North (Speed)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -7293,7 +7293,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Yellow EMMI Introduction",
-                        "node_name": "Dock to collision_camera_017 (D) (Tunnel)"
+                        "node_name": "Dock to EMMI Zone Exit North (Tunnel)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Dairon EMMI Tunnel",
@@ -7403,7 +7403,7 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Dock to Dairon Hub East": {
+                "Dock to Big Hub": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7418,13 +7418,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Dairon Hub East",
+                        "area_name": "Big Hub",
                         "node_name": "Dock to Yellow EMMI Introduction"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_005 (D)": {
+                        "Door to EMMI Zone Exit East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7459,7 +7459,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_005 (D)": {
+                "Door to EMMI Zone Exit East": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7478,13 +7478,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_005 (D)",
+                        "area_name": "EMMI Zone Exit East",
                         "node_name": "Door from Yellow EMMI Introduction"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Dock to Dairon Hub East": {
+                        "Dock to Big Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7573,7 +7573,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_005 (D)": {
+                        "Door to EMMI Zone Exit East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7587,7 +7587,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_017 (D) (Speed)": {
+                        "Dock to EMMI Zone Exit North (Speed)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7678,7 +7678,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Dairon Hub East": {
+                        "Dock to Big Hub": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7712,7 +7712,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_017 (D) (Speed)": {
+                        "Dock to EMMI Zone Exit North (Speed)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7721,7 +7721,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_017 (D) (Speed)": {
+                "Dock to EMMI Zone Exit North (Speed)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7733,7 +7733,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_017 (D)",
+                        "area_name": "EMMI Zone Exit North",
                         "node_name": "Dock to Yellow EMMI Introduction (Speed)"
                     },
                     "dock_type": "other",
@@ -7748,7 +7748,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_017 (D) (Tunnel)": {
+                "Dock to EMMI Zone Exit North (Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7760,7 +7760,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_017 (D)",
+                        "area_name": "EMMI Zone Exit North",
                         "node_name": "Dock to Yellow EMMI Introduction (Tunnel)"
                     },
                     "dock_type": "other",
@@ -7786,7 +7786,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_005 (D)": {
+                        "Door to EMMI Zone Exit East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7800,7 +7800,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_017 (D) (Tunnel)": {
+                        "Dock to EMMI Zone Exit North (Tunnel)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7842,7 +7842,7 @@
                 "asset_id": "collision_camera_019"
             },
             "nodes": {
-                "Dock to collision_camera_017 (D)": {
+                "Dock to EMMI Zone Exit North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7857,13 +7857,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_017 (D)",
+                        "area_name": "EMMI Zone Exit North",
                         "node_name": "Dock to West Transport to Ferenia"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to Navigation Room North (Lower)": {
+                        "Door to Navigation Station North (Lower)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -7874,7 +7874,7 @@
                         }
                     }
                 },
-                "Door to Navigation Room North (Lower)": {
+                "Door to Navigation Station North (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7893,13 +7893,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Navigation Room North",
+                        "area_name": "Navigation Station North",
                         "node_name": "Door to West Transport to Ferenia (Lower)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_017 (D)": {
+                        "Dock to EMMI Zone Exit North": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -7914,7 +7914,7 @@
                         }
                     }
                 },
-                "Door to Navigation Room North (Upper)": {
+                "Door to Navigation Station North (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7933,7 +7933,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Navigation Room North",
+                        "area_name": "Navigation Station North",
                         "node_name": "Door to West Transport to Ferenia (Upper)"
                     },
                     "dock_type": "door",
@@ -7972,7 +7972,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to Navigation Room North (Upper)": {
+                        "Door to Navigation Station North (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7993,7 +7993,7 @@
                     "extra": {},
                     "event_name": "DaironWideBeamBlockFerenia",
                     "connections": {
-                        "Door to Navigation Room North (Lower)": {
+                        "Door to Navigation Station North (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8035,7 +8035,7 @@
                 "asset_id": "collision_camera_020"
             },
             "nodes": {
-                "Dock to collision_camera_017 (D)": {
+                "Dock to EMMI Zone Exit North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8050,13 +8050,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_017 (D)",
+                        "area_name": "EMMI Zone Exit North",
                         "node_name": "Dock to Cross Bomb Puzzle Room"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_022 (D)": {
+                        "Door to Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8093,7 +8093,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_022 (D)": {
+                "Door to Total Recharge Station West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8112,13 +8112,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_022 (D)",
+                        "area_name": "Total Recharge Station West",
                         "node_name": "Door to Cross Bomb Puzzle Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_017 (D)": {
+                        "Dock to EMMI Zone Exit North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8202,7 +8202,7 @@
                     },
                     "event_name": "s030_baselab:default:grapplepulloff1x2_002",
                     "connections": {
-                        "Door to collision_camera_022 (D)": {
+                        "Door to Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8225,7 +8225,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Dock to collision_camera_017 (D)": {
+                        "Dock to EMMI Zone Exit North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8252,7 +8252,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_022 (D)": {
+                        "Door to Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8391,7 +8391,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_022 (D)": {
+                        "Door to Total Recharge Station West": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -8446,7 +8446,7 @@
                     "pickup_index": 58,
                     "major_location": true,
                     "connections": {
-                        "Door from collision_camera_022 (D)": {
+                        "Door from Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8455,7 +8455,7 @@
                         }
                     }
                 },
-                "Door from collision_camera_022 (D)": {
+                "Door from Total Recharge Station West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8474,7 +8474,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_022 (D)",
+                        "area_name": "Total Recharge Station West",
                         "node_name": "Door to Bomb Room"
                     },
                     "dock_type": "door",
@@ -8537,7 +8537,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door from collision_camera_022 (D)": {
+                        "Door from Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8564,7 +8564,7 @@
                         ]
                     },
                     "connections": {
-                        "Door from collision_camera_022 (D)": {
+                        "Door from Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8607,7 +8607,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_022 (D)": {
+                        "Dock to Total Recharge Station West": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8643,7 +8643,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_022 (D)": {
+                        "Dock to Total Recharge Station West": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8654,7 +8654,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_022 (D)": {
+                "Dock to Total Recharge Station West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8666,7 +8666,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_022 (D)",
+                        "area_name": "Total Recharge Station West",
                         "node_name": "Dock from Bomb Room"
                     },
                     "dock_type": "other",
@@ -8694,7 +8694,7 @@
                 }
             }
         },
-        "collision_camera_022 (D)": {
+        "Total Recharge Station West": {
             "default_node": "Total Recharge",
             "valid_starting_location": false,
             "extra": {
@@ -8745,12 +8745,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Cross Bomb Puzzle Room",
-                        "node_name": "Door to collision_camera_022 (D)"
+                        "node_name": "Door to Total Recharge Station West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_026 (D)": {
+                        "Door to Test Chamber Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8768,7 +8768,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_026 (D)": {
+                "Door to Test Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8787,8 +8787,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_026 (D)",
-                        "node_name": "Door to collision_camera_022 (D)"
+                        "area_name": "Test Chamber Access",
+                        "node_name": "Door to Total Recharge Station West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -8822,7 +8822,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Bomb Room",
-                        "node_name": "Door from collision_camera_022 (D)"
+                        "node_name": "Door from Total Recharge Station West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
@@ -8858,7 +8858,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Map Station",
-                        "node_name": "Door to collision_camera_022 (D)"
+                        "node_name": "Door to Total Recharge Station West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -8919,7 +8919,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Power Switch 2",
-                        "node_name": "Dock to collision_camera_022 (D)"
+                        "node_name": "Dock to Total Recharge Station West"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -8948,7 +8948,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Bomb Room",
-                        "node_name": "Dock to collision_camera_022 (D)"
+                        "node_name": "Dock to Total Recharge Station West"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
@@ -9062,7 +9062,7 @@
                 "asset_id": "collision_camera_023"
             },
             "nodes": {
-                "Door to collision_camera_022 (D)": {
+                "Door to Total Recharge Station West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9081,7 +9081,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_022 (D)",
+                        "area_name": "Total Recharge Station West",
                         "node_name": "Door to Map Station"
                     },
                     "dock_type": "door",
@@ -9128,7 +9128,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_022 (D)": {
+                        "Door to Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9153,7 +9153,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_022 (D)": {
+                        "Door to Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9231,7 +9231,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_022 (D)": {
+                        "Dock to Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9324,7 +9324,7 @@
                     },
                     "connections": {}
                 },
-                "Dock to collision_camera_022 (D)": {
+                "Dock to Total Recharge Station West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9336,7 +9336,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_022 (D)",
+                        "area_name": "Total Recharge Station West",
                         "node_name": "Dock to Power Switch 2"
                     },
                     "dock_type": "other",
@@ -9736,7 +9736,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_042 (D) (doorpowerpower_028)": {
+                "Door to Energy Recharge Station West (doorpowerpower_028)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9755,7 +9755,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_042 (D)",
+                        "area_name": "Energy Recharge Station West",
                         "node_name": "Door to Freezer (doorpowerpower_028)"
                     },
                     "dock_type": "door",
@@ -9806,7 +9806,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_042 (D) (doorpowerpower_030)": {
+                "Door to Energy Recharge Station West (doorpowerpower_030)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9825,7 +9825,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_042 (D)",
+                        "area_name": "Energy Recharge Station West",
                         "node_name": "Door to Freezer (doorpowerpower_030)"
                     },
                     "dock_type": "door",
@@ -10055,7 +10055,7 @@
                     "pickup_index": 76,
                     "major_location": false,
                     "connections": {
-                        "Door to collision_camera_042 (D) (doorpowerpower_030)": {
+                        "Door to Energy Recharge Station West (doorpowerpower_030)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10115,7 +10115,7 @@
                     },
                     "event_name": "s030_baselab:default:db_reg_b1_001",
                     "connections": {
-                        "Door to collision_camera_042 (D) (doorpowerpower_030)": {
+                        "Door to Energy Recharge Station West (doorpowerpower_030)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10406,7 +10406,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_042 (D) (doorpowerpower_028)": {
+                        "Door to Energy Recharge Station West (doorpowerpower_028)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10449,7 +10449,7 @@
                                 ]
                             }
                         },
-                        "Door to collision_camera_042 (D) (doorpowerpower_030)": {
+                        "Door to Energy Recharge Station West (doorpowerpower_030)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10907,7 +10907,7 @@
                                 ]
                             }
                         },
-                        "Door to collision_camera_042 (D) (doorpowerpower_030)": {
+                        "Door to Energy Recharge Station West (doorpowerpower_030)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11151,7 +11151,7 @@
                 }
             }
         },
-        "collision_camera_026 (D)": {
+        "Test Chamber Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -11198,12 +11198,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Shinespark Tutorial",
-                        "node_name": "Dock to collision_camera_026 (D)"
+                        "node_name": "Dock to Test Chamber Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_022 (D)": {
+                        "Door to Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11240,7 +11240,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_022 (D)": {
+                "Door to Total Recharge Station West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11259,8 +11259,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_022 (D)",
-                        "node_name": "Door to collision_camera_026 (D)"
+                        "area_name": "Total Recharge Station West",
+                        "node_name": "Door to Test Chamber Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -11291,7 +11291,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_028 (D)": {
+                        "Dock to Experiment Z-57 Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11324,7 +11324,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_028 (D)": {
+                "Dock to Experiment Z-57 Test Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11336,13 +11336,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_028 (D)",
-                        "node_name": "Dock from collision_camera_026 (D)"
+                        "area_name": "Experiment Z-57 Test Chamber",
+                        "node_name": "Dock from Test Chamber Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
-                        "Door to collision_camera_022 (D)": {
+                        "Door to Total Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11353,7 +11353,7 @@
                 }
             }
         },
-        "collision_camera_027 (D)": {
+        "EMMI Zone Exit Test Chamber": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -11384,7 +11384,7 @@
                 "asset_id": "collision_camera_027"
             },
             "nodes": {
-                "Dock to collision_camera_028 (D)": {
+                "Dock to Experiment Z-57 Test Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11399,13 +11399,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_028 (D)",
-                        "node_name": "Dock to collision_camera_027 (D)"
+                        "area_name": "Experiment Z-57 Test Chamber",
+                        "node_name": "Dock to EMMI Zone Exit Test Chamber"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_029 (D)": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11421,7 +11421,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_029 (D)": {
+                "Door to EMMI Zone Exit West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11440,13 +11440,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_029 (D)",
-                        "node_name": "Door to collision_camera_027 (D)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Door to EMMI Zone Exit Test Chamber"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_028 (D)": {
+                        "Dock to Experiment Z-57 Test Chamber": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11485,7 +11485,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_029 (D) (Tunnel)": {
+                        "Dock to EMMI Zone Exit West (Tunnel)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11510,7 +11510,7 @@
                     "pickup_index": 66,
                     "major_location": false,
                     "connections": {
-                        "Dock to collision_camera_029 (D) (Speed)": {
+                        "Dock to EMMI Zone Exit West (Speed)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11541,12 +11541,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Shinespark Tutorial",
-                        "node_name": "Door to collision_camera_027 (D)"
+                        "node_name": "Door to EMMI Zone Exit Test Chamber"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_028 (D)": {
+                        "Dock to Experiment Z-57 Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11555,7 +11555,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_029 (D) (Speed)": {
+                "Dock to EMMI Zone Exit West (Speed)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11567,8 +11567,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_029 (D)",
-                        "node_name": "Dock to collision_camera_027 (D) (Speed)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Dock to EMMI Zone Exit Test Chamber (Speed)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -11584,7 +11584,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_029 (D) (Tunnel)": {
+                "Dock to EMMI Zone Exit West (Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11596,13 +11596,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_029 (D)",
-                        "node_name": "Dock to collision_camera_027 (D) (Tunnel)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Dock to EMMI Zone Exit Test Chamber (Tunnel)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
-                        "Door to collision_camera_029 (D)": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11613,7 +11613,7 @@
                 }
             }
         },
-        "collision_camera_028 (D)": {
+        "Experiment Z-57 Test Chamber": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -11644,7 +11644,7 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Dock to collision_camera_027 (D)": {
+                "Dock to EMMI Zone Exit Test Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11659,13 +11659,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_027 (D)",
-                        "node_name": "Dock to collision_camera_028 (D)"
+                        "area_name": "EMMI Zone Exit Test Chamber",
+                        "node_name": "Dock to Experiment Z-57 Test Chamber"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_030 (D)": {
+                        "Door to Hidden Grapple Shortcut Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11674,7 +11674,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_030 (D)": {
+                "Door to Hidden Grapple Shortcut Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11693,13 +11693,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_030 (D)",
-                        "node_name": "Door to collision_camera_028 (D)"
+                        "area_name": "Hidden Grapple Shortcut Room",
+                        "node_name": "Door to Experiment Z-57 Test Chamber"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_027 (D)": {
+                        "Dock to EMMI Zone Exit Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11708,7 +11708,7 @@
                         }
                     }
                 },
-                "Dock from collision_camera_026 (D)": {
+                "Dock from Test Chamber Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11720,13 +11720,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_026 (D)",
-                        "node_name": "Dock to collision_camera_028 (D)"
+                        "area_name": "Test Chamber Access",
+                        "node_name": "Dock to Experiment Z-57 Test Chamber"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
                     "connections": {
-                        "Dock to collision_camera_027 (D)": {
+                        "Dock to EMMI Zone Exit Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11737,7 +11737,7 @@
                 }
             }
         },
-        "collision_camera_029 (D)": {
+        "EMMI Zone Exit West": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -11768,7 +11768,7 @@
                 "asset_id": "collision_camera_029"
             },
             "nodes": {
-                "Door to collision_camera_027 (D)": {
+                "Door to EMMI Zone Exit Test Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11787,8 +11787,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_027 (D)",
-                        "node_name": "Door to collision_camera_029 (D)"
+                        "area_name": "EMMI Zone Exit Test Chamber",
+                        "node_name": "Door to EMMI Zone Exit West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -11804,7 +11804,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_030 (D)": {
+                "Dock to Hidden Grapple Shortcut Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11819,20 +11819,20 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_030 (D)",
-                        "node_name": "Dock to collision_camera_029 (D)"
+                        "area_name": "Hidden Grapple Shortcut Room",
+                        "node_name": "Dock to EMMI Zone Exit West"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_036 (D)": {
+                        "Door to EMMI Zone Exit Upper West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_027 (D) (Tunnel)": {
+                        "Dock to EMMI Zone Exit Test Chamber (Tunnel)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11841,7 +11841,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_036 (D)": {
+                "Door to EMMI Zone Exit Upper West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11860,13 +11860,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_036 (D)",
-                        "node_name": "Door to collision_camera_029 (D)"
+                        "area_name": "EMMI Zone Exit Upper West",
+                        "node_name": "Door to EMMI Zone Exit West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_030 (D)": {
+                        "Dock to Hidden Grapple Shortcut Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11893,11 +11893,11 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_027 (D)": {
+                        "Door to EMMI Zone Exit Test Chamber": {
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Dock to collision_camera_027 (D) (Speed)": {
+                        "Dock to EMMI Zone Exit Test Chamber (Speed)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11906,7 +11906,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_027 (D) (Speed)": {
+                "Dock to EMMI Zone Exit Test Chamber (Speed)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11918,8 +11918,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_027 (D)",
-                        "node_name": "Dock to collision_camera_029 (D) (Speed)"
+                        "area_name": "EMMI Zone Exit Test Chamber",
+                        "node_name": "Dock to EMMI Zone Exit West (Speed)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -11933,7 +11933,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_027 (D) (Tunnel)": {
+                "Dock to EMMI Zone Exit Test Chamber (Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11945,13 +11945,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_027 (D)",
-                        "node_name": "Dock to collision_camera_029 (D) (Tunnel)"
+                        "area_name": "EMMI Zone Exit Test Chamber",
+                        "node_name": "Dock to EMMI Zone Exit West (Tunnel)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
-                        "Dock to collision_camera_030 (D)": {
+                        "Dock to Hidden Grapple Shortcut Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11962,7 +11962,7 @@
                 }
             }
         },
-        "collision_camera_030 (D)": {
+        "Hidden Grapple Shortcut Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -11993,7 +11993,7 @@
                 "asset_id": "collision_camera_030"
             },
             "nodes": {
-                "Dock to collision_camera_029 (D)": {
+                "Dock to EMMI Zone Exit West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12008,8 +12008,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_029 (D)",
-                        "node_name": "Dock to collision_camera_030 (D)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Dock to Hidden Grapple Shortcut Room"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -12021,7 +12021,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_031 (D) (Bottom)": {
+                        "Dock to Save Station West Tunnels (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12030,7 +12030,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_028 (D)": {
+                "Door to Experiment Z-57 Test Chamber": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12049,8 +12049,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_028 (D)",
-                        "node_name": "Door to collision_camera_030 (D)"
+                        "area_name": "Experiment Z-57 Test Chamber",
+                        "node_name": "Door to Hidden Grapple Shortcut Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -12062,7 +12062,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_031 (D) (Top)": {
+                        "Dock to Save Station West Tunnels (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12166,7 +12166,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_029 (D)": {
+                        "Dock to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12202,7 +12202,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_028 (D)": {
+                        "Door to Experiment Z-57 Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12246,7 +12246,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_031 (D) (Bottom)": {
+                "Dock to Save Station West Tunnels (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12258,13 +12258,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_031 (D)",
-                        "node_name": "Dock to collision_camera_030 (D) (Bottom)"
+                        "area_name": "Save Station West Tunnels",
+                        "node_name": "Dock to Hidden Grapple Shortcut Room (Bottom)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
-                        "Dock to collision_camera_029 (D)": {
+                        "Dock to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12273,7 +12273,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_031 (D) (Top)": {
+                "Dock to Save Station West Tunnels (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12285,13 +12285,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_031 (D)",
-                        "node_name": "Dock to collision_camera_030 (D) (Top)"
+                        "area_name": "Save Station West Tunnels",
+                        "node_name": "Dock to Hidden Grapple Shortcut Room (Top)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
-                        "Door to collision_camera_028 (D)": {
+                        "Door to Experiment Z-57 Test Chamber": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12302,7 +12302,7 @@
                 }
             }
         },
-        "collision_camera_031 (D)": {
+        "Save Station West Tunnels": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -12353,7 +12353,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Save Station West",
-                        "node_name": "Door to collision_camera_031 (D)"
+                        "node_name": "Door to Save Station West Tunnels"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -12367,14 +12367,14 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_030 (D) (Bottom)": {
+                        "Dock to Hidden Grapple Shortcut Room (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_030 (D) (Top)": {
+                        "Dock to Hidden Grapple Shortcut Room (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12486,7 +12486,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_030 (D) (Bottom)": {
+                "Dock to Hidden Grapple Shortcut Room (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12498,8 +12498,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_030 (D)",
-                        "node_name": "Dock to collision_camera_031 (D) (Bottom)"
+                        "area_name": "Hidden Grapple Shortcut Room",
+                        "node_name": "Dock to Save Station West Tunnels (Bottom)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Launcher",
@@ -12513,7 +12513,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_030 (D) (Top)": {
+                "Dock to Hidden Grapple Shortcut Room (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12525,8 +12525,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_030 (D)",
-                        "node_name": "Dock to collision_camera_031 (D) (Top)"
+                        "area_name": "Hidden Grapple Shortcut Room",
+                        "node_name": "Dock to Save Station West Tunnels (Top)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Launcher",
@@ -12573,7 +12573,7 @@
                 "asset_id": "collision_camera_032"
             },
             "nodes": {
-                "Door to collision_camera_031 (D)": {
+                "Door to Save Station West Tunnels": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12592,7 +12592,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_031 (D)",
+                        "area_name": "Save Station West Tunnels",
                         "node_name": "Door to Save Station West"
                     },
                     "dock_type": "door",
@@ -12623,7 +12623,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_031 (D)": {
+                        "Door to Save Station West Tunnels": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12695,7 +12695,7 @@
                         }
                     }
                 },
-                "Door from collision_camera_034 (D)": {
+                "Door from Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12714,7 +12714,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_034 (D)",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Storm Missile Gate Room"
                     },
                     "dock_type": "door",
@@ -12808,7 +12808,7 @@
                                 "items": []
                             }
                         },
-                        "Door from collision_camera_034 (D)": {
+                        "Door from Ammo Recharge Station": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -12832,14 +12832,14 @@
                         ]
                     },
                     "connections": {
-                        "Door from collision_camera_034 (D)": {
+                        "Door from Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_034 (D)": {
+                        "Dock to Ammo Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -12868,7 +12868,7 @@
                         ]
                     },
                     "connections": {
-                        "Door from collision_camera_034 (D)": {
+                        "Door from Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12902,7 +12902,7 @@
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door from collision_camera_034 (D)": {
+                        "Door from Ammo Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -12913,7 +12913,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_034 (D)": {
+                "Dock to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12925,7 +12925,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_034 (D)",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Dock to Storm Missile Gate Room"
                     },
                     "dock_type": "other",
@@ -12954,7 +12954,7 @@
                     "extra": {},
                     "event_name": "DaironStormMissileGate",
                     "connections": {
-                        "Door from collision_camera_034 (D)": {
+                        "Door from Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12965,7 +12965,7 @@
                 }
             }
         },
-        "collision_camera_034 (D)": {
+        "Ammo Recharge Station": {
             "default_node": "Ammo Recharge",
             "valid_starting_location": false,
             "extra": {
@@ -12996,7 +12996,7 @@
                 "asset_id": "collision_camera_034"
             },
             "nodes": {
-                "Dock to collision_camera_037 (D)": {
+                "Dock to EMMI Zone Exit South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13011,8 +13011,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_037 (D)",
-                        "node_name": "Dock to collision_camera_034 (D)"
+                        "area_name": "EMMI Zone Exit South",
+                        "node_name": "Dock to Ammo Recharge Station"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -13053,12 +13053,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Storm Missile Gate Room",
-                        "node_name": "Door from collision_camera_034 (D)"
+                        "node_name": "Door from Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Dock to collision_camera_037 (D)": {
+                        "Dock to EMMI Zone Exit South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13092,7 +13092,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
                     },
                     "connections": {
-                        "Dock to collision_camera_037 (D)": {
+                        "Dock to EMMI Zone Exit South": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13152,7 +13152,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Storm Missile Gate Room",
-                        "node_name": "Dock to collision_camera_034 (D)"
+                        "node_name": "Dock to Ammo Recharge Station"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Morph Ball Tunnel",
@@ -13532,7 +13532,7 @@
                 }
             }
         },
-        "collision_camera_036 (D)": {
+        "EMMI Zone Exit Upper West": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -13563,7 +13563,7 @@
                 "asset_id": "collision_camera_036"
             },
             "nodes": {
-                "Dock to collision_camera_039 (D)": {
+                "Dock to Burenia Upper Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13578,13 +13578,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_039 (D)",
-                        "node_name": "Dock to collision_camera_036 (D)"
+                        "area_name": "Burenia Upper Transport Access",
+                        "node_name": "Dock to EMMI Zone Exit Upper West"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_029 (D)": {
+                        "Door to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13641,7 +13641,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_029 (D)": {
+                "Door to EMMI Zone Exit West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13660,13 +13660,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_029 (D)",
-                        "node_name": "Door to collision_camera_036 (D)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Door to EMMI Zone Exit Upper West"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_039 (D)": {
+                        "Dock to Burenia Upper Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13721,7 +13721,7 @@
                                 ]
                             }
                         },
-                        "Dock to Yellow EMMI Fight": {
+                        "Dock to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13730,7 +13730,7 @@
                         }
                     }
                 },
-                "Dock to Yellow EMMI Fight": {
+                "Dock to Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13742,8 +13742,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Fight",
-                        "node_name": "Dock to collision_camera_036 (D)"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Dock to EMMI Zone Exit Upper West"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Dairon EMMI Tunnel",
@@ -13751,7 +13751,7 @@
                 }
             }
         },
-        "collision_camera_037 (D)": {
+        "EMMI Zone Exit South": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -13782,7 +13782,7 @@
                 "asset_id": "collision_camera_037"
             },
             "nodes": {
-                "Dock to collision_camera_034 (D)": {
+                "Dock to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13797,8 +13797,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_034 (D)",
-                        "node_name": "Dock to collision_camera_037 (D)"
+                        "area_name": "Ammo Recharge Station",
+                        "node_name": "Dock to EMMI Zone Exit South"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -13812,7 +13812,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_041 (D)": {
+                "Dock to Burenia Lower Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13827,13 +13827,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_041 (D)",
-                        "node_name": "Dock to collision_camera_037 (D)"
+                        "area_name": "Burenia Lower Transport Access",
+                        "node_name": "Dock to EMMI Zone Exit South"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to Yellow EMMI Fight (doorchargecharge_000)": {
+                        "Door to Central Unit Access (doorchargecharge_000)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13868,7 +13868,7 @@
                         }
                     }
                 },
-                "Door to Yellow EMMI Fight (doorchargecharge_000)": {
+                "Door to Central Unit Access (doorchargecharge_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13887,13 +13887,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Fight",
-                        "node_name": "Door to collision_camera_037 (D) (doorchargecharge_000)"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Door to EMMI Zone Exit South (doorchargecharge_000)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Dock to collision_camera_041 (D)": {
+                        "Dock to Burenia Lower Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13973,7 +13973,7 @@
                         }
                     }
                 },
-                "Door to Yellow EMMI Fight (doorframe_000)": {
+                "Door to Central Unit Access (doorframe_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -13992,8 +13992,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Fight",
-                        "node_name": "Door to collision_camera_037 (D) (doorframe_000)"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Door to EMMI Zone Exit South (doorframe_000)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -14025,7 +14025,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_034 (D)": {
+                        "Dock to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14059,7 +14059,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Yellow EMMI Fight (doorframe_000)": {
+                        "Door to Central Unit Access (doorframe_000)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14086,7 +14086,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Yellow EMMI Fight (doorchargecharge_000)": {
+                        "Door to Central Unit Access (doorchargecharge_000)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14114,7 +14114,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Yellow EMMI Fight": {
+                        "Dock to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14134,7 +14134,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to collision_camera_041 (D)": {
+                        "Dock to Burenia Lower Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14176,7 +14176,7 @@
                                 ]
                             }
                         },
-                        "Door to Yellow EMMI Fight (doorchargecharge_000)": {
+                        "Door to Central Unit Access (doorchargecharge_000)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -14213,7 +14213,7 @@
                         }
                     }
                 },
-                "Dock to Yellow EMMI Fight": {
+                "Dock to Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14225,8 +14225,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Fight",
-                        "node_name": "Dock to collision_camera_037 (D)"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Dock to EMMI Zone Exit South"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Dairon EMMI Tunnel",
@@ -14234,7 +14234,7 @@
                 }
             }
         },
-        "Central Unit Room": {
+        "Central Unit": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -14279,7 +14279,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Yellow EMMI Fight": {
+                        "Door to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14288,7 +14288,7 @@
                         }
                     }
                 },
-                "Door to Yellow EMMI Fight": {
+                "Door to Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14300,8 +14300,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Yellow EMMI Fight",
-                        "node_name": "Door to Central Unit Room"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Door to Central Unit"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -14324,7 +14324,7 @@
                     "extra": {},
                     "event_name": "DaironCU",
                     "connections": {
-                        "Door to Yellow EMMI Fight": {
+                        "Door to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14335,7 +14335,7 @@
                 }
             }
         },
-        "collision_camera_039 (D)": {
+        "Burenia Upper Transport Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -14366,7 +14366,7 @@
                 "asset_id": "collision_camera_039"
             },
             "nodes": {
-                "Dock to collision_camera_036 (D)": {
+                "Dock to EMMI Zone Exit Upper West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14381,8 +14381,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_036 (D)",
-                        "node_name": "Dock to collision_camera_039 (D)"
+                        "area_name": "EMMI Zone Exit Upper West",
+                        "node_name": "Dock to Burenia Upper Transport Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -14413,12 +14413,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Upper Transport to Burenia",
-                        "node_name": "Door to collision_camera_039 (D)"
+                        "node_name": "Door to Burenia Upper Transport Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_036 (D)": {
+                        "Dock to EMMI Zone Exit Upper West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14483,7 +14483,7 @@
                 }
             }
         },
-        "Yellow EMMI Fight": {
+        "Central Unit Access": {
             "default_node": "Start Point 2",
             "valid_starting_location": true,
             "extra": {
@@ -14514,7 +14514,7 @@
                 "asset_id": "collision_camera_040"
             },
             "nodes": {
-                "Door to collision_camera_037 (D) (doorchargecharge_000)": {
+                "Door to EMMI Zone Exit South (doorchargecharge_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14533,13 +14533,13 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_037 (D)",
-                        "node_name": "Door to Yellow EMMI Fight (doorchargecharge_000)"
+                        "area_name": "EMMI Zone Exit South",
+                        "node_name": "Door to Central Unit Access (doorchargecharge_000)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Door to Central Unit Room": {
+                        "Door to Central Unit": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -14577,7 +14577,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_037 (D) (doorframe_000)": {
+                "Door to EMMI Zone Exit South (doorframe_000)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14596,8 +14596,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_037 (D)",
-                        "node_name": "Door to Yellow EMMI Fight (doorframe_000)"
+                        "area_name": "EMMI Zone Exit South",
+                        "node_name": "Door to Central Unit Access (doorframe_000)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
@@ -14640,7 +14640,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Central Unit Room": {
+                        "Door to Central Unit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14676,7 +14676,7 @@
                                 "negate": false
                             }
                         },
-                        "Door to collision_camera_037 (D) (doorframe_000)": {
+                        "Door to EMMI Zone Exit South (doorframe_000)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14685,7 +14685,7 @@
                         }
                     }
                 },
-                "Door to Central Unit Room": {
+                "Door to Central Unit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14697,13 +14697,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "Central Unit Room",
-                        "node_name": "Door to Yellow EMMI Fight"
+                        "area_name": "Central Unit",
+                        "node_name": "Door to Central Unit Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
                     "connections": {
-                        "Door to collision_camera_037 (D) (doorchargecharge_000)": {
+                        "Door to EMMI Zone Exit South (doorchargecharge_000)": {
                             "type": "template",
                             "data": "Can Slide"
                         },
@@ -14743,7 +14743,7 @@
                     "pickup_index": 147,
                     "major_location": true,
                     "connections": {
-                        "Door to Central Unit Room": {
+                        "Door to Central Unit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14752,7 +14752,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_037 (D)": {
+                "Dock to EMMI Zone Exit South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14764,13 +14764,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_037 (D)",
-                        "node_name": "Dock to Yellow EMMI Fight"
+                        "area_name": "EMMI Zone Exit South",
+                        "node_name": "Dock to Central Unit Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
-                        "Door to collision_camera_037 (D) (doorchargecharge_000)": {
+                        "Door to EMMI Zone Exit South (doorchargecharge_000)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14779,7 +14779,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_036 (D)": {
+                "Dock to EMMI Zone Exit Upper West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14791,13 +14791,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_036 (D)",
-                        "node_name": "Dock to Yellow EMMI Fight"
+                        "area_name": "EMMI Zone Exit Upper West",
+                        "node_name": "Dock to Central Unit Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Dairon EMMI Tunnel",
                     "connections": {
-                        "Door to Central Unit Room": {
+                        "Door to Central Unit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14808,7 +14808,7 @@
                 }
             }
         },
-        "collision_camera_041 (D)": {
+        "Burenia Lower Transport Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -14851,7 +14851,7 @@
                 "asset_id": "collision_camera_041"
             },
             "nodes": {
-                "Dock to collision_camera_037 (D)": {
+                "Dock to EMMI Zone Exit South": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -14866,8 +14866,8 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_037 (D)",
-                        "node_name": "Dock to collision_camera_041 (D)"
+                        "area_name": "EMMI Zone Exit South",
+                        "node_name": "Dock to Burenia Lower Transport Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -14898,12 +14898,12 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Lower Transport to Burenia",
-                        "node_name": "Door to collision_camera_041 (D)"
+                        "node_name": "Door to Burenia Lower Transport Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_037 (D)": {
+                        "Dock to EMMI Zone Exit South": {
                             "type": "template",
                             "data": "Can Slide Underwater"
                         }
@@ -14911,7 +14911,7 @@
                 }
             }
         },
-        "collision_camera_042 (D)": {
+        "Energy Recharge Station West": {
             "default_node": "Life Recharge",
             "valid_starting_location": false,
             "extra": {
@@ -14962,7 +14962,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Freezer",
-                        "node_name": "Door to collision_camera_042 (D) (doorpowerpower_028)"
+                        "node_name": "Door to Energy Recharge Station West (doorpowerpower_028)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -15003,7 +15003,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Freezer",
-                        "node_name": "Door to collision_camera_042 (D) (doorpowerpower_030)"
+                        "node_name": "Door to Energy Recharge Station West (doorpowerpower_030)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -15111,7 +15111,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "Transport to Ghavoran",
-                        "node_name": "Dock to collision_camera_042 (D)"
+                        "node_name": "Dock to Energy Recharge Station West"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -15229,7 +15229,7 @@
                 }
             }
         },
-        "Navigation Room North": {
+        "Navigation Station North": {
             "default_node": "Navigation Room",
             "valid_starting_location": false,
             "extra": {
@@ -15280,7 +15280,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "West Transport to Ferenia",
-                        "node_name": "Door to Navigation Room North (Lower)"
+                        "node_name": "Door to Navigation Station North (Lower)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -15321,7 +15321,7 @@
                     "destination": {
                         "world_name": "Dairon",
                         "area_name": "West Transport to Ferenia",
-                        "node_name": "Door to Navigation Room North (Upper)"
+                        "node_name": "Door to Navigation Station North (Upper)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -15393,7 +15393,7 @@
                 "asset_id": "collision_camera_045"
             },
             "nodes": {
-                "Door to collision_camera_041 (D)": {
+                "Door to Burenia Lower Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15412,7 +15412,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_041 (D)",
+                        "area_name": "Burenia Lower Transport Access",
                         "node_name": "Door to Lower Transport to Burenia"
                     },
                     "dock_type": "door",
@@ -15451,7 +15451,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to collision_camera_041 (D)": {
+                        "Door to Burenia Lower Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15493,7 +15493,7 @@
                 "asset_id": "collision_camera_046"
             },
             "nodes": {
-                "Door to collision_camera_039 (D)": {
+                "Door to Burenia Upper Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15512,7 +15512,7 @@
                     },
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_039 (D)",
+                        "area_name": "Burenia Upper Transport Access",
                         "node_name": "Door to Upper Transport to Burenia"
                     },
                     "dock_type": "door",
@@ -15551,7 +15551,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to collision_camera_039 (D)": {
+                        "Door to Burenia Upper Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15651,7 +15651,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_042 (D)": {
+                        "Dock to Energy Recharge Station West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -15660,7 +15660,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_042 (D)": {
+                "Dock to Energy Recharge Station West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -15672,7 +15672,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Dairon",
-                        "area_name": "collision_camera_042 (D)",
+                        "area_name": "Energy Recharge Station West",
                         "node_name": "Dock to Transport to Ghavoran"
                     },
                     "dock_type": "other",
