@@ -89,8 +89,8 @@ Extra - asset_id: collision_camera_002
   > Missile Tank Alcove
       Trivial
 
-> Dock to Speedboost Puzzle Room; Heals? False
-  * Morph Ball Tunnel to Speedboost Puzzle Room/Dock to Ferenia Shortcut
+> Tunnel to Speedboost Puzzle Room; Heals? False
+  * Morph Ball Tunnel to Speedboost Puzzle Room/Tunnel to Ferenia Shortcut
   > Tile Group (SCREWATTACK) 2
       Trivial
   > Tile Group (BOMB) 4
@@ -150,7 +150,7 @@ Extra - asset_id: collision_camera_002
   * Extra - tile_types: ('SCREWATTACK',)
   > Door to Transport to Ferenia
       Morph Ball and After Hanubia - grapplepulloff1x2_000
-  > Dock to Speedboost Puzzle Room
+  > Tunnel to Speedboost Puzzle Room
       Trivial
 
 > Tile Group (BOMB) 3; Heals? False
@@ -168,7 +168,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: breakabletilegroup_038
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
-  > Dock to Speedboost Puzzle Room
+  > Tunnel to Speedboost Puzzle Room
       Morph Ball
   > Tile Group (BOMB) 2
       Morph Ball
@@ -585,8 +585,8 @@ Extra - asset_id: collision_camera_009
   > Start Point 2
       Trivial
 
-> Dock to Ferenia Shortcut; Heals? False
-  * Morph Ball Tunnel to Ferenia Shortcut/Dock to Speedboost Puzzle Room
+> Tunnel to Ferenia Shortcut; Heals? False
+  * Morph Ball Tunnel to Ferenia Shortcut/Tunnel to Speedboost Puzzle Room
   > Start Point 1
       Morph Ball and After Hanubia - grapplepulloff1x2
 
@@ -602,7 +602,7 @@ Extra - asset_id: collision_camera_009
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Tank Room
       Trivial
-  > Dock to Ferenia Shortcut
+  > Tunnel to Ferenia Shortcut
       Morph Ball and After Hanubia - grapplepulloff1x2
   > Event - Pull Grapple Block (grapplepulloff1x2)
       Grapple Beam
@@ -733,8 +733,8 @@ Extra - asset_id: collision_camera_011
   > Start Point
       Trivial
 
-> Dock to Central Unit; Heals? False
-  * Morph Ball Tunnel to Central Unit/Dock to EMMI Zone Exit West
+> Tunnel to Central Unit; Heals? False
+  * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit West
   > Tile Group (BOMB) 2
       Trivial
 
@@ -768,7 +768,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: breakabletilegroup_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
-  > Dock to Central Unit
+  > Tunnel to Central Unit
       Trivial
   > Tile Group (BOMB) 1
       Trivial
@@ -778,22 +778,22 @@ Central Unit
 Extra - total_boundings: {'x1': 8400.0, 'x2': 10500.0, 'y1': -900.0, 'y2': 650.0}
 Extra - polygon: [[10500.0, 650.0], [8400.0, 650.0], [8400.0, -900.0], [10500.0, -900.0]]
 Extra - asset_id: collision_camera_012
-> Dock to EMMI Zone Exit East; Heals? False
-  * Morph Ball Tunnel to EMMI Zone Exit East/Dock to Central Unit
+> Tunnel to EMMI Zone Exit East; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to Central Unit
   > Start Point
       Trivial
 
-> Dock to EMMI Zone Exit West; Heals? False
-  * Morph Ball Tunnel to EMMI Zone Exit West/Dock to Central Unit
+> Tunnel to EMMI Zone Exit West; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Exit West/Tunnel to Central Unit
   > Start Point
       Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: centralunitmagmacontroller_000
   * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
-  > Dock to EMMI Zone Exit East
+  > Tunnel to EMMI Zone Exit East
       Simple IBJ or Use Spin Boost
-  > Dock to EMMI Zone Exit West
+  > Tunnel to EMMI Zone Exit West
       Any of the following:
           Space Jump or Simple IBJ
           Speed Booster and Speedbooster Conservation (Beginner)
@@ -809,14 +809,14 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Event - Break PB Tube (block_pbtube_2)
       Lay Power Bomb
-  > Dock to Central Unit
+  > Tunnel to Central Unit
       After Hanubia - block_pbtube_2
 
 > Dock to Total Recharge Station East (dooremmy_003); Heals? False
   * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (dooremmy_003)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock to Orange EMMI Introduction
+  > Tunnel to Orange EMMI Introduction
       Trivial
 
 > Event - Break PB Tube (block_pbtube_2); Heals? False
@@ -825,18 +825,18 @@ Extra - asset_id: collision_camera_013
   * Extra - actor_def: actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad
   > Dock to Total Recharge Station East (dooremmy_002)
       Trivial
-  > Dock to Central Unit
+  > Tunnel to Central Unit
       Trivial
 
-> Dock to Central Unit; Heals? False
-  * Morph Ball Tunnel to Central Unit/Dock to EMMI Zone Exit East
+> Tunnel to Central Unit; Heals? False
+  * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit East
   > Dock to Total Recharge Station East (dooremmy_002)
       After Hanubia - block_pbtube_2
   > Event - Break PB Tube (block_pbtube_2)
       Lay Power Bomb
 
-> Dock to Orange EMMI Introduction; Heals? False
-  * Morph Ball Tunnel to Orange EMMI Introduction/Dock to EMMI Zone Exit East
+> Tunnel to Orange EMMI Introduction; Heals? False
+  * Morph Ball Tunnel to Orange EMMI Introduction/Tunnel to EMMI Zone Exit East
   > Dock to Total Recharge Station East (dooremmy_003)
       Trivial
 
@@ -857,8 +857,8 @@ Extra - asset_id: collision_camera_014
   > Start Point
       Trivial
 
-> Dock to EMMI Zone Exit East; Heals? False
-  * Morph Ball Tunnel to EMMI Zone Exit East/Dock to Orange EMMI Introduction
+> Tunnel to EMMI Zone Exit East; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to Orange EMMI Introduction
   > Start Point
       Trivial
 
@@ -881,7 +881,7 @@ Extra - asset_id: collision_camera_014
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door from EMMI Zone Exit West
       After Hanubia Red Chozo Fight
-  > Dock to EMMI Zone Exit East
+  > Tunnel to EMMI Zone Exit East
       After Hanubia Red Chozo Fight
   > Event - Red Chozo Warrior Fight
       Trivial
