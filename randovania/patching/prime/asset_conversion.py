@@ -9,7 +9,7 @@ from typing import NamedTuple, List
 import nod
 from retro_data_structures.asset_provider import AssetProvider, InvalidAssetId, UnknownAssetId
 from retro_data_structures.conversion import conversions
-from retro_data_structures.conversion.asset_converter import AssetConverter
+from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
 from retro_data_structures.dependencies import all_converted_dependencies, Dependency
 from retro_data_structures.formats import PAK, format_for
 from retro_data_structures.game_check import Game
@@ -115,52 +115,79 @@ prime1_assets = {
 }
 
 
-def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable):
-    next_id = 0xFFFF0000
+def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable):
 
-    def id_generator(asset_type):
-        nonlocal next_id
-        result = next_id
-        while asset_provider.asset_id_exists(result):
-            result += 1
+    if cache_path.is_dir():
+        converted_assets = {}
+        # Read assets from cache if available
+        for asset_path in cache_path.glob("*"):
+            type = asset_path.suffix[1:]
+            asset_id = int(asset_path.stem)
 
-        next_id = result + 1
-        return result
+            construct_class = format_for(type)
 
-    try:
-        asset_provider = prime_asset_provider()
-    except RuntimeError:
-        return
+            raw = asset_path.read_bytes()
+            decoded_from_raw = construct_class.parse(raw, target_game=Game.ECHOES)
+            converted_asset = ConvertedAsset(
+                id=asset_id,
+                type=type,
+                resource=decoded_from_raw,
+            )
+            converted_assets[asset_id] = converted_asset
 
-    updaters = status_update_lib.split_progress_update(status_update, 3)
+    else:
+        next_id = 0xFFFF0000
 
-    start = time.time()
-    with asset_provider:
-        updaters[0]("Loading Prime 1 PAKs", 0)
-        converter = AssetConverter(
-            target_game=Game.ECHOES,
-            asset_providers={Game.PRIME: asset_provider},
-            id_generator=id_generator,
-            converters=conversions.converter_for,
-        )
-        updaters[0]("Finished loading Prime 1 PAKs", 1)
-        # logging.debug(f"Finished loading PAKs: {time.time() - start}")
+        def id_generator(asset_type):
+            nonlocal next_id
+            result = next_id
+            while asset_provider.asset_id_exists(result):
+                result += 1
 
-        result = {}
-        num_assets = len(prime1_assets)
-        for i, (name, asset) in enumerate(prime1_assets.items()):
-            updaters[1](f"Converting {name} from Prime 1", i / num_assets)
-            if asset.ancs != 0 and asset.cmdl != 0:
-                result[name] = Asset(
-                    ancs=converter.convert_id(asset.ancs, Game.PRIME),
-                    cmdl=converter.convert_id(asset.cmdl, Game.PRIME),
-                    character=asset.character,
-                    scale=asset.scale,
+            next_id = result + 1
+            return result
+
+        try:
+            asset_provider = prime_asset_provider()
+        except RuntimeError:
+            return
+
+        updaters = status_update_lib.split_progress_update(status_update, 3)
+
+        start = time.time()
+        with asset_provider:
+            updaters[0]("Loading Prime 1 PAKs", 0)
+            converter = AssetConverter(
+                target_game=Game.ECHOES,
+                asset_providers={Game.PRIME: asset_provider},
+                id_generator=id_generator,
+                converters=conversions.converter_for,
+            )
+            updaters[0]("Finished loading Prime 1 PAKs", 1)
+            # logging.debug(f"Finished loading PAKs: {time.time() - start}")
+
+            result = {}
+            num_assets = len(prime1_assets)
+            for i, (name, asset) in enumerate(prime1_assets.items()):
+                updaters[1](f"Converting {name} from Prime 1", i / num_assets)
+                if asset.ancs != 0 and asset.cmdl != 0:
+                    result[name] = Asset(
+                        ancs=converter.convert_id(asset.ancs, Game.PRIME),
+                        cmdl=converter.convert_id(asset.cmdl, Game.PRIME),
+                        character=asset.character,
+                        scale=asset.scale,
+                    )
+            updaters[1]("Finished converting Prime 1 assets", 1)
+            # Cache these assets here
+            cache_path.mkdir(exist_ok=True, parents=True)
+            for asset in converter.converted_assets.values():
+                assetdata = format_for(asset.type).build(asset.resource, target_game=Game.ECHOES)
+                cache_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
+                    assetdata
                 )
-        updaters[1]("Finished converting Prime 1 assets", 1)
-        #Cache these assets here
-    end = time.time()
-    # logging.debug(f"Time took: {end - start}")
+
+        end = time.time()
+        # logging.debug(f"Time took: {end - start}")
 
     pak_updaters = status_update_lib.split_progress_update(updaters[2], 5)
     for pak_i in range(1, 6):
@@ -173,7 +200,7 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
             pak_path.read_bytes(),
             target_game=Game.ECHOES,
         )
-        for i, new_asset in enumerate(converter.converted_assets.values()):
+        for i, new_asset in enumerate(converted_assets.values()):
             if new_asset.type.upper() == "EVNT":
                 continue
 
@@ -202,7 +229,7 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
             for dep in converted_dependencies[asset.ancs] | converted_dependencies[asset.cmdl]
         ]
         randomizer_data["ModelData"].append({
-            "Index": len(randomizer_data["ModelData"]),
+            "Index": len(randomizer_data["ModelData"]), #Adjust this one later
             "Name": f"prime1_{name}",
             "Model": asset.cmdl,
             "ScanModel": 0xFFFFFFFF,

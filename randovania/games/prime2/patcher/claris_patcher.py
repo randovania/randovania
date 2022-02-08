@@ -11,6 +11,7 @@ from randovania import get_data_path
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.patcher import claris_randomizer, claris_patcher_file
 from randovania.interface_common import game_workdir
+from randovania.interface_common.options import Options
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import status_update_lib
@@ -112,7 +113,8 @@ class ClarisPatcher(Patcher):
 
         if patch_data.pop("convert_other_game_assets", False) or True:
             from randovania.patching.prime import asset_conversion
-            asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
+            cache_path = Options.with_default_data_dir().internal_copies_path.joinpath("prime2", "prime1_models")
+            asset_conversion.convert_prime1_pickups(contents_files_path, cache_path, randomizer_data, updaters[1])
 
         claris_patcher_file.adjust_model_name(patch_data, randomizer_data)
         claris_randomizer.apply_patcher_file(
