@@ -205,7 +205,7 @@ class OpenDreadPatcher(Patcher):
             pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
             hud_text = detail.hud_text[0]
-            if len(detail.hud_text) > 1:
+            if len(set(detail.hud_text)) > 1:
                 hud_text = memo_data[detail.original_pickup.name]
 
             details = {
@@ -249,6 +249,7 @@ class OpenDreadPatcher(Patcher):
         )
 
         return {
+            "debug_export_modified_files": True,
             "starting_location": starting_location,
             "starting_items": starting_items,
             "pickups": [
@@ -289,4 +290,5 @@ class DreadAcquiredMemo(dict):
         result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bombs}."
         result["Energy Part"] = "Energy Part acquired.\nCollect 4 to increase energy capacity."
         result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
+        result["Locked Power Bomb Tank"] = result["Power Bomb Tank"]
         return result
