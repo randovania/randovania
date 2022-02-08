@@ -116,11 +116,26 @@ prime1_assets = {
 
 
 def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable):
+    next_id = 0xFFFF0000
+
+    def id_generator(asset_type):
+        nonlocal next_id
+        result = next_id
+        while asset_provider.asset_id_exists(result):
+            result += 1
+
+        next_id = result + 1
+        return result
+
+    updaters = status_update_lib.split_progress_update(status_update, 3)
 
     if cache_path.is_dir():
+        print("Reading assets from cache")
         converted_assets = {}
         # Read assets from cache if available
         for asset_path in cache_path.glob("*"):
+            if asset_path.suffix.upper() == ".JSON":
+                continue
             type = asset_path.suffix[1:]
             asset_id = int(asset_path.stem)
 
@@ -135,24 +150,18 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
             )
             converted_assets[asset_id] = converted_asset
 
+        with open(cache_path.joinpath("meta.json"), "r")as data_additions_file:
+            randomizer_data_additions = json.load(data_additions_file)
+
+
     else:
-        next_id = 0xFFFF0000
-
-        def id_generator(asset_type):
-            nonlocal next_id
-            result = next_id
-            while asset_provider.asset_id_exists(result):
-                result += 1
-
-            next_id = result + 1
-            return result
+        print("Creating assets....")
 
         try:
             asset_provider = prime_asset_provider()
         except RuntimeError:
             return
 
-        updaters = status_update_lib.split_progress_update(status_update, 3)
 
         start = time.time()
         with asset_provider:
@@ -188,13 +197,51 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
 
         end = time.time()
         # logging.debug(f"Time took: {end - start}")
+        converted_assets = converter.converted_assets
+        converted_dependencies = all_converted_dependencies(converter)
+
+        # logging.debug("Updating RandomizerData.json")
+        start = time.time()
+        randomizer_data_additions = []
+        for name, asset in result.items():
+            dependencies = [
+                {"AssetID": dep.id, "Type": dep.type.upper()}
+                for dep in converted_dependencies[asset.ancs] | converted_dependencies[asset.cmdl]
+            ]
+            randomizer_data_additions.append({
+                "Index": len(randomizer_data["ModelData"]), #Adjust this one later
+                "Name": f"prime1_{name}",
+                "Model": asset.cmdl,
+                "ScanModel": 0xFFFFFFFF,
+                "AnimSet": asset.ancs,
+                "Character": asset.character,
+                "DefaultAnim": 0,
+                "Rotation": [0.0, 0.0, 0.0],
+                "Scale": [asset.scale, asset.scale, asset.scale],
+                "OrbitOffset": [0.0, 0.0, 0.0],
+                "Lighting": {
+                    "CastShadow": True,
+                    "UnknownBool1": True,
+                    "UseWorldLighting": 1,
+                    "UnknownBool2": False
+                },
+                "Assets": dependencies
+            })
+        with open(cache_path.joinpath("meta.json"), "w")as data_additions_file:
+            json.dump(randomizer_data_additions, data_additions_file)
+        end = time.time()
+        # logging.debug(f"Time took: {end - start}")
+
+# Write to paks now
+
+    print("Converging")
 
     pak_updaters = status_update_lib.split_progress_update(updaters[2], 5)
     for pak_i in range(1, 6):
         pak_status = pak_updaters[pak_i - 1]
         pak_path = echoes_files_path.joinpath("files", f"Metroid{pak_i}.pak")
         pak_status(f"Preparing to write custom assets to Echoes {pak_path.name}", 0)
-        num_assets = len(converter.converted_assets) + 1
+        num_assets = len(converted_assets) + 1
 
         new_pak = PAK.parse(
             pak_path.read_bytes(),
@@ -219,37 +266,9 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
         pak_status(f"Writing new {pak_path.name}", (num_assets - 1) / num_assets)
         PAK.build_file(new_pak, pak_path, target_game=Game.ECHOES)
 
-    converted_dependencies = all_converted_dependencies(converter)
-
-    # logging.debug("Updating RandomizerData.json")
-    start = time.time()
-    for name, asset in result.items():
-        dependencies = [
-            {"AssetID": dep.id, "Type": dep.type.upper()}
-            for dep in converted_dependencies[asset.ancs] | converted_dependencies[asset.cmdl]
-        ]
-        randomizer_data["ModelData"].append({
-            "Index": len(randomizer_data["ModelData"]), #Adjust this one later
-            "Name": f"prime1_{name}",
-            "Model": asset.cmdl,
-            "ScanModel": 0xFFFFFFFF,
-            "AnimSet": asset.ancs,
-            "Character": asset.character,
-            "DefaultAnim": 0,
-            "Rotation": [0.0, 0.0, 0.0],
-            "Scale": [asset.scale, asset.scale, asset.scale],
-            "OrbitOffset": [0.0, 0.0, 0.0],
-            "Lighting": {
-                "CastShadow": True,
-                "UnknownBool1": True,
-                "UseWorldLighting": 1,
-                "UnknownBool2": False
-            },
-            "Assets": dependencies
-        })
-
-    end = time.time()
-    # logging.debug(f"Time took: {end - start}")
+        for asset in randomizer_data_additions:
+            asset["Index"] = len(randomizer_data["ModelData"])
+            randomizer_data["ModelData"].append(asset)
 
 
 def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCallable):
