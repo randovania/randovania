@@ -23,7 +23,7 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Total Recharge Station South
+  > Tunnel to Total Recharge Station South
       Morph Ball and After Cataris - breakablemag002
   > Event - Missile Tank Blob through wall (breakablemag002)
       Shoot Diffusion or Wave
@@ -34,14 +34,14 @@ Extra - asset_id: collision_camera_000
   * Pickup 36; Major Location? False
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Dock to Total Recharge Station South
+  > Tunnel to Total Recharge Station South
       Trivial
 
 > Event - Missile Tank Blob (breakablemag002); Heals? False
   * Event Cataris - breakablemag002
   * Extra - actor_name: breakablemag002
   * Extra - actor_def: actordef:actors/props/breakablemag002/charclasses/breakablemag002.bmsad
-  > Dock to Total Recharge Station South
+  > Tunnel to Total Recharge Station South
       Trivial
 
 > Elevator to Artaria - Transport to Cataris; Heals? False; Spawn Point
@@ -79,8 +79,8 @@ Extra - asset_id: collision_camera_000
   > Tile Group (POWERBEAM) 1
       Trivial
 
-> Dock to Total Recharge Station South; Heals? False
-  * Morph Ball Tunnel to Total Recharge Station South/Dock to Transport to Artaria
+> Tunnel to Total Recharge Station South; Heals? False
+  * Morph Ball Tunnel to Total Recharge Station South/Tunnel to Transport to Artaria
   > Door to Navigation Station Southeast
       Morph Ball and After Cataris - breakablemag002
   > Pickup (Missile Tank)
@@ -104,14 +104,14 @@ Dropdown Pit
 Extra - total_boundings: {'x1': -1700.0, 'x2': 400.0, 'y1': -4700.0, 'y2': -3000.0}
 Extra - polygon: [[400.0, -3000.0], [-1700.0, -3000.0], [-1700.0, -4700.0], [400.0, -4700.0]]
 Extra - asset_id: collision_camera_001
-> Dock to Above Z-57 Fight; Heals? False
-  * Morph Ball Tunnel to Above Z-57 Fight/Dock to Dropdown Pit
-  > Dock to Underlava Puzzle Room 2
+> Tunnel to Above Z-57 Fight; Heals? False
+  * Morph Ball Tunnel to Above Z-57 Fight/Tunnel to Dropdown Pit
+  > Tunnel to Underlava Puzzle Room 2
       Trivial
 
-> Dock to Underlava Puzzle Room 2; Heals? False
-  * Slide Tunnel to Underlava Puzzle Room 2/Dock to Dropdown Pit
-  > Dock to Above Z-57 Fight
+> Tunnel to Underlava Puzzle Room 2; Heals? False
+  * Slide Tunnel to Underlava Puzzle Room 2/Tunnel to Dropdown Pit
+  > Tunnel to Above Z-57 Fight
       Space Jump or Simple IBJ
 
 ----------------
@@ -169,9 +169,9 @@ Extra - asset_id: collision_camera_004
       Before Cataris - First Thermal Device
   > Door to Total Recharge Station South (doorpowerpower_019)
       Trivial
-  > Dock to Above Z-57 Fight (Bottom)
+  > Dock to Above Z-57 Fight
       After Cataris - First Thermal Device
-  > Dock to Above Z-57 Fight (Tunnel)
+  > Tunnel to Above Z-57 Fight
       Morph Ball
 
 > Door to Total Recharge Station South (doorpowerpower_004); Heals? False
@@ -222,12 +222,12 @@ Extra - asset_id: collision_camera_004
   > Door to Navigation Station Southeast
       Trivial
 
-> Dock to Above Z-57 Fight (Bottom); Heals? False
+> Dock to Above Z-57 Fight; Heals? False
   * Open Passage to Above Z-57 Fight/Dock to Thermal Device Room South
   > Door to Navigation Station Southeast
       After Cataris - First Thermal Device
 
-> Dock to Above Z-57 Fight (Tunnel); Heals? False
+> Tunnel to Above Z-57 Fight; Heals? False
   * Morph Ball Launcher to Above Z-57 Fight/Dock from Thermal Device Room South
   > Door to Navigation Station Southeast
       Morph Ball
@@ -311,14 +311,14 @@ Extra - asset_id: collision_camera_007
   * Extra - right_shield_def: None
   > Event - Breakable (breakablemag001)
       Wave Beam
-  > Dock to Transport to Artaria
+  > Tunnel to Transport to Artaria
       After Cataris - breakablemag001
 
 > Event - Breakable (breakablemag001); Heals? False
   * Event Cataris - breakablemag001
   * Extra - actor_name: breakablemag001
   * Extra - actor_def: actordef:actors/props/breakablemag001/charclasses/breakablemag001.bmsad
-  > Dock to Transport to Artaria
+  > Tunnel to Transport to Artaria
       Trivial
 
 > Total Recharge; Heals? True; Spawn Point
@@ -326,7 +326,7 @@ Extra - asset_id: collision_camera_007
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  > Dock to Transport to Artaria
+  > Tunnel to Transport to Artaria
       Trivial
 
 > Tile Group (POWERBEAM); Heals? False
@@ -337,11 +337,11 @@ Extra - asset_id: collision_camera_007
   * Extra - tile_types: ('POWERBEAM',)
   > Dock to Thermal Device Room South
       Can Slide
-  > Dock to Transport to Artaria
+  > Tunnel to Transport to Artaria
       Can Slide
 
-> Dock to Transport to Artaria; Heals? False
-  * Morph Ball Tunnel to Transport to Artaria/Dock to Total Recharge Station South
+> Tunnel to Transport to Artaria; Heals? False
+  * Morph Ball Tunnel to Transport to Artaria/Tunnel to Total Recharge Station South
   > Door to Thermal Device Room South (doorpowerpower_019)
       After Cataris - breakablemag001
   > Event - Breakable (breakablemag001)
@@ -381,7 +381,7 @@ Extra - asset_id: collision_camera_009
       Trivial
   > Event - Blob (breakablemag003)
       Shoot Beam
-  > Dock to Dropdown Pit
+  > Tunnel to Dropdown Pit
       After Cataris - breakablemag003 and Can Slide
 
 > Pickup (Missile Tank); Heals? False
@@ -438,18 +438,18 @@ Extra - asset_id: collision_camera_009
   > Between Thermal Gates
       Trivial
 
-> Dock to Dropdown Pit; Heals? False
-  * Slide Tunnel to Dropdown Pit/Dock to Above Z-57 Fight
+> Tunnel to Dropdown Pit; Heals? False
+  * Slide Tunnel to Dropdown Pit/Tunnel to Above Z-57 Fight
   > Door to Z-57 Heat Room West (Right)
       Morph Ball and After Cataris - breakablemag003
 
 > Dock to Thermal Device Room South; Heals? False
-  * Open Passage to Thermal Device Room South/Dock to Above Z-57 Fight (Bottom)
+  * Open Passage to Thermal Device Room South/Dock to Above Z-57 Fight
   > Z-57 Room
       After Cataris - First Thermal Device
 
 > Dock from Thermal Device Room South; Heals? False
-  * Blocked Passage to Thermal Device Room South/Dock to Above Z-57 Fight (Tunnel)
+  * Blocked Passage to Thermal Device Room South/Tunnel to Above Z-57 Fight
   > Z-57 Room
       Trivial
 
@@ -484,7 +484,7 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_def: None
   > Door to EMMI Zone Tower East (doorclosedcharge_001)
       Trivial
-  > Dock to EMMI Zone Tower East
+  > Tunnel to EMMI Zone Tower East
       Spider Magnet or Infinite Bomb Jump (Beginner) or Use Spin Boost
 
 > Dock to Tall Magnet Walls Access; Heals? False
@@ -507,8 +507,8 @@ Extra - asset_id: collision_camera_010
   > Dock to Tall Magnet Walls Access
       After Cataris - Hallway Thermal Device
 
-> Dock to EMMI Zone Tower East; Heals? False
-  * Morph Ball Tunnel to EMMI Zone Tower East/Dock to EMMI Zone Exit East
+> Tunnel to EMMI Zone Tower East; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone Exit East
   > Door to EMMI Zone Tower East (doorpowerpower_016)
       Trivial
 
@@ -1021,15 +1021,15 @@ Extra - asset_id: collision_camera_015
   > Tile Group (BOMB MISSILE)
       Trivial
 
-> Dock to Double Obsydomithon Room; Heals? False
-  * Morph Ball Tunnel to Double Obsydomithon Room/Dock to Teleport to Artaria (Blue)
+> Tunnel to Double Obsydomithon Room; Heals? False
+  * Morph Ball Tunnel to Double Obsydomithon Room/Tunnel to Teleport to Artaria (Blue)
   > Upper-Left Room
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Dock to Lava Button East Access; Heals? False
-  * Slide Tunnel to Lava Button East Access/Dock to Teleport to Artaria (Blue)
+> Tunnel to Lava Button East Access; Heals? False
+  * Slide Tunnel to Lava Button East Access/Tunnel to Teleport to Artaria (Blue)
   > Center Room
       All of the following:
           After Cataris - db_dside_mg_004
@@ -1042,7 +1042,7 @@ Extra - asset_id: collision_camera_015
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Dock to Double Obsydomithon Room
+  > Tunnel to Double Obsydomithon Room
       Any of the following:
           All of the following:
               Varia Suit
@@ -1101,7 +1101,7 @@ Extra - asset_id: collision_camera_015
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Dock to Lava Button East Access
+  > Tunnel to Lava Button East Access
       All of the following:
           After Cataris - db_dside_mg_004
           Any of the following:
@@ -1278,8 +1278,8 @@ Extra - asset_id: collision_camera_019
   > Right Platform
       Trivial
 
-> Dock to Z-57 Heat Room West (Right) (Open Passage); Heals? False
-  * Open Passage to Z-57 Heat Room West (Right)/Dock to Z-57 Heat Room West (Left) (Open Passage)
+> Dock to Z-57 Heat Room West (Right); Heals? False
+  * Open Passage to Z-57 Heat Room West (Right)/Dock to Z-57 Heat Room West (Left)
   > Right Platform
       All of the following:
           After Cataris - breakablemag013
@@ -1305,8 +1305,8 @@ Extra - asset_id: collision_camera_019
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
-> Dock to Z-57 Heat Room West (Right) (Tunnel); Heals? False
-  * Morph Ball Tunnel to Z-57 Heat Room West (Right)/Dock to Z-57 Heat Room West (Left) (Tunnel)
+> Tunnel to Z-57 Heat Room West (Right); Heals? False
+  * Morph Ball Tunnel to Z-57 Heat Room West (Right)/Tunnel to Z-57 Heat Room West (Left)
   > Tiny Alcove
       All of the following:
           Morph Ball and After Cataris - breakablemag014
@@ -1317,7 +1317,7 @@ Extra - asset_id: collision_camera_019
 > Tiny Alcove; Heals? False
   > Event - Second Tunnel Blob (breakablemag014)
       Shoot Beam
-  > Dock to Z-57 Heat Room West (Right) (Tunnel)
+  > Tunnel to Z-57 Heat Room West (Right)
       All of the following:
           Morph Ball and After Cataris - breakablemag014
           Any of the following:
@@ -1357,7 +1357,7 @@ Extra - asset_id: collision_camera_019
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
   > Event - Open Passage Blob (breakablemag013)
       Shoot Beam
-  > Dock to Z-57 Heat Room West (Right) (Open Passage)
+  > Dock to Z-57 Heat Room West (Right)
       All of the following:
           After Cataris - breakablemag013
           Any of the following:
@@ -1381,7 +1381,7 @@ Extra - asset_id: collision_camera_020
       Trivial
   > Event - Lower-left Blob (breakablemag005)
       Wave Beam
-  > Dock to EMMI Zone East Tower Access (Bottom)
+  > Tunnel to EMMI Zone East Tower Access (Bottom)
       Trivial
   > Center Alcove
       Morph Ball or After Cataris - breakablemag005
@@ -1407,11 +1407,11 @@ Extra - asset_id: collision_camera_020
   * Extra - right_shield_def: None
   > Tile Group (POWERBEAM) 1
       Trivial
-  > Dock to EMMI Zone Item Tunnel
+  > Tunnel to EMMI Zone Item Tunnel
       All of the following:
           After Cataris - Central Unit
           Simple IBJ or Use Spin Boost
-  > Dock to EMMI Zone East Tower Access (Upper)
+  > Tunnel to EMMI Zone East Tower Access (Upper)
       Trivial
   > Center Alcove
       Can Slide
@@ -1467,18 +1467,18 @@ Extra - asset_id: collision_camera_020
   > Tile Group (POWERBEAM) 2
       Trivial
 
-> Dock to EMMI Zone Item Tunnel; Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone Item Tunnel/Dock to Green EMMI Introduction
+> Tunnel to EMMI Zone Item Tunnel; Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone Item Tunnel/Tunnel to Green EMMI Introduction
   > Door to EMMI Zone West Exit Path
       After Cataris - Central Unit
 
-> Dock to EMMI Zone East Tower Access (Bottom); Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Dock to Green EMMI Introduction (Bottom)
+> Tunnel to EMMI Zone East Tower Access (Bottom); Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Tunnel to Green EMMI Introduction (Bottom)
   > Dock to Green EMMI Introduction Access
       Trivial
 
-> Dock to EMMI Zone East Tower Access (Upper); Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Dock to Green EMMI Introduction (Upper)
+> Tunnel to EMMI Zone East Tower Access (Upper); Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Tunnel to Green EMMI Introduction (Upper)
   > Door to EMMI Zone West Exit Path
       Trivial
 
@@ -1505,7 +1505,7 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Z-57 Heat Room West (Left) (Open Passage)
+  > Dock to Z-57 Heat Room West (Left)
       All of the following:
           After Cataris - breakablemag013
           Any of the following:
@@ -1518,11 +1518,11 @@ Extra - asset_id: collision_camera_021
   * Pickup 38; Major Location? False
   * Extra - actor_name: item_missiletank_001
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Dock to Z-57 Heat Room West (Left) (Tunnel)
+  > Tunnel to Z-57 Heat Room West (Left)
       Morph Ball
 
-> Dock to Z-57 Heat Room West (Left) (Open Passage); Heals? False
-  * Open Passage to Z-57 Heat Room West (Left)/Dock to Z-57 Heat Room West (Right) (Open Passage)
+> Dock to Z-57 Heat Room West (Left); Heals? False
+  * Open Passage to Z-57 Heat Room West (Left)/Dock to Z-57 Heat Room West (Right)
   > Door to Above Z-57 Fight
       All of the following:
           After Cataris - breakablemag013
@@ -1535,8 +1535,8 @@ Extra - asset_id: collision_camera_021
   > Door to Above Z-57 Fight
       Trivial
 
-> Dock to Z-57 Heat Room West (Left) (Tunnel); Heals? False
-  * Morph Ball Tunnel to Z-57 Heat Room West (Left)/Dock to Z-57 Heat Room West (Right) (Tunnel)
+> Tunnel to Z-57 Heat Room West (Left); Heals? False
+  * Morph Ball Tunnel to Z-57 Heat Room West (Left)/Tunnel to Z-57 Heat Room West (Right)
   > Pickup (Missile Tank)
       Morph Ball
 
@@ -1562,11 +1562,11 @@ Extra - asset_id: collision_camera_022
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Item Tunnel
       Trivial
-  > Dock to EMMI Zone Tower West
+  > Tunnel to EMMI Zone Tower West
       Space Jump or Simple IBJ
 
-> Dock to EMMI Zone Tower West; Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone Tower West/Dock to EMMI Zone Exit to Map Station
+> Tunnel to EMMI Zone Tower West; Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone Tower West/Tunnel to EMMI Zone Exit to Map Station
   > Dock to Map Station
       Trivial
 
@@ -1656,7 +1656,7 @@ Extra - asset_id: collision_camera_023
       Flash Shift and Morph Ball
   > Door to Path to Kraid Entryway
       Trivial
-  > Dock to Path to Kraid Entryway
+  > Tunnel to Path to Kraid Entryway
       Morph Ball
 
 > Tile Group (POWERBEAM) 2; Heals? False
@@ -1667,7 +1667,7 @@ Extra - asset_id: collision_camera_023
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Path to Kraid Entryway
       Trivial
-  > Dock to Path to Kraid Entryway
+  > Tunnel to Path to Kraid Entryway
       Trivial
 
 > Tile Group (WEIGHT) 2; Heals? False
@@ -1686,8 +1686,8 @@ Extra - asset_id: collision_camera_023
   > Dock to EMMI Zone Exits West (dooremmy_009)
       Morph Ball
 
-> Dock to Path to Kraid Entryway; Heals? False
-  * Morph Ball Tunnel to Path to Kraid Entryway/Dock to Long Mouth Statue Room
+> Tunnel to Path to Kraid Entryway; Heals? False
+  * Morph Ball Tunnel to Path to Kraid Entryway/Tunnel to Long Mouth Statue Room
   > Tile Group (POWERBEAM) 1
       Morph Ball
   > Tile Group (POWERBEAM) 2
@@ -1772,7 +1772,7 @@ Extra - asset_id: collision_camera_024
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Dock to Kraid Eyedoor Room
+  > Tunnel to Kraid Eyedoor Room
       All of the following:
           Morph Ball and After Cataris - breakablemag010
           Any of the following:
@@ -1782,8 +1782,8 @@ Extra - asset_id: collision_camera_024
 > Dock to Kraid Arena; Heals? False
   * Open Passage to Kraid Arena/Dock to Above Kraid
 
-> Dock to Heated U-Turn (bottom); Heals? False
-  * Slide Tunnel to Heated U-Turn/Dock to Above Kraid (bottom)
+> Tunnel to Heated U-Turn (bottom); Heals? False
+  * Slide Tunnel to Heated U-Turn/Tunnel to Above Kraid (bottom)
   > Left Room
       All of the following:
           Morph Ball
@@ -1791,8 +1791,8 @@ Extra - asset_id: collision_camera_024
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
 
-> Dock to Heated U-Turn (top); Heals? False
-  * Morph Ball Tunnel to Heated U-Turn/Dock to Above Kraid (top)
+> Tunnel to Heated U-Turn (top); Heals? False
+  * Morph Ball Tunnel to Heated U-Turn/Tunnel to Above Kraid (top)
   > Dock to Path to Kraid Entryway
       All of the following:
           Morph Ball
@@ -1801,7 +1801,7 @@ Extra - asset_id: collision_camera_024
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
 > Left Room; Heals? False
-  > Dock to Heated U-Turn (bottom)
+  > Tunnel to Heated U-Turn (bottom)
       Morph Ball and Varia Suit and Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
   > Center Room
       All of the following:
@@ -1810,8 +1810,8 @@ Extra - asset_id: collision_camera_024
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Dock to Kraid Eyedoor Room; Heals? False
-  * Morph Ball Tunnel to Kraid Eyedoor Room/Dock to Above Kraid
+> Tunnel to Kraid Eyedoor Room; Heals? False
+  * Morph Ball Tunnel to Kraid Eyedoor Room/Tunnel to Above Kraid
   > Tile Group (POWERBEAM) 2
       All of the following:
           Morph Ball and After Cataris - breakablemag010
@@ -1821,7 +1821,7 @@ Extra - asset_id: collision_camera_024
 
 > Dock to Path to Kraid Entryway; Heals? False
   * Open Passage to Path to Kraid Entryway/Dock to Above Kraid
-  > Dock to Heated U-Turn (top)
+  > Tunnel to Heated U-Turn (top)
       All of the following:
           Morph Ball
           Any of the following:
@@ -1891,7 +1891,7 @@ Extra - asset_id: collision_camera_025
       Shoot Beam
   > Tile Group (BOMB)
       Trivial
-  > Dock to Teleport to Ghavoran
+  > Tunnel to Teleport to Ghavoran
       After Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
 
 > Door to Navigation Station Northwest; Heals? False
@@ -1972,8 +1972,8 @@ Extra - asset_id: collision_camera_025
   > Tile Group (WEIGHT) 1
       Trivial
 
-> Dock to Teleport to Ghavoran; Heals? False
-  * Slide Tunnel to Teleport to Ghavoran/Dock to Teleport to Artaria (Red)
+> Tunnel to Teleport to Ghavoran; Heals? False
+  * Slide Tunnel to Teleport to Ghavoran/Tunnel to Teleport to Artaria (Red)
   > Door to West Teleport Access
       After Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
 
@@ -2104,7 +2104,7 @@ Extra - asset_id: collision_camera_026
       All of the following:
           Varia Suit and Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
           Grapple Beam or Infinite Bomb Jump (Beginner) or Use Spin Boost
-  > Dock to Teleport to Artaria (Red)
+  > Tunnel to Teleport to Artaria (Red)
       All of the following:
           After Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
           Any of the following:
@@ -2126,15 +2126,15 @@ Extra - asset_id: collision_camera_026
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
   > Tile Group (POWERBEAM) 1
       Trivial
-  > Dock to Ghavoran Teleport Access
+  > Tunnel to Ghavoran Teleport Access
       All of the following:
           After Cataris - db_dside_mg_002
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
-> Dock to Teleport to Artaria (Red); Heals? False
-  * Slide Tunnel to Teleport to Artaria (Red)/Dock to Teleport to Ghavoran
+> Tunnel to Teleport to Artaria (Red); Heals? False
+  * Slide Tunnel to Teleport to Artaria (Red)/Tunnel to Teleport to Ghavoran
   > Lower Center
       All of the following:
           After Cataris - Ghavoran Teleporter Lower-left Tunnel Blob
@@ -2142,8 +2142,8 @@ Extra - asset_id: collision_camera_026
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Dock to Ghavoran Teleport Access; Heals? False
-  * Slide Tunnel to Ghavoran Teleport Access/Dock to Teleport to Ghavoran
+> Tunnel to Ghavoran Teleport Access; Heals? False
+  * Slide Tunnel to Ghavoran Teleport Access/Tunnel to Teleport to Ghavoran
   > Top room
       All of the following:
           After Cataris - db_dside_mg_002
@@ -2168,7 +2168,7 @@ Extra - asset_id: collision_camera_027
       Trivial
   > Event - Morph Tunnel Blob (db_dside_mg_002)
       Shoot Beam
-  > Dock to Teleport to Ghavoran
+  > Tunnel to Teleport to Ghavoran
       After Cataris - db_dside_mg_002
 
 > Dock to EMMI Zone Exits West; Heals? False
@@ -2185,8 +2185,8 @@ Extra - asset_id: collision_camera_027
   > Door to Navigation Station Northwest
       Trivial
 
-> Dock to Teleport to Ghavoran; Heals? False
-  * Slide Tunnel to Teleport to Ghavoran/Dock to Ghavoran Teleport Access
+> Tunnel to Teleport to Ghavoran; Heals? False
+  * Slide Tunnel to Teleport to Ghavoran/Tunnel to Ghavoran Teleport Access
   > Door to Navigation Station Northwest
       After Cataris - db_dside_mg_002
 
@@ -2209,7 +2209,7 @@ Extra - asset_id: collision_camera_028
           Speed Booster or Simple IBJ or Use Spin Boost
   > Dock to Long Mouth Statue Room (dooremmy_008)
       Morph Ball
-  > Dock to Central Unit Access
+  > Tunnel to Central Unit Access
       Trivial
 
 > Dock to Ghavoran Teleport Access; Heals? False
@@ -2253,18 +2253,18 @@ Extra - asset_id: collision_camera_028
   > Dock to Long Mouth Statue Room (dooremmy_008)
       Trivial
 
-> Dock to EMMI Zone West Exit Path; Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone West Exit Path/Dock to EMMI Zone Exits West
+> Tunnel to EMMI Zone West Exit Path; Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone West Exit Path/Tunnel to EMMI Zone Exits West
   > Upper Ledge
       Space Jump or Simple IBJ
 
-> Dock to EMMI Zone Item Tunnel; Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone Item Tunnel/Dock to EMMI Zone Exits West
+> Tunnel to EMMI Zone Item Tunnel; Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone Item Tunnel/Tunnel to EMMI Zone Exits West
   > Upper Ledge
       Trivial
 
-> Dock to Central Unit Access; Heals? False
-  * Cataris EMMI Tunnel to Central Unit Access/Dock to EMMI Zone Exits West
+> Tunnel to Central Unit Access; Heals? False
+  * Cataris EMMI Tunnel to Central Unit Access/Tunnel to EMMI Zone Exits West
   > Door to EMMI Zone Item Tunnel
       Trivial
 
@@ -2273,9 +2273,9 @@ Extra - asset_id: collision_camera_028
       Trivial
   > Door to EMMI Zone West Exit Path
       Trivial
-  > Dock to EMMI Zone West Exit Path
+  > Tunnel to EMMI Zone West Exit Path
       Trivial
-  > Dock to EMMI Zone Item Tunnel
+  > Tunnel to EMMI Zone Item Tunnel
       Trivial
 
 ----------------
@@ -2311,7 +2311,7 @@ Extra - asset_id: collision_camera_029
   * Extra - right_shield_def: None
   > Door to EMMI Zone Exits West
       Can Slide
-  > Tunnel Center
+  > Center of Tunnel
       Morph Ball and After Cataris - Central Unit
 
 > Tile Group (POWERBEAM); Heals? False
@@ -2337,27 +2337,27 @@ Extra - asset_id: collision_camera_029
   * Extra - tile_types: ('POWERBOMB',)
   > Pickup (Power Bomb Tank)
       Ballspark
-  > Tunnel Center
+  > Center of Tunnel
       Morph Ball
 
-> Dock to Green EMMI Introduction; Heals? False
-  * Cataris EMMI Tunnel to Green EMMI Introduction/Dock to EMMI Zone Item Tunnel
-  > Tunnel Center
+> Tunnel to Green EMMI Introduction; Heals? False
+  * Cataris EMMI Tunnel to Green EMMI Introduction/Tunnel to EMMI Zone Item Tunnel
+  > Center of Tunnel
       Morph Ball
 
-> Dock to EMMI Zone Exits West; Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone Exits West/Dock to EMMI Zone Item Tunnel
-  > Tunnel Center
+> Tunnel to EMMI Zone Exits West; Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone Exits West/Tunnel to EMMI Zone Item Tunnel
+  > Center of Tunnel
       Morph Ball
 
-> Tunnel Center; Heals? False
+> Center of Tunnel; Heals? False
   > Door to EMMI Zone Exit to Map Station
       Morph Ball and After Cataris - Central Unit
   > Tile Group (POWERBOMB)
       Morph Ball
-  > Dock to Green EMMI Introduction
+  > Tunnel to Green EMMI Introduction
       Morph Ball
-  > Dock to EMMI Zone Exits West
+  > Tunnel to EMMI Zone Exits West
       Morph Ball
 
 ----------------
@@ -2451,7 +2451,7 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to EMMI Zone Exit East
+  > Tunnel to EMMI Zone Exit East
       Trivial
 
 > Door to EMMI Zone Exit East; Heals? False
@@ -2464,7 +2464,7 @@ Extra - asset_id: collision_camera_032
   * Extra - right_shield_def: None
   > Door to EMMI Zone East Tower Access (doorclosedcharge)
       Trivial
-  > Dock to EMMI Zone Exit East
+  > Tunnel to EMMI Zone Exit East
       All of the following:
           Morph Ball
           Simple IBJ or Use Spin Boost
@@ -2492,7 +2492,7 @@ Extra - asset_id: collision_camera_032
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Moving Magnet Walls (Small)
       Morph Ball or After Cataris - deviceheat_camerafar_000
-  > Dock to EMMI Zone Hidden Missile Room
+  > Tunnel to EMMI Zone Hidden Missile Room
       Trivial
 
 > Door to EMMI Zone East Tower Access (doorpowerpower_000); Heals? False
@@ -2525,34 +2525,34 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to EMMI Zone Hidden Missile Room
+  > Tunnel to EMMI Zone Hidden Missile Room
       Trivial
-  > Dock to EMMI Zone East Tower Access (2)
+  > Tunnel to EMMI Zone East Tower Access (2)
       Trivial
 
-> Dock to EMMI Zone Hidden Missile Room; Heals? False
-  * Morph Ball Tunnel to EMMI Zone Hidden Missile Room/Dock to EMMI Zone Tower East
+> Tunnel to EMMI Zone Hidden Missile Room; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Hidden Missile Room/Tunnel to EMMI Zone Tower East
   > Dock to Hall Thermal Device Room
       Trivial
   > Door from EMMI Zone Exit East
       Trivial
 
-> Dock to EMMI Zone Exit East; Heals? False
-  * Morph Ball Tunnel to EMMI Zone Exit East/Dock to EMMI Zone Tower East
+> Tunnel to EMMI Zone Exit East; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to EMMI Zone Tower East
   > Door to EMMI Zone East Tower Access (doorpowerpower_015)
       Trivial
   > Door to EMMI Zone Exit East
       Can Slide
-  > Dock to EMMI Zone East Tower Access (1)
+  > Tunnel to EMMI Zone East Tower Access (1)
       Trivial
 
-> Dock to EMMI Zone East Tower Access (1); Heals? False
-  * Morph Ball Tunnel to EMMI Zone East Tower Access/Dock to EMMI Zone Tower East (1)
-  > Dock to EMMI Zone Exit East
+> Tunnel to EMMI Zone East Tower Access (1); Heals? False
+  * Morph Ball Tunnel to EMMI Zone East Tower Access/Tunnel to EMMI Zone Tower East (1)
+  > Tunnel to EMMI Zone Exit East
       Trivial
 
-> Dock to EMMI Zone East Tower Access (2); Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Dock to EMMI Zone Tower East (2)
+> Tunnel to EMMI Zone East Tower Access (2); Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Tunnel to EMMI Zone Tower East (2)
   > Door from EMMI Zone Exit East
       Trivial
 
@@ -2638,7 +2638,7 @@ Extra - asset_id: collision_camera_035
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to Central Unit Access
       Trivial
-  > Dock to EMMI Zone Exit to Map Station
+  > Tunnel to EMMI Zone Exit to Map Station
       Trivial
 
 > Dock to Dairon Transport Access; Heals? False
@@ -2661,8 +2661,8 @@ Extra - asset_id: collision_camera_035
   > Dock to Dairon Transport Access
       Trivial
 
-> Dock to EMMI Zone Exit to Map Station; Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone Exit to Map Station/Dock to EMMI Zone Tower West
+> Tunnel to EMMI Zone Exit to Map Station; Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone Exit to Map Station/Tunnel to EMMI Zone Tower West
   > Dock to Moving Magnet Walls (Small)
       Trivial
 
@@ -2683,7 +2683,7 @@ Extra - asset_id: collision_camera_036
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
-  > Dock to EMMI Zone Exits West
+  > Tunnel to EMMI Zone Exits West
       Trivial
   > Upper-right Corner
       Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
@@ -2707,11 +2707,11 @@ Extra - asset_id: collision_camera_036
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_MorphBall
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to EMMI Zone Exits West
+  > Tunnel to EMMI Zone Exits West
       Trivial
 
-> Dock to EMMI Zone Exits West; Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone Exits West/Dock to Central Unit Access
+> Tunnel to EMMI Zone Exits West; Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone Exits West/Tunnel to Central Unit Access
   > Door from EMMI Zone Tower West
       Trivial
 
@@ -2784,14 +2784,14 @@ Extra - asset_id: collision_camera_038
   * Extra - start_point_actor_name: SP_Checkpoint_PistonLeft
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
 
-> Dock to Thermal Device Room North (Top); Heals? False
-  * Slide Tunnel to Thermal Device Room North/Dock to Lava Button West (Top)
+> Tunnel to Thermal Device Room North; Heals? False
+  * Slide Tunnel to Thermal Device Room North/Tunnel to Lava Button West
   > Dock to Thermal Device Room North (Bottom)
       Gravity Suit or After Cataris - Lower Lava Button or Lava Damage ≥ 400
 
 > Dock to Thermal Device Room North (Bottom); Heals? False
   * Open Passage to Thermal Device Room North/Dock to Lava Button West (Bottom)
-  > Dock to Thermal Device Room North (Top)
+  > Tunnel to Thermal Device Room North
       Any of the following:
           All of the following:
               Gravity Suit or After Cataris - Lower Lava Button
@@ -2967,7 +2967,7 @@ Extra - asset_id: collision_camera_042
   * Pickup 42; Major Location? True
   * Extra - actor_name: item_energyfragment_001
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Dock to Lava Button West (Top)
+  > Tunnel to Lava Button West
       Trivial
 
 > Pickup (Energy Tank); Heals? False
@@ -2995,8 +2995,8 @@ Extra - asset_id: collision_camera_042
   > Dock to Energy Recharge Station
       Trivial
 
-> Dock to Lava Button West (Top); Heals? False
-  * Slide Tunnel to Lava Button West/Dock to Thermal Device Room North (Top)
+> Tunnel to Lava Button West; Heals? False
+  * Slide Tunnel to Lava Button West/Tunnel to Thermal Device Room North
   > Pickup (Energy Part)
       Trivial
 
@@ -3090,7 +3090,7 @@ Extra - asset_id: collision_camera_043
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Teleport to Artaria (Red)
       Morph Ball
-  > Dock to Long Mouth Statue Room
+  > Tunnel to Long Mouth Statue Room
       Trivial
 
 > Tile Group (POWERBEAM) 2; Heals? False
@@ -3119,8 +3119,8 @@ Extra - asset_id: collision_camera_043
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
-> Dock to Long Mouth Statue Room; Heals? False
-  * Morph Ball Tunnel to Long Mouth Statue Room/Dock to Path to Kraid Entryway
+> Tunnel to Long Mouth Statue Room; Heals? False
+  * Morph Ball Tunnel to Long Mouth Statue Room/Tunnel to Path to Kraid Entryway
   > Tile Group (POWERBEAM) 1
       Trivial
 
@@ -3144,7 +3144,7 @@ Extra - asset_id: collision_camera_044
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Event - Diffusion Tutorial Blob (db_dif_mg_002)
       Shoot Diffusion or Wave
-  > Dock to Teleport to Dairon
+  > Tunnel to Teleport to Dairon
       All of the following:
           Morph Ball and After Cataris - db_dif_mg_002
           Any of the following:
@@ -3195,7 +3195,7 @@ Extra - asset_id: collision_camera_044
   * Extra - tile_types: ('BOMB',)
   > Tile Group (BOMB) 2
       Morph Ball
-  > Dock to Kraid Arena (bottom)
+  > Tunnel to Kraid Arena (bottom)
       Morph Ball
 
 > Tile Group (WEIGHT) 1; Heals? False
@@ -3282,31 +3282,31 @@ Extra - asset_id: collision_camera_044
   > Alcove
       Trivial
 
-> Dock to Kraid Arena (top); Heals? False
-  * Morph Ball Tunnel to Kraid Arena/Dock to Diffusion Beam Room (top)
+> Tunnel to Kraid Arena (top); Heals? False
+  * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (top)
   > Event - Diffusion Tutorial Blob (db_dif_mg_002)
       Morph Ball and Shoot Diffusion or Wave
-  > Dock to Teleport to Dairon
+  > Tunnel to Teleport to Dairon
       All of the following:
           Morph Ball
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Dock to Kraid Arena (bottom); Heals? False
-  * Morph Ball Tunnel to Kraid Arena/Dock to Diffusion Beam Room (bottom)
+> Tunnel to Kraid Arena (bottom); Heals? False
+  * Morph Ball Tunnel to Kraid Arena/Tunnel to Diffusion Beam Room (bottom)
   > Tile Group (BOMB) 1
       Morph Ball
 
-> Dock to Teleport to Dairon; Heals? False
-  * Morph Ball Tunnel to Teleport to Dairon/Dock to Diffusion Beam Room
+> Tunnel to Teleport to Dairon; Heals? False
+  * Morph Ball Tunnel to Teleport to Dairon/Tunnel to Diffusion Beam Room
   > Door from Teleport to Dairon
       All of the following:
           After Cataris - db_dif_mg_002
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Dock to Kraid Arena (top)
+  > Tunnel to Kraid Arena (top)
       All of the following:
           Morph Ball
           Any of the following:
@@ -3364,7 +3364,7 @@ Extra - asset_id: collision_camera_045
       Trivial
   > Event - Morph Tunnel Blob (db_dside_mg_004)
       Shoot Beam
-  > Dock to Teleport to Artaria (Blue)
+  > Tunnel to Teleport to Artaria (Blue)
       After Cataris - db_dside_mg_004
 
 > Pickup (Missile Tank); Heals? False
@@ -3394,8 +3394,8 @@ Extra - asset_id: collision_camera_045
   > Pickup Corner
       Trivial
 
-> Dock to Teleport to Artaria (Blue); Heals? False
-  * Slide Tunnel to Teleport to Artaria (Blue)/Dock to Lava Button East Access
+> Tunnel to Teleport to Artaria (Blue); Heals? False
+  * Slide Tunnel to Teleport to Artaria (Blue)/Tunnel to Lava Button East Access
   > Door to Lava Button East (doorframepresence_001)
       After Cataris - db_dside_mg_004
 
@@ -3429,11 +3429,11 @@ Extra - asset_id: collision_camera_046
       Trivial
   > Door from EMMI Zone Tower East
       Trivial
-  > Dock to EMMI Zone Tower East (1)
+  > Tunnel to EMMI Zone Tower East (1)
       Trivial
-  > Dock to Green EMMI Introduction (Bottom)
+  > Tunnel to Green EMMI Introduction (Bottom)
       Trivial
-  > Dock to EMMI Zone Tower East (2)
+  > Tunnel to EMMI Zone Tower East (2)
       All of the following:
           Morph Ball and After Cataris - Central Unit
           Simple IBJ or Use Spin Boost
@@ -3481,28 +3481,28 @@ Extra - asset_id: collision_camera_046
   * Extra - right_shield_def: None
   > Door to EMMI Zone Tower East (doorpowerpower_000)
       Can Slide
-  > Dock to Green EMMI Introduction (Upper)
+  > Tunnel to Green EMMI Introduction (Upper)
       Trivial
-  > Dock to EMMI Zone Tower East (2)
+  > Tunnel to EMMI Zone Tower East (2)
       Morph Ball and After Cataris - Central Unit
 
-> Dock to EMMI Zone Tower East (1); Heals? False
-  * Morph Ball Tunnel to EMMI Zone Tower East/Dock to EMMI Zone East Tower Access (1)
+> Tunnel to EMMI Zone Tower East (1); Heals? False
+  * Morph Ball Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone East Tower Access (1)
   > Door to EMMI Zone Tower East (doorpowerpower_015)
       Trivial
 
-> Dock to Green EMMI Introduction (Bottom); Heals? False
-  * Cataris EMMI Tunnel to Green EMMI Introduction/Dock to EMMI Zone East Tower Access (Bottom)
+> Tunnel to Green EMMI Introduction (Bottom); Heals? False
+  * Cataris EMMI Tunnel to Green EMMI Introduction/Tunnel to EMMI Zone East Tower Access (Bottom)
   > Door to EMMI Zone Tower East (doorpowerpower_015)
       Trivial
 
-> Dock to Green EMMI Introduction (Upper); Heals? False
-  * Cataris EMMI Tunnel to Green EMMI Introduction/Dock to EMMI Zone East Tower Access (Upper)
+> Tunnel to Green EMMI Introduction (Upper); Heals? False
+  * Cataris EMMI Tunnel to Green EMMI Introduction/Tunnel to EMMI Zone East Tower Access (Upper)
   > Door to Green EMMI Introduction (doorshutter_001)
       Trivial
 
-> Dock to EMMI Zone Tower East (2); Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone Tower East/Dock to EMMI Zone East Tower Access (2)
+> Tunnel to EMMI Zone Tower East (2); Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone East Tower Access (2)
   > Door to EMMI Zone Tower East (doorpowerpower_015)
       Morph Ball and After Cataris - Central Unit
   > Door to Green EMMI Introduction (doorshutter_001)
@@ -3632,7 +3632,7 @@ Extra - asset_id: collision_camera_048
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Dock to Teleport to Artaria (Blue)
+  > Tunnel to Teleport to Artaria (Blue)
       All of the following:
           Morph Ball
           Any of the following:
@@ -3655,13 +3655,13 @@ Extra - asset_id: collision_camera_048
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
-  > Dock to Teleport to Artaria (Blue)
+  > Tunnel to Teleport to Artaria (Blue)
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
 
-> Dock to Teleport to Artaria (Blue); Heals? False
-  * Morph Ball Tunnel to Teleport to Artaria (Blue)/Dock to Double Obsydomithon Room
+> Tunnel to Teleport to Artaria (Blue); Heals? False
+  * Morph Ball Tunnel to Teleport to Artaria (Blue)/Tunnel to Double Obsydomithon Room
   > Tile Group (MISSILE) 3
       Any of the following:
           Varia Suit
@@ -3740,7 +3740,7 @@ Extra - asset_id: collision_camera_051
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
-  > Dock to Diffusion Beam Room
+  > Tunnel to Diffusion Beam Room
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
@@ -3796,7 +3796,7 @@ Extra - asset_id: collision_camera_051
   * Event Cataris - db_dif_mg_001
   * Extra - actor_name: db_dif_mg_001
   * Extra - actor_def: actordef:actors/props/db_dif_mg_001/charclasses/db_dif_mg_001.bmsad
-  > Dock to Diffusion Beam Room
+  > Tunnel to Diffusion Beam Room
       Trivial
 
 > Teleporter to Dairon - Teleport to Cataris; Heals? False; Spawn Point
@@ -3859,8 +3859,8 @@ Extra - asset_id: collision_camera_051
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
 
-> Dock to Diffusion Beam Room; Heals? False
-  * Morph Ball Tunnel to Diffusion Beam Room/Dock to Teleport to Dairon
+> Tunnel to Diffusion Beam Room; Heals? False
+  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Teleport to Dairon
   > Door to Diffusion Beam Room
       Any of the following:
           Varia Suit
@@ -3874,8 +3874,8 @@ Extra - asset_id: collision_camera_051
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 120
 
-> Dock to Kraid Eyedoor Room; Heals? False
-  * Morph Ball Tunnel to Kraid Eyedoor Room/Dock to Teleport to Dairon
+> Tunnel to Kraid Eyedoor Room; Heals? False
+  * Morph Ball Tunnel to Kraid Eyedoor Room/Tunnel to Teleport to Dairon
   > Above Tutorial Blob
       All of the following:
           Morph Ball and After Cataris - db_reg_mg_021
@@ -3929,13 +3929,13 @@ Extra - asset_id: collision_camera_051
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Dock to Diffusion Beam Room
+  > Tunnel to Diffusion Beam Room
       All of the following:
           Morph Ball and After Cataris - db_reg_mg_021
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
-  > Dock to Kraid Eyedoor Room
+  > Tunnel to Kraid Eyedoor Room
       All of the following:
           Morph Ball and After Cataris - db_reg_mg_021
           Any of the following:
@@ -3997,7 +3997,7 @@ Extra - asset_id: collision_camera_052
       Trivial
   > Door from Underlava Puzzle Room 2
       Trivial
-  > Dock to Underlava Puzzle Room 2
+  > Tunnel to Underlava Puzzle Room 2
       Trivial
 
 > Event - Breakable (db_hdoor_mg_002); Heals? False
@@ -4013,8 +4013,8 @@ Extra - asset_id: collision_camera_052
   > Dock to Green EMMI Introduction
       Trivial
 
-> Dock to Underlava Puzzle Room 2; Heals? False
-  * Morph Ball Tunnel to Underlava Puzzle Room 2/Dock to Green EMMI Introduction Access
+> Tunnel to Underlava Puzzle Room 2; Heals? False
+  * Morph Ball Tunnel to Underlava Puzzle Room 2/Tunnel to Green EMMI Introduction Access
   > Door to Teleport to Dairon
       Trivial
 
@@ -4099,7 +4099,7 @@ Extra - asset_id: collision_camera_053
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (POWERBEAM) 3
       Trivial
-  > Dock to Green EMMI Introduction Access
+  > Tunnel to Green EMMI Introduction Access
       Trivial
 
 > Tile Group (POWERBEAM) 3; Heals? False
@@ -4110,7 +4110,7 @@ Extra - asset_id: collision_camera_053
   * Extra - tile_types: ('POWERBEAM',)
   > Tile Group (POWERBEAM) 2
       Trivial
-  > Dock to Dropdown Pit
+  > Tunnel to Dropdown Pit
       Trivial
 
 > Above Lava; Heals? False
@@ -4131,13 +4131,13 @@ Extra - asset_id: collision_camera_053
   > Above Lava
       Gravity Suit or Lava Damage ≥ 500
 
-> Dock to Dropdown Pit; Heals? False
-  * Slide Tunnel to Dropdown Pit/Dock to Underlava Puzzle Room 2
+> Tunnel to Dropdown Pit; Heals? False
+  * Slide Tunnel to Dropdown Pit/Tunnel to Underlava Puzzle Room 2
   > Tile Group (POWERBEAM) 3
       Trivial
 
-> Dock to Green EMMI Introduction Access; Heals? False
-  * Slide Tunnel to Green EMMI Introduction Access/Dock to Underlava Puzzle Room 2
+> Tunnel to Green EMMI Introduction Access; Heals? False
+  * Slide Tunnel to Green EMMI Introduction Access/Tunnel to Underlava Puzzle Room 2
   > Door to Green EMMI Introduction Access
       All of the following:
           # TODO: After proper blast shield logic is implemented, adjust this. This is a temporary connection.
@@ -4195,7 +4195,7 @@ Extra - asset_id: collision_camera_055
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Dock to EMMI Zone Tower East
+  > Tunnel to EMMI Zone Tower East
       Morph Ball
 
 > Tile Group (MISSILE); Heals? False
@@ -4212,11 +4212,11 @@ Extra - asset_id: collision_camera_055
 > Main Room; Heals? False
   > Tile Group (MISSILE)
       Grapple Beam or Spider Magnet or Use Spin Boost
-  > Dock to EMMI Zone Tower East
+  > Tunnel to EMMI Zone Tower East
       Morph Ball
 
-> Dock to EMMI Zone Tower East; Heals? False
-  * Morph Ball Tunnel to EMMI Zone Tower East/Dock to EMMI Zone Hidden Missile Room
+> Tunnel to EMMI Zone Tower East; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone Hidden Missile Room
   > Main Room
       Morph Ball
 
@@ -4283,11 +4283,11 @@ Extra - asset_id: collision_camera_059
   * Extra - right_shield_def: None
   > Door to Green EMMI Introduction
       Trivial
-  > Dock to EMMI Zone Exits West
+  > Tunnel to EMMI Zone Exits West
       Trivial
 
-> Dock to EMMI Zone Exits West; Heals? False
-  * Cataris EMMI Tunnel to EMMI Zone Exits West/Dock to EMMI Zone West Exit Path
+> Tunnel to EMMI Zone Exits West; Heals? False
+  * Cataris EMMI Tunnel to EMMI Zone Exits West/Tunnel to EMMI Zone West Exit Path
   > Door to EMMI Zone Exits West
       Trivial
 
@@ -4296,18 +4296,18 @@ Heated U-Turn
 Extra - total_boundings: {'x1': -14500.0, 'x2': -12400.0, 'y1': -2400.0, 'y2': -1300.0}
 Extra - polygon: [[-12400.0, -1300.0], [-14500.0, -1300.0], [-14500.0, -2400.0], [-12400.0, -2400.0]]
 Extra - asset_id: collision_camera_060
-> Dock to Above Kraid (bottom); Heals? False
-  * Slide Tunnel to Above Kraid/Dock to Heated U-Turn (bottom)
-  > Dock to Above Kraid (top)
+> Tunnel to Above Kraid (bottom); Heals? False
+  * Slide Tunnel to Above Kraid/Tunnel to Heated U-Turn (bottom)
+  > Tunnel to Above Kraid (top)
       All of the following:
           Morph Ball
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
-> Dock to Above Kraid (top); Heals? False
-  * Morph Ball Tunnel to Above Kraid/Dock to Heated U-Turn (top)
-  > Dock to Above Kraid (bottom)
+> Tunnel to Above Kraid (top); Heals? False
+  * Morph Ball Tunnel to Above Kraid/Tunnel to Heated U-Turn (top)
+  > Tunnel to Above Kraid (bottom)
       All of the following:
           Morph Ball
           Any of the following:
@@ -4375,8 +4375,8 @@ Extra - asset_id: collision_camera_061
           Morph Ball
           Gravity Suit or Lava Damage ≥ 400
 
-> Dock to Above Kraid; Heals? False
-  * Morph Ball Tunnel to Above Kraid/Dock to Kraid Eyedoor Room
+> Tunnel to Above Kraid; Heals? False
+  * Morph Ball Tunnel to Above Kraid/Tunnel to Kraid Eyedoor Room
   > Ledge below blob
       Any of the following:
           Varia Suit
@@ -4395,7 +4395,7 @@ Extra - asset_id: collision_camera_061
       All of the following:
           Morph Ball
           Gravity Suit or Lava Damage ≥ 400
-  > Dock to Teleport to Dairon
+  > Tunnel to Teleport to Dairon
       All of the following:
           After Cataris - db_reg_mg_021
           Any of the following:
@@ -4409,8 +4409,8 @@ Extra - asset_id: collision_camera_061
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
           Space Jump or Infinite Bomb Jump (Beginner)
 
-> Dock to Teleport to Dairon; Heals? False
-  * Morph Ball Tunnel to Teleport to Dairon/Dock to Kraid Eyedoor Room
+> Tunnel to Teleport to Dairon; Heals? False
+  * Morph Ball Tunnel to Teleport to Dairon/Tunnel to Kraid Eyedoor Room
   > Safe Ledge
       All of the following:
           After Cataris - db_reg_mg_021
@@ -4421,7 +4421,7 @@ Extra - asset_id: collision_camera_061
 > Ledge below blob; Heals? False
   > Event - Top Blob (db_reg_mg_020)
       Shoot Beam
-  > Dock to Above Kraid
+  > Tunnel to Above Kraid
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
@@ -4502,9 +4502,9 @@ Extra - asset_id: collision_camera_063
       Gravity Suit or Space Jump or Lava Damage ≥ 1500
 
 > Right Ledge; Heals? False
-  > Dock to Diffusion Beam Room (top)
+  > Tunnel to Diffusion Beam Room (top)
       Spider Magnet or Space Jump
-  > Dock to Diffusion Beam Room (bottom)
+  > Tunnel to Diffusion Beam Room (bottom)
       All of the following:
           Morph Ball
           Gravity Suit or Lava Damage ≥ 1000
@@ -4514,11 +4514,11 @@ Extra - asset_id: collision_camera_063
   > Tile Group (WEIGHT) 1
       Trivial
 
-> Dock to Diffusion Beam Room (top); Heals? False
-  * Morph Ball Tunnel to Diffusion Beam Room/Dock to Kraid Arena (top)
+> Tunnel to Diffusion Beam Room (top); Heals? False
+  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Kraid Arena (top)
 
-> Dock to Diffusion Beam Room (bottom); Heals? False
-  * Morph Ball Tunnel to Diffusion Beam Room/Dock to Kraid Arena (bottom)
+> Tunnel to Diffusion Beam Room (bottom); Heals? False
+  * Morph Ball Tunnel to Diffusion Beam Room/Tunnel to Kraid Arena (bottom)
   > Right Ledge
       All of the following:
           Morph Ball
