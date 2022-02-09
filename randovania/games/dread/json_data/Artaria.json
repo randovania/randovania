@@ -15506,7 +15506,7 @@
                     "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Tunnel to Charge Beam Access": {
+                        "Tile Group (BOMB)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -15535,7 +15535,7 @@
                     "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Tunnel to Speed Hallway": {
+                        "Tile Group (BOMB)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -15569,6 +15569,44 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Tile Group (BOMB)": {
+                    "node_type": "configurable_node",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7159.3,
+                        "y": -8682.33,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_005",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "BOMB"
+                        ]
+                    },
+                    "connections": {
+                        "Tunnel to Speed Hallway": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Tunnel to Charge Beam Access": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
