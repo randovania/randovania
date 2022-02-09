@@ -22,6 +22,7 @@ _FIELDS = [
     "small_samus",
     "shuffle_item_pos",
     "items_every_room",
+    "spring_ball",
 ]
 
 

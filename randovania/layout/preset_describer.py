@@ -109,8 +109,8 @@ def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfigur
     return item_pool
 
 
-def _format_params_base(configuration: BaseConfiguration,
-                        ) -> dict[str, list[str]]:
+def format_params_base(configuration: BaseConfiguration,
+                       ) -> dict[str, list[str]]:
     game_description = default_database.game_description_for(configuration.game)
     major_items = configuration.major_items_configuration
 
@@ -184,7 +184,7 @@ def fill_template_strings_from_tree(template_strings: Dict[str, List[str]], tree
 def describe(preset: Preset) -> Iterable[PresetDescription]:
     configuration = preset.configuration
 
-    template_strings = (preset.game.data.layout.preset_describer.format_params or _format_params_base)(configuration)
+    template_strings = (preset.game.data.layout.preset_describer.format_params or format_params_base)(configuration)
 
     for category, entries in template_strings.items():
         if entries:
