@@ -80,6 +80,97 @@
                     "item_id": 15
                 }
             },
+            "Amber": {
+                "long_name": "Amber Card",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": 301
+                }
+            },
+            "Dice": {
+                "long_name": "Dice Brace",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": 302
+                }
+            },
+            "RibbPink": {
+                "long_name": "Pink Ribbon",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 303
+                }
+            },
+            "RibbWhite": {
+                "long_name": "White Ribbon",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 304
+                }
+            },
+            "Shackle": {
+                "long_name": "IronShackle",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 305
+                }
+            },
+            "JevilTail": {
+                "long_name": "Jevilstail",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 307
+                }
+            },
+            "SilverCard": {
+                "long_name": "Silver Card",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": 308
+                }
+            },
+            "Glower": {
+                "long_name": "GlowWrist",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": 309
+                }
+            },
+            "RoyalPin": {
+                "long_name": "Royal Pin",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 310
+                }
+            },
+            "BBow": {
+                "long_name": "B.ShotBowtie",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 311
+                }
+            },
+            "Chain": {
+                "long_name": "ChainMail",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 312
+                }
+            },
+            "DealMaker": {
+                "long_name": "Dealmaker",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 313
+                }
+            },
+            "Spiky": {
+                "long_name": "SpikeBand",
+                "max_capacity": 999,
+                "extra": {
+                    "item_id": 314
+                }
+            },
             "SpookSword": {
                 "long_name": "SpookySword",
                 "max_capacity": 1,
@@ -226,22 +317,24 @@
                 "extra": {
                     "item_id": 111
                 }
-            },
-            "Nothing": {
-                "long_name": "Nothing",
-                "max_capacity": 1,
-                "extra": {
-                    "item_id": 1004
-                }
             }
         },
         "events": {
-            "Event1": {
-                "long_name": "Fought castle lancer.",
+            "GotGlowshard": {
+                "long_name": "Got Glowshard Check",
+                "extra": {}
+            },
+            "Boss": {
+                "long_name": "Boss",
                 "extra": {}
             }
         },
         "tricks": {
+            "Combat": {
+                "long_name": "Combat",
+                "description": "If this trick is enabled, the player may be expected to defeat enemies and bosses with fewer items and less health.",
+                "extra": {}
+            }
         },
         "damage": {
             "Damage": {
@@ -250,502 +343,43 @@
             }
         },
         "versions": {
-        },
-        "misc": {
-        },
-        "requirement_template": {
-            "Shoot Super Missile": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Power",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 5,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Charge",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Supers",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Can Use Arm Cannon"
-                        }
-                    ]
-                }
-            },
-            "Have all Beams": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Power",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Ice",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Can Use Arm Cannon"
-                        }
-                    ]
-                }
-            },
-            "Heat-Resisting Suit": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "GravitySuit",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "VariaSuit",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "PhazonSuit",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
-                }
-            },
-            "Can Use Arm Cannon": {
-                "type": "or",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Combat",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Thermal",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "X-Ray",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
-                }
-            },
-            "Shoot Any Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "template",
-                            "data": "Can Use Arm Cannon"
-                        },
-                        {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Ice",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Plasma",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            "Shoot Power Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Power",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Can Use Arm Cannon"
-                        }
-                    ]
-                }
-            },
-            "Shoot Wave Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Can Use Arm Cannon"
-                        }
-                    ]
-                }
-            },
-            "Shoot Ice Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Ice",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Can Use Arm Cannon"
-                        }
-                    ]
-                }
-            },
-            "Shoot Plasma Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Can Use Arm Cannon"
-                        }
-                    ]
-                }
-            },
-            "Use Grapple Beam": {
-                "type": "and",
-                "data": {
-                    "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Grapple",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "template",
-                            "data": "Can Use Arm Cannon"
-                        }
-                    ]
-                }
+            "NTSC": {
+                "long_name": "NTSC",
+                "extra": {}
             }
         },
-        "damage_reductions": [
-            {
-                "name": "Damage",
-                "reductions": [
-                    {
-                        "name": "GravitySuit",
-                        "multiplier": 0.800000011920929
-                    },
-                    {
-                        "name": "VariaSuit",
-                        "multiplier": 0.8999999761581421
-                    },
-                    {
-                        "name": "PhazonSuit",
-                        "multiplier": 0.5
-                    }
-                ]
-            },
-            {
-                "name": "HeatDamage1",
-                "reductions": [
-                    {
-                        "name": "GravitySuit",
-                        "multiplier": 0.0
-                    },
-                    {
-                        "name": "VariaSuit",
-                        "multiplier": 0.0
-                    },
-                    {
-                        "name": "PhazonSuit",
-                        "multiplier": 0.0
-                    }
-                ]
-            },
-            {
-                "name": "Phazon",
-                "reductions": [
-                    {
-                        "name": "PhazonSuit",
-                        "multiplier": 0.0
-                    }
-                ]
-            }
-        ],
-        "energy_tank_item_index": "EnergyTank",
+        "misc": {},
+        "requirement_template": {},
+        "damage_reductions": [],
+        "energy_tank_item_index": "Health",
         "item_percentage_index": null,
-        "multiworld_magic_item_index": "Unknown1"
+        "multiworld_magic_item_index": null
     },
     "starting_location": {
-        "world_name": "Tallon Overworld",
-        "area_name": "Landing Site"
+        "world_name": "??????",
+        "area_name": "Starting Area"
     },
     "initial_states": {
-        "Item Loss Disabled": []
+        "Default": []
     },
     "minimal_logic": {
-        "items_to_exclude": [
-            {
-                "name": "Ice",
-                "when_shuffled": null
-            },
-            {
-                "name": "Wave",
-                "when_shuffled": null
-            },
-            {
-                "name": "Bombs",
-                "when_shuffled": null
-            },
-            {
-                "name": "MorphBall",
-                "when_shuffled": null
-            },
-            {
-                "name": "PhazonSuit",
-                "when_shuffled": null
-            },
-            {
-                "name": "Truth",
-                "when_shuffled": null
-            },
-            {
-                "name": "Strength",
-                "when_shuffled": null
-            },
-            {
-                "name": "Elder",
-                "when_shuffled": null
-            },
-            {
-                "name": "Wild",
-                "when_shuffled": null
-            },
-            {
-                "name": "Lifegiver",
-                "when_shuffled": null
-            },
-            {
-                "name": "Warrior",
-                "when_shuffled": null
-            },
-            {
-                "name": "Chozo",
-                "when_shuffled": null
-            },
-            {
-                "name": "Nature",
-                "when_shuffled": null
-            },
-            {
-                "name": "Sun",
-                "when_shuffled": null
-            },
-            {
-                "name": "World",
-                "when_shuffled": null
-            },
-            {
-                "name": "Spirit",
-                "when_shuffled": null
-            },
-            {
-                "name": "Newborn",
-                "when_shuffled": null
-            }
-        ],
-        "custom_item_amount": [
-            {
-                "name": "Missile",
-                "value": 100
-            },
-            {
-                "name": "PowerBomb",
-                "value": 8
-            },
-            {
-                "name": "EnergyTank",
-                "value": 14
-            }
-        ],
+        "items_to_exclude": [],
+        "custom_item_amount": [],
         "events_to_exclude": [
             {
-                "name": "Event43",
+                "name": "Boss",
                 "reason": "victory condition"
             }
         ],
-        "description": "Items checked for: Morph Ball, Morph Ball Bomb, Wave Beam, Ice Beam, Phazon Suit, Artifacts."
+        "description": "Nothing is checked."
     },
     "victory_condition": {
-        "type": "or",
+        "type": "resource",
         "data": {
-            "comment": null,
-            "items": [
-                {
-                    "type": "resource",
-                    "data": {
-                        "type": "events",
-                        "name": "Event43",
-                        "amount": 1,
-                        "negate": false
-                    }
-                }
-            ]
+            "type": "events",
+            "name": "Boss",
+            "amount": 1,
+            "negate": false
         }
     },
     "dock_weakness_database": {
@@ -758,225 +392,10 @@
                         "lock_type": 0,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Any Beam"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Scan",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    },
-                    "Ice Door": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "template",
-                            "data": "Shoot Ice Beam"
-                        }
-                    },
-                    "Wave Door": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "template",
-                            "data": "Shoot Wave Beam"
-                        }
-                    },
-                    "Plasma Door": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "template",
-                            "data": "Shoot Plasma Beam"
-                        }
-                    },
-                    "Missile Blast Shield": {
-                        "lock_type": 2,
-                        "extra": {},
-                        "requirement": {
                             "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Any Beam"
-                                    }
-                                ]
-                            }
-                        }
-                    },
-                    "Permanently Locked": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                }
-            },
-            "morph_ball": {
-                "name": "Morph Ball Door",
-                "extra": {},
-                "items": {
-                    "Morph Ball Door": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Plasma",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Combat",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Thermal",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "X-Ray",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Scan",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
                             }
                         }
                     }
@@ -991,97 +410,6 @@
                         "extra": {},
                         "requirement": {
                             "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Power",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Ice",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Wave",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Plasma",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Combat",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Thermal",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "X-Ray",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    },
-                    "Closed Passage": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": []
@@ -1108,13 +436,7 @@
         }
     },
     "worlds": [
-        "Impact Crater.json",
-        "Phendrana Drifts.json",
-        "Frigate Orpheon.json",
-        "Magmoor Caverns.json",
-        "Phazon Mines.json",
-        "Tallon Overworld.json",
-        "Chozo Ruins.json",
-        "End of Game.json"
+        "Intro.json",
+        "RalCastle.json"
     ]
 }

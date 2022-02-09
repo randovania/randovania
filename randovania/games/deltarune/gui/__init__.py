@@ -1,0 +1,1 @@
+from .dialog.cosmetic_patches_dialog import deltaruneCosmeticPatchesDialog

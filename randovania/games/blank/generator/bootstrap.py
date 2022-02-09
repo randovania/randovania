@@ -1,5 +1,5 @@
 from randovania.resolver.bootstrap import Bootstrap
 
 
-class deltaruneBootstrap(Bootstrap):
+class BlankBootstrap(Bootstrap):
     pass
