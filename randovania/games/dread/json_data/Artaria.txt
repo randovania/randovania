@@ -3470,18 +3470,29 @@ Extra - asset_id: collision_camera_062
 
 > Dock to Speed Hallway; Heals? False
   * Morph Ball Tunnel to Speed Hallway/Dock to Cold Introduction
-  > Dock to Charge Beam Access (Speed Tunnel)
+  > Tile Group (BOMB)
       Morph Ball
 
 > Dock to Charge Beam Access (Speed Tunnel); Heals? False
   * Morph Ball Tunnel to Charge Beam Access/Dock to Cold Introduction (Speed Tunnel)
-  > Dock to Speed Hallway
+  > Tile Group (BOMB)
       Morph Ball
 
 > Dock to Charge Beam Access (Side Tunnel); Heals? False
   * Open Passage to Charge Beam Access/Dock to Cold Introduction (Side Tunnel)
   > Door to Charge Beam Access (Side Tunnel)
       Trivial
+
+> Tile Group (BOMB); Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_005
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
+  > Dock to Speed Hallway
+      Morph Ball
+  > Dock to Charge Beam Access (Speed Tunnel)
+      Morph Ball
 
 ----------------
 Save Station South
