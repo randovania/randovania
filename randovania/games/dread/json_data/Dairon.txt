@@ -210,7 +210,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Dock to Big Hub (Lower)
+  > Dock to Big Hub
       Trivial
 
 > Tile Group (BOMB); Heals? False
@@ -219,16 +219,16 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
-  > Dock to Big Hub (Tunnel)
+  > Tunnel to Big Hub
       Morph Ball
   > Above Crumble Blocks
       Morph Ball
 
-> Dock to Big Hub (Lower); Heals? False
-  * Open Passage to Big Hub/Dock to Hub Access (Lower)
+> Dock to Big Hub; Heals? False
+  * Open Passage to Big Hub/Dock to Hub Access
 
-> Dock to Big Hub (Tunnel); Heals? False
-  * Morph Ball Tunnel to Big Hub/Dock to Hub Access (Tunnel)
+> Tunnel to Big Hub; Heals? False
+  * Morph Ball Tunnel to Big Hub/Tunnel to Hub Access
   > Tile Group (BOMB)
       Morph Ball
 
@@ -246,7 +246,7 @@ Extra - asset_id: collision_camera_002
       Trivial
 
 > Dock from Transport to Artaria; Heals? False
-  * Blocked Passage to Transport to Artaria/Dock to Hub Access
+  * Blocked Passage to Transport to Artaria/Tunnel to Hub Access
   > Door to Save Station East
       Trivial
 
@@ -294,7 +294,7 @@ Extra - asset_id: collision_camera_004
       Grapple Beam or Space Jump or Speed Booster or Simple IBJ
   > Event - Blob (db_reg_b1_005)
       Lay Bomb or Shoot Beam
-  > Dock to Hub Access (Lower)
+  > Dock to Hub Access
       Trivial
 
 > Door to Wide Beam Room; Heals? False
@@ -322,7 +322,7 @@ Extra - asset_id: collision_camera_004
   * Extra - right_shield_def: None
   > Door to Wide Beam Room
       Trivial
-  > Dock to Hub Access (Lower)
+  > Dock to Hub Access
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -343,7 +343,7 @@ Extra - asset_id: collision_camera_004
   * Event Dairon - grapplepulloff1x2_007
   * Extra - actor_name: grapplepulloff1x2_007
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Dock to Hub Access (Lower)
+  > Dock to Hub Access
       Trivial
 
 > Start Point; Heals? False; Spawn Point
@@ -358,13 +358,13 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
-  > Dock to Hub Access (Lower)
+  > Dock to Hub Access
       Morph Ball and After Dairon - grapplepulloff1x2_007
-  > Dock to Hub Access (Tunnel)
+  > Tunnel to Hub Access
       Morph Ball
 
-> Dock to Hub Access (Lower); Heals? False
-  * Open Passage to Hub Access/Dock to Big Hub (Lower)
+> Dock to Hub Access; Heals? False
+  * Open Passage to Hub Access/Dock to Big Hub
   > Dock to Yellow EMMI Introduction
       After Dairon - Wide Beam Block Hub or Simple IBJ or Use Spin Boost
   > Door to Total Recharge Station East
@@ -376,14 +376,14 @@ Extra - asset_id: collision_camera_004
   > Event - Push Wide Beam Block
       Push Wide Beam Block
 
-> Dock to Hub Access (Tunnel); Heals? False
-  * Morph Ball Tunnel to Hub Access/Dock to Big Hub (Tunnel)
+> Tunnel to Hub Access; Heals? False
+  * Morph Ball Tunnel to Hub Access/Tunnel to Big Hub
   > Tile Group (BOMB)
       Morph Ball
 
 > Event - Push Wide Beam Block; Heals? False
   * Event Dairon - Wide Beam Block Hub
-  > Dock to Hub Access (Lower)
+  > Dock to Hub Access
       Trivial
 
 ----------------
@@ -552,11 +552,11 @@ Extra - asset_id: collision_camera_007
       Trivial
   > Event - Electric Generator
       Trivial
-  > Dock to Teleport to Cataris
+  > Tunnel to Teleport to Cataris
       Morph Ball
 
-> Dock to Teleport to Cataris; Heals? False
-  * Slide Tunnel to Teleport to Cataris/Dock to Power Switch 1
+> Tunnel to Teleport to Cataris; Heals? False
+  * Slide Tunnel to Teleport to Cataris/Tunnel to Power Switch 1
   > Start Point
       Trivial
 
@@ -646,7 +646,7 @@ Extra - asset_id: collision_camera_008
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Power Switch 1
       Trivial
-  > Dock to Power Switch 1
+  > Tunnel to Power Switch 1
       Trivial
 
 > Tile Group (POWERBEAM) 2; Heals? False
@@ -660,8 +660,8 @@ Extra - asset_id: collision_camera_008
   > Bottom-Left Corner
       Trivial
 
-> Dock to Power Switch 1; Heals? False
-  * Slide Tunnel to Power Switch 1/Dock to Teleport to Cataris
+> Tunnel to Power Switch 1; Heals? False
+  * Slide Tunnel to Power Switch 1/Tunnel to Teleport to Cataris
   > Tile Group (POWERBEAM) 1
       Trivial
 
@@ -900,7 +900,7 @@ Extra - asset_id: collision_camera_011
       Grapple Beam
   > Tile Group (POWERBEAM)
       Trivial
-  > Dock to Hub Access
+  > Tunnel to Hub Access
       After Dairon - grapplepulloff1x2_006
 
 > Tile Group (POWERBEAM); Heals? False
@@ -941,7 +941,7 @@ Extra - asset_id: collision_camera_011
   > Door from Early Grapple Room
       Trivial
 
-> Dock to Hub Access; Heals? False
+> Tunnel to Hub Access; Heals? False
   * Morph Ball Launcher to Hub Access/Dock from Transport to Artaria
   > Elevator to Artaria - Transport to Dairon
       After Dairon - grapplepulloff1x2_006
@@ -1485,16 +1485,16 @@ Extra - asset_id: collision_camera_017
   * Extra - tile_types: ('SPEEDBOOST',)
   > Dock to West Transport to Ferenia
       Trivial
-  > Dock to Yellow EMMI Introduction (Speed)
+  > Dock to Yellow EMMI Introduction
       Trivial
 
-> Dock to Yellow EMMI Introduction (Speed); Heals? False
-  * Open Passage to Yellow EMMI Introduction/Dock to EMMI Zone Exit North (Speed)
+> Dock to Yellow EMMI Introduction; Heals? False
+  * Open Passage to Yellow EMMI Introduction/Dock to EMMI Zone Exit North
   > Tile Group (SPEEDBOOST)
       Trivial
 
-> Dock to Yellow EMMI Introduction (Tunnel); Heals? False
-  * Dairon EMMI Tunnel to Yellow EMMI Introduction/Dock to EMMI Zone Exit North (Tunnel)
+> Tunnel to Yellow EMMI Introduction; Heals? False
+  * Dairon EMMI Tunnel to Yellow EMMI Introduction/Tunnel to EMMI Zone Exit North
   > Lower-Right Corner
       Trivial
 
@@ -1505,7 +1505,7 @@ Extra - asset_id: collision_camera_017
       Can Slide
   > Event - Blob (db_dif_b1_002)
       Shoot Diffusion or Wave
-  > Dock to Yellow EMMI Introduction (Tunnel)
+  > Tunnel to Yellow EMMI Introduction
       All of the following:
           Morph Ball
           Simple IBJ or Use Spin Boost
@@ -1556,7 +1556,7 @@ Extra - asset_id: collision_camera_018
       Trivial
   > Tile Group (BOMB MISSILE)
       Trivial
-  > Dock to EMMI Zone Exit North (Speed)
+  > Dock to EMMI Zone Exit North
       Trivial
 
 > Tile Group (BOMB MISSILE); Heals? False
@@ -1595,16 +1595,16 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Dock to EMMI Zone Exit North (Speed)
+  > Dock to EMMI Zone Exit North
       Trivial
 
-> Dock to EMMI Zone Exit North (Speed); Heals? False
-  * Open Passage to EMMI Zone Exit North/Dock to Yellow EMMI Introduction (Speed)
+> Dock to EMMI Zone Exit North; Heals? False
+  * Open Passage to EMMI Zone Exit North/Dock to Yellow EMMI Introduction
   > Tile Group (SPEEDBOOST)
       Trivial
 
-> Dock to EMMI Zone Exit North (Tunnel); Heals? False
-  * Dairon EMMI Tunnel to EMMI Zone Exit North/Dock to Yellow EMMI Introduction (Tunnel)
+> Tunnel to EMMI Zone Exit North; Heals? False
+  * Dairon EMMI Tunnel to EMMI Zone Exit North/Tunnel to Yellow EMMI Introduction
   > Lower-Left Area
       Trivial
 
@@ -1613,7 +1613,7 @@ Extra - asset_id: collision_camera_018
       Trivial
   > Tile Group (POWERBEAM) 1
       Trivial
-  > Dock to EMMI Zone Exit North (Tunnel)
+  > Tunnel to EMMI Zone Exit North
       Trivial
 
 ----------------
@@ -1825,7 +1825,7 @@ Extra - asset_id: collision_camera_021
   * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
       Morph Ball
-  > Dock to Total Recharge Station West
+  > Tunnel to Total Recharge Station West
       Morph Ball
 
 > Tile Group (BOMB) 3; Heals? False
@@ -1836,10 +1836,10 @@ Extra - asset_id: collision_camera_021
   * Extra - tile_types: ('BOMB',)
   > Tile Group (BOMB) 1
       Trivial
-  > Dock to Total Recharge Station West
+  > Tunnel to Total Recharge Station West
       Morph Ball
 
-> Dock to Total Recharge Station West; Heals? False
+> Tunnel to Total Recharge Station West; Heals? False
   * Morph Ball Launcher to Total Recharge Station West/Dock from Bomb Room
   > Tile Group (BOMB) 2
       Morph Ball
@@ -1907,13 +1907,13 @@ Extra - asset_id: collision_camera_022
   > Center
       Trivial
 
-> Dock to Power Switch 2; Heals? False
-  * Morph Ball Tunnel to Power Switch 2/Dock to Total Recharge Station West
+> Tunnel to Power Switch 2; Heals? False
+  * Morph Ball Tunnel to Power Switch 2/Tunnel to Total Recharge Station West
   > Center
       After Dairon - db_reg_b1_003
 
 > Dock from Bomb Room; Heals? False
-  * Blocked Passage to Bomb Room/Dock to Total Recharge Station West
+  * Blocked Passage to Bomb Room/Tunnel to Total Recharge Station West
   > Center
       Trivial
 
@@ -1924,7 +1924,7 @@ Extra - asset_id: collision_camera_022
       Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
   > Total Recharge
       Trivial
-  > Dock to Power Switch 2
+  > Tunnel to Power Switch 2
       After Dairon - db_reg_b1_003
 
 ----------------
@@ -1981,7 +1981,7 @@ Extra - asset_id: collision_camera_024
       Shoot Beam
   > Event - Electric Generator
       Trivial
-  > Dock to Total Recharge Station West
+  > Tunnel to Total Recharge Station West
       Morph Ball and After Dairon - db_reg_b1_003
 
 > Event - Blob (db_reg_b1_003); Heals? False
@@ -2004,8 +2004,8 @@ Extra - asset_id: collision_camera_024
   * Extra - start_point_actor_name: powergeneratorengine_002
   * Extra - start_point_actor_def: actordef:actors/props/powergeneratorengine/charclasses/powergeneratorengine.bmsad
 
-> Dock to Total Recharge Station West; Heals? False
-  * Morph Ball Tunnel to Total Recharge Station West/Dock to Power Switch 2
+> Tunnel to Total Recharge Station West; Heals? False
+  * Morph Ball Tunnel to Total Recharge Station West/Tunnel to Power Switch 2
   > Door to Freezer
       Morph Ball and After Dairon - db_reg_b1_003
 
@@ -2291,7 +2291,7 @@ Extra - asset_id: collision_camera_026
   * Extra - right_shield_def: None
   > Dock to Shinespark Tutorial
       Morph Ball and After Dairon - grapplepulloff1x2
-  > Dock to Experiment Z-57 Test Chamber
+  > Tunnel to Experiment Z-57 Test Chamber
       Trivial
 
 > Event - Pull Grapple Block (grapplepulloff1x2); Heals? False
@@ -2301,7 +2301,7 @@ Extra - asset_id: collision_camera_026
   > Dock to Shinespark Tutorial
       Trivial
 
-> Dock to Experiment Z-57 Test Chamber; Heals? False
+> Tunnel to Experiment Z-57 Test Chamber; Heals? False
   * Morph Ball Launcher to Experiment Z-57 Test Chamber/Dock from Test Chamber Access
   > Door to Total Recharge Station West
       Trivial
@@ -2330,14 +2330,14 @@ Extra - asset_id: collision_camera_027
   * Extra - right_shield_def: None
   > Dock to Experiment Z-57 Test Chamber
       Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ
-  > Dock to EMMI Zone Exit West (Tunnel)
+  > Tunnel to EMMI Zone Exit West
       Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 66; Major Location? False
   * Extra - actor_name: item_missiletank_007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Dock to EMMI Zone Exit West (Speed)
+  > Dock to EMMI Zone Exit West
       Morph Ball
 
 > Door to Shinespark Tutorial; Heals? False
@@ -2351,13 +2351,13 @@ Extra - asset_id: collision_camera_027
   > Dock to Experiment Z-57 Test Chamber
       Trivial
 
-> Dock to EMMI Zone Exit West (Speed); Heals? False
-  * Open Passage to EMMI Zone Exit West/Dock to EMMI Zone Exit Northwest (Speed)
+> Dock to EMMI Zone Exit West; Heals? False
+  * Open Passage to EMMI Zone Exit West/Dock to EMMI Zone Exit Northwest
   > Pickup (Missile Tank)
       Morph Ball
 
-> Dock to EMMI Zone Exit West (Tunnel); Heals? False
-  * Dairon EMMI Tunnel to EMMI Zone Exit West/Dock to EMMI Zone Exit Northwest (Tunnel)
+> Tunnel to EMMI Zone Exit West; Heals? False
+  * Dairon EMMI Tunnel to EMMI Zone Exit West/Tunnel to EMMI Zone Exit Northwest
   > Door to EMMI Zone Exit West
       Trivial
 
@@ -2385,7 +2385,7 @@ Extra - asset_id: collision_camera_028
       Trivial
 
 > Dock from Test Chamber Access; Heals? False
-  * Blocked Passage to Test Chamber Access/Dock to Experiment Z-57 Test Chamber
+  * Blocked Passage to Test Chamber Access/Tunnel to Experiment Z-57 Test Chamber
   > Dock to EMMI Zone Exit Northwest
       Trivial
 
@@ -2411,7 +2411,7 @@ Extra - asset_id: collision_camera_029
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Exit Southwest
       Trivial
-  > Dock to EMMI Zone Exit Northwest (Tunnel)
+  > Tunnel to EMMI Zone Exit Northwest
       Trivial
 
 > Door to EMMI Zone Exit Southwest; Heals? False
@@ -2433,16 +2433,16 @@ Extra - asset_id: collision_camera_029
   * Extra - tile_types: ('SPEEDBOOST',)
   > Door to EMMI Zone Exit Northwest
       Can Slide
-  > Dock to EMMI Zone Exit Northwest (Speed)
+  > Dock to EMMI Zone Exit Northwest
       Trivial
 
-> Dock to EMMI Zone Exit Northwest (Speed); Heals? False
-  * Open Passage to EMMI Zone Exit Northwest/Dock to EMMI Zone Exit West (Speed)
+> Dock to EMMI Zone Exit Northwest; Heals? False
+  * Open Passage to EMMI Zone Exit Northwest/Dock to EMMI Zone Exit West
   > Tile Group (SPEEDBOOST)
       Trivial
 
-> Dock to EMMI Zone Exit Northwest (Tunnel); Heals? False
-  * Dairon EMMI Tunnel to EMMI Zone Exit Northwest/Dock to EMMI Zone Exit West (Tunnel)
+> Tunnel to EMMI Zone Exit Northwest; Heals? False
+  * Dairon EMMI Tunnel to EMMI Zone Exit Northwest/Tunnel to EMMI Zone Exit West
   > Dock to Hidden Grapple Shortcut Room
       Trivial
 
@@ -2457,7 +2457,7 @@ Extra - asset_id: collision_camera_030
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (POWERBEAM) 1
       Trivial
-  > Dock to Save Station West Tunnels (Bottom)
+  > Tunnel to Save Station West Tunnels (Bottom)
       Trivial
 
 > Door to Experiment Z-57 Test Chamber; Heals? False
@@ -2470,7 +2470,7 @@ Extra - asset_id: collision_camera_030
   * Extra - right_shield_def: None
   > Tile Group (POWERBEAM) 2
       Trivial
-  > Dock to Save Station West Tunnels (Top)
+  > Tunnel to Save Station West Tunnels (Top)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -2513,13 +2513,13 @@ Extra - asset_id: collision_camera_030
   > Event - Pull Grapple Block (grapplepulloff1x2_005)
       Grapple Beam
 
-> Dock to Save Station West Tunnels (Bottom); Heals? False
-  * Morph Ball Launcher to Save Station West Tunnels/Dock to Hidden Grapple Shortcut Room (Bottom)
+> Tunnel to Save Station West Tunnels (Bottom); Heals? False
+  * Morph Ball Launcher to Save Station West Tunnels/Tunnel to Hidden Grapple Shortcut Room (Bottom)
   > Dock to EMMI Zone Exit West
       Trivial
 
-> Dock to Save Station West Tunnels (Top); Heals? False
-  * Morph Ball Launcher to Save Station West Tunnels/Dock to Hidden Grapple Shortcut Room (Top)
+> Tunnel to Save Station West Tunnels (Top); Heals? False
+  * Morph Ball Launcher to Save Station West Tunnels/Tunnel to Hidden Grapple Shortcut Room (Top)
   > Door to Experiment Z-57 Test Chamber
       Trivial
 
@@ -2538,9 +2538,9 @@ Extra - asset_id: collision_camera_031
   * Extra - right_shield_def: None
   > Tile Group (BOMB) 1
       Morph Ball
-  > Dock to Hidden Grapple Shortcut Room (Bottom)
+  > Tunnel to Hidden Grapple Shortcut Room (Bottom)
       Trivial
-  > Dock to Hidden Grapple Shortcut Room (Top)
+  > Tunnel to Hidden Grapple Shortcut Room (Top)
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -2572,13 +2572,13 @@ Extra - asset_id: collision_camera_031
   > Tile Group (BOMB) 1
       Morph Ball
 
-> Dock to Hidden Grapple Shortcut Room (Bottom); Heals? False
-  * Morph Ball Launcher to Hidden Grapple Shortcut Room/Dock to Save Station West Tunnels (Bottom)
+> Tunnel to Hidden Grapple Shortcut Room (Bottom); Heals? False
+  * Morph Ball Launcher to Hidden Grapple Shortcut Room/Tunnel to Save Station West Tunnels (Bottom)
   > Door to Save Station West
       Trivial
 
-> Dock to Hidden Grapple Shortcut Room (Top); Heals? False
-  * Morph Ball Launcher to Hidden Grapple Shortcut Room/Dock to Save Station West Tunnels (Top)
+> Tunnel to Hidden Grapple Shortcut Room (Top); Heals? False
+  * Morph Ball Launcher to Hidden Grapple Shortcut Room/Tunnel to Save Station West Tunnels (Top)
   > Door to Save Station West
       Trivial
 
@@ -2663,7 +2663,7 @@ Extra - asset_id: collision_camera_033
   * Extra - tile_types: ('SPEEDBOOST',)
   > Door from Ammo Recharge Station
       Trivial
-  > Dock to Ammo Recharge Station
+  > Tunnel to Ammo Recharge Station
       Morph Ball
 
 > Tile Group (SPEEDBOOST) 2; Heals? False
@@ -2682,8 +2682,8 @@ Extra - asset_id: collision_camera_033
   > Door from Ammo Recharge Station
       After Dairon - Storm Missile Gate
 
-> Dock to Ammo Recharge Station; Heals? False
-  * Morph Ball Tunnel to Ammo Recharge Station/Dock to Storm Missile Gate Room
+> Tunnel to Ammo Recharge Station; Heals? False
+  * Morph Ball Tunnel to Ammo Recharge Station/Tunnel to Storm Missile Gate Room
   > Tile Group (SPEEDBOOST) 1
       Morph Ball
 
@@ -2735,11 +2735,11 @@ Extra - asset_id: collision_camera_034
   * Extra - tile_types: ('SPEEDBOOST',)
   > Door to Storm Missile Gate Room
       Morph Ball
-  > Dock to Storm Missile Gate Room
+  > Tunnel to Storm Missile Gate Room
       Morph Ball
 
-> Dock to Storm Missile Gate Room; Heals? False
-  * Morph Ball Tunnel to Storm Missile Gate Room/Dock to Ammo Recharge Station
+> Tunnel to Storm Missile Gate Room; Heals? False
+  * Morph Ball Tunnel to Storm Missile Gate Room/Tunnel to Ammo Recharge Station
   > Tile Group (SPEEDBOOST)
       Morph Ball
 
@@ -2840,11 +2840,11 @@ Extra - asset_id: collision_camera_036
       All of the following:
           Can Slide
           Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
-  > Dock to Central Unit Access
+  > Tunnel to Central Unit Access
       Trivial
 
-> Dock to Central Unit Access; Heals? False
-  * Dairon EMMI Tunnel to Central Unit Access/Dock to EMMI Zone Exit Southwest
+> Tunnel to Central Unit Access; Heals? False
+  * Dairon EMMI Tunnel to Central Unit Access/Tunnel to EMMI Zone Exit Southwest
 
 ----------------
 EMMI Zone Exit South
@@ -2924,7 +2924,7 @@ Extra - asset_id: collision_camera_037
       Trivial
   > Submerged Area
       Trivial
-  > Dock to Central Unit Access
+  > Tunnel to Central Unit Access
       Trivial
 
 > Submerged Area; Heals? False
@@ -2935,8 +2935,8 @@ Extra - asset_id: collision_camera_037
   > Door to Central Unit Access (doorchargecharge_000)
       Grapple Beam or Gravity Suit or Spider Magnet
 
-> Dock to Central Unit Access; Heals? False
-  * Dairon EMMI Tunnel to Central Unit Access/Dock to EMMI Zone Exit South
+> Tunnel to Central Unit Access; Heals? False
+  * Dairon EMMI Tunnel to Central Unit Access/Tunnel to EMMI Zone Exit South
 
 ----------------
 Central Unit
@@ -3054,18 +3054,18 @@ Extra - asset_id: collision_camera_040
   * Pickup 147; Major Location? True
   * Extra - pickup_type: emmi
   * Extra - actor_def: actors/characters/emmylab/charclasses/emmylab.bmsad
-  * Extra - string_key: GUI_ITEM_ACQUIRE_SPEED_BOOSTER
-  * Extra - callback_function: OnEmmyLabDead
+  * Extra - string_key: GUI_ITEM_ACQUIRED_SPEED_BOOSTER
+  * Extra - callback_function: OnEmmyBaseLabDead
   > Door to Central Unit
       Trivial
 
-> Dock to EMMI Zone Exit South; Heals? False
-  * Dairon EMMI Tunnel to EMMI Zone Exit South/Dock to Central Unit Access
+> Tunnel to EMMI Zone Exit South; Heals? False
+  * Dairon EMMI Tunnel to EMMI Zone Exit South/Tunnel to Central Unit Access
   > Door to EMMI Zone Exit South (doorchargecharge_000)
       Trivial
 
-> Dock to EMMI Zone Exit Southwest; Heals? False
-  * Dairon EMMI Tunnel to EMMI Zone Exit Southwest/Dock to Central Unit Access
+> Tunnel to EMMI Zone Exit Southwest; Heals? False
+  * Dairon EMMI Tunnel to EMMI Zone Exit Southwest/Tunnel to Central Unit Access
   > Door to Central Unit
       Trivial
 

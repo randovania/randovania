@@ -26,6 +26,27 @@ from randovania.patching.patcher import Patcher
 from randovania.patching.prime.patcher_file_lib import pickup_exporter
 from randovania.patching.prime.patcher_file_lib.pickup_exporter import ExportedPickupDetails
 
+_ALTERNATIVE_MODELS = {
+    "powerup_wavebeam": "powerup_plasmabeam",
+    "powerup_hyperbeam": "powerup_plasmabeam",
+    "powerup_icemissile": "powerup_supermissile",
+    "powerup_stormmissile": "itemsphere",
+    "powerup_metroidsuit": "powerup_gravitysuit",
+    "powerup_morphball": "itemsphere",
+    "powerup_crossbomb": "powerup_bomb",
+    "powerup_powerbomb": "itemsphere",
+    "powerup_slide": "itemsphere",
+    "powerup_spidermagnet": "itemsphere",
+    "powerup_speedbooster": "itemsphere",
+
+    "PROGRESSIVE_BEAM": "powerup_widebeam",
+    "PROGRESSIVE_CHARGE": "powerup_chargebeam",
+    "PROGRESSIVE_MISSILE": "powerup_supermissile",
+    "PROGRESSIVE_SUIT": "powerup_variasuit",
+    "PROGRESSIVE_BOMB": "powerup_bomb",
+    "PROGRESSIVE_SPIN": "powerup_doublejump",
+}
+
 
 def _get_item_id_for_item(item: ItemResourceInfo) -> str:
     if "item_capacity_id" in item.extra:
@@ -85,6 +106,7 @@ class OpenDreadPatcher(Patcher):
         configuration = description.get_preset(players_config.player_index).configuration
         assert isinstance(configuration, DreadConfiguration)
         rng = Random(description.get_seed_for_player(players_config.player_index))
+        memo_data = DreadAcquiredMemo.with_expansion_text()
 
         def _calculate_starting_inventory(resources: CurrentResources):
             result = {}
@@ -130,7 +152,7 @@ class OpenDreadPatcher(Patcher):
                 }
             except KeyError as e:
                 raise KeyError(f"{node} has no extra {e}")
-        
+
         def _callback_ref_for(node: Node) -> dict:
             try:
                 return {
@@ -147,10 +169,10 @@ class OpenDreadPatcher(Patcher):
             if detail.model.game != RandovaniaGame.METROID_DREAD:
                 model_name = "itemsphere"
             else:
-                model_name = detail.model.name
-            
+                model_name = _ALTERNATIVE_MODELS.get(detail.model.name, detail.model.name)
+
             ammoconfig = configuration.ammo_configuration.items_state
-            pbammo = item_db.ammo["Power Bomb Expansion"]
+            pbammo = item_db.ammo["Power Bomb Tank"]
 
             def get_resource(res: ConditionalResources) -> dict:
                 item_id = "ITEM_NONE"
@@ -163,17 +185,17 @@ class OpenDreadPatcher(Patcher):
                         break
                     except KeyError:
                         continue
-                
+
                 if "ITEM_WEAPON_POWER_BOMB" in ids:
                     item_id = "ITEM_WEAPON_POWER_BOMB"
-                
+
                 # non-required mains
                 if (item_id == "ITEM_WEAPON_POWER_BOMB_MAX"
-                    and not ammoconfig[pbammo].requires_major_item):
+                        and not ammoconfig[pbammo].requires_major_item):
                     item_id = "ITEM_WEAPON_POWER_BOMB"
 
                 return {"item_id": item_id, "quantity": quantity}
-            
+
             # ugly hack
             resources = [get_resource(res) for res in detail.conditional_resources]
             if resources[0]["item_id"] == "ITEM_WEAPON_POWER_BOMB_MAX":
@@ -183,8 +205,8 @@ class OpenDreadPatcher(Patcher):
             pickup_type = pickup_node.extra.get("pickup_type", "actor")
 
             hud_text = detail.hud_text[0]
-            if len(detail.hud_text) > 1:
-                hud_text = DreadAcquiredMemo()[detail.original_pickup.name]
+            if len(set(detail.hud_text)) > 1:
+                hud_text = memo_data[detail.original_pickup.name]
 
             details = {
                 "pickup_type": pickup_type,
@@ -206,7 +228,7 @@ class OpenDreadPatcher(Patcher):
                     })
                 return details
             except KeyError as e:
-                logging.warn(e)
+                logging.warning(e)
                 return None
 
         starting_location = _start_point_ref_for(_node_for(patches.starting_location))
@@ -222,11 +244,12 @@ class OpenDreadPatcher(Patcher):
             rng,
             configuration.pickup_model_style,
             configuration.pickup_model_data_source,
-            exporter=pickup_exporter.create_pickup_exporter(db, DreadAcquiredMemo(), players_config),
+            exporter=pickup_exporter.create_pickup_exporter(db, memo_data, players_config),
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
         return {
+            "debug_export_modified_files": True,
             "starting_location": starting_location,
             "starting_items": starting_items,
             "pickups": [
@@ -249,8 +272,23 @@ class OpenDreadPatcher(Patcher):
         output_file.mkdir(parents=True, exist_ok=True)
         with output_file.joinpath("patcher.json").open("w") as f:
             json.dump(patch_data, f, indent=4)
-        open_dread_rando.patch(input_file, output_file, patch_data)
+        open_dread_rando.patch_with_status_update(
+            input_file, output_file, patch_data,
+            lambda progress, msg: progress_update(msg, progress),
+        )
+
 
 class DreadAcquiredMemo(dict):
     def __missing__(self, key):
         return "{} acquired.".format(key)
+
+    @classmethod
+    def with_expansion_text(cls):
+        result = cls()
+        result["Missile Tank"] = "Missile Tank acquired.\nMissile capacity increased by {Missiles}."
+        result["Missile+ Tank"] = "Missile+ Tank acquired.\nMissile capacity increased by {Missiles}."
+        result["Power Bomb Tank"] = "Power Bomb Tank acquired.\nPower Bomb capacity increased by {Power Bombs}."
+        result["Energy Part"] = "Energy Part acquired.\nCollect 4 to increase energy capacity."
+        result["Energy Tank"] = "Energy Tank acquired.\nEnergy capacity increased by 100."
+        result["Locked Power Bomb Tank"] = result["Power Bomb Tank"]
+        return result
