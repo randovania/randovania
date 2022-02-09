@@ -91,15 +91,15 @@ Hypermode tricks aren't fair. They are placed in their own difficulty so that pl
   
 As has been discussed, there are many different criteria for deciding a trick's difficulty, and the task is ultimately very subjective. Remember that there's more worth considering than strictly the amount of "skill" the player must put in to perform the trick. Every time you add or modify a trick, you should ask yourself:  
   
-How familiar does a player need to be with a trick to perform it?  
-Is the trick consistent?  
-Are there consequences for attempting the trick?  
-How long does the trick take to attempt?  
-How long does it take before the player can try again?  
-Is the trick fun or flashy to perform, or does it feel like a drag on gameplay?  
-Could a player intuit this trick on their own?  
-How quickly could a player learn this trick?  
-How similar is this trick to other tricks of the same type?  
+- How familiar does a player need to be with a trick to perform it?  
+- Is the trick consistent?  
+- Are there consequences for attempting the trick?  
+- How long does the trick take to attempt?  
+- How long does it take before the player can try again?  
+- Is the trick fun or flashy to perform, or does it feel like a drag on gameplay?  
+- Could a player intuit this trick on their own?  
+- How quickly could a player learn this trick?  
+- How similar is this trick to other tricks of the same type?  
   
   
 ## NAMING CONVENTIONS  

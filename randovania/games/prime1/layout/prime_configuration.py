@@ -32,6 +32,7 @@ class PrimeConfiguration(BaseConfiguration):
     small_samus: bool
     shuffle_item_pos: bool
     items_every_room: bool
+    spring_ball: bool
 
     main_plaza_door: bool
     backwards_frigate: bool

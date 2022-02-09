@@ -4,7 +4,7 @@ from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.preset_describer import _format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
+from randovania.layout.preset_describer import format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
     message_for_required_mains
 
 
@@ -13,7 +13,7 @@ def cs_format_params(configuration: BaseConfiguration) -> dict[str, list[str]]:
 
     template_strings = defaultdict(list)
     template_strings["Objective"].append(configuration.objective.long_name)
-    template_strings.update(_format_params_base(configuration))
+    template_strings.update(format_params_base(configuration))
 
     extra_message_tree = {
         "Item Placement": [
