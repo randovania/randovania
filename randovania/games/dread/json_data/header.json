@@ -989,6 +989,11 @@
                 "long_name": "Heat/Cold Runs",
                 "description": "",
                 "extra": {}
+            },
+            "RGrapple": {
+                "long_name": "Reverse Grapple Block",
+                "description": "",
+                "extra": {}
             }
         },
         "damage": {
@@ -1650,8 +1655,25 @@
                             "data": "Shoot Ice Missile"
                         },
                         {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1836,6 +1858,41 @@
                             "data": {
                                 "type": "items",
                                 "name": "Slide",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Break/Move Grapple Block from Behind": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Slide",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "RGrapple",
                                 "amount": 1,
                                 "negate": false
                             }

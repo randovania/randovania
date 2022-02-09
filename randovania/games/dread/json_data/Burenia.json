@@ -6000,6 +6000,27 @@
                                     }
                                 ]
                             }
+                        },
+                        "Dock to Main Hub Tower Bottom": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can SSC"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SSC",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -6237,6 +6258,25 @@
                             }
                         }
                     }
+                },
+                "Dock to Main Hub Tower Bottom": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -3048.99,
+                        "y": -6939.41,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Main Hub Tower Bottom",
+                        "node_name": "Dock from Main Hub Tower Middle"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Open Passage",
+                    "connections": {}
                 }
             }
         },
@@ -7125,6 +7165,33 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Dock from Main Hub Tower Middle": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -2998.63,
+                        "y": -7068.36,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Burenia",
+                        "area_name": "Main Hub Tower Middle",
+                        "node_name": "Dock to Main Hub Tower Bottom"
+                    },
+                    "dock_type": "other",
+                    "dock_weakness": "Blocked Passage",
+                    "connections": {
+                        "Door to Energy Recharge South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
