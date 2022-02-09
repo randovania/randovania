@@ -55,6 +55,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: The UI for 1HP Mode now only shows up for Echoes.
 
+### Metroid Prime Patcher
+- Fixed: Cannon remaining holstered after grapple when shuffling combat visor
+- Fixed: Cannon remaining holstered after a specific type of R-Jump when shuffling combat visor
+- Fixed: Unmorphing now returns you to your previous visor instead of default visor when shuffling combat visor for quality of life purposes
+
 ## [4.0.1] - Unreleased
 
 - Changed: The UI for 1HP Mode now only shows up for Echoes.
