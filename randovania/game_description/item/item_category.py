@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Tuple
 
+from randovania.lib import frozen_lib
+
 
 @dataclass(frozen=True, order=True)
 class ItemCategory:
@@ -15,7 +17,7 @@ class ItemCategory:
         return cls(
             name=name,
             long_name=value["long_name"],
-            hint_details=tuple(value["hint_details"]),
+            hint_details=frozen_lib.wrap(value["hint_details"]),
             is_major=value["is_major"],
             is_key=value["is_key"] if "is_key" in value else False
         )
@@ -24,7 +26,7 @@ class ItemCategory:
     def as_json(self) -> dict:
         result = {
             "long_name": self.long_name,
-            "hint_details": list(self.hint_details),
+            "hint_details": frozen_lib.unwrap(self.hint_details),
             "is_major": self.is_major,
         }
         if self.is_key:

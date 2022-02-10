@@ -8,7 +8,7 @@
         "map_max_y": 239
     },
     "areas": {
-        "Elun Gate": {
+        "Bridge Gate": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -52,7 +52,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Exterior Bridge",
-                        "node_name": "Dock to Elun Gate"
+                        "node_name": "Dock to Bridge Gate"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -79,7 +79,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Purple Drapes",
-                        "node_name": "Dock to Elun Gate"
+                        "node_name": "Dock to Bridge Gate"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -126,7 +126,7 @@
                 "asset_id": "collision_camera_001"
             },
             "nodes": {
-                "Door to Elun Save Station": {
+                "Door to Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -145,7 +145,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Elun Save Station",
+                        "area_name": "Save Station",
                         "node_name": "Door to Transport to Ghavoran"
                     },
                     "dock_type": "door",
@@ -188,7 +188,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Elun Save Station": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -221,7 +221,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to Elun Save Station": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -244,7 +244,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Elun Save Station": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -286,7 +286,7 @@
                 "asset_id": "collision_camera_002"
             },
             "nodes": {
-                "Door to Ammo Refill Room": {
+                "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -305,7 +305,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Purple Drapes"
                     },
                     "dock_type": "door",
@@ -318,7 +318,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Elun Gate": {
+                        "Dock to Bridge Gate": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -352,7 +352,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Ammo Refill Room": {
+                        "Tunnel to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -379,7 +379,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -395,7 +395,7 @@
                         }
                     }
                 },
-                "Dock to Elun Gate": {
+                "Dock to Bridge Gate": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -407,13 +407,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Elun Gate",
+                        "area_name": "Bridge Gate",
                         "node_name": "Dock to Purple Drapes"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -422,7 +422,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Refill Room": {
+                "Tunnel to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -434,10 +434,10 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Dock from Purple Drapes"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Tile Group (BOMB) 1": {
@@ -451,7 +451,7 @@
                 }
             }
         },
-        "Ammo Refill Room": {
+        "Ammo Recharge Station": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -502,7 +502,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Purple Drapes",
-                        "node_name": "Door to Ammo Refill Room"
+                        "node_name": "Door to Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
@@ -550,7 +550,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Chozo Soldier Arena",
-                        "node_name": "Door to Ammo Refill Room"
+                        "node_name": "Door to Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -645,7 +645,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Gyroscope Room",
-                        "node_name": "Door to Ammo Refill Room"
+                        "node_name": "Door to Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -726,7 +726,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Plasma Beam Room",
-                        "node_name": "Door to Ammo Refill Room"
+                        "node_name": "Door to Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
@@ -776,12 +776,12 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Plasma Beam Room",
-                        "node_name": "Door from Ammo Refill Room"
+                        "node_name": "Door from Ammo Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
                     "connections": {
-                        "Dock to Bottom Morph Launcher": {
+                        "Tunnel to Bottom Morph Launcher": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -995,7 +995,7 @@
                                 ]
                             }
                         },
-                        "Dock to Horizontal Bomb Maze": {
+                        "Tunnel to Horizontal Bomb Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1081,35 +1081,21 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Purple Drapes",
-                        "node_name": "Dock to Ammo Refill Room"
+                        "node_name": "Tunnel to Ammo Recharge Station"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
                     "connections": {
-                        "Door to Plasma Beam Room (Upper)": {
+                        "Event - Release X": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s060_quarantine:default:db_reg_qt_001",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "items": []
                             }
-                        },
-                        "Event - Elun - Ammo Recharge Room Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
                         }
                     }
                 },
-                "Dock to Bottom Morph Launcher": {
+                "Tunnel to Bottom Morph Launcher": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1122,9 +1108,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Bottom Morph Launcher",
-                        "node_name": "Dock to Ammo Refill Room"
+                        "node_name": "Tunnel to Ammo Recharge Station"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Door to Plasma Beam Room (Lower)": {
@@ -1136,7 +1122,7 @@
                         }
                     }
                 },
-                "Dock to Horizontal Bomb Maze": {
+                "Tunnel to Horizontal Bomb Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1149,9 +1135,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Horizontal Bomb Maze",
-                        "node_name": "Dock to Ammo Refill Room"
+                        "node_name": "Tunnel to Ammo Recharge Station"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (BOMB) 2": {
@@ -1169,6 +1155,60 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Alcove": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1975.9073143495252,
+                        "y": -1890.089335566723,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Plasma Beam Room (Upper)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s060_quarantine:default:db_reg_qt_001",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Event - Elun - Ammo Recharge Room Blob": {
+                            "type": "template",
+                            "data": "Shoot Beam"
+                        },
+                        "Dock from Purple Drapes": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Release X": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1871.16,
+                        "y": -2099.58,
+                        "z": 0.0
+                    },
+                    "description": "TODO: Verify exiting this morph ball launcher releases the X\n\n",
+                    "extra": {},
+                    "event_name": "ElunReleaseX",
+                    "connections": {
+                        "Alcove": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -1206,7 +1246,7 @@
                 "asset_id": "collision_camera_004"
             },
             "nodes": {
-                "Door to Ammo Refill Room": {
+                "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1225,7 +1265,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Chozo Soldier Arena"
                     },
                     "dock_type": "door",
@@ -1282,7 +1322,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1385,7 +1425,7 @@
                 "asset_id": "collision_camera_005"
             },
             "nodes": {
-                "Door to Ammo Refill Room": {
+                "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1404,7 +1444,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Gyroscope Room"
                     },
                     "dock_type": "door",
@@ -1444,7 +1484,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1577,7 +1617,7 @@
                     "pickup_index": 115,
                     "major_location": true,
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1586,7 +1626,7 @@
                         }
                     }
                 },
-                "Door to Ammo Refill Room": {
+                "Door to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1605,7 +1645,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Plasma Beam Room (Upper)"
                     },
                     "dock_type": "door",
@@ -1634,7 +1674,7 @@
                         }
                     }
                 },
-                "Door from Ammo Refill Room": {
+                "Door from Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1653,7 +1693,7 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
+                        "area_name": "Ammo Recharge Station",
                         "node_name": "Door to Plasma Beam Room (Lower)"
                     },
                     "dock_type": "door",
@@ -1682,7 +1722,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1709,14 +1749,14 @@
                         ]
                     },
                     "connections": {
-                        "Door to Ammo Refill Room": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door from Ammo Refill Room": {
+                        "Door from Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1948,7 +1988,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Vertical Bomb Maze": {
+                        "Tunnel to Vertical Bomb Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1976,7 +2016,7 @@
                         }
                     }
                 },
-                "Dock to Vertical Bomb Maze": {
+                "Tunnel to Vertical Bomb Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1989,9 +2029,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Vertical Bomb Maze",
-                        "node_name": "Dock to Spider Magnet Room"
+                        "node_name": "Tunnel to Spider Magnet Room"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (BOMB)": {
@@ -2104,7 +2144,7 @@
                                 ]
                             }
                         },
-                        "Dock to Vertical Bomb Maze": {
+                        "Tunnel to Vertical Bomb Maze": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2192,7 +2232,7 @@
                                 ]
                             }
                         },
-                        "Dock to Bottom Morph Launcher": {
+                        "Tunnel to Bottom Morph Launcher": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2245,7 +2285,7 @@
                         }
                     }
                 },
-                "Dock to Vertical Bomb Maze": {
+                "Tunnel to Vertical Bomb Maze": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2258,9 +2298,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Vertical Bomb Maze",
-                        "node_name": "Dock to Fan Room"
+                        "node_name": "Tunnel to Fan Room"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Door to Gyroscope Room": {
@@ -2282,7 +2322,7 @@
                         }
                     }
                 },
-                "Dock to Bottom Morph Launcher": {
+                "Tunnel to Bottom Morph Launcher": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2295,9 +2335,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Bottom Morph Launcher",
-                        "node_name": "Dock to Fan Room"
+                        "node_name": "Tunnel to Fan Room"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Tile Group (POWERBEAM)": {
@@ -2394,7 +2434,7 @@
                     },
                     "event_name": "s060_quarantine:default:grapplepulloff1x2_000",
                     "connections": {
-                        "Dock to Spider Magnet Room": {
+                        "Tunnel to Spider Magnet Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2436,7 +2476,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad"
                     },
                     "connections": {
-                        "Dock to Fan Room": {
+                        "Tunnel to Fan Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2503,7 +2543,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Horizontal Bomb Maze (Lower)": {
+                        "Tunnel to Horizontal Bomb Maze (Lower)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2549,7 +2589,7 @@
                                 ]
                             }
                         },
-                        "Dock to Horizontal Bomb Maze (Upper)": {
+                        "Tunnel to Horizontal Bomb Maze (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2919,24 +2959,7 @@
                         }
                     }
                 },
-                "Tile Group ()": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9200.0,
-                        "y": 700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_026",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": []
-                    },
-                    "connections": {}
-                },
-                "Dock to Horizontal Bomb Maze (Upper)": {
+                "Tunnel to Horizontal Bomb Maze (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2949,9 +2972,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Horizontal Bomb Maze",
-                        "node_name": "Dock to Vertical Bomb Maze (Upper)"
+                        "node_name": "Tunnel to Vertical Bomb Maze (Upper)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (POWERBOMB) 1": {
@@ -2973,7 +2996,7 @@
                         }
                     }
                 },
-                "Dock to Horizontal Bomb Maze (Lower)": {
+                "Tunnel to Horizontal Bomb Maze (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2986,9 +3009,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Horizontal Bomb Maze",
-                        "node_name": "Dock to Vertical Bomb Maze (Lower)"
+                        "node_name": "Tunnel to Vertical Bomb Maze (Lower)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (BOMB WEIGHT)": {
@@ -3005,7 +3028,7 @@
                         }
                     }
                 },
-                "Dock to Spider Magnet Room": {
+                "Tunnel to Spider Magnet Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3018,9 +3041,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Spider Magnet Room",
-                        "node_name": "Dock to Vertical Bomb Maze"
+                        "node_name": "Tunnel to Vertical Bomb Maze"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Grapple Block Alcove": {
@@ -3051,7 +3074,7 @@
                         }
                     }
                 },
-                "Dock to Fan Room": {
+                "Tunnel to Fan Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3064,9 +3087,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Fan Room",
-                        "node_name": "Dock to Vertical Bomb Maze"
+                        "node_name": "Tunnel to Vertical Bomb Maze"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Life Recharge": {
@@ -3126,7 +3149,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Spider Magnet Room": {
+                        "Tunnel to Spider Magnet Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3212,7 +3235,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Vertical Bomb Maze (Upper)": {
+                        "Tunnel to Vertical Bomb Maze (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3248,7 +3271,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Ammo Refill Room": {
+                        "Tunnel to Ammo Recharge Station": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3285,7 +3308,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Ammo Refill Room": {
+                        "Tunnel to Ammo Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3489,7 +3512,7 @@
                                 ]
                             }
                         },
-                        "Dock to Vertical Bomb Maze (Lower)": {
+                        "Tunnel to Vertical Bomb Maze (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3508,7 +3531,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Refill Room": {
+                "Tunnel to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3520,10 +3543,10 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
-                        "node_name": "Dock to Horizontal Bomb Maze"
+                        "area_name": "Ammo Recharge Station",
+                        "node_name": "Tunnel to Horizontal Bomb Maze"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (BOMB) 1": {
@@ -3545,7 +3568,7 @@
                         }
                     }
                 },
-                "Dock to Vertical Bomb Maze (Lower)": {
+                "Tunnel to Vertical Bomb Maze (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3558,9 +3581,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Vertical Bomb Maze",
-                        "node_name": "Dock to Horizontal Bomb Maze (Lower)"
+                        "node_name": "Tunnel to Horizontal Bomb Maze (Lower)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (BOMB) 4": {
@@ -3582,7 +3605,7 @@
                         }
                     }
                 },
-                "Dock to Vertical Bomb Maze (Upper)": {
+                "Tunnel to Vertical Bomb Maze (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3595,9 +3618,9 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Vertical Bomb Maze",
-                        "node_name": "Dock to Horizontal Bomb Maze (Upper)"
+                        "node_name": "Tunnel to Horizontal Bomb Maze (Upper)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Pickup (Missile Tank)": {
@@ -3652,7 +3675,7 @@
                 "asset_id": "collision_camera_011"
             },
             "nodes": {
-                "Door to Elun Save Station": {
+                "Door to Save Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3671,13 +3694,13 @@
                     },
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Elun Save Station",
+                        "area_name": "Save Station",
                         "node_name": "Door to Exterior Bridge"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to Elun Gate": {
+                        "Dock to Bridge Gate": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3686,7 +3709,7 @@
                         }
                     }
                 },
-                "Dock to Elun Gate": {
+                "Dock to Bridge Gate": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3698,13 +3721,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Elun Gate",
+                        "area_name": "Bridge Gate",
                         "node_name": "Dock to Exterior Bridge"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to Elun Save Station": {
+                        "Door to Save Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3715,7 +3738,7 @@
                 }
             }
         },
-        "Elun Save Station": {
+        "Save Station": {
             "default_node": "Save Station",
             "valid_starting_location": false,
             "extra": {
@@ -3766,7 +3789,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Exterior Bridge",
-                        "node_name": "Door to Elun Save Station"
+                        "node_name": "Door to Save Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3800,7 +3823,7 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Transport to Ghavoran",
-                        "node_name": "Door to Elun Save Station"
+                        "node_name": "Door to Save Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3895,7 +3918,7 @@
                 "asset_id": "collision_camera_MBL_B"
             },
             "nodes": {
-                "Dock to Fan Room": {
+                "Tunnel to Fan Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3908,12 +3931,12 @@
                     "destination": {
                         "world_name": "Elun",
                         "area_name": "Fan Room",
-                        "node_name": "Dock to Bottom Morph Launcher"
+                        "node_name": "Tunnel to Bottom Morph Launcher"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
-                        "Dock to Ammo Refill Room": {
+                        "Tunnel to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3922,7 +3945,7 @@
                         }
                     }
                 },
-                "Dock to Ammo Refill Room": {
+                "Tunnel to Ammo Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3934,13 +3957,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Elun",
-                        "area_name": "Ammo Refill Room",
-                        "node_name": "Dock to Bottom Morph Launcher"
+                        "area_name": "Ammo Recharge Station",
+                        "node_name": "Tunnel to Bottom Morph Launcher"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
-                        "Dock to Fan Room": {
+                        "Tunnel to Fan Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,

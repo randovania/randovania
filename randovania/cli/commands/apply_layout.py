@@ -9,26 +9,15 @@ def randomize_command_logic(args):
 
 async def randomize_command_logic_async(args):
     from randovania.patching.patcher_provider import PatcherProvider
-    from randovania.generator import generator
     from randovania.interface_common.players_configuration import PlayersConfiguration
     from randovania.layout.layout_description import LayoutDescription
-    from randovania.layout.permalink import Permalink
     from randovania.interface_common.options import Options
 
     def status_update(s):
         if args.verbose:
             print(s)
 
-    if args.permalink is not None:
-        permalink = Permalink.from_str(args.permalink)
-        layout_description = await generator.generate_and_validate_description(
-            generator_params=permalink.parameters,
-            status_update=status_update,
-            validate_after_generation=True,
-        )
-    else:
-        layout_description = LayoutDescription.from_file(args.log_file)
-
+    layout_description = LayoutDescription.from_file(args.log_file)
     players_config = PlayersConfiguration(args.player_index,
                                           {i: f"Player {i + 1}"
                                            for i in range(layout_description.player_count)})
@@ -44,16 +33,12 @@ async def randomize_command_logic_async(args):
                        lambda x, _: status_update(x))
 
 
-def add_randomize_command(sub_parsers):
+def add_apply_layout_command(sub_parsers):
     parser: ArgumentParser = sub_parsers.add_parser(
-        "randomize",
-        help="Randomizes a game files path."
+        "apply-layout",
+        help="Exports the modified game."
     )
-
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("--permalink", type=str, help="The permalink to use")
-    group.add_argument("--log-file", type=Path, help="A seed log file to use")
-
+    parser.add_argument("--layout-file", type=Path, help="The rdvgame file to use")
     parser.add_argument("--verbose", action="store_true", help="Prints progress",
                         default=False)
     parser.add_argument("--player-index", type=int, default=0,

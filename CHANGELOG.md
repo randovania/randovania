@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Randovania now checks if the entire database is strongly connected, allowing for manual exceptions. 
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
+- Changed: Most command line arguments have been renamed.
+- Changed: Changed how ConfigurableNodes (In Echoes, the Translator Gates) are handled in logic. This should have no visual differences, other than speeding up generation.
 
 ### Cave Story
 
@@ -52,6 +54,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.0.2] - Unreleased
 
 - Changed: The UI for 1HP Mode now only shows up for Echoes.
+
+### Metroid Prime Patcher
+- Fixed: Cannon remaining holstered after grapple when shuffling combat visor
+- Fixed: Cannon remaining holstered after a specific type of R-Jump when shuffling combat visor
+- Fixed: Unmorphing now returns you to your previous visor instead of default visor when shuffling combat visor for quality of life purposes
 
 ## [4.0.1] - Unreleased
 

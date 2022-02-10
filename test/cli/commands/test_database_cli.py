@@ -2,15 +2,15 @@ from unittest.mock import MagicMock, patch, ANY, call
 
 import pytest
 
-from randovania.cli import prime_database
+from randovania.cli import database
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.games.game import RandovaniaGame
 
 
 @pytest.mark.parametrize("expected_resource", [0, 1, 2])
-@patch("randovania.cli.prime_database._list_paths_with_resource", autospec=True)
-@patch("randovania.cli.prime_database.load_game_description", autospec=True)
+@patch("randovania.cli.database._list_paths_with_resource", autospec=True)
+@patch("randovania.cli.database.load_game_description", autospec=True)
 def test_list_paths_with_resource_logic(mock_load_game_description: MagicMock,
                                         mock_list_paths_with_resource: MagicMock,
                                         expected_resource: int
@@ -34,7 +34,7 @@ def test_list_paths_with_resource_logic(mock_load_game_description: MagicMock,
     args.resource = resource.long_name
 
     # Run
-    prime_database.list_paths_with_resource_logic(args)
+    database.list_paths_with_resource_logic(args)
 
     # Assert
     mock_load_game_description.assert_called_once_with(args)
@@ -62,7 +62,7 @@ def test_refresh_all_logic(check, mocker):
                                                     return_value=["An error"])
 
     # Run
-    prime_database.refresh_all_logic(args)
+    database.refresh_all_logic(args)
 
     # Assert
     if check:
