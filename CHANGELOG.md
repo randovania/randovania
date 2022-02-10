@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Patcher Changes
 
-- Nothing.
+- Option to use deterministic I. Drone RNG for fairer racing
 
 #### Logic Database
 
