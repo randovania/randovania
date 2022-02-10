@@ -49,6 +49,37 @@ So have fun and start randomizing.
 In the [releases page](https://github.com/randovania/randovania/releases), we have zip files
 with everything ready to use. Just extract and run!
 
+## Linux
+
+### Running (in-source)
+
+1. Clone this repository (downloading the source zip is not supported and will not work)
+2. Open a terminal in the repository root
+3. Fetch the tags from the repo:
+
+   `$ git fetch --tags`
+4. Checkout the latest tag (replace v4.0.1 with the latest release version):
+
+   `$ git checkout v4.0.1`
+5. Prepare the virtual environment and install dependencies:
+   
+   `$ tools/prepare_virtual_env.sh`
+6. Run the program from source:
+
+   `$ tools/start_client.sh`
+
+### Running Natively and Multiworld
+
+1. Activate the virtual environment and generate the necessary configuration.json, as well as build a native application:
+
+   ```console
+   $ . venv/bin/activate
+   (venv) $ export PRODUCTION=true
+   (venv) $ python tools/create_release.py
+   ```
+2. Navigate into the build/randovania directory
+3. Install the generated randovania.pkg or run the generated executable
+
 <!-- Begin COMMUNITY -->
 
 # Community

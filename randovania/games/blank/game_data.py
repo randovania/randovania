@@ -1,21 +1,19 @@
-from randovania.games.blank import generator
-from randovania.games.blank.layout.blank_configuration import BlankConfiguration
-from randovania.games.blank.layout.blank_cosmetic_patches import BlankCosmeticPatches
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout
+from randovania.games import game
+from randovania.games.blank import generator, layout
 
 
-def _gui():
-    from randovania.games.blank.gui import preset_settings, BlankCosmeticPatchesDialog
+def _gui() -> game.GameGui:
+    from randovania.games.blank import gui
 
-    return GameGui(
-        tab_provider=preset_settings.preset_tabs,
-        cosmetic_dialog=BlankCosmeticPatchesDialog,
+    return game.GameGui(
+        tab_provider=gui.preset_tabs,
+        cosmetic_dialog=gui.BlankCosmeticPatchesDialog,
         progressive_item_gui_tuples=tuple(),
         spoiler_visualizer=tuple(),
     )
 
 
-game_data: GameData = GameData(
+game_data: game.GameData = game.GameData(
     short_name="Blank",
     long_name="Blank Development Game",
     experimental=True,
@@ -28,14 +26,14 @@ game_data: GameData = GameData(
 
     faq=[],
 
-    layout=GameLayout(
-        configuration=BlankConfiguration,
-        cosmetic_patches=BlankCosmeticPatches,
+    layout=game.GameLayout(
+        configuration=layout.BlankConfiguration,
+        cosmetic_patches=layout.BlankCosmeticPatches,
     ),
 
     gui=_gui,
 
-    generator=GameGenerator(
+    generator=game.GameGenerator(
         item_pool_creator=generator.pool_creator,
         bootstrap=generator.BlankBootstrap(),
         base_patches_factory=generator.BlankBasePatchesFactory(),

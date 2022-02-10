@@ -2481,10 +2481,44 @@
                                         }
                                     },
                                     {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "SpaceJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WallJump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Pants Room Right": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "SpaceJump",
+                                            "name": "Gravity",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -2507,18 +2541,200 @@
                     "destination": {
                         "world_name": "Maridia",
                         "area_name": "Shaktool Room",
+                        "node_name": "Door to Pants Room Right"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Pants Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Pants Room Right": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 479.02,
+                        "y": 253.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Maridia",
+                        "area_name": "Pants Room Right",
                         "node_name": "Door to Pants Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
                         "Door to Sandy Hall East": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to Pants Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 540.58,
+                        "y": 259.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Maridia",
+                        "area_name": "Pants Room",
+                        "node_name": "Door to Pants Room Right"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Shaktool Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ice",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IBA",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Pants Room Right": {
+            "default_node": "Door to Shaktool Room",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "7D69A",
+                "asset_id": 138
+            },
+            "nodes": {
+                "Door to Shaktool Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 477.7842190016103,
+                        "y": 770.4734299516908,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Maridia",
+                        "area_name": "Shaktool Room",
+                        "node_name": "Door to Pants Room Right"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Pants Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Pants Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 27.62,
+                        "y": 257.65,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Maridia",
+                        "area_name": "Pants Room",
+                        "node_name": "Door to Pants Room Right"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Door to Shaktool Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Ice",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "IBA",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -2526,26 +2742,26 @@
             }
         },
         "Shaktool Room": {
-            "default_node": "Door to Pants Room",
+            "default_node": "Door to Pants Room Right",
             "valid_starting_location": false,
             "extra": {
                 "map_name": "7D8C5",
                 "asset_id": 139
             },
             "nodes": {
-                "Door to Pants Room": {
+                "Door to Pants Room Right": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 34.876605248464465,
-                        "y": 255.9999999999999,
-                        "z": 0
+                        "x": 34.88,
+                        "y": 256.0,
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "destination": {
                         "world_name": "Maridia",
-                        "area_name": "Pants Room",
+                        "area_name": "Pants Room Right",
                         "node_name": "Door to Shaktool Room"
                     },
                     "dock_type": "door",
@@ -2597,7 +2813,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
-                        "Door to Pants Room": {
+                        "Door to Pants Room Right": {
                             "type": "and",
                             "data": {
                                 "comment": null,

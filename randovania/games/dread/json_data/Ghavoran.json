@@ -4,8 +4,8 @@
         "asset_id": "maps/levels/c10_samus/s050_forest/s050_forest.brfld",
         "map_min_x": 28,
         "map_max_x": 46,
-        "map_min_y": 25,
-        "map_max_y": 26
+        "map_min_y": 24,
+        "map_max_y": 66
     },
     "areas": {
         "Transport to Burenia": {
@@ -106,29 +106,6 @@
                             }
                         },
                         "Elevator to Burenia - Transport to Ghavoran": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -9000.0,
-                        "y": -5650.0,
-                        "z": -0.00024399999529123306
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "StartPoint0",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Right Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -394,7 +371,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_000)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -639,7 +616,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_000)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -1123,7 +1100,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_003)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -1394,7 +1371,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (item_missiletank_003)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1572,7 +1549,7 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_011 (G)": {
+                        "Door to EMMI Zone Exit Southeast": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1642,7 +1619,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_011 (G)": {
+                "Door to EMMI Zone Exit Southeast": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1661,7 +1638,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_011 (G)",
+                        "area_name": "EMMI Zone Exit Southeast",
                         "node_name": "Door to Blue EMMI Introduction"
                     },
                     "dock_type": "door",
@@ -1674,7 +1651,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_011 (G)": {
+                        "Tunnel to EMMI Zone Exit Southeast": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1690,7 +1667,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_005 (G)": {
+                "Dock to Navigation Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1705,7 +1682,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_005 (G)",
+                        "area_name": "Navigation Station Access",
                         "node_name": "Dock to Blue EMMI Introduction"
                     },
                     "dock_type": "other",
@@ -1741,7 +1718,7 @@
                     },
                     "connections": {}
                 },
-                "Dock to collision_camera_011 (G)": {
+                "Tunnel to EMMI Zone Exit Southeast": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1753,13 +1730,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_011 (G)",
-                        "node_name": "Dock to Blue EMMI Introduction"
+                        "area_name": "EMMI Zone Exit Southeast",
+                        "node_name": "Tunnel to Blue EMMI Introduction"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Ghavoran EMMI Tunnel",
                     "connections": {
-                        "Door to collision_camera_011 (G)": {
+                        "Door to EMMI Zone Exit Southeast": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1779,7 +1756,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_011 (G)": {
+                        "Door to EMMI Zone Exit Southeast": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -1827,7 +1804,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_005 (G)": {
+                        "Dock to Navigation Station Access": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -1835,7 +1812,7 @@
                 }
             }
         },
-        "collision_camera_005 (G)": {
+        "Navigation Station Access": {
             "default_node": "Start Point 2",
             "valid_starting_location": true,
             "extra": {
@@ -1882,12 +1859,19 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Blue EMMI Introduction",
-                        "node_name": "Dock to collision_camera_005 (G)"
+                        "node_name": "Dock to Navigation Station Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_006 (G)": {
+                        "Door to Navigation Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Start Point 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1896,7 +1880,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_006 (G)": {
+                "Door to Navigation Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1915,8 +1899,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_006 (G)",
-                        "node_name": "Door to collision_camera_005 (G)"
+                        "area_name": "Navigation Station",
+                        "node_name": "Door to Navigation Station Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -1967,7 +1951,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_006 (G)": {
+                        "Door to Navigation Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1978,7 +1962,7 @@
                 }
             }
         },
-        "collision_camera_006 (G)": {
+        "Navigation Station": {
             "default_node": "Navigation Room",
             "valid_starting_location": false,
             "extra": {
@@ -2009,7 +1993,7 @@
                 "asset_id": "collision_camera_006"
             },
             "nodes": {
-                "Door to collision_camera_005 (G)": {
+                "Door to Navigation Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2028,13 +2012,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_005 (G)",
-                        "node_name": "Door to collision_camera_006 (G)"
+                        "area_name": "Navigation Station Access",
+                        "node_name": "Door to Navigation Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_007 (G)": {
+                        "Door to Flipper Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2050,7 +2034,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_007 (G)": {
+                "Door to Flipper Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2069,13 +2053,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_007 (G)",
-                        "node_name": "Door to collision_camera_006 (G)"
+                        "area_name": "Flipper Room",
+                        "node_name": "Door to Navigation Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_005 (G)": {
+                        "Door to Navigation Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2100,7 +2084,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_005 (G)": {
+                        "Door to Navigation Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2111,7 +2095,7 @@
                 }
             }
         },
-        "collision_camera_007 (G)": {
+        "Flipper Room": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -2142,7 +2126,7 @@
                 "asset_id": "collision_camera_007"
             },
             "nodes": {
-                "Door to collision_camera_006 (G)": {
+                "Door to Navigation Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2161,13 +2145,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_006 (G)",
-                        "node_name": "Door to collision_camera_007 (G)"
+                        "area_name": "Navigation Station",
+                        "node_name": "Door to Flipper Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_029 (G)": {
+                        "Door to Elun Transport Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2185,7 +2169,7 @@
                                 "negate": false
                             }
                         },
-                        "Event - Super Missiles Rotatable": {
+                        "Event - Super Missile Rotatable": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2194,13 +2178,13 @@
                                 "negate": true
                             }
                         },
-                        "Event - Super Missiles Rotatable Enky": {
+                        "Event - Super Missile Rotatable Enky": {
                             "type": "template",
                             "data": "Destroy Enky"
                         }
                     }
                 },
-                "Door to collision_camera_029 (G)": {
+                "Door to Elun Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2219,13 +2203,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_029 (G)",
-                        "node_name": "Door to collision_camera_007 (G)"
+                        "area_name": "Elun Transport Access",
+                        "node_name": "Door to Flipper Room"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Super Missile Door",
                     "connections": {
-                        "Door to collision_camera_006 (G)": {
+                        "Door to Navigation Station": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2250,7 +2234,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_006 (G)": {
+                        "Door to Navigation Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2272,12 +2256,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Spin Boost Tower",
-                        "node_name": "Dock to collision_camera_007 (G)"
+                        "node_name": "Dock to Flipper Room"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Door to collision_camera_006 (G)": {
+                        "Door to Navigation Station": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2286,13 +2270,13 @@
                                 "negate": false
                             }
                         },
-                        "Event - Super Missiles Rotatable Enky": {
+                        "Event - Super Missile Rotatable Enky": {
                             "type": "template",
                             "data": "Destroy Enky"
                         }
                     }
                 },
-                "Event - Super Missiles Rotatable": {
+                "Event - Super Missile Rotatable": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -2304,7 +2288,7 @@
                     "extra": {},
                     "event_name": "GhavoranSupersRotatable",
                     "connections": {
-                        "Dock to Spider Magnet Elevator": {
+                        "Tunnel to Spider Magnet Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2326,12 +2310,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Spider Magnet Elevator",
-                        "node_name": "Dock to collision_camera_007 (G) (Cannon)"
+                        "node_name": "Tunnel to Flipper Room (Cannon)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Blocked Passage",
                     "connections": {
-                        "Door to collision_camera_029 (G)": {
+                        "Door to Elun Transport Access": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -2342,7 +2326,7 @@
                         }
                     }
                 },
-                "Dock to Spider Magnet Elevator": {
+                "Tunnel to Spider Magnet Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2355,13 +2339,13 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Spider Magnet Elevator",
-                        "node_name": "Dock to collision_camera_007 (G) (Tunnel)"
+                        "node_name": "Tunnel to Flipper Room (Tunnel)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {}
                 },
-                "Event - Super Missiles Rotatable Enky": {
+                "Event - Super Missile Rotatable Enky": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -2384,7 +2368,7 @@
                 }
             }
         },
-        "collision_camera_008 (G)": {
+        "Dairon Transport Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2443,12 +2427,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Transport to Dairon",
-                        "node_name": "Door to collision_camera_008 (G)"
+                        "node_name": "Door to Dairon Transport Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_009 (G)": {
+                        "Door to Super Missile Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2457,7 +2441,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_009 (G)": {
+                "Door to Super Missile Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2476,8 +2460,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_009 (G)",
-                        "node_name": "Door to collision_camera_008 (G)"
+                        "area_name": "Super Missile Room Access",
+                        "node_name": "Door to Dairon Transport Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -2489,7 +2473,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (item_missiletank_001)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2524,7 +2508,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_009 (G)": {
+                        "Tunnel to Super Missile Room Access": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -2542,7 +2526,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_001)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2558,7 +2542,7 @@
                     "pickup_index": 99,
                     "major_location": false,
                     "connections": {
-                        "Door to collision_camera_009 (G)": {
+                        "Door to Super Missile Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2601,7 +2585,7 @@
                     },
                     "event_name": "s050_forest:default:grapplepulloff1x2_002",
                     "connections": {
-                        "Door to collision_camera_009 (G)": {
+                        "Door to Super Missile Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2610,7 +2594,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_009 (G)": {
+                "Tunnel to Super Missile Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2622,13 +2606,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_009 (G)",
-                        "node_name": "Dock to collision_camera_008 (G)"
+                        "area_name": "Super Missile Room Access",
+                        "node_name": "Tunnel to Dairon Transport Access"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to collision_camera_009 (G)": {
+                        "Door to Super Missile Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2639,7 +2623,7 @@
                 }
             }
         },
-        "collision_camera_009 (G)": {
+        "Super Missile Room Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -2690,12 +2674,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Super Missile Room",
-                        "node_name": "Door to collision_camera_009 (G) (Super Lock)"
+                        "node_name": "Door to Super Missile Room Access (Super Lock)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Super Missile Door",
                     "connections": {
-                        "Door to collision_camera_008 (G)": {
+                        "Door to Dairon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2704,7 +2688,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_008 (G)": {
+                "Door to Dairon Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2723,8 +2707,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_008 (G)",
-                        "node_name": "Door to collision_camera_009 (G)"
+                        "area_name": "Dairon Transport Access",
+                        "node_name": "Door to Super Missile Room Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -2765,7 +2749,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Super Missile Room",
-                        "node_name": "Door to collision_camera_009 (G) (Missile Lock)"
+                        "node_name": "Door to Super Missile Room Access (Missile Lock)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
@@ -2883,7 +2867,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletankplus_000)": {
+                "Pickup (Missile+ Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -2899,7 +2883,7 @@
                     "pickup_index": 102,
                     "major_location": false,
                     "connections": {
-                        "Dock to Super Missile Room": {
+                        "Tunnel to Super Missile Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2926,7 +2910,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to collision_camera_008 (G)": {
+                        "Door to Dairon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2939,7 +2923,7 @@
                         }
                     }
                 },
-                "Dock to Super Missile Room": {
+                "Tunnel to Super Missile Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2952,12 +2936,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Super Missile Room",
-                        "node_name": "Dock to collision_camera_009 (G)"
+                        "node_name": "Tunnel to Super Missile Room Access"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Pickup (item_missiletankplus_000)": {
+                        "Pickup (Missile+ Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2968,7 +2952,7 @@
                         }
                     }
                 },
-                "Dock to Spider Magnet Elevator": {
+                "Tunnel to Spider Magnet Elevator": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2981,12 +2965,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Spider Magnet Elevator",
-                        "node_name": "Dock to collision_camera_009 (G)"
+                        "node_name": "Tunnel to Super Missile Room Access"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Dock to collision_camera_008 (G)": {
+                        "Tunnel to Dairon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2995,7 +2979,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_008 (G)": {
+                "Tunnel to Dairon Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3007,13 +2991,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_008 (G)",
-                        "node_name": "Dock to collision_camera_009 (G)"
+                        "area_name": "Dairon Transport Access",
+                        "node_name": "Tunnel to Super Missile Room Access"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
-                        "Dock to Spider Magnet Elevator": {
+                        "Tunnel to Spider Magnet Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3109,7 +3093,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_009 (G) (Super Lock)": {
+                        "Door to Super Missile Room Access (Super Lock)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3118,7 +3102,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_009 (G) (Super Lock)": {
+                "Door to Super Missile Room Access (Super Lock)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3137,7 +3121,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_009 (G)",
+                        "area_name": "Super Missile Room Access",
                         "node_name": "Door to Super Missile Room (Super Lock)"
                     },
                     "dock_type": "door",
@@ -3150,7 +3134,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_009 (G)": {
+                        "Tunnel to Super Missile Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3220,7 +3204,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_009 (G) (Missile Lock)": {
+                "Door to Super Missile Room Access (Missile Lock)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3228,7 +3212,7 @@
                         "y": -5900.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Normally a Power Beam Door, but listed as a missile door for helping logic.\n\n",
                     "extra": {
                         "actor_name": "doorpowerpower_007",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -3239,13 +3223,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_009 (G)",
+                        "area_name": "Super Missile Room Access",
                         "node_name": "Door to Super Missile Room (Missile Lock)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Missile Door",
                     "connections": {
-                        "Pickup (itemsphere_supermissile)": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3254,13 +3238,13 @@
                         }
                     }
                 },
-                "Pickup (itemsphere_supermissile)": {
+                "Pickup (Super Missile)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": -4540.00048828125,
+                        "x": -4540.0,
                         "y": -5590.0,
-                        "z": 0.0012209999840706587
+                        "z": 0.0
                     },
                     "description": "",
                     "extra": {
@@ -3270,7 +3254,7 @@
                     "pickup_index": 100,
                     "major_location": true,
                     "connections": {
-                        "Door to collision_camera_009 (G) (Missile Lock)": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3293,7 +3277,14 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_009 (G) (Missile Lock)": {
+                        "Door to Super Missile Room Access (Missile Lock)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Super Missile)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3302,7 +3293,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_009 (G)": {
+                "Tunnel to Super Missile Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3314,13 +3305,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_009 (G)",
-                        "node_name": "Dock to Super Missile Room"
+                        "area_name": "Super Missile Room Access",
+                        "node_name": "Tunnel to Super Missile Room"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to collision_camera_009 (G) (Super Lock)": {
+                        "Door to Super Missile Room Access (Super Lock)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3333,7 +3324,7 @@
                 }
             }
         },
-        "collision_camera_011 (G)": {
+        "EMMI Zone Exit Southeast": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -3384,12 +3375,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Blue EMMI Introduction",
-                        "node_name": "Door to collision_camera_011 (G)"
+                        "node_name": "Door to EMMI Zone Exit Southeast"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_012 (G) (dooremmy_002)": {
+                        "Dock to Map Station Access (dooremmy_002)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3398,7 +3389,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_012 (G) (dooremmy_002)": {
+                "Dock to Map Station Access (dooremmy_002)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3413,8 +3404,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_012 (G)",
-                        "node_name": "Dock to collision_camera_011 (G) (dooremmy_002)"
+                        "area_name": "Map Station Access",
+                        "node_name": "Dock to EMMI Zone Exit Southeast (dooremmy_002)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -3426,7 +3417,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_012 (G) (dooremmy_003)": {
+                        "Dock to Map Station Access (dooremmy_003)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3470,7 +3461,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_012 (G) (dooremmy_003)": {
+                "Dock to Map Station Access (dooremmy_003)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3485,20 +3476,20 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_012 (G)",
-                        "node_name": "Dock to collision_camera_011 (G) (dooremmy_003)"
+                        "area_name": "Map Station Access",
+                        "node_name": "Dock to EMMI Zone Exit Southeast (dooremmy_003)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Dock to collision_camera_012 (G) (dooremmy_002)": {
+                        "Dock to Map Station Access (dooremmy_002)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_014 (G)": {
+                        "Dock to EMMI Zone Exit West": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3548,7 +3539,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_014 (G)": {
+                "Dock to EMMI Zone Exit West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3567,13 +3558,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_014 (G)",
-                        "node_name": "Dock to collision_camera_011 (G)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Dock to EMMI Zone Exit Southeast"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Dock to collision_camera_012 (G) (dooremmy_003)": {
+                        "Dock to Map Station Access (dooremmy_003)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -3621,7 +3612,7 @@
                                 ]
                             }
                         },
-                        "Dock to Blue EMMI Introduction": {
+                        "Tunnel to Blue EMMI Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3630,7 +3621,7 @@
                         }
                     }
                 },
-                "Dock to Blue EMMI Introduction": {
+                "Tunnel to Blue EMMI Introduction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3643,12 +3634,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Blue EMMI Introduction",
-                        "node_name": "Dock to collision_camera_011 (G)"
+                        "node_name": "Tunnel to EMMI Zone Exit Southeast"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Ghavoran EMMI Tunnel",
                     "connections": {
-                        "Dock to collision_camera_014 (G)": {
+                        "Dock to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3659,7 +3650,7 @@
                 }
             }
         },
-        "collision_camera_012 (G)": {
+        "Map Station Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -3690,7 +3681,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Dock to collision_camera_011 (G) (dooremmy_002)": {
+                "Dock to EMMI Zone Exit Southeast (dooremmy_002)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3705,8 +3696,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_011 (G)",
-                        "node_name": "Dock to collision_camera_012 (G) (dooremmy_002)"
+                        "area_name": "EMMI Zone Exit Southeast",
+                        "node_name": "Dock to Map Station Access (dooremmy_002)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -3850,7 +3841,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_011 (G) (dooremmy_003)": {
+                "Dock to EMMI Zone Exit Southeast (dooremmy_003)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -3865,8 +3856,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_011 (G)",
-                        "node_name": "Dock to collision_camera_012 (G) (dooremmy_003)"
+                        "area_name": "EMMI Zone Exit Southeast",
+                        "node_name": "Dock to Map Station Access (dooremmy_003)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -3902,7 +3893,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Map Station",
-                        "node_name": "Door to collision_camera_012 (G)"
+                        "node_name": "Door to Map Station Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3940,7 +3931,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_011 (G) (dooremmy_002)": {
+                        "Dock to EMMI Zone Exit Southeast (dooremmy_002)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3949,7 +3940,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_028 (G)": {
+                        "Tunnel to Map Station Access Secret": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -3978,7 +3969,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_011 (G) (dooremmy_002)": {
+                        "Dock to EMMI Zone Exit Southeast (dooremmy_002)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4043,7 +4034,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_011 (G) (dooremmy_003)": {
+                        "Dock to EMMI Zone Exit Southeast (dooremmy_003)": {
                             "type": "template",
                             "data": "Can Slide"
                         },
@@ -4058,7 +4049,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_028 (G)": {
+                "Tunnel to Map Station Access Secret": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4070,10 +4061,10 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_028 (G)",
-                        "node_name": "Dock to collision_camera_012 (G)"
+                        "area_name": "Map Station Access Secret",
+                        "node_name": "Tunnel to Map Station Access"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (BOMB) 1": {
@@ -4098,7 +4089,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to collision_camera_011 (G) (dooremmy_002)": {
+                        "Dock to EMMI Zone Exit Southeast (dooremmy_002)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4178,7 +4169,7 @@
                 "asset_id": "collision_camera_013"
             },
             "nodes": {
-                "Door to collision_camera_012 (G)": {
+                "Door to Map Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4197,7 +4188,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_012 (G)",
+                        "area_name": "Map Station Access",
                         "node_name": "Door to Map Station"
                     },
                     "dock_type": "door",
@@ -4228,7 +4219,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_map/charclasses/weightactivatedplatform_map.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_012 (G)": {
+                        "Door to Map Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4239,7 +4230,7 @@
                 }
             }
         },
-        "collision_camera_014 (G)": {
+        "EMMI Zone Exit West": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -4270,7 +4261,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door to collision_camera_018 (G) (doorgrapplegrapple_006)": {
+                "Door to EMMI Zone Middle Path (doorgrapplegrapple_006)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4289,13 +4280,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_018 (G)",
-                        "node_name": "Door to collision_camera_014 (G) (doorgrapplegrapple_006)"
+                        "area_name": "EMMI Zone Middle Path",
+                        "node_name": "Door to EMMI Zone Exit West (doorgrapplegrapple_006)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
                     "connections": {
-                        "Dock to collision_camera_015 (G) (dooremmy_005)": {
+                        "Dock to Early Ice Room (dooremmy_005)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4304,7 +4295,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_015 (G) (dooremmy_004)": {
+                "Dock to Early Ice Room (dooremmy_004)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4319,8 +4310,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_015 (G)",
-                        "node_name": "Dock to collision_camera_014 (G) (dooremmy_004)"
+                        "area_name": "Early Ice Room",
+                        "node_name": "Dock to EMMI Zone Exit West (dooremmy_004)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -4334,7 +4325,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_015 (G) (dooremmy_005)": {
+                "Dock to Early Ice Room (dooremmy_005)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4349,20 +4340,20 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_015 (G)",
-                        "node_name": "Dock to collision_camera_014 (G) (dooremmy_005)"
+                        "area_name": "Early Ice Room",
+                        "node_name": "Dock to EMMI Zone Exit West (dooremmy_005)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_018 (G) (doorgrapplegrapple_006)": {
+                        "Door to EMMI Zone Middle Path (doorgrapplegrapple_006)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to collision_camera_018 (G) (doorpowerpower_009)": {
+                        "Door to EMMI Zone Middle Path (doorpowerpower_009)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4371,7 +4362,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_018 (G) (doorpowerpower_009)": {
+                "Door to EMMI Zone Middle Path (doorpowerpower_009)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4390,13 +4381,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_018 (G)",
-                        "node_name": "Door to collision_camera_014 (G) (doorpowerpower_009)"
+                        "area_name": "EMMI Zone Middle Path",
+                        "node_name": "Door to EMMI Zone Exit West (doorpowerpower_009)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_015 (G) (dooremmy_005)": {
+                        "Dock to Early Ice Room (dooremmy_005)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4405,7 +4396,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_011 (G)": {
+                "Dock to EMMI Zone Exit Southeast": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4424,8 +4415,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_011 (G)",
-                        "node_name": "Dock to collision_camera_014 (G)"
+                        "area_name": "EMMI Zone Exit Southeast",
+                        "node_name": "Dock to EMMI Zone Exit West"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -4483,7 +4474,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_018 (G)": {
+                "Tunnel to EMMI Zone Middle Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4495,10 +4486,10 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_018 (G)",
-                        "node_name": "Dock to collision_camera_014 (G)"
+                        "area_name": "EMMI Zone Middle Path",
+                        "node_name": "Tunnel to EMMI Zone Exit West"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Ghavoran EMMI Tunnel",
                     "connections": {
                         "Upper Platform": {
@@ -4521,21 +4512,21 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to collision_camera_015 (G) (dooremmy_004)": {
+                        "Dock to Early Ice Room (dooremmy_004)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_011 (G)": {
+                        "Dock to EMMI Zone Exit Southeast": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_018 (G)": {
+                        "Tunnel to EMMI Zone Middle Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4546,7 +4537,7 @@
                 }
             }
         },
-        "collision_camera_015 (G)": {
+        "Early Ice Room": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -4577,7 +4568,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Dock to collision_camera_014 (G) (dooremmy_004)": {
+                "Dock to EMMI Zone Exit West (dooremmy_004)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4592,13 +4583,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_014 (G)",
-                        "node_name": "Dock to collision_camera_015 (G) (dooremmy_004)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Dock to Early Ice Room (dooremmy_004)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Dock to collision_camera_014 (G) (dooremmy_005)": {
+                        "Dock to EMMI Zone Exit West (dooremmy_005)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4637,7 +4628,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_014 (G) (dooremmy_005)": {
+                "Dock to EMMI Zone Exit West (dooremmy_005)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4652,13 +4643,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_014 (G)",
-                        "node_name": "Dock to collision_camera_015 (G) (dooremmy_005)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Dock to Early Ice Room (dooremmy_005)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Dock to collision_camera_014 (G) (dooremmy_004)": {
+                        "Dock to EMMI Zone Exit West (dooremmy_004)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4667,7 +4658,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_016 (G)": {
+                "Dock to EMMI Zone Exit Northwest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4682,8 +4673,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_016 (G)",
-                        "node_name": "Dock to collision_camera_015 (G)"
+                        "area_name": "EMMI Zone Exit Northwest",
+                        "node_name": "Dock to Early Ice Room"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -4708,14 +4699,14 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to collision_camera_014 (G) (dooremmy_004)": {
+                        "Dock to EMMI Zone Exit West (dooremmy_004)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_016 (G)": {
+                        "Dock to EMMI Zone Exit Northwest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4735,7 +4726,7 @@
                 }
             }
         },
-        "collision_camera_016 (G)": {
+        "EMMI Zone Exit Northwest": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -4766,7 +4757,7 @@
                 "asset_id": "collision_camera_016"
             },
             "nodes": {
-                "Dock to collision_camera_015 (G)": {
+                "Dock to Early Ice Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4781,8 +4772,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_015 (G)",
-                        "node_name": "Dock to collision_camera_016 (G)"
+                        "area_name": "Early Ice Room",
+                        "node_name": "Dock to EMMI Zone Exit Northwest"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -4793,7 +4784,7 @@
                         }
                     }
                 },
-                "Door to Blue EMMI Fight": {
+                "Door to Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4812,13 +4803,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Blue EMMI Fight",
-                        "node_name": "Door to collision_camera_016 (G)"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Door to EMMI Zone Exit Northwest"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Dock to Blue EMMI Fight": {
+                        "Tunnel to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4827,7 +4818,7 @@
                         }
                     }
                 },
-                "Dock to Blue EMMI Fight": {
+                "Tunnel to Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4846,13 +4837,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Blue EMMI Fight",
-                        "node_name": "Dock to collision_camera_016 (G)"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Tunnel to EMMI Zone Exit Northwest"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
-                        "Door to Blue EMMI Fight": {
+                        "Door to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4879,7 +4870,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Blue EMMI Fight": {
+                        "Tunnel to Central Unit Access": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -4887,7 +4878,7 @@
                 }
             }
         },
-        "Central Unit Room": {
+        "Central Unit": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -4932,7 +4923,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Dock to Blue EMMI Fight": {
+                        "Dock to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4941,7 +4932,7 @@
                         }
                     }
                 },
-                "Dock to Blue EMMI Fight": {
+                "Dock to Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4953,8 +4944,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Blue EMMI Fight",
-                        "node_name": "Dock to Central Unit Room"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Dock to Central Unit"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -4977,7 +4968,7 @@
                     "extra": {},
                     "event_name": "GhavoranCU",
                     "connections": {
-                        "Dock to Blue EMMI Fight": {
+                        "Dock to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4988,7 +4979,7 @@
                 }
             }
         },
-        "collision_camera_018 (G)": {
+        "EMMI Zone Middle Path": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -5019,7 +5010,7 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Door to collision_camera_014 (G) (doorgrapplegrapple_006)": {
+                "Door to EMMI Zone Exit West (doorgrapplegrapple_006)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5038,20 +5029,20 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_014 (G)",
-                        "node_name": "Door to collision_camera_018 (G) (doorgrapplegrapple_006)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Door to EMMI Zone Middle Path (doorgrapplegrapple_006)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
                     "connections": {
-                        "Door to collision_camera_014 (G) (doorpowerpower_009)": {
+                        "Door to EMMI Zone Exit West (doorpowerpower_009)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_014 (G)": {
+                        "Tunnel to EMMI Zone Exit West": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5060,7 +5051,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_014 (G) (doorpowerpower_009)": {
+                "Door to EMMI Zone Exit West (doorpowerpower_009)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5079,20 +5070,20 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_014 (G)",
-                        "node_name": "Door to collision_camera_018 (G) (doorpowerpower_009)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Door to EMMI Zone Middle Path (doorpowerpower_009)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_014 (G) (doorgrapplegrapple_006)": {
+                        "Door to EMMI Zone Exit West (doorgrapplegrapple_006)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to collision_camera_020 (G)": {
+                        "Door to EMMI Zone Exit Northeast": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5138,7 +5129,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_020 (G)": {
+                "Door to EMMI Zone Exit Northeast": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5157,13 +5148,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_020 (G)",
-                        "node_name": "Door to collision_camera_018 (G)"
+                        "area_name": "EMMI Zone Exit Northeast",
+                        "node_name": "Door to EMMI Zone Middle Path"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Door to collision_camera_014 (G) (doorpowerpower_009)": {
+                        "Door to EMMI Zone Exit West (doorpowerpower_009)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5172,7 +5163,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_014 (G)": {
+                "Tunnel to EMMI Zone Exit West": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5184,13 +5175,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_014 (G)",
-                        "node_name": "Dock to collision_camera_018 (G)"
+                        "area_name": "EMMI Zone Exit West",
+                        "node_name": "Tunnel to EMMI Zone Middle Path"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Ghavoran EMMI Tunnel",
                     "connections": {
-                        "Door to collision_camera_014 (G) (doorgrapplegrapple_006)": {
+                        "Door to EMMI Zone Exit West (doorgrapplegrapple_006)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5201,8 +5192,8 @@
                 }
             }
         },
-        "Blue EMMI Fight": {
-            "default_node": "Room Center (Start Point 2)",
+        "Central Unit Access": {
+            "default_node": "Room Center",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -5232,7 +5223,7 @@
                 "asset_id": "collision_camera_019"
             },
             "nodes": {
-                "Door to collision_camera_020 (G) (doorpowerpower_010)": {
+                "Door to EMMI Zone Exit Northeast (doorpowerpower_010)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5251,13 +5242,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_020 (G)",
-                        "node_name": "Door to Blue EMMI Fight (doorpowerpower_010)"
+                        "area_name": "EMMI Zone Exit Northeast",
+                        "node_name": "Door to Central Unit Access (doorpowerpower_010)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_016 (G)": {
+                        "Door to EMMI Zone Exit Northwest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5292,7 +5283,7 @@
                                 ]
                             }
                         },
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5301,7 +5292,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_020 (G) (doorpowerpower_011)": {
+                "Door to EMMI Zone Exit Northeast (doorpowerpower_011)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5320,13 +5311,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_020 (G)",
-                        "node_name": "Door to Blue EMMI Fight (doorpowerpower_011)"
+                        "area_name": "EMMI Zone Exit Northeast",
+                        "node_name": "Door to Central Unit Access (doorpowerpower_011)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5335,7 +5326,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_016 (G)": {
+                "Door to EMMI Zone Exit Northwest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5354,13 +5345,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_016 (G)",
-                        "node_name": "Door to Blue EMMI Fight"
+                        "area_name": "EMMI Zone Exit Northwest",
+                        "node_name": "Door to Central Unit Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
-                        "Door to collision_camera_020 (G) (doorpowerpower_010)": {
+                        "Door to EMMI Zone Exit Northeast (doorpowerpower_010)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5386,7 +5377,7 @@
                                 ]
                             }
                         },
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5395,7 +5386,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_016 (G)": {
+                "Tunnel to EMMI Zone Exit Northwest": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5414,13 +5405,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_016 (G)",
-                        "node_name": "Dock to Blue EMMI Fight"
+                        "area_name": "EMMI Zone Exit Northwest",
+                        "node_name": "Tunnel to Central Unit Access"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Dock to Central Unit Room": {
+                        "Dock to Central Unit": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5429,30 +5420,7 @@
                         }
                     }
                 },
-                "Start Point 1": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6500.0,
-                        "y": 4300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_CentralUnit",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Dock to Central Unit Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Room Center (Start Point 2)": {
+                "Room Center": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -5466,18 +5434,18 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to collision_camera_020 (G) (doorpowerpower_011)": {
+                        "Door to EMMI Zone Exit Northeast (doorpowerpower_011)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Central Unit Room": {
+                        "Dock to Central Unit": {
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Pickup (Ice Missiles)": {
+                        "Pickup (Ice Missile)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -5488,7 +5456,7 @@
                         }
                     }
                 },
-                "Dock to Central Unit Room": {
+                "Dock to Central Unit": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5500,13 +5468,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Central Unit Room",
-                        "node_name": "Dock to Blue EMMI Fight"
+                        "area_name": "Central Unit",
+                        "node_name": "Dock to Central Unit Access"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Dock to collision_camera_016 (G)": {
+                        "Tunnel to EMMI Zone Exit Northwest": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -5536,13 +5504,13 @@
                                 ]
                             }
                         },
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "template",
                             "data": "Can Slide"
                         }
                     }
                 },
-                "Pickup (Ice Missiles)": {
+                "Pickup (Ice Missile)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -5551,11 +5519,16 @@
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "pickup_type": "emmi",
+                        "actor_def": "actors/characters/emmyforest/charclasses/emmyforest.bmsad",
+                        "string_key": "GUI_ITEM_ACQUIRED_ICE_MISSILE",
+                        "callback_function": "OnEmmyForestDead"
+                    },
                     "pickup_index": 146,
                     "major_location": true,
                     "connections": {
-                        "Room Center (Start Point 2)": {
+                        "Room Center": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5566,7 +5539,7 @@
                 }
             }
         },
-        "collision_camera_020 (G)": {
+        "EMMI Zone Exit Northeast": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -5597,7 +5570,7 @@
                 "asset_id": "collision_camera_020"
             },
             "nodes": {
-                "Door to collision_camera_018 (G)": {
+                "Door to EMMI Zone Middle Path": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5616,8 +5589,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_018 (G)",
-                        "node_name": "Door to collision_camera_020 (G)"
+                        "area_name": "EMMI Zone Middle Path",
+                        "node_name": "Door to EMMI Zone Exit Northeast"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -5694,12 +5667,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Spin Boost Tower",
-                        "node_name": "Dock to collision_camera_020 (G) (dooremmy)"
+                        "node_name": "Dock to EMMI Zone Exit Northeast (dooremmy)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to collision_camera_018 (G)": {
+                        "Door to EMMI Zone Middle Path": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5724,23 +5697,40 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Spin Boost Tower",
-                        "node_name": "Dock to collision_camera_020 (G) (dooremmy_007)"
+                        "node_name": "Dock to EMMI Zone Exit Northeast (dooremmy_007)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Door to Blue EMMI Fight (doorpowerpower_011)": {
-                            "type": "resource",
+                        "Door to Central Unit Access (doorpowerpower_011)": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranCU",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 },
-                "Door to Blue EMMI Fight (doorpowerpower_010)": {
+                "Door to Central Unit Access (doorpowerpower_010)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5759,13 +5749,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Blue EMMI Fight",
-                        "node_name": "Door to collision_camera_020 (G) (doorpowerpower_010)"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Door to EMMI Zone Exit Northeast (doorpowerpower_010)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Blue EMMI Fight (doorpowerpower_011)": {
+                        "Door to Central Unit Access (doorpowerpower_011)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5774,7 +5764,7 @@
                         }
                     }
                 },
-                "Door to Blue EMMI Fight (doorpowerpower_011)": {
+                "Door to Central Unit Access (doorpowerpower_011)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5793,17 +5783,34 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Blue EMMI Fight",
-                        "node_name": "Door to collision_camera_020 (G) (doorpowerpower_011)"
+                        "area_name": "Central Unit Access",
+                        "node_name": "Door to EMMI Zone Exit Northeast (doorpowerpower_011)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
                         "Dock to Spin Boost Tower (dooremmy_007)": {
-                            "type": "template",
-                            "data": "Can Slide"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranCU",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
-                        "Door to Blue EMMI Fight (doorpowerpower_010)": {
+                        "Door to Central Unit Access (doorpowerpower_010)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5933,7 +5940,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
-                        "Dock to collision_camera_007 (G)": {
+                        "Dock to Flipper Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5985,7 +5992,7 @@
                         }
                     }
                 },
-                "Pickup (item_powerbombtank_000)": {
+                "Pickup (Power Bomb Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -6010,7 +6017,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_020 (G) (dooremmy)": {
+                "Dock to EMMI Zone Exit Northeast (dooremmy)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6025,7 +6032,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_020 (G)",
+                        "area_name": "EMMI Zone Exit Northeast",
                         "node_name": "Dock to Spin Boost Tower (dooremmy)"
                     },
                     "dock_type": "other",
@@ -6054,7 +6061,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_020 (G) (dooremmy_007)": {
+                "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6069,7 +6076,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_020 (G)",
+                        "area_name": "EMMI Zone Exit Northeast",
                         "node_name": "Dock to Spin Boost Tower (dooremmy_007)"
                     },
                     "dock_type": "other",
@@ -6110,7 +6117,7 @@
                         }
                     }
                 },
-                "Pickup (item_energyfragment_000)": {
+                "Pickup (Energy Part)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -6137,7 +6144,7 @@
                         }
                     }
                 },
-                "Pickup (item_energytank_000)": {
+                "Pickup (Energy Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -6202,7 +6209,7 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad"
                     },
                     "connections": {
-                        "Dock to collision_camera_020 (G) (dooremmy_007)": {
+                        "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6229,7 +6236,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_energyfragment_000)": {
+                        "Pickup (Energy Part)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6247,7 +6254,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_007 (G)": {
+                "Dock to Flipper Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6259,7 +6266,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_007 (G)",
+                        "area_name": "Flipper Room",
                         "node_name": "Dock to Spin Boost Tower"
                     },
                     "dock_type": "other",
@@ -6321,7 +6328,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to collision_camera_020 (G) (dooremmy)": {
+                        "Dock to EMMI Zone Exit Northeast (dooremmy)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6342,7 +6349,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_020 (G) (dooremmy_007)": {
+                        "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -6375,7 +6382,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to collision_camera_020 (G) (dooremmy_007)": {
+                        "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -6384,7 +6391,7 @@
                                 "negate": false
                             }
                         },
-                        "Pickup (item_energytank_000)": {
+                        "Pickup (Energy Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6449,7 +6456,7 @@
                                 ]
                             }
                         },
-                        "Pickup (item_powerbombtank_000)": {
+                        "Pickup (Power Bomb Tank)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6595,7 +6602,7 @@
                     "extra": {},
                     "event_name": "GhavoranAmmoRechargeEnkyBelow",
                     "connections": {
-                        "Dock to collision_camera_020 (G) (dooremmy_007)": {
+                        "Dock to EMMI Zone Exit Northeast (dooremmy_007)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6662,7 +6669,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
-                        "Door to Yellow Chozo Arena": {
+                        "Door to Chozo Warrior Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6678,7 +6685,7 @@
                         }
                     }
                 },
-                "Door to Yellow Chozo Arena": {
+                "Door to Chozo Warrior Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6697,7 +6704,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Yellow Chozo Arena",
+                        "area_name": "Chozo Warrior Arena",
                         "node_name": "Door to Save Station Center"
                     },
                     "dock_type": "door",
@@ -6739,7 +6746,7 @@
                 }
             }
         },
-        "Yellow Chozo Arena": {
+        "Chozo Warrior Arena": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -6790,12 +6797,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Save Station Center",
-                        "node_name": "Door to Yellow Chozo Arena"
+                        "node_name": "Door to Chozo Warrior Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to collision_camera_025_B (G)": {
+                        "Door to Total Recharge Station North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6804,7 +6811,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_025_B (G)": {
+                "Door to Total Recharge Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6823,8 +6830,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_025_B (G)",
-                        "node_name": "Door from Yellow Chozo Arena"
+                        "area_name": "Total Recharge Station North",
+                        "node_name": "Door from Chozo Warrior Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -6901,7 +6908,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia",
-                        "node_name": "Dock to Yellow Chozo Arena"
+                        "node_name": "Dock to Chozo Warrior Arena"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -7052,7 +7059,7 @@
                                 ]
                             }
                         },
-                        "Door to collision_camera_031 (G)": {
+                        "Door to Energy Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7104,7 +7111,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_031 (G)": {
+                "Door to Energy Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7123,7 +7130,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_031 (G)",
+                        "area_name": "Energy Recharge Station",
                         "node_name": "Door to Golzuna Tower"
                     },
                     "dock_type": "door",
@@ -7138,7 +7145,7 @@
                         }
                     }
                 },
-                "Pickup (item_energyfragment)": {
+                "Pickup (Energy Part)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -7165,7 +7172,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -7237,7 +7244,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank)": {
+                        "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Ballspark"
                         },
@@ -7283,7 +7290,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Above Pulse Radar": {
+                        "Tunnel to Above Pulse Radar": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7312,7 +7319,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_energyfragment)": {
+                        "Pickup (Energy Part)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7571,7 +7578,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_031 (G)": {
+                        "Dock to Energy Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7598,7 +7605,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_031 (G)": {
+                        "Dock to Energy Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7607,7 +7614,7 @@
                         }
                     }
                 },
-                "Dock to Above Pulse Radar": {
+                "Tunnel to Above Pulse Radar": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7620,9 +7627,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Above Pulse Radar",
-                        "node_name": "Dock to Golzuna Tower"
+                        "node_name": "Tunnel to Golzuna Tower"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
                         "Tile Group (POWERBEAM) 1": {
@@ -7636,7 +7643,7 @@
                         }
                     }
                 },
-                "Dock to Pulse Radar Room": {
+                "Tunnel to Pulse Radar Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7649,9 +7656,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Pulse Radar Room",
-                        "node_name": "Dock to Golzuna Tower"
+                        "node_name": "Tunnel to Golzuna Tower"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (WEIGHT) 2": {
@@ -7665,7 +7672,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_031 (G)": {
+                "Dock to Energy Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7677,7 +7684,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_031 (G)",
+                        "area_name": "Energy Recharge Station",
                         "node_name": "Dock to Golzuna Tower"
                     },
                     "dock_type": "other",
@@ -7858,7 +7865,7 @@
                                 "items": []
                             }
                         },
-                        "Door from collision_camera_025_B (G)": {
+                        "Door from Total Recharge Station North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7923,7 +7930,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_025_B (G)": {
+                        "Dock to Total Recharge Station North": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -7986,7 +7993,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to collision_camera_031 (G) (Mid)": {
+                        "Dock to Energy Recharge Station": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -7997,7 +8004,7 @@
                         }
                     }
                 },
-                "Door to collision_camera_025_B (G)": {
+                "Door to Total Recharge Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8016,13 +8023,13 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_025_B (G)",
+                        "area_name": "Total Recharge Station North",
                         "node_name": "Door to Teleport to Burenia (Missile)"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_031 (G) (Top)": {
+                        "Tunnel to Energy Recharge Station (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8033,7 +8040,7 @@
                         }
                     }
                 },
-                "Door from collision_camera_025_B (G)": {
+                "Door from Total Recharge Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8052,7 +8059,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_025_B (G)",
+                        "area_name": "Total Recharge Station North",
                         "node_name": "Door to Teleport to Burenia (Power Beam)"
                     },
                     "dock_type": "door",
@@ -8065,7 +8072,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Yellow Chozo Arena": {
+                        "Dock to Chozo Warrior Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8074,7 +8081,7 @@
                         }
                     }
                 },
-                "Dock to Spin Boost Room": {
+                "Tunnel to Spin Boost Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8087,12 +8094,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Spin Boost Room",
-                        "node_name": "Dock to Teleport to Burenia"
+                        "node_name": "Tunnel to Teleport to Burenia"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
-                        "Dock to collision_camera_031 (G) (Bottom)": {
+                        "Tunnel to Energy Recharge Station (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8101,7 +8108,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_031 (G) (Bottom)": {
+                "Tunnel to Energy Recharge Station (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8113,13 +8120,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_031 (G)",
-                        "node_name": "Dock to Teleport to Burenia (Bottom)"
+                        "area_name": "Energy Recharge Station",
+                        "node_name": "Tunnel to Teleport to Burenia (Bottom)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Dock to Spin Boost Room": {
+                        "Tunnel to Spin Boost Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8128,7 +8135,7 @@
                         }
                     }
                 },
-                "Dock to Yellow Chozo Arena": {
+                "Dock to Chozo Warrior Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8140,14 +8147,14 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Yellow Chozo Arena",
+                        "area_name": "Chozo Warrior Arena",
                         "node_name": "Dock to Teleport to Burenia"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {}
                 },
-                "Dock to collision_camera_031 (G) (Mid)": {
+                "Dock to Energy Recharge Station": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8159,8 +8166,8 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_031 (G)",
-                        "node_name": "Dock to Teleport to Burenia (Mid)"
+                        "area_name": "Energy Recharge Station",
+                        "node_name": "Dock to Teleport to Burenia"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -8183,13 +8190,13 @@
                                 "negate": false
                             }
                         },
-                        "Pickup (item_missiletank_004)": {
+                        "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Lay Cross Comb"
                         }
                     }
                 },
-                "Dock to collision_camera_031 (G) (Top)": {
+                "Tunnel to Energy Recharge Station (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8201,13 +8208,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_031 (G)",
-                        "node_name": "Dock to Teleport to Burenia (Top)"
+                        "area_name": "Energy Recharge Station",
+                        "node_name": "Tunnel to Teleport to Burenia (Top)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
-                        "Door to collision_camera_025_B (G)": {
+                        "Door to Total Recharge Station North": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -8218,7 +8225,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_004)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -8243,13 +8250,13 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_031 (G) (Mid)": {
+                        "Dock to Energy Recharge Station": {
                             "type": "template",
                             "data": "Lay Cross Comb"
                         }
                     }
                 },
-                "Dock to collision_camera_025_B (G)": {
+                "Dock to Total Recharge Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8261,7 +8268,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_025_B (G)",
+                        "area_name": "Total Recharge Station North",
                         "node_name": "Dock to Teleport to Burenia"
                     },
                     "dock_type": "other",
@@ -8280,7 +8287,7 @@
                 }
             }
         },
-        "collision_camera_025_B (G)": {
+        "Total Recharge Station North": {
             "default_node": "Start Point",
             "valid_starting_location": true,
             "extra": {
@@ -8319,7 +8326,7 @@
                 "asset_id": "collision_camera_025_B"
             },
             "nodes": {
-                "Door from Yellow Chozo Arena": {
+                "Door from Chozo Warrior Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8338,8 +8345,8 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Yellow Chozo Arena",
-                        "node_name": "Door to collision_camera_025_B (G)"
+                        "area_name": "Chozo Warrior Arena",
+                        "node_name": "Door to Total Recharge Station North"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
@@ -8470,12 +8477,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia",
-                        "node_name": "Door to collision_camera_025_B (G)"
+                        "node_name": "Door to Total Recharge Station North"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Missile Door",
                     "connections": {
-                        "Door from Yellow Chozo Arena": {
+                        "Door from Chozo Warrior Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8634,12 +8641,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia",
-                        "node_name": "Door from collision_camera_025_B (G)"
+                        "node_name": "Door from Total Recharge Station North"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door from Yellow Chozo Arena": {
+                        "Door from Chozo Warrior Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8718,7 +8725,7 @@
                         ]
                     },
                     "connections": {
-                        "Door from Yellow Chozo Arena": {
+                        "Door from Chozo Warrior Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8745,7 +8752,7 @@
                         ]
                     },
                     "connections": {
-                        "Door from Yellow Chozo Arena": {
+                        "Door from Chozo Warrior Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8787,10 +8794,17 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tile Group (WEIGHT) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
-                "Pickup (item_missiletank_007)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -8830,7 +8844,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Transport to Ferenia",
-                        "node_name": "Dock to collision_camera_025_B (G)"
+                        "node_name": "Dock to Total Recharge Station North"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -8866,6 +8880,27 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Pull Grapple Block (grapplepulloff1x2_002)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranFereniaTransportEnkyRight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Break/Move Grapple Block from Behind"
                                     }
                                 ]
                             }
@@ -8939,7 +8974,7 @@
                     "extra": {},
                     "event_name": "GhavoranStormMissileGate",
                     "connections": {
-                        "Door from Yellow Chozo Arena": {
+                        "Door from Chozo Warrior Arena": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8968,12 +9003,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia",
-                        "node_name": "Dock to collision_camera_025_B (G)"
+                        "node_name": "Dock to Total Recharge Station North"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Pickup (item_missiletank_007)": {
+                        "Pickup (Missile Tank)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -9085,35 +9120,12 @@
                     "dock_weakness": "Power Beam Door",
                     "connections": {}
                 },
-                "Start Point": {
+                "Before Golzuna": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 8800.0,
-                        "y": 5231.7578125,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_LineBomb",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Event - Golzuna": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 9600.0,
-                        "y": 6000.0,
+                        "x": 9500.0,
+                        "y": 5500.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -9444,7 +9456,7 @@
                         }
                     }
                 },
-                "Dock to Above Golzuna": {
+                "Tunnel to Above Golzuna": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9457,9 +9469,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Above Golzuna",
-                        "node_name": "Dock to Golzuna Arena"
+                        "node_name": "Tunnel to Golzuna Arena"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (WEIGHT)": {
@@ -9476,14 +9488,14 @@
                     "heal": false,
                     "coordinates": {
                         "x": 9240.53,
-                        "y": 5300.33,
+                        "y": 5500.0,
                         "z": 0.0
                     },
                     "description": "",
                     "extra": {},
                     "event_name": "Golzuna",
                     "connections": {
-                        "Pickup (Cross Bombs)": {
+                        "Pickup (Cross Bomb)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9492,7 +9504,7 @@
                         }
                     }
                 },
-                "Pickup (Cross Bombs)": {
+                "Pickup (Cross Bomb)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -9501,9 +9513,73 @@
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "pickup_type": "corex",
+                        "actor_def": "actors/characters/core_x/charclasses/core_x.bmsad",
+                        "string_key": "GUI_ITEM_ACQUIRED_LINE_BOMB",
+                        "callback_function": "golzuna",
+                        "callback_args": 2
+                    },
                     "pickup_index": 145,
                     "major_location": true,
+                    "connections": {
+                        "Door to Cross Bomb Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Tile Group (WEIGHT)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9600.0,
+                        "y": 6000.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "breakabletilegroup_011",
+                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
+                        "actor_layer": "breakables",
+                        "tile_types": [
+                            "WEIGHT"
+                        ]
+                    },
+                    "connections": {
+                        "Door to Cross Bomb Tutorial": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        "Before Golzuna": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8670.921985815603,
+                        "y": 5366.378691544769,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Cross Bomb Tutorial": {
                             "type": "and",
@@ -9571,7 +9647,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Dock to collision_camera_025_B (G)": {
+                        "Dock to Total Recharge Station North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9580,7 +9656,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_025_B (G)": {
+                "Dock to Total Recharge Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9592,7 +9668,7 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_025_B (G)",
+                        "area_name": "Total Recharge Station North",
                         "node_name": "Dock to Transport to Ferenia"
                     },
                     "dock_type": "other",
@@ -9609,7 +9685,7 @@
                 }
             }
         },
-        "collision_camera_028 (G)": {
+        "Map Station Access Secret": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -9640,7 +9716,7 @@
                 "asset_id": "collision_camera_028"
             },
             "nodes": {
-                "Pickup (item_missiletank_002)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -9689,7 +9765,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to collision_camera_012 (G)": {
+                        "Tunnel to Map Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9716,7 +9792,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_002)": {
+                        "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Lay Cross Comb"
                         }
@@ -9741,7 +9817,7 @@
                     },
                     "connections": {}
                 },
-                "Dock to collision_camera_012 (G)": {
+                "Tunnel to Map Station Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9753,10 +9829,10 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_012 (G)",
-                        "node_name": "Dock to collision_camera_028 (G)"
+                        "area_name": "Map Station Access",
+                        "node_name": "Tunnel to Map Station Access Secret"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Get on Bomb Block": {
@@ -9790,7 +9866,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to collision_camera_012 (G)": {
+                        "Tunnel to Map Station Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9801,7 +9877,7 @@
                 }
             }
         },
-        "collision_camera_029 (G)": {
+        "Elun Transport Access": {
             "default_node": null,
             "valid_starting_location": false,
             "extra": {
@@ -9840,7 +9916,7 @@
                 "asset_id": "collision_camera_029"
             },
             "nodes": {
-                "Door to collision_camera_007 (G)": {
+                "Door to Flipper Room": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9848,7 +9924,7 @@
                         "y": -3000.0,
                         "z": 0.0
                     },
-                    "description": "",
+                    "description": "Normally a power beam door, but listed as supers to prevent logic issues with\nblast shields\n\n",
                     "extra": {
                         "actor_name": "doorpowerpower_005",
                         "actor_def": "actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad",
@@ -9859,11 +9935,11 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_007 (G)",
-                        "node_name": "Door to collision_camera_029 (G)"
+                        "area_name": "Flipper Room",
+                        "node_name": "Door to Elun Transport Access"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Super Missile Door",
                     "connections": {
                         "Center Platform": {
                             "type": "or",
@@ -9939,7 +10015,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Transport to Elun",
-                        "node_name": "Door to collision_camera_029 (G)"
+                        "node_name": "Door to Elun Transport Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -9953,7 +10029,7 @@
                         }
                     }
                 },
-                "Pickup (item_missiletank_009)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -9969,7 +10045,7 @@
                     "pickup_index": 111,
                     "major_location": false,
                     "connections": {
-                        "Door to collision_camera_007 (G)": {
+                        "Door to Flipper Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10003,7 +10079,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_009)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10023,7 +10099,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to collision_camera_007 (G)": {
+                        "Door to Flipper Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10127,7 +10203,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Teleport to Burenia": {
+                        "Tunnel to Teleport to Burenia": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10171,7 +10247,7 @@
                         }
                     }
                 },
-                "Dock to Teleport to Burenia": {
+                "Tunnel to Teleport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10184,9 +10260,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia",
-                        "node_name": "Dock to Spin Boost Room"
+                        "node_name": "Tunnel to Spin Boost Room"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Start Point": {
@@ -10202,7 +10278,7 @@
                 }
             }
         },
-        "collision_camera_031 (G)": {
+        "Energy Recharge Station": {
             "default_node": "Life Recharge",
             "valid_starting_location": false,
             "extra": {
@@ -10253,7 +10329,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Golzuna Tower",
-                        "node_name": "Door to collision_camera_031 (G)"
+                        "node_name": "Door to Energy Recharge Station"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
@@ -10409,7 +10485,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Teleport to Burenia (Top)": {
+                        "Tunnel to Teleport to Burenia (Top)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -10599,7 +10675,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Golzuna Tower",
-                        "node_name": "Dock to collision_camera_031 (G)"
+                        "node_name": "Dock to Energy Recharge Station"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
@@ -10619,7 +10695,7 @@
                         }
                     }
                 },
-                "Dock to Teleport to Burenia (Bottom)": {
+                "Tunnel to Teleport to Burenia (Bottom)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10632,9 +10708,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia",
-                        "node_name": "Dock to collision_camera_031 (G) (Bottom)"
+                        "node_name": "Tunnel to Energy Recharge Station (Bottom)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Left Water Ledge": {
@@ -10669,7 +10745,7 @@
                         }
                     }
                 },
-                "Dock to Teleport to Burenia (Mid)": {
+                "Dock to Teleport to Burenia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10682,12 +10758,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia",
-                        "node_name": "Dock to collision_camera_031 (G) (Mid)"
+                        "node_name": "Dock to Energy Recharge Station"
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
-                        "Dock to Teleport to Burenia (Bottom)": {
+                        "Tunnel to Teleport to Burenia (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10696,7 +10772,7 @@
                         }
                     }
                 },
-                "Dock to Teleport to Burenia (Top)": {
+                "Tunnel to Teleport to Burenia (Top)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10709,9 +10785,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Teleport to Burenia",
-                        "node_name": "Dock to collision_camera_031 (G) (Top)"
+                        "node_name": "Tunnel to Energy Recharge Station (Top)"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (BOMB) 2": {
@@ -10823,14 +10899,14 @@
                                 ]
                             }
                         },
-                        "Dock to Teleport to Burenia (Bottom)": {
+                        "Tunnel to Teleport to Burenia (Bottom)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Dock to Teleport to Burenia (Mid)": {
+                        "Dock to Teleport to Burenia": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11114,7 +11190,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Golzuna Tower": {
+                        "Tunnel to Golzuna Tower": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11208,7 +11284,7 @@
                         }
                     }
                 },
-                "Dock to Golzuna Tower": {
+                "Tunnel to Golzuna Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11221,9 +11297,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Golzuna Tower",
-                        "node_name": "Dock to Pulse Radar Room"
+                        "node_name": "Tunnel to Pulse Radar Room"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (POWERBEAM) 2": {
@@ -11270,7 +11346,7 @@
                 "asset_id": "collision_camera_033"
             },
             "nodes": {
-                "Pickup (item_missiletank_005)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -11431,7 +11507,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_005)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11543,7 +11619,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Transport to Hanubia": {
+                        "Tunnel to Transport to Hanubia": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -11581,7 +11657,7 @@
                         }
                     }
                 },
-                "Dock to Transport to Hanubia": {
+                "Tunnel to Transport to Hanubia": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11594,9 +11670,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Transport to Hanubia",
-                        "node_name": "Dock to Cross Bomb Tutorial"
+                        "node_name": "Tunnel to Cross Bomb Tutorial"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Tile Group (SCREWATTACK)": {
@@ -11744,7 +11820,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Cross Bomb Tutorial": {
+                        "Tunnel to Cross Bomb Tutorial": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11786,7 +11862,7 @@
                         }
                     }
                 },
-                "Dock to Cross Bomb Tutorial": {
+                "Tunnel to Cross Bomb Tutorial": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11799,9 +11875,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Cross Bomb Tutorial",
-                        "node_name": "Dock to Transport to Hanubia"
+                        "node_name": "Tunnel to Transport to Hanubia"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Door to Cross Bomb Tutorial": {
@@ -11871,7 +11947,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to collision_camera_007 (G) (Tunnel)": {
+                        "Tunnel to Flipper Room (Tunnel)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11924,7 +12000,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_009 (G)": {
+                "Tunnel to Super Missile Room Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11936,14 +12012,14 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_009 (G)",
-                        "node_name": "Dock to Spider Magnet Elevator"
+                        "area_name": "Super Missile Room Access",
+                        "node_name": "Tunnel to Spider Magnet Elevator"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {}
                 },
-                "Dock to collision_camera_007 (G) (Cannon)": {
+                "Tunnel to Flipper Room (Cannon)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11955,13 +12031,13 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_007 (G)",
+                        "area_name": "Flipper Room",
                         "node_name": "Dock from Spider Magnet Elevator"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
-                        "Dock to collision_camera_007 (G) (Tunnel)": {
+                        "Tunnel to Flipper Room (Tunnel)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -11972,7 +12048,7 @@
                         }
                     }
                 },
-                "Dock to collision_camera_007 (G) (Tunnel)": {
+                "Tunnel to Flipper Room (Tunnel)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -11984,10 +12060,10 @@
                     "extra": {},
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_007 (G)",
-                        "node_name": "Dock to Spider Magnet Elevator"
+                        "area_name": "Flipper Room",
+                        "node_name": "Tunnel to Spider Magnet Elevator"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Door to Right Entrance": {
@@ -12011,7 +12087,7 @@
                                 ]
                             }
                         },
-                        "Dock to collision_camera_007 (G) (Cannon)": {
+                        "Tunnel to Flipper Room (Cannon)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12068,7 +12144,7 @@
                     "extra": {},
                     "event_name": "GhavoraSupersMagnetPlatformLowered",
                     "connections": {
-                        "Dock to collision_camera_009 (G)": {
+                        "Tunnel to Super Missile Room Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12142,7 +12218,7 @@
                                 "items": []
                             }
                         },
-                        "Dock to Golzuna Arena": {
+                        "Tunnel to Golzuna Arena": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -12187,7 +12263,7 @@
                         }
                     }
                 },
-                "Dock to Golzuna Arena": {
+                "Tunnel to Golzuna Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12200,9 +12276,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Golzuna Arena",
-                        "node_name": "Dock to Above Golzuna"
+                        "node_name": "Tunnel to Above Golzuna"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Door to Golzuna Tower": {
@@ -12249,7 +12325,7 @@
                 "asset_id": "collision_camera_037"
             },
             "nodes": {
-                "Door to collision_camera_029 (G)": {
+                "Door to Elun Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12268,7 +12344,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_029 (G)",
+                        "area_name": "Elun Transport Access",
                         "node_name": "Door to Transport to Elun"
                     },
                     "dock_type": "door",
@@ -12324,7 +12400,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to collision_camera_029 (G)": {
+                        "Door to Elun Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12366,7 +12442,7 @@
                 "asset_id": "collision_camera_038"
             },
             "nodes": {
-                "Door to collision_camera_008 (G)": {
+                "Door to Dairon Transport Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12385,7 +12461,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "collision_camera_008 (G)",
+                        "area_name": "Dairon Transport Access",
                         "node_name": "Door to Transport to Dairon"
                     },
                     "dock_type": "door",
@@ -12424,7 +12500,7 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Door to collision_camera_008 (G)": {
+                        "Door to Dairon Transport Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12490,9 +12566,17 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
-                "Pickup (item_missiletank_006)": {
+                "Pickup (Missile Tank)": {
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
@@ -12626,7 +12710,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_006)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12657,7 +12741,7 @@
                         ]
                     },
                     "connections": {
-                        "Pickup (item_missiletank_006)": {
+                        "Pickup (Missile Tank)": {
                             "type": "template",
                             "data": "Can Slide"
                         },
@@ -12699,7 +12783,7 @@
                                 "negate": false
                             }
                         },
-                        "Dock to Golzuna Tower": {
+                        "Tunnel to Golzuna Tower": {
                             "type": "template",
                             "data": "Can Slide"
                         }
@@ -12724,7 +12808,7 @@
                     "dock_weakness": "Open Passage",
                     "connections": {}
                 },
-                "Dock to Golzuna Tower": {
+                "Tunnel to Golzuna Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12737,9 +12821,9 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Golzuna Tower",
-                        "node_name": "Dock to Above Pulse Radar"
+                        "node_name": "Tunnel to Above Pulse Radar"
                     },
-                    "dock_type": "other",
+                    "dock_type": "tunnel",
                     "dock_weakness": "Slide Tunnel",
                     "connections": {
                         "Tile Group (POWERBEAM) 3": {

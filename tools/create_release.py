@@ -14,7 +14,7 @@ import markdown
 import tenacity
 
 from randovania import VERSION
-from randovania.cli import prime_database
+from randovania.cli import database
 from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
 from randovania.lib.enum_lib import iterate_enum
@@ -87,7 +87,7 @@ async def main():
         shutil.rmtree(app_folder, ignore_errors=False)
 
     for game in iterate_enum(RandovaniaGame):
-        prime_database.export_as_binary(
+        database.export_as_binary(
             default_data.read_json_then_binary(game)[1],
             _ROOT_FOLDER.joinpath("randovania", "data", "binary_data", f"{game.value}.bin"))
 
@@ -105,13 +105,13 @@ async def main():
 
     await download_nintendont()
 
-    if platform.system() == "Darwin":
-        # HACK: pyintaller calls lipo/codesign on macOS and frequently timeout in github actions
-        print("Will patch timeout in PyInstaller compat")
-        import PyInstaller.compat
-        compat_path = Path(PyInstaller.compat.__file__)
-        compat_text = compat_path.read_text().replace("timeout=60", "timeout=180")
-        compat_path.write_text(compat_text)
+    # HACK: pyintaller calls lipo/codesign on macOS and frequently timeout in github actions
+    # There's also timeouts on Windows so we're expanding this to everyone
+    print("Will patch timeout in PyInstaller compat")
+    import PyInstaller.compat
+    compat_path = Path(PyInstaller.compat.__file__)
+    compat_text = compat_path.read_text().replace("timeout=60", "timeout=180")
+    compat_path.write_text(compat_text)
 
     subprocess.run([sys.executable, "-m", "PyInstaller",
                     "randovania.spec"],
@@ -121,6 +121,10 @@ async def main():
         create_windows_zip(package_folder)
     elif platform.system() == "Darwin":
         create_macos_zip(app_folder)
+    elif platform.system() == "Linux":
+        create_linux_zip(package_folder)
+    else:
+        raise ValueError(f"Unknown system: {platform.system()}")
 
 
 def create_windows_zip(package_folder):
@@ -138,8 +142,19 @@ def create_windows_zip(package_folder):
 
 
 def create_macos_zip(folder_to_pack: Path):
+    output = f"dist/{zip_folder}-macos.tar.gz"
     with tarfile.open(_ROOT_FOLDER.joinpath(f"dist/{zip_folder}-macos.tar.gz"), "w:gz") as release_zip:
+        print(f"Creating {output} from {folder_to_pack}.")
         release_zip.add(folder_to_pack, f"{zip_folder}/Randovania.app")
+        print("Finished.")
+
+
+def create_linux_zip(folder_to_pack: Path):
+    output = _ROOT_FOLDER.joinpath(f"dist/{zip_folder}-linux.tar.gz")
+    with tarfile.open(output, "w:gz") as release_zip:
+        print(f"Creating {output} from {folder_to_pack}.")
+        release_zip.add(folder_to_pack, zip_folder)
+        print("Finished.")
 
 
 def add_readme_to_zip(release_zip):

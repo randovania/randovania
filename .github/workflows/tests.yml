@@ -20,6 +20,11 @@ jobs:
             executable: false
             name: 'Linux'
 
+          - os: 'ubuntu-latest'
+            python: '3.9'
+            executable: true
+            name: 'Linux Executable'
+
           - os: 'macos-latest'
             python: '3.9'
             executable: false
@@ -59,7 +64,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v2.3.1
+        uses: actions/setup-python@v2.3.2
         with:
           python-version: ${{ matrix.python }}
 
@@ -165,7 +170,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v2.3.1
+        uses: actions/setup-python@v2.3.2
         with:
           python-version: 3.9
 

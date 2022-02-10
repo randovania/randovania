@@ -21,7 +21,7 @@ from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.connections_visualizer import ConnectionsVisualizer
-from randovania.lib import enum_lib
+from randovania.lib import enum_lib, frozen_lib
 
 
 def refresh_if_needed(combo: QtWidgets.QComboBox, func):
@@ -106,7 +106,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.location_y_spin.setValue(node.location.y)
             self.location_z_spin.setValue(node.location.z)
         self.description_edit.setMarkdown(node.description)
-        self.extra_edit.setPlainText(json.dumps(node.extra, indent=4))
+        self.extra_edit.setPlainText(json.dumps(frozen_lib.unwrap(node.extra), indent=4))
 
         try:
             visible_tab = self._fill_for_type(node)

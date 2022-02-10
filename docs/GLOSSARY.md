@@ -74,7 +74,7 @@ Has two meainings:
 
 ## Generator
 
-The part of Randovania responsible for placing [#Pickups] in randomized games, as well as determing details like [Starting Items](#starting-items).
+The part of Randovania responsible for placing [Pickups](#pickup) in randomized games, as well as determing details like [Starting Items](#starting-items).
 
 ## Hint
 
