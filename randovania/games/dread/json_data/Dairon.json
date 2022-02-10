@@ -4145,20 +4145,11 @@
                                 ]
                             }
                         },
-                        "Tile Group (MISSILE)": {
+                        "Ceiling": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
                                     {
                                         "type": "or",
                                         "data": {
@@ -4449,31 +4440,41 @@
                         }
                     }
                 },
-                "Tile Group (MISSILE)": {
-                    "node_type": "configurable_node",
+                "Ceiling": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 12600.0,
-                        "y": -700.0,
+                        "x": 12500.0,
+                        "y": -600.0,
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_054",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "MISSILE"
-                        ]
-                    },
+                    "extra": {},
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door from Early Grapple Room": {
@@ -7814,48 +7815,11 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (BOMB MISSILE)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Dock to EMMI Zone Exit North": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (BOMB MISSILE)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2800.0,
-                        "y": 5200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_042",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB",
-                            "MISSILE"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Energy Part)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -7973,6 +7937,27 @@
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
                     "connections": {
+                        "Pickup (Energy Part)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Tile Group (SPEEDBOOST)": {
                             "type": "and",
                             "data": {
@@ -8378,6 +8363,43 @@
                                 ]
                             }
                         },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Ballspark"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MissileAmmo",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Event - Pull Grapple Block (grapplepulloff1x2_002)": {
                             "type": "resource",
                             "data": {
@@ -8385,13 +8407,6 @@
                                 "name": "Grapple",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        },
-                        "Tile Group (BOMB MISSILE)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -8522,43 +8537,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB MISSILE)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4400.0,
-                        "y": 4400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_070",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB",
-                            "MISSILE"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (MISSILE)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Ballspark"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Cross Comb"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Tile Group (WEIGHT) 3": {
                     "node_type": "generic",
                     "heal": false,
@@ -8577,35 +8555,6 @@
                         ]
                     },
                     "connections": {}
-                },
-                "Tile Group (MISSILE)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3700.0,
-                        "y": 4400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_072",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "MISSILE"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
                 },
                 "Tile Group (WEIGHT) 4": {
                     "node_type": "generic",
@@ -13451,7 +13400,7 @@
                     "pickup_index": 65,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (BOMB) 2": {
+                        "Above Grapple Block": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -13505,56 +13454,6 @@
                     },
                     "connections": {}
                 },
-                "Tile Group (BOMB) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -5700.0,
-                        "y": -3100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_007",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (BOMB) 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:grapplepulloff1x2_003",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Cross Comb"
-                                    }
-                                ]
-                            }
-                        },
-                        "Ledge": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -13574,23 +13473,16 @@
                     },
                     "connections": {}
                 },
-                "Tile Group (BOMB) 2": {
-                    "node_type": "configurable_node",
+                "Above Grapple Block": {
+                    "node_type": "generic",
                     "heal": false,
                     "coordinates": {
                         "x": -5000.0,
-                        "y": -3000.0,
+                        "y": -2800.0,
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_056",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB"
-                        ]
-                    },
+                    "extra": {},
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
                             "type": "resource",
@@ -13703,24 +13595,39 @@
                     "extra": {},
                     "connections": {
                         "Event - Pull Grapple Block (grapplepulloff1x2_003)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Grapple",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
-                        "Tile Group (BOMB) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (BOMB) 2": {
+                        "Above Grapple Block": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13744,12 +13651,38 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Cross",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]

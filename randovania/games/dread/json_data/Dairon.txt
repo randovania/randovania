@@ -876,9 +876,8 @@ Extra - asset_id: collision_camera_011
   * Extra - right_shield_def: None
   > Tile Group (POWERBEAM)
       Varia Suit or Heat Damage ≥ 100
-  > Tile Group (MISSILE)
+  > Ceiling
       All of the following:
-          Morph Ball
           Grapple Beam or Simple IBJ or Use Spin Boost
           Varia Suit or Cold Damage ≥ 100
 
@@ -919,14 +918,9 @@ Extra - asset_id: collision_camera_011
   > Elevator to Artaria - Transport to Dairon
       Varia Suit or Heat Damage ≥ 100
 
-> Tile Group (MISSILE); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_054
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
+> Ceiling; Heals? False
   > Pickup (Power Bomb Tank)
-      Morph Ball
+      Missiles ≥ 2 and Morph Ball
   > Door from Early Grapple Room
       Varia Suit or Heat Damage ≥ 50
 
@@ -1561,19 +1555,8 @@ Extra - asset_id: collision_camera_018
   * Extra - tile_types: ('SPEEDBOOST',)
   > Door to EMMI Zone Exit East
       Trivial
-  > Tile Group (BOMB MISSILE)
-      Trivial
   > Dock to EMMI Zone Exit North
       Trivial
-
-> Tile Group (BOMB MISSILE); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_042
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB', 'MISSILE')
-  > Pickup (Energy Part)
-      Morph Ball
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Configurable Node
@@ -1607,6 +1590,8 @@ Extra - asset_id: collision_camera_018
 
 > Dock to EMMI Zone Exit North; Heals? False
   * Open Passage to EMMI Zone Exit North/Dock to Yellow EMMI Introduction
+  > Pickup (Energy Part)
+      Missiles and Lay Bomb
   > Tile Group (SPEEDBOOST)
       Trivial
 
@@ -1701,10 +1686,12 @@ Extra - asset_id: collision_camera_020
   * Extra - right_shield_def: None
   > Dock to EMMI Zone Exit North
       Morph Ball and After Dairon - grapplepulloff1x2_002
+  > Pickup (Missile Tank)
+      All of the following:
+          Missiles ≥ 4 and Lay Bomb
+          Ballspark or Lay Cross Comb
   > Event - Pull Grapple Block (grapplepulloff1x2_002)
       Grapple Beam
-  > Tile Group (BOMB MISSILE)
-      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 75; Major Location? False
@@ -1742,29 +1729,11 @@ Extra - asset_id: collision_camera_020
   > Tile Group (WEIGHT) 1
       Trivial
 
-> Tile Group (BOMB MISSILE); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_070
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB', 'MISSILE')
-  > Tile Group (MISSILE)
-      Ballspark or Lay Cross Comb
-
 > Tile Group (WEIGHT) 3; Heals? False
   * Extra - actor_name: breakabletilegroup_071
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-
-> Tile Group (MISSILE); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_072
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('MISSILE',)
-  > Pickup (Missile Tank)
-      Morph Ball
 
 > Tile Group (WEIGHT) 4; Heals? False
   * Extra - actor_name: breakabletilegroup_073
@@ -2759,7 +2728,7 @@ Extra - asset_id: collision_camera_035
   * Pickup 65; Major Location? False
   * Extra - actor_name: item_powerbombtank_001
   * Extra - actor_def: actordef:actors/items/item_powerbombtank/charclasses/item_powerbombtank.bmsad
-  > Tile Group (BOMB) 2
+  > Above Grapple Block
       Morph Ball
 
 > Event - Pull Grapple Block (grapplepulloff1x2_003); Heals? False
@@ -2775,17 +2744,6 @@ Extra - asset_id: collision_camera_035
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
 
-> Tile Group (BOMB) 1; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_007
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 2
-      After Dairon - grapplepulloff1x2_003 and Lay Cross Comb
-  > Ledge
-      Morph Ball
-
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_008
@@ -2793,12 +2751,7 @@ Extra - asset_id: collision_camera_035
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
 
-> Tile Group (BOMB) 2; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_056
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
+> Above Grapple Block; Heals? False
   > Pickup (Power Bomb Tank)
       Morph Ball
   > Ledge
@@ -2813,11 +2766,13 @@ Extra - asset_id: collision_camera_035
 
 > Ledge; Heals? False
   > Event - Pull Grapple Block (grapplepulloff1x2_003)
-      Grapple Beam
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (BOMB) 2
-      Gravity Suit and Morph Ball and After Dairon - grapplepulloff1x2_003
+      All of the following:
+          Grapple Beam
+          Lay Cross Comb or Lay Power Bomb
+  > Above Grapple Block
+      All of the following:
+          Morph Ball and After Dairon - grapplepulloff1x2_003
+          Cross Bomb or Gravity Suit or Space Jump
   > Dock to Storm Missile Gate Room
       Trivial
 

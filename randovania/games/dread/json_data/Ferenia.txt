@@ -77,8 +77,8 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
   > Tile Group (WEIGHT)
       Trivial
-  > Tile Group (BOMB)
-      Morph Ball
+  > Ceiling Tunnel
+      Lay Bomb
 
 > Door to Purple EMMI Introduction Access; Heals? False
   * Phase Shift Door to Purple EMMI Introduction Access/Dock to Total Recharge Station
@@ -107,17 +107,6 @@ Extra - asset_id: collision_camera_002
   > Door to Purple EMMI Introduction Access
       Trivial
 
-> Tile Group (BOMB); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_053
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Energy Part)
-      Morph Ball
-  > Right Alcove
-      Morph Ball
-
 > Right Alcove; Heals? False
   > Door to East Transport to Darion
       Morph Ball
@@ -125,10 +114,19 @@ Extra - asset_id: collision_camera_002
       All of the following:
           Morph Ball
           Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
-  > Tile Group (BOMB)
-      All of the following:
-          Morph Ball
-          Space Jump or Infinite Bomb Jump (Beginner)
+  > Ceiling Tunnel
+      Any of the following:
+          Space Jump or Simple IBJ
+          All of the following:
+              Flash Shift
+              Grapple Beam or Spider Magnet
+              Walljump (Beginner) or Use Spin Boost
+
+> Ceiling Tunnel; Heals? False
+  > Pickup (Energy Part)
+      Lay Bomb
+  > Right Alcove
+      Trivial
 
 ----------------
 EMMI Zone Exit West
@@ -1597,16 +1595,18 @@ Extra - asset_id: collision_camera_019
       After Ferenia - Storm Missile Gate by Robot Fight
   > Life Recharge
       Trivial
-  > Tile Group (SCREW ATTACK)
-      Infinite Bomb Jump (Beginner) or Use Spin Boost
   > Event - Storm Missile Gate
       Activate Storm Missile Locks
+  > Bomb Ledge
+      All of the following:
+          Screw Attack
+          Walljump (Beginner) or Use Spin Boost
 
 > Event - Grapple Block (grapplepulloff1x2_000); Heals? False
   * Event Ferenia - grapplepulloff1x2_000
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
-  > Tile Group (BOMB) 1
+  > Bomb Ledge
       Trivial
 
 > Start Point; Heals? False; Spawn Point
@@ -1623,21 +1623,6 @@ Extra - asset_id: collision_camera_019
   > Dock to EMMI Zone Exit Middle
       Trivial
 
-> Tile Group (BOMB) 1; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_019
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Event - Grapple Block (grapplepulloff1x2_000)
-      Grapple Beam
-  > Tile Group (WEIGHT)
-      Trivial
-  > Tile Group (BOMB) 2
-      Morph Ball
-  > Tunnel to Energy Recharge Station Secret
-      Morph Ball and After Ferenia - grapplepulloff1x2_000
-
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_020
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
@@ -1646,30 +1631,6 @@ Extra - asset_id: collision_camera_019
   > Dock to EMMI Zone Exit Middle
       Trivial
 
-> Tile Group (BOMB) 2; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_021
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (WEIGHT)
-      Trivial
-  > Tile Group (SCREW ATTACK)
-      Trivial
-
-> Tile Group (SCREW ATTACK); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_022
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Dock to EMMI Zone Exit Middle
-      Trivial
-  > Tile Group (BOMB) 2
-      Morph Ball
-
 > Event - Storm Missile Gate; Heals? False
   * Event Ferenia - Storm Missile Gate by Robot Fight
   > Dock to EMMI Zone Exit Middle
@@ -1677,8 +1638,26 @@ Extra - asset_id: collision_camera_019
 
 > Tunnel to Energy Recharge Station Secret; Heals? False
   * Morph Ball Tunnel to Energy Recharge Station Secret/Tunnel to Energy Recharge Station (Gate)
-  > Tile Group (BOMB) 1
-      Morph Ball and After Ferenia - grapplepulloff1x2_000
+  > Tile Group (WEIGHT)
+      After Ferenia - grapplepulloff1x2_000 and Lay Bomb
+
+> Bomb Ledge; Heals? False
+  > Dock to EMMI Zone Exit Middle
+      Screw Attack
+  > Event - Grapple Block (grapplepulloff1x2_000)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Cross Bomb
+              All of the following:
+                  # Bomb & Power Bombs, to desync the tunnel bomb blocks from the ledge bomb blocks
+                  Bomb and Power Bombs
+  > Tile Group (WEIGHT)
+      Morph Ball
+  > Tunnel to Energy Recharge Station Secret
+      All of the following:
+          Morph Ball and After Ferenia - grapplepulloff1x2_000
+          Cross Bomb or Power Bombs
 
 ----------------
 Energy Recharge Station Secret
@@ -1689,45 +1668,23 @@ Extra - asset_id: collision_camera_020
   * Pickup 124; Major Location? True
   * Extra - actor_name: item_energyfragment_001
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Tile Group (BOMB)
-      Morph Ball
-
-> Tile Group (BOMB); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_016
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Energy Part)
-      Morph Ball
-  > Tile Group (SCREWATTACK)
+  > Corner
       Trivial
-
-> Tile Group (SCREWATTACK); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (BOMB)
-      Trivial
-  > Tunnel to Energy Recharge Station (Gate)
-      Morph Ball
 
 > Tile Group (BOMB WEIGHT); Heals? False
-  * Extra - actor_name: breakabletilegroup_018
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB', 'WEIGHT')
-  > Tile Group (BOMB)
-      Morph Ball
+  > Corner
+      Lay Bomb
 
 > Tunnel to Energy Recharge Station (Gate); Heals? False
   * Morph Ball Tunnel to Energy Recharge Station (Gate)/Tunnel to Energy Recharge Station Secret
-  > Tile Group (SCREWATTACK)
-      Morph Ball
   > Tile Group (BOMB WEIGHT)
+      Lay Bomb
+
+> Corner; Heals? False
+  > Pickup (Energy Part)
       Morph Ball
+  > Tunnel to Energy Recharge Station (Gate)
+      Morph Ball and Screw Attack
 
 ----------------
 EMMI Zone Exit Middle
@@ -1988,19 +1945,8 @@ Extra - asset_id: collision_camera_025
   * Pickup 133; Major Location? True
   * Extra - actor_name: item_energyfragment
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Tile Group (BOMB)
-      Morph Ball
-
-> Tile Group (BOMB); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_000
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Energy Part)
-      Morph Ball
   > Tunnel to Escue Eyedoor Room
-      Morph Ball
+      Lay Bomb
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_059
@@ -2021,8 +1967,8 @@ Extra - asset_id: collision_camera_025
   * Morph Ball Tunnel to Escue Eyedoor Room/Tunnel to Path to Escue
   > Door to Storm Missile Tutorial
       Trivial
-  > Tile Group (BOMB)
-      Morph Ball
+  > Pickup (Energy Part)
+      Lay Bomb
 
 > Tunnel to Storm Missile Tutorial; Heals? False
   * Slide Tunnel to Storm Missile Tutorial/Tunnel to Path to Escue
