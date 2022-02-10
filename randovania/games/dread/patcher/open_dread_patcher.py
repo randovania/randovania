@@ -27,17 +27,11 @@ from randovania.patching.prime.patcher_file_lib import pickup_exporter
 from randovania.patching.prime.patcher_file_lib.pickup_exporter import ExportedPickupDetails
 
 _ALTERNATIVE_MODELS = {
-    "powerup_wavebeam": "powerup_plasmabeam",
-    "powerup_hyperbeam": "powerup_plasmabeam",
-    "powerup_icemissile": "powerup_supermissile",
-    "powerup_stormmissile": "itemsphere",
-    "powerup_metroidsuit": "powerup_gravitysuit",
-    "powerup_morphball": "itemsphere",
-    "powerup_crossbomb": "powerup_bomb",
-    "powerup_powerbomb": "itemsphere",
+    "powerup_powerbomb": "item_powerbombtank",
+
     "powerup_slide": "itemsphere",
-    "powerup_spidermagnet": "itemsphere",
-    "powerup_speedbooster": "itemsphere",
+    "powerup_hyperbeam": "powerup_plasmabeam",
+    "powerup_metroidsuit": "powerup_gravitysuit",
 
     "PROGRESSIVE_BEAM": "powerup_widebeam",
     "PROGRESSIVE_CHARGE": "powerup_chargebeam",
