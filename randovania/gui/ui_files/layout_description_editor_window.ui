@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LayoutDescriptionEditorWindow</class>
+ <widget class="QMainWindow" name="LayoutDescriptionEditorWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1025</width>
+    <height>508</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Layout Editor</string>
+  </property>
+  <widget class="QWidget" name="central_widget">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <layout class="QVBoxLayout" name="root_layout">
+    <item>
+     <widget class="QGroupBox" name="presets_combo">
+      <property name="title">
+       <string>Presets</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="1">
+        <widget class="QPushButton" name="preset_1_customize_button">
+         <property name="text">
+          <string>Customize</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QComboBox" name="preset_2_game_combo"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QComboBox" name="preset_1_game_combo"/>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="preset_1_details_button">
+         <property name="text">
+          <string>View Details</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="preset_2_customize_button">
+         <property name="text">
+          <string>Customize</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="preset_2_details_button">
+         <property name="text">
+          <string>View Details</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="player_index_combo">
+      <item>
+       <property name="text">
+        <string>Player 1</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Player 2</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="patches_tab_widget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QScrollArea" name="pickup_tab">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <attribute name="title">
+        <string>Pickups</string>
+       </attribute>
+       <widget class="QWidget" name="pickup_tab_contents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1001</width>
+          <height>223</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="pickup_layout"/>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="teleporter_tab">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="buttons_layout">
+      <item>
+       <widget class="QPushButton" name="validate_button">
+        <property name="text">
+         <string>Validate</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="save_button">
+        <property name="text">
+         <string>Save as file</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menu_bar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1025</width>
+     <height>28</height>
+    </rect>
+   </property>
+  </widget>
+  <action name="actionAction">
+   <property name="text">
+    <string>Action</string>
+   </property>
+  </action>
+  <action name="menu_reset_action">
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
