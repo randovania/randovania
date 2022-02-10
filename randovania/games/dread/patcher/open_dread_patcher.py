@@ -5,8 +5,6 @@ from pathlib import Path
 from random import Random
 from typing import Optional, List, Union
 
-import open_dread_rando
-
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -266,6 +264,8 @@ class OpenDreadPatcher(Patcher):
         output_file.mkdir(parents=True, exist_ok=True)
         with output_file.joinpath("patcher.json").open("w") as f:
             json.dump(patch_data, f, indent=4)
+
+        import open_dread_rando
         open_dread_rando.patch_with_status_update(
             input_file, output_file, patch_data,
             lambda progress, msg: progress_update(msg, progress),
