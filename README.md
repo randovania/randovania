@@ -112,8 +112,8 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 [Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
 
 ### Metroid Prime 3: Corruption
-* Game patching written by gollop.
-* Room data collected by Dyceron and [KirbymastaH](https://www.twitch.tv/kirbymastah).
+* Game patching written by [gollop](https://github.com/gollop).
+* Room data collected by [Dyceron](https://www.twitch.tv/dyceron) and [KirbymastaH](https://www.twitch.tv/kirbymastah).
 
 ### Super Metroid
 * Game Patching and Logic Database by [SolventMercury](https://github.com/SolventMercury).
@@ -125,6 +125,11 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 * Patcher and logic written by [duncathan_salt](https://twitter.com/duncathan_salt).
 * Based on the [original randomizer](https://shru.itch.io/cave-story-randomizer) by shru.
 * Features contributions from [many others](https://github.com/cave-story-randomizer/cave-story-randomizer/graphs/contributors).
+
+### Metroid Dread
+* Game Patching by [Henrique Gemignani](https://github.com/henriquegemignani/) and [duncathan_salt](https://twitter.com/duncathan_salt).
+* Room data initially collected by [KirbymastaH](https://www.twitch.tv/kirbymastah) (connections), [Dyceron](https://www.twitch.tv/dyceron) (area names) and Henrique Gemignani (initial structure).
+* Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ). Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ. 
 
 ## Auto Tracker
 
@@ -141,7 +146,7 @@ Server and logic written by Henrique, including Dolphin and Nintendont integrati
 
 ## Dependencies
 
-* [Python 3.9 64-bit](https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe)
+* [Python 3.9 64-bit](https://www.python.org/ftp/python/3.9.10/python-3.9.10-amd64.exe)
 * [Git](https://git-scm.com/downloads)
 
 ## Setup
@@ -157,6 +162,13 @@ Getting started:
 In order to start Randovania, open:
    1. Windows: `tools/start_client.bat`
    2. Linux/macOS: `tools/start_client.sh` 
+
+In order to update your repository:
+   1. Update the git repository. (With `git pull` or anything else)
+   2. Make sure that Randovania is closed.
+   3. Re-run the steps from "Getting Started", starting at step 2.
+      1. In case of unexpected errors, delete the `venv` in the root of the repository and start again.
+   4. Open Randovania normally.
 
 In order to run the tests:
    1. Run both "Getting started" and "Start Randovania" steps. 
