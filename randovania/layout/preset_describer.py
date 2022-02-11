@@ -61,7 +61,7 @@ def _calculate_starting_items(game: RandovaniaGame, items_state: Dict[MajorItem,
     starting_items = []
 
     for major_item, item_state in items_state.items():
-        if major_item.required:
+        if major_item.hide_from_gui:
             continue
 
         count = item_state.num_included_in_starting_items
@@ -89,7 +89,7 @@ def _calculate_item_pool(game: RandovaniaGame, configuration: MajorItemsConfigur
     unexpected_items = game.data.layout.preset_describer.unexpected_items(configuration)
 
     for major_item, item_state in configuration.items_state.items():
-        if major_item.required:
+        if major_item.hide_from_gui:
             continue
 
         item_was_expected = major_item.name not in unexpected_items
