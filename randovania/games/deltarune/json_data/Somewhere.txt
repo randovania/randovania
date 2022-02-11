@@ -1,0 +1,296 @@
+----------------
+room_dark1
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark1a
+      Trivial
+
+> Door to room_dark1a; Heals? False
+  * Normal Door to room_dark1a/Door to room_dark1
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark1a
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark2
+      Trivial
+  > Door to room_dark1
+      Trivial
+
+> Door to room_dark2; Heals? False
+  * Normal Door to room_dark2/Door to room_dark1a
+  > Spawn Point
+      Trivial
+
+> Door to room_dark1; Heals? False
+  * Normal Door to room_dark1/Door to room_dark1a
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark2
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark3
+      Trivial
+  > Door to room_dark1a
+      Trivial
+
+> Door to room_dark3; Heals? False
+  * Normal Door to room_dark3/Door to room_dark2
+  > Spawn Point
+      Trivial
+
+> Door to room_dark1a; Heals? False
+  * Normal Door to room_dark1a/Door to room_dark2
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark3
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark3a
+      Trivial
+  > Door to room_dark2
+      Trivial
+  > Door to room_dark_wobbles
+      Trivial
+
+> Door to room_dark3a; Heals? False
+  * Normal Door to room_dark3a/Door to room_dark3
+  > Spawn Point
+      Trivial
+
+> Door to room_dark2; Heals? False
+  * Normal Door to room_dark2/Door to room_dark3
+  > Spawn Point
+      Trivial
+
+> Door to room_dark_wobbles; Heals? False
+  * Normal Door to room_dark_wobbles/Door to room_dark3
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark3a
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark3
+      Trivial
+  > Pickup (Glowshard0)
+      Trivial
+
+> Door to room_dark3; Heals? False
+  * Normal Door to room_dark3/Door to room_dark3a
+  > Spawn Point
+      Trivial
+
+> Pickup (Glowshard0); Heals? False
+  * Pickup 10; Major Location? False
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark_wobbles
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark_eyepuzzle
+      Trivial
+  > Door to room_dark3
+      Trivial
+
+> Door to room_dark_eyepuzzle; Heals? False
+  * Normal Door to room_dark_eyepuzzle/Door to room_dark_wobbles
+  > Spawn Point
+      Trivial
+
+> Door to room_dark3; Heals? False
+  * Normal Door to room_dark3/Door to room_dark_wobbles
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark_eyepuzzle
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark7
+      Trivial
+  > Door to room_dark_wobbles
+      Trivial
+
+> Door to room_dark7; Heals? False
+  * Normal Door to room_dark7/Door to room_dark_eyepuzzle
+  > Spawn Point
+      Trivial
+
+> Door to room_dark_wobbles; Heals? False
+  * Normal Door to room_dark_wobbles/Door to room_dark_eyepuzzle
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark7
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark_chase1
+      Trivial
+  > Door to room_dark_eyepuzzle
+      Trivial
+
+> Door to room_dark_chase1; Heals? False
+  * Normal Door to room_dark_chase1/Door to room_dark7
+  > Spawn Point
+      Trivial
+
+> Door to room_dark_eyepuzzle; Heals? False
+  * Normal Door to room_dark_eyepuzzle/Door to room_dark7
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark_chase1
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_dark_chase2
+      Trivial
+  > Door to room_dark7
+      Trivial
+
+> Door to room_dark_chase2; Heals? False
+  * Normal Door to room_dark_chase2/Door to room_dark_chase1
+  > Spawn Point
+      Trivial
+
+> Door to room_dark7; Heals? False
+  * Normal Door to room_dark7/Door to room_dark_chase1
+  > Spawn Point
+      Trivial
+
+----------------
+room_dark_chase2
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_castle_outskirts
+      Trivial
+  > Door to room_dark_chase1
+      Trivial
+
+> Door to room_castle_outskirts; Heals? False
+  * Normal Door to room_castle_outskirts/Door to room_dark_chase2
+  > Spawn Point
+      Trivial
+
+> Door to room_dark_chase1; Heals? False
+  * Normal Door to room_dark_chase1/Door to room_dark_chase2
+  > Spawn Point
+      Trivial
+
+----------------
+room_castle_outskirts
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  * Extra - different_strongly_connected_component: True
+  > Door to room_castle_town
+      Trivial
+
+> Door to room_castle_town; Heals? False
+  * Normal Door to room_castle_town/Door to room_castle_outskirts
+  > Spawn Point
+      Trivial
+
+> Door to room_dark_chase2; Heals? False
+  * Normal Door to room_dark_chase2/Door to room_castle_outskirts
+  > Spawn Point
+      Trivial
+
+----------------
+room_castle_town
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_castle_front
+      Trivial
+  > Door to room_castle_outskirts
+      Trivial
+  > Door to room_castle_tutorial
+      Trivial
+
+> Door to room_castle_front; Heals? False
+  * Normal Door to room_castle_front/Door to room_castle_town
+  > Spawn Point
+      Trivial
+
+> Door to room_castle_outskirts; Heals? False
+  * Normal Door to room_castle_outskirts/Door to room_castle_town
+  > Spawn Point
+      Trivial
+
+> Door to room_castle_tutorial; Heals? False
+  * Normal Door to room_castle_tutorial/Door to room_castle_town
+  > Spawn Point
+      Trivial
+
+----------------
+room_castle_front
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_castle_town
+      Trivial
+
+> Door to room_castle_town; Heals? False
+  * Normal Door to room_castle_town/Door to room_castle_front
+  > Spawn Point
+      Trivial
+
+----------------
+room_castle_tutorial
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_castle_darkdoor
+      Trivial
+  > Door to room_castle_town
+      Trivial
+  > Pickup (Manual0)
+      Trivial
+
+> Door to room_castle_darkdoor; Heals? False
+  * Normal Door to room_castle_darkdoor/Door to room_castle_tutorial
+  > Spawn Point
+      Trivial
+
+> Door to room_castle_town; Heals? False
+  * Normal Door to room_castle_town/Door to room_castle_tutorial
+  > Spawn Point
+      Trivial
+
+> Pickup (Manual0); Heals? False
+  * Pickup 12; Major Location? False
+  > Spawn Point
+      Trivial
+
+----------------
+room_castle_darkdoor
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_start
+      Field Key
+  > Door to room_castle_tutorial
+      Trivial
+  > Pickup (Field Key0)
+      Trivial
+
+> Door to room_field_start; Heals? False
+  * Normal Door to room_field_start/Door to room_castle_darkdoor
+
+> Door to room_castle_tutorial; Heals? False
+  * Normal Door to room_castle_tutorial/Door to room_castle_darkdoor
+  > Spawn Point
+      Trivial
+
+> Pickup (Field Key0); Heals? False
+  * Pickup 36; Major Location? True
+  > Spawn Point
+      Trivial
+
