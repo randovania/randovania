@@ -3,7 +3,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 2
+CURRENT_VERSION = 3
 
 
 def _migrate_v1(data: dict) -> dict:
@@ -28,8 +28,17 @@ def _migrate_v1(data: dict) -> dict:
     return data
 
 
+def _migrate_v2(data: dict) -> dict:
+
+    for item in data["items"].values():
+        item["must_be_starting"] = item["hide_from_gui"] = item.pop("required")
+
+    return data
+
+
 _MIGRATIONS = {
-    1: _migrate_v1
+    1: _migrate_v1,
+    2: _migrate_v2,
 }
 
 
