@@ -374,8 +374,10 @@ class RandomprimePatcher(Patcher):
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
+        seed = description.get_seed_for_player(players_config.player_index)
+
         return {
-            "seed": description.get_seed_for_player(players_config.player_index),
+            "seed": seed,
             "preferences": {
                 "defaultGameOptions": default_game_options,
                 "qolGameBreaking": configuration.qol_game_breaking,
@@ -398,7 +400,21 @@ class RandomprimePatcher(Patcher):
                 "startingMemo": starting_memo,
                 "warpToStart": configuration.warp_to_start,
                 "springBall": configuration.spring_ball,
-
+                "incineratorDroneConfig":{
+                    "eyeWaitInitialRandomTime": 0.0,
+                    "eyeWaitRandomTime": 0.0,
+                    "eyeStayUpRandomTime": 0.0,
+                    "resetContraptionRandomTime": 0.0,
+                    # ~~~ Justification for Divide by 2 ~~~
+                    # These Timer RNG values are normally re-rolled inbetween each of the 4 phases,
+                    # turning the zoid fight duration probability into a bell curve. With /2 we manipulate
+                    # the (now linear) probability characteristic to more often generate "average zoid fights"
+                    # while erring on the side of faster.
+                    "eyeWaitInitialMinimumTime": 8.0 + rng.random()*5.0/2.0,
+                    "eyeWaitMinimumTime": 15.0 + rng.random()*10.0/2.0,
+                    "eyeStayUpMinimumTime": 8.0 + rng.random()*3.0/2.0,
+                    "resetContraptionMinimumTime": 3.0 + rng.random()*3.0/2.0,
+                },
                 "nonvariaHeatDamage": configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": configuration.progressive_damage_reduction,
                 "heatDamagePerSec": configuration.heat_damage,
