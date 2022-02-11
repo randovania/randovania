@@ -20,7 +20,8 @@ class MajorItem:
     progression: Tuple[str, ...]
     ammo_index: Tuple[str, ...] = tuple()
     unlocks_ammo: bool = False
-    required: bool = False
+    hide_from_gui: bool = False
+    must_be_starting: bool = False
     original_index: Optional[PickupIndex] = None
     probability_offset: int = 0
     probability_multiplier: float = 1
@@ -43,7 +44,8 @@ class MajorItem:
             progression=frozen_lib.wrap(value["progression"]),
             ammo_index=frozen_lib.wrap(value.get("ammo", [])),
             unlocks_ammo=value.get("unlocks_ammo", False),
-            required=value.get("required", False),
+            hide_from_gui=value.get("hide_from_gui", False),
+            must_be_starting=value.get("must_be_starting", False),
             original_index=PickupIndex(value["original_index"]) if "original_index" in value else None,
             probability_offset=value["probability_offset"],
             probability_multiplier=value["probability_multiplier"],
@@ -60,7 +62,8 @@ class MajorItem:
             "progression": frozen_lib.unwrap(self.progression),
             "ammo": frozen_lib.unwrap(self.ammo_index),
             "unlocks_ammo": self.unlocks_ammo,
-            "required": self.required,
+            "hide_from_gui": self.hide_from_gui,
+            "must_be_starting": self.must_be_starting,
             "probability_offset": self.probability_offset,
             "probability_multiplier": self.probability_multiplier,
             "extra": frozen_lib.unwrap(self.extra),
