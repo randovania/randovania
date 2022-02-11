@@ -1,21 +1,19 @@
-from randovania.games.deltarune import generator
-from randovania.games.deltarune.layout.deltarune_configuration import deltaruneConfiguration
-from randovania.games.deltarune.layout.deltarune_cosmetic_patches import deltaruneCosmeticPatches
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout
+from randovania.games import game
+from randovania.games.deltarune import generator, layout
 
 
-def _gui():
-    from randovania.games.deltarune.gui import preset_settings, deltaruneCosmeticPatchesDialog
+def _gui() -> game.GameGui:
+    from randovania.games.deltarune import gui
 
-    return GameGui(
-        tab_provider=preset_settings.preset_tabs,
-        cosmetic_dialog=deltaruneCosmeticPatchesDialog,
+    return game.GameGui(
+        tab_provider=gui.preset_tabs,
+        cosmetic_dialog=gui.deltaruneCosmeticPatchesDialog,
         progressive_item_gui_tuples=tuple(),
         spoiler_visualizer=tuple(),
     )
 
 
-game_data: GameData = GameData(
+game_data: game.GameData = game.GameData(
     short_name="Deltarune",
     long_name="Deltarune",
     experimental=True,
@@ -28,14 +26,14 @@ game_data: GameData = GameData(
 
     faq=[],
 
-    layout=GameLayout(
-        configuration=deltaruneConfiguration,
-        cosmetic_patches=deltaruneCosmeticPatches,
+    layout=game.GameLayout(
+        configuration=layout.deltaruneConfiguration,
+        cosmetic_patches=layout.deltaruneCosmeticPatches,
     ),
 
     gui=_gui,
 
-    generator=GameGenerator(
+    generator=game.GameGenerator(
         item_pool_creator=generator.pool_creator,
         bootstrap=generator.deltaruneBootstrap(),
         base_patches_factory=generator.deltaruneBasePatchesFactory(),

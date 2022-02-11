@@ -1,1 +1,2 @@
-from .dialog.cosmetic_patches_dialog import deltaruneCosmeticPatchesDialog
+from randovania.games.deltarune.gui.dialog.cosmetic_patches_dialog import deltaruneCosmeticPatchesDialog
+from randovania.games.deltarune.gui.preset_settings import preset_tabs
