@@ -1,0 +1,375 @@
+----------------
+room_field_start
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_forest
+      Trivial
+  > Door to room_castle_darkdoor
+      Trivial
+
+> Door to room_field_forest; Heals? False
+  * Normal Door to room_field_forest/Door to room_field_start
+  > Spawn Point
+      Trivial
+
+> Door to room_castle_darkdoor; Heals? False
+  * Normal Door to room_castle_darkdoor/Door to room_field_start
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_forest
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field1
+      Trivial
+  > Door to room_field_start
+      Trivial
+
+> Door to room_field1; Heals? False
+  * Normal Door to room_field1/Door to room_field_forest
+  > Spawn Point
+      Trivial
+
+> Door to room_field_start; Heals? False
+  * Normal Door to room_field_start/Door to room_field_forest
+  > Spawn Point
+      Trivial
+
+----------------
+room_field1
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field2
+      Trivial
+  > Door to room_field_forest
+      Trivial
+
+> Door to room_field2; Heals? False
+  * Normal Door to room_field2/Door to room_field1
+  * Extra - different_strongly_connected_component: True
+  > Spawn Point
+      Trivial
+
+> Door to room_field_forest; Heals? False
+  * Normal Door to room_field_forest/Door to room_field1
+  > Spawn Point
+      Trivial
+
+----------------
+room_field2
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field2A
+      Trivial
+  > Door to room_field1
+      Trivial
+  > Door to room_field_topchef
+      Trivial
+
+> Door to room_field2A; Heals? False
+  * Normal Door to room_field2A/Door to room_field2
+  > Spawn Point
+      Trivial
+
+> Door to room_field1; Heals? False
+  * Normal Door to room_field1/Door to room_field2
+  > Spawn Point
+      Trivial
+
+> Door to room_field_topchef; Heals? False
+  * Normal Door to room_field_topchef/Door to room_field2
+  > Spawn Point
+      Trivial
+
+----------------
+room_field2A
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field2
+      Trivial
+  > Pickup (Dark Candy0)
+      Trivial
+  > Pickup (Dark Candy1)
+      Trivial
+
+> Door to room_field2; Heals? False
+  * Normal Door to room_field2/Door to room_field2A
+  > Spawn Point
+      Trivial
+
+> Pickup (Dark Candy0); Heals? False
+  * Pickup 0; Major Location? False
+  > Spawn Point
+      Trivial
+
+> Pickup (Dark Candy1); Heals? False
+  * Pickup 1; Major Location? False
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_topchef
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_puzzle1
+      Trivial
+  > Door to room_field2
+      Trivial
+  > Pickup (BrokenCake0)
+      Trivial
+  > Pickup (Spincake1)
+      Top Cake
+
+> Door to room_field_puzzle1; Heals? False
+  * Normal Door to room_field_puzzle1/Door to room_field_topchef
+  > Spawn Point
+      Trivial
+
+> Door to room_field2; Heals? False
+  * Normal Door to room_field2/Door to room_field_topchef
+  > Spawn Point
+      Trivial
+
+> Pickup (BrokenCake0); Heals? False
+  * Pickup 34; Major Location? True
+  > Spawn Point
+      Trivial
+
+> Pickup (Spincake1); Heals? False
+  * Pickup 9; Major Location? False
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_puzzle1
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_maze
+      Trivial
+  > Door to room_field_topchef
+      Trivial
+  > Pickup (Dark Candy0)
+      Trivial
+  > Pickup (Dark Candy1)
+      Trivial
+
+> Door to room_field_maze; Heals? False
+  * Normal Door to room_field_maze/Door to room_field_puzzle1
+  > Spawn Point
+      Trivial
+
+> Door to room_field_topchef; Heals? False
+  * Normal Door to room_field_topchef/Door to room_field_puzzle1
+  > Spawn Point
+      Trivial
+
+> Pickup (Dark Candy0); Heals? False
+  * Pickup 2; Major Location? False
+  > Spawn Point
+      Trivial
+
+> Pickup (Dark Candy1); Heals? False
+  * Pickup 3; Major Location? False
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_maze
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_puzzle2
+      Trivial
+  > Door to room_field_puzzle1
+      Trivial
+  > Pickup (White Ribbon0)
+      Trivial
+
+> Door to room_field_puzzle2; Heals? False
+  * Normal Door to room_field_puzzle2/Door to room_field_maze
+  > Spawn Point
+      Trivial
+
+> Door to room_field_puzzle1; Heals? False
+  * Normal Door to room_field_puzzle1/Door to room_field_maze
+  > Spawn Point
+      Trivial
+
+> Pickup (White Ribbon0); Heals? False
+  * Pickup 23; Major Location? False
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_puzzle2
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_getsusie
+      Trivial
+  > Door to room_field_maze
+      Trivial
+
+> Door to room_field_getsusie; Heals? False
+  * Normal Door to room_field_getsusie/Door to room_field_puzzle2
+  > Spawn Point
+      Trivial
+
+> Door to room_field_maze; Heals? False
+  * Normal Door to room_field_maze/Door to room_field_puzzle2
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_getsusie
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_shop1
+      Trivial
+  > Door to room_field_puzzle2
+      Trivial
+
+> Door to room_field_shop1; Heals? False
+  * Normal Door to room_field_shop1/Door to room_field_getsusie
+  > Spawn Point
+      Trivial
+
+> Door to room_field_puzzle2; Heals? False
+  * Normal Door to room_field_puzzle2/Door to room_field_getsusie
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_shop1
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_puzzletutorial
+      Trivial
+  > Door to room_field_getsusie
+      Trivial
+  > Door to room_field3
+      Trivial
+  > Door to room_shop1
+      Trivial
+
+> Door to room_field_puzzletutorial; Heals? False
+  * Normal Door to room_field_puzzletutorial/Door to room_field_shop1
+  > Spawn Point
+      Trivial
+
+> Door to room_field_getsusie; Heals? False
+  * Normal Door to room_field_getsusie/Door to room_field_shop1
+  > Spawn Point
+      Trivial
+
+> Door to room_field3; Heals? False
+  * Normal Door to room_field3/Door to room_field_shop1
+  > Spawn Point
+      Trivial
+
+> Door to room_shop1; Heals? False
+  * Normal Door to room_shop1/Door to room_field_shop1
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_puzzletutorial
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_shop1
+      Trivial
+
+> Door to room_field_shop1; Heals? False
+  * Normal Door to room_field_shop1/Door to room_field_puzzletutorial
+  > Spawn Point
+      Trivial
+
+----------------
+room_field3
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_boxpuzzle
+      Trivial
+  > Door to room_field_shop1
+      Trivial
+
+> Door to room_field_boxpuzzle; Heals? False
+  * Normal Door to room_field_boxpuzzle/Door to room_field3
+  > Spawn Point
+      Trivial
+
+> Door to room_field_shop1; Heals? False
+  * Normal Door to room_field_shop1/Door to room_field3
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_boxpuzzle
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field4
+      Trivial
+  > Door to room_field3
+      Trivial
+
+> Door to room_field4; Heals? False
+  * Normal Door to room_field4/Door to room_field_boxpuzzle
+  > Spawn Point
+      Trivial
+
+> Door to room_field3; Heals? False
+  * Normal Door to room_field3/Door to room_field_boxpuzzle
+  > Spawn Point
+      Trivial
+
+----------------
+room_field4
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field_secret1
+      Trivial
+  > Door to room_field_boxpuzzle
+      Trivial
+  > Door to room_field_checkers4
+      Board Key
+  > Pickup (Board Key0)
+      Trivial
+
+> Door to room_field_secret1; Heals? False
+  * Normal Door to room_field_secret1/Door to room_field4
+  > Spawn Point
+      Trivial
+
+> Door to room_field_boxpuzzle; Heals? False
+  * Normal Door to room_field_boxpuzzle/Door to room_field4
+  > Spawn Point
+      Trivial
+
+> Door to room_field_checkers4; Heals? False
+  * Normal Door to room_field_checkers4/Door to room_field4
+  > Spawn Point
+      Trivial
+
+> Pickup (Board Key0); Heals? False
+  * Pickup 37; Major Location? True
+  > Spawn Point
+      Trivial
+
+----------------
+room_field_secret1
+(Valid Starting Location)
+> Spawn Point; Heals? False; Spawn Point
+  > Door to room_field4
+      Trivial
+  > Pickup (Broken Key C0)
+      Trivial
+
+> Door to room_field4; Heals? False
+  * Normal Door to room_field4/Door to room_field_secret1
+  > Spawn Point
+      Trivial
+
+> Pickup (Broken Key C0); Heals? False
+  * Pickup 13; Major Location? True
+  > Spawn Point
+      Trivial
+
