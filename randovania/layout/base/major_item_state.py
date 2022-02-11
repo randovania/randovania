@@ -1,13 +1,44 @@
+from __future__ import annotations
+
 import dataclasses
-from typing import Tuple, Iterator
+import enum
+from typing import Tuple, Iterator, Optional
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
+from randovania.lib import enum_lib
 
 ENERGY_TANK_MAXIMUM_COUNT = 16
 DEFAULT_MAXIMUM_SHUFFLED = (2, 10, 99)
+PRIORITY_LIMITS = {
+    "if_different": 1.0,
+    "min": 0.0,
+    "max": 10.0,
+    "precision": 1.0,
+}
+
+
+class MajorItemStateCase(enum.Enum):
+    MISSING = "missing"
+    VANILLA = "vanilla"
+    STARTING_ITEM = "starting_item"
+    SHUFFLED = "shuffled"
+    CUSTOM = "custom"
+
+    @property
+    def pretty_text(self):
+        return _CASE_PRETTY_TEXT[self]
+
+
+_CASE_PRETTY_TEXT = {
+    MajorItemStateCase.MISSING: "Excluded",
+    MajorItemStateCase.VANILLA: "Vanilla",
+    MajorItemStateCase.STARTING_ITEM: "Starting",
+    MajorItemStateCase.SHUFFLED: "Shuffled",
+    MajorItemStateCase.CUSTOM: "Custom",
+}
 
 
 @dataclasses.dataclass(frozen=True)
@@ -15,6 +46,7 @@ class MajorItemState:
     include_copy_in_original_location: bool = False
     num_shuffled_pickups: int = 0
     num_included_in_starting_items: int = 0
+    priority: float = 1.0
     included_ammo: Tuple[int, ...] = tuple()
 
     def check_consistency(self, item: MajorItem):
@@ -35,6 +67,12 @@ class MajorItemState:
         if self.include_copy_in_original_location and item.original_index is None:
             raise ValueError(f"Custom item cannot be vanilla. ({item.name})")
 
+        if not (PRIORITY_LIMITS["min"] <= self.priority <= PRIORITY_LIMITS["max"]):
+            raise ValueError("Priority must be between {min} and {max}, got {priority}".format(
+                priority=self.priority,
+                **PRIORITY_LIMITS,
+            ))
+
         if len(self.included_ammo) != len(item.ammo_index):
             raise ValueError(f"Mismatched included_ammo array size. ({item.name})")
 
@@ -42,6 +80,31 @@ class MajorItemState:
             if ammo > db.get_item(ammo_index).max_capacity:
                 raise ValueError(
                     f"Including more than maximum capacity for ammo {ammo_index}. Included: {ammo}; Max: {db.get_item(ammo_index).max_capacity}")
+
+    @classmethod
+    def from_case(cls, case: MajorItemStateCase, included_ammo: Tuple[int, ...]) -> Optional[MajorItemState]:
+        if case == MajorItemStateCase.MISSING:
+            return MajorItemState(included_ammo=included_ammo)
+
+        elif case == MajorItemStateCase.VANILLA:
+            return MajorItemState(include_copy_in_original_location=True, included_ammo=included_ammo)
+
+        elif case == MajorItemStateCase.STARTING_ITEM:
+            return MajorItemState(num_included_in_starting_items=1, included_ammo=included_ammo)
+
+        elif case == MajorItemStateCase.SHUFFLED:
+            return MajorItemState(num_shuffled_pickups=1, included_ammo=included_ammo)
+
+        else:
+            return None
+
+    @property
+    def case(self) -> MajorItemStateCase:
+        for case in enum_lib.iterate_enum(MajorItemStateCase):
+            if self == MajorItemState.from_case(case, self.included_ammo):
+                return case
+
+        return MajorItemStateCase.CUSTOM
 
     @property
     def as_json(self) -> dict:
@@ -92,6 +155,9 @@ class MajorItemState:
         else:
             yield self.num_included_in_starting_items, main_item.max_capacity + 1
 
+        # priority
+        yield from bitpacking.BitPackFloat(self.priority).bit_pack_encode(PRIORITY_LIMITS)
+
         # ammo index
         assert len(self.included_ammo) == len(item.ammo_index)
         if self.included_ammo:
@@ -130,6 +196,9 @@ class MajorItemState:
         else:
             starting = decoder.decode_single(main_item.max_capacity + 1)
 
+        # priority
+        priority = bitpacking.BitPackFloat.bit_pack_unpack(decoder, PRIORITY_LIMITS)
+
         # ammo index
         if item.ammo_index:
             custom_ammo = bitpacking.decode_bool(decoder)
@@ -150,5 +219,6 @@ class MajorItemState:
             include_copy_in_original_location=original,
             num_shuffled_pickups=shuffled,
             num_included_in_starting_items=starting,
+            priority=priority,
             included_ammo=tuple(included_ammo),
         )

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>534</width>
-    <height>99</height>
+    <width>880</width>
+    <height>122</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -38,6 +38,30 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
+   <item row="0" column="0" colspan="4">
+    <widget class="Line" name="separator_line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="4">
+    <widget class="QLabel" name="warning_label">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="vanilla_check">
+     <property name="text">
+      <string>In Vanilla</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0">
     <widget class="QLabel" name="item_name_label">
      <property name="minimumSize">
@@ -57,45 +81,20 @@
      </property>
     </widget>
    </item>
+   <item row="3" column="1">
+    <widget class="QCheckBox" name="starting_check">
+     <property name="text">
+      <string>As starting</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="4">
-    <widget class="QRadioButton" name="shuffled_radio">
-     <property name="text">
-      <string>Shuffled</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="6">
-    <widget class="QLabel" name="warning_label">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QRadioButton" name="vanilla_radio">
-     <property name="text">
-      <string>Vanilla</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QRadioButton" name="excluded_radio">
-     <property name="text">
-      <string>Excluded</string>
-     </property>
-    </widget>
+    <widget class="ScrollProtectedComboBox" name="state_case_combo"/>
    </item>
    <item row="1" column="3">
-    <widget class="QRadioButton" name="starting_radio">
-     <property name="text">
-      <string>Starting</string>
-     </property>
-    </widget>
+    <widget class="ScrollProtectedSpinBox" name="provided_ammo_spinbox"/>
    </item>
-   <item row="2" column="0" colspan="4">
+   <item row="1" column="1" colspan="2">
     <widget class="QLabel" name="provided_ammo_label">
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When this item is collected, it also gives this amount of the given ammos.&lt;/p&gt;&lt;p&gt;This is included in the calculation of how much each pickup of this ammo gives.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -111,11 +110,11 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="4" colspan="2">
-    <widget class="ScrollProtectedSpinBox" name="provided_ammo_spinbox"/>
-   </item>
-   <item row="1" column="5">
+   <item row="3" column="4">
     <widget class="ScrollProtectedSpinBox" name="shuffled_spinbox">
+     <property name="suffix">
+      <string> shuffled copies</string>
+     </property>
      <property name="minimum">
       <number>1</number>
      </property>
@@ -124,10 +123,13 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="6">
-    <widget class="Line" name="separator_line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+   <item row="3" column="3">
+    <widget class="ScrollProtectedComboBox" name="priority_combo"/>
+   </item>
+   <item row="3" column="2">
+    <widget class="QLabel" name="priority_label">
+     <property name="text">
+      <string>Priority for placement</string>
      </property>
     </widget>
    </item>
@@ -138,6 +140,11 @@
   <customwidget>
    <class>ScrollProtectedSpinBox</class>
    <extends>QSpinBox</extends>
+   <header>randovania/gui/lib/scroll_protected.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ScrollProtectedComboBox</class>
+   <extends>QComboBox</extends>
    <header>randovania/gui/lib/scroll_protected.h</header>
   </customwidget>
  </customwidgets>

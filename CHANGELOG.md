@@ -9,11 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.1.0] - Unreleased
 
 - Added: /randovania-faq command was added to the Discord bot, which sends FAQ messages.
-- Added: Randovania now checks if the entire database is strongly connected, allowing for manual exceptions. 
+- Added: Randovania now checks if the entire database is strongly connected, allowing for manual exceptions.
+- Added: You can now configure the priority given to each major item. Higher values are more likely show up earlier in the progression chain.
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
 - Changed: Most command line arguments have been renamed.
 - Changed: Changed how ConfigurableNodes (In Echoes, the Translator Gates) are handled in logic. This should have no visual differences, other than speeding up generation.
+- Changed: Simplified the item pool tab, with the usual case now having only a single line per item.
 
 ### Cave Story
 
