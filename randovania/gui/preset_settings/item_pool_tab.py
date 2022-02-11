@@ -87,7 +87,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         # Major Items
         for _, _, elements in self._boxes_for_category.values():
             for major_item, widget in elements.items():
-                widget.state = major_configuration.items_state[major_item]
+                widget.set_new_state(major_configuration.items_state[major_item])
 
         # Progressive Items
         for progressive_widget in self._progressive_widgets:
@@ -102,7 +102,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         resource_database = self.game_description.resource_database
 
-        item_for_index: Dict[int, ItemResourceInfo] = {
+        item_for_index: Dict[str, ItemResourceInfo] = {
             ammo_index: resource_database.get_item(ammo_index)
             for ammo_index in ammo_provided.keys()
         }
