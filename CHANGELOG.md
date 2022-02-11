@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Changed how ConfigurableNodes (In Echoes, the Translator Gates) are handled in logic. This should have no visual differences, other than speeding up generation.
 - Changed: Simplified the item pool tab, with the usual case now having only a single line per item.
 - Changed: Improved the text for quantities for ammo in the item pool tab.
+- Fixed: Map Tracker now properly handles multiple copies of pickups in all cases.
 
 ### Cave Story
 
