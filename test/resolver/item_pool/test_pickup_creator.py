@@ -37,7 +37,7 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
         model_name="SuperModel",
         progression=("DarkVisor", "MorphBall", "Bombs"),
         ammo_index=("EnergyTank", "DarkAmmo"),
-        required=False,
+        must_be_starting=False,
         original_index=None,
         probability_offset=5,
     )

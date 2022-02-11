@@ -43,7 +43,7 @@ def _major_item_state(request, echoes_item_database, generic_item_category):
         model_name="Model Name",
         progression=(request.param.get("progression", "Power"),),
         ammo_index=request.param.get("ammo_index", ()),
-        required=True,
+        must_be_starting=True,
         original_index=None,
         probability_offset=0,
     )

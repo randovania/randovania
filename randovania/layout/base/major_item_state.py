@@ -52,7 +52,7 @@ class MajorItemState:
     def check_consistency(self, item: MajorItem):
         db = default_database.resource_database_for(item.game)
 
-        if item.required:
+        if item.must_be_starting:
             if not self.num_included_in_starting_items:
                 raise ValueError(f"Required items must be included in starting items. ({item.name})")
 
