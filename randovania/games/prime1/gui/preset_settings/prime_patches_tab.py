@@ -23,6 +23,7 @@ _FIELDS = [
     "shuffle_item_pos",
     "items_every_room",
     "spring_ball",
+    "deterministic_idrone",
 ]
 
 
