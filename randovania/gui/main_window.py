@@ -11,11 +11,11 @@ from functools import partial
 from pathlib import Path
 from typing import Optional, List
 
-import markdown
 from PySide2 import QtCore, QtWidgets, QtGui
 from PySide2.QtCore import QUrl, Signal, Qt
 from qasync import asyncSlot
 
+import randovania
 from randovania import VERSION, get_data_path, get_readme
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame
@@ -62,6 +62,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
     newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
+    _experimental_games_visible: bool = False
 
     menu_new_version: Optional[QtWidgets.QAction] = None
     _current_version_url: Optional[str] = None
@@ -117,6 +118,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
         if preview:
             debug.set_level(2)
 
+        if randovania.is_frozen():
+            self.menu_bar.removeAction(self.menu_edit.menuAction())
+
         # Signals
         self.newer_version_signal.connect(self.display_new_version)
         self.options_changed_signal.connect(self.on_options_changed)
@@ -138,11 +142,13 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.game_menus = []
         self.menu_action_edits = []
 
-        for game in iterate_enum(RandovaniaGame):
+        for game in sorted(iterate_enum(RandovaniaGame), key=lambda g: g.long_name):
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
             game_menu.setTitle(_t(game.long_name))
-            self.menu_open.addAction(game_menu.menuAction())
+            game_menu.game = game
+            if not game.data.experimental:
+                self.menu_open.addAction(game_menu.menuAction())
             self.game_menus.append(game_menu)
 
             game_trick_details_menu = QtWidgets.QMenu(game_menu)
@@ -217,6 +223,20 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def showEvent(self, event: QtGui.QShowEvent):
         self.InitPostShowSignal.emit()
+
+    # Per-Game elements
+    def refresh_game_list(self):
+        if self._experimental_games_visible == self.menu_action_experimental_games.isChecked():
+            return
+        self._experimental_games_visible = self.menu_action_experimental_games.isChecked()
+
+        for game_menu in self.game_menus:
+            self.menu_open.removeAction(game_menu.menuAction())
+
+        for game_menu, edit_action in zip(self.game_menus, self.menu_action_edits):
+            game: RandovaniaGame = game_menu.game
+            if self.menu_action_experimental_games.isChecked() or not game.data.experimental:
+                self.menu_open.addAction(game_menu.menuAction())
 
     # Delayed Initialization
     @asyncSlot()
@@ -433,7 +453,9 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.menu_action_timeout_generation_after_a_time_limit.setChecked(
             self._options.advanced_timeout_during_generation)
         self.menu_action_dark_mode.setChecked(self._options.dark_mode)
+
         self.menu_action_experimental_games.setChecked(self._options.experimental_games)
+        self.refresh_game_list()
 
         self.generate_seed_tab.on_options_changed(self._options)
         theme.set_dark_theme(self._options.dark_mode)
