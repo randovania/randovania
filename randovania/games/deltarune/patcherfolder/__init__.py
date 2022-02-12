@@ -1,19 +1,15 @@
-import copy
-import json
-import os
+import dataclasses
 import typing
+import json
+from io import BytesIO
 from pathlib import Path
 from random import Random
-from typing import Optional, List, Union
+from typing import List, Optional
 
-import randovania
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import CurrentResources
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import PickupNode, TeleporterNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.games.deltarune.layout.deltarune_configuration import deltaruneConfiguration
 from randovania.games.deltarune.layout.deltarune_cosmetic_patches import deltaruneCosmeticPatches
@@ -22,32 +18,53 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
-from randovania.patching.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
-    credits_spoiler
+from randovania.patching.prime.patcher_file_lib import pickup_exporter
 
-def deltarune_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
-                                     rng: Random) -> dict:
+def deltarune_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails
+                                 ) -> dict:
+    if detail.model.game == RandovaniaGame.DELTARUNE:
+        model_name = detail.model.name
+    else:
+        model_name = "Nothing"
 
+    scan_text = detail.scan_text
+    hud_text = detail.hud_text[0]
     pickup_type = -1
     count = 0
 
     for resource, quantity in detail.conditional_resources[0].resources:
-        if resource.extra["item_id"] >= 1000:
+        if resource.resource_type == ResourceType.ITEM and resource.extra["item_id"] >= 1000:
             continue
         pickup_type = resource.extra["item_id"]
         count = quantity
         break
+        
+
+
+    result = {
+        "item_index": pickup_type,
+        "quantity_given": count,
+        "pickup_index": detail.index.index,
+        "owner_name": None,
+    }
+
+    return result
+
+def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
+    result = {
+        "item_index": item.index,
+        "quantity_given": quantity,
+    }
+    return result
 
 class PatcherMaker(Patcher):
-
-    _busy: bool = False
 
     @property
     def is_busy(self) -> bool:
         """
         Checks if the patcher is busy right now
         """
-        return self._busy
+        return False
 
     @property
     def export_can_be_aborted(self) -> bool:
@@ -61,16 +78,31 @@ class PatcherMaker(Patcher):
         """
         Does this patcher uses the input file directly?
         """
-        return True
-        
+        return False
+
     def has_internal_copy(self, game_files_path: Path) -> bool:
+        """
+        Checks if the internal storage has an usable copy of the game
+        """
         return False
 
     def delete_internal_copy(self, game_files_path: Path):
+        """
+        Deletes any copy of the game in the internal storage.
+        """
         pass
-        
+
     def default_output_file(self, seed_hash: str) -> str:
-        return "Deltarune Randomizer - {}".format(seed_hash)
+        """
+        Provides a output file name with the given seed hash.
+        :param seed_hash:
+        :return:
+        """
+        return f"Deltarune Randomizer Seed"
+        
+    @property
+    def requires_input_file(self) -> bool:
+        return False
 
     @property
     def valid_input_file_types(self) -> List[str]:
@@ -81,14 +113,20 @@ class PatcherMaker(Patcher):
         return ["txt"]
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                          cosmetic_patches: deltaruneCosmeticPatches):
+                          cosmetic_patches: deltaruneCosmeticPatches) -> dict:
+        """
+        Creates a JSON serializable dict that can be used to patch the game.
+        Intended to be ran on the server for multiworld.
+        :return:
+        """
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.DELTARUNE)
-        configuration = description.get_preset(players_config.player_index).configuration
-        assert isinstance(configuration, deltaruneConfiguration)
+        preset = description.get_preset(players_config.player_index)
+        configuration = typing.cast(deltaruneConfiguration, preset.configuration)
         rng = Random(description.get_seed_for_player(players_config.player_index))
-
-
+        
+        if players_config.is_multiworld:
+            raise NotImplementedError("Multiworld is not supported for DELTARUNE")
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
                                       players_config.player_index)
 
@@ -103,98 +141,39 @@ class PatcherMaker(Patcher):
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
-        world_data = {}
 
 
-        for world in db.world_list.worlds:
+        starting_point = patches.starting_location
 
-            world_data[world.name] = {
-                "transports": {},
-                "rooms": {}
-            }
-            for area in world.areas:
-                pickup_indices = sorted(node.pickup_index for node in area.nodes if isinstance(node, PickupNode))
-                if pickup_indices:
-                    world_data[world.name]["rooms"][area.name] = {
-                        "pickups": [
-                            deltarune_pickup_details_to_patcher(pickup_list[index.index],
-                                                             rng)
-                            for index in pickup_indices
-                        ],
-                    }
-                for node in area.nodes:
-                    if not isinstance(node, TeleporterNode) or not node.editable:
-                        continue
+        starting_area = db.world_list.area_by_area_location(starting_point)
 
-                    identifier = db.world_list.identifier_for_node(node)
-                    target = _name_for_location(db.world_list, patches.elevator_connection[identifier])
-
-                    source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[(
-                        identifier.area_location.world_name,
-                        identifier.area_location.area_name,
-                    )]
-                    world_data[world.name]["transports"][source_name] = target
-
-        starting_memo = None
-        extra_starting = item_names.additional_starting_items(configuration, db.resource_database,
-                                                              patches.starting_items)
-        if extra_starting:
-            starting_memo = ", ".join(extra_starting)
-
-
-
-        # Tweaks
-        ctwk_config = {}
-
-
-        starting_room = _name_for_location(db.world_list, patches.starting_location)
-
-        starting_items = {
-            name: _starting_items_value_for(db.resource_database, patches.starting_items, index)
-            for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
+        starting_location_info = {
+            "starting_region": starting_point.world_name,
         }
-
         return {
-            "seed": description.get_seed_for_player(players_config.player_index),
-            "preferences": {
-            },
-            "gameConfig": {
-                "shufflePickupPosition": configuration.shuffle_item_pos,
-                "shufflePickupPosAllRooms": configuration.items_every_room,
-                "startingRoom": starting_room,
-
-                "startingItems": starting_items,
-
-            },
-            "tweaks": ctwk_config,
-            "levelData": world_data,
-            "hasSpoiler": description.has_spoiler,
-
-            # TODO
-            # "externAssetsDir": path_to_converted_assets,
+            "pickups": [
+                deltarune_pickup_details_to_patcher(detail)
+                for detail in pickup_list
+            ],
+            "starting_items": [
+                deltarune_starting_items_to_patcher(item, qty)
+                for item, qty in patches.starting_items.items()
+            ],
+            "starting_conditions": starting_location_info
         }
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    internal_copies_path: Path, progress_update: ProgressUpdateCallable):
-        if input_file is None:
-            raise ValueError("Missing input file")
-
-        new_config = copy.copy(patch_data)
-        has_spoiler = new_config.pop("hasSpoiler")
-        new_config["input"] = os.fspath(input_file)
-        new_config["output"] = os.fspath(output_file)
-
-        patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
-        if has_spoiler:
-            output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
-
-        os.environ["RUST_BACKTRACE"] = "1"
-
-        try:
-            output_file.with_name(f"{output_file.stem}.json").write_text(patch_as_str)
-        except BaseException as e:
-            if isinstance(e, Exception):
-                raise
-            else:
-                raise RuntimeError(f"randomprime panic: {e}") from e
-
+        """
+        Invokes the necessary tools to patch the game.
+        :param input_file: Vanilla copy of the game. Required if uses_input_file_directly or has_internal_copy is False.
+        :param output_file: Where a modified copy of the game is placed.
+        :param patch_data: Data created by create_patch_data.
+        :param internal_copies_path: Path to where all internal copies are stored.
+        :param progress_update: Pushes updates as slow operations are done.
+        :return: None
+        """
+        
+        self._busy = True
+        json.dump(patch_data, output_file.open("w"))
+        self._busy = False
