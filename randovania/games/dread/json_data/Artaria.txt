@@ -214,8 +214,6 @@ Extra - asset_id: collision_camera_001
 > Start Point; Heals? False; Spawn Point
   > Door to First Tutorial
       Trivial
-  > Door to Melee Tutorial West
-      Trivial
 
 ----------------
 Melee Tutorial West
@@ -483,6 +481,10 @@ Extra - asset_id: collision_camera_004
       Trivial
   > Event - Early Cloak Blob
       Shoot Beam
+
+> Start Point; Heals? False; Spawn Point
+  > Door to Save Station South
+      Trivial
 
 ----------------
 EMMI Zone First Entrance
@@ -954,6 +956,10 @@ Extra - asset_id: collision_camera_009
   > Door to EMMI Zone Dome
       Morph Ball
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Teleport to Dairon
+      Trivial
+
 ----------------
 EMMI Zone Hub
 Extra - total_boundings: {'x1': -5200.0, 'x2': -1200.0, 'y1': -6200.0, 'y2': 2700.0}
@@ -1056,7 +1062,7 @@ Extra - asset_id: collision_camera_010
   > Tunnel to EMMI Zone Exit Northwest
       Space Jump or Speed Booster
 
-> Event - Water Device; Heals? False; Spawn Point
+> Event - Water Device; Heals? False
   * Event Artaria - EMMI Zone Water Device
   * Extra - actor_name: PRP_CV_PlatformCaveWater_B
   * Extra - actor_def: actordef:actors/props/platformcavewaterb/charclasses/platformcavewaterb.bmsad
@@ -1096,6 +1102,10 @@ Extra - asset_id: collision_camera_010
       Any of the following:
           Morph Ball
           Slide and After Artaria - EMMI Zone Water Device
+
+> Start Point; Heals? False; Spawn Point
+  > Door to EMMI Zone Exit Southwest (DoorFrame_005)
+      Trivial
 
 ----------------
 Teleport to Cataris
@@ -1466,6 +1476,10 @@ Extra - asset_id: collision_camera_013
   > Door to Cold Introduction
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door from Cold Introduction
+      Trivial
+
 ----------------
 Charge Beam Room
 (Valid Starting Location)
@@ -1612,6 +1626,10 @@ Extra - asset_id: collision_camera_015
 > Event - EMMI Spinner Rotated; Heals? False
   * Event Artaria - EMMI Spinner Rotated
   > Door to White EMMI Arena (DoorFrame_011)
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  > Door to Wide Beam Block Room
       Trivial
 
 ----------------
@@ -1810,6 +1828,10 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: DoorEmmy11
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone First Entrance
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  > Dock to Melee Tutorial Room
       Trivial
 
 ----------------
@@ -2078,6 +2100,12 @@ Extra - asset_id: collision_camera_023_B
       All of the following:
           Varia Suit
           Spider Magnet or Space Jump
+
+> Start Point; Heals? False; Spawn Point
+  > Door to Hot Room Hub
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Beginner) and Heat Damage ≥ 40
 
 ----------------
 Hot Room Hub
@@ -2663,6 +2691,10 @@ Extra - asset_id: collision_camera_045
   > Door to Energy Recharge Station South
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Energy Recharge Station South
+      Trivial
+
 ----------------
 EMMI Zone Dome
 Extra - total_boundings: {'x1': -5200.0, 'x2': 800.0, 'y1': 1500.0, 'y2': 5200.0}
@@ -2762,6 +2794,10 @@ Extra - asset_id: collision_camera_048
       Morph Ball
   > Below Slide
       Can Slide
+
+> Start Point; Heals? False; Spawn Point
+  > Door to EMMI Zone Exit North
+      Trivial
 
 ----------------
 Central Unit Access
@@ -2971,6 +3007,10 @@ Extra - asset_id: collision_camera_051
   > Dock to Teleport to Cataris
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door to EMMI Zone Dome
+      Trivial
+
 ----------------
 EMMI Zone Ballspark Hallway
 Extra - total_boundings: {'x1': -1300.0, 'x2': 2800.0, 'y1': 400.0, 'y2': 1750.0}
@@ -3004,6 +3044,10 @@ Extra - asset_id: collision_camera_053
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+
+> Start Point; Heals? False; Spawn Point
+  > Door to White EMMI Introduction
+      Trivial
 
 ----------------
 Energy Recharge Station South
@@ -3127,6 +3171,10 @@ Extra - asset_id: collision_camera_055
           Shoot Charge Beam
   > Tunnel to Teleport to Cataris (Tunnel)
       Trivial
+
+> Start Point; Heals? False; Spawn Point
+  > Tunnel to Waterfall
+      Can Slide
 
 ----------------
 Waterfall
@@ -3438,6 +3486,10 @@ Extra - asset_id: collision_camera_061
   > Dock to Energy Recharge Station South
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Dock to Energy Recharge Station South
+      Trivial
+
 ----------------
 Cold Introduction
 Extra - total_boundings: {'x1': -9200.0, 'x2': -7100.0, 'y1': -8800.0, 'y2': -6900.0}
@@ -3505,6 +3557,10 @@ Extra - asset_id: collision_camera_062
       Morph Ball
   > Tunnel to Charge Beam Access
       Morph Ball
+
+> Start Point; Heals? False; Spawn Point
+  > Door to Charge Beam Access (Side Tunnel)
+      Trivial
 
 ----------------
 Save Station South
@@ -3995,6 +4051,10 @@ Extra - asset_id: collision_camera_071
   > Door to Teleport to Dairon (DoorFrame_015)
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Teleport to Dairon (DoorFrame_015)
+      Trivial
+
 ----------------
 Path to Corpius
 (Valid Starting Location)
@@ -4134,6 +4194,10 @@ Extra - asset_id: collision_camera_075
   > Dock to Water Reservoir
       Morph Ball
   > Door to EMMI Zone Hub (DoorFrame_004)
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  > Dock to Water Reservoir
       Trivial
 
 ----------------
@@ -5029,6 +5093,10 @@ Extra - asset_id: collision_camera_089
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Grapple Beam Room
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  > Door to Spider Beam Tower
       Trivial
 
 ----------------
