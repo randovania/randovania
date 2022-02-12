@@ -49,7 +49,7 @@ def test_versions_to_display_for_releases(current_version, last_changelog_versio
         "## v0.{0}.0\n\nChangelog v0.{0}.0{1}".format(i, _CUSTOM_EXPECTED_LOG.get(i, ""))
         for i in reversed(range(last_changelog_version + 1, current_version + 1))
     ]
-    assert all_change_logs == [
-        "## v0.{0}.0\n\nChangelog v0.{0}.0{1}".format(i, _CUSTOM_CHANGE_LOGS.get(i, ""))
+    assert all_change_logs == {
+        f"v0.{i}.0": "## v0.{0}.0\n\nChangelog v0.{0}.0{1}".format(i, _CUSTOM_CHANGE_LOGS.get(i, ""))
         for i in reversed(range(1, current_version + 1))
-    ]
+    }
