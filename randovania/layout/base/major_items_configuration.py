@@ -170,8 +170,8 @@ class MajorItemsConfiguration(BitPackValue):
         default_items[category] = item
         return dataclasses.replace(self, default_items=default_items)
 
-    def calculate_provided_ammo(self) -> Dict[int, int]:
-        result: Dict[int, int] = {}
+    def calculate_provided_ammo(self) -> Dict[str, int]:
+        result: Dict[str, int] = {}
 
         for item, state in self.items_state.items():
             total_pickups = state.num_shuffled_pickups + state.num_included_in_starting_items

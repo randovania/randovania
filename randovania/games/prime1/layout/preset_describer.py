@@ -61,6 +61,9 @@ def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str
                 "Spring Ball": configuration.spring_ball,
             },
             {
+                "Deterministic I. Drone RNG": configuration.deterministic_idrone,
+            },
+            {
                 cutscene_removal: cutscene_removal is not None,
             }
         ],

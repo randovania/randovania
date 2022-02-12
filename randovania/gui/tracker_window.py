@@ -805,19 +805,22 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 row_for_parent[parent_widget] = row
                 column_for_parent[parent_widget] = column
 
-        for parent_widget, parent_layout, pickup, quantity in non_expansions_with_quantity:
-            if column_for_parent[parent_widget] != 0:
-                column_for_parent[parent_widget] = 0
-                row_for_parent[parent_widget] += 1
+            # Prepare the rows for the spin boxes below
+            row_for_parent[parent_widget] = num_rows
+            column_for_parent[parent_widget] = 0
 
+        for parent_widget, parent_layout, pickup, quantity in non_expansions_with_quantity:
             self._create_widgets_with_quantity(pickup, parent_widget, parent_layout,
                                                row_for_parent[parent_widget],
                                                quantity)
             row_for_parent[parent_widget] += 1
 
-    def state_for_current_configuration(self) -> Optional[State]:
-        all_nodes = self.game_description.world_list.all_nodes
+        for parent_widget, _ in parent_widgets.values():
+            # Nothing was added to this box
+            if row_for_parent[parent_widget] == column_for_parent.get(parent_widget) == 0:
+                parent_widget.setVisible(False)
 
+    def state_for_current_configuration(self) -> Optional[State]:
         state = self._initial_state.copy()
         if self._actions:
             state.node = self._actions[-1]
