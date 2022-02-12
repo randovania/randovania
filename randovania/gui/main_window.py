@@ -28,7 +28,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.enum_lib import iterate_enum
+from randovania.lib import enum_lib
 from randovania.patching.patcher_provider import PatcherProvider
 from randovania.resolver import debug
 
@@ -137,7 +137,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.game_menus = []
         self.menu_action_edits = []
 
-        for game in sorted(iterate_enum(RandovaniaGame), key=lambda g: g.long_name):
+        for game in RandovaniaGame.sorted_all_games():
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
             game_menu.setTitle(_t(game.long_name))
@@ -221,6 +221,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     # Per-Game elements
     def refresh_game_list(self):
+        self.games_tab.set_experimental_visible(self.menu_action_experimental_games.isChecked())
+
         if self._experimental_games_visible == self.menu_action_experimental_games.isChecked():
             return
         self._experimental_games_visible = self.menu_action_experimental_games.isChecked()
@@ -255,28 +257,23 @@ class MainWindow(WindowManager, Ui_MainWindow):
         logging.info("Running GenerateSeedTab.setup_ui")
         self.generate_seed_tab.setup_ui()
 
-        # Remove pointless Prime 1/3 help tabs
-        self.prime_differences_tab.deleteLater()
-        self.corruption_differences_tab.deleteLater()
-
-        # Update FAQ text
-
-        def format_game_faq(widget: QtWidgets.QLabel, game: RandovaniaGame):
-            widget.setTextFormat(Qt.MarkdownText)
-            widget.setText("\n\n&nbsp;\n".join(
-                "### {}\n{}".format(question, answer)
-                for question, answer in game.data.faq
-            ))
-
-        format_game_faq(self.prime_faq_label, RandovaniaGame.METROID_PRIME)
-        format_game_faq(self.echoes_faq_label, RandovaniaGame.METROID_PRIME_ECHOES)
-        format_game_faq(self.super_metroid_faq_label, RandovaniaGame.SUPER_METROID)
+        # # Update FAQ text
+        # def format_game_faq(widget: QtWidgets.QLabel, game: RandovaniaGame):
+        #     widget.setTextFormat(Qt.MarkdownText)
+        #     widget.setText("\n\n&nbsp;\n".join(
+        #         "### {}\n{}".format(question, answer)
+        #         for question, answer in game.data.faq
+        #     ))
+        #
+        # format_game_faq(self.prime_faq_label, RandovaniaGame.METROID_PRIME)
+        # format_game_faq(self.echoes_faq_label, RandovaniaGame.METROID_PRIME_ECHOES)
+        # format_game_faq(self.super_metroid_faq_label, RandovaniaGame.SUPER_METROID)
 
         # Update hints text
         logging.info("Will _update_hints_text")
-        self._update_hints_text()
+        # self._update_hints_text()
         logging.info("Will hide hint locations combo")
-        self._update_hint_locations()
+        # self._update_hint_locations()
 
         logging.info("Will update for modified options")
         with self._options:
@@ -540,7 +537,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             menu.addAction(trick_menu.menuAction())
 
             used_difficulties = difficulties_for_trick(game, trick)
-            for i, trick_level in enumerate(iterate_enum(LayoutTrickLevel)):
+            for trick_level in enum_lib.iterate_enum(LayoutTrickLevel):
                 if trick_level in used_difficulties:
                     difficulty_action = QtWidgets.QAction(self)
                     difficulty_action.setText(trick_level.long_name)

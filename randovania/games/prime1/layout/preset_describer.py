@@ -1,6 +1,7 @@
 from typing import Dict, List
 
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.preset_describer import format_params_base, fill_template_strings_from_tree, \
     message_for_required_mains
@@ -13,7 +14,8 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
 }
 
 
-def prime_format_params(configuration: PrimeConfiguration) -> Dict[str, List[str]]:
+def prime_format_params(configuration: BaseConfiguration) -> Dict[str, List[str]]:
+    assert isinstance(configuration, PrimeConfiguration)
     template_strings = format_params_base(configuration)
     cutscene_removal = _PRIME1_CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
 
@@ -98,5 +100,5 @@ prime_expected_items = {
 }
 
 
-def prime_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
+def prime_unexpected_items(configuration: MajorItemsConfiguration) -> set[str]:
     return prime_expected_items
