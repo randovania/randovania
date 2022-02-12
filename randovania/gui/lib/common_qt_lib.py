@@ -1,5 +1,6 @@
 import os
 import platform
+import re
 import subprocess
 import typing
 from pathlib import Path
@@ -241,3 +242,11 @@ def open_directory_in_explorer(path: Path):
         subprocess.run(["open", path])
     else:
         subprocess.run(["xdg-open", path])
+
+
+def set_icon_data_paths(label: QtWidgets.QLabel):
+    image_pattern = re.compile('<img src="data/(.*?)"/>')
+
+    repl = f'<img src="{get_data_path().as_posix()}/\g<1>"/>'
+    new_text = image_pattern.sub(repl, label.text())
+    label.setText(new_text)
