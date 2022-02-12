@@ -52,7 +52,7 @@ def deltarune_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDe
 
 def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
     result = {
-        "item_index": item.index,
+        "item_index": item.extra["item_id"],
         "quantity_given": quantity,
     }
     return result
@@ -175,5 +175,13 @@ class PatcherMaker(Patcher):
         """
         
         self._busy = True
-        json.dump(patch_data, output_file.open("w"))
+        with output_file.open("w") as f:
+            for item in patch_data["pickups"]:
+                f.write(str(item["pickup_index"]))
+                f.write('\n')
+                f.write(str(item["item_index"]))
+                f.write('\n')
+            for item in patch_data["starting_items"]:
+                f.write(str(item["item_index"]))
+                f.write('\n')
         self._busy = False
