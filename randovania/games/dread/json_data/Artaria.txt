@@ -177,7 +177,6 @@ Extra - asset_id: collision_camera_000_Init
 
 ----------------
 Charge Tutorial
-(Valid Starting Location)
 Extra - total_boundings: {'x1': 5800.0, 'x2': 8900.0, 'y1': -9600.0, 'y2': -7800.0}
 Extra - polygon: [[8900.0, -7800.0], [5800.0, -7800.0], [5800.0, -9600.0], [8900.0, -9600.0]]
 Extra - asset_id: collision_camera_001
@@ -213,8 +212,6 @@ Extra - asset_id: collision_camera_001
       Can Slide
 
 > Start Point; Heals? False; Spawn Point
-  * Extra - start_point_actor_name: Spawn001
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to First Tutorial
       Trivial
   > Door to Melee Tutorial West
@@ -3345,6 +3342,10 @@ Extra - asset_id: collision_camera_059
   > Door to Water Reservoir
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Water Reservoir
+      Trivial
+
 ----------------
 Water Reservoir
 (Valid Starting Location)
@@ -3854,7 +3855,7 @@ Extra - asset_id: collision_camera_070
   * Extra - right_shield_def: None
   > Dock to Teleport to Dairon (DoorEmmy07)
       Morph Ball
-  > Next to Blobs
+  > Start Point
       Morph Ball or Before Artaria - ArbEnky Blob West
 
 > Pickup (Missile Tank); Heals? False
@@ -3863,7 +3864,7 @@ Extra - asset_id: collision_camera_070
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tile Group (BOMB)
       Morph Ball
-  > Next to Blobs
+  > Start Point
       Morph Ball and After Artaria - ArbEnky Blob West
 
 > Door to Navigation Station North (Thermal); Heals? False
@@ -3897,17 +3898,17 @@ Extra - asset_id: collision_camera_070
   * Event Artaria - ArbEnky Blob West
   * Extra - actor_name: breakablecave017
   * Extra - actor_def: actordef:actors/props/breakablecave017/charclasses/breakablecave017.bmsad
-  > Next to Blobs
+  > Start Point
       Trivial
 
 > Event - ArbEnky Blob East; Heals? False
   * Event Artaria - ArbEnky Blob East
   * Extra - actor_name: breakablecave016
   * Extra - actor_def: actordef:actors/props/breakablecave016/charclasses/breakablecave016.bmsad
-  > Next to Blobs
+  > Start Point
       Trivial
 
-> Total Recharge; Heals? True; Spawn Point
+> Total Recharge; Heals? True
   * Extra - actor_name: PRP_TotalR_001
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: PRP_TotalR_Platform_001
@@ -3933,7 +3934,7 @@ Extra - asset_id: collision_camera_070
   > Tile Group (BOMB)
       Morph Ball
 
-> Next to Blobs; Heals? False
+> Start Point; Heals? False; Spawn Point
   > Door to Navigation Station North (Upper)
       Morph Ball or Before Artaria - ArbEnky Blob West
   > Pickup (Missile Tank)

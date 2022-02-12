@@ -848,10 +848,7 @@
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {
-                        "start_point_actor_name": "Spawn001",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
+                    "extra": {},
                     "connections": {
                         "Door to First Tutorial": {
                             "type": "and",
@@ -14748,7 +14745,7 @@
             }
         },
         "Behind Waterfall": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -14836,6 +14833,26 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
+                    "connections": {
+                        "Door to Water Reservoir": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12415.051395007342,
+                        "y": -452.60442855319604,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Water Reservoir": {
                             "type": "and",
@@ -16893,7 +16910,7 @@
             }
         },
         "Arbitrary Enky Room": {
-            "default_node": "Total Recharge",
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -16957,7 +16974,7 @@
                                 "negate": false
                             }
                         },
-                        "Next to Blobs": {
+                        "Start Point": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -17010,7 +17027,7 @@
                                 "negate": false
                             }
                         },
-                        "Next to Blobs": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17192,7 +17209,7 @@
                     },
                     "event_name": "s010_cave:default:breakablecave017",
                     "connections": {
-                        "Next to Blobs": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17216,7 +17233,7 @@
                     },
                     "event_name": "s010_cave:default:breakablecave016",
                     "connections": {
-                        "Next to Blobs": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17338,12 +17355,12 @@
                         }
                     }
                 },
-                "Next to Blobs": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 10380.549110595515,
-                        "y": 3613.766434648105,
+                        "x": 9844.860499265786,
+                        "y": 3230.286343612335,
                         "z": 0
                     },
                     "description": "",
