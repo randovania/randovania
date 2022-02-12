@@ -11,6 +11,8 @@ from randovania import get_file_path
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
+    from PySide2 import QtWidgets
+
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.base_patches_factory import BasePatchesFactory
@@ -52,7 +54,8 @@ class GameLayout:
     """(Optional) Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
     get_ingame_hash: Callable[[bytes], Optional[str]] = lambda h: None
-    """(Optional) Takes a layout hash bytes and produces a string representing how the game will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
+    """(Optional) Takes a layout hash bytes and produces a string representing how the game 
+    will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
 
 
 @dataclass(frozen=True)
@@ -67,9 +70,14 @@ class GameGui:
     """Three strings used to describe the input file for the game."""
 
     progressive_item_gui_tuples: Iterable[tuple[str, tuple[str, ...]]] = frozenset()
-    """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long names replaced by the progressive item."""
+    """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long
+    names replaced by the progressive item."""
 
     spoiler_visualizer: tuple[Type[GameDetailsTab], ...] = tuple()
+    """Tuple of specializations of GameDetailsTab for providing extra details when visualizing a LayoutDescription."""
+
+    help_widget: Optional[Callable[[], QtWidgets.QWidget]] = None
+    """(Optional) Provides a widget used by the main window to display help, faq and other details about this game."""
 
 
 @dataclass(frozen=True)
@@ -164,3 +172,11 @@ class RandovaniaGame(BitPackEnum, Enum):
     @property
     def long_name(self) -> str:
         return self.data.long_name
+
+    @classmethod
+    def all_games(cls) -> Iterable[RandovaniaGame]:
+        yield from cls
+
+    @classmethod
+    def sorted_all_games(cls) -> list[RandovaniaGame]:
+        return sorted(cls.all_games(), key=lambda g: g.long_name)

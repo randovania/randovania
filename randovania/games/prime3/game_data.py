@@ -11,13 +11,15 @@ from randovania.resolver.bootstrap import MetroidBootstrap
 def _corruption_gui():
     from randovania.games.prime3.gui.preset_settings import prime3_preset_tabs
     from randovania.games.prime3.gui.dialog.corruption_cosmetic_patches_dialog import CorruptionCosmeticPatchesDialog
+    from randovania.games.prime3.gui.corruption_help_widget import CorruptionHelpWidget
     from randovania.games.prime3.item_database import prime3_progressive_items
 
     return GameGui(
         tab_provider=prime3_preset_tabs,
         cosmetic_dialog=CorruptionCosmeticPatchesDialog,
         input_file_text=None,
-        progressive_item_gui_tuples=prime3_progressive_items.gui_tuples()
+        progressive_item_gui_tuples=prime3_progressive_items.gui_tuples(),
+        help_widget=lambda: CorruptionHelpWidget(),
     )
 
 
@@ -41,7 +43,7 @@ game_data: GameData = GameData(
         preset_describer=GamePresetDescriber(
             expected_items=corruption_expected_items,
             unexpected_items=corruption_unexpected_items,
-            format_params=corruption_format_params
+            format_params=corruption_format_params,
         )
     ),
 
