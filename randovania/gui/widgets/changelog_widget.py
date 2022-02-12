@@ -1,43 +1,26 @@
 from PySide2 import QtWidgets, QtCore
 
-
-def _update_label_on_show(label: QtWidgets.QLabel, text: str):
-    def showEvent(_):
-        if label._delayed_text is not None:
-            label.setText(label._delayed_text)
-            label._delayed_text = None
-
-    label._delayed_text = text
-    label.showEvent = showEvent
+from randovania.gui.lib.vertical_tab_bar import VerticalTabBar
+from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
 
-class ChangeLogWidget(QtWidgets.QWidget):
-    def __init__(self, all_change_logs: list[str]):
+class ChangeLogWidget(QtWidgets.QTabWidget):
+    def __init__(self, all_change_logs: dict[str, str]):
         super().__init__()
+        self.setTabBar(VerticalTabBar())
+        self.setTabPosition(QtWidgets.QTabWidget.West)
 
-        self.setObjectName("changelog_tab")
+        for version_name, version_text in all_change_logs.items():
+            scroll_area = QtWidgets.QScrollArea()
+            scroll_area.setObjectName(f"scroll_area {version_name}")
+            scroll_area.setWidgetResizable(True)
 
-        self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.setContentsMargins(0, 0, 0, 0)
-        self.layout.setObjectName("changelog_tab_layout")
+            label = DelayedTextLabel()
+            label.setAlignment(QtCore.Qt.AlignTop)
+            label.setObjectName(f"label {version_name}")
+            label.setTextFormat(QtCore.Qt.MarkdownText)
+            label.setText(version_text)
+            label.setWordWrap(True)
 
-        self.scroll_area = QtWidgets.QScrollArea(self)
-        self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setObjectName("changelog_scroll_area")
-
-        self.scroll_contents = QtWidgets.QWidget()
-        self.scroll_contents.setGeometry(QtCore.QRect(0, 0, 489, 337))
-        self.scroll_contents.setObjectName("changelog_scroll_contents")
-        self.scroll_layout = QtWidgets.QVBoxLayout(self.scroll_contents)
-        self.scroll_layout.setObjectName("changelog_scroll_layout")
-
-        for entry in all_change_logs:
-            changelog_label = QtWidgets.QLabel(self.scroll_contents)
-            changelog_label.setTextFormat(QtCore.Qt.MarkdownText)
-            _update_label_on_show(changelog_label, entry)
-            changelog_label.setObjectName("changelog_label")
-            changelog_label.setWordWrap(True)
-            self.scroll_layout.addWidget(changelog_label)
-
-        self.scroll_area.setWidget(self.scroll_contents)
-        self.layout.addWidget(self.scroll_area)
+            scroll_area.setWidget(label)
+            self.addTab(scroll_area, version_name)
