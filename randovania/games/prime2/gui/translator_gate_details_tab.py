@@ -6,7 +6,7 @@ from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import gate_data
-from randovania.games.prime2.patcher.claris_patcher_file import translator_index_for_requirement
+from randovania.games.prime2.patcher import claris_patcher_file
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -25,6 +25,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
         return "Translator Gate"
 
     def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
+
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Gate", "Requirement"])
@@ -47,7 +48,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
             source_world = world_list.world_by_area_location(source_loc.area_identifier)
             source_name = gate_index_to_name[identifier_to_gate[source_loc]]
 
-            index = translator_index_for_requirement(requirement)
+            index = claris_patcher_file.translator_index_for_requirement(requirement)
             per_world[source_world.name][source_name] = items_by_id[index]
 
         for world_name, world_contents in iterate_key_sorted(per_world):

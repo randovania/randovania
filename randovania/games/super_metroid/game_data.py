@@ -8,13 +8,15 @@ from randovania.resolver.bootstrap import Bootstrap
 
 
 def _super_metroid_gui():
-    from randovania.games.super_metroid.gui.preset_settings import super_metroid_preset_tabs
     from randovania.games.super_metroid.gui.dialog.super_cosmetic_patches_dialog import SuperCosmeticPatchesDialog
+    from randovania.games.super_metroid.gui.preset_settings import super_metroid_preset_tabs
+    from randovania.games.super_metroid.gui.super_metroid_help_widget import SuperMetroidHelpWidget
 
     return GameGui(
         tab_provider=super_metroid_preset_tabs,
         cosmetic_dialog=SuperCosmeticPatchesDialog,
         input_file_text=("an SFC/SMC file", "the Super Famicom/SNES", "SFC/SMC"),
+        help_widget=lambda: SuperMetroidHelpWidget(),
     )
 
 

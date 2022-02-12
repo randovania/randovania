@@ -10,15 +10,17 @@ from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFac
 
 
 def _prime_gui():
-    from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs
-    from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog
+    from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs
+    from randovania.games.prime1.gui.prime_help_widget import PrimeHelpWidget
 
     return GameGui(
         tab_provider=prime1_preset_tabs,
         cosmetic_dialog=PrimeCosmeticPatchesDialog,
         input_file_text=("an ISO file", "the Nintendo Gamecube", "Gamecube ISO"),
         spoiler_visualizer=(TeleporterDetailsTab,),
+        help_widget=lambda: PrimeHelpWidget(),
     )
 
 
@@ -68,7 +70,7 @@ game_data: GameData = GameData(
         preset_describer=GamePresetDescriber(
             expected_items=prime_expected_items,
             unexpected_items=prime_unexpected_items,
-            format_params=prime_format_params
+            format_params=prime_format_params,
         )
     ),
 
