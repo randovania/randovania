@@ -5,8 +5,6 @@ from pathlib import Path
 from random import Random
 from typing import Optional, List, Union
 
-import open_dread_rando
-
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -23,12 +21,10 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import status_update_lib
 from randovania.patching.patcher import Patcher
-from randovania.patching.prime.patcher_file_lib import pickup_exporter
+from randovania.patching.prime.patcher_file_lib import item_names, pickup_exporter
 from randovania.patching.prime.patcher_file_lib.pickup_exporter import ExportedPickupDetails
 
 _ALTERNATIVE_MODELS = {
-    "powerup_powerbomb": "item_powerbombtank",
-
     "powerup_slide": "itemsphere",
     "powerup_hyperbeam": "powerup_plasmabeam",
     "powerup_metroidsuit": "powerup_gravitysuit",
@@ -110,6 +106,14 @@ class OpenDreadPatcher(Patcher):
                 except KeyError:
                     print(f"Skipping {resource} for starting inventory: no item id")
                     continue
+            return result
+        
+        def _starting_inventory_text(resources: CurrentResources):
+            result = [r"{c1}Random starting items:{c0}"]
+            items = item_names.additional_starting_items(configuration, db.resource_database, resources)
+            if not items:
+                return []
+            result.extend(items)
             return result
 
         def _node_for(identifier: Union[AreaIdentifier, NodeIdentifier]) -> Node:
@@ -227,6 +231,7 @@ class OpenDreadPatcher(Patcher):
 
         starting_location = _start_point_ref_for(_node_for(patches.starting_location))
         starting_items = _calculate_starting_inventory(patches.starting_items)
+        starting_text = [_starting_inventory_text(patches.starting_items)]
 
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
                                       players_config.player_index)
@@ -246,6 +251,7 @@ class OpenDreadPatcher(Patcher):
             "debug_export_modified_files": True,
             "starting_location": starting_location,
             "starting_items": starting_items,
+            "starting_text": starting_text,
             "pickups": [
                 data
                 for pickup_item in pickup_list
@@ -266,6 +272,8 @@ class OpenDreadPatcher(Patcher):
         output_file.mkdir(parents=True, exist_ok=True)
         with output_file.joinpath("patcher.json").open("w") as f:
             json.dump(patch_data, f, indent=4)
+
+        import open_dread_rando
         open_dread_rando.patch_with_status_update(
             input_file, output_file, patch_data,
             lambda progress, msg: progress_update(msg, progress),
