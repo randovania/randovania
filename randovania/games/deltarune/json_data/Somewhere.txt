@@ -263,7 +263,12 @@ room_castle_tutorial
 > Door to room_castle_town; Heals? False
   * Normal Door to room_castle_town/Door to room_castle_tutorial
   > Spawn Point
-      Trivial
+      Any of the following:
+          # Requirements to do the dummy tutorial
+          Defend Button or Fight Button
+          All of the following:
+              # Required to end the battle with the dummy normally
+              Defend Button and Magic Button and Spare Button
 
 > Pickup (Manual0); Heals? False
   * Pickup 12; Major Location? False
@@ -275,7 +280,22 @@ room_castle_darkdoor
 (Valid Starting Location)
 > Spawn Point; Heals? False; Spawn Point
   > Door to room_field_start
-      Field Key
+      All of the following:
+          Field Key
+          Any of the following:
+              # Check for required missing actions
+              Any of the following:
+                  # If no trick, check for most actions
+                  Fight Button
+                  All of the following:
+                      # For spare route
+                      Magic Button and Spare Button
+              All of the following:
+                  # Skip enabled
+                  Missing Actions Combat (Beginner)
+                  Any of the following:
+                      # Fighting without act requirements
+                      Fight Button or Spare Button
   > Door to room_castle_tutorial
       Trivial
   > Pickup (Field Key0)
