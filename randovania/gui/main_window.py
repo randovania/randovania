@@ -28,7 +28,7 @@ from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
-from randovania.lib.enum_lib import iterate_enum
+from randovania.lib import enum_lib
 from randovania.patching.patcher_provider import PatcherProvider
 from randovania.resolver import debug
 
@@ -58,7 +58,6 @@ def _update_label_on_show(label: QtWidgets.QLabel, text: str):
 
 
 class MainWindow(WindowManager, Ui_MainWindow):
-    newer_version_signal = Signal(str, str)
     options_changed_signal = Signal()
     _is_preview_mode: bool = False
     _experimental_games_visible: bool = False
@@ -117,7 +116,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self.menu_bar.removeAction(self.menu_edit.menuAction())
 
         # Signals
-        self.newer_version_signal.connect(self.display_new_version)
         self.options_changed_signal.connect(self.on_options_changed)
         self.GameDetailsSignal.connect(self._open_game_details)
         self.InitPostShowSignal.connect(self.initialize_post_show)
@@ -137,7 +135,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.game_menus = []
         self.menu_action_edits = []
 
-        for game in sorted(iterate_enum(RandovaniaGame), key=lambda g: g.long_name):
+        for game in RandovaniaGame.sorted_all_games():
             # Sub-Menu in Open Menu
             game_menu = QtWidgets.QMenu(self.menu_open)
             game_menu.setTitle(_t(game.long_name))
@@ -221,6 +219,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     # Per-Game elements
     def refresh_game_list(self):
+        self.games_tab.set_experimental_visible(self.menu_action_experimental_games.isChecked())
+
         if self._experimental_games_visible == self.menu_action_experimental_games.isChecked():
             return
         self._experimental_games_visible = self.menu_action_experimental_games.isChecked()
@@ -255,65 +255,13 @@ class MainWindow(WindowManager, Ui_MainWindow):
         logging.info("Running GenerateSeedTab.setup_ui")
         self.generate_seed_tab.setup_ui()
 
-        # Remove pointless Prime 1/3 help tabs
-        self.prime_differences_tab.deleteLater()
-        self.corruption_differences_tab.deleteLater()
-
-        # Update FAQ text
-
-        def format_game_faq(widget: QtWidgets.QLabel, game: RandovaniaGame):
-            widget.setTextFormat(Qt.MarkdownText)
-            widget.setText("\n\n&nbsp;\n".join(
-                "### {}\n{}".format(question, answer)
-                for question, answer in game.data.faq
-            ))
-
-        format_game_faq(self.prime_faq_label, RandovaniaGame.METROID_PRIME)
-        format_game_faq(self.echoes_faq_label, RandovaniaGame.METROID_PRIME_ECHOES)
-        format_game_faq(self.super_metroid_faq_label, RandovaniaGame.SUPER_METROID)
-
-        # Update hints text
-        logging.info("Will _update_hints_text")
-        self._update_hints_text()
-        logging.info("Will hide hint locations combo")
-        self._update_hint_locations()
-
         logging.info("Will update for modified options")
         with self._options:
             self.on_options_changed()
 
-    def _update_hints_text(self):
-        from randovania.gui.lib import hints_text
-
-        for game, widget in [
-            (RandovaniaGame.METROID_PRIME, self.prime_hint_item_names_tree_widget),
-            (RandovaniaGame.METROID_PRIME_ECHOES, self.echoes_hint_item_names_tree_widget),
-            (RandovaniaGame.METROID_PRIME_CORRUPTION, self.corruption_hint_item_names_tree_widget),
-            (RandovaniaGame.CAVE_STORY, self.cs_hint_item_names_tree_widget),
-        ]:
-            hints_text.update_hints_text(game, widget)
-
-    def _update_hint_locations(self):
-        from randovania.gui.lib import hints_text
-        for game, widget in [
-            (RandovaniaGame.METROID_PRIME, self.prime_hint_locations_tree_widget),
-            (RandovaniaGame.METROID_PRIME_ECHOES, self.echoes_hint_locations_tree_widget),
-            (RandovaniaGame.METROID_PRIME_CORRUPTION, self.corruption_hint_locations_tree_widget),
-            (RandovaniaGame.CAVE_STORY, self.cs_hint_locations_tree_widget)
-        ]:
-            hints_text.update_hint_locations(game, widget)
-
-        self.prime_hint_locations_tab.deleteLater()
-        self.corruption_hint_locations_tab.deleteLater()
-
     # Generate Seed
     def _open_faq(self):
         self.main_tab_widget.setCurrentWidget(self.games_tab)
-        self.games_tab_widget.setCurrentWidget(self.help_echoes_tab)
-        self.help_prime_tab_widget.setCurrentWidget(self.prime_faq_tab)
-        self.help_echoes_tab_widget.setCurrentWidget(self.echoes_faq_tab)
-        self.help_corruption_tab_widget.setCurrentWidget(self.corruption_faq_tab)
-        self.help_cs_tab_widget.setCurrentWidget(self.cs_faq_tab)
 
     async def generate_seed_from_permalink(self, permalink: Permalink):
         from randovania.lib.status_update_lib import ProgressUpdateCallable
@@ -384,8 +332,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
         await self._on_releases_data(await github_releases_data.get_releases())
 
     async def _on_releases_data(self, releases: Optional[List[dict]]):
-        import markdown
-
         current_version = update_checker.strict_current_version()
         last_changelog = self._options.last_changelog_displayed
 
@@ -396,34 +342,21 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self.display_new_version(version_to_display)
 
         if all_change_logs:
-            changelog_tab = QtWidgets.QWidget()
-            changelog_tab.setObjectName("changelog_tab")
-            changelog_tab_layout = QtWidgets.QVBoxLayout(changelog_tab)
-            changelog_tab_layout.setContentsMargins(0, 0, 0, 0)
-            changelog_tab_layout.setObjectName("changelog_tab_layout")
-            changelog_scroll_area = QtWidgets.QScrollArea(changelog_tab)
-            changelog_scroll_area.setWidgetResizable(True)
-            changelog_scroll_area.setObjectName("changelog_scroll_area")
-            changelog_scroll_contents = QtWidgets.QWidget()
-            changelog_scroll_contents.setGeometry(QtCore.QRect(0, 0, 489, 337))
-            changelog_scroll_contents.setObjectName("changelog_scroll_contents")
-            changelog_scroll_layout = QtWidgets.QVBoxLayout(changelog_scroll_contents)
-            changelog_scroll_layout.setObjectName("changelog_scroll_layout")
-
-            for entry in all_change_logs:
-                changelog_label = QtWidgets.QLabel(changelog_scroll_contents)
-                _update_label_on_show(changelog_label, markdown.markdown(entry))
-                changelog_label.setObjectName("changelog_label")
-                changelog_label.setWordWrap(True)
-                changelog_scroll_layout.addWidget(changelog_label)
-
-            changelog_scroll_area.setWidget(changelog_scroll_contents)
-            changelog_tab_layout.addWidget(changelog_scroll_area)
+            from randovania.gui.widgets.changelog_widget import ChangeLogWidget
+            changelog_tab = ChangeLogWidget(all_change_logs)
             self.main_tab_widget.addTab(changelog_tab, "Change Log")
 
         if new_change_logs:
-            await async_dialog.message_box(self, QtWidgets.QMessageBox.Information,
-                                           "What's new", markdown.markdown("\n".join(new_change_logs)))
+            from randovania.gui.lib.scroll_message_box import ScrollMessageBox
+
+            message_box = ScrollMessageBox.create_new(
+                self, QtWidgets.QMessageBox.Information,
+                "What's new", "\n".join(new_change_logs),
+                QtWidgets.QMessageBox.Ok,
+            )
+            message_box.label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
+            await async_dialog.execute_dialog(message_box)
+
             with self._options as options:
                 options.last_changelog_displayed = current_version
 
@@ -540,7 +473,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             menu.addAction(trick_menu.menuAction())
 
             used_difficulties = difficulties_for_trick(game, trick)
-            for i, trick_level in enumerate(iterate_enum(LayoutTrickLevel)):
+            for trick_level in enum_lib.iterate_enum(LayoutTrickLevel):
                 if trick_level in used_difficulties:
                     difficulty_action = QtWidgets.QAction(self)
                     difficulty_action.setText(trick_level.long_name)
