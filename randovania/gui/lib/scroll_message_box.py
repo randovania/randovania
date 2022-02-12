@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
 
 
 class ScrollMessageBox(QtWidgets.QMessageBox):
@@ -22,6 +22,7 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
 
         label = QtWidgets.QLabel(old_label.text(), self)
         label.setWordWrap(True)
+        self.label = label
 
         scroll = QtWidgets.QScrollArea(self)
         scroll.setWidgetResizable(True)
@@ -39,7 +40,7 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
             title: str,
             body: str,
             buttons: QtWidgets.QMessageBox.StandardButtons,
-            default_button: QtWidgets.QMessageBox.StandardButton,
+            default_button: QtWidgets.QMessageBox.StandardButton = QtWidgets.QMessageBox.StandardButton.Ok,
     ) -> "ScrollMessageBox":
         box = cls(icon, title, body, buttons, parent)
         box.setDefaultButton(default_button)

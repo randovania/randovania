@@ -381,8 +381,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
         await self._on_releases_data(await github_releases_data.get_releases())
 
     async def _on_releases_data(self, releases: Optional[List[dict]]):
-        import markdown
-
         current_version = update_checker.strict_current_version()
         last_changelog = self._options.last_changelog_displayed
 
@@ -409,7 +407,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
             for entry in all_change_logs:
                 changelog_label = QtWidgets.QLabel(changelog_scroll_contents)
-                _update_label_on_show(changelog_label, markdown.markdown(entry))
+                changelog_label.setTextFormat(QtCore.Qt.MarkdownText)
+                _update_label_on_show(changelog_label, entry)
                 changelog_label.setObjectName("changelog_label")
                 changelog_label.setWordWrap(True)
                 changelog_scroll_layout.addWidget(changelog_label)
@@ -419,8 +418,16 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self.main_tab_widget.addTab(changelog_tab, "Change Log")
 
         if new_change_logs:
-            await async_dialog.message_box(self, QtWidgets.QMessageBox.Information,
-                                           "What's new", markdown.markdown("\n".join(new_change_logs)))
+            from randovania.gui.lib.scroll_message_box import ScrollMessageBox
+
+            message_box = ScrollMessageBox.create_new(
+                self, QtWidgets.QMessageBox.Information,
+                "What's new", "\n".join(new_change_logs),
+                QtWidgets.QMessageBox.Ok,
+            )
+            message_box.label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
+            await async_dialog.execute_dialog(message_box)
+            
             with self._options as options:
                 options.last_changelog_displayed = current_version
 
