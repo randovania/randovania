@@ -39,12 +39,24 @@ async def _read_from_persisted() -> Optional[List[dict]]:
         return None
 
 
-async def _download_from_github() -> Optional[List[dict]]:
+async def _download_from_github(page_size: int = 100) -> Optional[List[dict]]:
     async with aiohttp.ClientSession() as session:
         try:
-            async with session.get(_RELEASES_URL) as response:
-                response.raise_for_status()
-                return await response.json()
+            result = []
+
+            current_page = 1
+
+            while True:
+                async with session.get(_RELEASES_URL,
+                                       params={"page": current_page, "per_page": page_size}) as response:
+                    response.raise_for_status()
+                    last_result = await response.json()
+                    result.extend(last_result)
+                    if len(last_result) < page_size:
+                        return result
+
+                    current_page += 1
+
         except (aiohttp.ClientResponseError, aiohttp.ClientConnectionError):
             return None
 
