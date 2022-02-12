@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CaveStoryHelpWidget</class>
+ <widget class="QTabWidget" name="CaveStoryHelpWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>423</width>
+    <height>416</height>
+   </rect>
+  </property>
+  <property name="currentIndex">
+   <number>0</number>
+  </property>
+  <widget class="QWidget" name="faq_tab">
+   <attribute name="title">
+    <string>FAQ</string>
+   </attribute>
+   <layout class="QGridLayout" name="faq_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QScrollArea" name="faq_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="faq_scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>417</width>
+         <height>384</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_9">
+        <item row="0" column="0">
+         <widget class="QLabel" name="faq_label">
+          <property name="text">
+           <string>## Help me!
+If you find yourself stuck, here are a few common pitfalls:
+- Remember that the Jellyfish Juice can quench more than one fireplace
+- The Graveyard can only be accessed if you obtain the Silver Locket and see Toroko get kidnapped
+- The Hermit Gunsmith will wake up and give you an item if you defeat the Core and show him his gun
+- The western side of the Labyrinth can be accessed without flight if you defeat Toroko+
+- The Plantation can be accessed without the Teleporter Room Key if you save Kazuma and teleport in or climb the Outer Wall
+- The Waterway can be accessed without the Cure-All by using the teleporter in the Labyrinth Shop
+- There may be a required item in the Last Cave (Hidden) as a reward for defeating the Red Demon
+
+If you're still stuck, join our [official Discord server](https://discord.gg/7zUdPEn) and ask for help in there!</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="differences_tab">
+   <attribute name="title">
+    <string>Differences</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="differences_tab_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="differences_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="differences_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>403</width>
+         <height>956</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="differences_scroll_layout_4">
+        <item>
+         <widget class="QLabel" name="differences_label">
+          <property name="text">
+           <string>## Main differences
+Note that there are a few key differences from the vanilla game in order to improve the playing experience:
+
+- All 5 teleporter locations in Arthur's House are active from the beginning of the game
+- All other teleporters from the vanilla game are active and linked to one another at all times
+- A teleporter between Sand Zone (near the Storehouse) and Labyrinth I has been placed and can be activated in one of two ways:
+   1. Defeating Toroko+
+   2. Using the teleporter from the Labyrinth I side
+- Most cutscenes have been abridged or skipped entirely
+- Jellyfish Juice can be used an infinite number of times
+- You can carry as many as 5 puppies at once: Jenka will only accept them once you've collected all 5
+- Certain items that are received from NPCs have been placed in chests:
+  - Labyrinth B (Fallen Booster)
+  - Labyrinth Shop
+    - One requiring the Machine Gun to open
+    - One requiring the Fireball to open
+    - One requiring the Spur to open
+  - Jail no. 1
+  - Storage? (Ma Pignon)
+    - This chest requires saving Curly in the Waterway to open
+- If you don't have Curly's Air Tank after defeating the Core, the water will not rise and you may leave without dying
+- Curly cannot be left behind permanently in the Core; the shutter will never close once the boss has been defeated
+- The jump in the Waterway to save Curly has been made much easier
+- Ironhead will always give you his item on defeat (but there's still a special surprise if you defeat him without taking damage!)
+- Kazuma will only open the door between Egg no. 0 and the Outer Wall if you save him in Grasstown
+- Kazuma's door can be blown down from both the outside and the inside
+- Entering the Throne Room to complete the game requires doing a few things:
+  1. Saving Sue in the Egg Corridor
+  2. Obtaining the Booster 2.0 (for Best Ending and up)
+  3. Obtaining the Iron Bond (for Best Ending and up)
+  4. Defeating every boss (for All Bosses and up)
+  5. Obtaining all 66 items outside of Sacred Grounds (for 100%)
+- In Bad Ending, leaving the island with Kazuma on the Outer Wall requires two things:
+  1. Saving Kazuma using the Explosive
+  2. Defeating the Core</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="hints_tab">
+   <attribute name="title">
+    <string>Hints</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="hints_tab_layout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="hints_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="hints_scroll_area_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>417</width>
+         <height>384</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="hints_scroll_layout">
+        <item>
+         <widget class="QLabel" name="hints_label">
+          <property name="text">
+           <string>In Cave Story, you can find hints from the following sources:
+
+**Blue Robots and Cthulhus**: Each of these friendly folks will provide a general hint about items in the game.
+
+**MALCO**: MALCO provides a hint about the item he gives as a reward for bringing him the bomb ingredients.
+
+**Jenka**: Jenka provides a hint about the item she gives as a reward for returning all 5 of her puppies.
+
+**Mrs. Little**: Mrs. Little provides a hint about the item Mr. Little gives as a reward for returning him home and showing him the Blade.
+
+**Numahachi**: In the Statue Chamber, Numahachi will provide two hints about the items found in Sacred Grounds.</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::MarkdownText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="hint_item_names_tab">
+   <attribute name="title">
+    <string>Hint Item Names</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="hint_item_names_layout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="hint_item_names_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <widget class="QWidget" name="hint_item_names_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>417</width>
+         <height>384</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="hint_item_names_scroll_layout">
+        <item>
+         <widget class="QLabel" name="hint_item_names_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When
+                                                items are referenced in a hint, multiple names can be
+                                                used depending on how precise the hint is. The names
+                                                each item can use are the following:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                                            </string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="hint_item_names_tree_widget">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Item</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Precise Category</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>General Category</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Broad Category</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="hint_locations_tab">
+   <attribute name="title">
+    <string>Hints Locations</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="hint_tab_layout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QScrollArea" name="hint_locations_scroll_area">
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <widget class="QWidget" name="hint_locations_scroll_contents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>417</width>
+         <height>384</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="hint_scroll_layout">
+        <item>
+         <widget class="QLabel" name="hint_locations_label">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hints
+                                                are placed in the game by replacing character dialog.
+                                                The following are the areas that may have a hint added
+                                                to them:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+                                            </string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTreeWidget" name="hint_locations_tree_widget">
+          <column>
+           <property name="text">
+            <string>Location</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
