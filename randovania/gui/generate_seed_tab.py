@@ -16,7 +16,7 @@ from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
 from randovania.gui.lib.window_manager import WindowManager
-from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
+from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
@@ -102,7 +102,7 @@ class PresetMenu(QtWidgets.QMenu):
 
 
 class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
-    _logic_settings_window: Optional[LogicSettingsWindow] = None
+    _logic_settings_window: Optional[CustomizePresetDialog] = None
     _has_set_from_last_selected: bool = False
     _preset_menu: PresetMenu
     _action_delete: QtWidgets.QAction
@@ -209,9 +209,9 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         old_preset = self._current_preset_data.get_preset()
         if old_preset.base_preset_uuid is None:
             old_preset = old_preset.fork()
-        editor = PresetEditor(old_preset)
-        self._logic_settings_window = LogicSettingsWindow(self._window_manager, editor)
 
+        editor = PresetEditor(old_preset)
+        self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
 

@@ -4,7 +4,7 @@ import uuid
 import pytest
 
 from randovania.games.game import RandovaniaGame
-from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
+from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.interface_common.preset_editor import PresetEditor
 
 
@@ -17,7 +17,7 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game):
                                  uuid=uuid.UUID('b41fde84-1f57-4b79-8cd6-3e5a78077fa6'),
                                  base_preset_uuid=base.uuid)
     editor = PresetEditor(preset)
-    window = LogicSettingsWindow(None, editor)
+    window = CustomizePresetDialog(None, editor)
 
     # Run
     window.on_preset_changed(editor.create_custom_preset_with())

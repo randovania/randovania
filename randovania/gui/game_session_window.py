@@ -26,7 +26,7 @@ from randovania.gui.lib.generation_failure_handling import GenerationFailureHand
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient, BackendInUse
-from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
+from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
@@ -168,7 +168,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     rows: List[RowWidget]
     _game_session: GameSessionEntry
     has_closed = False
-    _logic_settings_window: Optional[LogicSettingsWindow] = None
+    _logic_settings_window: Optional[CustomizePresetDialog] = None
     _window_manager: WindowManager
     _generating_game: bool = False
     _already_kicked = False
@@ -474,12 +474,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         old_preset = self._game_session.presets[row_index].get_preset()
         if old_preset.base_preset_uuid is None:
             old_preset = old_preset.fork()
-        editor = PresetEditor(old_preset)
-        self._logic_settings_window = LogicSettingsWindow(self._window_manager, editor)
-        self._logic_settings_window._game_session_row = row
 
+        editor = PresetEditor(old_preset)
+        self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
+        self._logic_settings_window._game_session_row = row
 
         result = await async_dialog.execute_dialog(self._logic_settings_window)
         self._logic_settings_window = None
