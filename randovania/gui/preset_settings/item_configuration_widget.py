@@ -75,6 +75,7 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
             self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
 
+        self.set_custom_fields_visible(False)
         if self._item.must_be_starting:
             self.item_name_label.setToolTip(
                 "This item is necessary for the game to function properly and can't be removed.")
