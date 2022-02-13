@@ -185,9 +185,11 @@ class PatcherMaker(Patcher):
         self._busy = True
         import subprocess
         print(str(input_file.joinpath("*")))
-        PatcherMaker.copyDir(input_file,output_file)
-        subprocess.run([str(Path(__file__).parent.joinpath("..","deltapatcher","xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(Path(__file__).parent.joinpath("..","deltapatcher","PATCH THIS.xdelta")),str(output_file.joinpath("data.win"))],check=True)
-        with Path(output_file).joinpath("Deltarune Randomizer Seed.txt").open("w") as f:
+        Path(output_file.joinpath("Deltarune Randomizer")).mkdir(exist_ok=False)
+        tomakepath = Path(output_file.joinpath("Deltarune Randomizer"))
+        PatcherMaker.copyDir(input_file,tomakepath)
+        subprocess.run([str(Path(__file__).parent.joinpath("..","deltapatcher","xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(Path(__file__).parent.joinpath("..","deltapatcher","PATCH THIS.xdelta")),str(tomakepath.joinpath("data.win"))],check=True)
+        with Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").open("w") as f:
             for item in patch_data["pickups"]:
                 f.write(str(item["pickup_index"]))
                 f.write('\n')
