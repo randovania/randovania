@@ -13,6 +13,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
 from randovania.gui.lib.area_list_helper import AreaListHelper, dark_world_flags
 from randovania.gui.lib.foldable import Foldable
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
@@ -27,10 +28,9 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
     _during_batch_update: bool
     _major_minor: bool
 
-    def __init__(self, editor: PresetEditor, game: GameDescription):
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
-        self.game_description = game
         self._during_batch_update = False
 
         self._row_widget_for_node = {}

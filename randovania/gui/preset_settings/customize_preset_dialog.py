@@ -1,5 +1,6 @@
 from PySide6 import QtWidgets
 
+from randovania.game_description import default_database
 from randovania.game_description.world.world import World
 from randovania.gui import game_specific_gui
 from randovania.gui.generated.customize_preset_dialog_ui import Ui_CustomizePresetDialog
@@ -17,7 +18,8 @@ def dark_world_flags(world: World):
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
-    _tabs: list[PresetTab]
+    _tab_types: list[type[PresetTab]]
+    _tabs: dict[type[PresetTab], PresetTab]
     _editor: PresetEditor
 
     # _updated_tabs: set[PresetTab]
@@ -29,14 +31,19 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         common_qt_lib.set_default_window_icon(self)
 
         self._editor = editor
-        self._tabs = game_specific_gui.preset_editor_tabs_for(editor, window_manager)
+        self._tab_types = list(game_specific_gui.preset_editor_tabs_for(editor, window_manager))
+        self._tabs = {}
 
-        for extra_tab in self._tabs:
+        game_description = default_database.game_description_for(editor.game)
+
+        for extra_tab in self._tab_types:
             if extra_tab.uses_patches_tab():
                 parent_tab = self.patches_tab_widget
             else:
                 parent_tab = self.logic_tab_widget
-            parent_tab.addTab(extra_tab, extra_tab.tab_title())
+
+            tab = self._tabs[extra_tab] = extra_tab(editor, game_description, window_manager)
+            parent_tab.addTab(tab, extra_tab.tab_title())
 
         for i in range(self.main_tab_widget.count()):
             tab_widget = self.main_tab_widget.widget(i)
@@ -53,7 +60,7 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         # self._last_preset = preset
 
         common_qt_lib.set_edit_if_different(self.name_edit, preset.name)
-        for extra_tab in self._tabs:
+        for extra_tab in self._tabs.values():
             extra_tab.on_preset_changed(preset)
 
         # active_tab = self.current_tab()

@@ -9,6 +9,7 @@ from randovania.game_description.world.dock import DockRandoParams, DockType, Do
 from randovania.gui.generated.preset_dock_rando_ui import Ui_PresetDockRando
 from randovania.gui.lib import common_qt_lib, signal_handling
 from randovania.gui.lib.foldable import Foldable
+from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.preset_settings.preset_tab import PresetTab
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
@@ -18,8 +19,8 @@ from randovania.layout.preset import Preset
 class PresetDockRando(PresetTab, Ui_PresetDockRando):
     type_checks: dict[DockType, dict[DockWeakness, dict[str, QtWidgets.QCheckBox]]]
 
-    def __init__(self, editor: PresetEditor, game_description: GameDescription) -> None:
-        super().__init__(editor)
+    def __init__(self, editor: PresetEditor, game_description: GameDescription, window_manager: WindowManager):
+        super().__init__(editor, game_description, window_manager)
         self.setupUi(self)
 
         # Mode
