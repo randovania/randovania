@@ -33,7 +33,7 @@ def deltarune_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDe
     count = 0
 
     for resource, quantity in detail.conditional_resources[0].resources:
-        if resource.resource_type == ResourceType.ITEM && resource.extra["item_id"] >= 1000:
+        if resource.resource_type == ResourceType.ITEM and resource.extra["item_id"] >= 1000:
             continue
         pickup_type = resource.extra["item_id"]
         count = quantity
