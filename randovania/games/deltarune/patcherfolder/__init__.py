@@ -53,8 +53,9 @@ def deltarune_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDe
 def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
     result = {
         "item_index": item.extra["item_id"],
-        "quantity_given": quantity,
+        "quantity_given": quantity
     }
+    print(str(item.extra["item_id"]))
     return result
 
 def copyDir(folder: Path, to: Path):
@@ -151,8 +152,6 @@ class PatcherMaker(Patcher):
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
-
-
         starting_point = patches.starting_location
 
         starting_area = db.world_list.area_by_area_location(starting_point)
@@ -190,6 +189,7 @@ class PatcherMaker(Patcher):
         tomakepath = Path(output_file.joinpath("Deltarune Randomizer"))
         copyDir(input_file,tomakepath)
         subprocess.run([str(Path(__file__).parent.joinpath("..","deltapatcher","xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(Path(__file__).parent.joinpath("..","deltapatcher","PATCH THIS.xdelta")),str(tomakepath.joinpath("data.win"))],check=True)
+        Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").unlink(missing_ok=True)
         with Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").open("w") as f:
             for item in patch_data["pickups"]:
                 f.write(str(item["pickup_index"]))
