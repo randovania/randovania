@@ -1,0 +1,605 @@
+{
+    "schema_version": 3,
+    "item_categories": {
+        "visor": {
+            "long_name": "Visors",
+            "hint_details": [
+                "a ",
+                "visor"
+            ],
+            "is_major": true
+        },
+        "suit": {
+            "long_name": "Suits",
+            "hint_details": [
+                "a ",
+                "suit"
+            ],
+            "is_major": true
+        },
+        "beam": {
+            "long_name": "Beams",
+            "hint_details": [
+                "a ",
+                "beam"
+            ],
+            "is_major": true
+        },
+        "morph_ball": {
+            "long_name": "Morph Ball",
+            "hint_details": [
+                "a ",
+                "morph ball system"
+            ],
+            "is_major": true
+        },
+        "movement": {
+            "long_name": "Movement",
+            "hint_details": [
+                "a ",
+                "movement system"
+            ],
+            "is_major": true
+        },
+        "missile": {
+            "long_name": "Missile",
+            "hint_details": [
+                "a ",
+                "missile system"
+            ],
+            "is_major": true
+        },
+        "grapple": {
+            "long_name": "Grapple",
+            "hint_details": [
+                "a ",
+                "grapple system"
+            ],
+            "is_major": true
+        },
+        "hypermode": {
+            "long_name": "Hypermode",
+            "hint_details": [
+                "a ",
+                "hypermode system"
+            ],
+            "is_major": true
+        },
+        "energy_tank": {
+            "long_name": "Energy Tanks",
+            "hint_details": [
+                "an ",
+                "Energy Tank"
+            ],
+            "is_major": false
+        },
+        "missile_related": {
+            "long_name": "",
+            "hint_details": [
+                "a ",
+                "missile-related upgrade"
+            ],
+            "is_major": false
+        },
+        "morph_ball_related": {
+            "long_name": "",
+            "hint_details": [
+                "a ",
+                "morph ball-related upgrade"
+            ],
+            "is_major": false
+        },
+        "beam_related": {
+            "long_name": "",
+            "hint_details": [
+                "a ",
+                "beam-related upgrade"
+            ],
+            "is_major": false
+        },
+        "life_support": {
+            "long_name": "",
+            "hint_details": [
+                "a ",
+                "life support system"
+            ],
+            "is_major": false
+        }
+    },
+    "items": {
+        "Charge Beam": {
+            "item_category": "beam",
+            "broad_category": "beam",
+            "model_name": "Charge Beam",
+            "progression": [
+                "ChargeUpgrade"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Power Beam": {
+            "item_category": "beam",
+            "broad_category": "beam",
+            "model_name": "Power Beam",
+            "progression": [
+                "PowerBeam"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": true,
+            "must_be_starting": true,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Plasma Beam": {
+            "item_category": "beam",
+            "broad_category": "beam",
+            "model_name": "Plasma Beam",
+            "progression": [
+                "PlasmaBeam"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 52
+        },
+        "Nova Beam": {
+            "item_category": "beam",
+            "broad_category": "beam",
+            "model_name": "Nova Beam",
+            "progression": [
+                "NovaBeam"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 95
+        },
+        "Progressive Beam": {
+            "item_category": "beam",
+            "broad_category": "beam",
+            "model_name": "Plasma Beam",
+            "progression": [
+                "PlasmaBeam",
+                "NovaBeam"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Missile Launcher": {
+            "item_category": "missile",
+            "broad_category": "missile",
+            "model_name": "Missile Launcher",
+            "progression": [],
+            "ammo": [
+                "Missile"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 2
+        },
+        "Ice Missile": {
+            "item_category": "missile",
+            "broad_category": "missile",
+            "model_name": "Ice Missile",
+            "progression": [
+                "IceMissile"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 23
+        },
+        "Seeker Missile": {
+            "item_category": "missile",
+            "broad_category": "missile",
+            "model_name": "Seeker Missile",
+            "progression": [
+                "Seekers"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 69
+        },
+        "Progressive Missile": {
+            "item_category": "missile",
+            "broad_category": "missile",
+            "model_name": "Ice Missile",
+            "progression": [
+                "IceMissile",
+                "Seekers"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Grapple Lasso": {
+            "item_category": "grapple",
+            "broad_category": "grapple",
+            "model_name": "Grapple Lasso",
+            "progression": [
+                "GrappleBeamPull"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 4
+        },
+        "Grapple Swing": {
+            "item_category": "grapple",
+            "broad_category": "grapple",
+            "model_name": "Grapple Swing",
+            "progression": [
+                "GrappleBeamSwing"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 26
+        },
+        "Grapple Voltage": {
+            "item_category": "grapple",
+            "broad_category": "grapple",
+            "model_name": "Grapple Voltage",
+            "progression": [
+                "GrappleBeamVoltage"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 78
+        },
+        "Combat Visor": {
+            "item_category": "visor",
+            "broad_category": "visor",
+            "model_name": "Combat Visor",
+            "progression": [
+                "CombatVisor"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": true,
+            "must_be_starting": true,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Scan Visor": {
+            "item_category": "visor",
+            "broad_category": "visor",
+            "model_name": "Scan Visor",
+            "progression": [
+                "ScanVisor"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": true,
+            "must_be_starting": true,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Command Visor": {
+            "item_category": "visor",
+            "broad_category": "visor",
+            "model_name": "Command Visor",
+            "progression": [
+                "CommandVisor"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "X-Ray Visor": {
+            "item_category": "visor",
+            "broad_category": "visor",
+            "model_name": "X-Ray Visor",
+            "progression": [
+                "XRayVisor"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 87
+        },
+        "Space Jump Boots": {
+            "item_category": "movement",
+            "broad_category": "movement",
+            "model_name": "Space Jump Boots",
+            "progression": [
+                "DoubleJump"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Screw Attack": {
+            "item_category": "movement",
+            "broad_category": "movement",
+            "model_name": "Screw Attack",
+            "progression": [
+                "ScrewAttack"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 48
+        },
+        "Hazard Shield": {
+            "item_category": "suit",
+            "broad_category": "life_support",
+            "model_name": "Hazard Shield",
+            "progression": [
+                "SuitType"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 76
+        },
+        "Energy Tank": {
+            "item_category": "energy_tank",
+            "broad_category": "life_support",
+            "model_name": "Energy Tank",
+            "progression": [
+                "EnergyTank"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Morph Ball": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "Morph Ball",
+            "progression": [
+                "MorphBall"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Morph Ball Bombs": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "Morph Ball Bombs",
+            "progression": [
+                "Bomb"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {}
+        },
+        "Boost Ball": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "Boost Ball",
+            "progression": [
+                "BoostBall"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 63
+        },
+        "Spider Ball": {
+            "item_category": "morph_ball",
+            "broad_category": "morph_ball_related",
+            "model_name": "Spider Ball",
+            "progression": [
+                "SpiderBall"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 64
+        },
+        "Hypermode": {
+            "item_category": "hypermode",
+            "broad_category": "hypermode",
+            "model_name": "Hypermode",
+            "progression": [
+                "HyperModeTank"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 0
+        },
+        "Hyper Missile": {
+            "item_category": "hypermode",
+            "broad_category": "hypermode",
+            "model_name": "Hyper Missile",
+            "progression": [
+                "HyperModeMissile"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 97
+        },
+        "Hyper Ball": {
+            "item_category": "hypermode",
+            "broad_category": "hypermode",
+            "model_name": "Hyper Ball",
+            "progression": [
+                "HyperModeBall"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 98
+        },
+        "Hyper Grapple": {
+            "item_category": "hypermode",
+            "broad_category": "hypermode",
+            "model_name": "Hyper Grapple",
+            "progression": [
+                "HyperModeGrapple"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 99
+        },
+        "Ship Grapple": {
+            "item_category": "grapple",
+            "broad_category": "grapple",
+            "model_name": "Ship Grapple",
+            "progression": [
+                "ShipGrapple"
+            ],
+            "ammo": [],
+            "unlocks_ammo": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 73
+        },
+        "Ship Missile": {
+            "item_category": "missile",
+            "broad_category": "missile_related",
+            "model_name": "Ship Missile",
+            "progression": [],
+            "ammo": [
+                "ShipMissile"
+            ],
+            "unlocks_ammo": true,
+            "hide_from_gui": false,
+            "must_be_starting": false,
+            "probability_offset": 0,
+            "probability_multiplier": 1,
+            "extra": {},
+            "original_index": 43
+        }
+    },
+    "ammo": {
+        "Missile Expansion": {
+            "model_name": "Missile",
+            "items": [
+                "Missile"
+            ],
+            "broad_category": "missile_related",
+            "extra": {},
+            "temporary": "TemporaryMissile",
+            "unlocked_by": "MissileLauncher"
+        },
+        "Ship Missile Expansion": {
+            "model_name": "Ship Missile",
+            "items": [
+                "ShipMissile"
+            ],
+            "broad_category": "missile_related",
+            "extra": {},
+            "temporary": "TemporaryShipMissile",
+            "unlocked_by": "ShipMissileLauncher"
+        }
+    },
+    "default_items": {}
+}

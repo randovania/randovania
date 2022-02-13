@@ -1,0 +1,190 @@
+{
+    "schema_version": 20,
+    "name": "Starter Preset",
+    "uuid": "e36f52b3-ccd9-4dd7-a18f-b57b25f6b079",
+    "description": "This preset is ideal for those new to playing Metroid Prime or it's Randomizer. Every seed can be completed without utilizing any tricks or glitches, and the world will be familiar to the base game.<br/><br/>In addition to shuffling items, this preset includes some minor improvements over the base game such as crash and soft-lock fixes.",
+    "base_preset_uuid": null,
+    "game": "prime1",
+    "configuration": {
+        "trick_level": {
+            "minimal_logic": false,
+            "specific_levels": {}
+        },
+        "starting_location": [
+            {
+                "world_name": "Tallon Overworld",
+                "area_name": "Landing Site"
+            }
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "major_items_configuration": {
+            "items_state": {
+                "Charge Beam": {
+                    "num_shuffled_pickups": 2
+                },
+                "Power Beam": {
+                    "num_included_in_starting_items": 1
+                },
+                "Wave Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Ice Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Plasma Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Missile Launcher": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        5
+                    ]
+                },
+                "Grapple Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Combat Visor": {
+                    "num_included_in_starting_items": 1
+                },
+                "Scan Visor": {
+                    "num_included_in_starting_items": 1
+                },
+                "Thermal Visor": {
+                    "num_shuffled_pickups": 1
+                },
+                "X-Ray Visor": {
+                    "num_shuffled_pickups": 1
+                },
+                "Space Jump Boots": {
+                    "num_shuffled_pickups": 1
+                },
+                "Energy Tank": {
+                    "num_shuffled_pickups": 14
+                },
+                "Morph Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Morph Ball Bomb": {
+                    "num_shuffled_pickups": 1
+                },
+                "Boost Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Spider Ball": {
+                    "num_shuffled_pickups": 1
+                },
+                "Power Bomb": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        4
+                    ]
+                },
+                "Power Suit": {
+                    "num_included_in_starting_items": 1
+                },
+                "Varia Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Gravity Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Phazon Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Super Missile": {
+                    "num_shuffled_pickups": 1
+                },
+                "Wavebuster": {
+                    "num_shuffled_pickups": 1
+                },
+                "Ice Spreader": {
+                    "num_shuffled_pickups": 1
+                },
+                "Flamethrower": {
+                    "num_shuffled_pickups": 1
+                }
+            },
+            "default_items": {},
+            "minimum_random_starting_items": 0,
+            "maximum_random_starting_items": 0
+        },
+        "ammo_configuration": {
+            "items_state": {
+                "Missile Expansion": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 49,
+                    "requires_major_item": false
+                },
+                "Power Bomb Expansion": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 4,
+                    "requires_major_item": false
+                }
+            }
+        },
+        "damage_strictness": 1.5,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm",
+        "multi_pickup_placement": true,
+        "logical_resource_action": "randomly",
+        "elevators": {
+            "mode": "vanilla",
+            "excluded_teleporters": [
+                {
+                    "world_name": "Frigate Orpheon",
+                    "area_name": "Exterior Docking Hangar",
+                    "node_name": "Teleport to Landing Site"
+                },
+                {
+                    "world_name": "Impact Crater",
+                    "area_name": "Crater Entry Point",
+                    "node_name": "Teleport to Artifact Temple"
+                },
+                {
+                    "world_name": "Impact Crater",
+                    "area_name": "Metroid Prime Lair",
+                    "node_name": "Teleporter to Credits"
+                },
+                {
+                    "world_name": "Tallon Overworld",
+                    "area_name": "Artifact Temple",
+                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
+                }
+            ],
+            "excluded_targets": [],
+            "skip_final_bosses": false,
+            "allow_unvisited_room_names": true
+        },
+        "hints": {
+            "artifacts": "precise"
+        },
+        "energy_per_tank": 100,
+        "artifact_target": 6,
+        "artifact_minimum_progression": 6,
+        "heat_damage": 10.0,
+        "warp_to_start": true,
+        "heat_protection_only_varia": true,
+        "progressive_damage_reduction": true,
+        "allow_underwater_movement_without_gravity": false,
+        "small_samus": false,
+        "shuffle_item_pos": false,
+        "items_every_room": false,
+        "spring_ball": true,
+        "main_plaza_door": true,
+        "backwards_frigate": true,
+        "backwards_labs": true,
+        "backwards_upper_mines": true,
+        "backwards_lower_mines": false,
+        "phazon_elite_without_dynamo": true,
+        "qol_game_breaking": true,
+        "qol_pickup_scans": true,
+        "qol_cutscenes": "competitive"
+    }
+}
