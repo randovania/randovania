@@ -135,20 +135,27 @@ room_dark_eyepuzzle
 room_dark7
 (Valid Starting Location)
 > Spawn Point; Heals? False; Spawn Point
-  > Door to room_dark_chase1
-      Trivial
   > Door to room_dark_eyepuzzle
+      Trivial
+  > Event - Find Susie
       Trivial
 
 > Door to room_dark_chase1; Heals? False
   * Normal Door to room_dark_chase1/Door to room_dark7
-  > Spawn Point
+  > Event - Find Susie
       Trivial
 
 > Door to room_dark_eyepuzzle; Heals? False
   * Normal Door to room_dark_eyepuzzle/Door to room_dark7
   > Spawn Point
       Trivial
+
+> Event - Find Susie; Heals? False
+  * Event Find Susie
+  > Spawn Point
+      Trivial
+  > Door to room_dark_chase1
+      After Find Susie
 
 ----------------
 room_dark_chase1
@@ -215,7 +222,7 @@ room_castle_town
   > Door to room_castle_outskirts
       Trivial
   > Door to room_castle_tutorial
-      Trivial
+      After Find Ralsei
 
 > Door to room_castle_front; Heals? False
   * Normal Door to room_castle_front/Door to room_castle_town
@@ -238,9 +245,16 @@ room_castle_front
 > Spawn Point; Heals? False; Spawn Point
   > Door to room_castle_town
       Trivial
+  > Event - Find Ralsei
+      Trivial
 
 > Door to room_castle_town; Heals? False
   * Normal Door to room_castle_town/Door to room_castle_front
+  > Spawn Point
+      Trivial
+
+> Event - Find Ralsei; Heals? False
+  * Event Find Ralsei
   > Spawn Point
       Trivial
 
@@ -252,7 +266,7 @@ room_castle_tutorial
       Trivial
   > Door to room_castle_town
       Trivial
-  > Pickup (Manual0)
+  > Event - Fight Dummy
       Trivial
 
 > Door to room_castle_darkdoor; Heals? False
@@ -275,8 +289,15 @@ room_castle_tutorial
 
 > Pickup (Manual0); Heals? False
   * Pickup 12; Major Location? False
+  > Event - Fight Dummy
+      Trivial
+
+> Event - Fight Dummy; Heals? False
+  * Event Fight Dummy
   > Spawn Point
       Trivial
+  > Pickup (Manual0)
+      After Fight Dummy
 
 ----------------
 room_castle_darkdoor
