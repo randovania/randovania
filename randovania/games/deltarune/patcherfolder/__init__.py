@@ -98,19 +98,19 @@ class PatcherMaker(Patcher):
         :param seed_hash:
         :return:
         """
-        return f"Deltarune Randomizer Seed"
+        return f"Deltarune Randomizer"
         
     @property
     def requires_input_file(self) -> bool:
-        return False
+        return True
 
     @property
     def valid_input_file_types(self) -> List[str]:
-        return ["txt"]
+        return [""]
 
     @property
     def valid_output_file_types(self) -> List[str]:
-        return ["txt"]
+        return [""]
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
                           cosmetic_patches: deltaruneCosmeticPatches) -> dict:
@@ -161,7 +161,15 @@ class PatcherMaker(Patcher):
             ],
             "starting_conditions": starting_location_info
         }
-
+    def copyDir(folder: Path, to: Path):
+        for d in folder.iterdir():
+            if (d.is_file()):
+                Path(to.joinpath(d.name)).touch(exist_ok=True)
+                fl = Path(to.joinpath(d.name))
+                fl.write_bytes(d.read_bytes())
+            elif (d.is_dir()):
+                Path(to.joinpath(d.name)).mkdir(exist_ok=True)
+                PatcherMaker.copyDir(Path(folder.joinpath(d.name)),to.joinpath(d.name))
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    internal_copies_path: Path, progress_update: ProgressUpdateCallable):
         """
@@ -175,7 +183,11 @@ class PatcherMaker(Patcher):
         """
         
         self._busy = True
-        with output_file.open("w") as f:
+        import subprocess
+        print(str(input_file.joinpath("*")))
+        PatcherMaker.copyDir(input_file,output_file)
+        subprocess.run([str(Path(__file__).parent.joinpath("..","deltapatcher","xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(Path(__file__).parent.joinpath("..","deltapatcher","PATCH THIS.xdelta")),str(output_file.joinpath("data.win"))],check=True)
+        with Path(output_file).joinpath("Deltarune Randomizer Seed.txt").open("w") as f:
             for item in patch_data["pickups"]:
                 f.write(str(item["pickup_index"]))
                 f.write('\n')
