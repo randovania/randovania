@@ -629,14 +629,14 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to room_dark_chase1": {
+                        "Door to room_dark_eyepuzzle": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to room_dark_eyepuzzle": {
+                        "Event - Find Susie": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -663,7 +663,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
                     "connections": {
-                        "Spawn Point": {
+                        "Event - Find Susie": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -695,6 +695,44 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Find Susie": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1372.21,
+                        "y": 194.15,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Find Susie",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_dark_chase1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Find Susie",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -994,7 +1032,17 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Find Ralsei",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1104,6 +1152,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Find Ralsei": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -1124,6 +1179,27 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Find Ralsei": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 510.26,
+                        "y": 605.13,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Find Ralsei",
                     "connections": {
                         "Spawn Point": {
                             "type": "and",
@@ -1166,7 +1242,7 @@
                                 "items": []
                             }
                         },
-                        "Pickup (Manual0)": {
+                        "Event - Fight Dummy": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1340,11 +1416,49 @@
                     "pickup_index": 12,
                     "major_location": false,
                     "connections": {
+                        "Event - Fight Dummy": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Fight Dummy": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 917.78,
+                        "y": 303.42,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Fight Dummy",
+                    "connections": {
                         "Spawn Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Pickup (Manual0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Fight Dummy",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -1553,9 +1667,9 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 267.0,
-                        "y": 286.0,
-                        "z": 0.0
+                        "x": 278.4273504273504,
+                        "y": 145.36752136752136,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {},

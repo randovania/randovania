@@ -224,8 +224,10 @@ room_field_getsusie
 (Valid Starting Location)
 > Spawn Point; Heals? False; Spawn Point
   > Door to room_field_shop1
-      Trivial
+      After Get Susie
   > Door to room_field_puzzle2
+      Trivial
+  > Event - Get Susie
       Trivial
 
 > Door to room_field_shop1; Heals? False
@@ -235,6 +237,11 @@ room_field_getsusie
 
 > Door to room_field_puzzle2; Heals? False
   * Normal Door to room_field_puzzle2/Door to room_field_getsusie
+  > Spawn Point
+      Trivial
+
+> Event - Get Susie; Heals? False
+  * Event Get Susie
   > Spawn Point
       Trivial
 

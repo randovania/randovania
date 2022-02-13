@@ -1029,10 +1029,27 @@
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Get Susie\\",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to room_field_puzzle2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Get Susie": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1085,6 +1102,27 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Get Susie": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 398.77,
+                        "y": 229.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Get Susie\\",
                     "connections": {
                         "Spawn Point": {
                             "type": "and",
@@ -1492,8 +1530,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 760,
-                        "y": 240,
+                        "x": 365.3333333333333,
+                        "y": 210.66666666666669,
                         "z": 0
                     },
                     "description": "",
