@@ -11,12 +11,12 @@ class PresetTab(QtWidgets.QMainWindow):
         super().__init__()
         self._editor = editor
 
-    @property
-    def tab_title(self):
-        return self.windowTitle()
+    @classmethod
+    def tab_title(cls) -> str:
+        raise NotImplementedError()
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         raise NotImplementedError()
 
     def on_preset_changed(self, preset: Preset):

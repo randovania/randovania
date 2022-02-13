@@ -33,11 +33,11 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
         self._tabs = game_specific_gui.preset_editor_tabs_for(editor, window_manager)
 
         for extra_tab in self._tabs:
-            if extra_tab.uses_patches_tab:
+            if extra_tab.uses_patches_tab():
                 parent_tab = self.patches_tab_widget
             else:
                 parent_tab = self.logic_tab_widget
-            parent_tab.addTab(extra_tab, extra_tab.tab_title)
+            parent_tab.addTab(extra_tab, extra_tab.tab_title())
 
         self.name_edit.textEdited.connect(self._edit_name)
         self.button_box.accepted.connect(self.accept)

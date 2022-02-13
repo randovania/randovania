@@ -16,8 +16,12 @@ class PresetPrimeGoal(PresetTab, Ui_PresetPrimeGoal):
         self.goal_layout.setAlignment(QtCore.Qt.AlignTop)
         self.slider.valueChanged.connect(self._on_slider_changed)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Goal"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     def _update_editor(self):

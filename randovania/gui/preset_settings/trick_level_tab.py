@@ -100,8 +100,12 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
         self.trick_level_layout.addLayout(self.trick_difficulties_layout)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Trick Level"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     @property

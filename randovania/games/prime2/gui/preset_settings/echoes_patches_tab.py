@@ -16,8 +16,12 @@ class PresetEchoesPatches(PresetTab, Ui_PresetEchoesPatches):
         self.warp_to_start_check.stateChanged.connect(self._persist_option_then_notify("warp_to_start"))
         self.include_menu_mod_check.stateChanged.connect(self._persist_option_then_notify("include_menu_mod"))
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Other"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return True
 
     def on_preset_changed(self, preset: Preset):

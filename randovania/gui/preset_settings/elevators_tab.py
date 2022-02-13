@@ -75,15 +75,13 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
                 self.elevators_description_label.text().replace("elevator", "teleporter")
             )
 
-    @property
-    def uses_patches_tab(self) -> bool:
-        return True
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Elevators"
 
-    @property
-    def tab_title(self):
-        if self.game_enum == RandovaniaGame.METROID_PRIME_CORRUPTION:
-            return "Teleporters"
-        return self.windowTitle()
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
+        return True
 
     @property
     def game_enum(self):
