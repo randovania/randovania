@@ -10,7 +10,7 @@ def _gui() -> game.GameGui:
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.deltaruneCosmeticPatchesDialog,
         progressive_item_gui_tuples=tuple(),
-        input_file_text=("a data.win file", "the DELTARUNE", "data.win file"),
+        input_file_text=("the folder file", "of DELTARUNE", "folder"),
         spoiler_visualizer=tuple(),
     )
 
