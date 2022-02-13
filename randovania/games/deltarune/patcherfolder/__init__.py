@@ -57,6 +57,16 @@ def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -
     }
     return result
 
+def copyDir(folder: Path, to: Path):
+    for d in folder.iterdir():
+        if (d.is_file()):
+            Path(to.joinpath(d.name)).touch(exist_ok=True)
+            fl = Path(to.joinpath(d.name))
+            fl.write_bytes(d.read_bytes())
+        elif (d.is_dir()):
+            Path(to.joinpath(d.name)).mkdir(exist_ok=True)
+            copyDir(Path(folder.joinpath(d.name)),to.joinpath(d.name))
+
 class PatcherMaker(Patcher):
 
     @property
@@ -161,15 +171,6 @@ class PatcherMaker(Patcher):
             ],
             "starting_conditions": starting_location_info
         }
-    def copyDir(folder: Path, to: Path):
-        for d in folder.iterdir():
-            if (d.is_file()):
-                Path(to.joinpath(d.name)).touch(exist_ok=True)
-                fl = Path(to.joinpath(d.name))
-                fl.write_bytes(d.read_bytes())
-            elif (d.is_dir()):
-                Path(to.joinpath(d.name)).mkdir(exist_ok=True)
-                PatcherMaker.copyDir(Path(folder.joinpath(d.name)),to.joinpath(d.name))
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    internal_copies_path: Path, progress_update: ProgressUpdateCallable):
         """
@@ -185,9 +186,9 @@ class PatcherMaker(Patcher):
         self._busy = True
         import subprocess
         print(str(input_file.joinpath("*")))
-        Path(output_file.joinpath("Deltarune Randomizer")).mkdir(exist_ok=False)
+        Path(output_file.joinpath("Deltarune Randomizer")).mkdir(exist_ok=True)
         tomakepath = Path(output_file.joinpath("Deltarune Randomizer"))
-        PatcherMaker.copyDir(input_file,tomakepath)
+        copyDir(input_file,tomakepath)
         subprocess.run([str(Path(__file__).parent.joinpath("..","deltapatcher","xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(Path(__file__).parent.joinpath("..","deltapatcher","PATCH THIS.xdelta")),str(tomakepath.joinpath("data.win"))],check=True)
         with Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").open("w") as f:
             for item in patch_data["pickups"]:
