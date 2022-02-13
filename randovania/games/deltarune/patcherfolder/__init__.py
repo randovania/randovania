@@ -54,7 +54,7 @@ def deltarune_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDe
 
     return result
 
-def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int, detail: pickup_exporter.ExportedPickupDetails) -> dict:
+def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
     result = {
         "item_index": item.extra["item_id"],
         "quantity_given": quantity
@@ -170,7 +170,6 @@ class PatcherMaker(Patcher):
             ],
             "starting_items": [
                 deltarune_starting_items_to_patcher(item, qty, detail)
-                for detail in pickup_list
                 for item, qty in patches.starting_items.items()
             ],
             "starting_conditions": starting_location_info
