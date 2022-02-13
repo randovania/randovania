@@ -31,7 +31,10 @@ def deltarune_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDe
     hud_text = detail.hud_text[0]
     pickup_type = -1
     count = 0
-
+    prog = 0
+    
+    if len(detail.conditional_resources) > 1:
+        prog = 1
     for resource, quantity in detail.conditional_resources[0].resources:
         if resource.resource_type == ResourceType.ITEM and resource.extra["item_id"] >= 1000:
             continue
@@ -46,11 +49,12 @@ def deltarune_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDe
         "quantity_given": count,
         "pickup_index": detail.index.index,
         "owner_name": None,
+        "progressive": prog
     }
 
     return result
 
-def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -> dict:
+def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int, detail: pickup_exporter.ExportedPickupDetails) -> dict:
     result = {
         "item_index": item.extra["item_id"],
         "quantity_given": quantity
@@ -165,7 +169,8 @@ class PatcherMaker(Patcher):
                 for detail in pickup_list
             ],
             "starting_items": [
-                deltarune_starting_items_to_patcher(item, qty)
+                deltarune_starting_items_to_patcher(item, qty, detail)
+                for detail in pickup_list
                 for item, qty in patches.starting_items.items()
             ],
             "starting_conditions": starting_location_info
@@ -195,6 +200,8 @@ class PatcherMaker(Patcher):
                 f.write(str(item["pickup_index"]))
                 f.write('\n')
                 f.write(str(item["item_index"]))
+                f.write('\n')
+                f.write(str(item["progressive"]))
                 f.write('\n')
             for item in patch_data["starting_items"]:
                 f.write(str(item["item_index"]))

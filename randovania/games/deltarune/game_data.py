@@ -1,6 +1,7 @@
 from randovania.games import game
 from randovania.games.deltarune import generator, layout
 from randovania.games.deltarune import patcherfolder
+from randovania.games.deltarune.item_database import progressive_items
 
 
 def _gui() -> game.GameGui:
@@ -9,7 +10,7 @@ def _gui() -> game.GameGui:
     return game.GameGui(
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.deltaruneCosmeticPatchesDialog,
-        progressive_item_gui_tuples=tuple(),
+        progressive_item_gui_tuples=progressive_items.gui_tuples(),
         input_file_text=("the folder file", "of DELTARUNE", "folder"),
         spoiler_visualizer=tuple(),
     )
