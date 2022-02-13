@@ -5,6 +5,7 @@ from io import BytesIO
 from pathlib import Path
 from random import Random
 from typing import List, Optional
+from deltapatcher import deltpatcher
 
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
@@ -169,7 +170,7 @@ class PatcherMaker(Patcher):
                 for detail in pickup_list
             ],
             "starting_items": [
-                deltarune_starting_items_to_patcher(item, qty, detail)
+                deltarune_starting_items_to_patcher(item, qty)
                 for item, qty in patches.starting_items.items()
             ],
             "starting_conditions": starting_location_info
@@ -192,7 +193,8 @@ class PatcherMaker(Patcher):
         Path(output_file.joinpath("Deltarune Randomizer")).mkdir(exist_ok=True)
         tomakepath = Path(output_file.joinpath("Deltarune Randomizer"))
         copyDir(input_file,tomakepath)
-        subprocess.run([str(Path(__file__).parent.joinpath("..","deltapatcher","xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(Path(__file__).parent.joinpath("..","deltapatcher","PATCH THIS.xdelta")),str(tomakepath.joinpath("data.win"))],check=True)
+        print(deltpatcher.GetDeltaPath().joinpath("xdelta.exe"))
+        subprocess.run([str(deltpatcher.GetDeltaPath().joinpath("xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(deltpatcher.GetDeltaPath().joinpath("PATCH THIS.xdelta")),str(tomakepath.joinpath("data.win"))],check=True)
         Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").unlink(missing_ok=True)
         with Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").open("w") as f:
             for item in patch_data["pickups"]:
