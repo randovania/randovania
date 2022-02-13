@@ -61,10 +61,12 @@ room_field2
 (Valid Starting Location)
 > Spawn Point; Heals? False; Spawn Point
   > Door to room_field2A
-      Trivial
+      Field Secret Key
   > Door to room_field1
       Trivial
   > Door to room_field_topchef
+      Trivial
+  > Pickup (Field Secret Key)
       Trivial
 
 > Door to room_field2A; Heals? False
@@ -79,6 +81,11 @@ room_field2
 
 > Door to room_field_topchef; Heals? False
   * Normal Door to room_field_topchef/Door to room_field2
+  > Spawn Point
+      Trivial
+
+> Pickup (Field Secret Key); Heals? False
+  * Pickup 102; Major Location? False
   > Spawn Point
       Trivial
 
@@ -183,7 +190,7 @@ room_field_maze
   > Door to room_field_puzzle1
       Trivial
   > Pickup (White Ribbon0)
-      Trivial
+      Field Secret Key
 
 > Door to room_field_puzzle2; Heals? False
   * Normal Door to room_field_puzzle2/Door to room_field_maze
@@ -368,7 +375,7 @@ room_field_secret1
   > Door to room_field4
       Trivial
   > Pickup (Broken Key C0)
-      Trivial
+      Field Secret Key
 
 > Door to room_field4; Heals? False
   * Normal Door to room_field4/Door to room_field_secret1
