@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Nothing.
+- Changed: Reduce difficulty of Monitor Station -> Warrior Shrine NSJ/No Bombs to intermediate dash and standable terrain (from advanced dash and expert standable) and included a video.
 
 ### Metroid Prime 2: Echoes
 
