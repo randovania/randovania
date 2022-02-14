@@ -130,7 +130,10 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         player_pool = generator.create_player_pool(Random(0), self.game_configuration, 0, 1)
         pool_patches = player_pool.patches
-        self.game_description, self._initial_state = self.game_configuration.game.data.generator.bootstrap.logic_bootstrap(
+
+        bootstrap = self.game_configuration.game.data.generator().bootstrap
+
+        self.game_description, self._initial_state = bootstrap.logic_bootstrap(
             preset.configuration,
             player_pool.game,
             pool_patches)

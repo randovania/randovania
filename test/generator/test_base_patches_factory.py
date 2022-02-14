@@ -24,6 +24,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                      skip_final_bosses: bool,
                                                      default_layout_configuration):
     # Setup
+    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
     expected = dataclasses.replace(echoes_game_description.create_game_patches())
     if skip_final_bosses:
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
@@ -36,7 +37,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                                skip_final_bosses=skip_final_bosses))
 
     # Run
-    result = echoes_game_description.game.data.generator.base_patches_factory.add_elevator_connections_to_patches(
+    result = patches_factory.add_elevator_connections_to_patches(
         config,
         Random(0),
         echoes_game_description.create_game_patches())
@@ -50,6 +51,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
                                                     skip_final_bosses: bool,
                                                     default_layout_configuration):
     # Setup
+    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
     game = echoes_game_description
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
@@ -122,7 +124,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
         elevator_connection=elevator_connection)
 
     # Run
-    result = echoes_game_description.game.data.generator.base_patches_factory.add_elevator_connections_to_patches(
+    result = patches_factory.add_elevator_connections_to_patches(
         layout_configuration,
         Random(0),
         game.create_game_patches(),
@@ -137,6 +139,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
 
 def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, default_layout_configuration):
     # Setup
+    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
     scan_visor = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Scan Visor")
     emerald = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Emerald Translator")
 
@@ -155,7 +158,7 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
     rng = MagicMock()
 
     # Run
-    results = echoes_game_description.game.data.generator.base_patches_factory.configurable_node_assignment(
+    results = patches_factory.configurable_node_assignment(
         configuration, echoes_game_description, rng)
 
     # Assert
@@ -169,6 +172,7 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
 
 def test_gate_assignment_for_configuration_all_random(echoes_game_description, default_layout_configuration):
     # Setup
+    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
     scan_visor = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Scan Visor")
     violet = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Violet Translator")
     emerald = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Emerald Translator")
@@ -196,7 +200,7 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
     rng.choice.side_effect = choices * len(translator_configuration.translator_requirement)
 
     # Run
-    results = echoes_game_description.game.data.generator.base_patches_factory.configurable_node_assignment(
+    results = patches_factory.configurable_node_assignment(
         configuration, echoes_game_description, rng)
 
     # Assert
@@ -206,6 +210,7 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
 @pytest.mark.parametrize("is_multiworld", [False, True])
 def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is_multiworld):
     # Setup
+    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
     layout_configuration = MagicMock()
     layout_configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     rng = MagicMock()
@@ -259,7 +264,7 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is
     }
 
     # Run
-    result = echoes_game_description.game.data.generator.base_patches_factory.add_default_hints_to_patches(
+    result = patches_factory.add_default_hints_to_patches(
         layout_configuration, echoes_game_description,
         rng, empty_patches, echoes_game_description.world_list, num_joke=2, is_multiworld=is_multiworld)
 

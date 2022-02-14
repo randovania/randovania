@@ -1,12 +1,15 @@
 from typing import Dict, List
 
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.preset_describer import format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
     has_vanilla_item, message_for_required_mains
 
 
-def dread_format_params(configuration: DreadConfiguration) -> Dict[str, List[str]]:
+def dread_format_params(configuration: BaseConfiguration) -> dict[str, list[str]]:
+    assert isinstance(configuration, DreadConfiguration)
+
     major_items = configuration.major_items_configuration
 
     template_strings = format_params_base(configuration)
@@ -45,7 +48,7 @@ def dread_format_params(configuration: DreadConfiguration) -> Dict[str, List[str
 dread_expected_items = {"Missiles"}
 
 
-def dread_unexpected_items(configuration: MajorItemsConfiguration) -> List[str]:
+def dread_unexpected_items(configuration: MajorItemsConfiguration) -> set[str]:
     unexpected_items = dread_expected_items.copy()
 
     if not has_vanilla_item(configuration, "Hyper Beam"):

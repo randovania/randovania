@@ -1,22 +1,34 @@
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout
-from randovania.games.super_metroid.generator.item_pool.pool_creator import super_metroid_specific_pool
+from randovania.games import game
+from randovania.games.game import GameData, GameLayout
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 from randovania.games.super_metroid.patcher.super_duper_metroid_patcher import SuperDuperMetroidPatcher
-from randovania.generator.base_patches_factory import BasePatchesFactory
-from randovania.resolver.bootstrap import Bootstrap
 
 
-def _super_metroid_gui():
+def _gui() -> game.GameGui:
     from randovania.games.super_metroid.gui.dialog.super_cosmetic_patches_dialog import SuperCosmeticPatchesDialog
     from randovania.games.super_metroid.gui.preset_settings import super_metroid_preset_tabs
     from randovania.games.super_metroid.gui.super_metroid_help_widget import SuperMetroidHelpWidget
 
-    return GameGui(
+    return game.GameGui(
         tab_provider=super_metroid_preset_tabs,
         cosmetic_dialog=SuperCosmeticPatchesDialog,
         input_file_text=("an SFC/SMC file", "the Super Famicom/SNES", "SFC/SMC"),
         help_widget=lambda: SuperMetroidHelpWidget(),
+    )
+
+
+def _generator() -> game.GameGenerator:
+    from randovania.games.super_metroid.generator.item_pool.pool_creator import super_metroid_specific_pool
+    from randovania.resolver.bootstrap import Bootstrap
+    from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.generator.hint_distributor import AllJokesHintDistributor
+
+    return game.GameGenerator(
+        item_pool_creator=super_metroid_specific_pool,
+        bootstrap=Bootstrap(),
+        base_patches_factory=BasePatchesFactory(),
+        hint_distributor=AllJokesHintDistributor(),
     )
 
 
@@ -71,13 +83,9 @@ game_data: GameData = GameData(
         cosmetic_patches=SuperMetroidCosmeticPatches
     ),
 
-    gui=_super_metroid_gui,
+    gui=_gui,
 
-    generator=GameGenerator(
-        item_pool_creator=super_metroid_specific_pool,
-        bootstrap=Bootstrap(),
-        base_patches_factory=BasePatchesFactory()
-    ),
+    generator=_generator,
 
-    patcher=SuperDuperMetroidPatcher()
+    patcher=SuperDuperMetroidPatcher(),
 )

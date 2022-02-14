@@ -34,16 +34,18 @@ from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 def run_bootstrap(preset: Preset):
     game = default_database.game_description_for(preset.game).make_mutable_copy()
-    game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database,
-                                                                                        preset.configuration)
+    generator = game.game.data.generator()
+
+    game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database,
+                                                                         preset.configuration)
     permalink = GeneratorParameters(
         seed_number=15000,
         spoiler=True,
         presets=[preset],
     )
-    patches = game.game.data.generator.base_patches_factory.create_base_patches(preset.configuration, Random(15000),
-                                                                                game, False, player_index=0)
-    _, state = game.game.data.generator.bootstrap.logic_bootstrap(preset.configuration, game, patches)
+    patches = generator.base_patches_factory.create_base_patches(preset.configuration, Random(15000),
+                                                                 game, False, player_index=0)
+    _, state = generator.bootstrap.logic_bootstrap(preset.configuration, game, patches)
 
     return game, state, permalink
 
@@ -212,6 +214,8 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 def test_reach_size_from_start_echoes(small_echoes_game_description, default_layout_configuration):
     # Setup
     game: GameDescription = small_echoes_game_description
+    generator = game.game.data.generator()
+
     specific_levels = {
         trick.short_name: LayoutTrickLevel.maximum()
         for trick in game.resource_database.trick
@@ -238,10 +242,11 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
             game=RandovaniaGame.METROID_PRIME_ECHOES,
         )
     )
-    patches = game.game.data.generator.base_patches_factory.create_base_patches(layout_configuration, Random(15000),
-                                                                                game,
-                                                                                False, player_index=0)
-    state = game.game.data.generator.bootstrap.calculate_starting_state(game, patches, default_layout_configuration)
+    patches = generator.base_patches_factory.create_base_patches(
+        layout_configuration, Random(15000),
+        game,
+        False, player_index=0)
+    state = generator.bootstrap.calculate_starting_state(game, patches, default_layout_configuration)
     state.resources[item("Combat Visor")] = 1
     state.resources[item("Amber Translator")] = 1
     state.resources[item("Scan Visor")] = 1

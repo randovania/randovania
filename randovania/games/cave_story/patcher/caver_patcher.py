@@ -14,7 +14,7 @@ from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import LogbookNode
+from randovania.game_description.world.node import LogbookNode, PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
@@ -95,7 +95,8 @@ class CaverPatcher(Patcher):
         nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
         pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
-        for index in sorted(game_description.world_list._pickup_index_to_node.keys()):
+        for index in sorted(node.pickup_index for node in game_description.world_list.all_nodes
+                            if isinstance(node, PickupNode)):
             target = patches.pickup_assignment.get(index, nothing_item)
 
             if target.player != players_config.player_index:
