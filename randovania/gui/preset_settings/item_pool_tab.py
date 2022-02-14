@@ -29,9 +29,12 @@ from randovania.layout.preset import Preset
 from randovania.patching.prime.patcher_file_lib import item_names
 from randovania.resolver.exceptions import InvalidConfiguration
 
-_EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = ("For a total of {total} from this source."
-                                       "\n{from_items} will be provided from other sources."
-                                       "\n{maximum} is the maximum you can have at once.")
+_EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
+    "For a total of {total} from this source."
+    "\n{from_items} will be provided from other sources."
+    "\n{maximum} is the maximum you can have at once.\n"
+    "\nResources from sources like this are not considered by logic!"
+)
 
 
 def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
