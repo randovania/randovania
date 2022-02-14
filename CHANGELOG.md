@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: /randovania-faq command was added to the Discord bot, which sends FAQ messages.
 - Added: Randovania now checks if the entire database is strongly connected, allowing for manual exceptions.
 - Added: You can now configure the priority given to each major item. Higher values are more likely show up earlier in the progression chain.
+- Added: Generation failures now have a lot more details on what was missing for progression, facilitating finding issues with your preset.
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
 - Changed: Most command line arguments have been renamed.

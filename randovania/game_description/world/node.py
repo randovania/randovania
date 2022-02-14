@@ -94,7 +94,7 @@ class DockNode(Node):
     the door leads to.
 
     This is the default way a node connects to another area, expected to be used in every area and it implies the
-    areas are "phyisically" next to each other.
+    areas are "physically" next to each other.
 
     TeleporterNode is expected to be used exceptionally, where it can be reasonable to list all of them in the
     UI for user selection (elevator rando, for example).
