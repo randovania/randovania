@@ -8,7 +8,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import ResourceNode
+from randovania.game_description.world.node import ResourceNode, TeleporterNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import reach_lib
@@ -21,6 +21,7 @@ from randovania.generator.filler.pickup_list import (get_pickups_that_solves_unr
                                                      interesting_resources_for_reach, PickupCombinations)
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
+from randovania.patching.prime import elevators
 from randovania.resolver import debug
 from randovania.resolver.state import State
 
@@ -144,9 +145,50 @@ class PlayerState:
                        for resource in interesting_resources_for_reach(self.reach)
                        if resource.resource_type == ResourceType.ITEM}
 
-        return ("At {0} after {1} actions and {2} pickups, with {3} collected locations,"
-                " {6} nodes in reach and {7} safe nodes.\n\n"
-                "Pickups still available: {4}\n\nResources to progress: {5}").format(
+        wl = self.reach.game.world_list
+        s = self.reach.state
+
+        paths_to_be_opened = set()
+        for node, requirement in self.reach.unreachable_nodes_with_requirements().items():
+            for alternative in requirement.alternatives:
+                if any(r.negate or (r.resource.resource_type != ResourceType.ITEM
+                                    and not r.satisfied(s.resources, s.energy, self.game.resource_database))
+                       for r in alternative.values()):
+                    continue
+
+                paths_to_be_opened.add("* {}: {}".format(
+                    wl.node_name(node, with_world=True),
+                    " and ".join(sorted(
+                        r.pretty_text for r in alternative.values()
+                        if not r.satisfied(s.resources, s.energy, self.game.resource_database)
+                    ))
+                ))
+
+        teleporters = []
+        for node in wl.all_nodes:
+            if isinstance(node, TeleporterNode) and self.reach.is_reachable_node(node):
+                other = wl.resolve_teleporter_node(node, s.patches)
+                teleporters.append("* {} to {}".format(
+                    elevators.get_elevator_or_area_name(self.game.game, wl,
+                                                        wl.identifier_for_node(node).area_location, True),
+
+                    elevators.get_elevator_or_area_name(self.game.game, wl,
+                                                        wl.identifier_for_node(other).area_location, True)
+                    if other is not None else "<Not connected>",
+                ))
+
+        accessible_nodes = [
+            wl.node_name(n, with_world=True) for n in self.reach.all_nodes if self.reach.is_reachable_node(n)
+        ]
+
+        return (
+            "At {0} after {1} actions and {2} pickups, with {3} collected locations, {7} safe nodes.\n\n"
+            "Pickups still available: {4}\n\n"
+            "Resources to progress: {5}\n\n"
+            "Paths to be opened:\n{8}\n\n"
+            "Accessible teleporters:\n{9}\n\n"
+            "Reachable nodes:\n{6}"
+        ).format(
             self.game.world_list.node_name(self.reach.state.node, with_world=True, distinguish_dark_aether=True),
             self.num_actions,
             self.num_assigned_pickups,
@@ -154,8 +196,10 @@ class PlayerState:
             ", ".join(name if quantity == 1 else f"{name} x{quantity}"
                       for name, quantity in sorted(pickups_by_name_and_quantity.items())),
             ", ".join(sorted(to_progress)),
-            sum(1 for n in self.reach.all_nodes if self.reach.is_reachable_node(n)),
+            "\n".join(accessible_nodes) if len(accessible_nodes) < 15 else f"{len(accessible_nodes)} nodes total",
             sum(1 for n in self.reach.all_nodes if self.reach.is_safe_node(n)),
+            "\n".join(sorted(paths_to_be_opened)) or "None",
+            "\n".join(teleporters) or "None",
         )
 
 
