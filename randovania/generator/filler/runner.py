@@ -318,7 +318,7 @@ class FillerResults:
 
 
 async def run_filler(rng: Random,
-                     player_pools: Dict[int, PlayerPool],
+                     player_pools: list[PlayerPool],
                      status_update: Callable[[str], None],
                      ) -> FillerResults:
     """
@@ -333,9 +333,9 @@ async def run_filler(rng: Random,
     """
 
     player_states = []
-    player_expansions: Dict[int, List[PickupEntry]] = {}
+    player_expansions: dict[int, list[PickupEntry]] = {}
 
-    for index, pool in player_pools.items():
+    for index, pool in enumerate(player_pools):
         status_update(f"Creating state for player {index + 1}")
         if pool.configuration.multi_pickup_placement and False:
             major_items, player_expansions[index] = list(pool.pickups), []

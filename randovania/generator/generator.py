@@ -107,7 +107,7 @@ def _assign_remaining_items(rng: Random,
 
 
 async def _create_pools_and_fill(rng: Random,
-                                 presets: Dict[int, Preset],
+                                 presets: list[Preset],
                                  status_update: Callable[[str], None],
                                  ) -> FillerResults:
     """
@@ -117,14 +117,13 @@ async def _create_pools_and_fill(rng: Random,
     :param status_update:
     :return:
     """
-    player_pools: Dict[int, PlayerPool] = {}
+    player_pools: list[PlayerPool] = []
 
-    for player_index, player_preset in presets.items():
+    for player_index, player_preset in enumerate(presets):
         status_update(f"Creating item pool for player {player_index + 1}")
-        player_pools[player_index] = create_player_pool(rng, player_preset.configuration, player_index,
-                                                        len(presets))
+        player_pools.append(create_player_pool(rng, player_preset.configuration, player_index, len(presets)))
 
-    for player_pool in player_pools.values():
+    for player_pool in player_pools:
         _validate_item_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
 
     return await run_filler(rng, player_pools, status_update)
@@ -185,10 +184,10 @@ async def _create_description(generator_params: GeneratorParameters,
     """
     rng = Random(generator_params.as_bytes)
 
-    presets = {
-        i: generator_params.get_preset(i)
+    presets = [
+        generator_params.get_preset(i)
         for i in range(generator_params.player_count)
-    }
+    ]
 
     retrying = tenacity.AsyncRetrying(
         stop=tenacity.stop_after_attempt(attempts),
