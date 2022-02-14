@@ -61,7 +61,6 @@ def deltarune_starting_items_to_patcher(item: ItemResourceInfo, quantity: int) -
         "item_index": item.extra["item_id"],
         "quantity_given": quantity
     }
-    print(str(item.extra["item_id"]))
     return result
 
 def copyDir(folder: Path, to: Path):
@@ -192,13 +191,11 @@ class PatcherMaker(Patcher):
         
         self._busy = True
         import subprocess
-        print(str(input_file.joinpath("*")))
         new_config = copy.copy(patch_data)
         my_seed = new_config.pop("description")
         Path(output_file.joinpath("Deltarune Randomizer " + my_seed)).mkdir(exist_ok=True)
         tomakepath = Path(output_file.joinpath("Deltarune Randomizer " + my_seed))
         copyDir(input_file,tomakepath)
-        print(deltpatcher.GetDeltaPath().joinpath("xdelta.exe"))
         subprocess.run([str(deltpatcher.GetDeltaPath().joinpath("xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(deltpatcher.GetDeltaPath().joinpath("PATCH THIS.xdelta")),str(tomakepath.joinpath("data.win"))],check=True)
         Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").unlink(missing_ok=True)
         has_spoiler = new_config.pop("hasSpoiler")
