@@ -1,0 +1,370 @@
+{
+    "schema_version": 8,
+    "game": "prime2",
+    "resource_database": {
+        "items": {
+            "Light": {
+                "long_name": "Light Beam",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 2
+                }
+            },
+            "SpaceJump": {
+                "long_name": "Space Jump Boots",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 24
+                }
+            },
+            "ScanVisor": {
+                "long_name": "Scan Visor",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 30
+                }
+            },
+            "LightAmmo": {
+                "long_name": "Light Ammo",
+                "max_capacity": 1,
+                "extra": {
+                    "item_id": 46
+                }
+            }
+        },
+        "events": {
+            "Event1": {
+                "long_name": "First Event",
+                "extra": {}
+            }
+        },
+        "tricks": {},
+        "damage": {},
+        "versions": {},
+        "misc": {},
+        "requirement_template": {},
+        "damage_reductions": [],
+        "energy_tank_item_index": "EnergyTank",
+        "item_percentage_index": "Percent",
+        "multiworld_magic_item_index": "Multiworld"
+    },
+    "starting_location": {
+        "world_name": "Temple Grounds",
+        "area_name": "Landing Site"
+    },
+    "initial_states": {
+        "Default": [
+            {
+                "resource_type": "items",
+                "resource_name": "SpaceJump",
+                "amount": 1
+            }
+        ],
+        "Item Loss Disabled": [
+            {
+                "resource_type": "items",
+                "resource_name": "Light",
+                "amount": 1
+            },
+            {
+                "resource_type": "items",
+                "resource_name": "SpaceJump",
+                "amount": 1
+            }
+        ]
+    },
+    "minimal_logic": null,
+    "victory_condition": {
+        "type": "or",
+        "data": {
+            "comment": null,
+            "items": [
+                {
+                    "type": "and",
+                    "data": {
+                        "comment": null,
+                        "items": [
+                            {
+                                "type": "resource",
+                                "data": {
+                                    "type": "events",
+                                    "name": "Event1",
+                                    "amount": 3,
+                                    "negate": false
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "dock_weakness_database": {
+        "types": {
+            "door": {
+                "name": "Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "Permanently Locked": {
+                        "lock_type": 1,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            },
+            "portal": {
+                "name": "Portal",
+                "extra": {},
+                "items": {
+                    "Scan Portal": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": []
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "morph_ball": {
+                "name": "Morph Ball Door",
+                "extra": {},
+                "items": {}
+            },
+            "other": {
+                "name": "Other",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "default_weakness": {
+            "type": "other",
+            "name": "Not Determined"
+        }
+    },
+    "worlds": [
+        {
+            "name": "Temple Grounds",
+            "extra": {
+                "asset_id": 1006255871,
+                "dark_name": "Sky Temple Grounds"
+            },
+            "areas": {
+                "Landing Site": {
+                    "default_node": "Save Station",
+                    "valid_starting_location": true,
+                    "extra": {
+                        "asset_id": 1655756413,
+                        "in_dark_aether": false
+                    },
+                    "nodes": {
+                        "Save Station": {
+                            "node_type": "generic",
+                            "heal": true,
+                            "coordinates": {
+                                "x": -224.33,
+                                "y": 113.81,
+                                "z": -9.39
+                            },
+                            "description": "",
+                            "extra": {},
+                            "connections": {
+                                "Door to Service Access": {
+                                    "type": "or",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "and",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": [
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "Light",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "resource",
+                                                            "data": {
+                                                                "type": "items",
+                                                                "name": "SpaceJump",
+                                                                "amount": 1,
+                                                                "negate": false
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "Door to Service Access": {
+                            "node_type": "dock",
+                            "heal": true,
+                            "coordinates": {
+                                "x": 224.33,
+                                "y": 1113.81,
+                                "z": -9.3923
+                            },
+                            "description": "",
+                            "extra": {
+                                "dock_index": 0
+                            },
+                            "destination": {
+                                "world_name": "Temple Grounds",
+                                "area_name": "Service Access",
+                                "node_name": "Door to Landing Site"
+                            },
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
+                            "connections": {
+                                "Save Station": {
+                                    "type": "or",
+                                    "data": {
+                                        "comment": null,
+                                        "items": [
+                                            {
+                                                "type": "and",
+                                                "data": {
+                                                    "comment": null,
+                                                    "items": []
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "Service Access": {
+                    "default_node": "Door to Landing Site",
+                    "valid_starting_location": true,
+                    "extra": {
+                        "asset_id": 2679590972,
+                        "in_dark_aether": false
+                    },
+                    "nodes": {
+                        "Door to Landing Site": {
+                            "node_type": "dock",
+                            "heal": true,
+                            "coordinates": null,
+                            "description": "",
+                            "extra": {
+                                "dock_index": 0
+                            },
+                            "destination": {
+                                "world_name": "Temple Grounds",
+                                "area_name": "Landing Site",
+                                "node_name": "Door to Service Access"
+                            },
+                            "dock_type": "door",
+                            "dock_weakness": "Normal Door",
+                            "connections": {}
+                        },
+                        "Luminoth Lore": {
+                            "node_type": "logbook",
+                            "heal": true,
+                            "coordinates": null,
+                            "description": "",
+                            "extra": {
+                                "translator": "ScanVisor"
+                            },
+                            "string_asset_id": 1000,
+                            "lore_type": "requires-item",
+                            "connections": {}
+                        },
+                        "Luminoth Warrior": {
+                            "node_type": "logbook",
+                            "heal": true,
+                            "coordinates": null,
+                            "description": "",
+                            "extra": {
+                                "hint_index": 2
+                            },
+                            "string_asset_id": 2000,
+                            "lore_type": "specific-pickup",
+                            "connections": {}
+                        },
+                        "Pirate Lore": {
+                            "node_type": "logbook",
+                            "heal": true,
+                            "coordinates": null,
+                            "description": "",
+                            "extra": {},
+                            "string_asset_id": 3000,
+                            "lore_type": "generic",
+                            "connections": {}
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

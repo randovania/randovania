@@ -1,0 +1,233 @@
+{
+  "permalink": "OsuU2FuscACy",
+  "__comment_permalink": "The permalink used for this seed. Variable size.",
+
+  "seed_hash": "LLADBP4K",
+  "__comment_seed_hash": "The seed hash that can be used to compare if all changes are the same. Always 8 characters long.",
+
+  "menu_mod": true,
+  "__comment_menu_mod": "If menu mod should be added to the game",
+
+  "user_preferences": {
+      "sound_mode": 1,
+      "screen_brightness": 4,
+      "screen_x_offset": 0,
+      "screen_y_offset": 0,
+      "screen_stretch": 0,
+      "sfx_volume": 105,
+      "music_volume": 79,
+      "hud_alpha": 255,
+      "helmet_alpha": 0,
+      "hud_lag": false,
+      "invert_y_axis": false,
+      "rumble": false,
+      "hint_system": false
+  },
+  "__comment_user_preferences": "Overwrite the default values for the in-game options",
+
+  "spawn_point": {
+    "location": {
+      "world_asset_id": 1006255871,
+      "area_asset_id": 494654382
+    },
+    "amount": [
+      {
+        "index": 0,
+        "amount": 1
+      },
+      {
+        "index": 8,
+        "amount": 1
+      },
+      {
+        "index": 9,
+        "amount": 1
+      }
+    ],
+    "capacity": [
+      {
+        "index": 0,
+        "amount": 1
+      },
+      {
+        "index": 8,
+        "amount": 1
+      },
+      {
+        "index": 9,
+        "amount": 1
+      }
+    ]
+  },
+
+  "starting_popup": [
+    "Hello girl, I see you like these items:\nSpider Ball, Screw Attack"
+  ],
+  "__comment_starting_popup": "If not missing, should show a popup with the given message as soon as the game starts",
+
+  "docks": [
+    {
+      "location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+
+      "dock_index": 0,
+      "__comment_dock_index": "To identify which dock in the area. Would use the same number than in the logic data",
+
+      "connected_area_asset_id": 1655756413,
+
+      "connected_dock_index": 0,
+      "__comment_connected_dock_index": "The type of the connected dock should match this",
+
+      "dock_weakness_type": 1,
+      "__comment_weakness_type": "Would be an index of the 'Door Weakness' in logic data"
+    }
+  ],
+
+  "pickups": [
+    {
+      "pickup_index": 0,
+      "__comment_pickup_index": "For when an area has more than one pickup. Alternatively, remove the `location` field and this uses the same index number there currently is.",
+
+      "model_index": 1234,
+      "__comment_model_index": "An index of the ModelData array in RandomizerData.json.",
+
+      "scan": "This is a description.",
+      "__comment_scan": "Text that is displayed when the pickup is scanned.",
+
+      "hud_text": [
+        "Text that is displayed when the item is collected.",
+        "Other text that is displayed when the second conditional resource is collected."
+      ],
+
+      "__comment_resources": "The items this pickup gives.",
+      "resources": [
+        {
+          "index": 0,
+          "amount": 1
+        },
+        {
+          "index": 8,
+          "amount": 1
+        }
+      ],
+
+      "__comment_conditional_resources": "Conditional resource provider. The resources given are the last item that matches. If none matches, give the unconditional resources instead.",
+      "conditional_resources": [
+        {
+          "item": 15,
+          "__comment_index": "The index of the item to check for quantity > 0.",
+
+          "resources": [
+            {
+              "index": 0,
+              "amount": 1
+            },
+            {
+              "index": 8,
+              "amount": 1
+            }
+          ]
+        }
+      ],
+
+      "__comment_convert": "Converts all items from one value into another",
+      "convert": [
+        {
+          "from_item": 14,
+          "__comment_from_item": "The item index we're getting how much to transfer",
+
+          "to_item": 15,
+          "__comment_to_item": "The item index that will receive the quantities",
+
+          "clear_source": false,
+          "__comment_clear_source": "The origin item should be left at 0 after this if true, left intact otherwise",
+
+          "overwrite_target": false,
+          "__comment_overwrite_target": "The original quantity of the target item should be ignored if true"
+        }
+      ]
+    }
+  ],
+  "__comment_pickups": "An error is raised if there's a pickup missing from the list.",
+
+  "elevators": [
+    {
+      "origin_location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+      "target_location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+      "__comment_target_location": "This location does not necessarily contains an elevator.",
+      "room_name": "Transport to Somewhere Else"
+    }
+  ],
+  "__comment_elevators": "An error is raised if there's an elevator missing from the list.",
+
+  "translator_gates": [
+    {
+      "gate_index": 0,
+      "__comment_gate_index": "For when an area has more than one gate",
+
+      "translator_index": 12,
+      "__comment_translator_index": "The item index of the translator needed. The gate's color is updated accordingly."
+    }
+  ],
+
+  "area_patches": [
+    {
+      "location": {
+        "world_asset_id": 1006255871,
+        "area_asset_id": 1536348486
+      },
+      "starting_layer": 123,
+      "__comment_starting_layer": "The idea would be a generic API that allows for things like 'Disable IL cutscene in Hive Chamber B'. If this isn't that usable, see `specific_patches`"
+    }
+  ],
+
+  "string_patches": [
+    {
+      "asset_id": 12341234,
+      "strings": [
+        "Hello world!",
+        "This is not colored &push;&main-color=#784784;This is colored&pop; also not colored"
+      ]
+    }
+  ],
+
+  "specific_patches": {
+    "hive_chamber_b_post_state": true,
+    "__comment_hive_chamber_b_post_state": "Current IL removal code.",
+
+    "intro_in_post_state": true,
+    "__comment_intro_in_post_state": "The rooms between Ship and Hive Chamber B are in the state they would be after the player goes through then",
+
+    "warp_to_start": true,
+    "__comment_warp_to_start": "Adds a user-activated tool that warps the player to Ship (or where the player started this game). Could be from Save Stations or anywhere similar to Menu Mod.",
+
+    "speed_up_credits": true,
+    "__comment_speed_up_credits": "Speeds up the credits scene.",
+
+    "disable_hud_popup": true,
+    "__comment_disable_hud_popup": "Removes the Popup when picking an item",
+
+    "pickup_map_icons": true,
+    "__comment_pickup_map_icons": "Replace translator gates with markers for where uncollected pickups are",
+
+    "full_map_at_start": true,
+    "__comment_full_map_at_start": "Have the map open (as in used a map station) right off the start",
+
+    "always_up_gfmc_compound": true,
+    "__comment_always_up_gfmc_compound": "The translator gate in GFMC Compound is up before the cutscene",
+
+    "always_up_torvus_temple": true,
+    "__comment_always_up_torvus_temple": "The translator gate in Torvus Temple is up before the pirate fight,",
+
+    "always_up_great_temple": true,
+    "__comment_always_up_great_temple": "The emerald translator gate in Great Temple is up before the Alpha Splinter fight, unless you enter Great Temple from Temple Transport A"
+  }
+}

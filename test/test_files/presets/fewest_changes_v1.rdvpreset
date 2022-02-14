@@ -1,0 +1,101 @@
+{
+    "schema_version": 1,
+    "name": "Fewest Changes",
+    "description": "This preset keeps the game as close as possible to how the original game operates. Only crashes are fixed.",
+    "base_preset_name": null,
+    "patcher_configuration": {
+        "menu_mod": false,
+        "warp_to_start": false,
+        "varia_suit_damage": 6.0,
+        "dark_suit_damage": 1.2,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm"
+    },
+    "layout_configuration": {
+        "game": "mp2-echoes",
+        "trick_level": {
+            "global_level": "trivial",
+            "specific_levels": {
+                "0": "easy"
+            }
+        },
+        "damage_strictness": 1.5,
+        "sky_temple_keys": 9,
+        "elevators": "vanilla",
+        "starting_location": [
+            "Temple Grounds/Landing Site"
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "major_items_configuration": {
+            "items_state": {},
+            "progressive_suit": false,
+            "progressive_grapple": false,
+            "minimum_random_starting_items": 0,
+            "maximum_random_starting_items": 0
+        },
+        "ammo_configuration": {
+            "maximum_ammo": {
+                "44": 255,
+                "43": 10,
+                "45": 250,
+                "46": 250
+            },
+            "items_state": {
+                "Missile Expansion": {
+                    "variance": 0,
+                    "pickup_count": 49,
+                    "requires_major_item": false
+                },
+                "Power Bomb Expansion": {
+                    "variance": 0,
+                    "pickup_count": 8,
+                    "requires_major_item": false
+                },
+                "Dark Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 0,
+                    "requires_major_item": true
+                },
+                "Light Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 0,
+                    "requires_major_item": true
+                },
+                "Beam Ammo Expansion": {
+                    "variance": 0,
+                    "pickup_count": 4,
+                    "requires_major_item": true
+                }
+            }
+        },
+        "translator_configuration": {
+            "translator_requirement": {
+                "0": "violet",
+                "1": "violet",
+                "2": "violet",
+                "3": "violet",
+                "4": "amber",
+                "5": "violet",
+                "6": "violet",
+                "7": "violet",
+                "8": "amber",
+                "9": "emerald",
+                "10": "amber",
+                "11": "amber",
+                "12": "emerald",
+                "13": "emerald",
+                "14": "emerald",
+                "15": "cobalt",
+                "16": "cobalt"
+            }
+        },
+        "hints": {
+            "item_hints": true,
+            "sky_temple_keys": "precise"
+        },
+        "split_beam_ammo": false
+    }
+}
