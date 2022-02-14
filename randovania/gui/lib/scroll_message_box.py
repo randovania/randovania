@@ -32,6 +32,12 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
 
         old_label.setText('')
 
+    def text(self) -> str:
+        return self.label.text()
+
+    def setText(self, text:str) -> None:
+        self.label.setText(text)
+
     @classmethod
     def create_new(
             cls,
