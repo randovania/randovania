@@ -13,8 +13,8 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
-from randovania.games.deltarune.layout.deltarune_configuration import deltaruneConfiguration
-from randovania.games.deltarune.layout.deltarune_cosmetic_patches import deltaruneCosmeticPatches
+from randovania.games.deltarune.layout.deltarune_configuration import DeltaruneConfiguration
+from randovania.games.deltarune.layout.deltarune_cosmetic_patches import DeltaruneCosmeticPatches
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -129,7 +129,7 @@ class PatcherMaker(Patcher):
         return [""]
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                          cosmetic_patches: deltaruneCosmeticPatches) -> dict:
+                          cosmetic_patches: DeltaruneCosmeticPatches) -> dict:
         """
         Creates a JSON serializable dict that can be used to patch the game.
         Intended to be ran on the server for multiworld.
@@ -138,7 +138,7 @@ class PatcherMaker(Patcher):
         patches = description.all_patches[players_config.player_index]
         db = default_database.game_description_for(RandovaniaGame.DELTARUNE)
         preset = description.get_preset(players_config.player_index)
-        configuration = typing.cast(deltaruneConfiguration, preset.configuration)
+        configuration = typing.cast(DeltaruneConfiguration, preset.configuration)
         rng = Random(description.get_seed_for_player(players_config.player_index))
         
         if players_config.is_multiworld:
@@ -174,7 +174,7 @@ class PatcherMaker(Patcher):
                 for item, qty in patches.starting_items.items()
             ],
             "starting_conditions": starting_location_info,
-            "hasSpoiler": description.has_spoiler,
+            "has_spoiler": description.has_spoiler,
             "description": "{}".format(description.shareable_word_hash)
         }
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
@@ -198,7 +198,7 @@ class PatcherMaker(Patcher):
         copyDir(input_file,tomakepath)
         subprocess.run([str(deltpatcher.GetDeltaPath().joinpath("xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(deltpatcher.GetDeltaPath().joinpath("PATCH THIS.xdelta")),str(tomakepath.joinpath("data.win"))],check=True)
         Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").unlink(missing_ok=True)
-        has_spoiler = new_config.pop("hasSpoiler")
+        has_spoiler = new_config.pop("has_spoiler")
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:
             Path(tomakepath).joinpath("Deltarune Randomizer "+my_seed+"-patcher.json").write_text(patch_as_str)

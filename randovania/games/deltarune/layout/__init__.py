@@ -1,2 +1,2 @@
-from randovania.games.deltarune.layout.deltarune_configuration import deltaruneConfiguration
-from randovania.games.deltarune.layout.deltarune_cosmetic_patches import deltaruneCosmeticPatches
+from randovania.games.deltarune.layout.deltarune_configuration import DeltaruneConfiguration
+from randovania.games.deltarune.layout.deltarune_cosmetic_patches import DeltaruneCosmeticPatches

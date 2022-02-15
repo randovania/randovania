@@ -9,7 +9,7 @@ def _gui() -> game.GameGui:
 
     return game.GameGui(
         tab_provider=gui.preset_tabs,
-        cosmetic_dialog=gui.deltaruneCosmeticPatchesDialog,
+        cosmetic_dialog=gui.DeltaruneCosmeticPatchesDialog,
         progressive_item_gui_tuples=progressive_items.gui_tuples(),
         input_file_text=("the folder file", "of DELTARUNE", "folder"),
         spoiler_visualizer=tuple(),
@@ -17,8 +17,8 @@ def _gui() -> game.GameGui:
 
 
 game_data: game.GameData = game.GameData(
-    short_name="Deltarune",
-    long_name="Deltarune",
+    short_name="DELTARUNE",
+    long_name="DELTARUNE",
     experimental=True,
 
     presets=[
@@ -30,8 +30,8 @@ game_data: game.GameData = game.GameData(
     faq=[],
 
     layout=game.GameLayout(
-        configuration=layout.deltaruneConfiguration,
-        cosmetic_patches=layout.deltaruneCosmeticPatches,
+        configuration=layout.DeltaruneConfiguration,
+        cosmetic_patches=layout.DeltaruneCosmeticPatches,
     ),
 
     gui=_gui,
@@ -39,7 +39,7 @@ game_data: game.GameData = game.GameData(
     generator=game.GameGenerator(
         item_pool_creator=generator.pool_creator,
         bootstrap=generator.deltaruneBootstrap(),
-        base_patches_factory=generator.deltaruneBasePatchesFactory(),
+        base_patches_factory=generator.DeltaruneBasePatchesFactory(),
     ),
 
     patcher=patcherfolder.PatcherMaker(),

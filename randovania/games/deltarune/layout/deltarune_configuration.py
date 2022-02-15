@@ -5,7 +5,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 
 
 @dataclasses.dataclass(frozen=True)
-class deltaruneConfiguration(BaseConfiguration):
+class DeltaruneConfiguration(BaseConfiguration):
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

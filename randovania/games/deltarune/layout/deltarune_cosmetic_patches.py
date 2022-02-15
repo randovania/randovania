@@ -5,7 +5,7 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 
 @dataclasses.dataclass(frozen=True)
-class deltaruneCosmeticPatches(BaseCosmeticPatches):
+class DeltaruneCosmeticPatches(BaseCosmeticPatches):
     @classmethod
     def game(cls):
         return RandovaniaGame.DELTARUNE
