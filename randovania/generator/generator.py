@@ -12,6 +12,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, UnableToGenerate
 from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
+from randovania.generator.hint_distributor import PreFillParams
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -31,15 +32,25 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
                 len(item_pool), game.world_list.num_pickup_nodes, min_starting_items))
 
 
-def create_player_pool(rng: Random, configuration: BaseConfiguration,
-                       player_index: int, num_players: int) -> PlayerPool:
+async def create_player_pool(rng: Random, configuration: BaseConfiguration,
+                             player_index: int, num_players: int) -> PlayerPool:
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
-    game.resource_database = game.game.data.generator.bootstrap.patch_resource_database(game.resource_database,
-                                                                                        configuration)
+    game_generator = game.game.data.generator()
+    game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
-    base_patches = game.game.data.generator.base_patches_factory.create_base_patches(configuration, rng, game,
-                                                                                     num_players > 1,
-                                                                                     player_index=player_index)
+    base_patches = game_generator.base_patches_factory.create_base_patches(configuration, rng, game,
+                                                                           num_players > 1,
+                                                                           player_index=player_index)
+
+    base_patches = await game_generator.hint_distributor.assign_pre_filler_hints(
+        base_patches,
+        PreFillParams(
+            rng,
+            configuration,
+            game,
+            num_players > 1,
+        )
+    )
 
     item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,
                                                                                       game.resource_database,
@@ -53,6 +64,7 @@ def create_player_pool(rng: Random, configuration: BaseConfiguration,
 
     return PlayerPool(
         game=game,
+        game_generator=game_generator,
         configuration=configuration,
         patches=patches,
         pickups=item_pool,
@@ -107,7 +119,7 @@ def _assign_remaining_items(rng: Random,
 
 
 async def _create_pools_and_fill(rng: Random,
-                                 presets: Dict[int, Preset],
+                                 presets: list[Preset],
                                  status_update: Callable[[str], None],
                                  ) -> FillerResults:
     """
@@ -117,14 +129,13 @@ async def _create_pools_and_fill(rng: Random,
     :param status_update:
     :return:
     """
-    player_pools: Dict[int, PlayerPool] = {}
+    player_pools: list[PlayerPool] = []
 
-    for player_index, player_preset in presets.items():
+    for player_index, player_preset in enumerate(presets):
         status_update(f"Creating item pool for player {player_index + 1}")
-        player_pools[player_index] = create_player_pool(rng, player_preset.configuration, player_index,
-                                                        len(presets))
+        player_pools.append(await create_player_pool(rng, player_preset.configuration, player_index, len(presets)))
 
-    for player_pool in player_pools.values():
+    for player_pool in player_pools:
         _validate_item_pool_size(player_pool.pickups, player_pool.game, player_pool.configuration)
 
     return await run_filler(rng, player_pools, status_update)
@@ -185,10 +196,10 @@ async def _create_description(generator_params: GeneratorParameters,
     """
     rng = Random(generator_params.as_bytes)
 
-    presets = {
-        i: generator_params.get_preset(i)
+    presets = [
+        generator_params.get_preset(i)
         for i in range(generator_params.player_count)
-    }
+    ]
 
     retrying = tenacity.AsyncRetrying(
         stop=tenacity.stop_after_attempt(attempts),

@@ -11,8 +11,8 @@ from randovania.resolver.bootstrap import MetroidBootstrap
 
 
 class PrimeBootstrap(MetroidBootstrap):
-    def _get_enabled_misc_resources(self, configuration: BaseConfiguration, resource_database: ResourceDatabase) -> set[
-        str]:
+    def _get_enabled_misc_resources(self, configuration: BaseConfiguration,
+                                    resource_database: ResourceDatabase) -> set[str]:
         enabled_resources = set()
 
         logical_patches = {

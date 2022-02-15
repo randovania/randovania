@@ -13,6 +13,10 @@ from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFac
 
 
 class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
+    @property
+    def num_joke_hints(self) -> int:
+        return 0
+
     def configurable_node_assignment(self, configuration: DreadConfiguration, game: GameDescription,
                                      rng: Random) -> NodeConfigurationAssignment:
         result = {}

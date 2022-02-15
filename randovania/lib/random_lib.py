@@ -1,5 +1,5 @@
 from random import Random
-from typing import Iterator, List, TypeVar, Dict, Any
+from typing import Iterator, List, TypeVar, Dict, Any, Callable
 
 T = TypeVar('T')
 
@@ -50,3 +50,21 @@ def select_element_with_weight(weighted_items: Dict[T, float], rng: Random) -> T
 
 def random_key(d: Dict[T, Any], rng: Random) -> T:
     return rng.choice(list(d.keys()))
+
+
+def create_weighted_list(rng: Random,
+                         current: List[T],
+                         factory: Callable[[], List[T]],
+                         ) -> List[T]:
+    """
+    Ensures we always have a non-empty list.
+    :param rng:
+    :param current:
+    :param factory:
+    :return:
+    """
+    if not current:
+        current = factory()
+        rng.shuffle(current)
+
+    return current
