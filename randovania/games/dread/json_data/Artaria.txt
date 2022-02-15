@@ -249,6 +249,10 @@ Extra - asset_id: collision_camera_002
   > Door to Charge Tutorial
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Charge Tutorial
+      Trivial
+
 ----------------
 Melee Tutorial Room
 (Valid Starting Location)
@@ -316,28 +320,28 @@ Extra - asset_id: collision_camera_003
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Pickup (Missile Tank 2)
+  > East of Blob
       Trivial
 
 > Pickup (Missile Tank 2); Heals? False
   * Pickup 31; Major Location? False
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Door to Proto EMMI Introduction
-      Trivial
-  > Start Point
+  > East of Blob
       Trivial
 
 > Event - Proto EMMI Blob (East Side); Heals? False
   * Event Artaria - Proto EMMI Blob
   * Extra - actor_name: PRP_DB_CV_014
   * Extra - actor_def: actordef:actors/props/breakablecave014/charclasses/breakablecave014.bmsad
-  > Start Point
+  > East of Blob
       Trivial
 
-> Start Point; Heals? False; Spawn Point
+> East of Blob; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_ProtoEmmy
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Proto EMMI Introduction
+      Trivial
   > Pickup (Missile Tank 2)
       Trivial
   > West of Blob
@@ -368,14 +372,14 @@ Extra - asset_id: collision_camera_003
   > West of Blob
       Trivial
 
-> West of Blob; Heals? False
+> West of Blob; Heals? False; Spawn Point
   > Door from Proto EMMI Introduction
       Trivial
   > Door to Save Station South
       After Artaria - Proto EMMI Blob
   > Event - Proto EMMI Blob (East Side)
       Before Artaria - Proto EMMI Blob and Can Slide
-  > Start Point
+  > East of Blob
       Morph Ball and After Artaria - Proto EMMI Blob
   > Event - Proto EMMI Blob (West Side)
       Wave Beam or Pseudo-Wave Beam (Beginner) or Shoot Diffusion Beam
@@ -680,7 +684,7 @@ Extra - asset_id: collision_camera_006
   > Warp from Entrance
       Trivial
 
-> Warp from Entrance; Heals? False
+> Warp from Entrance; Heals? False; Spawn Point
   > Event - First Chase Blob
       Trivial
 
@@ -789,7 +793,7 @@ Extra - asset_id: collision_camera_008
   > Teleporter to Dairon - Teleport to Artaria
       Trivial
 
-> Teleporter to Dairon - Teleport to Artaria; Heals? False; Spawn Point
+> Teleporter to Dairon - Teleport to Artaria; Heals? False
   * Teleporter to Dairon - Teleport to Artaria
   * Extra - actor_name: teleport_baselab_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
@@ -850,6 +854,10 @@ Extra - asset_id: collision_camera_008
   * Morph Ball Tunnel to EMMI Zone Exit North/Tunnel to Teleport to Dairon
   > Dock to Arbitrary Enky Room (DoorEmmy07)
       Movement (Beginner)
+
+> Start Point; Heals? False; Spawn Point
+  > Dock to Arbitrary Enky Room (DoorEmmy07)
+      Trivial
 
 ----------------
 EMMI Zone Exit North
@@ -1133,7 +1141,7 @@ Extra - asset_id: collision_camera_011
       Any of the following:
           Space Jump or Infinite Bomb Jump (Intermediate)
           Gravity Suit and Simple IBJ
-  > Under Teleporter
+  > Start Point
       Trivial
 
 > Pickup (Missile Tank, Underwater); Heals? False
@@ -1147,7 +1155,7 @@ Extra - asset_id: collision_camera_011
   * EMMI Door to EMMI Zone Exit Northwest/Dock to Teleport to Cataris
   * Extra - actor_name: DoorEmmy03
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Under Teleporter
+  > Start Point
       Trivial
 
 > Pickup (Missile Tank, Supers-locked); Heals? False
@@ -1209,7 +1217,7 @@ Extra - asset_id: collision_camera_011
   > Tile Group (BOMB) 1
       Morph Ball and After Artaria - Early SA Shortcut Blob
 
-> Teleporter to Cataris - Teleport to Artaria (Red); Heals? False; Spawn Point
+> Teleporter to Cataris - Teleport to Artaria (Red); Heals? False
   * Teleporter to Cataris - Teleport to Artaria (Red)
   * Extra - actor_name: LE_Teleport_FromMagma
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
@@ -1225,7 +1233,7 @@ Extra - asset_id: collision_camera_011
       All of the following:
           Morph Ball
           After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
-  > Under Teleporter
+  > Start Point
       All of the following:
           Can Slide
           After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
@@ -1238,7 +1246,7 @@ Extra - asset_id: collision_camera_011
   * Extra - tile_types: ('MISSILE',)
   > Pickup (Missile Tank, Underwater)
       Morph Ball
-  > Under Teleporter
+  > Start Point
       Trivial
 
 > Tile Group (BOMB) 1; Heals? False
@@ -1317,7 +1325,7 @@ Extra - asset_id: collision_camera_011
   > Tunnel to Chain Reaction Access (Morph Puzzle)
       After Artaria - Thermal Device
 
-> Under Teleporter; Heals? False
+> Start Point; Heals? False; Spawn Point
   > Door to Save Station West
       Trivial
   > Dock to EMMI Zone Exit Northwest
@@ -1697,6 +1705,10 @@ Extra - asset_id: collision_camera_016
   > Pickup (Missile Tank)
       Morph Ball
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Melee Tutorial Room (Upper)
+      Trivial
+
 ----------------
 White EMMI Arena
 (Valid Starting Location)
@@ -2043,6 +2055,10 @@ Extra - asset_id: collision_camera_022
   > Door to David Jaffe Room
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door to David Jaffe Room
+      Trivial
+
 ----------------
 Magma Flow Vista
 Extra - total_boundings: {'x1': 17800.0, 'x2': 24900.0, 'y1': 2300.0, 'y2': 5100.0}
@@ -2067,6 +2083,10 @@ Extra - asset_id: collision_camera_023
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Thermal Door Tutorial
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
   > Door to Thermal Door Tutorial
       Trivial
 
@@ -2105,7 +2125,7 @@ Extra - asset_id: collision_camera_023_B
   > Door to Hot Room Hub
       Any of the following:
           Varia Suit
-          Heat/Cold Runs (Beginner) and Heat Damage ≥ 40
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
 
 ----------------
 Hot Room Hub
@@ -2171,6 +2191,10 @@ Extra - asset_id: collision_camera_024
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Hot Cataris Shortcut
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  > Door to Save Station East
       Trivial
 
 ----------------
@@ -2347,6 +2371,12 @@ Extra - asset_id: collision_camera_028
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Chain Reaction Room
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
+
 ----------------
 Varia Suit Tutorial North
 Extra - total_boundings: {'x1': -8200.0, 'x2': -6100.0, 'y1': 8100.0, 'y2': 9900.0}
@@ -2406,7 +2436,7 @@ Extra - asset_id: collision_camera_029
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
 
-> Ledge above lava; Heals? False
+> Ledge above lava; Heals? False; Spawn Point
   > Door to Chain Reaction Room
       Any of the following:
           Varia Suit
@@ -2600,6 +2630,10 @@ Extra - asset_id: collision_camera_032
           Grapple Beam and Movement (Beginner)
           Flash Shift and Walljump (Beginner)
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Save Station North
+      Trivial
+
 ----------------
 Grapple Beam Room
 (Valid Starting Location)
@@ -2659,7 +2693,7 @@ Extra - asset_id: collision_camera_034
   > Elevator to Dairon
       Trivial
 
-> Elevator to Dairon; Heals? False; Spawn Point
+> Elevator to Dairon; Heals? False
   * Teleporter to Dairon - Transport to Artaria
   * Extra - actor_name: elevator_baselab_000
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
@@ -2667,6 +2701,10 @@ Extra - asset_id: collision_camera_034
   * Extra - target_spawn_point: elevator_cave_000_platform
   * Extra - start_point_actor_name: elevator_baselab_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  > Door to Spider Beam Tower
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
   > Door to Spider Beam Tower
       Trivial
 
@@ -3326,6 +3364,10 @@ Extra - asset_id: collision_camera_057
   > Dock to Water Reservoir
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Dock to Waterfall
+      Trivial
+
 ----------------
 Map Station
 Extra - total_boundings: {'x1': -14200.0, 'x2': -12100.0, 'y1': -2200.3798828125, 'y2': -1058.0}
@@ -3620,6 +3662,10 @@ Extra - asset_id: collision_camera_064
   > Door to Proto EMMI Introduction
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Proto EMMI Introduction
+      Trivial
+
 ----------------
 Navigation Station North
 Extra - total_boundings: {'x1': 10800.0, 'x2': 12900.0, 'y1': 2500.0, 'y2': 3642.0}
@@ -3720,6 +3766,10 @@ Extra - asset_id: collision_camera_066
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Thermal Device
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
   > Door to Thermal Device
       Trivial
 
@@ -3893,6 +3943,10 @@ Extra - asset_id: collision_camera_069
 
 > Tunnel to EMMI Zone Hub; Heals? False
   * Slide Tunnel to EMMI Zone Hub/Tunnel to Wide Beam Block Room
+  > Door to EMMI Zone Hub (DoorFrame_006)
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
   > Door to EMMI Zone Hub (DoorFrame_006)
       Trivial
 
@@ -4132,6 +4186,10 @@ Extra - asset_id: collision_camera_073
   > Door to Path to Corpius
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Path to Corpius
+      Trivial
+
 ----------------
 Proto EMMI CU
 (Valid Starting Location)
@@ -4264,7 +4322,7 @@ Extra - asset_id: collision_camera_077
   > Elevator to Cataris - Transport to Artaria
       Grapple Beam or Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
 
-> Elevator to Cataris - Transport to Artaria; Heals? False; Spawn Point
+> Elevator to Cataris - Transport to Artaria; Heals? False
   * Teleporter to Cataris - Transport to Artaria
   * Extra - actor_name: LE_Elevator_FromMagma
   * Extra - actor_def: actordef:actors/props/elevator/charclasses/elevator.bmsad
@@ -4274,6 +4332,10 @@ Extra - asset_id: collision_camera_077
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
   > Door to Hot Cataris Shortcut
       Trivial
+  > Door to Lower Path to Cataris
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
   > Door to Lower Path to Cataris
       Trivial
 
@@ -4346,6 +4408,12 @@ Extra - asset_id: collision_camera_078
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Hot Room Hub
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 40
+
 ----------------
 Lower Path to Cataris
 Extra - total_boundings: {'x1': 26800.0, 'x2': 31800.0, 'y1': 1400.0, 'y2': 3000.0}
@@ -4398,7 +4466,7 @@ Extra - asset_id: collision_camera_080
   > Tile Group (SCREWATTACK) 1
       Trivial
 
-> Elevator to Burenia - Transport to Artaria; Heals? False; Spawn Point
+> Elevator to Burenia - Transport to Artaria; Heals? False
   * Teleporter to Burenia - Transport to Artaria
   * Extra - actor_name: elevator_with_cutscene_aqua_000
   * Extra - actor_def: actordef:actors/props/elevator_with_cutscene/charclasses/elevator_with_cutscene.bmsad
@@ -4442,6 +4510,10 @@ Extra - asset_id: collision_camera_080
   > Tile Group (POWERBEAM)
       Trivial
   > Tile Group (SCREWATTACK) 1
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  > Door to Screw Attack Room
       Trivial
 
 ----------------
@@ -4567,7 +4639,7 @@ Extra - asset_id: collision_camera_081
   > Tile Group (SCREWATTACK) 3
       Simple IBJ or Use Spin Boost
 
-> Teleporter to Cataris; Heals? False; Spawn Point
+> Teleporter to Cataris; Heals? False
   * Teleporter to Cataris - Teleport to Artaria (Blue)
   * Extra - actor_name: teleporter_magma_000
   * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
@@ -4716,6 +4788,10 @@ Extra - asset_id: collision_camera_081
   > Teleporter to Cataris
       After Artaria - Screw Attack Grapple Block
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Freezer (doorgrapplegrapple)
+      Trivial
+
 ----------------
 Freezer
 (Valid Starting Location)
@@ -4814,6 +4890,10 @@ Extra - asset_id: collision_camera_083
   > Tile Group (SPEEDBOOST)
       Trivial
 
+> Start Point; Heals? False; Spawn Point
+  > Tile Group (SPEEDBOOST)
+      Trivial
+
 ----------------
 Shortcut to Screw Attack
 Extra - total_boundings: {'x1': -19200.0, 'x2': -17100.0, 'y1': -2300.0, 'y2': -1200.0}
@@ -4845,6 +4925,10 @@ Extra - asset_id: collision_camera_085
 
 > Tunnel to Screw Attack Room; Heals? False
   * Morph Ball Tunnel to Screw Attack Room/Tunnel to Shortcut to Screw Attack
+  > Door to Screw Attack Room
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
   > Door to Screw Attack Room
       Trivial
 
@@ -4977,6 +5061,10 @@ Extra - asset_id: collision_camera_086
   > Tile Group (SPEEDBOOST) 5
       Morph Ball
 
+> Start Point; Heals? False; Spawn Point
+  > Door to Cold Introduction
+      Trivial
+
 ----------------
 Shinespark Tower to Grapple
 Extra - total_boundings: {'x1': -1300.0, 'x2': 800.0, 'y1': 3900.0, 'y2': 8000.0}
@@ -5053,6 +5141,10 @@ Extra - asset_id: collision_camera_088
   > Dock to EMMI Zone Exit North
       Trivial
   > Tile Group (POWERBEAM) 4
+      Trivial
+
+> Start Point; Heals? False; Spawn Point
+  > Dock to EMMI Zone Exit North
       Trivial
 
 ----------------
