@@ -38,7 +38,7 @@ game_data: game.GameData = game.GameData(
 
     generator=game.GameGenerator(
         item_pool_creator=generator.pool_creator,
-        bootstrap=generator.deltaruneBootstrap(),
+        bootstrap=generator.DeltaruneBootstrap(),
         base_patches_factory=generator.DeltaruneBasePatchesFactory(),
     ),
 
