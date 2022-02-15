@@ -425,11 +425,11 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self._data_editor = DataEditorWindow(json.load(database_file), database_path, False, True)
             self._data_editor.show()
 
-    def open_map_tracker(self, configuration: "Preset"):
+    async def open_map_tracker(self, configuration: "Preset"):
         from randovania.gui.tracker_window import TrackerWindow, InvalidLayoutForTracker
 
         try:
-            self._map_tracker = TrackerWindow(self._options.tracker_files_path, configuration)
+            self._map_tracker = await TrackerWindow.create_new(self._options.tracker_files_path, configuration)
         except InvalidLayoutForTracker as e:
             QtWidgets.QMessageBox.critical(
                 self,

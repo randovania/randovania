@@ -2,9 +2,10 @@ import copy
 import dataclasses
 from abc import ABC
 from random import Random
-from typing import List, Iterator, Union, Optional, Callable, Dict
+from typing import Iterator, Union, Optional, Callable, Dict
 
 from randovania.game_description import node_search
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
     Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision,
@@ -13,14 +14,15 @@ from randovania.game_description.hint import (
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import PickupNode, LogbookNode
+from randovania.game_description.world.node import PickupNode, LogbookNode, LoreType
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib import random_lib
 from randovania.resolver import debug
-
 
 HintProvider = Callable[[PlayerState, GamePatches, Random, PickupIndex], Optional[Hint]]
 
@@ -29,7 +31,102 @@ def _not_empty(it: Iterator) -> bool:
     return sum(1 for _ in it) > 0
 
 
+HintTargetPrecision = tuple[PickupIndex, PrecisionPair]
+
+
+@dataclasses.dataclass(frozen=True)
+class PreFillParams:
+    rng: Random
+    configuration: BaseConfiguration
+    game: GameDescription
+    is_multiworld: bool
+
+
 class HintDistributor(ABC):
+    @property
+    def num_joke_hints(self) -> int:
+        return 0
+
+    def get_generic_logbook_nodes(self, prefill: PreFillParams):
+        return [node
+                for node in prefill.game.world_list.all_nodes
+                if isinstance(node, LogbookNode)
+                and node.lore_type.holds_generic_hint]
+
+    async def get_specific_pickup_precision_pair_overrides(self, patches: GamePatches, prefill: PreFillParams
+                                                           ) -> dict[NodeIdentifier, PrecisionPair]:
+        return {}
+
+    async def assign_specific_location_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
+        specific_location_precisions = await self.get_specific_pickup_precision_pair_overrides(patches, prefill)
+
+        # TODO: this is an Echoes default. Should not have a default and all nodes have one in the DB.
+        default_precision = PrecisionPair(HintLocationPrecision.KEYBEARER, HintItemPrecision.BROAD_CATEGORY,
+                                          include_owner=True)
+
+        wl = prefill.game.world_list
+        for node in wl.all_nodes:
+            if isinstance(node, LogbookNode) and node.lore_type == LoreType.SPECIFIC_PICKUP:
+                patches = patches.assign_hint(
+                    node.resource(),
+                    Hint(HintType.LOCATION,
+                         specific_location_precisions.get(wl.identifier_for_node(node), default_precision),
+                         PickupIndex(node.hint_index))
+                )
+
+        return patches
+
+    async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
+        return []
+
+    async def assign_guaranteed_indices_hints(self, patches: GamePatches, nodes: list[LogbookNode],
+                                              prefill: PreFillParams) -> GamePatches:
+        # Specific Pickup/any LogbookNode Hints
+        indices_with_hint = await self.get_guranteed_hints(patches, prefill)
+        prefill.rng.shuffle(indices_with_hint)
+
+        all_logbook_nodes = [node for node in nodes if node.resource() not in patches.hints]
+        prefill.rng.shuffle(all_logbook_nodes)
+
+        for index, precision in indices_with_hint:
+            if not all_logbook_nodes:
+                break
+
+            logbook_node = all_logbook_nodes.pop()
+            patches = patches.assign_hint(logbook_node.resource(), Hint(HintType.LOCATION, precision, index))
+            nodes.remove(logbook_node)
+
+        return patches
+
+    async def assign_other_hints(self, patches: GamePatches, nodes: list[LogbookNode],
+                                 prefill: PreFillParams) -> GamePatches:
+        return patches
+
+    async def assign_joke_hints(self, patches: GamePatches, nodes: list[LogbookNode],
+                                prefill: PreFillParams) -> GamePatches:
+
+        all_logbook_nodes = [node for node in nodes if node.resource() not in patches.hints]
+        prefill.rng.shuffle(all_logbook_nodes)
+
+        num_joke = self.num_joke_hints
+
+        while num_joke > 0 and all_logbook_nodes:
+            logbook_asset = (node := all_logbook_nodes.pop()).resource()
+            patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, None))
+            num_joke -= 1
+            nodes.remove(node)
+
+        return patches
+
+    async def assign_pre_filler_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
+        patches = await self.assign_specific_location_hints(patches, prefill)
+        logbook_nodes = self.get_generic_logbook_nodes(prefill)
+        prefill.rng.shuffle(logbook_nodes)
+        patches = await self.assign_guaranteed_indices_hints(patches, logbook_nodes, prefill)
+        patches = await self.assign_other_hints(patches, logbook_nodes, prefill)
+        patches = await self.assign_joke_hints(patches, logbook_nodes, prefill)
+        return patches
+
     async def assign_post_filler_hints(self, patches: GamePatches, rng: Random,
                                        player_pool: PlayerPool, player_state: PlayerState,
                                        ) -> GamePatches:

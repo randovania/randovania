@@ -238,8 +238,9 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         old_preset = self._current_preset_data
         self._add_new_preset(VersionedPreset.with_preset(old_preset.get_preset().fork()))
 
-    def _on_open_map_tracker_for_preset(self):
-        self._window_manager.open_map_tracker(self._current_preset_data.get_preset())
+    @asyncSlot()
+    async def _on_open_map_tracker_for_preset(self):
+        await self._window_manager.open_map_tracker(self._current_preset_data.get_preset())
 
     def _on_open_required_tricks_for_preset(self):
         from randovania.gui.dialog.trick_usage_popup import TrickUsagePopup

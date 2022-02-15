@@ -25,15 +25,15 @@ def _gui():
 
 
 def _generator():
-    from randovania.games.cave_story.generator.base_patches_factory import CSBasePatchesFactory
     from randovania.games.cave_story.generator.bootstrap import CSBootstrap
     from randovania.games.cave_story.generator.hint_distributor import CSHintDistributor
     from randovania.games.cave_story.generator.pool_creator import pool_creator
+    from randovania.generator.base_patches_factory import BasePatchesFactory
 
     return GameGenerator(
         item_pool_creator=pool_creator,
         bootstrap=CSBootstrap(),
-        base_patches_factory=CSBasePatchesFactory(),
+        base_patches_factory=BasePatchesFactory(),
         hint_distributor=CSHintDistributor(),
     )
 

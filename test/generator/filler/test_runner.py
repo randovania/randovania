@@ -29,7 +29,7 @@ async def test_run_filler(echoes_game_description,
     logbook_nodes = [node for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
 
     player_pools = [
-        create_player_pool(rng, default_layout_configuration, 0, 1),
+        await create_player_pool(rng, default_layout_configuration, 0, 1),
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 
