@@ -22,7 +22,7 @@ class LogbookAsset:
         return self.long_name
 
     def __hash__(self):
-        return self._string_asset_id
+        return hash((self._string_asset_id, ResourceType.LOGBOOK_INDEX))
 
     def __eq__(self, other):
         return isinstance(other, LogbookAsset) and other._string_asset_id == self._string_asset_id
