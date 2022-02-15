@@ -13,12 +13,14 @@ def _gui() -> game.GameGui:
     from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
     from randovania.games.dread.gui.preset_settings import dread_preset_tabs
     from randovania.games.dread.item_database import progressive_items
+    from randovania.games.prime2.gui.hint_details_tab import HintDetailsTab
 
     return game.GameGui(
         tab_provider=dread_preset_tabs,
         cosmetic_dialog=DreadCosmeticPatchesDialog,
         input_file_text=("an extracted RomFS folder", "the Nintendo Switch", "RomFS folder"),
-        progressive_item_gui_tuples=progressive_items.gui_tuples()
+        progressive_item_gui_tuples=progressive_items.gui_tuples(),
+        spoiler_visualizer=(HintDetailsTab,),
     )
 
 
@@ -26,13 +28,13 @@ def _generator() -> game.GameGenerator:
     from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
     from randovania.games.dread.generator.pool_creator import pool_creator
     from randovania.resolver.bootstrap import MetroidBootstrap
-    from randovania.generator.hint_distributor import AllJokesHintDistributor
+    from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
 
     return game.GameGenerator(
         item_pool_creator=pool_creator,
         base_patches_factory=DreadBasePatchesFactory(),
         bootstrap=MetroidBootstrap(),
-        hint_distributor=AllJokesHintDistributor(),
+        hint_distributor=DreadHintDistributor(),
     )
 
 
@@ -47,8 +49,7 @@ game_data: GameData = GameData(
         }
     ],
 
-    faq={
-    }.items(),
+    faq=[],
 
     layout=GameLayout(
         configuration=DreadConfiguration,
@@ -64,5 +65,5 @@ game_data: GameData = GameData(
 
     generator=_generator,
 
-    patcher=OpenDreadPatcher()
+    patcher=OpenDreadPatcher(),
 )

@@ -62,7 +62,7 @@ game_data: GameData = GameData(
             unexpected_items=cs_unexpected_items,
             format_params=cs_format_params,
         ),
-        get_ingame_hash=get_ingame_hash_str
+        get_ingame_hash=get_ingame_hash_str,
     ),
 
     gui=_gui,
