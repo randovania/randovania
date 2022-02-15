@@ -1,0 +1,1828 @@
+{
+    "name": "Fields",
+    "extra": {},
+    "areas": {
+        "room_field_start": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 620,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_forest": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_castle_darkdoor": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_forest": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 200,
+                        "y": 20,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_forest",
+                        "node_name": "Door to room_field_start"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_castle_darkdoor": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 665,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Somewhere",
+                        "area_name": "room_castle_darkdoor",
+                        "node_name": "Door to room_field_start"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_forest": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 320,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_start": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1030,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field1",
+                        "node_name": "Door to room_field_forest"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_start": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 240,
+                        "y": 320,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_start",
+                        "node_name": "Door to room_field_forest"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 450,
+                        "y": 370,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_forest": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1680.0,
+                        "y": 10.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field2",
+                        "node_name": "Door to room_field1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_forest": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10,
+                        "y": 370,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_forest",
+                        "node_name": "Door to room_field1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 400,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field2A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Field Secret Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room_field1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_topchef": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Field Secret Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field2A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 640,
+                        "y": 10,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field2A",
+                        "node_name": "Door to room_field2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 240,
+                        "y": 690,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field1",
+                        "node_name": "Door to room_field2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_topchef": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1990,
+                        "y": 360,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_topchef",
+                        "node_name": "Door to room_field2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Field Secret Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 475.79,
+                        "y": 389.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 102,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field2A": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Dark Candy0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Dark Candy1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 400,
+                        "y": 490,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field2",
+                        "node_name": "Door to room_field2A"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Dark Candy0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 198.0,
+                        "y": 190.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 0,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Dark Candy1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 256.0,
+                        "y": 190.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 1,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_topchef": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 70.0,
+                        "y": 240.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_puzzle1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (BrokenCake0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Spincake1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Top Cake",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_puzzle1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 630,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_puzzle1",
+                        "node_name": "Door to room_field_topchef"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field2",
+                        "node_name": "Door to room_field_topchef"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (BrokenCake0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 286.0,
+                        "y": 124.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 34,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Spincake1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 319.02,
+                        "y": 202.08,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 9,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_puzzle1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 80,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_maze": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_topchef": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Dark Candy0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Dark Candy1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_maze": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1590,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_maze",
+                        "node_name": "Door to room_field_puzzle1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_topchef": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_topchef",
+                        "node_name": "Door to room_field_puzzle1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Dark Candy0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 706.0,
+                        "y": 230.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 2,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Dark Candy1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 772.0,
+                        "y": 230.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 3,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_maze": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 1240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_puzzle2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_puzzle1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (White Ribbon0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Field Secret Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_puzzle2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1940,
+                        "y": 320,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_puzzle2",
+                        "node_name": "Door to room_field_maze"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_puzzle1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10,
+                        "y": 1200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_puzzle1",
+                        "node_name": "Door to room_field_maze"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (White Ribbon0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 286.7466812147663,
+                        "y": 984.1534824513549,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 23,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_puzzle2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 180,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_getsusie": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_maze": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_getsusie": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 630,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_getsusie",
+                        "node_name": "Door to room_field_puzzle2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_maze": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_maze",
+                        "node_name": "Door to room_field_puzzle2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_getsusie": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_shop1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Get Susie\\",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room_field_puzzle2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Get Susie": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_shop1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 445,
+                        "y": 430,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_shop1",
+                        "node_name": "Door to room_field_getsusie"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_puzzle2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_puzzle2",
+                        "node_name": "Door to room_field_getsusie"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Get Susie": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 398.77,
+                        "y": 229.61,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "Get Susie\\",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_shop1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 480,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_puzzletutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_getsusie": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_shop1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_puzzletutorial": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_puzzletutorial",
+                        "node_name": "Door to room_field_shop1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_getsusie": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 240,
+                        "y": 10,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_getsusie",
+                        "node_name": "Door to room_field_shop1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 620,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field3",
+                        "node_name": "Door to room_field_shop1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_shop1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 260,
+                        "y": 320,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Other",
+                        "area_name": "room_shop1",
+                        "node_name": "Door to room_field_shop1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_puzzletutorial": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 260,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_shop1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_shop1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 620,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_shop1",
+                        "node_name": "Door to room_field_puzzletutorial"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field3": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 220,
+                        "y": 230,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_boxpuzzle": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_shop1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_boxpuzzle": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1190,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_boxpuzzle",
+                        "node_name": "Door to room_field3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_shop1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_shop1",
+                        "node_name": "Door to room_field3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_boxpuzzle": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 260,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 380,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field4",
+                        "node_name": "Door to room_field_boxpuzzle"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field3",
+                        "node_name": "Door to room_field_boxpuzzle"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field4": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 365.3333333333333,
+                        "y": 210.66666666666669,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_secret1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_boxpuzzle": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_field_checkers4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Board Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Board Key0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_secret1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 160,
+                        "y": 480,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_secret1",
+                        "node_name": "Door to room_field4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_boxpuzzle": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 160,
+                        "y": 20,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_boxpuzzle",
+                        "node_name": "Door to room_field4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_checkers4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1030,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Checkers",
+                        "area_name": "room_field_checkers4",
+                        "node_name": "Door to room_field4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Board Key0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 757.0,
+                        "y": 210.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 37,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_field_secret1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 140,
+                        "y": 110,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Broken Key C0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Field Secret Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to room_field4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 120,
+                        "y": 10,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field4",
+                        "node_name": "Door to room_field_secret1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Broken Key C0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1442.0,
+                        "y": 220.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 13,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,499 @@
+{
+    "name": "Other",
+    "extra": {},
+    "areas": {
+        "ROOM_INITIALIZE": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1,
+                        "y": -1,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_legend": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1,
+                        "y": -1,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "PLACE_DOG": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -100,
+                        "y": 340,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_shop1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -100,
+                        "y": 580,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_field_shop1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Dark Candy0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Darkburger1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Amber Card2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Spookysword3)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Broken Key A4)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "TalkedJevil",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_shop1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 180.0,
+                        "y": 120.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Fields",
+                        "area_name": "room_field_shop1",
+                        "node_name": "Door to room_shop1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Dark Candy0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20.0,
+                        "y": 220.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 25,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Darkburger1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.0,
+                        "y": 200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 26,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Amber Card2)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 60.0,
+                        "y": 180.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 27,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Spookysword3)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 100.0,
+                        "y": 160.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 28,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Broken Key A4)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 140.0,
+                        "y": 140.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 40,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_shop2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -100,
+                        "y": 580,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_cc_5f": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (RouxlsRoux0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Brave Ax1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (DaintyScarf2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Amber Card3)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_cc_5f": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 140.0,
+                        "y": 140.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Castle",
+                        "area_name": "room_cc_5f",
+                        "node_name": "Door to room_shop2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (RouxlsRoux0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -20.0,
+                        "y": 220.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 29,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Brave Ax1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 60.0,
+                        "y": 180.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 32,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (DaintyScarf2)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 100.0,
+                        "y": 160.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 31,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Amber Card3)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20.0,
+                        "y": 200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 30,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "PLACE_LOGO": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1,
+                        "y": -1,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "PLACE_MENU": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1,
+                        "y": -1,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "PLACE_CONTACT": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1,
+                        "y": -1,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        }
+    }
+}

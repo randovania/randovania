@@ -1,0 +1,2509 @@
+{
+    "name": "Forest",
+    "extra": {},
+    "areas": {
+        "room_forest_savepoint1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_area0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Forest Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room_field_checkersboss": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Forest Key0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area0": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 620,
+                        "y": 250,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area0",
+                        "node_name": "Door to room_forest_savepoint1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_field_checkersboss": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 250,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Checkers",
+                        "area_name": "room_field_checkersboss",
+                        "node_name": "Door to room_forest_savepoint1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Forest Key0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 472.0,
+                        "y": 202.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 38,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_area0": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 90,
+                        "y": 320,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_area1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_savepoint1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 830,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area1",
+                        "node_name": "Door to room_forest_area0"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_savepoint1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_savepoint1",
+                        "node_name": "Door to room_forest_area0"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_area1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40,
+                        "y": 760,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_area2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_area0": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1390,
+                        "y": 160,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area2",
+                        "node_name": "Door to room_forest_area1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area0": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 760,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area0",
+                        "node_name": "Door to room_forest_area1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_area2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 80,
+                        "y": 360,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_area2A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Forest Secret Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room_forest_area1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_puzzle1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Forest Secret Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area2A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 80,
+                        "y": 1000,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area2A",
+                        "node_name": "Door to room_forest_area2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 360,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area1",
+                        "node_name": "Door to room_forest_area2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_puzzle1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1360,
+                        "y": 800,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_puzzle1",
+                        "node_name": "Door to room_forest_area2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Forest Secret Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 215.41,
+                        "y": 347.81,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 103,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_area2A": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 100,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_area2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Ragger0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 20,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area2",
+                        "node_name": "Door to room_forest_area2A"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Ragger0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300.0,
+                        "y": 130.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 16,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_puzzle1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 60,
+                        "y": 220,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_beforeclover": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_area2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_beforeclover": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 630,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_beforeclover",
+                        "node_name": "Door to room_forest_puzzle1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area2",
+                        "node_name": "Door to room_forest_puzzle1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_beforeclover": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 240,
+                        "y": 560,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_area3A": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Forest Secret Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room_forest_puzzle1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_area3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area3A": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 400,
+                        "y": 800,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area3A",
+                        "node_name": "Door to room_forest_beforeclover"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_puzzle1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 520,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_puzzle1",
+                        "node_name": "Door to room_forest_beforeclover"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1500,
+                        "y": 520,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area3",
+                        "node_name": "Door to room_forest_beforeclover"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_area3A": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 340,
+                        "y": 100,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_beforeclover": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Dice Brace0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_beforeclover": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 320,
+                        "y": 20,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_beforeclover",
+                        "node_name": "Door to room_forest_area3A"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Dice Brace0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 340.0,
+                        "y": 180.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 17,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_area3": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 80,
+                        "y": 320,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_savepoint2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_beforeclover": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_savepoint2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 520,
+                        "y": 720,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_savepoint2",
+                        "node_name": "Door to room_forest_area3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_beforeclover": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 320,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_beforeclover",
+                        "node_name": "Door to room_forest_area3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_savepoint2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 540,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_smith": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Forest Secret Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room_forest_area3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_area4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (ChocDiamond0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (HeartsDonut1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (LancerCookie2)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_smith": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 360,
+                        "y": 480,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_smith",
+                        "node_name": "Door to room_forest_savepoint2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 520,
+                        "y": 20,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area3",
+                        "node_name": "Door to room_forest_savepoint2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1260,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area4",
+                        "node_name": "Door to room_forest_savepoint2"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (ChocDiamond0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 730.0,
+                        "y": 156.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 6,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (HeartsDonut1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 884.0,
+                        "y": 156.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 7,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (LancerCookie2)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1094.0,
+                        "y": 156.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 8,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_smith": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 120,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_savepoint2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Top Cake0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "BrokenCake",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Pickup (Door Key1)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Broken Key A",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Broken Key B",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Broken Key C",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_savepoint2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 20,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_savepoint2",
+                        "node_name": "Door to room_forest_smith"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Top Cake0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300.0,
+                        "y": 154.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 5,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Door Key1)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 260.0,
+                        "y": 154.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 33,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_area4": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 200,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_dancers1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_savepoint2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_dancers1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1390,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_dancers1",
+                        "node_name": "Door to room_forest_area4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_savepoint2": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_savepoint2",
+                        "node_name": "Door to room_forest_area4"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_dancers1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 160,
+                        "y": 1200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_secret1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_area4": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_thrashmaker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (ReviveMint0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_secret1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 440,
+                        "y": 10,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_secret1",
+                        "node_name": "Door to room_forest_dancers1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area4": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 1200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area4",
+                        "node_name": "Door to room_forest_dancers1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_thrashmaker": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1620,
+                        "y": 840,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_thrashmaker",
+                        "node_name": "Door to room_forest_dancers1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (ReviveMint0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 140.0,
+                        "y": 932.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 14,
+                    "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_secret1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 220,
+                        "y": 380,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_dancers1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Broken Key B0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Forest Secret Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_dancers1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 200,
+                        "y": 480,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_dancers1",
+                        "node_name": "Door to room_forest_secret1"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Broken Key B0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 802.0,
+                        "y": 140.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 15,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_thrashmaker": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_starwalker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_dancers1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_starwalker": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 600,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_starwalker",
+                        "node_name": "Door to room_forest_thrashmaker"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_dancers1": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_dancers1",
+                        "node_name": "Door to room_forest_thrashmaker"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_starwalker": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_area5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_thrashmaker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area5": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2620,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area5",
+                        "node_name": "Door to room_forest_starwalker"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_thrashmaker": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 200,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_thrashmaker",
+                        "node_name": "Door to room_forest_starwalker"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_area5": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 80,
+                        "y": 520,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_savepoint_relax": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_starwalker": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_savepoint_relax": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1660,
+                        "y": 520,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_savepoint_relax",
+                        "node_name": "Door to room_forest_area5"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_starwalker": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 520,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_starwalker",
+                        "node_name": "Door to room_forest_area5"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_savepoint_relax": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 215,
+                        "y": 235,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_area5": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_savepoint3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_area5": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_area5",
+                        "node_name": "Door to room_forest_savepoint_relax"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_savepoint3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 240,
+                        "y": 480,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_savepoint3",
+                        "node_name": "Door to room_forest_savepoint_relax"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_maze1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 100,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_maze_deadend": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 298,
+                        "y": 98,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_maze_susie": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 100,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_maze2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 110,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_maze_deadend2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 100,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_savepoint3": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 320,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_fightsusie": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Castle Key",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to room_forest_savepoint_relax": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Castle Key0)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_fightsusie": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 630,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_fightsusie",
+                        "node_name": "Door to room_forest_savepoint3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_savepoint_relax": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 20,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_savepoint_relax",
+                        "node_name": "Door to room_forest_savepoint3"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Castle Key0)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 202.0,
+                        "y": 110.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 39,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_fightsusie": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 700,
+                        "y": 285,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_savepoint3": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_forest_castlefront": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_savepoint3": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 0,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_savepoint3",
+                        "node_name": "Door to room_forest_fightsusie"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_castlefront": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 1220.0,
+                        "y": 280.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_castlefront",
+                        "node_name": "Door to room_forest_fightsusie"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "room_forest_afterthrash2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_afterthrash3": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_afterthrash4": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40,
+                        "y": 280,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_castleview": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_chase1": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 40,
+                        "y": 240,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_chase2": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -100,
+                        "y": 3100,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {}
+                }
+            }
+        },
+        "room_forest_castlefront": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": true,
+            "extra": {},
+            "nodes": {
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 300,
+                        "y": 120,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to room_forest_fightsusie": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to room_cc_entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_forest_fightsusie": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 280,
+                        "y": 20,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Forest",
+                        "area_name": "room_forest_fightsusie",
+                        "node_name": "Door to room_forest_castlefront"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to room_cc_entrance": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 319.33,
+                        "y": 536.35,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "destination": {
+                        "world_name": "Castle",
+                        "area_name": "room_cc_entrance",
+                        "node_name": "Door to room_forest_castlefront"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Normal Door",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
