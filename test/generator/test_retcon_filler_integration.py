@@ -1,12 +1,9 @@
-from random import Random
 from unittest.mock import MagicMock
 
 import pytest
 
 import randovania.generator.filler.player_state
-from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.generator.filler import retcon
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
@@ -50,30 +47,3 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
 
     assert indices_per_world == [a_pickups, b_pickups]
     assert all_indices == a_pickups | b_pickups
-
-
-@pytest.mark.skip
-@pytest.mark.skip_generation_tests
-def test_retcon_filler_integration(default_layout_configuration):
-    layout_configuration = default_layout_configuration
-
-    rng = Random("fixed-seed!")
-    status_update = MagicMock()
-
-    game = default_database.game_description_for(layout_configuration.game)
-    patches = game.create_game_patches()
-    available_pickups = game.pickup_database.all_useful_pickups
-
-    new_game, state = game.game.data.generator.bootstrap.logic_bootstrap(layout_configuration, game, patches)
-    new_game.patch_requirements(state.resources, layout_configuration.damage_strictness.value)
-
-    filler_patches = retcon.retcon_playthrough_filler(new_game,
-                                                      state, tuple(available_pickups), rng,
-                                                      FillerConfiguration(
-                                                          randomization_mode=RandomizationMode.FULL,
-                                                          minimum_random_starting_items=0,
-                                                          maximum_random_starting_items=0,
-                                                          indices_to_exclude=frozenset(),
-                                                      ),
-                                                      status_update)
-    assert filler_patches == patches

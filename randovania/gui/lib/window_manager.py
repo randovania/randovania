@@ -25,7 +25,7 @@ class WindowManager(QMainWindow):
     def patcher_provider(self) -> PatcherProvider:
         raise NotImplemented()
 
-    def open_map_tracker(self, configuration: Preset):
+    async def open_map_tracker(self, configuration: Preset):
         raise NotImplemented()
 
     def open_data_visualizer_at(self, world_name: Optional[str], area_name: Optional[str],

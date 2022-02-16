@@ -49,7 +49,7 @@ async def test_create_patches(mock_random: MagicMock,
         call(player_pools[i].pickups, player_pools[i].game, player_pools[i].configuration)
         for i in range(num_players)
     ])
-    mock_run_filler.assert_awaited_once_with(rng, {i: player_pools[i] for i in range(num_players)}, status_update)
+    mock_run_filler.assert_awaited_once_with(rng, [player_pools[i] for i in range(num_players)], status_update)
     mock_distribute_remaining_items.assert_called_once_with(rng, filler_result.player_results)
 
     assert result == LayoutDescription.create_new(

@@ -13,6 +13,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import LogbookNode
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
 from randovania.generator.generator import create_player_pool
 
@@ -27,9 +28,9 @@ async def test_run_filler(echoes_game_description,
 
     logbook_nodes = [node for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
 
-    player_pools = {
-        0: create_player_pool(rng, default_layout_configuration, 0, 1),
-    }
+    player_pools = [
+        await create_player_pool(rng, default_layout_configuration, 0, 1),
+    ]
     initial_pickup_count = len(player_pools[0].pickups)
 
     patches = echoes_game_description.create_game_patches()
@@ -67,22 +68,22 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description):
     base_patches = echoes_game_description.create_game_patches()
     expected_logbooks = sum(1 for node in echoes_game_description.world_list.all_nodes
                             if isinstance(node, LogbookNode))
+    hint_distributor = echoes_game_description.game.data.generator().hint_distributor
 
     # Run
-    result = runner.fill_unassigned_hints(base_patches,
-                                          echoes_game_description.world_list,
-                                          rng, {})
+    result = hint_distributor.fill_unassigned_hints(
+        base_patches,
+        echoes_game_description.world_list,
+        rng, {},
+    )
 
     # Assert
     assert len(result.hints) == expected_logbooks
 
 
-def test_add_hints_precision(empty_patches, mocker):
+def test_add_hints_precision(empty_patches):
     failed_relative_provider = MagicMock(return_value=None)
     relative_hint_provider = MagicMock()
-    mocker.patch("randovania.generator.filler.runner._get_relative_hint_providers",
-                 return_value=[failed_relative_provider, relative_hint_provider])
-
     player_state = MagicMock()
     rng = MagicMock()
     hints = [
@@ -96,8 +97,13 @@ def test_add_hints_precision(empty_patches, mocker):
     for i, hint in enumerate(hints):
         initial_patches = initial_patches.assign_hint(LogbookAsset(i), hint)
 
+    hint_distributor = EchoesHintDistributor()
+    hint_distributor._get_relative_hint_providers = MagicMock(
+        return_value=[failed_relative_provider, relative_hint_provider]
+    )
+
     # Run
-    result = runner.add_hints_precision(player_state, initial_patches, rng)
+    result = hint_distributor.add_hints_precision(player_state, initial_patches, rng)
 
     # Assert
     failed_relative_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(2))
@@ -140,6 +146,7 @@ def test_add_relative_hint(echoes_game_description, empty_patches, precise_dista
     patches = empty_patches.assign_pickup_assignment({
         PickupIndex(8): PickupTarget(_make_pickup(echoes_item_database.item_categories["movement"]), 0),
     })
+    hint_distributor = EchoesHintDistributor()
 
     if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:
         max_distance = 8
@@ -158,15 +165,17 @@ def test_add_relative_hint(echoes_game_description, empty_patches, precise_dista
         )
 
     # Run
-    result = runner.add_relative_hint(echoes_game_description.world_list,
-                                      patches,
-                                      rng,
-                                      PickupIndex(1),
-                                      target_precision,
-                                      location_precision,
-                                      precise_distance,
-                                      precision,
-                                      max_distance=max_distance)
+    result = hint_distributor.add_relative_hint(
+        echoes_game_description.world_list,
+        patches,
+        rng,
+        PickupIndex(1),
+        target_precision,
+        location_precision,
+        precise_distance,
+        precision,
+        max_distance=max_distance,
+    )
 
     # Assert
     pair = PrecisionPair(location_precision, target_precision, include_owner=False, relative=data)

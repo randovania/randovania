@@ -4856,7 +4856,7 @@
             }
         },
         "Teleport to Cataris": {
-            "default_node": "Start Point",
+            "default_node": "Teleporter to Cataris - Teleport to Artaria (Red)",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -5025,7 +5025,7 @@
                                 ]
                             }
                         },
-                        "Start Point": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5082,7 +5082,7 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Start Point": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5447,7 +5447,7 @@
                                 ]
                             }
                         },
-                        "Start Point": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5514,7 +5514,7 @@
                                 "negate": false
                             }
                         },
-                        "Start Point": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5871,13 +5871,13 @@
                         }
                     }
                 },
-                "Start Point": {
+                "Under Teleportal": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -8600.83,
-                        "y": 594.8,
-                        "z": 0.0
+                        "x": -10196.50043744532,
+                        "y": 887.7077865266842,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {},
@@ -12007,7 +12007,7 @@
             }
         },
         "Transport to Dairon": {
-            "default_node": "Start Point",
+            "default_node": "Elevator to Dairon",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -12094,26 +12094,6 @@
                     },
                     "keep_name_when_vanilla": true,
                     "editable": true,
-                    "connections": {
-                        "Door to Spider Beam Tower": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 2349.6884735202493,
-                        "y": 8827.074766355141,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
                     "connections": {
                         "Door to Spider Beam Tower": {
                             "type": "and",
@@ -16617,7 +16597,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "generic",
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": {
                         "x": 11850.0,
@@ -16631,6 +16611,8 @@
                         "start_point_actor_name": "PRP_CV_AccessPoint002_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
+                    "string_asset_id": 1,
+                    "lore_type": "generic",
                     "connections": {
                         "Door to David Jaffe Room": {
                             "type": "and",
@@ -17195,7 +17177,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "generic",
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": {
                         "x": 7850.0,
@@ -17209,6 +17191,8 @@
                         "start_point_actor_name": "PRP_CV_AccessPoint001_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
+                    "string_asset_id": 2,
+                    "lore_type": "generic",
                     "connections": {
                         "Door to Melee Tutorial West": {
                             "type": "and",
@@ -19021,7 +19005,7 @@
             }
         },
         "Transport to Cataris": {
-            "default_node": "Start Point",
+            "default_node": "Elevator to Cataris - Transport to Artaria",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -19191,26 +19175,6 @@
                                 "items": []
                             }
                         },
-                        "Door to Lower Path to Cataris": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 32059.35494765282,
-                        "y": 2367.6798378926037,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "connections": {
                         "Door to Lower Path to Cataris": {
                             "type": "and",
                             "data": {
@@ -20003,7 +19967,7 @@
             }
         },
         "Transport to Burenia": {
-            "default_node": "Start Point",
+            "default_node": "Elevator to Burenia - Transport to Artaria",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -20226,26 +20190,6 @@
                             }
                         },
                         "Tile Group (SCREWATTACK) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -24602.49962913514,
-                        "y": -1694.0051921079958,
-                        "z": 0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "connections": {
-                        "Door to Screw Attack Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,

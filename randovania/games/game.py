@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.base_patches_factory import BasePatchesFactory
+    from randovania.generator.hint_distributor import HintDistributor
     from randovania.generator.item_pool import PoolResults
     from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
@@ -91,6 +92,9 @@ class GameGenerator:
     base_patches_factory: BasePatchesFactory
     """Creates base patches, such as elevator or configurable node assignments."""
 
+    hint_distributor: Optional[HintDistributor] = None
+    """(Optional) """
+
 
 @dataclass(frozen=True)
 class GameData:
@@ -118,7 +122,7 @@ class GameData:
     gui: Callable[[], GameGui]
     """Contains game-specific GUI windows."""
 
-    generator: GameGenerator
+    generator: Callable[[], GameGenerator]
     """Contains game-specific generation data."""
 
     patcher: Optional[Patcher] = None
