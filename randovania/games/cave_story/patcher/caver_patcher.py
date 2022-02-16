@@ -413,11 +413,11 @@ def get_hints(all_patches: dict[int, GamePatches], players_config: PlayersConfig
                    for index in players_config.player_names.keys()}
 
     hints_for_asset = get_hints_for_asset(all_patches, players_config, game_description.world_list, area_namers,
-                                          hint_rng, create_loc_formatters, RandovaniaGame.CAVE_STORY, None, None)
+                                          hint_rng, create_loc_formatters, None, None, game=RandovaniaGame.CAVE_STORY)
 
     starts = ["I hear that", "Rumour has it,", "They say"]
     mids = ["can be found", "is", "is hidden"]
     return {
-        asset_id: hint.format(start=hint_rng.choice(starts), mid=hint_rng.choice(mids))
-        for asset_id, hint in hints_for_asset.items()
+        asset.asset_id: hint.format(start=hint_rng.choice(starts), mid=hint_rng.choice(mids))
+        for asset, hint in hints_for_asset.items()
     }
