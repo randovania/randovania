@@ -4307,7 +4307,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Grapple Beam Door",
                     "connections": {
-                        "Dock to Early Ice Room (dooremmy_005)": {
+                        "Dock to Early Ice Room (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4316,7 +4316,7 @@
                         }
                     }
                 },
-                "Dock to Early Ice Room (dooremmy_004)": {
+                "Dock to Early Ice Room (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4332,7 +4332,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Early Ice Room",
-                        "node_name": "Dock to EMMI Zone Exit West (dooremmy_004)"
+                        "node_name": "Dock to EMMI Zone Exit West (Lower)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -4346,7 +4346,7 @@
                         }
                     }
                 },
-                "Dock to Early Ice Room (dooremmy_005)": {
+                "Dock to Early Ice Room (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4362,7 +4362,7 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "Early Ice Room",
-                        "node_name": "Dock to EMMI Zone Exit West (dooremmy_005)"
+                        "node_name": "Dock to EMMI Zone Exit West (Upper)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
@@ -4408,7 +4408,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Dock to Early Ice Room (dooremmy_005)": {
+                        "Dock to Early Ice Room (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4533,7 +4533,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to Early Ice Room (dooremmy_004)": {
+                        "Dock to Early Ice Room (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4589,7 +4589,7 @@
                 "asset_id": "collision_camera_015"
             },
             "nodes": {
-                "Dock to EMMI Zone Exit West (dooremmy_004)": {
+                "Dock to EMMI Zone Exit West (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4605,12 +4605,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit West",
-                        "node_name": "Dock to Early Ice Room (dooremmy_004)"
+                        "node_name": "Dock to Early Ice Room (Lower)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Dock to EMMI Zone Exit West (dooremmy_005)": {
+                        "Dock to EMMI Zone Exit West (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4649,7 +4649,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit West (dooremmy_005)": {
+                "Dock to EMMI Zone Exit West (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4665,12 +4665,12 @@
                     "destination": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit West",
-                        "node_name": "Dock to Early Ice Room (dooremmy_005)"
+                        "node_name": "Dock to Early Ice Room (Upper)"
                     },
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Dock to EMMI Zone Exit West (dooremmy_004)": {
+                        "Dock to EMMI Zone Exit West (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4720,7 +4720,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Dock to EMMI Zone Exit West (dooremmy_004)": {
+                        "Dock to EMMI Zone Exit West (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6946,7 +6946,7 @@
             }
         },
         "Golzuna Tower": {
-            "default_node": "Start Point",
+            "default_node": "Teleporter to Cataris",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -6962,19 +6962,9 @@
                         "top right"
                     ],
                     [
-                        4760.0,
-                        8400.0,
-                        "top right of elevator"
-                    ],
-                    [
-                        4760.0,
-                        7350.0,
-                        "bottom right of elevator"
-                    ],
-                    [
                         4000.0,
-                        7350.0,
-                        "bottom left of elevator"
+                        8400.0,
+                        "top left"
                     ],
                     [
                         4000.0,
@@ -7166,6 +7156,73 @@
                         }
                     }
                 },
+                "Door to Above Pulse Radar": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4050.0,
+                        "y": 7500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "doorclosedcharge",
+                        "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
+                        "left_shield_entity": "{EMPTY}",
+                        "left_shield_def": null,
+                        "right_shield_entity": "{EMPTY}",
+                        "right_shield_def": null
+                    },
+                    "destination": {
+                        "world_name": "Ghavoran",
+                        "area_name": "Above Pulse Radar",
+                        "node_name": "Door from Golzuna Tower"
+                    },
+                    "dock_type": "door",
+                    "dock_weakness": "Charge Beam Door",
+                    "connections": {
+                        "Teleporter to Cataris": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Teleporter to Cataris": {
+                    "node_type": "teleporter",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4450.0,
+                        "y": 7500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "teleporter_magma_000",
+                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
+                        "elevator_component": "CTeleporterUsableComponent",
+                        "target_spawn_point": "teleporter_forest_000_platform",
+                        "start_point_actor_name": "teleporter_magma_000_platform",
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
+                    },
+                    "destination": {
+                        "world_name": "Cataris",
+                        "area_name": "Teleport to Ghavoran"
+                    },
+                    "keep_name_when_vanilla": true,
+                    "editable": true,
+                    "connections": {
+                        "Door to Above Pulse Radar": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
                 "Pickup (Energy Part)": {
                     "node_type": "pickup",
                     "heal": false,
@@ -7220,29 +7277,6 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Start Point": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 6200.0,
-                        "y": 6200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "start_point_actor_name": "SP_Checkpoint_SuperGoliath",
-                        "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
-                    },
-                    "connections": {
-                        "Door to Above Golzuna": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -7712,106 +7746,6 @@
                     "dock_weakness": "Open Passage",
                     "connections": {
                         "Tile Group (POWERBEAM) 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "Teleport to Cataris": {
-            "default_node": "Teleporter to Cataris",
-            "valid_starting_location": true,
-            "extra": {
-                "total_boundings": {
-                    "x1": 4000.0,
-                    "x2": 4760.0,
-                    "y1": 7400.0,
-                    "y2": 8000.0
-                },
-                "polygon": [
-                    [
-                        4760.0,
-                        8000.0
-                    ],
-                    [
-                        4000.0,
-                        8000.0
-                    ],
-                    [
-                        4000.0,
-                        7400.0
-                    ],
-                    [
-                        4760.0,
-                        7400.0
-                    ]
-                ],
-                "asset_id": "collision_camera_024"
-            },
-            "nodes": {
-                "Teleporter to Cataris": {
-                    "node_type": "teleporter",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4450.0,
-                        "y": 7500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "teleporter_magma_000",
-                        "actor_def": "actordef:actors/props/teleporter/charclasses/teleporter.bmsad",
-                        "elevator_component": "CTeleporterUsableComponent",
-                        "target_spawn_point": "teleporter_forest_000_platform",
-                        "start_point_actor_name": "teleporter_magma_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad"
-                    },
-                    "destination": {
-                        "world_name": "Cataris",
-                        "area_name": "Teleport to Ghavoran"
-                    },
-                    "keep_name_when_vanilla": true,
-                    "editable": true,
-                    "connections": {
-                        "Door to Above Pulse Radar": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Door to Above Pulse Radar": {
-                    "node_type": "dock",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 4050.0,
-                        "y": 7500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "doorclosedcharge",
-                        "actor_def": "actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad",
-                        "left_shield_entity": "{EMPTY}",
-                        "left_shield_def": null,
-                        "right_shield_entity": "{EMPTY}",
-                        "right_shield_def": null
-                    },
-                    "destination": {
-                        "world_name": "Ghavoran",
-                        "area_name": "Above Pulse Radar",
-                        "node_name": "Door from Teleport to Cataris"
-                    },
-                    "dock_type": "door",
-                    "dock_weakness": "Charge Beam Door",
-                    "connections": {
-                        "Teleporter to Cataris": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12628,7 +12562,7 @@
                         }
                     }
                 },
-                "Door from Teleport to Cataris": {
+                "Door from Golzuna Tower": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -12647,7 +12581,7 @@
                     },
                     "destination": {
                         "world_name": "Ghavoran",
-                        "area_name": "Teleport to Cataris",
+                        "area_name": "Golzuna Tower",
                         "node_name": "Door to Above Pulse Radar"
                     },
                     "dock_type": "door",
@@ -12766,7 +12700,7 @@
                             "type": "template",
                             "data": "Can Slide"
                         },
-                        "Door from Teleport to Cataris": {
+                        "Door from Golzuna Tower": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
