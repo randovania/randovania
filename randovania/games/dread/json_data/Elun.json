@@ -256,7 +256,7 @@
             }
         },
         "Purple Drapes": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -441,6 +441,26 @@
                     "dock_weakness": "Morph Ball Launcher",
                     "connections": {
                         "Tile Group (BOMB) 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -360.0,
+                        "y": 700.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Dock to Bridge Gate": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1395,7 +1415,7 @@
             }
         },
         "Gyroscope Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -1560,6 +1580,26 @@
                             }
                         },
                         "Door to Fan Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3655.72077653862,
+                        "y": 898.1825691862866,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Ammo Recharge Station": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2065,7 +2105,7 @@
             }
         },
         "Fan Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2355,6 +2395,26 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6010.08,
+                        "y": -134.98,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Gyroscope Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -3180,7 +3240,7 @@
             }
         },
         "Horizontal Bomb Maze": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3638,6 +3698,28 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3552.32,
+                        "y": 3365.39,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Tunnel to Ammo Recharge Station": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
