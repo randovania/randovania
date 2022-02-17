@@ -3,6 +3,7 @@ import os
 
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
+from randovania.layout.base.trick_level import LayoutTrickLevel
 
 # (tab title, page title, time)
 HTML_HEADER_FORMAT = '''
@@ -50,6 +51,7 @@ HTML_CONNECTION_FORMAT = '''
 '''
 
 HTML_VIDEO_FORMAT = '''
+        <p><i>%s</i></p>
         <iframe width="560" height="420" src="https://www.youtube.com/embed/%s?start=%d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n
 '''
 
@@ -63,23 +65,72 @@ def get_date():
     return str(datetime.datetime.now()).split('.')[0].split(" ")[0]
 
 
-def get_yt_ids(item, ids):
+def get_difficulty(item):
+    data = item["data"]
+    
+    # if, trick, return max(this_diff, curr_diff)
+    if item["type"] == "resource" and data["type"] == "tricks": 
+        return data["amount"]
+
+    # return the highest diff of all "and" paths
+    if item["type"] == "and":
+        max_diff = 0
+        for i in data["items"]:
+            diff = get_difficulty(i)
+            if diff is not None and diff > max_diff:
+                max_diff = diff
+        return max_diff
+    # return the lowest diff of all "or" paths
+    elif item["type"] == "or":
+        min_diff = None
+        for i in data["items"]:
+            diff = get_difficulty(i)
+            if diff is not None and (min_diff is None or diff < min_diff):
+                min_diff = diff
+        return min_diff
+    return None
+
+
+def get_yt_ids(item, ids, highest_diff):
     if item["type"] != "and" and item["type"] != "or":
         return
+    
+    diff = get_difficulty(item)
+    if diff is not None and diff > highest_diff:
+        highest_diff = diff
 
     data = item["data"]
+
     if data["comment"] is not None:
         comment = data["comment"]
         if "youtu" in comment:
+            
+            # Parse Video ID
             video_id = comment.split("/")[-1].split("watch?v=")[-1].split(" ")[0]
             start_time = 0
             if "?t=" in comment:
                 start_time = int(video_id.split("?t=")[-1])
             video_id = video_id.split("?t=")[0]
-            ids.append((video_id, start_time))
+
+            # Finish calculating difficulty
+            if item["type"] == "and":
+                for i in data["items"]:
+                    diff = get_difficulty(i)
+                    if diff is not None and diff > highest_diff:
+                        highest_diff = diff
+            elif item["type"] == "or":
+                min_diff = None
+                for i in data["items"]:
+                    diff = get_difficulty(i)
+                    if diff is not None and (min_diff is None or diff < min_diff):
+                        min_diff = diff
+                if min_diff is not None and min_diff > highest_diff:
+                    highest_diff = min_diff
+
+            ids.append((video_id, start_time, highest_diff))
 
     for i in data["items"]:
-        get_yt_ids(i, ids)
+        get_yt_ids(i, ids, highest_diff)
 
 
 def collect_game_info(game: RandovaniaGame):
@@ -96,7 +147,7 @@ def collect_game_info(game: RandovaniaGame):
                 for connection_name in node["connections"]:
                     connection = node["connections"][connection_name]
                     yt_ids = list()
-                    get_yt_ids(connection, yt_ids)
+                    get_yt_ids(connection, yt_ids, 0)
                     if len(yt_ids) > 0:
                         connections[connection_name] = yt_ids
                 if len(connections) > 0:
@@ -137,8 +188,8 @@ def generate_world_html(name, areas):
                 connection_name = "%s -> %s" % (node, connection)
                 body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
-                for (id, start_time) in yt_ids:
-                    body += HTML_VIDEO_FORMAT % (id, start_time)
+                for (id, start_time, highest_diff) in yt_ids:
+                    body += HTML_VIDEO_FORMAT % (LayoutTrickLevel.from_number(highest_diff).long_name, id, start_time)
                 toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
         toc += TOC_AREA_FORMAT % (area, toc_connections)
 
