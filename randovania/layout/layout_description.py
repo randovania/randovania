@@ -142,12 +142,7 @@ class LayoutDescription:
     def _serialized_patches(self):
         cached_result = object.__getattribute__(self, "__cached_serialized_patches")
         if cached_result is None:
-            cached_result = game_patches_serializer.serialize(
-                self.all_patches,
-                {
-                    index: preset.game
-                    for index, preset in enumerate(self.all_presets)
-                })
+            cached_result = game_patches_serializer.serialize(self.all_patches)
             object.__setattr__(self, "__cached_serialized_patches", cached_result)
 
         return cached_result

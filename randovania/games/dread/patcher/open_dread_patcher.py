@@ -2,10 +2,11 @@ import json
 import logging
 import os
 from pathlib import Path
-from random import Random
 from typing import Optional, List, Union
 
-from randovania.game_description import default_database
+from randovania.exporter.hints.hint_exporter import HintExporter
+from randovania.exporter.hints.hint_namer import HintNamer
+from randovania.exporter.patch_data_generator import BasePatchDataGenerator
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
@@ -21,8 +22,8 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import status_update_lib
 from randovania.patching.patcher import Patcher
-from randovania.patching.prime.patcher_file_lib import item_names, pickup_exporter, hints, hint_lib
-from randovania.patching.prime.patcher_file_lib.pickup_exporter import ExportedPickupDetails
+from randovania.exporter import pickup_exporter, item_names
+from randovania.exporter.pickup_exporter import ExportedPickupDetails
 
 _ALTERNATIVE_MODELS = {
     "powerup_slide": "itemsphere",
@@ -47,23 +48,16 @@ def _get_item_id_for_item(item: ItemResourceInfo) -> str:
         raise KeyError(f"{item.long_name} has no item ID.") from e
 
 
-class DreadPatchDataGenerator:
-    def __init__(self, description: LayoutDescription, players_config: PlayersConfiguration,
-                 cosmetic_patches: DreadCosmeticPatches):
-        self.description = description
-        self.players_config = players_config
-        self.cosmetic_patches = cosmetic_patches
+class DreadPatchDataGenerator(BasePatchDataGenerator):
+    cosmetic_patches: DreadCosmeticPatches
+    configuration: DreadConfiguration
 
-        self.game = default_database.game_description_for(RandovaniaGame.METROID_DREAD)
-        self.item_db = default_database.item_database_for_game(RandovaniaGame.METROID_DREAD)
-
-        self.patches = description.all_patches[players_config.player_index]
-
-        self.configuration = description.get_preset(players_config.player_index).configuration
-        assert isinstance(self.configuration, DreadConfiguration)
-
-        self.rng = Random(description.get_seed_for_player(players_config.player_index))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.memo_data = DreadAcquiredMemo.with_expansion_text()
+
+    def game_enum(self) -> RandovaniaGame:
+        return RandovaniaGame.METROID_DREAD
 
     def _calculate_starting_inventory(self, resources: CurrentResources):
         result = {}
@@ -200,26 +194,16 @@ class DreadPatchDataGenerator:
             return None
 
     def _encode_hints(self) -> list[dict]:
-        area_namers = {
-            index: hint_lib.AreaNamer(default_database.game_description_for(player_preset.game).world_list)
-            for index, player_preset in enumerate(self.description.all_presets)
-        }
+        namer = HintNamer()
 
-        hints_for_asset = hints.get_hints_for_asset(
-            self.description.all_patches,
-            self.players_config,
-            self.game.world_list,
-            area_namers,
-            self.rng,
-            item_text_color=None, joke_text_color=None,
-            game=RandovaniaGame.METROID_DREAD,
-        )
+        exporter = HintExporter(namer, self.rng, ["A joke hint."])
 
         return [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "hint_id": logbook_node.extra["hint_id"],
-                "text": hints_for_asset.get(logbook_node.resource(), "Someone forgot to leave a message."),
+                "text": exporter.create_message_for_hint(self.patches.hints[logbook_node.resource()],
+                                                         self.description.all_patches, self.players_config, True)
             }
             for logbook_node in self.game.world_list.all_nodes
             if isinstance(logbook_node, LogbookNode)

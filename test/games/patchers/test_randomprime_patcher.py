@@ -11,7 +11,7 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher, prime1_pickup_details_to_patcher
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
-from randovania.patching.prime.patcher_file_lib import pickup_exporter
+from randovania.exporter import pickup_exporter
 
 
 @pytest.mark.parametrize("other_player", [False, True])

@@ -18,6 +18,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import PickupNode, TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
@@ -28,8 +29,8 @@ from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
 from randovania.patching.prime import all_prime_dol_patches
-from randovania.patching.prime.patcher_file_lib import pickup_exporter, item_names, guaranteed_item_hint, hint_lib, \
-    credits_spoiler
+from randovania.exporter import pickup_exporter, item_names
+from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -239,10 +240,7 @@ class RandomprimePatcher(Patcher):
         assert isinstance(configuration, PrimeConfiguration)
         rng = Random(description.get_seed_for_player(players_config.player_index))
 
-        area_namers = {
-            index: hint_lib.AreaNamer(default_database.game_description_for(player_preset.game).world_list)
-            for index, player_preset in enumerate(description.all_presets)
-        }
+        namer = PrimeHintNamer(description.all_patches, players_config)
 
         scan_visor = db.resource_database.get_item_by_name("Scan Visor")
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
@@ -326,7 +324,7 @@ class RandomprimePatcher(Patcher):
             configuration.major_items_configuration,
             description.all_patches,
             players_config,
-            area_namers,
+            namer,
             "&push;&font=C29C51F1;&main-color=#89D6FF;Major Item Locations&pop;",
             "&push;&font=C29C51F1;&main-color=#33ffd6;{}&pop;",
         )
@@ -340,11 +338,11 @@ class RandomprimePatcher(Patcher):
             resulting_hints = {art: "{} is lost somewhere on Tallon IV.".format(art.long_name) for art in artifacts}
         else:
             resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-                description.all_patches, players_config, area_namers,
+                description.all_patches,
+                players_config, namer,
                 hint_config.artifacts == ArtifactHintMode.HIDE_AREA,
                 [db.resource_database.get_item(index) for index in prime_items.ARTIFACT_ITEMS],
-                hint_lib.TextColor.PRIME1_ITEM,
-                hint_lib.TextColor.PRIME1_LOCATION,
+                True,
             )
 
         # Tweaks
@@ -400,7 +398,7 @@ class RandomprimePatcher(Patcher):
                 "startingMemo": starting_memo,
                 "warpToStart": configuration.warp_to_start,
                 "springBall": configuration.spring_ball,
-                "incineratorDroneConfig":{
+                "incineratorDroneConfig": {
                     "eyeWaitInitialRandomTime": 0.0,
                     "eyeWaitRandomTime": 0.0,
                     "eyeStayUpRandomTime": 0.0,
@@ -410,10 +408,10 @@ class RandomprimePatcher(Patcher):
                     # turning the zoid fight duration probability into a bell curve. With /2 we manipulate
                     # the (now linear) probability characteristic to more often generate "average zoid fights"
                     # while erring on the side of faster.
-                    "eyeWaitInitialMinimumTime": 8.0 + rng.random()*5.0/2.0,
-                    "eyeWaitMinimumTime": 15.0 + rng.random()*10.0/2.0,
-                    "eyeStayUpMinimumTime": 8.0 + rng.random()*3.0/2.0,
-                    "resetContraptionMinimumTime": 3.0 + rng.random()*3.0/2.0,
+                    "eyeWaitInitialMinimumTime": 8.0 + rng.random() * 5.0 / 2.0,
+                    "eyeWaitMinimumTime": 15.0 + rng.random() * 10.0 / 2.0,
+                    "eyeStayUpMinimumTime": 8.0 + rng.random() * 3.0 / 2.0,
+                    "resetContraptionMinimumTime": 3.0 + rng.random() * 3.0 / 2.0,
                 },
                 "nonvariaHeatDamage": configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": configuration.progressive_damage_reduction,

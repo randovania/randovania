@@ -13,14 +13,14 @@ def _gui() -> game.GameGui:
     from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
     from randovania.games.dread.gui.preset_settings import dread_preset_tabs
     from randovania.games.dread.item_database import progressive_items
-    from randovania.games.prime2.gui.hint_details_tab import HintDetailsTab
+    from randovania.games.prime2.gui.hint_details_tab import EchoesHintDetailsTab
 
     return game.GameGui(
         tab_provider=dread_preset_tabs,
         cosmetic_dialog=DreadCosmeticPatchesDialog,
         input_file_text=("an extracted RomFS folder", "the Nintendo Switch", "RomFS folder"),
         progressive_item_gui_tuples=progressive_items.gui_tuples(),
-        spoiler_visualizer=(HintDetailsTab,),
+        spoiler_visualizer=(EchoesHintDetailsTab,),
     )
 
 

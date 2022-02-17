@@ -7,15 +7,18 @@ from caver import patcher as caver_patcher
 from tsc_utils.flags import set_flag
 from tsc_utils.numbers import num_to_tsc_value
 
+from randovania.exporter.hints.hint_exporter import HintExporter
+from randovania.exporter.hints.hint_namer import HintNamer
+from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
+from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node import LogbookNode, PickupNode
-from randovania.game_description.world.world_list import WorldList
+from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import get_ingame_hash
@@ -25,11 +28,6 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
-from randovania.patching.prime.patcher_file_lib import hint_lib
-from randovania.patching.prime.patcher_file_lib.hint_formatters import LocationFormatter
-from randovania.patching.prime.patcher_file_lib.hint_formatters import RelativeAreaFormatter, TemplatedFormatter
-from randovania.patching.prime.patcher_file_lib.hints import get_hints_for_asset
-from randovania.patching.prime.patcher_file_lib.item_hints import RelativeItemFormatter
 
 
 class CaverPatcher(Patcher):
@@ -289,7 +287,7 @@ class CaverPatcher(Patcher):
 
         if starting_msg:
             starting_script += f"\r\n<PRI<MSG<TUR{starting_msg}<CLO"
-        
+
         starting_script += f"<EQ+{num_to_tsc_value(equip_num).decode('utf-8')}\r\n"
 
         # Starting HP
@@ -382,38 +380,13 @@ class CaverPatcher(Patcher):
             self._busy = False
 
 
-def create_loc_formatters(area_namer: hint_lib.AreaNamer, world_list: WorldList, patches: GamePatches,
-                          players_config: PlayersConfiguration) -> dict[HintLocationPrecision, LocationFormatter]:
-    return {
-        HintLocationPrecision.MALCO: TemplatedFormatter(
-            "BUT ALL I KNOW HOW TO DO IS MAKE {determiner.upper}{pickup}...", area_namer, upper_pickup=True,
-            text_color=None
-        ),
-        HintLocationPrecision.JENKA: TemplatedFormatter(
-            "perhaps I'll give you {determiner}{pickup} in return...", area_namer, text_color=None
-        ),
-        HintLocationPrecision.LITTLE: TemplatedFormatter(
-            "He was exploring the island with {determiner}{pickup}...", area_namer, text_color=None
-        ),
-        HintLocationPrecision.NUMAHACHI: TemplatedFormatter(
-            "{determiner.capitalize}{pickup}.", area_namer, text_color=None
-        ),
-        HintLocationPrecision.DETAILED: TemplatedFormatter("{{start}} {determiner}{pickup} {{mid}} in {node}.",
-                                                           area_namer, text_color=None),
-        HintLocationPrecision.WORLD_ONLY: TemplatedFormatter("{{start}} {determiner}{pickup} {{mid}} in {node}.",
-                                                             area_namer, text_color=None),
-        HintLocationPrecision.RELATIVE_TO_AREA: RelativeAreaFormatter(world_list, patches, None),
-        HintLocationPrecision.RELATIVE_TO_INDEX: RelativeItemFormatter(world_list, patches, players_config, None),
-    }
-
-
 def get_hints(all_patches: dict[int, GamePatches], players_config: PlayersConfiguration, hint_rng: Random):
-    game_description = default_database.game_description_for(RandovaniaGame.CAVE_STORY)
-    area_namers = {index: hint_lib.AreaNamer(game_description.world_list, include_world=False)
-                   for index in players_config.player_names.keys()}
+    namer = CSHintNamer(all_patches, players_config)
+    exporter = HintExporter(namer, hint_rng, JOKE_HINTS)
 
-    hints_for_asset = get_hints_for_asset(all_patches, players_config, game_description.world_list, area_namers,
-                                          hint_rng, create_loc_formatters, None, None, game=RandovaniaGame.CAVE_STORY)
+    hints_for_asset: dict[LogbookAsset, str] = {}
+    for asset, hint in all_patches[players_config.player_index].hints.items():
+        hints_for_asset[asset] = exporter.create_message_for_hint(hint, all_patches, players_config, True)
 
     starts = ["I hear that", "Rumour has it,", "They say"]
     mids = ["can be found", "is", "is hidden"]
