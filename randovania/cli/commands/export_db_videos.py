@@ -188,7 +188,7 @@ def generate_world_html(name, areas):
                 connection_name = "%s -> %s" % (node, connection)
                 body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
-                for (id, start_time, highest_diff) in yt_ids:
+                for (id, start_time, highest_diff) in sorted(yt_ids, key=lambda x: x[2]):
                     body += HTML_VIDEO_FORMAT % (LayoutTrickLevel.from_number(highest_diff).long_name, id, start_time)
                 toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
         toc += TOC_AREA_FORMAT % (area, toc_connections)
