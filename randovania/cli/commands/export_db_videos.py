@@ -105,29 +105,34 @@ def get_yt_ids(item, ids, highest_diff):
         comment = data["comment"]
         if "youtu" in comment:
             
-            # Parse Video ID
-            video_id = comment.split("/")[-1].split("watch?v=")[-1].split(" ")[0]
-            start_time = 0
-            if "?t=" in comment:
-                start_time = int(video_id.split("?t=")[-1])
-            video_id = video_id.split("?t=")[0]
-
             # Finish calculating difficulty
+            trick_diff = highest_diff
             if item["type"] == "and":
                 for i in data["items"]:
                     diff = get_difficulty(i)
-                    if diff is not None and diff > highest_diff:
-                        highest_diff = diff
+                    if diff is not None and diff > trick_diff:
+                        trick_diff = diff
             elif item["type"] == "or":
                 min_diff = None
                 for i in data["items"]:
                     diff = get_difficulty(i)
                     if diff is not None and (min_diff is None or diff < min_diff):
                         min_diff = diff
-                if min_diff is not None and min_diff > highest_diff:
-                    highest_diff = min_diff
+                if min_diff is not None and min_diff > trick_diff:
+                    trick_diff = min_diff
 
-            ids.append((video_id, start_time, highest_diff))
+            for word in comment.split(" "):    
+                if "youtu" not in word:
+                    continue
+
+                # Parse Video ID
+                video_id = word.split("/")[-1].split("watch?v=")[-1].split(" ")[0]
+                start_time = 0
+                if "?t=" in word:
+                    start_time = int(video_id.split("?t=")[-1])
+                video_id = video_id.split("?t=")[0]
+
+                ids.append((video_id, start_time, trick_diff))
 
     for i in data["items"]:
         get_yt_ids(i, ids, highest_diff)
