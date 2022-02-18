@@ -12523,7 +12523,7 @@
                         }
                     }
                 },
-                "Event - Slide Alternative Blob": {
+                "Event - Slide Alternative Blob (Below)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12696,7 +12696,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Event - Slide Alternative Blob": {
+                        "Event - Slide Alternative Blob (Below)": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -12852,7 +12852,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Slide Alternative Blob": {
+                        "Event - Slide Alternative Blob (Above)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12865,17 +12865,32 @@
                                             "amount": 2,
                                             "negate": false
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                },
+                "Event - Slide Alternative Blob (Above)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 258.0,
+                        "y": 2328.23,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "PRP_DB_CV_000",
+                        "actor_def": "actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad"
+                    },
+                    "event_name": "s010_cave:default:PRP_DB_CV_000",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
