@@ -15,6 +15,29 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.network_client.network_client import ConnectionState
 
 
+async def ensure_logged_in(parent: Optional[QtWidgets.QWidget], network_client: QtNetworkClient):
+    if network_client.connection_state == ConnectionState.Connected:
+        return True
+
+    if network_client.connection_state.is_disconnected:
+        message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.NoIcon, "Connecting",
+                                            "Connecting to server...", QtWidgets.QMessageBox.Cancel,
+                                            parent)
+
+        connecting = network_client.connect_to_server()
+        message_box.rejected.connect(connecting.cancel)
+        message_box.show()
+        try:
+            await connecting
+        finally:
+            message_box.close()
+
+    if network_client.current_user is None:
+        await async_dialog.execute_dialog(LoginPromptDialog(network_client))
+
+    return network_client.current_user is not None
+
+
 class OnlineInteractions(QtWidgets.QWidget):
     network_client: QtNetworkClient
     game_session_window: Optional[GameSessionWindow] = None
@@ -52,27 +75,7 @@ class OnlineInteractions(QtWidgets.QWidget):
             return True
 
     async def _ensure_logged_in(self) -> bool:
-        network_client = self.network_client
-        if network_client.connection_state == ConnectionState.Connected:
-            return True
-
-        if network_client.connection_state.is_disconnected:
-            message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.NoIcon, "Connecting",
-                                                "Connecting to server...", QtWidgets.QMessageBox.Cancel,
-                                                self)
-
-            connecting = network_client.connect_to_server()
-            message_box.rejected.connect(connecting.cancel)
-            message_box.show()
-            try:
-                await connecting
-            finally:
-                message_box.close()
-
-        if network_client.current_user is None:
-            await async_dialog.execute_dialog(LoginPromptDialog(network_client))
-
-        return network_client.current_user is not None
+        return await ensure_logged_in(self, self.network_client)
 
     @asyncSlot()
     @handle_network_errors

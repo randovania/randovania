@@ -52,9 +52,18 @@ async def show_main_window(app: QtWidgets.QApplication, options, is_preview: boo
     await preset_manager.load_user_presets()
     logger.info("Finished loading presets!")
 
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    network_client: QtNetworkClient = app.network_client
+
+    if randovania.is_frozen() and randovania.is_dev_version():
+        from randovania.gui import main_online_interaction
+        if not await main_online_interaction.ensure_logged_in(None, network_client):
+            app.quit()
+            return
+
     from randovania.gui.main_window import MainWindow
     logger.info("Preparing main window...")
-    main_window = MainWindow(options, preset_manager, app.network_client, is_preview)
+    main_window = MainWindow(options, preset_manager, network_client, is_preview)
     app.main_window = main_window
 
     logger.info("Displaying main window")

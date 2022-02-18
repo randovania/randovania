@@ -95,6 +95,12 @@ class RequestTimeout(BaseNetworkError):
         return f"Request timed out: {self.message}"
 
 
+class UserNotAuthorized(BaseNetworkError):
+    @classmethod
+    def code(cls):
+        return 8
+
+
 def decode_error(data: dict) -> Optional[BaseNetworkError]:
     if "error" not in data:
         return None
