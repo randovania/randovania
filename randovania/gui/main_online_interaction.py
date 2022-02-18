@@ -23,6 +23,7 @@ async def ensure_logged_in(parent: Optional[QtWidgets.QWidget], network_client: 
         message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.NoIcon, "Connecting",
                                             "Connecting to server...", QtWidgets.QMessageBox.Cancel,
                                             parent)
+        common_qt_lib.set_default_window_icon(message_box)
 
         connecting = network_client.connect_to_server()
         message_box.rejected.connect(connecting.cancel)
