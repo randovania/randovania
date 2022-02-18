@@ -3219,6 +3219,32 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
+                        "Dock to Arbitrary Enky Room (DoorEmmy07)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to EMMI First Chase End (DoorPowerPower_001)": {
                             "type": "and",
                             "data": {
@@ -5152,12 +5178,12 @@
                         }
                     }
                 },
-                "Event - Post Chain Reaction Debris": {
+                "Event - Destroy Post Chain Reaction Debris (Below)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
                         "x": -10500.0,
-                        "y": 1300.0,
+                        "y": 1280.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -5167,7 +5193,7 @@
                     },
                     "event_name": "s010_cave:default:db_reg_cv_022",
                     "connections": {
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5375,9 +5401,22 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Event - Post Chain Reaction Debris": {
-                            "type": "template",
-                            "data": "Shoot Diffusion or Wave"
+                        "Event - Early SA Shortcut Blob": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Energy Recharge": {
                             "type": "or",
@@ -5481,6 +5520,27 @@
                                                 }
                                             ]
                                         }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Destroy Post Chain Reaction Debris (Above)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
                                     }
                                 ]
                             }
@@ -5922,9 +5982,9 @@
                                 ]
                             }
                         },
-                        "Event - Post Chain Reaction Debris": {
+                        "Event - Destroy Post Chain Reaction Debris (Below)": {
                             "type": "template",
-                            "data": "Shoot Diffusion or Wave"
+                            "data": "Shoot Beam"
                         },
                         "Teleporter to Cataris - Teleport to Artaria (Red)": {
                             "type": "and",
@@ -5976,6 +6036,30 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Destroy Post Chain Reaction Debris (Above)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10500.0,
+                        "y": 1360.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "db_reg_cv_022",
+                        "actor_def": "actordef:actors/props/db_reg_cv_021/charclasses/db_reg_cv_021.bmsad"
+                    },
+                    "event_name": "s010_cave:default:db_reg_cv_022",
+                    "connections": {
+                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -8747,12 +8831,29 @@
                             "data": "Shoot Beam"
                         },
                         "Event - Thermal Device West Blob": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -12422,7 +12523,7 @@
                         }
                     }
                 },
-                "Event - Slide Alternative Blob": {
+                "Event - Slide Alternative Blob (Below)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12595,7 +12696,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Event - Slide Alternative Blob": {
+                        "Event - Slide Alternative Blob (Below)": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -12745,6 +12846,47 @@
                     "extra": {},
                     "connections": {
                         "Door to EMMI Zone Exit North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Slide Alternative Blob (Above)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Slide Alternative Blob (Above)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 258.0,
+                        "y": 2328.23,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "PRP_DB_CV_000",
+                        "actor_def": "actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad"
+                    },
+                    "event_name": "s010_cave:default:PRP_DB_CV_000",
+                    "connections": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -13979,6 +14121,32 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -14034,6 +14202,32 @@
                                                         "type": "tricks",
                                                         "name": "Walljump",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }

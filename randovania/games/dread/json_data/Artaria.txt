@@ -735,6 +735,8 @@ Extra - asset_id: collision_camera_008
   * EMMI Door to Arbitrary Enky Room/Dock to Teleport to Dairon (DoorEmmy06)
   * Extra - actor_name: DoorEmmy06
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Dock to Arbitrary Enky Room (DoorEmmy07)
+      Morph Ball and Movement (Intermediate)
   > Door to EMMI First Chase End (DoorPowerPower_001)
       Trivial
   > Tunnel to EMMI Zone Exit North
@@ -1172,11 +1174,11 @@ Extra - asset_id: collision_camera_011
   > Tile Group (BOMB) 4
       Trivial
 
-> Event - Post Chain Reaction Debris; Heals? False
+> Event - Destroy Post Chain Reaction Debris (Below); Heals? False
   * Event Artaria - Post Chain Reaction Debris
   * Extra - actor_name: db_reg_cv_022
   * Extra - actor_def: actordef:actors/props/db_reg_cv_021/charclasses/db_reg_cv_021.bmsad
-  > Teleporter to Cataris - Teleport to Artaria (Red)
+  > Under Teleportal
       Trivial
 
 > Event - Early SA Shortcut Blob; Heals? False
@@ -1221,8 +1223,8 @@ Extra - asset_id: collision_camera_011
   * Extra - target_spawn_point: LE_Platform_Teleport_FromCave
   * Extra - start_point_actor_name: LE_Platform_Teleport_FromMagma
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Event - Post Chain Reaction Debris
-      Shoot Diffusion or Wave
+  > Event - Early SA Shortcut Blob
+      Pseudo-Wave Beam (Intermediate)
   > Energy Recharge
       Walljump (Beginner) or Simple IBJ or Use Spin Boost
   > Tile Group (POWERBEAM)
@@ -1233,6 +1235,8 @@ Extra - asset_id: collision_camera_011
       All of the following:
           Can Slide
           After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
+  > Event - Destroy Post Chain Reaction Debris (Above)
+      Pseudo-Wave Beam (Intermediate) or Shoot Diffusion or Wave
 
 > Tile Group (MISSILE); Heals? False
   * Configurable Node
@@ -1328,14 +1332,21 @@ Extra - asset_id: collision_camera_011
       All of the following:
           Gravity Suit
           Simple IBJ or Use Spin Boost
-  > Event - Post Chain Reaction Debris
-      Shoot Diffusion or Wave
+  > Event - Destroy Post Chain Reaction Debris (Below)
+      Shoot Beam
   > Teleporter to Cataris - Teleport to Artaria (Red)
       All of the following:
           Morph Ball
           After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
   > Tile Group (MISSILE)
       Morph Ball
+
+> Event - Destroy Post Chain Reaction Debris (Above); Heals? False
+  * Event Artaria - Post Chain Reaction Debris
+  * Extra - actor_name: db_reg_cv_022
+  * Extra - actor_def: actordef:actors/props/db_reg_cv_021/charclasses/db_reg_cv_021.bmsad
+  > Teleporter to Cataris - Teleport to Artaria (Red)
+      Trivial
 
 ----------------
 Save Station West
@@ -2006,7 +2017,7 @@ Extra - asset_id: collision_camera_022
   > Event - Thermal Device East Blob
       Shoot Beam
   > Event - Thermal Device West Blob
-      Wave Beam
+      Wave Beam or Pseudo-Wave Beam (Intermediate)
 
 > Door to Invisible Corpius Room; Heals? False
   * Access Open to Invisible Corpius Room/Door to Thermal Door Tutorial
@@ -2756,7 +2767,7 @@ Extra - asset_id: collision_camera_048
   > Tile Group (POWERBEAM) 1
       Trivial
 
-> Event - Slide Alternative Blob; Heals? False
+> Event - Slide Alternative Blob (Below); Heals? False
   * Event Artaria - Slide Alternative Blob
   * Extra - actor_name: PRP_DB_CV_000
   * Extra - actor_def: actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad
@@ -2802,7 +2813,7 @@ Extra - asset_id: collision_camera_048
       Simple IBJ or Use Spin Boost
 
 > Below Slide; Heals? False
-  > Event - Slide Alternative Blob
+  > Event - Slide Alternative Blob (Below)
       Shoot Beam
   > Tile Group (POWERBEAM) 3
       Trivial
@@ -2827,6 +2838,15 @@ Extra - asset_id: collision_camera_048
 
 > Start Point; Heals? False; Spawn Point
   > Door to EMMI Zone Exit North
+      Trivial
+  > Event - Slide Alternative Blob (Above)
+      Pseudo-Wave Beam (Intermediate)
+
+> Event - Slide Alternative Blob (Above); Heals? False
+  * Event Artaria - Slide Alternative Blob
+  * Extra - actor_name: PRP_DB_CV_000
+  * Extra - actor_def: actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad
+  > Start Point
       Trivial
 
 ----------------
@@ -3124,10 +3144,12 @@ Extra - asset_id: collision_camera_054
       Any of the following:
           Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
   > Pickup (Missile Tank)
       Any of the following:
           Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
   > Dock to Charge Beam Access
       Trivial
 
