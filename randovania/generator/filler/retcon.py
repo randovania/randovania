@@ -20,7 +20,7 @@ from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
-from randovania.resolver.random_lib import select_element_with_weight
+from randovania.lib.random_lib import select_element_with_weight
 
 _DANGEROUS_ACTION_MULTIPLIER = 0.75
 _EVENTS_WEIGHT_MULTIPLIER = 0.5

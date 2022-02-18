@@ -715,7 +715,7 @@
             }
         },
         "Charge Tutorial": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -838,11 +838,31 @@
                             "data": "Can Slide"
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 6492.78,
+                        "y": -9500.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to First Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Melee Tutorial West": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -982,11 +1002,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9159.968847352025,
+                        "y": -8218.380062305296,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Charge Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Melee Tutorial Room": {
-            "default_node": "Start Point",
+            "default_node": "West of Blob",
             "valid_starting_location": true,
             "extra": {
                 "total_boundings": {
@@ -1293,7 +1333,7 @@
                                 "items": []
                             }
                         },
-                        "Start Point": {
+                        "East of Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1317,7 +1357,7 @@
                     },
                     "event_name": "s010_cave:default:PRP_DB_CV_014",
                     "connections": {
-                        "Start Point": {
+                        "East of Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1326,7 +1366,7 @@
                         }
                     }
                 },
-                "Start Point": {
+                "East of Blob": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -1510,8 +1550,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 13229.361544172234,
-                        "y": -2715.338612554648,
+                        "x": 13256.788247213779,
+                        "y": -2906.456152200833,
                         "z": 0
                     },
                     "description": "",
@@ -1554,7 +1594,7 @@
                                 ]
                             }
                         },
-                        "Start Point": {
+                        "East of Blob": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1648,7 +1688,7 @@
             }
         },
         "Early Cloak Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -2081,6 +2121,26 @@
                         "Event - Early Cloak Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10502.46,
+                        "y": -1778.58,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Save Station South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -2591,7 +2651,7 @@
             }
         },
         "White EMMI Introduction": {
-            "default_node": null,
+            "default_node": "Warp from Entrance",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3159,6 +3219,32 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
+                        "Dock to Arbitrary Enky Room (DoorEmmy07)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to EMMI First Chase End (DoorPowerPower_001)": {
                             "type": "and",
                             "data": {
@@ -3596,7 +3682,7 @@
             }
         },
         "EMMI Zone Exit North": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -3977,11 +4063,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5472.096743195677,
+                        "y": 2260.3309619449965,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Teleport to Dairon": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "EMMI Zone Hub": {
-            "default_node": "Event - Water Device",
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -4752,6 +4858,26 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -4883.215130023641,
+                        "y": -2386.2152425982213,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to EMMI Zone Exit Southwest (DoorFrame_005)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -4925,7 +5051,7 @@
                                 ]
                             }
                         },
-                        "Under Teleporter": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4982,7 +5108,7 @@
                     "dock_type": "other",
                     "dock_weakness": "EMMI Door",
                     "connections": {
-                        "Under Teleporter": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5052,12 +5178,12 @@
                         }
                     }
                 },
-                "Event - Post Chain Reaction Debris": {
+                "Event - Destroy Post Chain Reaction Debris (Below)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
                         "x": -10500.0,
-                        "y": 1300.0,
+                        "y": 1280.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -5067,7 +5193,7 @@
                     },
                     "event_name": "s010_cave:default:db_reg_cv_022",
                     "connections": {
-                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5275,9 +5401,22 @@
                     "keep_name_when_vanilla": true,
                     "editable": true,
                     "connections": {
-                        "Event - Post Chain Reaction Debris": {
-                            "type": "template",
-                            "data": "Shoot Diffusion or Wave"
+                        "Event - Early SA Shortcut Blob": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Energy Recharge": {
                             "type": "or",
@@ -5347,7 +5486,7 @@
                                 ]
                             }
                         },
-                        "Under Teleporter": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5384,6 +5523,27 @@
                                     }
                                 ]
                             }
+                        },
+                        "Event - Destroy Post Chain Reaction Debris (Above)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Diffusion or Wave"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -5414,7 +5574,7 @@
                                 "negate": false
                             }
                         },
-                        "Under Teleporter": {
+                        "Under Teleportal": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5771,12 +5931,12 @@
                         }
                     }
                 },
-                "Under Teleporter": {
+                "Under Teleportal": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": -10207.742934572203,
-                        "y": 854.2973286875726,
+                        "x": -10196.50043744532,
+                        "y": 887.7077865266842,
                         "z": 0
                     },
                     "description": "",
@@ -5822,9 +5982,9 @@
                                 ]
                             }
                         },
-                        "Event - Post Chain Reaction Debris": {
+                        "Event - Destroy Post Chain Reaction Debris (Below)": {
                             "type": "template",
-                            "data": "Shoot Diffusion or Wave"
+                            "data": "Shoot Beam"
                         },
                         "Teleporter to Cataris - Teleport to Artaria (Red)": {
                             "type": "and",
@@ -5876,6 +6036,30 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Event - Destroy Post Chain Reaction Debris (Above)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -10500.0,
+                        "y": 1360.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "db_reg_cv_022",
+                        "actor_def": "actordef:actors/props/db_reg_cv_021/charclasses/db_reg_cv_021.bmsad"
+                    },
+                    "event_name": "s010_cave:default:db_reg_cv_022",
+                    "connections": {
+                        "Teleporter to Cataris - Teleport to Artaria (Red)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -6016,7 +6200,7 @@
             }
         },
         "Charge Beam Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -6428,6 +6612,26 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -6910.233918128655,
+                        "y": -8429.239766081871,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door from Cold Introduction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -6607,7 +6811,7 @@
             }
         },
         "EMMI Zone Spinner": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -7006,11 +7210,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 986.7443431273218,
+                        "y": -1599.1922773837666,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Wide Beam Block Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Proto EMMI Introduction": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -7316,6 +7540,26 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 15091.722296395194,
+                        "y": -1864.7752558967513,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Melee Tutorial Room (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -7773,7 +8017,7 @@
             }
         },
         "EMMI Zone Entrance Hallway": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -7859,6 +8103,26 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {
                         "Door to EMMI Zone First Entrance": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10549.944305207464,
+                        "y": -3398.9139515455304,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Dock to Melee Tutorial Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8404,7 +8668,7 @@
             }
         },
         "Thermal Door Tutorial": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -8567,12 +8831,29 @@
                             "data": "Shoot Beam"
                         },
                         "Event - Thermal Device West Blob": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -8725,11 +9006,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16146.859169199595,
+                        "y": 3176.190476190476,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to David Jaffe Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Magma Flow Vista": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -8826,11 +9127,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18248.160510310045,
+                        "y": 3536.7452900163175,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Thermal Door Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "East Lava Missile Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -9059,11 +9380,67 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24483.138401559452,
+                        "y": 2772.072124756335,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Hot Room Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 40,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
         "Hot Room Hub": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -9276,6 +9653,26 @@
                     "dock_weakness": "Power Beam Door",
                     "connections": {
                         "Door to Hot Cataris Shortcut": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 25172.863897331983,
+                        "y": 1333.9074636946975,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Save Station East": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9911,7 +10308,7 @@
             }
         },
         "Varia Suit Tutorial South": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -10080,11 +10477,67 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7840.031152647975,
+                        "y": 4819.781931464175,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Chain Reaction Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 20,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
         "Varia Suit Tutorial North": {
-            "default_node": null,
+            "default_node": "Ledge above lava",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -11095,7 +11548,7 @@
             }
         },
         "Spider Beam Tower": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -11468,6 +11921,26 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 3050.5741303613645,
+                        "y": 7378.081729145559,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Save Station North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -11735,7 +12208,7 @@
             }
         },
         "First Tutorial Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -11825,11 +12298,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -903.0075187969924,
+                        "y": -7400.0387078808135,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Energy Recharge Station South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "EMMI Zone Dome": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -12030,7 +12523,7 @@
                         }
                     }
                 },
-                "Event - Slide Alternative Blob": {
+                "Event - Slide Alternative Blob (Below)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -12203,7 +12696,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Event - Slide Alternative Blob": {
+                        "Event - Slide Alternative Blob (Below)": {
                             "type": "template",
                             "data": "Shoot Beam"
                         },
@@ -12338,6 +12831,67 @@
                         "Below Slide": {
                             "type": "template",
                             "data": "Can Slide"
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 322.9741019214707,
+                        "y": 2660.77694235589,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to EMMI Zone Exit North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Slide Alternative Blob (Above)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Pseudo",
+                                            "amount": 2,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Slide Alternative Blob (Above)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 258.0,
+                        "y": 2328.23,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {
+                        "actor_name": "PRP_DB_CV_000",
+                        "actor_def": "actordef:actors/props/breakablecave009/charclasses/breakablecave009.bmsad"
+                    },
+                    "event_name": "s010_cave:default:PRP_DB_CV_000",
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 }
@@ -12834,7 +13388,7 @@
             }
         },
         "EMMI Zone Exit Northwest": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -13197,11 +13751,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -5412.336396546923,
+                        "y": 2295.7950431634645,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to EMMI Zone Dome": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "EMMI Zone Ballspark Hallway": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -13325,6 +13899,26 @@
                         ]
                     },
                     "connections": {}
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 2468.323586744639,
+                        "y": 1300.494291283765,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to White EMMI Introduction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -13527,6 +14121,32 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -13587,6 +14207,32 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -13630,7 +14276,7 @@
             }
         },
         "Chain Reaction Access": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -13893,6 +14539,23 @@
                                 "comment": null,
                                 "items": []
                             }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13693.510075424969,
+                        "y": 2308.6907576269277,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Tunnel to Waterfall": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 }
@@ -14490,7 +15153,7 @@
             }
         },
         "Water Tunnel under Map": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -14574,6 +15237,26 @@
                     "dock_weakness": "Open Passage",
                     "connections": {
                         "Dock to Water Reservoir": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -13986.44859813084,
+                        "y": -2921.2118380062307,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Dock to Waterfall": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -14718,7 +15401,7 @@
             }
         },
         "Behind Waterfall": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -14806,6 +15489,26 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
+                    "connections": {
+                        "Door to Water Reservoir": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -12415.051395007342,
+                        "y": -452.60442855319604,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Water Reservoir": {
                             "type": "and",
@@ -15112,7 +15815,7 @@
             }
         },
         "EMMI Zone Exit South": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -15292,11 +15995,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -951.4522120905101,
+                        "y": -6581.363278171789,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Dock to Energy Recharge Station South": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Cold Introduction": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -15622,6 +16345,26 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7769.883040935672,
+                        "y": -8415.78947368421,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Charge Beam Access (Side Tunnel)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -15759,7 +16502,7 @@
             }
         },
         "Proto EMMI Battle": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -15848,6 +16591,26 @@
                     },
                     "dock_type": "other",
                     "dock_weakness": "Open Passage",
+                    "connections": {
+                        "Door to Proto EMMI Introduction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 18099.83311081442,
+                        "y": -3349.7329773030706,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Proto EMMI Introduction": {
                             "type": "and",
@@ -16028,7 +16791,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "generic",
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": {
                         "x": 11850.0,
@@ -16042,6 +16805,8 @@
                         "start_point_actor_name": "PRP_CV_AccessPoint002_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
+                    "string_asset_id": 1,
+                    "lore_type": "generic",
                     "connections": {
                         "Door to David Jaffe Room": {
                             "type": "and",
@@ -16076,7 +16841,7 @@
             }
         },
         "Path to Thermal Device": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -16205,6 +16970,26 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Access Closed",
+                    "connections": {
+                        "Door to Thermal Device": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 20124.43999406616,
+                        "y": 1089.8218365227713,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
                     "connections": {
                         "Door to Thermal Device": {
                             "type": "and",
@@ -16586,7 +17371,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "generic",
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": {
                         "x": 7850.0,
@@ -16600,6 +17385,8 @@
                         "start_point_actor_name": "PRP_CV_AccessPoint001_WeightPlate",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
+                    "string_asset_id": 2,
+                    "lore_type": "generic",
                     "connections": {
                         "Door to Melee Tutorial West": {
                             "type": "and",
@@ -16620,7 +17407,7 @@
             }
         },
         "Wide Beam Block Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -16859,11 +17646,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -1080.2180685358255,
+                        "y": -2450.7788161993767,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to EMMI Zone Hub (DoorFrame_006)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Arbitrary Enky Room": {
-            "default_node": "Total Recharge",
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -16927,7 +17734,7 @@
                                 "negate": false
                             }
                         },
-                        "Next to Blobs": {
+                        "Start Point": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -16980,7 +17787,7 @@
                                 "negate": false
                             }
                         },
-                        "Next to Blobs": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17162,7 +17969,7 @@
                     },
                     "event_name": "s010_cave:default:breakablecave017",
                     "connections": {
-                        "Next to Blobs": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17186,7 +17993,7 @@
                     },
                     "event_name": "s010_cave:default:breakablecave016",
                     "connections": {
-                        "Next to Blobs": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17308,12 +18115,12 @@
                         }
                     }
                 },
-                "Next to Blobs": {
+                "Start Point": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 10380.549110595515,
-                        "y": 3613.766434648105,
+                        "x": 9844.860499265786,
+                        "y": 3230.286343612335,
                         "z": 0
                     },
                     "description": "",
@@ -17422,7 +18229,7 @@
             }
         },
         "EMMI First Chase End": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -17619,6 +18426,26 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9092.690058479533,
+                        "y": 1032.748538011696,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Teleport to Dairon (DoorFrame_015)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -17753,7 +18580,7 @@
             }
         },
         "Phantom Cloak Tutorial": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -17928,6 +18755,26 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 16779.906542056076,
+                        "y": -440.18691588785055,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Path to Corpius": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -18039,7 +18886,7 @@
             }
         },
         "EMMI Zone Exit Southwest": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -18188,6 +19035,26 @@
                             }
                         },
                         "Door to EMMI Zone Hub (DoorFrame_004)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -7943.107769423559,
+                        "y": -2403.23029796714,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Dock to Water Reservoir": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -18514,7 +19381,7 @@
             }
         },
         "Hot Cataris Shortcut": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -19057,6 +19924,62 @@
                                     {
                                         "type": "template",
                                         "data": "Can Slide"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 27271.369233051475,
+                        "y": 3225.159471888444,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Hot Room Hub": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Varia",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Heat",
+                                                        "amount": 40,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -21155,7 +22078,7 @@
             }
         },
         "Speed Booster Bonus Room": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -21238,11 +22161,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -16667.757009345794,
+                        "y": -7207.816199376947,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Tile Group (SPEEDBOOST)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Shortcut to Screw Attack": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -21373,11 +22316,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -18684.267912772586,
+                        "y": -2119.158878504673,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Screw Attack Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Speed Hallway": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -21824,11 +22787,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": -9509.123275478418,
+                        "y": -8398.642634623942,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Cold Introduction": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Shinespark Tower to Grapple": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -22091,11 +23074,31 @@
                             }
                         }
                     }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 523.1059326804009,
+                        "y": 4064.5446358212316,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Dock to EMMI Zone Exit North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 }
             }
         },
         "Grapple Beam Tutorial": {
-            "default_node": null,
+            "default_node": "Start Point",
             "valid_starting_location": false,
             "extra": {
                 "total_boundings": {
@@ -22263,6 +23266,26 @@
                     "dock_weakness": "Power Beam Door",
                     "connections": {
                         "Door to Grapple Beam Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Start Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 5001.461988304093,
+                        "y": 5853.508771929824,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Spider Beam Tower": {
                             "type": "and",
                             "data": {
                                 "comment": null,

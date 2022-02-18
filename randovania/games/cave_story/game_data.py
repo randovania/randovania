@@ -1,6 +1,3 @@
-from randovania.games.cave_story.generator.base_patches_factory import CSBasePatchesFactory
-from randovania.games.cave_story.generator.bootstrap import CSBootstrap
-from randovania.games.cave_story.generator.pool_creator import pool_creator
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import (
@@ -11,7 +8,7 @@ from randovania.games.cave_story.patcher.caver_patcher import CaverPatcher
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
 
 
-def _cs_gui():
+def _gui():
     from randovania.games.cave_story.gui.hint_details_tab import HintDetailsTab
     from randovania.games.cave_story.gui.dialog.cs_cosmetic_patches_dialog import CSCosmeticPatchesDialog
     from randovania.games.cave_story.gui.preset_settings import cs_preset_tabs
@@ -24,6 +21,20 @@ def _cs_gui():
         progressive_item_gui_tuples=progressive_items.gui_tuples(),
         spoiler_visualizer=(HintDetailsTab,),
         help_widget=lambda: CSHelpWidget(),
+    )
+
+
+def _generator():
+    from randovania.games.cave_story.generator.bootstrap import CSBootstrap
+    from randovania.games.cave_story.generator.hint_distributor import CSHintDistributor
+    from randovania.games.cave_story.generator.pool_creator import pool_creator
+    from randovania.generator.base_patches_factory import BasePatchesFactory
+
+    return GameGenerator(
+        item_pool_creator=pool_creator,
+        bootstrap=CSBootstrap(),
+        base_patches_factory=BasePatchesFactory(),
+        hint_distributor=CSHintDistributor(),
     )
 
 
@@ -41,8 +52,7 @@ game_data: GameData = GameData(
         }
     ],
 
-    faq={
-    }.items(),
+    faq=[],
 
     layout=GameLayout(
         configuration=CSConfiguration,
@@ -52,16 +62,12 @@ game_data: GameData = GameData(
             unexpected_items=cs_unexpected_items,
             format_params=cs_format_params,
         ),
-        get_ingame_hash=get_ingame_hash_str
+        get_ingame_hash=get_ingame_hash_str,
     ),
 
-    gui=_cs_gui,
+    gui=_gui,
 
-    generator=GameGenerator(
-        item_pool_creator=pool_creator,
-        bootstrap=CSBootstrap(),
-        base_patches_factory=CSBasePatchesFactory()
-    ),
+    generator=_generator,
 
     patcher=CaverPatcher()
 )

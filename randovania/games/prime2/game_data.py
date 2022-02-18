@@ -1,15 +1,15 @@
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
-from randovania.games.prime2.generator.base_patches_factory import EchoesBasePatchesFactory
-from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
-from randovania.games.prime2.generator.item_pool.pool_creator import echoes_specific_pool
+from randovania.games import game
+from randovania.games.game import GameData, GameLayout, GamePresetDescriber
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.preset_describer import echoes_format_params, echoes_unexpected_items, \
+from randovania.games.prime2.layout.preset_describer import (
+    echoes_format_params, echoes_unexpected_items,
     echoes_expected_items
+)
 from randovania.games.prime2.patcher.claris_patcher import ClarisPatcher
 
 
-def _echoes_gui():
+def _gui() -> game.GameGui:
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
     from randovania.games.prime2.item_database import prime2_progressive_items
     from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
@@ -18,13 +18,27 @@ def _echoes_gui():
     from randovania.games.prime2.gui.hint_details_tab import HintDetailsTab
     from randovania.games.prime2.gui.echoes_help_widget import EchoesHelpWidget
 
-    return GameGui(
+    return game.GameGui(
         tab_provider=prime2_preset_tabs,
         cosmetic_dialog=EchoesCosmeticPatchesDialog,
         input_file_text=("an ISO file", "the Nintendo Gamecube", "Gamecube ISO"),
         progressive_item_gui_tuples=prime2_progressive_items.gui_tuples(),
         spoiler_visualizer=(TeleporterDetailsTab, TranslatorGateDetailsTab, HintDetailsTab),
         help_widget=lambda: EchoesHelpWidget(),
+    )
+
+
+def _generator() -> game.GameGenerator:
+    from randovania.games.prime2.generator.base_patches_factory import EchoesBasePatchesFactory
+    from randovania.games.prime2.generator.bootstrap import EchoesBootstrap
+    from randovania.games.prime2.generator.item_pool.pool_creator import echoes_specific_pool
+    from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
+
+    return game.GameGenerator(
+        item_pool_creator=echoes_specific_pool,
+        bootstrap=EchoesBootstrap(),
+        base_patches_factory=EchoesBasePatchesFactory(),
+        hint_distributor=EchoesHintDistributor(),
     )
 
 
@@ -94,17 +108,13 @@ This means you need Boost Ball to fight Spider Guardian."""),
         preset_describer=GamePresetDescriber(
             expected_items=echoes_expected_items,
             unexpected_items=echoes_unexpected_items,
-            format_params=echoes_format_params
+            format_params=echoes_format_params,
         )
     ),
 
-    gui=_echoes_gui,
+    gui=_gui,
 
-    generator=GameGenerator(
-        item_pool_creator=echoes_specific_pool,
-        bootstrap=EchoesBootstrap(),
-        base_patches_factory=EchoesBasePatchesFactory()
-    ),
+    generator=_generator,
 
     patcher=ClarisPatcher()
 )

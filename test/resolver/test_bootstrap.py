@@ -2,8 +2,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.game_description import default_database
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
 
 
 @pytest.mark.parametrize("vanilla_elevators", [False, True])
@@ -19,8 +21,8 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")
 
     # Run
-    result = configuration.game.data.generator.bootstrap.misc_resources_for_configuration(configuration,
-                                                                                          echoes_resource_database)
+    result = configuration.game.data.generator().bootstrap.misc_resources_for_configuration(configuration,
+                                                                                            echoes_resource_database)
     relevant_tricks = {
         trick: result[trick]
         for trick in [gfmc_resource, torvus_resource, great_resource]
@@ -34,11 +36,12 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     }
 
 
-def test_logic_bootstrap(default_echoes_preset, echoes_game_description):
-    new_game, state = echoes_game_description.game.data.generator.bootstrap.logic_bootstrap(
-        default_echoes_preset.configuration,
-        echoes_game_description.make_mutable_copy(),
-        echoes_game_description.create_game_patches())
+def test_logic_bootstrap(preset_manager, game_enum):
+    game = default_database.game_description_for(game_enum)
+    new_game, state = game_enum.data.generator().bootstrap.logic_bootstrap(
+        preset_manager.default_preset_for_game(game_enum).get_preset().configuration,
+        game.make_mutable_copy(),
+        game.create_game_patches())
 
 
 @pytest.mark.parametrize(["expected", "suits"], [
@@ -57,10 +60,11 @@ def test_prime1_progressive_damage_reduction(prime1_resource_database, expected,
         prime1_resource_database.get_item_by_name(suit): 1
         for suit in suits
     }
+    bootstrap = RandovaniaGame.METROID_PRIME.data.generator().bootstrap
+    assert isinstance(bootstrap, PrimeBootstrap)
 
     # Run
-    result = RandovaniaGame.METROID_PRIME.data.generator.bootstrap.prime1_progressive_damage_reduction(
-        prime1_resource_database, current_resources)
+    result = bootstrap.prime1_progressive_damage_reduction(prime1_resource_database, current_resources)
 
     # Assert
     assert result == expected
@@ -82,9 +86,11 @@ def test_prime1_absolute_damage_reduction(prime1_resource_database, expected, su
         prime1_resource_database.get_item_by_name(suit): 1
         for suit in suits
     }
+    bootstrap = RandovaniaGame.METROID_PRIME.data.generator().bootstrap
+    assert isinstance(bootstrap, PrimeBootstrap)
 
     # Run
-    result = RandovaniaGame.METROID_PRIME.data.generator.bootstrap.prime1_absolute_damage_reduction(
+    result = bootstrap.prime1_absolute_damage_reduction(
         prime1_resource_database, current_resources)
 
     # Assert

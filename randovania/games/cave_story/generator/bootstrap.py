@@ -5,8 +5,8 @@ from randovania.resolver.bootstrap import Bootstrap, EnergyConfig
 
 
 class CSBootstrap(Bootstrap):
-    def _get_enabled_misc_resources(self, configuration: CSConfiguration, resource_database: ResourceDatabase) -> set[
-        str]:
+    def _get_enabled_misc_resources(self, configuration: CSConfiguration,
+                                    resource_database: ResourceDatabase) -> set[str]:
         enabled_resources = set()
 
         objectives = {

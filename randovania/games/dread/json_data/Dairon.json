@@ -1318,7 +1318,7 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -1326,31 +1326,48 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Grapple",
+                                            "name": "Morph",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6377,7 +6394,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "generic",
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": {
                         "x": 50.0,
@@ -6391,6 +6408,8 @@
                         "start_point_actor_name": "accesspoint_000_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
+                    "string_asset_id": 5,
+                    "lore_type": "generic",
                     "connections": {
                         "Door to Heated Room West": {
                             "type": "and",
@@ -10199,7 +10218,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s030_baselab:default:db_dif_b1_001",
+                                            "name": "s030_baselab:default:db_reg_b1_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -15568,7 +15587,7 @@
                     }
                 },
                 "Navigation Room": {
-                    "node_type": "generic",
+                    "node_type": "logbook",
                     "heal": false,
                     "coordinates": {
                         "x": 4050.0,
@@ -15582,6 +15601,8 @@
                         "start_point_actor_name": "accesspoint_001_platform",
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
                     },
+                    "string_asset_id": 6,
+                    "lore_type": "generic",
                     "connections": {
                         "Door to West Transport to Ferenia (Lower)": {
                             "type": "and",

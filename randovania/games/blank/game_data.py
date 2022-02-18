@@ -1,5 +1,5 @@
 from randovania.games import game
-from randovania.games.blank import generator, layout
+from randovania.games.blank import layout
 
 
 def _gui() -> game.GameGui:
@@ -10,6 +10,18 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=gui.BlankCosmeticPatchesDialog,
         progressive_item_gui_tuples=tuple(),
         spoiler_visualizer=tuple(),
+    )
+
+
+def _generator() -> game.GameGenerator:
+    from randovania.games.blank import generator
+    from randovania.generator.hint_distributor import AllJokesHintDistributor
+
+    return game.GameGenerator(
+        item_pool_creator=generator.pool_creator,
+        bootstrap=generator.BlankBootstrap(),
+        base_patches_factory=generator.BlankBasePatchesFactory(),
+        hint_distributor=AllJokesHintDistributor(),
     )
 
 
@@ -33,11 +45,7 @@ game_data: game.GameData = game.GameData(
 
     gui=_gui,
 
-    generator=game.GameGenerator(
-        item_pool_creator=generator.pool_creator,
-        bootstrap=generator.BlankBootstrap(),
-        base_patches_factory=generator.BlankBasePatchesFactory(),
-    ),
+    generator=_generator,
 
     patcher=None,
 )

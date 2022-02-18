@@ -239,9 +239,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         )
         self._can_stop_background_process = True
 
-    def _open_map_tracker(self):
+    @asyncSlot()
+    async def _open_map_tracker(self):
         current_preset = self.layout_description.get_preset(self.current_player_index)
-        self._window_manager.open_map_tracker(current_preset)
+        await self._window_manager.open_map_tracker(current_preset)
 
     # Layout Visualization
 

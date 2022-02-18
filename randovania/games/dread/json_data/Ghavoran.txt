@@ -429,6 +429,7 @@ Extra - asset_id: collision_camera_006
       Trivial
 
 > Navigation Room; Heals? False; Spawn Point
+  * Logbook Generic for a
   * Extra - actor_name: accesspoint_000
   * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
   * Extra - start_point_actor_name: accesspoint_000_platform
@@ -469,6 +470,8 @@ Extra - asset_id: collision_camera_007
   * Extra - right_shield_def: None
   > Door to Navigation Station
       After Ghavoran - Super Missile Rotatable
+  > Tunnel to Spider Magnet Elevator
+      Before Ghavoran - Super Missile Rotatable
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_7B
@@ -495,6 +498,8 @@ Extra - asset_id: collision_camera_007
 
 > Tunnel to Spider Magnet Elevator; Heals? False
   * Morph Ball Tunnel to Spider Magnet Elevator/Tunnel to Flipper Room (Tunnel)
+  > Door to Elun Transport Access
+      Before Ghavoran - Super Missile Rotatable
 
 > Event - Super Missile Rotatable Enky; Heals? False
   * Event Ghavoran - Super Missile Rotatable Enky
@@ -898,18 +903,18 @@ Extra - asset_id: collision_camera_014
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Early Ice Room (dooremmy_005)
+  > Dock to Early Ice Room (Upper)
       Trivial
 
-> Dock to Early Ice Room (dooremmy_004); Heals? False
-  * EMMI Door to Early Ice Room/Dock to EMMI Zone Exit West (dooremmy_004)
+> Dock to Early Ice Room (Lower); Heals? False
+  * EMMI Door to Early Ice Room/Dock to EMMI Zone Exit West (Lower)
   * Extra - actor_name: dooremmy_004
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Upper Platform
       Trivial
 
-> Dock to Early Ice Room (dooremmy_005); Heals? False
-  * EMMI Door to Early Ice Room/Dock to EMMI Zone Exit West (dooremmy_005)
+> Dock to Early Ice Room (Upper); Heals? False
+  * EMMI Door to Early Ice Room/Dock to EMMI Zone Exit West (Upper)
   * Extra - actor_name: dooremmy_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Door to EMMI Zone Middle Path (doorgrapplegrapple_006)
@@ -925,7 +930,7 @@ Extra - asset_id: collision_camera_014
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Early Ice Room (dooremmy_005)
+  > Dock to Early Ice Room (Upper)
       Trivial
 
 > Dock to EMMI Zone Exit Southeast; Heals? False
@@ -947,7 +952,7 @@ Extra - asset_id: collision_camera_014
       Trivial
 
 > Upper Platform; Heals? False
-  > Dock to Early Ice Room (dooremmy_004)
+  > Dock to Early Ice Room (Lower)
       Trivial
   > Dock to EMMI Zone Exit Southeast
       Trivial
@@ -959,20 +964,20 @@ Early Ice Room
 Extra - total_boundings: {'x1': -12000.0, 'x2': -9900.0, 'y1': 2200.0, 'y2': 6400.0}
 Extra - polygon: [[-9900.0, 6400.0], [-12000.0, 6400.0], [-12000.0, 2200.0], [-9900.0, 2200.0]]
 Extra - asset_id: collision_camera_015
-> Dock to EMMI Zone Exit West (dooremmy_004); Heals? False
-  * EMMI Door to EMMI Zone Exit West/Dock to Early Ice Room (dooremmy_004)
+> Dock to EMMI Zone Exit West (Lower); Heals? False
+  * EMMI Door to EMMI Zone Exit West/Dock to Early Ice Room (Lower)
   * Extra - actor_name: dooremmy_004
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock to EMMI Zone Exit West (dooremmy_005)
+  > Dock to EMMI Zone Exit West (Upper)
       Trivial
   > Spin Boost Ledge
       Gravity Suit or Water Bomb Jump (Beginner) or Use Spin Boost
 
-> Dock to EMMI Zone Exit West (dooremmy_005); Heals? False
-  * EMMI Door to EMMI Zone Exit West/Dock to Early Ice Room (dooremmy_005)
+> Dock to EMMI Zone Exit West (Upper); Heals? False
+  * EMMI Door to EMMI Zone Exit West/Dock to Early Ice Room (Upper)
   * Extra - actor_name: dooremmy_005
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock to EMMI Zone Exit West (dooremmy_004)
+  > Dock to EMMI Zone Exit West (Lower)
       Trivial
 
 > Dock to EMMI Zone Exit Northwest; Heals? False
@@ -983,7 +988,7 @@ Extra - asset_id: collision_camera_015
       Trivial
 
 > Spin Boost Ledge; Heals? False
-  > Dock to EMMI Zone Exit West (dooremmy_004)
+  > Dock to EMMI Zone Exit West (Lower)
       Trivial
   > Dock to EMMI Zone Exit Northwest
       Simple IBJ or Use Spin Boost
@@ -1486,7 +1491,7 @@ Extra - asset_id: collision_camera_023
 Golzuna Tower
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 4000.0, 'x2': 7100.0, 'y1': 3192.0, 'y2': 8400.0}
-Extra - polygon: [[7100.0, 8400.0, 'top right'], [4760.0, 8400.0, 'top right of elevator'], [4760.0, 7350.0, 'bottom right of elevator'], [4000.0, 7350.0, 'bottom left of elevator'], [4000.0, 3192.0, 'bot left'], [7100.0, 3192.0, 'bot right']]
+Extra - polygon: [[7100.0, 8400.0, 'top right'], [4000.0, 8400.0, 'top left'], [4000.0, 3192.0, 'bot left'], [7100.0, 3192.0, 'bot right']]
 Extra - asset_id: collision_camera_024
 > Door to Save Station East; Heals? False
   * Power Beam Door to Save Station East/Door to Golzuna Tower
@@ -1527,6 +1532,28 @@ Extra - asset_id: collision_camera_024
   > Door to Save Station East
       Trivial
 
+> Door to Above Pulse Radar; Heals? False
+  * Charge Beam Door to Above Pulse Radar/Door from Golzuna Tower
+  * Extra - actor_name: doorclosedcharge
+  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
+  * Extra - left_shield_entity: {EMPTY}
+  * Extra - left_shield_def: None
+  * Extra - right_shield_entity: {EMPTY}
+  * Extra - right_shield_def: None
+  > Teleporter to Cataris
+      Trivial
+
+> Teleporter to Cataris; Heals? False; Spawn Point
+  * Teleporter to Cataris - Teleport to Ghavoran
+  * Extra - actor_name: teleporter_magma_000
+  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
+  * Extra - elevator_component: CTeleporterUsableComponent
+  * Extra - target_spawn_point: teleporter_forest_000_platform
+  * Extra - start_point_actor_name: teleporter_magma_000_platform
+  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
+  > Door to Above Pulse Radar
+      Trivial
+
 > Pickup (Energy Part); Heals? False
   * Pickup 112; Major Location? True
   * Extra - actor_name: item_energyfragment
@@ -1542,12 +1569,6 @@ Extra - asset_id: collision_camera_024
       Ballspark
   > Tile Group (WEIGHT) 3
       Morph Ball
-
-> Start Point; Heals? False; Spawn Point
-  * Extra - start_point_actor_name: SP_Checkpoint_SuperGoliath
-  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Above Golzuna
-      Trivial
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -1670,34 +1691,6 @@ Extra - asset_id: collision_camera_024
 > Dock to Energy Recharge Station; Heals? False
   * Open Passage to Energy Recharge Station/Dock to Golzuna Tower
   > Tile Group (POWERBEAM) 3
-      Trivial
-
-----------------
-Teleport to Cataris
-(Valid Starting Location)
-Extra - total_boundings: {'x1': 4000.0, 'x2': 4760.0, 'y1': 7400.0, 'y2': 8000.0}
-Extra - polygon: [[4760.0, 8000.0], [4000.0, 8000.0], [4000.0, 7400.0], [4760.0, 7400.0]]
-Extra - asset_id: collision_camera_024
-> Teleporter to Cataris; Heals? False; Spawn Point
-  * Teleporter to Cataris - Teleport to Ghavoran
-  * Extra - actor_name: teleporter_magma_000
-  * Extra - actor_def: actordef:actors/props/teleporter/charclasses/teleporter.bmsad
-  * Extra - elevator_component: CTeleporterUsableComponent
-  * Extra - target_spawn_point: teleporter_forest_000_platform
-  * Extra - start_point_actor_name: teleporter_magma_000_platform
-  * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Door to Above Pulse Radar
-      Trivial
-
-> Door to Above Pulse Radar; Heals? False
-  * Charge Beam Door to Above Pulse Radar/Door from Teleport to Cataris
-  * Extra - actor_name: doorclosedcharge
-  * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
-  * Extra - left_shield_entity: {EMPTY}
-  * Extra - left_shield_def: None
-  * Extra - right_shield_entity: {EMPTY}
-  * Extra - right_shield_def: None
-  > Teleporter to Cataris
       Trivial
 
 ----------------
@@ -2757,8 +2750,8 @@ Extra - asset_id: collision_camera_039
   > Tile Group (POWERBEAM) 1
       Can Slide
 
-> Door from Teleport to Cataris; Heals? False
-  * Access Closed to Teleport to Cataris/Door to Above Pulse Radar
+> Door from Golzuna Tower; Heals? False
+  * Access Closed to Golzuna Tower/Door to Above Pulse Radar
   * Extra - actor_name: doorclosedcharge
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2803,7 +2796,7 @@ Extra - asset_id: collision_camera_039
   * Extra - tile_types: ('POWERBEAM',)
   > Pickup (Missile Tank)
       Can Slide
-  > Door from Teleport to Cataris
+  > Door from Golzuna Tower
       Morph Ball
 
 > Tile Group (POWERBEAM) 3; Heals? False
