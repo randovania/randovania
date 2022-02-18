@@ -10,7 +10,7 @@ import peewee
 from oauthlib.oauth2 import OAuth2Error
 from requests_oauthlib import OAuth2Session
 
-from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction
+from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction, UserNotAuthorized
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
@@ -50,6 +50,11 @@ def _create_session_with_discord_token(sio: ServerApp, access_token: str) -> Tup
     if user.name != discord_user.name:
         user.name = discord_user.name
         user.save()
+
+    if sio.enforce_role is not None:
+        if not sio.enforce_role.verify_user(discord_user.id):
+            logger().info("User %s is not authorized for connecting to the server", discord_user.name)
+            raise UserNotAuthorized()
 
     with sio.session() as session:
         session["user-id"] = user.id

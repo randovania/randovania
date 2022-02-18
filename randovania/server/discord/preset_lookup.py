@@ -27,10 +27,6 @@ def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset):
         embed.add_field(name=category, value="\n".join(items), inline=True)
 
 
-def _is_dev_version():
-    return ".dev" in randovania.VERSION
-
-
 def get_version(original_permalink: str, randovania_version: bytes) -> Optional[str]:
     try:
         version_raw = subprocess.run(
@@ -39,7 +35,7 @@ def get_version(original_permalink: str, randovania_version: bytes) -> Optional[
         ).stdout.strip()
         version_split = version_raw.split("-")
 
-        is_dev_version = _is_dev_version()
+        is_dev_version = randovania.is_dev_version()
 
         if len(version_split) > 1:
             # dev version

@@ -1,4 +1,5 @@
 import asyncio
+import functools
 import locale
 import logging.handlers
 import os
@@ -52,9 +53,30 @@ async def show_main_window(app: QtWidgets.QApplication, options, is_preview: boo
     await preset_manager.load_user_presets()
     logger.info("Finished loading presets!")
 
+    from randovania.gui.lib.qt_network_client import QtNetworkClient
+    network_client: QtNetworkClient = app.network_client
+
+    if randovania.is_frozen() and randovania.is_dev_version():
+        try:
+            logger.info("Disabling quit on last window closed")
+            app.setQuitOnLastWindowClosed(False)
+            from randovania.gui import main_online_interaction
+            if not await main_online_interaction.ensure_logged_in(None, network_client):
+                from randovania.gui.lib import async_dialog
+                await async_dialog.warning(None, "Login required",
+                                           "Logging in is required to use dev builds.")
+                app.quit()
+                return
+        finally:
+            def reset_last_window_quit():
+                logger.info("Re-enabling quit on last window closed")
+                app.setQuitOnLastWindowClosed(True)
+
+            QtCore.QTimer.singleShot(1000, reset_last_window_quit)
+
     from randovania.gui.main_window import MainWindow
     logger.info("Preparing main window...")
-    main_window = MainWindow(options, preset_manager, app.network_client, is_preview)
+    main_window = MainWindow(options, preset_manager, network_client, is_preview)
     app.main_window = main_window
 
     logger.info("Displaying main window")
@@ -250,9 +272,12 @@ async def qt_main(app: QtWidgets.QApplication, data_dir: Path, args):
 
     @qasync.asyncClose
     async def _on_last_window_closed():
-        await app.network_client.disconnect_from_server()
-        await app.game_connection.stop()
-        logger.info("Last QT window closed")
+        if app.quitOnLastWindowClosed():
+            await app.network_client.disconnect_from_server()
+            await app.game_connection.stop()
+            logger.info("Last QT window closed")
+        else:
+            logger.warning("Last Qt window closed, but currently not doing anything")
 
     app.setQuitOnLastWindowClosed(True)
     app.lastWindowClosed.connect(_on_last_window_closed, QtCore.Qt.QueuedConnection)
