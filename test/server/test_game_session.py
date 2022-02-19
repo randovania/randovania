@@ -622,7 +622,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
-    layout_description.as_json = "some_json_string"
+    layout_description.as_json.return_value = "some_json_string"
     layout_description.player_count = 2
     layout_description.all_presets = [new_preset, new_preset]
     layout_description.shareable_word_hash = "Hash Words"
