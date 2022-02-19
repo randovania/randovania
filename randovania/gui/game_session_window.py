@@ -998,8 +998,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def generate_game_without_spoiler(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Online game sessions without spoilers aren't available right now.")
+        await self.generate_game(False, retries=None)
 
     @asyncSlot()
     @handle_network_errors
@@ -1033,7 +1032,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     async def _upload_layout_description(self, layout: LayoutDescription):
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
-                                        layout.as_json)
+                                        layout.as_json(force_spoiler=True))
 
     @asyncSlot()
     @handle_network_errors

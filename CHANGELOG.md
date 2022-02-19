@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: The item pool screen now explicitly tells you expansions are not used for logic.
 - Added: Implemented support for changing the title for a game session.
 - Added: A button for duplicating a session, including the generated game and all rows.
+- Added: Multiworld sessions can now be generated without spoilers.
 - Changed: Multiworld damage logic incompatibility warning now displays every time.
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
