@@ -361,6 +361,41 @@ def _change_title(sio: ServerApp, session: GameSession, title: str):
     _add_audit_entry(sio, session, f"Changed name from {old_name} to {title}")
 
 
+def _duplicate_session(sio: ServerApp, session: GameSession, new_title: str):
+    _verify_has_admin(sio, session.id, None)
+
+    current_user = sio.get_current_user()
+    _add_audit_entry(sio, session, f"Duplicated session as {new_title}")
+
+    with database.db.atomic():
+        new_session: GameSession = GameSession.create(
+            name=new_title,
+            password=session.password,
+            creator=current_user,
+            layout_description_json=session.layout_description_json,
+            seed_hash=session.seed_hash,
+            dev_features=session.dev_features,
+        )
+        for preset in session.presets:
+            assert isinstance(preset, GameSessionPreset)
+            GameSessionPreset.create(
+                session=new_session,
+                row=preset.row,
+                preset=preset.preset,
+            )
+        GameSessionMembership.create(
+            user=current_user,
+            session=new_session,
+            row=None, admin=True,
+            connection_state="Offline",
+        )
+        GameSessionAudit.create(
+            session=new_session,
+            user=current_user,
+            message=f"Duplicated from {session.name}",
+        )
+
+
 def _get_permalink(sio: ServerApp, session: GameSession) -> str:
     _verify_has_admin(sio, session.id, None)
     _add_audit_entry(sio, session, "Requested permalink")
@@ -404,6 +439,9 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.CHANGE_TITLE:
         _change_title(sio, session, arg)
+
+    elif action == SessionAdminGlobalAction.DUPLICATE_SESSION:
+        return _duplicate_session(sio, session, arg)
 
     elif action == SessionAdminGlobalAction.DELETE_SESSION:
         logger().info(f"{_describe_session(session)}: Deleting session.")

@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: You can now configure the priority given to each major item. Higher values are more likely show up earlier in the progression chain.
 - Added: Generation failures now have a lot more details on what was missing for progression, facilitating finding issues with your preset.
 - Added: The item pool screen now explicitly tells you expansions are not used for logic.
-- Added: Implemented support for changing the title for a game session
+- Added: Implemented support for changing the title for a game session.
+- Added: A button for duplicating a session, including the generated game and all rows.
 - Changed: Multiworld damage logic incompatibility warning now displays every time.
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.

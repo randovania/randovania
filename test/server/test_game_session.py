@@ -836,6 +836,31 @@ def test_game_session_admin_session_change_title(clean_database, mock_emit_sessi
     assert database.GameSession.get_by_id(1).name == "new_name"
 
 
+def test_game_session_admin_session_duplicate_session(clean_database, mock_emit_session_update, flask_app, mock_audit):
+    user1 = database.User.create(id=1234, name="The Name")
+    user2 = database.User.create(id=2345, name="Other Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionPreset.create(session=session, row=0, preset="{}")
+    database.GameSessionPreset.create(session=session, row=1, preset='{"foo": 5}')
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
+    database.GameSessionMembership.create(user=user2, session=session, row=1, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DUPLICATE_SESSION.value, "new_name")
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    mock_audit.assert_called_once_with(sio, session, "Duplicated session as new_name")
+    new_session = database.GameSession.get_by_id(2)
+    assert new_session.name == "new_name"
+    assert [p.preset for p in new_session.presets] == ["{}", '{"foo": 5}']
+    assert [mem.user.name for mem in new_session.players] == ["The Name"]
+    assert [a.message for a in new_session.audit_log] == ["Duplicated from Debug"]
+
+
 def test_game_session_admin_session_download_permalink(clean_database, mock_emit_session_update, flask_app,
                                                        mock_audit, mocker):
     user1 = database.User.create(id=1234, name="The Name")
