@@ -39,6 +39,11 @@ class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
                 parent_tab = self.logic_tab_widget
             parent_tab.addTab(extra_tab, extra_tab.tab_title())
 
+        for i in range(self.main_tab_widget.count()):
+            tab_widget = self.main_tab_widget.widget(i)
+            if isinstance(tab_widget, QtWidgets.QTabWidget):
+                self.main_tab_widget.setTabVisible(i, tab_widget.count() > 0)
+
         self.name_edit.textEdited.connect(self._edit_name)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
