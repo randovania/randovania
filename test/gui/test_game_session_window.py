@@ -16,6 +16,7 @@ from randovania.network_client.game_session import (
     GameSessionActions, GameDetails,
 )
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
+from randovania.network_common.error import NotAuthorizedForAction
 from randovania.network_common.session_state import GameSessionState
 
 
@@ -321,22 +322,35 @@ async def test_check_dangerous_presets(window, mocker):
     assert not result
 
 
-async def test_copy_permalink(window, mocker):
+async def test_copy_permalink_is_admin(window, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    game_session = MagicMock(spec=GameSessionEntry)
-    game_session.game_details = MagicMock()
-    game_session.game_details.permalink = "<permalink>"
-
-    window._game_session = game_session
+    window._admin_global_action = AsyncMock(return_value="<permalink>")
 
     # Run
     await window.copy_permalink()
 
     # Assert
+    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
     execute_dialog.assert_awaited_once()
     assert execute_dialog.call_args.args[0].textValue() == "<permalink>"
     mock_set_clipboard.assert_called_once_with("<permalink>")
+
+
+async def test_copy_permalink_not_admin(window, mocker):
+    mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
+    execute_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    execute_dialog: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    window._admin_global_action = AsyncMock(side_effect=NotAuthorizedForAction)
+
+    # Run
+    await window.copy_permalink()
+
+    # Assert
+    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
+    execute_warning.assert_awaited_once_with(window, "Unauthorized", "You're not authorized to perform that action.")
+    execute_dialog.assert_not_awaited()
+    mock_set_clipboard.assert_not_called()
 
 
 async def test_import_permalink(window, mocker):

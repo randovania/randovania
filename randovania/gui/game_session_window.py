@@ -1138,14 +1138,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self._window_manager.open_game_details(description)
 
     @asyncSlot()
+    @handle_network_errors
     async def copy_permalink(self):
-        permalink_str = self._game_session.game_details.permalink
+        permalink_str = await self._admin_global_action(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
         dialog = QtWidgets.QInputDialog(self)
         dialog.setModal(True)
         dialog.setWindowTitle("Session permalink")
         dialog.setLabelText("Permalink:")
         dialog.setTextValue(permalink_str)
         common_qt_lib.set_clipboard(permalink_str)
+        common_qt_lib.set_default_window_icon(dialog)
         await async_dialog.execute_dialog(dialog)
 
     @asyncSlot()
