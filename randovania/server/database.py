@@ -165,7 +165,6 @@ class GameSession(BaseModel):
                 "spoiler": description.has_spoiler,
                 "word_hash": description.shareable_word_hash,
                 "seed_hash": description.shareable_hash,
-                "permalink": description.permalink.as_base64_str,
             }
 
         return BinaryGameSessionEntry.build({

@@ -66,7 +66,6 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
             seed_hash="AB12",
             word_hash="Chykka Required",
             spoiler=True,
-            permalink="<permalink>",
         ),
         state=GameSessionState.IN_PROGRESS,
         generation_in_progress=None,

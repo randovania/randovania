@@ -900,7 +900,6 @@ def test_emit_session_meta_update(session_update, mocker):
             "spoiler": True,
             "word_hash": "Words of O-Lir",
             "seed_hash": "ABCDEFG",
-            "permalink": "<permalink>",
         },
         "generation_in_progress": None,
         'allowed_games': ['prime1', 'prime2'],
