@@ -4,9 +4,10 @@ import os
 from pathlib import Path
 from typing import Optional, List, Union
 
+from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_generator import BasePatchDataGenerator
+from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
@@ -14,6 +15,7 @@ from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import Node, LogbookNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
@@ -22,8 +24,6 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import status_update_lib
 from randovania.patching.patcher import Patcher
-from randovania.exporter import pickup_exporter, item_names
-from randovania.exporter.pickup_exporter import ExportedPickupDetails
 
 _ALTERNATIVE_MODELS = {
     "powerup_slide": "itemsphere",
@@ -194,7 +194,7 @@ class DreadPatchDataGenerator(BasePatchDataGenerator):
             return None
 
     def _encode_hints(self) -> list[dict]:
-        namer = HintNamer()
+        namer = DreadHintNamer(self.description.all_patches, self.players_config)
 
         exporter = HintExporter(namer, self.rng, ["A joke hint."])
 
