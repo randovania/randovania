@@ -83,7 +83,6 @@ class GameDetails(JsonDataclass):
     seed_hash: str
     word_hash: str
     spoiler: bool
-    permalink: str
 
 
 @dataclasses.dataclass(frozen=True)

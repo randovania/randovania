@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Simplified the item pool tab, with the usual case now having only a single line per item.
 - Changed: Improved the text for quantities for ammo in the item pool tab.
 - Changed: Experimental games are only shown in the menu if the option for experimental games is enabled.
+- Changed: Only session admins are allowed to copy the permalink of a session.
 - Changed: Modified how ConfigurableNodes (In Echoes, the Translator Gates) are handled in logic. This should have no visual differences, other than speeding up generation.
 - Changed: Great internal changes were done to how hints are applied to the game. This should have no visible impact.
 - Fixed: Map Tracker now properly handles multiple copies of pickups in all cases.

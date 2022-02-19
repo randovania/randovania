@@ -25,7 +25,6 @@ BinaryGameDetails = Struct(
     seed_hash=BinStr,
     word_hash=BinStr,
     spoiler=Flag,
-    permalink=BinStr,
 )
 
 BinaryGameSessionEntry = Struct(

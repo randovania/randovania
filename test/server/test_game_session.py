@@ -819,6 +819,26 @@ def test_game_session_admin_session_change_password(clean_database, mock_emit_se
     assert database.GameSession.get_by_id(1).password == expected_password
 
 
+def test_game_session_admin_session_download_permalink(clean_database, mock_emit_session_update, flask_app,
+                                                       mock_audit, mocker):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+    mock_session_description: PropertyMock = mocker.patch("randovania.server.database.GameSession.layout_description",
+                                                          new_callable=PropertyMock)
+
+    # Run
+    with flask_app.test_request_context():
+        result = game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.REQUEST_PERMALINK.value, None)
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    mock_audit.assert_called_once_with(sio, session, "Requested permalink")
+    assert result == mock_session_description.return_value.permalink.as_base64_str
+
+
 def test_change_row_missing_arguments(flask_app):
     with pytest.raises(InvalidAction), flask_app.test_request_context():
         game_session._change_row(MagicMock(), MagicMock(), (5,))
@@ -900,7 +920,6 @@ def test_emit_session_meta_update(session_update, mocker):
             "spoiler": True,
             "word_hash": "Words of O-Lir",
             "seed_hash": "ABCDEFG",
-            "permalink": "<permalink>",
         },
         "generation_in_progress": None,
         'allowed_games': ['prime1', 'prime2'],
