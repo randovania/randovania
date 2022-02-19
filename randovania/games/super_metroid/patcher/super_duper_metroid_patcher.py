@@ -20,7 +20,7 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patcher import Patcher
-from randovania.patching.prime.patcher_file_lib import pickup_exporter
+from randovania.exporter import pickup_exporter
 
 _multiplier_for_item = {
     "Energy Tank": 100, "Reserve Tank": 100,

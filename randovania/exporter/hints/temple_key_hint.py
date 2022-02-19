@@ -1,27 +1,30 @@
 from typing import Dict
 
+from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintDarkTemple
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_items
-from randovania.patching.prime.patcher_file_lib import hint_lib, guaranteed_item_hint
+from randovania.exporter.hints import guaranteed_item_hint
 
 
 def create_temple_key_hint(all_patches: Dict[int, GamePatches],
                            player_index: int,
                            temple: HintDarkTemple,
-                           area_namers: Dict[int, hint_lib.AreaNamer],
+                           namer: HintNamer,
+                           with_color: bool,
                            ) -> str:
     """
     Creates the text for .
     :param all_patches:
     :param player_index:
     :param temple:
-    :param area_namers:
+    :param namer:
+    :param with_color:
     :return:
     """
-    all_world_names = set()
+    all_world_names = {}
 
     _TEMPLE_NAMES = ["Dark Agon Temple", "Dark Torvus Temple", "Hive Temple"]
     temple_index = [HintDarkTemple.AGON_WASTES, HintDarkTemple.TORVUS_BOG,
@@ -34,11 +37,12 @@ def create_temple_key_hint(all_patches: Dict[int, GamePatches],
 
     for options in locations_for_items.values():
         for player, location in options:
-            all_world_names.add(area_namers[player].location_name(location, hide_area=True, color=None))
+            all_world_names[namer.format_world(location, with_color=False)] = (player, location)
             break
 
-    temple_name = hint_lib.color_text(hint_lib.TextColor.ITEM, _TEMPLE_NAMES[temple_index])
-    names_sorted = [hint_lib.color_text(hint_lib.TextColor.LOCATION, world) for world in sorted(all_world_names)]
+    temple_name = namer.format_temple_name(_TEMPLE_NAMES[temple_index], with_color=with_color)
+    names_sorted = [namer.format_world(location, with_color=with_color)
+                    for name, (_, location) in sorted(all_world_names.items(), key=lambda it: it[0])]
     if len(names_sorted) == 0:
         return f"The keys to {temple_name} are nowhere to be found."
     elif len(names_sorted) == 1:

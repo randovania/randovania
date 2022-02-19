@@ -1,19 +1,16 @@
 import collections
-import typing
-from typing import Tuple, Optional
+import dataclasses
+from typing import Optional
 
+from randovania.exporter.hints.determiner import Determiner
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
-from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintItemPrecision, Hint, RelativeDataItem
+from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.patching.prime.patcher_file_lib import hint_lib
-from randovania.patching.prime.patcher_file_lib.hint_formatters import RelativeFormatter
-from randovania.patching.prime.patcher_file_lib.hint_lib import Determiner
 
 _DET_AN = [
     "Annihilator Beam",
@@ -34,25 +31,11 @@ _DET_NULL.extend(f"{temple} Key {i}"
 _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 
 
-class RelativeItemFormatter(RelativeFormatter):
-    def __init__(self, world_list: WorldList, patches: GamePatches, players_config: PlayersConfiguration,
-                 text_color: hint_lib.TextColor = hint_lib.TextColor.LOCATION):
-        super().__init__(world_list, patches, text_color)
-        self.players_config = players_config
-
-    def format(self, determiner: Determiner, pickup: str, hint: Hint) -> str:
-        relative = typing.cast(RelativeDataItem, hint.precision.relative)
-        index = relative.other_index
-
-        other_area = self.world_list.nodes_to_area(self._index_to_node[index])
-        other_determiner, name = create_pickup_hint(self.patches.pickup_assignment, self.world_list,
-                                                    relative.precision,
-                                                    self.patches.pickup_assignment.get(index),
-                                                    self.players_config,
-                                                    False)
-        other_name = f"{other_determiner}{name}"
-
-        return self.relative_format(determiner, pickup, hint, other_area, other_name)
+@dataclasses.dataclass(frozen=True)
+class PickupHint:
+    determiner: Determiner
+    player_name: Optional[str]
+    pickup_name: str
 
 
 def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEntry, world_list: WorldList) -> str:
@@ -83,7 +66,7 @@ def create_pickup_hint(pickup_assignment: PickupAssignment,
                        target: Optional[PickupTarget],
                        players_config: PlayersConfiguration,
                        include_owner: bool,
-                       ) -> Tuple[Determiner, str]:
+                       ) -> PickupHint:
     """
 
     :param pickup_assignment:
@@ -127,9 +110,10 @@ def create_pickup_hint(pickup_assignment: PickupAssignment,
     else:
         raise ValueError(f"Unknown precision: {precision}")
 
-    if include_owner and players_config.is_multiworld:
-        determiner = hint_lib.player_determiner(players_config, target.player)
-    else:
-        determiner = Determiner(details[0], True)
+    determiner = Determiner(details[0])
+    player = None
 
-    return determiner, details[1]
+    if include_owner and players_config.is_multiworld:
+        player = players_config.player_names[target.player]
+
+    return PickupHint(determiner, player, details[1])

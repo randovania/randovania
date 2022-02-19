@@ -9,7 +9,7 @@ from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, 
 
 
 def _gui():
-    from randovania.games.cave_story.gui.hint_details_tab import HintDetailsTab
+    from randovania.games.cave_story.gui.hint_details_tab import CSHintDetailsTab
     from randovania.games.cave_story.gui.dialog.cs_cosmetic_patches_dialog import CSCosmeticPatchesDialog
     from randovania.games.cave_story.gui.preset_settings import cs_preset_tabs
     from randovania.games.cave_story.gui.cs_help_widget import CSHelpWidget
@@ -19,7 +19,7 @@ def _gui():
         tab_provider=cs_preset_tabs,
         cosmetic_dialog=CSCosmeticPatchesDialog,
         progressive_item_gui_tuples=progressive_items.gui_tuples(),
-        spoiler_visualizer=(HintDetailsTab,),
+        spoiler_visualizer=(CSHintDetailsTab,),
         help_widget=lambda: CSHelpWidget(),
     )
 

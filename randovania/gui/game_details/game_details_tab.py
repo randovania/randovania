@@ -16,5 +16,6 @@ class GameDetailsTab:
     def tab_title(self) -> str:
         raise NotImplementedError()
 
-    def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
+    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
+                       players: PlayersConfiguration):
         raise NotImplementedError()

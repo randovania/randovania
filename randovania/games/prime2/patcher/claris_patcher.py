@@ -9,7 +9,7 @@ from mp2hudcolor import mp2hudcolor_c
 
 from randovania import get_data_path
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.patcher import claris_randomizer, claris_patcher_file
+from randovania.games.prime2.patcher import claris_randomizer, patch_data_generator
 from randovania.interface_common import game_workdir
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.layout_description import LayoutDescription
@@ -68,7 +68,7 @@ class ClarisPatcher(Patcher):
 
     def create_patch_data(self, description: LayoutDescription, players_config: PlayersConfiguration,
                           cosmetic_patches: EchoesCosmeticPatches):
-        return claris_patcher_file.create_patcher_file(description, players_config, cosmetic_patches)
+        return patch_data_generator.generate_patcher_data(description, players_config, cosmetic_patches)
 
     def patch_game(self, input_file: Optional[Path], output_file: Path, patch_data: dict,
                    internal_copies_path: Path, progress_update: status_update_lib.ProgressUpdateCallable):
@@ -114,7 +114,7 @@ class ClarisPatcher(Patcher):
             from randovania.patching.prime import asset_conversion
             asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
 
-        claris_patcher_file.adjust_model_name(patch_data, randomizer_data)
+        patch_data_generator.adjust_model_name(patch_data, randomizer_data)
         claris_randomizer.apply_patcher_file(
             contents_files_path,
             patch_data,

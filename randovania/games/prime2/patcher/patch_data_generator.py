@@ -1,10 +1,13 @@
 import dataclasses
-import typing
 from random import Random
 from typing import Dict, Iterator
 
 import randovania
-from randovania.game_description import default_database
+import randovania.games.prime2.exporter.hints
+from randovania.exporter import pickup_exporter, item_names
+from randovania.exporter.hints import credits_spoiler
+from randovania.exporter.hints.hint_namer import HintNamer
+from randovania.exporter.patch_data_generator import BasePatchDataGenerator
 from randovania.game_description.assignment import NodeConfigurationAssignment, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
@@ -20,6 +23,8 @@ from randovania.game_description.world.node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter import hints
+from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import HintConfiguration, SkyTempleKeyHintMode
@@ -30,9 +35,6 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.patching.prime import elevators
-from randovania.patching.prime.patcher_file_lib import (
-    sky_temple_key_hint, item_names, pickup_exporter, hints, credits_spoiler, hint_lib,
-)
 
 _EASTER_EGG_RUN_VALIDATED_CHANCE = 1024
 _EASTER_EGG_SHINY_MISSILE = 8192
@@ -305,7 +307,7 @@ def _logbook_title_string_patches():
     ]
 
 
-def _akul_testament_string_patch():
+def _akul_testament_string_patch(namer: HintNamer):
     # update after each tournament! ordered from newest to oldest
     champs = [
         {
@@ -319,9 +321,11 @@ def _akul_testament_string_patch():
     ]
 
     title = "Metroid Prime 2: Echoes Randomizer Tournament"
-    champstring = '\n'.join(
-        [f'{champ["title"]}: {hint_lib.color_text(hint_lib.TextColor.PLAYER, champ["name"])}' for champ in champs])
-    latest = champstring.partition("\n")[0]
+    champ_string = '\n'.join([
+        f'{champ["title"]}: {namer.format_player(champ["name"], with_color=True)}'
+        for champ in champs
+    ])
+    latest = champ_string.partition("\n")[0]
 
     return [
         {
@@ -329,7 +333,7 @@ def _akul_testament_string_patch():
             "strings": [
                 'Luminoth Datapac translated.\n(Champions of Aether)',
                 f"{title}\n\n{latest}",
-                f"{title}\n\n{champstring}",
+                f"{title}\n\n{champ_string}",
             ],
         },
     ]
@@ -337,8 +341,8 @@ def _akul_testament_string_patch():
 
 def _create_string_patches(hint_config: HintConfiguration,
                            game: GameDescription,
-                           all_patches: Dict[int, GamePatches],
-                           area_namers: Dict[int, hint_lib.AreaNamer],
+                           all_patches: dict[int, GamePatches],
+                           namer: EchoesHintNamer,
                            players_config: PlayersConfiguration,
                            rng: Random,
                            ) -> list:
@@ -352,22 +356,22 @@ def _create_string_patches(hint_config: HintConfiguration,
     patches = all_patches[players_config.player_index]
     string_patches = []
 
-    string_patches.extend(_akul_testament_string_patch())
+    string_patches.extend(_akul_testament_string_patch(namer))
 
     # Location Hints
     string_patches.extend(
-        hints.create_hints(all_patches, players_config, game.world_list, area_namers, rng)
+        hints.create_patches_hints(all_patches, players_config, game.world_list, namer, rng)
     )
 
     # Sky Temple Keys
     stk_mode = hint_config.sky_temple_keys
     if stk_mode == SkyTempleKeyHintMode.DISABLED:
-        string_patches.extend(sky_temple_key_hint.hide_hints())
+        string_patches.extend(randovania.games.prime2.exporter.hints.hide_stk_hints(namer))
     else:
-        string_patches.extend(sky_temple_key_hint.create_hints(
+        string_patches.extend(randovania.games.prime2.exporter.hints.create_stk_hints(
             all_patches, players_config, game.resource_database,
-            area_namers,
-            stk_mode == SkyTempleKeyHintMode.HIDE_AREA))
+            namer, stk_mode == SkyTempleKeyHintMode.HIDE_AREA,
+        ))
 
     # Elevator Scans
     string_patches.extend(_create_elevator_scan_port_patches(game.game, game.world_list, patches.elevator_connection))
@@ -454,10 +458,145 @@ def _get_model_mapping(randomizer_data: dict):
     )
 
 
-def create_patcher_file(description: LayoutDescription,
-                        players_config: PlayersConfiguration,
-                        cosmetic_patches: EchoesCosmeticPatches,
-                        ) -> dict:
+class EchoesPatchDataGenerator(BasePatchDataGenerator):
+    cosmetic_patches: EchoesCosmeticPatches
+    configuration: EchoesConfiguration
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.namer = EchoesHintNamer(self.description.all_patches, self.players_config)
+
+    def game_enum(self) -> RandovaniaGame:
+        return RandovaniaGame.METROID_PRIME_ECHOES
+
+    def create_specific_patches(self):
+        # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
+        # we should disable hive_chamber_b_post_state
+        return {
+            "hive_chamber_b_post_state": True,
+            "intro_in_post_state": True,
+            "warp_to_start": self.configuration.warp_to_start,
+            "credits_length": 75 if self.cosmetic_patches.speed_up_credits else 259,
+            "disable_hud_popup": self.cosmetic_patches.disable_hud_popup,
+            "pickup_map_icons": self.cosmetic_patches.pickup_markers,
+            "full_map_at_start": self.cosmetic_patches.open_map,
+            "dark_world_varia_suit_damage": self.configuration.varia_suit_damage,
+            "dark_world_dark_suit_damage": self.configuration.dark_suit_damage,
+            "hud_color": self.cosmetic_patches.hud_color if self.cosmetic_patches.use_hud_color else None,
+        }
+
+    def create_data(self) -> dict:
+
+        result = {}
+        _add_header_data_to_result(self.description, result)
+
+        result["publisher_id"] = "0R"
+        if self.configuration.menu_mod:
+            result["publisher_id"] = "1R"
+
+        result["convert_other_game_assets"] = self.cosmetic_patches.convert_other_game_assets
+        result["credits"] = "\n\n\n\n\n" + credits_spoiler.prime_trilogy_credits(
+            self.configuration.major_items_configuration,
+            self.description.all_patches,
+            self.players_config,
+            self.namer,
+            "&push;&main-color=#89D6FF;Major Item Locations&pop;",
+            "&push;&main-color=#33ffd6;{}&pop;",
+        )
+
+        [item_category_visors] = [
+            cat for cat in self.configuration.major_items_configuration.default_items.keys() if cat.name == "visor"
+        ]
+        [item_category_beams] = [
+            cat for cat in self.configuration.major_items_configuration.default_items.keys() if cat.name == "beam"
+        ]
+
+        result["menu_mod"] = self.configuration.menu_mod
+        result["dol_patches"] = EchoesDolPatchesData(
+            energy_per_tank=self.configuration.energy_per_tank,
+            beam_configuration=self.configuration.beam_configuration,
+            safe_zone_heal_per_second=self.configuration.safe_zone.heal_per_second,
+            user_preferences=self.cosmetic_patches.user_preferences,
+            default_items={
+                "visor": self.configuration.major_items_configuration.default_items[item_category_visors].name,
+                "beam": self.configuration.major_items_configuration.default_items[item_category_beams].name,
+            },
+            unvisited_room_names=(self.configuration.elevators.can_use_unvisited_room_names
+                                  and self.cosmetic_patches.unvisited_room_names),
+            teleporter_sounds=self.cosmetic_patches.teleporter_sounds or self.configuration.elevators.is_vanilla,
+            dangerous_energy_tank=self.configuration.dangerous_energy_tank,
+        ).as_json
+
+        # Add Spawn Point
+        result["spawn_point"] = _create_spawn_point_field(self.patches, self.game)
+
+        result["starting_popup"] = _create_starting_popup(self.configuration, self.game.resource_database,
+                                                          self.patches.starting_items)
+
+        # Add the pickups
+        result["pickups"] = _create_pickup_list(self.cosmetic_patches, self.configuration, self.game, self.patches,
+                                                self.players_config, self.rng)
+
+        # Add the elevators
+        result["elevators"] = _create_elevators_field(self.patches, self.game)
+
+        # Add translators
+        result["translator_gates"] = _create_translator_gates_field(self.game, self.patches.configurable_nodes)
+
+        # Scan hints
+        result["string_patches"] = _create_string_patches(self.configuration.hints, self.game,
+                                                          self.description.all_patches, self.namer,
+                                                          self.players_config, self.rng)
+
+        # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
+        # we should disable hive_chamber_b_post_state
+        result["specific_patches"] = self.create_specific_patches()
+
+        result["logbook_patches"] = self.create_logbook_patches()
+
+        if not self.configuration.elevators.is_vanilla and (
+                self.cosmetic_patches.unvisited_room_names
+                and self.configuration.elevators.can_use_unvisited_room_names
+        ):
+            exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
+        else:
+            exclude_map_ids = []
+        result["maps_to_always_reveal"] = _ENERGY_CONTROLLER_MAP_ASSET_IDS
+        result["maps_to_never_reveal"] = exclude_map_ids
+
+        _apply_translator_gate_patches(result["specific_patches"], self.configuration.elevators.mode)
+
+        return result
+
+    def create_logbook_patches(self):
+        return [
+            {"asset_id": 25, "connections": [81, 166, 195], },
+            {"asset_id": 38, "connections": [4, 33, 120, 251, 364], },
+            {"asset_id": 60, "connections": [38, 74, 154, 196], },
+            {"asset_id": 74, "connections": [59, 75, 82, 102, 260], },
+            {"asset_id": 81, "connections": [148, 151, 156], },
+            {"asset_id": 119, "connections": [60, 254, 326], },
+            {"asset_id": 124, "connections": [35, 152, 355], },
+            {"asset_id": 129, "connections": [29, 118, 367], },
+            {"asset_id": 154, "connections": [169, 200, 228, 243, 312, 342], },
+            {"asset_id": 166, "connections": [45, 303, 317], },
+            {"asset_id": 194, "connections": [1, 6], },
+            {"asset_id": 195, "connections": [159, 221, 231], },
+            {"asset_id": 196, "connections": [17, 19, 23, 162, 183, 379], },
+            {"asset_id": 233, "connections": [58, 191, 373], },
+            {"asset_id": 241, "connections": [223, 284], },
+            {"asset_id": 254, "connections": [129, 233, 319], },
+            {"asset_id": 318, "connections": [119, 216, 277, 343], },
+            {"asset_id": 319, "connections": [52, 289, 329], },
+            {"asset_id": 326, "connections": [124, 194, 241, 327], },
+            {"asset_id": 327, "connections": [46, 275], },
+        ]
+
+
+def generate_patcher_data(description: LayoutDescription,
+                          players_config: PlayersConfiguration,
+                          cosmetic_patches: EchoesCosmeticPatches,
+                          ) -> dict:
     """
 
     :param description:
@@ -465,120 +604,7 @@ def create_patcher_file(description: LayoutDescription,
     :param cosmetic_patches:
     :return:
     """
-    preset = description.get_preset(players_config.player_index)
-    configuration = typing.cast(EchoesConfiguration, preset.configuration)
-    patches = description.all_patches[players_config.player_index]
-    rng = Random(description.get_seed_for_player(players_config.player_index))
-    area_namers = {index: hint_lib.AreaNamer(default_database.game_description_for(preset.game).world_list)
-                   for index, preset in enumerate(description.all_presets)}
-
-    game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
-
-    result = {}
-    _add_header_data_to_result(description, result)
-
-    result["publisher_id"] = "0R"
-    if configuration.menu_mod:
-        result["publisher_id"] = "1R"
-
-    result["convert_other_game_assets"] = cosmetic_patches.convert_other_game_assets
-    result["credits"] = "\n\n\n\n\n" + credits_spoiler.prime_trilogy_credits(
-        configuration.major_items_configuration,
-        description.all_patches,
-        players_config,
-        area_namers,
-        "&push;&main-color=#89D6FF;Major Item Locations&pop;",
-        "&push;&main-color=#33ffd6;{}&pop;",
-    )
-
-    [item_category_visors] = [cat for cat in configuration.major_items_configuration.default_items.keys() if cat.name ==
-                              "visor"]
-    [item_category_beams] = [cat for cat in configuration.major_items_configuration.default_items.keys() if cat.name ==
-                             "beam"]
-
-    result["menu_mod"] = configuration.menu_mod
-    result["dol_patches"] = EchoesDolPatchesData(
-        energy_per_tank=configuration.energy_per_tank,
-        beam_configuration=configuration.beam_configuration,
-        safe_zone_heal_per_second=configuration.safe_zone.heal_per_second,
-        user_preferences=cosmetic_patches.user_preferences,
-        default_items={
-            "visor": configuration.major_items_configuration.default_items[item_category_visors].name,
-            "beam": configuration.major_items_configuration.default_items[item_category_beams].name,
-        },
-        unvisited_room_names=(configuration.elevators.can_use_unvisited_room_names
-                              and cosmetic_patches.unvisited_room_names),
-        teleporter_sounds=cosmetic_patches.teleporter_sounds or configuration.elevators.is_vanilla,
-        dangerous_energy_tank=configuration.dangerous_energy_tank,
-    ).as_json
-
-    # Add Spawn Point
-    result["spawn_point"] = _create_spawn_point_field(patches, game)
-
-    result["starting_popup"] = _create_starting_popup(configuration, game.resource_database, patches.starting_items)
-
-    # Add the pickups
-    result["pickups"] = _create_pickup_list(cosmetic_patches, configuration, game, patches, players_config, rng)
-
-    # Add the elevators
-    result["elevators"] = _create_elevators_field(patches, game)
-
-    # Add translators
-    result["translator_gates"] = _create_translator_gates_field(game, patches.configurable_nodes)
-
-    # Scan hints
-    result["string_patches"] = _create_string_patches(configuration.hints, game, description.all_patches,
-                                                      area_namers, players_config, rng)
-
-    # TODO: if we're starting at ship, needs to collect 9 sky temple keys and want item loss,
-    # we should disable hive_chamber_b_post_state
-    result["specific_patches"] = {
-        "hive_chamber_b_post_state": True,
-        "intro_in_post_state": True,
-        "warp_to_start": configuration.warp_to_start,
-        "credits_length": 75 if cosmetic_patches.speed_up_credits else 259,
-        "disable_hud_popup": cosmetic_patches.disable_hud_popup,
-        "pickup_map_icons": cosmetic_patches.pickup_markers,
-        "full_map_at_start": cosmetic_patches.open_map,
-        "dark_world_varia_suit_damage": configuration.varia_suit_damage,
-        "dark_world_dark_suit_damage": configuration.dark_suit_damage,
-        "hud_color": cosmetic_patches.hud_color if cosmetic_patches.use_hud_color else None,
-    }
-
-    result["logbook_patches"] = [
-        {"asset_id": 25, "connections": [81, 166, 195], },
-        {"asset_id": 38, "connections": [4, 33, 120, 251, 364], },
-        {"asset_id": 60, "connections": [38, 74, 154, 196], },
-        {"asset_id": 74, "connections": [59, 75, 82, 102, 260], },
-        {"asset_id": 81, "connections": [148, 151, 156], },
-        {"asset_id": 119, "connections": [60, 254, 326], },
-        {"asset_id": 124, "connections": [35, 152, 355], },
-        {"asset_id": 129, "connections": [29, 118, 367], },
-        {"asset_id": 154, "connections": [169, 200, 228, 243, 312, 342], },
-        {"asset_id": 166, "connections": [45, 303, 317], },
-        {"asset_id": 194, "connections": [1, 6], },
-        {"asset_id": 195, "connections": [159, 221, 231], },
-        {"asset_id": 196, "connections": [17, 19, 23, 162, 183, 379], },
-        {"asset_id": 233, "connections": [58, 191, 373], },
-        {"asset_id": 241, "connections": [223, 284], },
-        {"asset_id": 254, "connections": [129, 233, 319], },
-        {"asset_id": 318, "connections": [119, 216, 277, 343], },
-        {"asset_id": 319, "connections": [52, 289, 329], },
-        {"asset_id": 326, "connections": [124, 194, 241, 327], },
-        {"asset_id": 327, "connections": [46, 275], },
-    ]
-
-    if not configuration.elevators.is_vanilla and (cosmetic_patches.unvisited_room_names
-                                                   and configuration.elevators.can_use_unvisited_room_names):
-        exclude_map_ids = _ELEVATOR_ROOMS_MAP_ASSET_IDS
-    else:
-        exclude_map_ids = []
-    result["maps_to_always_reveal"] = _ENERGY_CONTROLLER_MAP_ASSET_IDS
-    result["maps_to_never_reveal"] = exclude_map_ids
-
-    _apply_translator_gate_patches(result["specific_patches"], configuration.elevators.mode)
-
-    return result
+    return EchoesPatchDataGenerator(description, players_config, cosmetic_patches).create_data()
 
 
 def _create_pickup_list(cosmetic_patches: EchoesCosmeticPatches, configuration: BaseConfiguration,

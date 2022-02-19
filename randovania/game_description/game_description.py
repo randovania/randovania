@@ -113,7 +113,7 @@ class GameDescription:
             if isinstance(node, TeleporterNode) and node.editable
         }
 
-        return GamePatches(None, {}, elevator_connection, {}, {}, {}, {}, self.starting_location, {})
+        return GamePatches(None, self.game, {}, elevator_connection, {}, {}, {}, {}, self.starting_location, {})
 
     @property
     def dangerous_resources(self) -> FrozenSet[ResourceInfo]:
