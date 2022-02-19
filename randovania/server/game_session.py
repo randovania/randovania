@@ -353,6 +353,7 @@ def _change_password(sio: ServerApp, session: GameSession, password: str):
 
 def _get_permalink(sio: ServerApp, session: GameSession) -> str:
     _verify_has_admin(sio, session.id, None)
+    _add_audit_entry(sio, session, "Requested permalink")
 
     return session.layout_description.permalink.as_base64_str
 
