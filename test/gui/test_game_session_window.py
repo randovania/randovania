@@ -1,5 +1,4 @@
 import datetime
-import datetime
 import typing
 
 import pytest
@@ -12,8 +11,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
-from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction, \
-    GameSessionActions, GameDetails
+from randovania.network_client.game_session import (
+    GameSessionEntry, PlayerSessionEntry, User, GameSessionAction,
+    GameSessionActions, GameDetails,
+)
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
 
@@ -252,6 +253,7 @@ async def test_change_password(window, mocker):
 async def test_generate_game(window, mocker, preset_manager):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
+    mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
     spoiler = True
     game_session = MagicMock()
@@ -265,6 +267,9 @@ async def test_generate_game(window, mocker, preset_manager):
     await window.generate_game(spoiler, retries=3)
 
     # Assert
+    mock_warning.assert_awaited_once_with(
+        window, "Multiworld Limitation", ANY,
+    )
     mock_randint.assert_called_once_with(0, 2 ** 31)
     mock_generate_layout.assert_called_once_with(
         progress_update=ANY,
