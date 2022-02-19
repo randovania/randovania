@@ -68,8 +68,12 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
 
         common_qt_lib.set_combo_with_value(self.damage_strictness_combo, preset.configuration.damage_strictness)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Generation"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     @property

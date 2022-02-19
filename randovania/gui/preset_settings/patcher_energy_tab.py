@@ -55,8 +55,12 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.progressive_damage_reduction_check.setVisible(False)
             self.heated_damage_box.setVisible(False)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Energy"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return True
 
     def on_preset_changed(self, preset: Preset):

@@ -51,8 +51,12 @@ class PresetStartingArea(PresetTab, Ui_PresetStartingArea, AreaListHelper):
         button.clicked.connect(connection)
         return button
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Starting Area"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return True
 
     @property
