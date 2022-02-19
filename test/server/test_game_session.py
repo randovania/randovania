@@ -819,6 +819,23 @@ def test_game_session_admin_session_change_password(clean_database, mock_emit_se
     assert database.GameSession.get_by_id(1).password == expected_password
 
 
+def test_game_session_admin_session_change_title(clean_database, mock_emit_session_update, flask_app, mock_audit):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_TITLE.value, "new_name")
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    mock_audit.assert_called_once_with(sio, session, "Changed name from Debug to new_name")
+    assert database.GameSession.get_by_id(1).name == "new_name"
+
+
 def test_game_session_admin_session_download_permalink(clean_database, mock_emit_session_update, flask_app,
                                                        mock_audit, mocker):
     user1 = database.User.create(id=1234, name="The Name")

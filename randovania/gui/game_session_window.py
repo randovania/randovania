@@ -866,8 +866,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def rename_session(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Renaming session isn't implemented yet.")
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Enter new title")
+        dialog.setLabelText("Enter the new title for the session:")
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, dialog.textValue())
 
     @asyncSlot()
     @handle_network_errors

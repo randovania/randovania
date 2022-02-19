@@ -351,6 +351,16 @@ def _change_password(sio: ServerApp, session: GameSession, password: str):
     _add_audit_entry(sio, session, f"Changed password")
 
 
+def _change_title(sio: ServerApp, session: GameSession, title: str):
+    _verify_has_admin(sio, session.id, None)
+
+    old_name = session.name
+    session.name = title
+    logger().info(f"{_describe_session(session)}: Changed name from {old_name}.")
+    session.save()
+    _add_audit_entry(sio, session, f"Changed name from {old_name} to {title}")
+
+
 def _get_permalink(sio: ServerApp, session: GameSession) -> str:
     _verify_has_admin(sio, session.id, None)
     _add_audit_entry(sio, session, "Requested permalink")
@@ -391,6 +401,9 @@ def game_session_admin_session(sio: ServerApp, session_id: int, action: str, arg
 
     elif action == SessionAdminGlobalAction.CHANGE_PASSWORD:
         _change_password(sio, session, arg)
+
+    elif action == SessionAdminGlobalAction.CHANGE_TITLE:
+        _change_title(sio, session, arg)
 
     elif action == SessionAdminGlobalAction.DELETE_SESSION:
         logger().info(f"{_describe_session(session)}: Deleting session.")
