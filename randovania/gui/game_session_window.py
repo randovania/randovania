@@ -194,9 +194,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
         self.rename_session_action = QtWidgets.QAction("Change title", self.advanced_options_menu)
         self.change_password_action = QtWidgets.QAction("Change password", self.advanced_options_menu)
+        self.duplicate_session_action = QtWidgets.QAction("Duplicate session", self.advanced_options_menu)
 
         self.advanced_options_menu.addAction(self.rename_session_action)
         self.advanced_options_menu.addAction(self.change_password_action)
+        self.advanced_options_menu.addAction(self.duplicate_session_action)
         self.advanced_options_tool.setMenu(self.advanced_options_menu)
 
         # Save ISO Button
@@ -257,6 +259,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         # Advanced Options
         self.rename_session_action.triggered.connect(self.rename_session)
         self.change_password_action.triggered.connect(self.change_password)
+        self.duplicate_session_action.triggered.connect(self.duplicate_session)
 
         # Save ISO Button
         self.copy_permalink_action.triggered.connect(self.copy_permalink)
@@ -866,8 +869,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def rename_session(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Renaming session isn't implemented yet.")
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Enter new title")
+        dialog.setLabelText("Enter the new title for the session:")
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, dialog.textValue())
 
     @asyncSlot()
     @handle_network_errors
@@ -879,6 +886,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         dialog.setTextEchoMode(QtWidgets.QLineEdit.Password)
         if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
             await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, dialog.textValue())
+
+    @asyncSlot()
+    @handle_network_errors
+    async def duplicate_session(self):
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Enter new title")
+        dialog.setLabelText("Enter the title for the duplicated copy of the session:")
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+            await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, dialog.textValue())
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
         all_dangerous_settings = {

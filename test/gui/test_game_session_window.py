@@ -233,7 +233,12 @@ async def test_update_logic_settings_window(window, mocker, has_game):
         execute_dialog.assert_not_awaited()
 
 
-async def test_change_password(window, mocker):
+@pytest.mark.parametrize(["action", "method_name"], [
+    (SessionAdminGlobalAction.CHANGE_TITLE, "rename_session"),
+    (SessionAdminGlobalAction.CHANGE_PASSWORD, "change_password"),
+    (SessionAdminGlobalAction.DUPLICATE_SESSION, "duplicate_session"),
+])
+async def test_change_password_title_or_duplicate(window, mocker, action, method_name):
     def set_text_value(dialog: QtWidgets.QInputDialog):
         dialog.setTextValue("magoo")
         return QtWidgets.QDialog.Accepted
@@ -243,11 +248,11 @@ async def test_change_password(window, mocker):
     window._admin_global_action = AsyncMock()
 
     # Run
-    await window.change_password()
+    await getattr(window, method_name)()
 
     # Assert
     execute_dialog.assert_awaited_once()
-    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.CHANGE_PASSWORD, "magoo")
+    window._admin_global_action.assert_awaited_once_with(action, "magoo")
 
 
 async def test_generate_game(window, mocker, preset_manager):
