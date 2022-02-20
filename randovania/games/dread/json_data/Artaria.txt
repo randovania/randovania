@@ -507,8 +507,8 @@ Extra - asset_id: collision_camera_005
   > Start Point
       Trivial
 
-> Door to White EMMI Arena; Heals? False
-  * Access Open to White EMMI Arena/Door to EMMI Zone First Entrance
+> Door from White EMMI Arena; Heals? False
+  * Access Closed to White EMMI Arena/Door to EMMI Zone First Entrance
   * Extra - actor_name: Door018 (CG-CL,OP)
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -561,8 +561,8 @@ Extra - asset_id: collision_camera_005
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to EMMI Zone Entrance Hallway
       Trivial
-  > Door to White EMMI Arena
-      After Artaria - Unlock White EMMI Arena
+  > Door from White EMMI Arena
+      Trivial
   > Door to White EMMI Introduction
       Trivial
   > Tile Group (POWERBEAM)
@@ -711,7 +711,7 @@ Extra - total_boundings: {'x1': 5800.0, 'x2': 8900.0, 'y1': 300.0, 'y2': 4400.0}
 Extra - polygon: [[8900.0, 4400.0], [5800.0, 4400.0], [5800.0, 300.0], [8900.0, 300.0]]
 Extra - asset_id: collision_camera_008
 > Door to EMMI Zone Exit North (Bottom); Heals? False
-  * Power Beam Door to EMMI Zone Exit North/Door to Teleport to Dairon (Bottom)
+  * Power Beam Door to EMMI Zone Exit North/Door to Teleport to Dairon
   * Extra - actor_name: Door020 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -803,7 +803,7 @@ Extra - asset_id: collision_camera_008
       Can Slide
 
 > Door to EMMI Zone Exit North (Upper); Heals? False
-  * Wide Beam Door to EMMI Zone Exit North/Door to Teleport to Dairon (Top)
+  * Wide Beam Door to EMMI Zone Exit North/Door from Teleport to Dairon
   * Extra - actor_name: Door028
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -811,8 +811,6 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
   > Teleporter to Dairon - Teleport to Artaria
-      Trivial
-  > Event - Unlock Dairon Teleport
       Trivial
 
 > Teleporter to Dairon - Teleport to Artaria; Heals? False; Spawn Point
@@ -855,19 +853,12 @@ Extra - asset_id: collision_camera_008
   > Dock to Arbitrary Enky Room (DoorEmmy07)
       Trivial
 
-> Event - Unlock Dairon Teleport; Heals? False
-  * Event Artaria - Unlock Dairon Teleport
-  > Door to EMMI Zone Exit North (Bottom)
-      Trivial
-  > Door to EMMI Zone Exit North (Upper)
-      Trivial
-
 ----------------
 EMMI Zone Exit North
 Extra - total_boundings: {'x1': 699.9979858398438, 'x2': 5900.0, 'y1': 1800.0, 'y2': 4900.0}
 Extra - polygon: [[700.0, 4900.0], [699.9979858398438, 1800.0], [5900.0, 1800.0], [5900.0, 4900.0]]
 Extra - asset_id: collision_camera_009
-> Door to Teleport to Dairon (Bottom); Heals? False
+> Door to Teleport to Dairon; Heals? False
   * Power Beam Door to Teleport to Dairon/Door to EMMI Zone Exit North (Bottom)
   * Extra - actor_name: Door020 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
@@ -909,8 +900,8 @@ Extra - asset_id: collision_camera_009
   > Tile Group (POWERBEAM)
       Trivial
 
-> Door to Teleport to Dairon (Top); Heals? False
-  * Access Open to Teleport to Dairon/Door to EMMI Zone Exit North (Upper)
+> Door from Teleport to Dairon; Heals? False
+  * Access Closed to Teleport to Dairon/Door to EMMI Zone Exit North (Upper)
   * Extra - actor_name: Door028
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -966,12 +957,12 @@ Extra - asset_id: collision_camera_009
       Morph Ball
 
 > Start Point; Heals? False; Spawn Point
-  > Door to Teleport to Dairon (Bottom)
+  > Door to Teleport to Dairon
       Trivial
   > Door to EMMI Zone Dome
       Trivial
-  > Door to Teleport to Dairon (Top)
-      After Artaria - Unlock Dairon Teleport
+  > Door from Teleport to Dairon
+      Trivial
 
 ----------------
 EMMI Zone Hub
@@ -1244,8 +1235,6 @@ Extra - asset_id: collision_camera_011
   * Extra - target_spawn_point: LE_Platform_Teleport_FromCave
   * Extra - start_point_actor_name: LE_Platform_Teleport_FromMagma
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
-  > Event - Post Chain Reaction Debris (Above)
-      Pseudo-Wave Beam (Intermediate) or Shoot Diffusion or Wave
   > Event - Early SA Shortcut Blob
       Pseudo-Wave Beam (Intermediate)
   > Energy Recharge
@@ -1359,7 +1348,6 @@ Extra - asset_id: collision_camera_011
           Any of the following:
               Simple IBJ or Use Spin Boost
               Flash Shift and Walljump (Beginner)
-          Simple IBJ or Use Spin Boost
   > Event - Destroy Post Chain Reaction Debris (Below)
       Shoot Beam
   > Teleporter to Cataris - Teleport to Artaria (Red)
@@ -1775,7 +1763,7 @@ White EMMI Arena
 Extra - total_boundings: {'x1': 2700.0, 'x2': 5900.0, 'y1': -6450.0, 'y2': -1700.0}
 Extra - polygon: [[5900.0, -1700.0], [2700.0, -1700.0], [2700.0, -6450.0], [5900.0, -6450.0]]
 Extra - asset_id: collision_camera_017
-> Door to Central Unit Access (Upper); Heals? False
+> Door to Central Unit Access; Heals? False
   * Charge Beam Door to Central Unit Access/Door to White EMMI Arena (Top)
   * Extra - actor_name: Door015 (CG-CG)
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
@@ -1802,7 +1790,7 @@ Extra - asset_id: collision_camera_017
       Trivial
 
 > Door to EMMI Zone First Entrance; Heals? False
-  * Power Beam Door to EMMI Zone First Entrance/Door to White EMMI Arena
+  * Power Beam Door to EMMI Zone First Entrance/Door from White EMMI Arena
   * Extra - actor_name: Door018 (CG-CL,OP)
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1813,11 +1801,9 @@ Extra - asset_id: collision_camera_017
       Trivial
   > Door to EMMI Zone Spinner (DoorFrame_011)
       Simple IBJ or Use Spin Boost
-  > Event - Unlock White EMMI Arena
-      Trivial
 
-> Door to Central Unit Access (Lower); Heals? False
-  * Access Open to Central Unit Access/Door to White EMMI Arena (Bottom)
+> Door from Central Unit Access; Heals? False
+  * Access Closed to Central Unit Access/Door to White EMMI Arena (Bottom)
   * Extra - actor_name: Door059 (CL-PW)
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1846,7 +1832,7 @@ Extra - asset_id: collision_camera_017
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Central Unit Access (Upper)
+  > Door to Central Unit Access
       Trivial
   > Door to EMMI Zone First Entrance
       Trivial
@@ -1865,12 +1851,12 @@ Extra - asset_id: collision_camera_017
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_MagnetGlove
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Central Unit Access (Upper)
+  > Door to Central Unit Access
       Trivial
   > Door to EMMI Zone Spinner (1)
       Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
-  > Door to Central Unit Access (Lower)
-      After Artaria - Unlock Central Unit Access
+  > Door from Central Unit Access
+      Trivial
   > Door to EMMI Zone Spinner (DoorFrame_009)
       Trivial
   > Tunnel to EMMI Zone Spinner
@@ -1879,11 +1865,6 @@ Extra - asset_id: collision_camera_017
 > Tunnel to EMMI Zone Spinner; Heals? False
   * Morph Ball Tunnel to EMMI Zone Spinner/Tunnel to White EMMI Arena
   > Start Point
-      Trivial
-
-> Event - Unlock White EMMI Arena; Heals? False
-  * Event Artaria - Unlock White EMMI Arena
-  > Door to EMMI Zone First Entrance
       Trivial
 
 ----------------
@@ -1983,8 +1964,8 @@ David Jaffe Room
 Extra - total_boundings: {'x1': 12800.0, 'x2': 15900.0, 'y1': 3000.0, 'y2': 4600.0}
 Extra - polygon: [[15900.0, 4600.0], [12800.0, 4600.0], [12800.0, 3000.0], [15900.0, 3000.0]]
 Extra - asset_id: collision_camera_021
-> Door to Navigation Station North; Heals? False
-  * Access Open to Navigation Station North/Door to David Jaffe Room
+> Door from Navigation Station North; Heals? False
+  * Access Closed to Navigation Station North/Door to David Jaffe Room
   * Extra - actor_name: Door029 (CG-CL,OP)
   * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2015,8 +1996,8 @@ Extra - asset_id: collision_camera_021
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_2B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Navigation Station North
-      After Artaria - Unlock David Jaffe Room
+  > Door from Navigation Station North
+      Trivial
   > Door to Thermal Door Tutorial
       Trivial
   > Pickup (Missile Tank)
@@ -2315,8 +2296,8 @@ Chain Reaction Room
 Extra - total_boundings: {'x1': -12200.0, 'x2': -8100.0, 'y1': 4700.0, 'y2': 9200.0}
 Extra - polygon: [[-8100.0, 9200.0], [-12200.0, 9200.0], [-12200.0, 4700.0], [-8100.0, 4700.0]]
 Extra - asset_id: collision_camera_026
-> Door to Varia Suit Tutorial North; Heals? False
-  * Power Beam Door to Varia Suit Tutorial North/Door to Chain Reaction Room
+> Door from Varia Suit Tutorial North; Heals? False
+  * Access Closed to Varia Suit Tutorial North/Door to Chain Reaction Room
   * Extra - actor_name: Door057
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2456,8 +2437,8 @@ Extra - asset_id: collision_camera_026
       Before Artaria - Chain Reaction Heated
 
 > Next to Door; Heals? False
-  > Door to Varia Suit Tutorial North
-      After Artaria - Unlock Chain Reaction
+  > Door from Varia Suit Tutorial North
+      Trivial
   > Tile Group (POWERBEAM) 2
       All of the following:
           Morph Ball
@@ -2577,7 +2558,7 @@ Extra - total_boundings: {'x1': -8200.0, 'x2': -6100.0, 'y1': 8100.0, 'y2': 9900
 Extra - polygon: [[-6100.0, 9900.0], [-8200.0, 9900.0], [-8200.0, 8100.0], [-6100.0, 8100.0]]
 Extra - asset_id: collision_camera_029
 > Door to Chain Reaction Room; Heals? False
-  * Charge Beam Door to Chain Reaction Room/Door to Varia Suit Tutorial North
+  * Charge Beam Door to Chain Reaction Room/Door from Varia Suit Tutorial North
   * Extra - actor_name: Door057
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2592,8 +2573,6 @@ Extra - asset_id: collision_camera_029
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
-  > Event - Unlock Chain Reaction
-      Trivial
 
 > Door to Varia Suit Room; Heals? False
   * Charge Beam Door to Varia Suit Room/Door to Varia Suit Tutorial North
@@ -2643,11 +2622,6 @@ Extra - asset_id: collision_camera_029
       Any of the following:
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 10
-
-> Event - Unlock Chain Reaction; Heals? False
-  * Event Artaria - Unlock Chain Reaction
-  > Door to Chain Reaction Room
-      Trivial
 
 ----------------
 Shutter Platform Puzzle
@@ -3038,22 +3012,16 @@ Extra - asset_id: collision_camera_048
 > Start Point; Heals? False; Spawn Point
   > Door to EMMI Zone Exit North
       Trivial
-
   > Dock to EMMI Zone Exit Northwest
       Any of the following:
           Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
   > Event - EMMI Single Use Slide
       Before Artaria - EMMI Single Use Slide and Can Slide
-  > Event - Slide Alternative blob (Above)
-      Any of the following:
-          Wave Beam
-          Morph Ball and Pseudo-Wave Beam (Intermediate) and Shoot Charge Beam
-
-> Event - Slide Alternative blob (Above); Heals? False
-  * Event Artaria - Slide Alternative Blob
   > Event - Slide Alternative Blob (Above)
-      Pseudo-Wave Beam (Intermediate)
+      Any of the following:
+          Wave Beam or Pseudo-Wave Beam (Intermediate)
+          Morph Ball and Pseudo-Wave Beam (Intermediate) and Shoot Charge Beam
 
 > Event - Slide Alternative Blob (Above); Heals? False
   * Event Artaria - Slide Alternative Blob
@@ -3069,7 +3037,7 @@ Extra - total_boundings: {'x1': 5800.0, 'x2': 8350.0, 'y1': -6450.0, 'y2': -3600
 Extra - polygon: [[8350.0, -3600.0], [5800.0, -3600.0], [5800.0, -6450.0], [8350.0, -6450.0]]
 Extra - asset_id: collision_camera_049
 > Door to White EMMI Arena (Top); Heals? False
-  * Charge Beam Door to White EMMI Arena/Door to Central Unit Access (Upper)
+  * Charge Beam Door to White EMMI Arena/Door to Central Unit Access
   * Extra - actor_name: Door015 (CG-CG)
   * Extra - actor_def: actordef:actors/props/doorchargecharge/charclasses/doorchargecharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3082,7 +3050,7 @@ Extra - asset_id: collision_camera_049
       Trivial
 
 > Door to White EMMI Arena (Bottom); Heals? False
-  * Power Beam Door to White EMMI Arena/Door to Central Unit Access (Lower)
+  * Power Beam Door to White EMMI Arena/Door from Central Unit Access
   * Extra - actor_name: Door059 (CL-PW)
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3093,8 +3061,6 @@ Extra - asset_id: collision_camera_049
       Trivial
   > Dock to Central Unit
       After Artaria - Central Unit
-  > Event - Unlock Central Unit Access
-      Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_CentralUnit
@@ -3118,11 +3084,6 @@ Extra - asset_id: collision_camera_049
   * Extra - pickup_type: emmi
   * Extra - string_key: GUI_ITEM_ACQUIRED_SPIDER_MAGNET
   * Extra - callback_function: OnEmmyCaveDead
-  > Door to White EMMI Arena (Bottom)
-      Trivial
-
-> Event - Unlock Central Unit Access; Heals? False
-  * Event Artaria - Unlock Central Unit Access
   > Door to White EMMI Arena (Bottom)
       Trivial
 
@@ -3546,8 +3507,8 @@ Extra - asset_id: collision_camera_056
   > Door to Map Station
       Any of the following:
           Gravity Suit or After Artaria - Water Reservoir Blob
-          Water Bomb Jump (Beginner) and Lay Bomb
-          Water Bomb Jump (Intermediate) and Lay Cross Comb
+          Water Bomb Jump (Beginner) and Perform Water Bomb Jump
+          Water Bomb Jump (Intermediate) and Perform Water Cross Jump
   > Right of Rotatable
       Any of the following:
           All of the following:
@@ -3559,12 +3520,12 @@ Extra - asset_id: collision_camera_056
               After Artaria - Water Reservoir Blob and Water Bomb Jump (Intermediate)
               Any of the following:
                   All of the following:
-                      Lay Bomb
+                      Perform Water Bomb Jump
                       Any of the following:
                           Space Jump or Single-wall Wall Jump (Intermediate)
                           Walljump (Beginner) and Use Spin Boost
                   All of the following:
-                      Lay Cross Comb
+                      Perform Water Cross Jump
                       Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Dock to Red Chozo Arena; Heals? False
@@ -3923,7 +3884,7 @@ Extra - total_boundings: {'x1': 10800.0, 'x2': 12900.0, 'y1': 2500.0, 'y2': 3642
 Extra - polygon: [[12900.0, 3642.0], [10800.0, 3642.0], [10800.0, 2500.0], [12900.0, 2500.0]]
 Extra - asset_id: collision_camera_065
 > Door to David Jaffe Room; Heals? False
-  * Charge Beam Door to David Jaffe Room/Door to Navigation Station North
+  * Charge Beam Door to David Jaffe Room/Door from Navigation Station North
   * Extra - actor_name: Door029 (CG-CL,OP)
   * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3931,8 +3892,6 @@ Extra - asset_id: collision_camera_065
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Navigation Room
-      Trivial
-  > Event - Unlock David Jaffe Room
       Trivial
 
 > Door to Invisible Corpius Room; Heals? False
@@ -3984,17 +3943,12 @@ Extra - asset_id: collision_camera_065
   > Door to Arbitrary Enky Room (Thermal)
       Trivial
 
-> Event - Unlock David Jaffe Room; Heals? False
-  * Event Artaria - Unlock David Jaffe Room
-  > Door to David Jaffe Room
-      Trivial
-
 ----------------
 Path to Thermal Device
 Extra - total_boundings: {'x1': 19800.0, 'x2': 22900.0, 'y1': 958.0, 'y2': 2100.0}
 Extra - polygon: [[22900.0, 2100.0], [19800.0, 2100.0], [19800.0, 958.0], [22900.0, 958.0]]
 Extra - asset_id: collision_camera_066
-> Door to Thermal Device (Lower); Heals? False
+> Door to Thermal Device; Heals? False
   * Power Beam Door to Thermal Device/Door to Path to Thermal Device (Lower)
   * Extra - actor_name: Door033 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
@@ -4016,8 +3970,8 @@ Extra - asset_id: collision_camera_066
   > Start Point
       Trivial
 
-> Door to Thermal Device (Upper); Heals? False
-  * Access Open to Thermal Device/Door to Path to Thermal Device (Upper)
+> Door from Thermal Device; Heals? False
+  * Access Closed to Thermal Device/Door to Path to Thermal Device (Upper)
   * Extra - actor_name: Door046 (PW-CL,OP)
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4028,12 +3982,12 @@ Extra - asset_id: collision_camera_066
       Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Door to Thermal Device (Lower)
+  > Door to Thermal Device
       Trivial
   > Door to Save Station East
       Trivial
-  > Door to Thermal Device (Upper)
-      After Artaria - Unlock Thermal Pickup
+  > Door from Thermal Device
+      Trivial
 
 ----------------
 Thermal Device
@@ -4042,7 +3996,7 @@ Extra - total_boundings: {'x1': 17800.0, 'x2': 19900.0, 'y1': 900.0, 'y2': 2600.
 Extra - polygon: [[19900.0, 2600.0], [17800.0, 2600.0], [17800.0, 900.0], [19900.0, 900.0]]
 Extra - asset_id: collision_camera_067
 > Door to Path to Thermal Device (Lower); Heals? False
-  * Power Beam Door to Path to Thermal Device/Door to Thermal Device (Lower)
+  * Power Beam Door to Path to Thermal Device/Door to Thermal Device
   * Extra - actor_name: Door033 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4064,7 +4018,7 @@ Extra - asset_id: collision_camera_067
       Trivial
 
 > Door to Path to Thermal Device (Upper); Heals? False
-  * Power Beam Door to Path to Thermal Device/Door to Thermal Device (Upper)
+  * Power Beam Door to Path to Thermal Device/Door from Thermal Device
   * Extra - actor_name: Door046 (PW-CL,OP)
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -4072,8 +4026,6 @@ Extra - asset_id: collision_camera_067
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Pickup (Missile Tank)
-      Trivial
-  > Event - Unlock Thermal Pickup
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -4104,11 +4056,6 @@ Extra - asset_id: collision_camera_067
   > Pickup (Missile Tank)
       Morph Ball and Shoot Missile
   > Event - Thermal Device
-      Trivial
-
-> Event - Unlock Thermal Pickup; Heals? False
-  * Event Artaria - Unlock Thermal Pickup
-  > Start Point
       Trivial
 
 ----------------
@@ -4897,9 +4844,9 @@ Extra - asset_id: collision_camera_081
           All of the following:
               Water Bomb Jump (Intermediate)
               Any of the following:
-                  Lay Cross Comb
+                  Perform Water Cross Jump
                   All of the following:
-                      Lay Bomb
+                      Perform Water Bomb Jump
                       Space Jump or Walljump (Beginner)
 
 > Start Point - Screw Attack; Heals? False
@@ -5032,15 +4979,15 @@ Extra - asset_id: collision_camera_081
           All of the following:
               Before Artaria - Screw Attack Water Blob
               Any of the following:
-                  Water Bomb Jump (Beginner) and Lay Bomb
-                  Water Bomb Jump (Intermediate) and Lay Cross Comb
+                  Water Bomb Jump (Beginner) and Perform Water Bomb Jump
+                  Water Bomb Jump (Intermediate) and Perform Water Cross Jump
   > Blob - Right
       After Artaria - Screw Attack Water Blob
   > Early Screw Jump
       Any of the following:
           Gravity Suit
-          Water Bomb Jump (Beginner) and Lay Bomb
-          Water Bomb Jump (Intermediate) and Lay Cross Comb
+          Water Bomb Jump (Beginner) and Perform Water Bomb Jump
+          Water Bomb Jump (Intermediate) and Perform Water Cross Jump
 
 > Next to Upper Tank; Heals? False
   > Pickup (Missile Tank, Top)
@@ -5071,8 +5018,8 @@ Extra - asset_id: collision_camera_081
   > Total Recharge
       Any of the following:
           Gravity Suit
-          Water Bomb Jump (Beginner) and Lay Bomb
-          Water Bomb Jump (Intermediate) and Lay Cross Comb
+          Water Bomb Jump (Beginner) and Perform Water Bomb Jump
+          Water Bomb Jump (Intermediate) and Perform Water Cross Jump
   > Tile Group (SCREWATTACK) 2
       Trivial
   > Early Screw Jump

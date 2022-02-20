@@ -2300,7 +2300,7 @@
                         }
                     }
                 },
-                "Door to White EMMI Arena": {
+                "Door from White EMMI Arena": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -2323,7 +2323,7 @@
                         "node_name": "Door to EMMI Zone First Entrance"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Access Open",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -2566,13 +2566,11 @@
                                 "items": []
                             }
                         },
-                        "Door to White EMMI Arena": {
-                            "type": "resource",
+                        "Door from White EMMI Arena": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AccessClosedWhiteArena",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to White EMMI Introduction": {
@@ -3322,7 +3320,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "EMMI Zone Exit North",
-                        "node_name": "Door to Teleport to Dairon (Bottom)"
+                        "node_name": "Door to Teleport to Dairon"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -3452,7 +3450,7 @@
                                     },
                                     {
                                         "type": "resource",
-										"data": {
+                                        "data": {
                                             "type": "tricks",
                                             "name": "Movement",
                                             "amount": 2,
@@ -3660,19 +3658,12 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "EMMI Zone Exit North",
-                        "node_name": "Door to Teleport to Dairon (Top)"
+                        "node_name": "Door from Teleport to Dairon"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Wide Beam Door",
                     "connections": {
                         "Teleporter to Dairon - Teleport to Artaria": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Unlock Dairon Teleport": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3855,34 +3846,6 @@
                             }
                         }
                     }
-                },
-                "Event - Unlock Dairon Teleport": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5850.0,
-                        "y": 2700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "event_name": "AccessClosedDaironTeleport",
-                    "connections": {
-                        "Door to EMMI Zone Exit North (Bottom)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Door to EMMI Zone Exit North (Upper)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
@@ -3917,7 +3880,7 @@
                 "asset_id": "collision_camera_009"
             },
             "nodes": {
-                "Door to Teleport to Dairon (Bottom)": {
+                "Door to Teleport to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4063,7 +4026,7 @@
                         }
                     }
                 },
-                "Door to Teleport to Dairon (Top)": {
+                "Door from Teleport to Dairon": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4086,7 +4049,7 @@
                         "node_name": "Door to EMMI Zone Exit North (Upper)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Access Open",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -4273,7 +4236,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Teleport to Dairon (Bottom)": {
+                        "Door to Teleport to Dairon": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4287,13 +4250,11 @@
                                 "items": []
                             }
                         },
-                        "Door to Teleport to Dairon (Top)": {
-                            "type": "resource",
+                        "Door from Teleport to Dairon": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AccessClosedDaironTeleport",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -8213,7 +8174,7 @@
                 "asset_id": "collision_camera_017"
             },
             "nodes": {
-                "Door to Central Unit Access (Upper)": {
+                "Door to Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8352,7 +8313,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "EMMI Zone First Entrance",
-                        "node_name": "Door to White EMMI Arena"
+                        "node_name": "Door from White EMMI Arena"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -8379,17 +8340,10 @@
                                     }
                                 ]
                             }
-                        },
-                        "Event - Unlock White EMMI Arena": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
                         }
                     }
                 },
-                "Door to Central Unit Access (Lower)": {
+                "Door from Central Unit Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8412,7 +8366,7 @@
                         "node_name": "Door to White EMMI Arena (Bottom)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Access Open",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -8482,7 +8436,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Access Open",
                     "connections": {
-                        "Door to Central Unit Access (Upper)": {
+                        "Door to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8546,7 +8500,7 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Central Unit Access (Upper)": {
+                        "Door to Central Unit Access": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8587,13 +8541,11 @@
                                 ]
                             }
                         },
-                        "Door to Central Unit Access (Lower)": {
-                            "type": "resource",
+                        "Door from Central Unit Access": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AccessClosedWhiteCUAccess",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to EMMI Zone Spinner (DoorFrame_009)": {
@@ -8631,27 +8583,6 @@
                     "dock_weakness": "Morph Ball Tunnel",
                     "connections": {
                         "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Unlock White EMMI Arena": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5850.0,
-                        "y": -2550.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "event_name": "AccessClosedWhiteArena",
-                    "connections": {
-                        "Door to EMMI Zone First Entrance": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9126,7 +9057,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Door to Navigation Station North": {
+                "Door from Navigation Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -9149,7 +9080,7 @@
                         "node_name": "Door to David Jaffe Room"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Access Open",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -9230,13 +9161,11 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to Navigation Station North": {
-                            "type": "resource",
+                        "Door from Navigation Station North": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AccessClosedDavidJaffe",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Thermal Door Tutorial": {
@@ -9458,7 +9387,7 @@
                                 "name": "s010_cave:default:PRP_DB_CV_007",
                                 "amount": 1,
                                 "negate": false
-							}
+                            }
                         }
                     }
                 },
@@ -10541,7 +10470,7 @@
                 "asset_id": "collision_camera_026"
             },
             "nodes": {
-                "Door to Varia Suit Tutorial North": {
+                "Door from Varia Suit Tutorial North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10564,7 +10493,7 @@
                         "node_name": "Door to Chain Reaction Room"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Power Beam Door",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Next to Door": {
                             "type": "and",
@@ -11503,13 +11432,11 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Varia Suit Tutorial North": {
-                            "type": "resource",
+                        "Door from Varia Suit Tutorial North": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AccessClosedChainReaction",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Tile Group (POWERBEAM) 2": {
@@ -12599,7 +12526,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Chain Reaction Room",
-                        "node_name": "Door to Varia Suit Tutorial North"
+                        "node_name": "Door from Varia Suit Tutorial North"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -12688,13 +12615,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Event - Unlock Chain Reaction": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -13061,27 +12981,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Event - Unlock Chain Reaction": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -8150.0,
-                        "y": 8500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "event_name": "AccessClosedChainReaction",
-                    "connections": {
-                        "Door to Chain Reaction Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -15029,7 +14928,7 @@
                                                 }
                                             ]
                                         }
-									},
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
@@ -15121,7 +15020,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "White EMMI Arena",
-                        "node_name": "Door to Central Unit Access (Upper)"
+                        "node_name": "Door to Central Unit Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -15162,7 +15061,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "White EMMI Arena",
-                        "node_name": "Door to Central Unit Access (Lower)"
+                        "node_name": "Door from Central Unit Access"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -15181,13 +15080,6 @@
                                 "name": "ArtariaCU",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        },
-                        "Event - Unlock Central Unit Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -15306,27 +15198,6 @@
                     },
                     "pickup_index": 139,
                     "major_location": true,
-                    "connections": {
-                        "Door to White EMMI Arena (Bottom)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Unlock Central Unit Access": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5907.67,
-                        "y": -6137.67,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "event_name": "AccessClosedWhiteCUAccess",
                     "connections": {
                         "Door to White EMMI Arena (Bottom)": {
                             "type": "and",
@@ -16460,9 +16331,9 @@
                                             "name": "SWJ",
                                             "amount": 2,
                                             "negate": false
-										}
-									},
-									{
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
@@ -17220,7 +17091,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Bomb"
+                                                    "data": "Perform Water Bomb Jump"
                                                 }
                                             ]
                                         }
@@ -17241,7 +17112,7 @@
                                                 },
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Cross Comb"
+                                                    "data": "Perform Water Cross Jump"
                                                 }
                                             ]
                                         }
@@ -17356,7 +17227,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Lay Bomb"
+                                                                            "data": "Perform Water Bomb Jump"
                                                                         },
                                                                         {
                                                                             "type": "or",
@@ -17415,7 +17286,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Lay Cross Comb"
+                                                                            "data": "Perform Water Cross Jump"
                                                                         },
                                                                         {
                                                                             "type": "or",
@@ -19185,19 +19056,12 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "David Jaffe Room",
-                        "node_name": "Door to Navigation Station North"
+                        "node_name": "Door from Navigation Station North"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
                     "connections": {
                         "Navigation Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Unlock David Jaffe Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19356,27 +19220,6 @@
                             }
                         }
                     }
-                },
-                "Event - Unlock David Jaffe Room": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 12850.0,
-                        "y": 3200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "event_name": "AccessClosedDavidJaffe",
-                    "connections": {
-                        "Door to David Jaffe Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
                 }
             }
         },
@@ -19411,7 +19254,7 @@
                 "asset_id": "collision_camera_066"
             },
             "nodes": {
-                "Door to Thermal Device (Lower)": {
+                "Door to Thermal Device": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -19479,7 +19322,7 @@
                         }
                     }
                 },
-                "Door to Thermal Device (Upper)": {
+                "Door from Thermal Device": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -19502,7 +19345,7 @@
                         "node_name": "Door to Path to Thermal Device (Upper)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Access Open",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -19524,7 +19367,7 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Thermal Device (Lower)": {
+                        "Door to Thermal Device": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19538,13 +19381,11 @@
                                 "items": []
                             }
                         },
-                        "Door to Thermal Device (Upper)": {
-                            "type": "resource",
+                        "Door from Thermal Device": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AccessClosedThermalDevice",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -19602,7 +19443,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Path to Thermal Device",
-                        "node_name": "Door to Thermal Device (Lower)"
+                        "node_name": "Door to Thermal Device"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -19670,19 +19511,12 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Path to Thermal Device",
-                        "node_name": "Door to Thermal Device (Upper)"
+                        "node_name": "Door from Thermal Device"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Event - Unlock Thermal Pickup": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -19808,27 +19642,6 @@
                             }
                         },
                         "Event - Thermal Device": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Unlock Thermal Pickup": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 19850.0,
-                        "y": 1700.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {},
-                    "event_name": "AccessClosedThermalDevice",
-                    "connections": {
-                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -23755,7 +23568,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Lay Bomb"
+                                                                            "data": "Perform Water Bomb Jump"
                                                                         },
                                                                         {
                                                                             "type": "or",
@@ -23788,7 +23601,7 @@
                                                             },
                                                             {
                                                                 "type": "template",
-                                                                "data": "Lay Cross Comb"
+                                                                "data": "Perform Water Cross Jump"
                                                             }
                                                         ]
                                                     }
@@ -24442,7 +24255,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Lay Bomb"
+                                                                            "data": "Perform Water Bomb Jump"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -24463,7 +24276,7 @@
                                                                     "items": [
                                                                         {
                                                                             "type": "template",
-                                                                            "data": "Lay Cross Comb"
+                                                                            "data": "Perform Water Cross Jump"
                                                                         },
                                                                         {
                                                                             "type": "resource",
@@ -24516,7 +24329,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Bomb"
+                                                    "data": "Perform Water Bomb Jump"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -24537,7 +24350,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Cross Comb"
+                                                    "data": "Perform Water Cross Jump"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -24754,7 +24567,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Bomb"
+                                                    "data": "Perform Water Bomb Jump"
                                                 },
                                                 {
                                                     "type": "resource",
@@ -24775,7 +24588,7 @@
                                             "items": [
                                                 {
                                                     "type": "template",
-                                                    "data": "Lay Cross Comb"
+                                                    "data": "Perform Water Cross Jump"
                                                 },
                                                 {
                                                     "type": "resource",
