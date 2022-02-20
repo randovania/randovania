@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 from PySide2 import QtCore
 
+from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.gui.dialog.game_export_dialog import CSGameExportDialog
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
@@ -66,3 +67,19 @@ def test_save_options(skip_qtbot, tmp_path):
 
     # Assert
     assert options.options_for_game(RandovaniaGame.CAVE_STORY).output_directory == Path("somewhere/foo")
+
+
+def test_get_game_export_params(skip_qtbot, tmp_path):
+    # Setup
+    options = MagicMock()
+    options.options_for_game.return_value.output_directory = tmp_path.joinpath("output")
+    window = CSGameExportDialog(options, {}, "MyHash", True)
+
+    # Run
+    result = window.get_game_export_params()
+
+    # Assert
+    assert result == CSGameExportParams(
+        spoiler_output=tmp_path.joinpath("output.rdvgame"),
+        output_path=tmp_path.joinpath("output"),
+    )

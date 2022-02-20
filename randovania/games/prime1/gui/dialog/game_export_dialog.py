@@ -51,10 +51,10 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             self.input_file_edit.setText(str(per_game.input_path))
 
         if per_game.output_directory is not None:
-            output_path = per_game.output_directory
-            if self._selected_output_format:
-                output_path = output_path.joinpath("{}.{}".format(self.default_output_name,
-                                                                  self._selected_output_format))
+            output_path = per_game.output_directory.joinpath("{}.{}".format(
+                self.default_output_name,
+                self._selected_output_format,
+            ))
             self.output_file_edit.setText(str(output_path))
 
         self._validate_input_file()

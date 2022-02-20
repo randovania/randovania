@@ -41,10 +41,6 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     def default_output_file(self, seed_hash: str) -> str:
         return "Echoes Randomizer - {}".format(seed_hash)
 
-    @property
-    def _selected_output_format(self):
-        return "iso"
-
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
         super().__init__(options, patch_data, word_hash, spoiler)
         self.setupUi(self)
