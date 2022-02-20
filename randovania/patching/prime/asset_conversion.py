@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import time
+import shutil
 from pathlib import Path
 from typing import NamedTuple, List
 
@@ -19,6 +20,27 @@ from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
+
+PRIME_MODELS_VERSION = 1
+ECHOES_MODEL_VERSION = 1
+
+
+def delete_converted_assets(target_game: RandovaniaGame, source_game: RandovaniaGame):
+    asset_dir = Options.with_default_data_dir().internal_copies_path.joinpath(target_game.value, f"{source_game.value}_models")
+    try:
+        shutil.rmtree(asset_dir)
+    except OSError:
+        raise
+
+
+def get_asset_cache_version(target_game: RandovaniaGame, source_game: RandovaniaGame) -> int:
+    asset_dir = Options.with_default_data_dir().internal_copies_path.joinpath(target_game.value, f"{source_game.value}_models")
+    try:
+        with open(asset_dir.joinpath("meta.json")) as metafile:
+            metadata = json.load(metafile)
+            return int(metadata["version"])
+    except OSError:
+        return 0
 
 
 def prime_asset_provider() -> AssetProvider:
@@ -129,12 +151,12 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
 
     updaters = status_update_lib.split_progress_update(status_update, 3)
 
-    if cache_path.is_dir():
+    if get_asset_cache_version(RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME) >= ECHOES_MODEL_VERSION:
         print("Reading assets from cache")
         converted_assets = {}
         # Read assets from cache if available
         for asset_path in cache_path.glob("*"):
-            if asset_path.suffix.upper() == ".JSON":
+            if asset_path.suffix[1:].upper() not in conversions.ALL_FORMATS:
                 continue
             type = asset_path.suffix[1:]
             asset_id = int(asset_path.stem)
@@ -151,7 +173,7 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
             converted_assets[asset_id] = converted_asset
 
         with open(cache_path.joinpath("meta.json"), "r")as data_additions_file:
-            randomizer_data_additions = json.load(data_additions_file)
+            randomizer_data_additions = json.load(data_additions_file)["data"]
 
 
     else:
@@ -202,6 +224,7 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
 
         # logging.debug("Updating RandomizerData.json")
         start = time.time()
+        meta_dict = {"version": PRIME_MODELS_VERSION}
         randomizer_data_additions = []
         for name, asset in result.items():
             dependencies = [
@@ -227,8 +250,9 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
                 },
                 "Assets": dependencies
             })
+        meta_dict["data"] = randomizer_data_additions
         with open(cache_path.joinpath("meta.json"), "w")as data_additions_file:
-            json.dump(randomizer_data_additions, data_additions_file)
+            json.dump(meta_dict, data_additions_file)
         end = time.time()
         # logging.debug(f"Time took: {end - start}")
 
@@ -273,7 +297,7 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
 
 def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
-    if metafile.is_file():
+    if get_asset_cache_version(RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME) >= ECHOES_MODEL_VERSION:
         with open(metafile, "r") as md:
             return json.load(md)
 
@@ -371,6 +395,7 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
     output_path.mkdir(exist_ok=True, parents=True)
     with output_path.joinpath("meta.json").open("w") as meta_out:
         metadata = {
+            "version": ECHOES_MODEL_VERSION,
             "items": {
                 name: {
                     "ancs": asset.ancs,
