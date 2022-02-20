@@ -1964,8 +1964,8 @@ David Jaffe Room
 Extra - total_boundings: {'x1': 12800.0, 'x2': 15900.0, 'y1': 3000.0, 'y2': 4600.0}
 Extra - polygon: [[15900.0, 4600.0], [12800.0, 4600.0], [12800.0, 3000.0], [15900.0, 3000.0]]
 Extra - asset_id: collision_camera_021
-> Door from Navigation Station North; Heals? False
-  * Access Closed to Navigation Station North/Door to David Jaffe Room
+> Door to Navigation Station North; Heals? False
+  * Access Open to Navigation Station North/Door to David Jaffe Room
   * Extra - actor_name: Door029 (CG-CL,OP)
   * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1996,8 +1996,8 @@ Extra - asset_id: collision_camera_021
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_AccessPoint_2B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door from Navigation Station North
-      Trivial
+  > Door to Navigation Station North
+      After Artaria - Unlock David Jaffe Room
   > Door to Thermal Door Tutorial
       Trivial
   > Pickup (Missile Tank)
@@ -3884,7 +3884,7 @@ Extra - total_boundings: {'x1': 10800.0, 'x2': 12900.0, 'y1': 2500.0, 'y2': 3642
 Extra - polygon: [[12900.0, 3642.0], [10800.0, 3642.0], [10800.0, 2500.0], [12900.0, 2500.0]]
 Extra - asset_id: collision_camera_065
 > Door to David Jaffe Room; Heals? False
-  * Charge Beam Door to David Jaffe Room/Door from Navigation Station North
+  * Charge Beam Door to David Jaffe Room/Door to Navigation Station North
   * Extra - actor_name: Door029 (CG-CL,OP)
   * Extra - actor_def: actordef:actors/props/doorchargeclosed/charclasses/doorchargeclosed.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3893,6 +3893,10 @@ Extra - asset_id: collision_camera_065
   * Extra - right_shield_def: None
   > Navigation Room
       Trivial
+  > Event - Unlock David Jaffe Room
+      All of the following:
+          # Temporary requirement until dock works properly
+          Shoot Charge Beam
 
 > Door to Invisible Corpius Room; Heals? False
   * Power Beam Door to Invisible Corpius Room/Door to Navigation Station North
@@ -3941,6 +3945,11 @@ Extra - asset_id: collision_camera_065
   > Door to Arbitrary Enky Room (Upper)
       Trivial
   > Door to Arbitrary Enky Room (Thermal)
+      Trivial
+
+> Event - Unlock David Jaffe Room; Heals? False
+  * Event Artaria - Unlock David Jaffe Room
+  > Door to David Jaffe Room
       Trivial
 
 ----------------
