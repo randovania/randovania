@@ -105,12 +105,12 @@ class DreadPatchDataGenerator(BasePatchDataGenerator):
         world = self.game.world_list.nodes_to_world(node)
         return os.path.splitext(os.path.split(world.extra["asset_id"])[1])[0]
 
-    def _teleporter_ref_for(self, node: Node) -> dict:
+    def _teleporter_ref_for(self, node: Node, actor_key: str = "actor_name") -> dict:
         try:
             return {
                 "scenario": self._level_name_for(node),
                 "layer": node.extra.get("actor_layer", "default"),
-                "actor": node.extra["actor_name"],
+                "actor": node.extra[actor_key],
             }
         except KeyError as e:
             raise self._key_error_for_node(node, e)
@@ -129,8 +129,17 @@ class DreadPatchDataGenerator(BasePatchDataGenerator):
         # target.
 
         if detail.model.game != RandovaniaGame.METROID_DREAD:
+            map_icon = {
+                # TODO: more specific icons for pickups in other games
+                "custom_icon": {
+                    "label": detail.model.name.upper(),
+                }
+            }
             model_name = "itemsphere"
         else:
+            map_icon = {
+                "icon_id": detail.model.name
+            }
             model_name = _ALTERNATIVE_MODELS.get(detail.model.name, detail.model.name)
 
         ammoconfig = self.configuration.ammo_configuration.items_state
@@ -178,9 +187,14 @@ class DreadPatchDataGenerator(BasePatchDataGenerator):
 
         try:
             if pickup_type == "actor":
+                if "map_icon_actor" in pickup_node.extra:
+                    map_icon.update({
+                        "original_actor": self._teleporter_ref_for(pickup_node, "map_icon_actor")
+                    })
                 details.update({
                     "pickup_actor": self._teleporter_ref_for(pickup_node),
                     "model": model_name,
+                    "map_icon": map_icon
                 })
             else:
                 details.update({
