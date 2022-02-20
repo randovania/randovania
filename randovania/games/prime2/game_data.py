@@ -15,7 +15,7 @@ def _gui() -> game.GameGui:
     from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
     from randovania.games.prime2.gui.preset_settings import prime2_preset_tabs
     from randovania.games.prime2.gui.translator_gate_details_tab import TranslatorGateDetailsTab
-    from randovania.games.prime2.gui.hint_details_tab import HintDetailsTab
+    from randovania.games.prime2.gui.hint_details_tab import EchoesHintDetailsTab
     from randovania.games.prime2.gui.echoes_help_widget import EchoesHelpWidget
 
     return game.GameGui(
@@ -23,7 +23,7 @@ def _gui() -> game.GameGui:
         cosmetic_dialog=EchoesCosmeticPatchesDialog,
         input_file_text=("an ISO file", "the Nintendo Gamecube", "Gamecube ISO"),
         progressive_item_gui_tuples=prime2_progressive_items.gui_tuples(),
-        spoiler_visualizer=(TeleporterDetailsTab, TranslatorGateDetailsTab, HintDetailsTab),
+        spoiler_visualizer=(TeleporterDetailsTab, TranslatorGateDetailsTab, EchoesHintDetailsTab),
         help_widget=lambda: EchoesHelpWidget(),
     )
 

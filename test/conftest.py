@@ -178,7 +178,7 @@ def dataclass_test_lib() -> DataclassTestLib:
 
 @pytest.fixture()
 def empty_patches() -> GamePatches:
-    return GamePatches(0, {}, {}, {}, {}, {}, {}, None, {})
+    return GamePatches(0, RandovaniaGame.BLANK, {}, {}, {}, {}, {}, {}, None, {})
 
 
 def pytest_addoption(parser):

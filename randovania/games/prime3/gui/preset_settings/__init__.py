@@ -9,7 +9,6 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
     from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
-    from randovania.gui.preset_settings.elevators_tab import PresetElevators
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
@@ -17,7 +16,6 @@ def prime3_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetPatcherEnergy(editor, game_enum),
-        PresetElevators(editor, game_description),
         PresetMetroidStartingArea(editor, game_description),
         PresetGeneration(editor, game_description),
         PresetLocationPool(editor, game_description),

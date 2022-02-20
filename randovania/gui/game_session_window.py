@@ -26,7 +26,7 @@ from randovania.gui.lib.generation_failure_handling import GenerationFailureHand
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.multiworld_client import MultiworldClient, BackendInUse
-from randovania.gui.preset_settings.logic_settings_window import LogicSettingsWindow
+from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
@@ -168,7 +168,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     rows: List[RowWidget]
     _game_session: GameSessionEntry
     has_closed = False
-    _logic_settings_window: Optional[LogicSettingsWindow] = None
+    _logic_settings_window: Optional[CustomizePresetDialog] = None
     _window_manager: WindowManager
     _generating_game: bool = False
     _already_kicked = False
@@ -194,9 +194,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
         self.rename_session_action = QtWidgets.QAction("Change title", self.advanced_options_menu)
         self.change_password_action = QtWidgets.QAction("Change password", self.advanced_options_menu)
+        self.duplicate_session_action = QtWidgets.QAction("Duplicate session", self.advanced_options_menu)
 
         self.advanced_options_menu.addAction(self.rename_session_action)
         self.advanced_options_menu.addAction(self.change_password_action)
+        self.advanced_options_menu.addAction(self.duplicate_session_action)
         self.advanced_options_tool.setMenu(self.advanced_options_menu)
 
         # Save ISO Button
@@ -257,6 +259,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         # Advanced Options
         self.rename_session_action.triggered.connect(self.rename_session)
         self.change_password_action.triggered.connect(self.change_password)
+        self.duplicate_session_action.triggered.connect(self.duplicate_session)
 
         # Save ISO Button
         self.copy_permalink_action.triggered.connect(self.copy_permalink)
@@ -474,12 +477,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         old_preset = self._game_session.presets[row_index].get_preset()
         if old_preset.base_preset_uuid is None:
             old_preset = old_preset.fork()
-        editor = PresetEditor(old_preset)
-        self._logic_settings_window = LogicSettingsWindow(self._window_manager, editor)
-        self._logic_settings_window._game_session_row = row
 
+        editor = PresetEditor(old_preset)
+        self._logic_settings_window = CustomizePresetDialog(self._window_manager, editor)
         self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
         editor.on_changed = lambda: self._logic_settings_window.on_preset_changed(editor.create_custom_preset_with())
+        self._logic_settings_window._game_session_row = row
 
         result = await async_dialog.execute_dialog(self._logic_settings_window)
         self._logic_settings_window = None
@@ -866,8 +869,12 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def rename_session(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Renaming session isn't implemented yet.")
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Enter new title")
+        dialog.setLabelText("Enter the new title for the session:")
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+            await self._admin_global_action(SessionAdminGlobalAction.CHANGE_TITLE, dialog.textValue())
 
     @asyncSlot()
     @handle_network_errors
@@ -879,6 +886,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         dialog.setTextEchoMode(QtWidgets.QLineEdit.Password)
         if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
             await self._admin_global_action(SessionAdminGlobalAction.CHANGE_PASSWORD, dialog.textValue())
+
+    @asyncSlot()
+    @handle_network_errors
+    async def duplicate_session(self):
+        dialog = QtWidgets.QInputDialog(self)
+        dialog.setModal(True)
+        dialog.setWindowTitle("Enter new title")
+        dialog.setLabelText("Enter the title for the duplicated copy of the session:")
+        if await async_dialog.execute_dialog(dialog) == QtWidgets.QDialog.Accepted:
+            await self._admin_global_action(SessionAdminGlobalAction.DUPLICATE_SESSION, dialog.textValue())
 
     async def _check_dangerous_presets(self, permalink: Permalink) -> bool:
         all_dangerous_settings = {
@@ -910,13 +927,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         return True
 
     async def generate_game(self, spoiler: bool, retries: Optional[int]):
-        if not self._options.is_alert_displayed(InfoAlert.MULTI_ENERGY_ALERT):
-            await async_dialog.warning(
-                self, "Multiworld Limitation",
-                "Warning: Multiworld games doesn't have proper energy damage logic. "
-                "You might be required to do Dark Aether or heated Magmoor Cavern checks with very low energy."
-            )
-            self._options.mark_alert_as_displayed(InfoAlert.MULTI_ENERGY_ALERT)
+        await async_dialog.warning(
+            self, "Multiworld Limitation",
+            "Warning: Multiworld games doesn't have proper energy damage logic. "
+            "You might be required to do Dark Aether or heated Magmoor Cavern checks with very low energy."
+        )
 
         permalink = Permalink.from_parameters(GeneratorParameters(
             seed_number=random.randint(0, 2 ** 31),
@@ -983,8 +998,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     @asyncSlot()
     @handle_network_errors
     async def generate_game_without_spoiler(self):
-        await async_dialog.warning(self, "Not yet implemented",
-                                   "Online game sessions without spoilers aren't available right now.")
+        await self.generate_game(False, retries=None)
 
     @asyncSlot()
     @handle_network_errors
@@ -1018,7 +1032,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     async def _upload_layout_description(self, layout: LayoutDescription):
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
-                                        layout.as_json)
+                                        layout.as_json(force_spoiler=True))
 
     @asyncSlot()
     @handle_network_errors
@@ -1140,14 +1154,16 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self._window_manager.open_game_details(description)
 
     @asyncSlot()
+    @handle_network_errors
     async def copy_permalink(self):
-        permalink_str = self._game_session.game_details.permalink
+        permalink_str = await self._admin_global_action(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
         dialog = QtWidgets.QInputDialog(self)
         dialog.setModal(True)
         dialog.setWindowTitle("Session permalink")
         dialog.setLabelText("Permalink:")
         dialog.setTextValue(permalink_str)
         common_qt_lib.set_clipboard(permalink_str)
+        common_qt_lib.set_default_window_icon(dialog)
         await async_dialog.execute_dialog(dialog)
 
     @asyncSlot()

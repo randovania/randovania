@@ -26,7 +26,7 @@ from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
-from randovania.patching.prime.patcher_file_lib import item_names
+from randovania.exporter import item_names
 from randovania.resolver.exceptions import InvalidConfiguration
 
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
@@ -77,8 +77,12 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self._create_progressive_widgets(item_database)
         self._create_ammo_pickup_boxes(size_policy, item_database)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Item Pool"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     def on_preset_changed(self, preset: Preset):

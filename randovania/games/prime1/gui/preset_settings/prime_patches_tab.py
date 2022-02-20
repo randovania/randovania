@@ -44,8 +44,12 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Other"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return True
 
     def _add_persist_option(self, check: QtWidgets.QCheckBox, attribute_name: str):

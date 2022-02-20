@@ -13,7 +13,10 @@ class SessionAdminGlobalAction(Enum):
     FINISH_SESSION = "finish_session"
     RESET_SESSION = "reset_session"
     CHANGE_PASSWORD = "change_password"
+    CHANGE_TITLE = "change_title"
+    DUPLICATE_SESSION = "duplicate_session"
     DELETE_SESSION = "delete_session"
+    REQUEST_PERMALINK = "request_permalink"
 
 
 class SessionAdminUserAction(Enum):

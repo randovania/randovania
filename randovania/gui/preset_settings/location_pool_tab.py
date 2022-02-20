@@ -83,8 +83,12 @@ class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
 
         self.locations_scroll_area_layout.addItem(QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding))
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Location Pool"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     @property

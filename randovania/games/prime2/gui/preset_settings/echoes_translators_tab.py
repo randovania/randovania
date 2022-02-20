@@ -72,8 +72,12 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
             self.translators_layout.addWidget(combo, 3 + i, 1, 1, 2)
             self._combo_for_gate[combo.identifier] = combo
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Translators Gate"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return True
 
     def _on_randomize_all_gates_pressed(self):

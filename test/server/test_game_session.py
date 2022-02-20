@@ -622,7 +622,7 @@ def test_game_session_admin_session_change_layout_description(clean_database, pr
     sio = MagicMock()
     sio.get_current_user.return_value = user1
     layout_description = mock_from_json_dict.return_value
-    layout_description.as_json = "some_json_string"
+    layout_description.as_json.return_value = "some_json_string"
     layout_description.player_count = 2
     layout_description.all_presets = [new_preset, new_preset]
     layout_description.shareable_word_hash = "Hash Words"
@@ -819,6 +819,68 @@ def test_game_session_admin_session_change_password(clean_database, mock_emit_se
     assert database.GameSession.get_by_id(1).password == expected_password
 
 
+def test_game_session_admin_session_change_title(clean_database, mock_emit_session_update, flask_app, mock_audit):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.CHANGE_TITLE.value, "new_name")
+
+    # Assert
+    mock_emit_session_update.assert_called_once_with(session)
+    mock_audit.assert_called_once_with(sio, session, "Changed name from Debug to new_name")
+    assert database.GameSession.get_by_id(1).name == "new_name"
+
+
+def test_game_session_admin_session_duplicate_session(clean_database, mock_emit_session_update, flask_app, mock_audit):
+    user1 = database.User.create(id=1234, name="The Name")
+    user2 = database.User.create(id=2345, name="Other Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionPreset.create(session=session, row=0, preset="{}")
+    database.GameSessionPreset.create(session=session, row=1, preset='{"foo": 5}')
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
+    database.GameSessionMembership.create(user=user2, session=session, row=1, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+
+    # Run
+    with flask_app.test_request_context():
+        game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.DUPLICATE_SESSION.value, "new_name")
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    mock_audit.assert_called_once_with(sio, session, "Duplicated session as new_name")
+    new_session = database.GameSession.get_by_id(2)
+    assert new_session.name == "new_name"
+    assert [p.preset for p in new_session.presets] == ["{}", '{"foo": 5}']
+    assert [mem.user.name for mem in new_session.players] == ["The Name"]
+    assert [a.message for a in new_session.audit_log] == ["Duplicated from Debug"]
+
+
+def test_game_session_admin_session_download_permalink(clean_database, mock_emit_session_update, flask_app,
+                                                       mock_audit, mocker):
+    user1 = database.User.create(id=1234, name="The Name")
+    session = database.GameSession.create(id=1, name="Debug", state=GameSessionState.SETUP, creator=user1)
+    database.GameSessionMembership.create(user=user1, session=session, row=0, admin=True)
+    sio = MagicMock()
+    sio.get_current_user.return_value = user1
+    mock_session_description: PropertyMock = mocker.patch("randovania.server.database.GameSession.layout_description",
+                                                          new_callable=PropertyMock)
+
+    # Run
+    with flask_app.test_request_context():
+        result = game_session.game_session_admin_session(sio, 1, SessionAdminGlobalAction.REQUEST_PERMALINK.value, None)
+
+    # Assert
+    mock_emit_session_update.assert_not_called()
+    mock_audit.assert_called_once_with(sio, session, "Requested permalink")
+    assert result == mock_session_description.return_value.permalink.as_base64_str
+
+
 def test_change_row_missing_arguments(flask_app):
     with pytest.raises(InvalidAction), flask_app.test_request_context():
         game_session._change_row(MagicMock(), MagicMock(), (5,))
@@ -900,7 +962,6 @@ def test_emit_session_meta_update(session_update, mocker):
             "spoiler": True,
             "word_hash": "Words of O-Lir",
             "seed_hash": "ABCDEFG",
-            "permalink": "<permalink>",
         },
         "generation_in_progress": None,
         'allowed_games': ['prime1', 'prime2'],

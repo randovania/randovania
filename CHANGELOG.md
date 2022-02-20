@@ -13,13 +13,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: You can now configure the priority given to each major item. Higher values are more likely show up earlier in the progression chain.
 - Added: Generation failures now have a lot more details on what was missing for progression, facilitating finding issues with your preset.
 - Added: The item pool screen now explicitly tells you expansions are not used for logic.
+- Added: Implemented support for changing the title for a game session.
+- Added: A button for duplicating a session, including the generated game and all rows.
+- Added: Multiworld sessions can now be generated without spoilers.
+- Changed: Multiworld damage logic incompatibility warning now displays every time.
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
 - Changed: Most command line arguments have been renamed.
-- Changed: Changed how ConfigurableNodes (In Echoes, the Translator Gates) are handled in logic. This should have no visual differences, other than speeding up generation.
 - Changed: Simplified the item pool tab, with the usual case now having only a single line per item.
 - Changed: Improved the text for quantities for ammo in the item pool tab.
 - Changed: Experimental games are only shown in the menu if the option for experimental games is enabled.
+- Changed: Only session admins are allowed to copy the permalink of a session.
+- Changed: Modified how ConfigurableNodes (In Echoes, the Translator Gates) are handled in logic. This should have no visual differences, other than speeding up generation.
+- Changed: Great internal changes were done to how hints are applied to the game. This should have no visible impact.
 - Fixed: Map Tracker now properly handles multiple copies of pickups in all cases.
 - Removed: The Database Editor can only be open when running from source. In releases, use `Open -> (Game) -> Data Visualizer` instead.
 
@@ -49,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Nothing.
+- When checking details for a game, the hint spoiler tab now includes the correct text for Dark Temple keys hints.
 
 #### Patcher Changes
 
