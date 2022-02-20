@@ -68,7 +68,7 @@ def test_fill_unassigned_hints_empty_assignment(echoes_game_description):
     base_patches = echoes_game_description.create_game_patches()
     expected_logbooks = sum(1 for node in echoes_game_description.world_list.all_nodes
                             if isinstance(node, LogbookNode))
-    hint_distributor = echoes_game_description.game.data.generator().hint_distributor
+    hint_distributor = echoes_game_description.game.generator.hint_distributor
 
     # Run
     result = hint_distributor.fill_unassigned_hints(

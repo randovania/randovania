@@ -4,23 +4,20 @@ from randovania.games.cave_story.layout.preset_describer import (
     cs_format_params, cs_expected_items,
     cs_unexpected_items, get_ingame_hash_str,
 )
-from randovania.games.cave_story.patcher.caver_patcher import CaverPatcher
 from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
 
 
 def _gui():
-    from randovania.games.cave_story.gui.hint_details_tab import CSHintDetailsTab
-    from randovania.games.cave_story.gui.dialog.cs_cosmetic_patches_dialog import CSCosmeticPatchesDialog
-    from randovania.games.cave_story.gui.preset_settings import cs_preset_tabs
-    from randovania.games.cave_story.gui.cs_help_widget import CSHelpWidget
+    from randovania.games.cave_story import gui
     from randovania.games.cave_story.item_database import progressive_items
 
     return GameGui(
-        tab_provider=cs_preset_tabs,
-        cosmetic_dialog=CSCosmeticPatchesDialog,
+        tab_provider=gui.cs_preset_tabs,
+        cosmetic_dialog=gui.CSCosmeticPatchesDialog,
+        export_dialog=gui.CSGameExportDialog,
         progressive_item_gui_tuples=progressive_items.gui_tuples(),
-        spoiler_visualizer=(CSHintDetailsTab,),
-        help_widget=lambda: CSHelpWidget(),
+        spoiler_visualizer=(gui.CSHintDetailsTab,),
+        help_widget=lambda: gui.CSHelpWidget(),
     )
 
 
@@ -36,6 +33,16 @@ def _generator():
         base_patches_factory=BasePatchesFactory(),
         hint_distributor=CSHintDistributor(),
     )
+
+
+def _patch_data_factory():
+    from randovania.games.cave_story.exporter.patch_data_factory import CSPatchDataFactory
+    return CSPatchDataFactory
+
+
+def _exporter():
+    from randovania.games.cave_story.exporter.game_exporter import CSGameExporter
+    return CSGameExporter()
 
 
 game_data: GameData = GameData(
@@ -69,5 +76,7 @@ game_data: GameData = GameData(
 
     generator=_generator,
 
-    patcher=CaverPatcher()
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )

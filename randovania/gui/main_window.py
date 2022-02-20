@@ -29,7 +29,6 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib import enum_lib
-from randovania.patching.patcher_provider import PatcherProvider
 from randovania.resolver import debug
 
 if typing.TYPE_CHECKING:
@@ -81,10 +80,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
         return self._preset_manager
 
     @property
-    def patcher_provider(self) -> PatcherProvider:
-        return self._patcher_provider
-
-    @property
     def main_window(self) -> QtWidgets.QMainWindow:
         return self
 
@@ -98,7 +93,6 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("Randovania {}".format(VERSION))
         self._is_preview_mode = preview
-        self._patcher_provider = PatcherProvider()
         self.setAcceptDrops(True)
         common_qt_lib.set_default_window_icon(self)
 

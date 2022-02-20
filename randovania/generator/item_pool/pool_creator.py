@@ -39,7 +39,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     # Adding ammo to the pool
     base_results.pickups.extend(add_ammo(resource_database,
                                          layout_configuration.ammo_configuration))
-    layout_configuration.game.data.generator().item_pool_creator(
+    layout_configuration.game.generator.item_pool_creator(
         base_results, layout_configuration, resource_database, base_patches, rng,
     )
 

@@ -1,24 +1,23 @@
 from randovania.games import game
 from randovania.games.game import GameData, GameLayout, GamePresetDescriber
-from randovania.games.prime1.layout.preset_describer import prime_expected_items, prime_unexpected_items, \
-    prime_format_params
+from randovania.games.prime1.layout.preset_describer import (
+    prime_expected_items, prime_unexpected_items,
+    prime_format_params,
+)
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
-from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher
 
 
 def _gui() -> game.GameGui:
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
-    from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog
-    from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs
-    from randovania.games.prime1.gui.prime_help_widget import PrimeHelpWidget
+    from randovania.games.prime1 import gui
 
     return game.GameGui(
-        tab_provider=prime1_preset_tabs,
-        cosmetic_dialog=PrimeCosmeticPatchesDialog,
-        input_file_text=("an ISO file", "the Nintendo Gamecube", "Gamecube ISO"),
+        tab_provider=gui.prime1_preset_tabs,
+        cosmetic_dialog=gui.PrimeCosmeticPatchesDialog,
+        export_dialog=gui.PrimeGameExportDialog,
         spoiler_visualizer=(TeleporterDetailsTab,),
-        help_widget=lambda: PrimeHelpWidget(),
+        help_widget=lambda: gui.PrimeHelpWidget(),
     )
 
 
@@ -34,6 +33,16 @@ def _generator() -> game.GameGenerator:
         base_patches_factory=PrimeTrilogyBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
     )
+
+
+def _patch_data_factory():
+    from randovania.games.prime1.exporter.patch_data_factory import PrimePatchDataFactory
+    return PrimePatchDataFactory
+
+
+def _exporter():
+    from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter
+    return PrimeGameExporter()
 
 
 game_data: GameData = GameData(
@@ -90,5 +99,7 @@ game_data: GameData = GameData(
 
     generator=_generator,
 
-    patcher=RandomprimePatcher()
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )
