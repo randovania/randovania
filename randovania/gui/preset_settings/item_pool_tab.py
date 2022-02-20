@@ -392,7 +392,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def _create_progressive_widgets(self, item_database: ItemDatabase):
         self._progressive_widgets = []
 
-        all_progressive = self.game.data.gui().progressive_item_gui_tuples
+        all_progressive = self.game.gui.progressive_item_gui_tuples
 
         layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
             self._boxes_for_category[item_database.major_items[progressive_item_name].item_category.name][:2]

@@ -12,7 +12,6 @@ from flask_discord import DiscordOAuth2Session
 from prometheus_flask_exporter import PrometheusMetrics
 
 from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession
-from randovania.patching.patcher_provider import PatcherProvider
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 
@@ -49,7 +48,6 @@ class ServerApp:
     metrics: PrometheusMetrics
     fernet_encrypt: Fernet
     guest_encrypt: Optional[Fernet] = None
-    patcher_provider: PatcherProvider
     enforce_role: Optional[EnforceDiscordRole] = None
 
     def __init__(self, app: flask.Flask):
@@ -60,7 +58,6 @@ class ServerApp:
         self.fernet_encrypt = Fernet(app.config["FERNET_KEY"])
         if app.config["GUEST_KEY"] is not None:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
-        self.patcher_provider = PatcherProvider()
         if app.config["ENFORCE_ROLE"] is not None:
             self.enforce_role = EnforceDiscordRole(app.config["ENFORCE_ROLE"])
 

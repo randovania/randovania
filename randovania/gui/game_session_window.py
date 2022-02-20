@@ -16,7 +16,6 @@ from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter
@@ -1116,23 +1115,21 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             options.mark_alert_as_displayed(InfoAlert.MULTIWORLD_FAQ)
 
         game = self.current_player_game
-        patcher = self._window_manager.patcher_provider.patcher_for_game(game)
+        patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
+                                                     options.options_for_game(game).cosmetic_patches.as_json)
 
-        dialog = GameInputDialog(options, patcher, self._game_session.game_details.word_hash, False, game)
+        dialog = game.gui.export_dialog(options, patch_data, self._game_session.game_details.word_hash, False)
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.Accepted:
             return
 
         dialog.save_options()
-        patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
-                                                     options.options_for_game(game).cosmetic_patches.as_json)
-        self._can_stop_background_process = patcher.export_can_be_aborted
+        self._can_stop_background_process = game.exporter.export_can_be_aborted
         await game_exporter.export_game(
-            patcher=patcher,
-            input_dialog=dialog,
+            exporter=game.exporter,
+            export_dialog=dialog,
             patch_data=patch_data,
-            internal_copies_path=options.internal_copies_path,
             layout_for_spoiler=None,
             background=self,
             progress_update_signal=self.progress_update_signal,

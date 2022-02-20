@@ -3,6 +3,7 @@ from __future__ import annotations
 import typing
 from dataclasses import dataclass
 from enum import Enum
+from functools import cached_property
 from pathlib import Path
 from random import Random
 from typing import Callable, Iterable, Optional, Type
@@ -13,12 +14,15 @@ from randovania.bitpacking.bitpacking import BitPackEnum
 if typing.TYPE_CHECKING:
     from PySide2 import QtWidgets
 
+    from randovania.exporter.game_exporter import GameExporter
+    from randovania.exporter.patch_data_factory import BasePatchDataFactory
     from randovania.game_description.game_patches import GamePatches
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.generator.base_patches_factory import BasePatchesFactory
     from randovania.generator.hint_distributor import HintDistributor
     from randovania.generator.item_pool import PoolResults
     from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
+    from randovania.gui.dialog.game_export_dialog import GameExportDialog
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -26,7 +30,6 @@ if typing.TYPE_CHECKING:
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
     from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-    from randovania.patching.patcher import Patcher
     from randovania.resolver.bootstrap import Bootstrap
 
 
@@ -67,8 +70,8 @@ class GameGui:
     cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
 
-    input_file_text: Optional[tuple[str, str, str]] = None
-    """Three strings used to describe the input file for the game."""
+    export_dialog: Type[GameExportDialog]
+    """Dialog box for asking the user for whatever is needed to modify the game, like input and output paths."""
 
     progressive_item_gui_tuples: Iterable[tuple[str, tuple[str, ...]]] = frozenset()
     """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long
@@ -125,8 +128,10 @@ class GameData:
     generator: Callable[[], GameGenerator]
     """Contains game-specific generation data."""
 
-    patcher: Optional[Patcher] = None
-    """(Optional) The class responsible for patching a game and building a new .iso."""
+    patch_data_factory: Callable[[], Type[BasePatchDataFactory]]
+
+    exporter: Callable[[], GameExporter]
+    """Capable of exporting everything needed to play the randomized game."""
 
     permalink_reference_preset: Optional[str] = None
     """(Optional) Name of the preset used as reference to encode permalinks of this game.
@@ -181,3 +186,19 @@ class RandovaniaGame(BitPackEnum, Enum):
     @classmethod
     def sorted_all_games(cls) -> list[RandovaniaGame]:
         return sorted(cls.all_games(), key=lambda g: g.long_name)
+
+    @cached_property
+    def gui(self) -> GameGui:
+        return self.data.gui()
+
+    @cached_property
+    def generator(self) -> GameGenerator:
+        return self.data.generator()
+
+    @cached_property
+    def patch_data_factory(self) -> Type[BasePatchDataFactory]:
+        return self.data.patch_data_factory()
+
+    @cached_property
+    def exporter(self) -> GameExporter:
+        return self.data.exporter()
