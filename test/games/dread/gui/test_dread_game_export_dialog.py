@@ -1,9 +1,10 @@
 from pathlib import Path
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, call
 
 import pytest
 from PySide2 import QtCore
 
+from randovania.games.dread.exporter.game_exporter import DreadGameExportParams
 from randovania.games.dread.gui.dialog.game_export_dialog import DreadGameExportDialog
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
@@ -66,3 +67,77 @@ def test_save_options(skip_qtbot, tmp_path):
 
     # Assert
     assert options.options_for_game(RandovaniaGame.METROID_DREAD).output_directory == Path("somewhere/foo")
+
+
+def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
+    # Setup
+    tmp_path.joinpath("existing.iso").write_bytes(b"foo")
+    tmp_path.joinpath("existing-folder").mkdir()
+    mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file", autospec=True,
+                               side_effect=[
+                                   None,
+                                   tmp_path.joinpath("missing-folder"),
+                                   tmp_path.joinpath("existing.iso"),
+                                   tmp_path.joinpath("existing-folder"),
+                                   tmp_path.joinpath("missing2-folder"),
+                               ])
+
+    options = MagicMock()
+    options.options_for_game.return_value.input_path = None
+
+    window = DreadGameExportDialog(options, {}, "MyHash", True)
+    # Empty text field is an error
+    assert window.input_file_edit.text() == ""
+    assert window.input_file_edit.has_error
+
+    # Cancelling doesn't change the value
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    assert window.input_file_edit.text() == ""
+    assert window.input_file_edit.has_error
+
+    # A path that doesn't exist is an error
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    assert window.input_file_edit.text() == str(tmp_path.joinpath("missing-folder"))
+    assert window.input_file_edit.has_error
+
+    # The path must be a directory, not a file
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    assert window.input_file_edit.text() == str(tmp_path.joinpath("existing.iso"))
+    assert window.input_file_edit.has_error
+
+    # A valid path!
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    assert window.input_file_edit.text() == str(tmp_path.joinpath("existing-folder"))
+    assert not window.input_file_edit.has_error
+
+    # Another invalid path
+    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
+    assert window.input_file_edit.text() == str(tmp_path.joinpath("missing2-folder"))
+    assert window.input_file_edit.has_error
+
+    mock_prompt.assert_has_calls([
+        call(window, [""], existing_file=None),
+        call(window, [""], existing_file=None),
+        call(window, [""], existing_file=None),
+        call(window, [""], existing_file=None),
+        call(window, [""], existing_file=tmp_path.joinpath("existing-folder")),
+    ])
+
+
+def test_get_game_export_params(skip_qtbot, tmp_path):
+    # Setup
+    options = MagicMock()
+    options.options_for_game.return_value.input_path = tmp_path.joinpath("input/game.iso")
+    options.options_for_game.return_value.output_directory = tmp_path.joinpath("output")
+    options.options_for_game.return_value.output_format = "iso"
+    window = DreadGameExportDialog(options, {}, "MyHash", True)
+
+    # Run
+    result = window.get_game_export_params()
+
+    # Assert
+    assert result == DreadGameExportParams(
+        spoiler_output=tmp_path.joinpath("output.rdvgame"),
+        input_path=tmp_path.joinpath("input/game.iso"),
+        output_path=tmp_path.joinpath("output"),
+    )

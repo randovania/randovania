@@ -95,11 +95,10 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     def _on_input_file_button(self):
         existing_file = None
-        if self.input_file.is_dir():
+        if self.input_file_edit.text() and self.input_file.is_dir():
             existing_file = self.input_file
 
-        input_file = common_qt_lib.prompt_user_for_vanilla_input_file(self, self.patcher.valid_input_file_types,
-                                                                      existing_file=existing_file)
+        input_file = common_qt_lib.prompt_user_for_vanilla_input_file(self, [""], existing_file=existing_file)
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
 
