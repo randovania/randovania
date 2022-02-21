@@ -8,8 +8,11 @@ import py_randomprime
 
 from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.games.game import RandovaniaGame
+from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
-from randovania.patching.prime import all_prime_dol_patches
+from randovania.patching.prime import all_prime_dol_patches, asset_conversion
+from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 
 
 @dataclasses.dataclass(frozen=True)
@@ -57,6 +60,32 @@ class PrimeGameExporter(GameExporter):
                 ],
                 symbols=symbols)
         )
+
+        assets_path = Options.with_default_data_dir().internal_copies_path.joinpath(
+            RandovaniaGame.METROID_PRIME.value,
+            f"{RandovaniaGame.METROID_PRIME_ECHOES.value}_models")
+        assets_meta = asset_conversion.convert_prime2_pickups(assets_path, print)
+        use_external_assets = True
+        new_config["externAssetsDir"] = os.fspath(assets_path)
+
+        # Replace models
+        for level in new_config["levelData"].values():
+            for room in level["rooms"].values():
+                for pickup in room["pickups"]:
+                    model = pickup.pop("model")
+                    if model["game"] == RandovaniaGame.METROID_PRIME.value:
+                        pickup['model'] = model["name"]
+                    elif model["game"] == RandovaniaGame.METROID_PRIME_ECHOES.value:
+                        converted_model_name = "{}_{}".format(model["game"], model["name"])
+                        if assets_meta is not None and use_external_assets:
+                            if converted_model_name in assets_meta["items"]:
+                                pickup['model'] = converted_model_name
+                            else:
+                                pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+                        else:
+                            pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+                    else:
+                        pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:
