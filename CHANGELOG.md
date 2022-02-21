@@ -44,7 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 1
 
-- Option to use deterministic Incinerator Drone RNG for fairer racing
+- Added: Option to use deterministic Incinerator Drone RNG for fairer racing
+- Added: Spring Ball. Enable in preset configuration. Must have bombs in inventory to work.
 
 #### Patcher Changes
 
@@ -57,7 +58,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Cannon remaining holstered after grapple when shuffling combat visor
 - Fixed: Cannon remaining holstered after a specific type of R-Jump when shuffling combat visor
 - Fixed: Unmorphing now returns you to your previous visor instead of default visor when shuffling combat visor for quality of life purposes
-- Changed: Spring Ball now has 40 frames of cooldown
 
 #### Logic Database
 
