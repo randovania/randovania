@@ -33,6 +33,7 @@ def delete_internal_copy(internal_copies_path: Path):
 
 class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     _prompt_input_file: bool
+    _use_prime_models: bool
 
     @property
     def _game(self):
@@ -66,8 +67,23 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
 
+        self.prime_file_edit.textChanged.connect(self._validate_prime_file)
+        self.prime_file_button.clicked.connect(self._on_prime_file_button)
+
         self.input_file_edit.has_error = False
         self.output_file_edit.has_error = False
+
+        if RandovaniaGame.METROID_PRIME in games:
+            self._use_prime_models = True
+            prime_options = options.options_for_game(RandovaniaGame.METROID_PRIME)
+            if prime_options.input_path is not None:
+                self.prime_file_edit.setText(str(prime_options.input_path))
+
+        else:
+            self._use_prime_models = False
+            self.prime_file_edit.hide()
+            self.prime_file_label.hide()
+            self.prime_file_button.hide()
 
         if self._prompt_input_file and per_game.input_path is not None:
             self.input_file_edit.setText(str(per_game.input_path))
@@ -106,6 +122,10 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     @property
     def output_file(self) -> Path:
         return Path(self.output_file_edit.text())
+
+    @property
+    def prime_file(self) -> Path:
+        return Path(self.prime_file_edit.text())
 
     @property
     def auto_save_spoiler(self) -> bool:
@@ -164,6 +184,17 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
+    # Prime input
+    def _validate_prime_file(self):
+        has_error = not self.prime_file.is_file()
+        common_qt_lib.set_error_border_stylesheet(self.prime_file_edit, has_error)
+        self._update_accept_button()
+
+    def _on_prime_file_button(self):
+        prime_file = prompt_for_input_file(self, self.prime_file, self.prime_file_edit, ["iso"])
+        if prime_file is not None:
+            self.prime_file_edit.setText(str(prime_file.absolute()))
+
     @property
     def _contents_file_path(self):
         return self._options.internal_copies_path.joinpath("prime2", "contents")
@@ -183,4 +214,5 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             output_path=self.output_file,
             contents_files_path=self._contents_file_path,
             backup_files_path=backup_files_path,
+            prime_path=self.prime_file,
         )

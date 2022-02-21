@@ -50,6 +50,10 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
 
+        # Echoes File input
+        self.echoes_file_button.clicked.connect(self._on_echoes_file_button)
+        self.echoes_file_edit.textChanged.connect(self._validate_echoes_input)
+
         self.input_file_edit.has_error = False
         self.output_file_edit.has_error = False
 
@@ -178,7 +182,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         else:
             delete_internal_copy(self._options.internal_copies_path)
             self.echoes_file_edit.setText("")
-            self.check_extracted_game()
+            self.check_extracted_echoes()
 
     def _validate_echoes_input(self):
         if self._prompt_input_file_echoes:

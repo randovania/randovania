@@ -22,6 +22,7 @@ class EchoesGameExportParams(GameExportParams):
     output_path: Path
     contents_files_path: Path
     backup_files_path: Path
+    prime_path: Optional[Path]
 
 
 class EchoesGameExporter(GameExporter):
