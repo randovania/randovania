@@ -5,6 +5,7 @@ import pytest
 from PySide2 import QtCore
 
 from randovania.games.game import RandovaniaGame
+from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
 from randovania.games.super_metroid.gui.dialog.game_export_dialog import SuperMetroidGameExportDialog
 from randovania.interface_common.options import Options
 
@@ -45,7 +46,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
 
     options = MagicMock()
     options.options_for_game.return_value.output_directory = None
-    options.options_for_game.return_value.output_format = "iso"
+    options.options_for_game.return_value.output_format = "smc"
     window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
     mock_prompt.return_value = None
 
@@ -53,17 +54,38 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, "SM Randomizer - MyHash.iso", window.valid_output_file_types)
+    mock_prompt.assert_called_once_with(window, "SM Randomizer - MyHash.smc", window.valid_output_file_types)
     assert window.output_file_edit.text() == ""
 
 
 def test_save_options(skip_qtbot, tmp_path):
     options = Options(tmp_path)
     window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
-    window.output_file_edit.setText("somewhere/game.iso")
+    window.output_file_edit.setText("somewhere/game.smc")
 
     # Run
     window.save_options()
 
     # Assert
     assert options.options_for_game(RandovaniaGame.SUPER_METROID).output_directory == Path("somewhere")
+
+
+@pytest.mark.parametrize("save_spoiler", [False, True])
+def test_get_game_export_params(skip_qtbot, tmp_path, save_spoiler: bool):
+    # Setup
+    options = MagicMock()
+    options.auto_save_spoiler = save_spoiler
+    options.options_for_game.return_value.input_path = tmp_path.joinpath("input/game.sfc")
+    options.options_for_game.return_value.output_directory = tmp_path.joinpath("output")
+    options.options_for_game.return_value.output_format = "smc"
+    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
+
+    # Run
+    result = window.get_game_export_params()
+
+    # Assert
+    assert result == SuperMetroidGameExportParams(
+        spoiler_output=tmp_path.joinpath("output", "SM Randomizer - MyHash.rdvgame") if save_spoiler else None,
+        input_path=tmp_path.joinpath("input/game.sfc"),
+        output_path=tmp_path.joinpath("output", "SM Randomizer - MyHash.smc"),
+    )
