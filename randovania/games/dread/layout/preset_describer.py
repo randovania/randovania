@@ -31,7 +31,6 @@ def dread_format_params(configuration: BaseConfiguration) -> dict[str, list[str]
             {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
         ],
         "Game Changes": [
-            {"ADAM cutscenes removed": configuration.disable_adam_convos},
             message_for_required_mains(
                 configuration.ammo_configuration,
                 {
