@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Only session admins are allowed to copy the permalink of a session.
 - Changed: Modified how ConfigurableNodes (In Echoes, the Translator Gates) are handled in logic. This should have no visual differences, other than speeding up generation.
 - Changed: Great internal changes were done to how hints are applied to the game. This should have no visible impact.
+- Changed: The UI for 1HP Mode now only shows up for Echoes.
 - Fixed: Map Tracker now properly handles multiple copies of pickups in all cases.
 - Removed: The Database Editor can only be open when running from source. In releases, use `Open -> (Game) -> Data Visualizer` instead.
 
@@ -43,11 +44,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 1
 
-- Nothing.
+- Added: Option to use deterministic Incinerator Drone RNG for fairer racing
+- Added: Spring Ball. Enable in preset configuration. Must have bombs in inventory to work.
 
 #### Patcher Changes
 
-- Option to use deterministic Incinerator Drone RNG for fairer racing
+- Added: QoL Game Breaking - Reserach Lab Aether Pirate now guaranteed to jump through glass when doing room backwards
+- Fixed: Players could unmorph in Magmoor Workstation where they should not be able to
+- Fixed: Abuse of QoL Game Breaking in Central Dynamo to skip the maze/drone
+- Fixed: Exclude Phazon Elite Item from QoL Pickup Scans
+- Fixed: Wavesun when playing with shuffled item positions
+- Fixed: Main Plaza etank ledge door shield was slightly misaligned
+- Fixed: Cannon remaining holstered after grapple when shuffling combat visor
+- Fixed: Cannon remaining holstered after a specific type of R-Jump when shuffling combat visor
+- Fixed: Unmorphing now returns you to your previous visor instead of default visor when shuffling combat visor for quality of life purposes
 
 #### Logic Database
 
@@ -64,15 +74,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Nothing.
-
-## [4.0.2] - Unreleased
-
-- Changed: The UI for 1HP Mode now only shows up for Echoes.
-
-### Metroid Prime Patcher
-- Fixed: Cannon remaining holstered after grapple when shuffling combat visor
-- Fixed: Cannon remaining holstered after a specific type of R-Jump when shuffling combat visor
-- Fixed: Unmorphing now returns you to your previous visor instead of default visor when shuffling combat visor for quality of life purposes
 
 ## [4.0.1] - Unreleased
 
