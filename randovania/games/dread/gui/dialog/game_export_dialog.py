@@ -18,8 +18,8 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     def _game(self):
         return RandovaniaGame.METROID_DREAD
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
-        super().__init__(options, patch_data, word_hash, spoiler)
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games=[]):
+        super().__init__(options, patch_data, word_hash, spoiler, games)
         self.setupUi(self)
 
         per_game = options.options_for_game(self._game)
