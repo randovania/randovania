@@ -28,7 +28,8 @@ ECHOES_MODEL_VERSION = 1
 def delete_converted_assets(target_game: RandovaniaGame, source_game: RandovaniaGame):
     asset_dir = Options.with_default_data_dir().internal_copies_path.joinpath(target_game.value, f"{source_game.value}_models")
     try:
-        shutil.rmtree(asset_dir)
+        if asset_dir.is_dir():
+            shutil.rmtree(asset_dir)
     except OSError:
         raise
 
@@ -297,11 +298,13 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
 
 def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
-    if get_asset_cache_version(RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME) >= ECHOES_MODEL_VERSION:
+    if get_asset_cache_version(RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) >= ECHOES_MODEL_VERSION:
         with open(metafile, "r") as md:
             return json.load(md)
 
     next_id = 0xFFFF0000
+
+    delete_converted_assets(RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES)
 
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
     with randomizer_data_path.open() as randomizer_data_file:

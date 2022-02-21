@@ -17,8 +17,8 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     def _game(self):
         return RandovaniaGame.METROID_PRIME
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
-        super().__init__(options, patch_data, word_hash, spoiler)
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list):
+        super().__init__(options, patch_data, word_hash, spoiler, games)
         self.setupUi(self)
 
         self.default_output_name = self.default_output_file(word_hash)
@@ -43,6 +43,12 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         # Accept/Reject
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
+
+        # Echoes ISO input
+        if RandovaniaGame.METROID_PRIME_ECHOES not in games:
+            self.echoes_file_edit.hide()
+            self.echoes_file_label.hide()
+            self.echoes_file_button.hide()
 
         self.input_file_edit.has_error = False
         self.output_file_edit.has_error = False

@@ -14,14 +14,16 @@ class GameExportDialog(QtWidgets.QDialog):
     _patch_data: dict
     _word_hash: str
     _has_spoiler: bool
+    _games: list
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games=[]):
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self._options = options
         self._patch_data = patch_data
         self._word_hash = word_hash
         self._has_spoiler = spoiler
+        self._games = games
 
     def save_options(self):
         """Ensure that the current state of the dialog is saved to options."""
