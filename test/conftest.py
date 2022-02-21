@@ -6,7 +6,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import randovania.games.prime2.patcher.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -17,6 +16,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.games import default_data
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.preset import Preset
@@ -125,7 +125,7 @@ def dread_game_description() -> GameDescription:
 
 @pytest.fixture(scope="session")
 def randomizer_data() -> dict:
-    return randovania.games.prime2.patcher.claris_patcher.decode_randomizer_data()
+    return decode_randomizer_data()
 
 
 @pytest.fixture(params=RandovaniaGame)

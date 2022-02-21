@@ -14,11 +14,10 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
         self._index_for_game = {}
 
         for game in RandovaniaGame.sorted_all_games():
-            game_gui = game.data.gui()
-            if game_gui.help_widget is None:
+            if game.gui.help_widget is None:
                 continue
 
-            index = self.addTab(game_gui.help_widget(), game.long_name)
+            index = self.addTab(game.gui.help_widget(), game.long_name)
             self.setTabVisible(index, not game.data.experimental or self._experimental_visible)
             self._index_for_game[game] = index
 

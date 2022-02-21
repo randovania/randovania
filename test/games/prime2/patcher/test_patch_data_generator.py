@@ -19,10 +19,10 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
-from randovania.games.prime2.patcher import patch_data_generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.major_item_state import MajorItemState
@@ -41,9 +41,9 @@ def test_create_starting_popup_empty(default_echoes_configuration, echoes_resour
     starting_items = {}
 
     # Run
-    result = patch_data_generator._create_starting_popup(default_echoes_configuration,
-                                                         echoes_resource_database,
-                                                         starting_items)
+    result = patch_data_factory._create_starting_popup(default_echoes_configuration,
+                                                       echoes_resource_database,
+                                                       starting_items)
 
     # Assert
     assert result == []
@@ -58,9 +58,9 @@ def test_create_starting_popup_items(default_echoes_configuration, echoes_resour
     }
 
     # Run
-    result = patch_data_generator._create_starting_popup(default_echoes_configuration,
-                                                         echoes_resource_database,
-                                                         starting_items)
+    result = patch_data_factory._create_starting_popup(default_echoes_configuration,
+                                                       echoes_resource_database,
+                                                       starting_items)
 
     # Assert
     assert result == [
@@ -82,7 +82,7 @@ def test_adjust_model_name(randomizer_data):
     }
 
     # Run
-    patch_data_generator.adjust_model_name(patcher_data, randomizer_data)
+    patch_data_factory.adjust_model_name(patcher_data, randomizer_data)
 
     # Assert
     assert patcher_data == {
@@ -111,7 +111,7 @@ def test_add_header_data_to_result():
     result = {}
 
     # Run
-    patch_data_generator._add_header_data_to_result(description, result)
+    patch_data_factory._add_header_data_to_result(description, result)
 
     # Assert
     assert json.loads(json.dumps(result)) == expected
@@ -132,7 +132,7 @@ def test_create_spawn_point_field(echoes_game_description, empty_patches):
     ]
 
     # Run
-    result = patch_data_generator._create_spawn_point_field(patches, echoes_game_description)
+    result = patch_data_factory._create_spawn_point_field(patches, echoes_game_description)
 
     # Assert
     assert result == {
@@ -149,7 +149,7 @@ def test_create_elevators_field_no_elevator(empty_patches, echoes_game_descripti
     # Setup
     # Run
     with pytest.raises(ValueError) as exp:
-        patch_data_generator._create_elevators_field(empty_patches, echoes_game_description)
+        patch_data_factory._create_elevators_field(empty_patches, echoes_game_description)
 
     # Assert
     assert str(exp.value) == "Invalid elevator count. Expected 22, got 0."
@@ -178,7 +178,7 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
     patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
 
     # Run
-    result = patch_data_generator._create_elevators_field(patches, echoes_game_description)
+    result = patch_data_factory._create_elevators_field(patches, echoes_game_description)
 
     # Assert
     expected = [
@@ -317,7 +317,7 @@ def test_create_translator_gates_field(echoes_game_description):
     }
 
     # Run
-    result = patch_data_generator._create_translator_gates_field(echoes_game_description, gate_assignment)
+    result = patch_data_factory._create_translator_gates_field(echoes_game_description, gate_assignment)
 
     # Assert
     assert result == [
@@ -333,7 +333,7 @@ def test_apply_translator_gate_patches(elevators):
     target = {}
 
     # Run
-    patch_data_generator._apply_translator_gate_patches(target, elevators)
+    patch_data_factory._apply_translator_gate_patches(target, elevators)
 
     # Assert
     assert target == {
@@ -346,7 +346,7 @@ def test_apply_translator_gate_patches(elevators):
 def test_get_single_hud_text_locked_pbs():
     # Run
     result = pickup_exporter._get_single_hud_text("Locked Power Bomb Expansion",
-                                                  patch_data_generator._simplified_memo_data(),
+                                                  patch_data_factory._simplified_memo_data(),
                                                   tuple())
 
     # Assert
@@ -369,11 +369,11 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
         echoes_item_database.ammo["Missile Expansion"],
         True
     )
-    creator = pickup_exporter.PickupExporterSolo(patch_data_generator._simplified_memo_data())
+    creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = patch_data_generator.echoes_pickup_details_to_patcher(details, MagicMock())
+    result = patch_data_factory.echoes_pickup_details_to_patcher(details, MagicMock())
 
     # Assert
     assert result == {
@@ -405,7 +405,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
         echoes_resource_database,
     )
     if simplified:
-        memo = patch_data_generator._simplified_memo_data()
+        memo = patch_data_factory._simplified_memo_data()
         hud_text = [
             "Power Bomb Expansion acquired, but the main Power Bomb is required to use it.",
             "Power Bomb Expansion acquired!",
@@ -422,7 +422,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = patch_data_generator.echoes_pickup_details_to_patcher(details, MagicMock())
+    result = patch_data_factory.echoes_pickup_details_to_patcher(details, MagicMock())
 
     # Assert
     assert result == {
@@ -449,11 +449,11 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
         False,
         echoes_resource_database,
     )
-    creator = pickup_exporter.PickupExporterSolo(patch_data_generator._simplified_memo_data())
+    creator = pickup_exporter.PickupExporterSolo(patch_data_factory._simplified_memo_data())
 
     # Run
     details = creator.export(PickupIndex(0), PickupTarget(pickup, 0), pickup, PickupModelStyle.ALL_VISIBLE)
-    result = patch_data_generator.echoes_pickup_details_to_patcher(details, MagicMock())
+    result = patch_data_factory.echoes_pickup_details_to_patcher(details, MagicMock())
 
     # Assert
     assert result == {
@@ -477,7 +477,7 @@ def test_create_pickup_all_from_pool(echoes_resource_database,
                                                     echoes_resource_database)
     index = PickupIndex(0)
     if disable_hud_popup:
-        memo_data = patch_data_generator._simplified_memo_data()
+        memo_data = patch_data_factory._simplified_memo_data()
     else:
         memo_data = default_prime2_memo_data()
     creator = pickup_exporter.PickupExporterSolo(memo_data)
@@ -509,7 +509,7 @@ def test_run_validated_hud_text():
     )
 
     # Run
-    data = patch_data_generator.echoes_pickup_details_to_patcher(details, rng)
+    data = patch_data_factory.echoes_pickup_details_to_patcher(details, rng)
 
     # Assert
     assert data['hud_text'] == ['Run validated!']
@@ -539,19 +539,19 @@ def test_create_string_patches(
         autospec=True, return_value=["hide", "hints"],
     )
     mock_logbook_title_string_patches: MagicMock = mocker.patch(
-        "randovania.games.prime2.patcher.patch_data_generator._logbook_title_string_patches",
+        "randovania.games.prime2.exporter.patch_data_factory._logbook_title_string_patches",
         autospec=True, return_values=[],
     )
 
     mock_akul_testament: MagicMock = mocker.patch(
-        "randovania.games.prime2.patcher.patch_data_generator._akul_testament_string_patch",
+        "randovania.games.prime2.exporter.patch_data_factory._akul_testament_string_patch",
         autospec=True,
     )
     mock_akul_testament.return_values = []
     namer = MagicMock()
 
     # Run
-    result = patch_data_generator._create_string_patches(
+    result = patch_data_factory._create_string_patches(
         HintConfiguration(sky_temple_keys=stk_mode),
         game,
         all_patches,
@@ -589,8 +589,8 @@ def test_generate_patcher_data(test_files_dir):
     assert isinstance(preset.configuration, EchoesConfiguration)
 
     # Run
-    result = patch_data_generator.generate_patcher_data(description, PlayersConfiguration(player_index, {0: "you"}),
-                                                        cosmetic_patches)
+    result = patch_data_factory.generate_patcher_data(description, PlayersConfiguration(player_index, {0: "you"}),
+                                                      cosmetic_patches)
 
     # Assert
     assert isinstance(result["spawn_point"], dict)

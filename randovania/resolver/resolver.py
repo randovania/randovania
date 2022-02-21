@@ -173,7 +173,7 @@ async def resolve(configuration: BaseConfiguration,
         status_update = _quiet_print
 
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
-    bootstrap = game.game.data.generator().bootstrap
+    bootstrap = game.game.generator.bootstrap
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
     event_pickup.replace_with_event_pickups(game)

@@ -14,7 +14,6 @@ from randovania.generator.hint_distributor import PreFillParams
 @pytest.mark.parametrize("is_multiworld", [False, True])
 async def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is_multiworld):
     # Setup
-    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
     layout_configuration = MagicMock()
     layout_configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     rng = MagicMock()

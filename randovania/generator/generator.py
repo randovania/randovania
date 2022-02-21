@@ -35,7 +35,7 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                              player_index: int, num_players: int) -> PlayerPool:
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
-    game_generator = game.game.data.generator()
+    game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
     base_patches = game_generator.base_patches_factory.create_base_patches(configuration, rng, game,
