@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: The UI for 1HP Mode now only shows up for Echoes.
 - Fixed: Map Tracker now properly handles multiple copies of pickups in all cases.
 - Removed: The Database Editor can only be open when running from source. In releases, use `Open -> (Game) -> Data Visualizer` instead.
+- Removed: All auto trackers based on pixel art style were removed over concerns about asset licensing.
 
 ### Cave Story
 

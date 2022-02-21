@@ -132,9 +132,6 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 * Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ). Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ. 
 
 ## Auto Tracker
-
-Classic theme uses assets derived from [this spritesheet](https://www.spriters-resource.com/custom_edited/metroidcustoms/sheet/23198/) from ChaosMiles07 and Ridleymaster, with edits from SpaghettiToastBook.
-
 Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedKirby).
 
 ## Multiworld
