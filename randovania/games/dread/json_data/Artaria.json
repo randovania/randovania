@@ -9472,7 +9472,14 @@
                     },
                     "event_name": "s010_cave:default:db_reg_cv_021",
                     "connections": {
-                        "Event - Thermal Device East Blob": {
+                        "Door to Thermal Device": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Invisible Corpius Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9694,7 +9701,15 @@
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
-                    "connections": {}
+                    "connections": {
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Door to Hot Room Hub": {
                     "node_type": "dock",
