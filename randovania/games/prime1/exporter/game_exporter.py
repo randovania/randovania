@@ -2,6 +2,7 @@ import copy
 import dataclasses
 import json
 import os
+import shutil
 from pathlib import Path
 
 import py_randomprime
@@ -11,6 +12,7 @@ from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
+from randovania.patching.patchers.gamecube import iso_packager
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
 from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 
@@ -19,6 +21,9 @@ from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 class PrimeGameExportParams(GameExportParams):
     input_path: Path
     output_path: Path
+    echoes_input_path: Path
+    echoes_contents_path: Path
+    use_echoes_models: bool
 
 
 class PrimeGameExporter(GameExporter):
@@ -47,6 +52,20 @@ class PrimeGameExporter(GameExporter):
 
         symbols = py_randomprime.symbols_for_file(input_file)
 
+        use_external_assets = export_params.use_echoes_models
+
+        updaters = status_update_lib.split_progress_update(progress_update, 3)
+
+        #Deal with echoes
+        if export_params.use_echoes_models and export_params.echoes_input_path is not None:
+            echoes_contents_path = export_params.echoes_contents_path
+            shutil.rmtree(echoes_contents_path, ignore_errors=True)
+            iso_packager.unpack_iso(
+                iso=export_params.echoes_input_path,
+                game_files_path=echoes_contents_path,
+                progress_update=updaters[0],
+            )
+
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
         new_config["inputIso"] = os.fspath(input_file)
@@ -61,12 +80,12 @@ class PrimeGameExporter(GameExporter):
                 symbols=symbols)
         )
 
-        assets_path = Options.with_default_data_dir().internal_copies_path.joinpath(
-            RandovaniaGame.METROID_PRIME.value,
-            f"{RandovaniaGame.METROID_PRIME_ECHOES.value}_models")
-        assets_meta = asset_conversion.convert_prime2_pickups(assets_path, print)
-        use_external_assets = True
-        new_config["externAssetsDir"] = os.fspath(assets_path)
+        if use_external_assets:
+            assets_path = Options.with_default_data_dir().internal_copies_path.joinpath(
+                RandovaniaGame.METROID_PRIME.value,
+                f"{RandovaniaGame.METROID_PRIME_ECHOES.value}_models")
+            assets_meta = asset_conversion.convert_prime2_pickups(assets_path, updaters[1])
+            new_config["externAssetsDir"] = os.fspath(assets_path)
 
         # Replace models
         for level in new_config["levelData"].values():
@@ -80,11 +99,11 @@ class PrimeGameExporter(GameExporter):
                         if assets_meta is not None and use_external_assets:
                             if converted_model_name in assets_meta["items"]:
                                 pickup['model'] = converted_model_name
-                            else:
+                            else:  # This model wasn't converted
                                 pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
-                        else:
+                        else:  # Not using external assets
                             pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
-                    else:
+                    else:  # Not Prime or Echoes item
                         pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
@@ -96,7 +115,7 @@ class PrimeGameExporter(GameExporter):
         try:
             py_randomprime.patch_iso_raw(
                 patch_as_str,
-                py_randomprime.ProgressNotifier(lambda percent, msg: progress_update(msg, percent)),
+                py_randomprime.ProgressNotifier(lambda percent, msg: updaters[2](msg, percent)),
             )
         except BaseException as e:
             if isinstance(e, Exception):

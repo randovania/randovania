@@ -1,5 +1,6 @@
 import dataclasses
 from pathlib import Path
+from typing import Optional
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
@@ -14,8 +15,9 @@ from randovania.games.prime2.gui.dialog.game_export_dialog import has_internal_c
 
 
 class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
-    _prompt_input_file_echoes: bool
-    _echoes_internal_path: Path
+    _prompt_input_file_echoes = False
+    _echoes_contents_path: Path
+    _use_echoes_models: bool
 
     @property
     def _game(self):
@@ -48,17 +50,23 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         self.accept_button.clicked.connect(self.accept)
         self.cancel_button.clicked.connect(self.reject)
 
+        self.input_file_edit.has_error = False
+        self.output_file_edit.has_error = False
+
         # Echoes ISO input
         if RandovaniaGame.METROID_PRIME_ECHOES in games:
-            self._echoes_internal_path = options.internal_copies_path.joinpath("prime2", "contents")
+            self._use_echoes_models = True
+            self._echoes_contents_path = options.internal_copies_path.joinpath("prime2", "contents")
             self.check_extracted_echoes()
+            echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
+            if self._prompt_input_file_echoes and echoes_options.input_path is not None:
+                self.echoes_file_edit.setText(str(echoes_options.input_path))
         else:
+            self._use_echoes_models = False
+            self._echoes_contents_path = None
             self.echoes_file_edit.hide()
             self.echoes_file_label.hide()
             self.echoes_file_button.hide()
-
-        self.input_file_edit.has_error = False
-        self.output_file_edit.has_error = False
 
         if per_game.input_path is not None:
             self.input_file_edit.setText(str(per_game.input_path))
@@ -72,6 +80,8 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         self._validate_input_file()
         self._validate_output_file()
+        if self._use_echoes_models:
+            self._validate_echoes_input()
 
     def default_output_file(self, seed_hash: str) -> str:
         return "Prime Randomizer - {}".format(seed_hash)
@@ -118,8 +128,9 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         return Path(self.output_file_edit.text())
 
     @property
-    def echoes_file(self) -> Path:
-        return Path(self.echoes_file_edit.text())
+    def echoes_file(self) -> Optional[Path]:
+        if self._prompt_input_file_echoes:
+            return Path(self.echoes_file_edit.text())
 
     @property
     def auto_save_spoiler(self) -> bool:
@@ -158,6 +169,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
+    # Echoes input
     def _on_echoes_file_button(self):
         if self._prompt_input_file_echoes:
             input_file = prompt_for_input_file(self, self.input_file, self.input_file_edit, ["iso"])
@@ -167,6 +179,15 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             delete_internal_copy(self._options.internal_copies_path)
             self.echoes_file_edit.setText("")
             self.check_extracted_game()
+
+    def _validate_echoes_input(self):
+        if self._prompt_input_file_echoes:
+            has_error = not self.echoes_file.is_file()
+        else:
+            has_error = self.echoes_file_edit.text() != _VALID_GAME_TEXT
+
+        common_qt_lib.set_error_border_stylesheet(self.echoes_file_edit, has_error)
+        self._update_accept_button()
 
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = None
@@ -179,10 +200,13 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             spoiler_output=spoiler_output,
             input_path=self.input_file,
             output_path=self.output_file,
+            echoes_input_path=self.echoes_file,
+            echoes_contents_path=self._echoes_contents_path,
+            use_echoes_models=self._use_echoes_models,
         )
 
     def check_extracted_echoes(self):
-        self._prompt_input_file_echoes = not has_internal_copy(self._echoes_internal_path)
+        self._prompt_input_file_echoes = not has_internal_copy(self._echoes_contents_path)
         self.echoes_file_edit.setEnabled(self._prompt_input_file_echoes)
 
         if self._prompt_input_file_echoes:
