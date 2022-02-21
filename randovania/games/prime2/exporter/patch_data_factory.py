@@ -663,12 +663,6 @@ def _create_pickup_resources_for(resources: ResourceGain):
 
 
 def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails, rng: Random) -> dict:
-    '''
-    if details.model.game == RandovaniaGame.METROID_PRIME_ECHOES:
-        model_name = details.model.name
-    else:
-        model_name = f"{details.model.game.value}_{details.model.name}"
-    '''
     model = details.model.as_json
 
     if model["name"] == "MissileExpansion"\
