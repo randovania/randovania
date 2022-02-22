@@ -119,7 +119,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
 
     @property
     def prime_file(self) -> Path:
-        return Path(self.prime_file_edit.text())
+        return Path(self.prime_file_edit.text()) if self.prime_file_edit.text() else None
 
     @property
     def auto_save_spoiler(self) -> bool:

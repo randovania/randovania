@@ -129,4 +129,8 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
         spoiler_output=tmp_path.joinpath("output", "Prime Randomizer - MyHash.rdvgame"),
         input_path=tmp_path.joinpath("input/game.iso"),
         output_path=tmp_path.joinpath("output", "Prime Randomizer - MyHash.iso"),
+        echoes_input_path=None,
+        echoes_backup_path=None,
+        echoes_contents_path=None,
+        use_echoes_models=False,
     )

@@ -1,6 +1,6 @@
 import json
 import os
-from unittest.mock import MagicMock, ANY
+from unittest.mock import MagicMock, ANY, patch
 
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams
 
@@ -10,6 +10,7 @@ def test_patch_game(mocker, tmp_path):
         "UpdateHintState__13CStateManagerFf": 0x80044D38,
     })
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
+    mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True}
     progress_update = MagicMock()
 
@@ -19,8 +20,13 @@ def test_patch_game(mocker, tmp_path):
     exporter.export_game(
         patch_data,
         PrimeGameExportParams(
-            None,
-            tmp_path.joinpath("input.iso"), tmp_path.joinpath("output.iso"),
+            spoiler_output=None,
+            input_path=tmp_path.joinpath("input.iso"),
+            output_path=tmp_path.joinpath("output.iso"),
+            echoes_input_path=None,
+            echoes_backup_path=None,
+            echoes_contents_path=None,
+            use_echoes_models=False,
         ),
         progress_update
     )

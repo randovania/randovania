@@ -708,7 +708,7 @@ def adjust_model_name(patcher_data: dict, randomizer_data: dict):
     for pickup in patcher_data["pickups"]:
         model = pickup.pop("model")
         if model["game"] == RandovaniaGame.METROID_PRIME_ECHOES.value:
-            model_name == model["name"]
+            model_name = model["name"]
         else:
             model_name = "{}_{}".format(model["game"], model["name"])
 

@@ -142,4 +142,6 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
         output_path=tmp_path.joinpath("output", "Echoes Randomizer - MyHash.iso"),
         contents_files_path=tmp_path.joinpath("internal_copies", "prime2", "contents"),
         backup_files_path=tmp_path.joinpath("internal_copies", "prime2", "vanilla"),
+        prime_path=None,
+        use_prime_models=False,
     )

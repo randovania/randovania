@@ -27,6 +27,26 @@ class PrimeGameExportParams(GameExportParams):
     use_echoes_models: bool
 
 
+def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
+    for level in patch_data["levelData"].values():
+        for room in level["rooms"].values():
+            for pickup in room["pickups"]:
+                model = pickup.pop("model")
+                if model["game"] == RandovaniaGame.METROID_PRIME.value:
+                    pickup['model'] = model["name"]
+                elif model["game"] == RandovaniaGame.METROID_PRIME_ECHOES.value:
+                    converted_model_name = "{}_{}".format(model["game"], model["name"])
+                    if assets_meta is not None and use_external_assets:
+                        if converted_model_name in assets_meta["items"]:
+                            pickup['model'] = converted_model_name
+                        else:  # This model wasn't converted
+                            pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+                    else:  # Not using external assets
+                        pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+                else:  # Not Prime or Echoes item
+                    pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+
+
 class PrimeGameExporter(GameExporter):
     _busy: bool = False
 
@@ -97,25 +117,11 @@ class PrimeGameExporter(GameExporter):
                 f"{RandovaniaGame.METROID_PRIME_ECHOES.value}_models")
             assets_meta = asset_conversion.convert_prime2_pickups(assets_path, updaters[1])
             new_config["externAssetsDir"] = os.fspath(assets_path)
+        else:
+            assets_meta = None
 
         # Replace models
-        for level in new_config["levelData"].values():
-            for room in level["rooms"].values():
-                for pickup in room["pickups"]:
-                    model = pickup.pop("model")
-                    if model["game"] == RandovaniaGame.METROID_PRIME.value:
-                        pickup['model'] = model["name"]
-                    elif model["game"] == RandovaniaGame.METROID_PRIME_ECHOES.value:
-                        converted_model_name = "{}_{}".format(model["game"], model["name"])
-                        if assets_meta is not None and use_external_assets:
-                            if converted_model_name in assets_meta["items"]:
-                                pickup['model'] = converted_model_name
-                            else:  # This model wasn't converted
-                                pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
-                        else:  # Not using external assets
-                            pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
-                    else:  # Not Prime or Echoes item
-                        pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+        adjust_model_names(new_config, assets_meta, use_external_assets)
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:
