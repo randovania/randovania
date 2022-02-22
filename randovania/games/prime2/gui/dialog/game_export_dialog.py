@@ -40,8 +40,8 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     def _game(self):
         return RandovaniaGame.METROID_PRIME_ECHOES
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
-        super().__init__(options, patch_data, word_hash, spoiler)
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games=[]):
+        super().__init__(options, patch_data, word_hash, spoiler, games)
 
         self.default_output_name = f"Echoes Randomizer - {word_hash}"
         self.check_extracted_game()
@@ -55,7 +55,6 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         self.output_file_button.clicked.connect(self._on_output_file_button)
 
         # Prime input
-        self.prime_file_edit.textChanged.connect(self._validate_prime_file)
         self.prime_file_button.clicked.connect(self._on_prime_file_button)
 
         if RandovaniaGame.METROID_PRIME in games:
@@ -83,6 +82,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
                 self.input_file_edit: lambda: (not self.input_file.is_file() if self._prompt_input_file
                                                else self.input_file_edit.text() != _VALID_GAME_TEXT),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
+                self.prime_file_edit: lambda: self._use_prime_models and not self.prime_file.is_file(),
             }
         )
 
@@ -154,11 +154,6 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             self.output_file_edit.setText(str(output_file))
 
     # Prime input
-    def _validate_prime_file(self):
-        has_error = not self.prime_file.is_file()
-        common_qt_lib.set_error_border_stylesheet(self.prime_file_edit, has_error)
-        self._update_accept_button()
-
     def _on_prime_file_button(self):
         prime_file = prompt_for_input_file(self, self.prime_file, self.prime_file_edit, ["iso"])
         if prime_file is not None:

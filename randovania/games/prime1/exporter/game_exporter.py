@@ -71,7 +71,7 @@ class PrimeGameExporter(GameExporter):
             )
 
             from randovania.games.prime2.patcher import claris_randomizer
-            claris_randomizer.create_pak_packups(
+            claris_randomizer.create_pak_backups(
                 echoes_contents_path,
                 echoes_backup_path,
                 unpack_updaters[1]

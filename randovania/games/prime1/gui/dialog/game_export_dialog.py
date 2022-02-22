@@ -5,20 +5,9 @@ from typing import Optional
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
-from randovania.gui.dialog.game_export_dialog import GameExportDialog, prompt_for_output_file, prompt_for_input_file
-from randovania.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog
 from randovania.gui.lib import common_qt_lib
-from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
-from randovania.interface_common.options import Options
-from randovania.layout.layout_description import LayoutDescription
-from randovania.games.prime2.gui.dialog.game_export_dialog import has_internal_copy, delete_internal_copy, _VALID_GAME_TEXT
-
-
-class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
-    _prompt_input_file_echoes = False
-    _echoes_contents_path: Path
-    _use_echoes_models: bool
-
+from randovania.games.prime2.gui.dialog.game_export_dialog import has_internal_copy, delete_internal_copy, \
+    _VALID_GAME_TEXT
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
     spoiler_path_for, add_field_validation, output_file_validator,
@@ -29,23 +18,16 @@ from randovania.interface_common.options import Options
 
 
 class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
+    _prompt_input_file_echoes = False
+    _echoes_contents_path: Path
+    _use_echoes_models: bool
+
     @property
     def _game(self):
         return RandovaniaGame.METROID_PRIME
 
     def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games=[]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
-        self.setupUi(self)
-
-        self.default_output_name = self.default_output_file(word_hash)
-        self.input_file_button.setText("Select File")
-
-        per_game = options.options_for_game(self._game)
-
-        # Input
-        self.input_file_edit.textChanged.connect(self._validate_input_file)
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
-        super().__init__(options, patch_data, word_hash, spoiler)
 
         self._base_output_name = f"Prime Randomizer - {word_hash}"
         per_game = options.options_for_game(self._game)
@@ -58,6 +40,9 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         # Output format
         self.setup_multi_format(per_game.output_format)
+
+        # Echoes input
+        self.echoes_file_button.clicked.connect(self._on_echoes_file_button)
 
         # Echoes ISO input
         if RandovaniaGame.METROID_PRIME_ECHOES in games:
@@ -86,6 +71,9 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             fields={
                 self.input_file_edit: lambda: not self.input_file.is_file(),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
+                self.echoes_file_edit: lambda: self._use_echoes_models and (not self.echoes_file.is_file()
+                                                                            if self._prompt_input_file_echoes
+                                                                            else self.echoes_file_edit.text() != _VALID_GAME_TEXT),
             }
         )
 
@@ -152,22 +140,13 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     # Echoes input
     def _on_echoes_file_button(self):
         if self._prompt_input_file_echoes:
-            input_file = prompt_for_input_file(self, self.input_file, self.input_file_edit, ["iso"])
+            input_file = prompt_for_input_file(self, self.input_file_edit, ["iso"])
             if input_file is not None:
                 self.echoes_file_edit.setText(str(input_file.absolute()))
         else:
             delete_internal_copy(self._options.internal_copies_path)
             self.echoes_file_edit.setText("")
             self.check_extracted_echoes()
-
-    def _validate_echoes_input(self):
-        if self._prompt_input_file_echoes:
-            has_error = not self.echoes_file.is_file()
-        else:
-            has_error = self.echoes_file_edit.text() != _VALID_GAME_TEXT
-
-        common_qt_lib.set_error_border_stylesheet(self.echoes_file_edit, has_error)
-        self._update_accept_button()
 
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = spoiler_path_for(self.auto_save_spoiler, self.output_file)
