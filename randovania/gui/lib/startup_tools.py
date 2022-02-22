@@ -1,3 +1,5 @@
+import logging
+
 from PySide2 import QtWidgets
 
 from randovania.gui.lib import async_dialog
@@ -25,4 +27,5 @@ async def load_options_from_disk(options: Options) -> bool:
             options.load_from_disk(True)
             return True
         else:
+            logging.exception("")
             return False

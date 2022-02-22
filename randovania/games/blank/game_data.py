@@ -8,6 +8,7 @@ def _gui() -> game.GameGui:
     return game.GameGui(
         tab_provider=gui.preset_tabs,
         cosmetic_dialog=gui.BlankCosmeticPatchesDialog,
+        export_dialog=gui.BlankGameExportDialog,
         progressive_item_gui_tuples=tuple(),
         spoiler_visualizer=tuple(),
     )
@@ -23,6 +24,16 @@ def _generator() -> game.GameGenerator:
         base_patches_factory=generator.BlankBasePatchesFactory(),
         hint_distributor=AllJokesHintDistributor(),
     )
+
+
+def _patch_data_factory():
+    from randovania.games.blank.exporter.patch_data_factory import BlankPatchDataFactory
+    return BlankPatchDataFactory
+
+
+def _exporter():
+    from randovania.games.blank.exporter.game_exporter import BlankGameExporter
+    return BlankGameExporter()
 
 
 game_data: game.GameData = game.GameData(
@@ -47,5 +58,7 @@ game_data: game.GameData = game.GameData(
 
     generator=_generator,
 
-    patcher=None,
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )

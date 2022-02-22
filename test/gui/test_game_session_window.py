@@ -1,5 +1,4 @@
 import datetime
-import typing
 
 import pytest
 from PySide2 import QtWidgets
@@ -429,33 +428,36 @@ async def test_finish_session(window, accept, mocker):
         window.network_client.session_admin_global.assert_not_awaited()
 
 
-async def test_save_iso(window, mocker, preset_manager, echoes_game_description):
-    mock_input_dialog = mocker.patch("randovania.gui.game_session_window.GameInputDialog")
+async def test_save_iso(window, mocker, echoes_game_description):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.Accepted)
 
+    preset = MagicMock()
     window._game_session = MagicMock()
     window._game_session.players[window.network_client.current_user.id].is_observer = False
     window._game_session.players[window.network_client.current_user.id].row = 0
-    window._game_session.presets = {0: preset_manager.default_preset}
-    layout_configuration = preset_manager.default_preset.get_preset().configuration
+    window._game_session.presets = {0: preset}
     window.network_client.session_admin_player = AsyncMock()
 
-    patcher_provider = typing.cast(MagicMock, window._window_manager.patcher_provider)
-    patcher = patcher_provider.patcher_for_game.return_value
-    patcher.is_busy = False
+    patch_data = window.network_client.session_admin_player.return_value
+
+    game = preset.game
+    game.exporter.is_busy = False
 
     # Run
     await window.save_iso()
 
     # Assert
-    patcher_provider.patcher_for_game.assert_called_once_with(layout_configuration.game)
-    mock_execute_dialog.assert_awaited_once_with(mock_input_dialog.return_value)
-    patcher.patch_game.assert_called_once_with(
-        mock_input_dialog.return_value.input_file,
-        mock_input_dialog.return_value.output_file,
-        window.network_client.session_admin_player.return_value,
-        window._options.internal_copies_path,
+    game.gui.export_dialog.assert_called_once_with(
+        window._options,
+        patch_data,
+        window._game_session.game_details.word_hash,
+        False,
+    )
+    mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
+    game.exporter.export_game.assert_called_once_with(
+        patch_data,
+        game.gui.export_dialog.return_value.get_game_export_params.return_value,
         progress_update=ANY,
     )
 

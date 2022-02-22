@@ -434,8 +434,9 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
     database.GameSessionMembership.create(user=user2, session=session, row=1, admin=False)
     sio = MagicMock()
     sio.get_current_user.return_value = user1
-    patcher = sio.patcher_provider.patcher_for_game.return_value
-    mock_layout_description.return_value.get_preset.return_value.game = RandovaniaGame.METROID_PRIME_ECHOES
+
+    game = mock_layout_description.return_value.get_preset.return_value.game
+    game.data.layout.cosmetic_patches = EchoesCosmeticPatches
 
     cosmetic = EchoesCosmeticPatches(open_map=False)
 
@@ -445,17 +446,16 @@ def test_game_session_admin_player_patcher_file(mock_layout_description: Propert
 
     # Assert
     mock_layout_description.return_value.get_preset.assert_called_once_with(2)
-    sio.patcher_provider.patcher_for_game.assert_called_once_with(RandovaniaGame.METROID_PRIME_ECHOES)
-    patcher.create_patch_data.assert_called_once_with(
+    game.patch_data_factory.assert_called_once_with(
         mock_layout_description.return_value,
         PlayersConfiguration(2, {
             0: "Player 1",
             1: "Brother",
             2: "The Name",
         }),
-        cosmetic
+        cosmetic,
     )
-    assert result is patcher.create_patch_data.return_value
+    assert result is game.patch_data_factory.return_value.create_data.return_value
     mock_audit.assert_called_once_with(sio, session, "Made an ISO for row 3")
 
 

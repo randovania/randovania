@@ -5,23 +5,30 @@ from randovania.games.dread.layout.preset_describer import (
     dread_format_params, dread_expected_items,
     dread_unexpected_items
 )
-from randovania.games.dread.patcher.open_dread_patcher import OpenDreadPatcher
 from randovania.games.game import GameData, GameLayout, GamePresetDescriber
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
-    from randovania.games.dread.gui.preset_settings import dread_preset_tabs
+    from randovania.games.dread import gui
     from randovania.games.dread.item_database import progressive_items
-    from randovania.games.prime2.gui.hint_details_tab import EchoesHintDetailsTab
 
     return game.GameGui(
-        tab_provider=dread_preset_tabs,
-        cosmetic_dialog=DreadCosmeticPatchesDialog,
-        input_file_text=("an extracted RomFS folder", "the Nintendo Switch", "RomFS folder"),
+        tab_provider=gui.dread_preset_tabs,
+        cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
+        export_dialog=gui.DreadGameExportDialog,
         progressive_item_gui_tuples=progressive_items.gui_tuples(),
-        spoiler_visualizer=(EchoesHintDetailsTab,),
+        spoiler_visualizer=(gui.DreadHintDetailsTab,),
     )
+
+
+def _patch_data_factory():
+    from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory
+    return DreadPatchDataFactory
+
+
+def _exporter():
+    from randovania.games.dread.exporter.game_exporter import DreadGameExporter
+    return DreadGameExporter()
 
 
 def _generator() -> game.GameGenerator:
@@ -65,5 +72,7 @@ game_data: GameData = GameData(
 
     generator=_generator,
 
-    patcher=OpenDreadPatcher(),
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )

@@ -1,34 +1,30 @@
 import logging
 import traceback
-from pathlib import Path
 from typing import Optional
 
 from PySide2 import QtWidgets
 from PySide2.QtCore import Signal
 
-from randovania.gui.dialog.game_input_dialog import GameInputDialog
+from randovania.exporter.game_exporter import GameExporter
+from randovania.gui.dialog.game_export_dialog import GameExportDialog
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
-from randovania.patching.patcher import Patcher
 from randovania.patching.patchers.exceptions import ExportFailure
 
 
 async def export_game(
-        patcher: Patcher,
-        input_dialog: GameInputDialog,
+        exporter: GameExporter,
+        export_dialog: GameExportDialog,
         patch_data: dict,
-        internal_copies_path: Path,
         layout_for_spoiler: Optional[LayoutDescription],
         background: BackgroundTaskMixin,
         progress_update_signal: Signal(str, int),
 ):
-    input_file = input_dialog.input_file
-    output_file = input_dialog.output_file
-    auto_save_spoiler = input_dialog.auto_save_spoiler
+    export_params = export_dialog.get_game_export_params()
 
-    if patcher.is_busy:
+    if exporter.is_busy:
         return await async_dialog.message_box(
             None, QtWidgets.QMessageBox.Critical,
             "Can't export game",
@@ -36,11 +32,11 @@ async def export_game(
             "another window is exporting a game right now.")
 
     def work(progress_update: ProgressUpdateCallable):
-        patcher.patch_game(input_file, output_file, patch_data, internal_copies_path,
-                           progress_update=progress_update)
+        exporter.export_game(patch_data, export_params, progress_update=progress_update)
 
-        if auto_save_spoiler and layout_for_spoiler is not None and layout_for_spoiler.has_spoiler:
-            layout_for_spoiler.save_to_file(output_file.with_suffix(f".{LayoutDescription.file_extension()}"))
+        has_spoiler = layout_for_spoiler is not None and layout_for_spoiler.has_spoiler
+        if export_params.spoiler_output is not None and has_spoiler:
+            layout_for_spoiler.save_to_file(export_params.spoiler_output)
 
         progress_update(f"Finished!", 1)
 
