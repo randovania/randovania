@@ -72,9 +72,9 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         if self._prompt_input_file and per_game.input_path is not None:
             self.input_file_edit.setText(str(per_game.input_path))
 
-            if per_game.output_directory is not None:
-                output_path = per_game.output_directory.joinpath(f"{self.default_output_name}.iso")
-                self.output_file_edit.setText(str(output_path))
+        if per_game.output_directory is not None:
+            output_path = per_game.output_directory.joinpath(f"{self.default_output_name}.iso")
+            self.output_file_edit.setText(str(output_path))
 
         add_field_validation(
             accept_button=self.accept_button,
