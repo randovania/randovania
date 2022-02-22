@@ -1,17 +1,17 @@
+from randovania.games import game
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.cave_story.layout.preset_describer import (
     cs_format_params, cs_expected_items,
     cs_unexpected_items, get_ingame_hash_str,
 )
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
 
 
 def _gui():
     from randovania.games.cave_story import gui
     from randovania.games.cave_story.item_database import progressive_items
 
-    return GameGui(
+    return game.GameGui(
         tab_provider=gui.cs_preset_tabs,
         cosmetic_dialog=gui.CSCosmeticPatchesDialog,
         export_dialog=gui.CSGameExportDialog,
@@ -27,7 +27,7 @@ def _generator():
     from randovania.games.cave_story.generator.pool_creator import pool_creator
     from randovania.generator.base_patches_factory import BasePatchesFactory
 
-    return GameGenerator(
+    return game.GameGenerator(
         item_pool_creator=pool_creator,
         bootstrap=CSBootstrap(),
         base_patches_factory=BasePatchesFactory(),
@@ -45,10 +45,10 @@ def _exporter():
     return CSGameExporter()
 
 
-game_data: GameData = GameData(
+game_data: game.GameData = game.GameData(
     short_name="CS",
     long_name="Cave Story",
-    experimental=False,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
@@ -61,10 +61,10 @@ game_data: GameData = GameData(
 
     faq=[],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=CSConfiguration,
         cosmetic_patches=CSCosmeticPatches,
-        preset_describer=GamePresetDescriber(
+        preset_describer=game.GamePresetDescriber(
             expected_items=cs_expected_items,
             unexpected_items=cs_unexpected_items,
             format_params=cs_format_params,

@@ -1,5 +1,4 @@
 from randovania.games import game
-from randovania.games.game import GameData, GameLayout
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 
@@ -39,10 +38,10 @@ def _exporter():
     return SuperMetroidGameExporter()
 
 
-game_data: GameData = GameData(
+game_data: game.GameData = game.GameData(
     short_name="SM",
     long_name="Super Metroid",
-    experimental=True,
+    development_state=game.DevelopmentState.EXPERIMENTAL,
 
     presets=[
         {
@@ -85,7 +84,7 @@ game_data: GameData = GameData(
          "No."),
     ],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=SuperMetroidConfiguration,
         cosmetic_patches=SuperMetroidCosmeticPatches
     ),

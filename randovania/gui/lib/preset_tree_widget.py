@@ -59,8 +59,8 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         self.clear()
 
         tree_item = {}
-        for game in enum_lib.iterate_enum(RandovaniaGame):
-            if game.data.experimental and not self.show_experimental:
+        for game in RandovaniaGame.sorted_all_games():
+            if not game.data.development_state.can_view(self.show_experimental):
                 continue
 
             root = QtWidgets.QTreeWidgetItem(self)
@@ -72,7 +72,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         # Included presets
         for preset in self.window_manager.preset_manager.included_presets.values():
-            if preset.game.data.experimental and not self.show_experimental:
+            if not preset.game.data.development_state.can_view(self.show_experimental):
                 continue
 
             item = QtWidgets.QTreeWidgetItem(tree_item[preset.game])
@@ -83,7 +83,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         # Custom Presets
         for preset in self.window_manager.preset_manager.custom_presets.values():
-            if preset.game.data.experimental and not self.show_experimental:
+            if not preset.game.data.development_state.can_view(self.show_experimental):
                 continue
 
             item = QtWidgets.QTreeWidgetItem(tree_item[preset.game])

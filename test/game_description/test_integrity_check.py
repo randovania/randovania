@@ -11,7 +11,8 @@ _acceptable_database_errors = {
 
 
 @pytest.mark.parametrize("game_enum", [
-    pytest.param(g, marks=pytest.mark.xfail if _acceptable_database_errors.get(g, g.data.experimental) else [])
+    pytest.param(g, marks=pytest.mark.xfail if _acceptable_database_errors.get(
+        g, not g.data.development_state.is_stable) else [])
     for g in iterate_enum(RandovaniaGame)
 ])
 def test_find_database_errors(game_enum):

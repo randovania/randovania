@@ -47,7 +47,7 @@ def _exporter():
 game_data: game.GameData = game.GameData(
     short_name="Corruption",
     long_name="Metroid Prime 3: Corruption",
-    experimental=True,
+    development_state=game.DevelopmentState.EXPERIMENTAL,
 
     presets=[
         {
