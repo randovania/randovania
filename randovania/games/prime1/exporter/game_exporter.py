@@ -29,8 +29,12 @@ class PrimeGameExportParams(GameExportParams):
 
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
 
+    bad_models = ["prime2_MissileLauncher", "prime2_MissileExpansionPrime1"]
     if assets_meta is not None and use_external_assets:
         model_list = [str(i) for i in assets_meta["items"].keys()]
+        for m in bad_models:
+            if m in model_list:
+                model_list.remove(m)
     else:
         model_list = []
 
@@ -44,7 +48,7 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
                     converted_model_name = "{}_{}".format(model["game"], model["name"])
 
                 if converted_model_name not in model_list and model["game"] != RandovaniaGame.METROID_PRIME.value:
-                    converted_model_name = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+                    converted_model_name = _MODEL_MAPPING.get((RandovaniaGame(model["game"]), model["name"]), "Nothing")
 
                 pickup['model'] = converted_model_name
 
@@ -79,7 +83,7 @@ class PrimeGameExporter(GameExporter):
 
         updaters = status_update_lib.split_progress_update(progress_update, 3)
 
-        #Deal with echoes
+        # Deal with echoes
         if export_params.use_echoes_models and export_params.echoes_input_path is not None:
             unpack_updaters = status_update_lib.split_progress_update(updaters[0], 2)
             echoes_contents_path = export_params.echoes_contents_path
