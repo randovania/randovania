@@ -14,7 +14,7 @@ from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
 from randovania.patching.patchers.gamecube import iso_packager
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
-from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
+from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING, _STARTING_ITEM_NAME_TO_INDEX
 
 
 @dataclasses.dataclass(frozen=True)
@@ -28,23 +28,25 @@ class PrimeGameExportParams(GameExportParams):
 
 
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
+
+    if assets_meta is not None and use_external_assets:
+        model_list = [str(i) for i in assets_meta["items"].keys()]
+    else:
+        model_list = []
+
     for level in patch_data["levelData"].values():
         for room in level["rooms"].values():
             for pickup in room["pickups"]:
                 model = pickup.pop("model")
                 if model["game"] == RandovaniaGame.METROID_PRIME.value:
-                    pickup['model'] = model["name"]
-                elif model["game"] == RandovaniaGame.METROID_PRIME_ECHOES.value:
+                    converted_model_name = model["name"]
+                else:
                     converted_model_name = "{}_{}".format(model["game"], model["name"])
-                    if assets_meta is not None and use_external_assets:
-                        if converted_model_name in assets_meta["items"]:
-                            pickup['model'] = converted_model_name
-                        else:  # This model wasn't converted
-                            pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
-                    else:  # Not using external assets
-                        pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
-                else:  # Not Prime or Echoes item
-                    pickup['model'] = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+
+                if converted_model_name not in model_list and model["game"] != RandovaniaGame.METROID_PRIME.value:
+                    converted_model_name = _MODEL_MAPPING.get((model["game"], model["name"]), "Nothing")
+
+                pickup['model'] = converted_model_name
 
 
 class PrimeGameExporter(GameExporter):
