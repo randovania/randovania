@@ -5,8 +5,13 @@ from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
 
+_acceptable_database_errors = {
+    RandovaniaGame.METROID_DREAD: False,
+}
+
+
 @pytest.mark.parametrize("game_enum", [
-    pytest.param(g, marks=pytest.mark.xfail if g.data.experimental else [])
+    pytest.param(g, marks=pytest.mark.xfail if _acceptable_database_errors.get(g, g.data.experimental) else [])
     for g in iterate_enum(RandovaniaGame)
 ])
 def test_find_database_errors(game_enum):

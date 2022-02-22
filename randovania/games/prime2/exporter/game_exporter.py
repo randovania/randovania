@@ -4,7 +4,7 @@ import functools
 import json
 import shutil
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from mp2hudcolor import mp2hudcolor_c
 

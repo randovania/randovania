@@ -7,6 +7,7 @@ from PySide2 import QtWidgets
 
 class MultiFormatOutputMixin:
     _selected_output_format: str
+    _base_output_name: str
     output_format_layout: QtWidgets.QHBoxLayout
     output_file_edit: QtWidgets.QLineEdit
 
@@ -14,12 +15,14 @@ class MultiFormatOutputMixin:
     def valid_output_file_types(self) -> list[str]:
         raise NotImplementedError()
 
-    def _validate_output_file(self):
-        raise NotImplementedError()
+    @property
+    def default_output_name(self):
+        return "{}.{}".format(
+            self._base_output_name,
+            self._selected_output_format,
+        )
 
     def setup_multi_format(self, output_format: Optional[str]):
-        self.output_file_edit.textChanged.connect(self._validate_output_file)
-
         if output_format is not None:
             self._selected_output_format = output_format
         else:
@@ -39,4 +42,4 @@ class MultiFormatOutputMixin:
             current_filename = Path(self.output_file_edit.text())
             if str(current_filename) != '.':
                 self.output_file_edit.setText(str(current_filename.with_suffix('.' + self._selected_output_format)))
-                self._validate_output_file()
+                self.output_file_edit.field_validation()

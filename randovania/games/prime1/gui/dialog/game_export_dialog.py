@@ -19,6 +19,16 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     _echoes_contents_path: Path
     _use_echoes_models: bool
 
+from randovania.gui.dialog.game_export_dialog import (
+    GameExportDialog, prompt_for_output_file, prompt_for_input_file,
+    spoiler_path_for, add_field_validation, output_file_validator,
+)
+from randovania.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog
+from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
+from randovania.interface_common.options import Options
+
+
+class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
     @property
     def _game(self):
         return RandovaniaGame.METROID_PRIME
@@ -34,6 +44,13 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         # Input
         self.input_file_edit.textChanged.connect(self._validate_input_file)
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
+        super().__init__(options, patch_data, word_hash, spoiler)
+
+        self._base_output_name = f"Prime Randomizer - {word_hash}"
+        per_game = options.options_for_game(self._game)
+
+        # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
 
         # Output
@@ -41,21 +58,6 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         # Output format
         self.setup_multi_format(per_game.output_format)
-
-        # Spoiler
-        self.auto_save_spoiler_check.setEnabled(spoiler)
-        self.auto_save_spoiler_check.setChecked(options.auto_save_spoiler)
-
-        # Accept/Reject
-        self.accept_button.clicked.connect(self.accept)
-        self.cancel_button.clicked.connect(self.reject)
-
-        # Echoes File input
-        self.echoes_file_button.clicked.connect(self._on_echoes_file_button)
-        self.echoes_file_edit.textChanged.connect(self._validate_echoes_input)
-
-        self.input_file_edit.has_error = False
-        self.output_file_edit.has_error = False
 
         # Echoes ISO input
         if RandovaniaGame.METROID_PRIME_ECHOES in games:
@@ -76,19 +78,16 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             self.input_file_edit.setText(str(per_game.input_path))
 
         if per_game.output_directory is not None:
-            output_path = per_game.output_directory.joinpath("{}.{}".format(
-                self.default_output_name,
-                self._selected_output_format,
-            ))
+            output_path = per_game.output_directory.joinpath(self.default_output_name)
             self.output_file_edit.setText(str(output_path))
 
-        self._validate_input_file()
-        self._validate_output_file()
-        if self._use_echoes_models:
-            self._validate_echoes_input()
-
-    def default_output_file(self, seed_hash: str) -> str:
-        return "Prime Randomizer - {}".format(seed_hash)
+        add_field_validation(
+            accept_button=self.accept_button,
+            fields={
+                self.input_file_edit: lambda: not self.input_file.is_file(),
+                self.output_file_edit: lambda: output_file_validator(self.output_file),
+            }
+        )
 
     @property
     def valid_input_file_types(self) -> list[str]:
@@ -103,16 +102,13 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
-            output_directory = self.output_file
-            if self._selected_output_format:
-                output_directory = output_directory.parent
-
             per_game = options.options_for_game(self._game)
             per_game_changes = {
                 "input_path": self.input_file,
-                "output_directory": output_directory,
+                "output_directory": self.output_file.parent,
                 "output_format": self._selected_output_format,
             }
+
             if self._prompt_input_file_echoes:
                 echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
                 echoes_changes = {
@@ -140,36 +136,16 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     def auto_save_spoiler(self) -> bool:
         return self.auto_save_spoiler_check.isChecked()
 
-    def _update_accept_button(self):
-        self.accept_button.setEnabled(not (self.input_file_edit.has_error or self.output_file_edit.has_error))
-
     # Input file
-    def _validate_input_file(self):
-        has_error = not self.input_file.is_file()
-        common_qt_lib.set_error_border_stylesheet(self.input_file_edit, has_error)
-        self._update_accept_button()
-
     def _on_input_file_button(self):
-        input_file = prompt_for_input_file(self, self.input_file, self.input_file_edit, self.valid_input_file_types)
+        input_file = prompt_for_input_file(self, self.input_file_edit, self.valid_input_file_types)
         if input_file is not None:
             self.input_file_edit.setText(str(input_file.absolute()))
 
     # Output File
-    def _validate_output_file(self):
-        output_file = self.output_file
-        has_error = output_file.is_dir() or not output_file.parent.is_dir()
-
-        common_qt_lib.set_error_border_stylesheet(self.output_file_edit, has_error)
-        self._update_accept_button()
-
     def _on_output_file_button(self):
-        output_file = prompt_for_output_file(
-            self,
-            self.output_file,
-            self.valid_output_file_types,
-            "{}.{}".format(self.default_output_name, self._selected_output_format),
-            self.output_file_edit,
-        )
+        output_file = prompt_for_output_file(self, self.valid_output_file_types, self.default_output_name,
+                                             self.output_file_edit)
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
@@ -194,11 +170,8 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         self._update_accept_button()
 
     def get_game_export_params(self) -> GameExportParams:
-        spoiler_output = None
-        if self.auto_save_spoiler:
-            spoiler_output = self.output_file.parent.joinpath(
-                self.output_file.with_suffix(f".{LayoutDescription.file_extension()}")
-            )
+        spoiler_output = spoiler_path_for(self.auto_save_spoiler, self.output_file)
+
         if self._use_echoes_models:
             backup_files_path = self._options.internal_copies_path.joinpath("prime2", "vanilla")
         else:

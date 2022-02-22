@@ -7,6 +7,10 @@ from PySide2 import QtCore
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
 from randovania.games.cave_story.gui.dialog.game_export_dialog import CSGameExportDialog
 from randovania.games.game import RandovaniaGame
+<<<<<<<< HEAD:test/games/super_metroid/gui/test_sm_game_export_dialog.py
+from randovania.games.super_metroid.gui.dialog.game_export_dialog import SuperMetroidGameExportDialog
+========
+>>>>>>>> origin/main:test/games/cave_story/gui/test_cs_game_export_dialog.py
 from randovania.interface_common.options import Options
 
 
@@ -17,6 +21,19 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
 
     if has_output_dir:
         output_directory = tmp_path.joinpath("output_path")
+<<<<<<<< HEAD:test/games/super_metroid/gui/test_sm_game_export_dialog.py
+        expected_default_name = str(tmp_path.joinpath("output_path", "SM Randomizer - MyHash"))
+        output_directory.mkdir()
+    else:
+        output_directory = None
+        expected_default_name = "SM Randomizer - MyHash"
+
+    options = MagicMock()
+    options.options_for_game.return_value.output_directory = output_directory
+    options.options_for_game.return_value.output_format = "iso"
+
+    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
+========
         expected_default_name = str(tmp_path.joinpath("output_path"))
         output_directory.mkdir()
     else:
@@ -27,13 +44,19 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
     options.options_for_game.return_value.output_directory = output_directory
 
     window = CSGameExportDialog(options, {}, "MyHash", True)
+>>>>>>>> origin/main:test/games/cave_story/gui/test_cs_game_export_dialog.py
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
 
     # Assert
+<<<<<<<< HEAD:test/games/super_metroid/gui/test_sm_game_export_dialog.py
+    mock_prompt.assert_called_once_with(window, expected_default_name + ".iso",
+                                        window.valid_output_file_types)
+========
     mock_prompt.assert_called_once_with(window, expected_default_name, [""])
+>>>>>>>> origin/main:test/games/cave_story/gui/test_cs_game_export_dialog.py
     assert window.output_file_edit.text() == str(tmp_path.joinpath("foo", "game.iso"))
     assert tmp_path.joinpath("foo").is_dir()
 
@@ -44,28 +67,45 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
 
     options = MagicMock()
     options.options_for_game.return_value.output_directory = None
+<<<<<<<< HEAD:test/games/super_metroid/gui/test_sm_game_export_dialog.py
+    options.options_for_game.return_value.output_format = "iso"
+    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
+========
 
     window = CSGameExportDialog(options, {}, "MyHash", True)
+>>>>>>>> origin/main:test/games/cave_story/gui/test_cs_game_export_dialog.py
     mock_prompt.return_value = None
 
     # Run
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
 
     # Assert
+<<<<<<<< HEAD:test/games/super_metroid/gui/test_sm_game_export_dialog.py
+    mock_prompt.assert_called_once_with(window, "SM Randomizer - MyHash.iso", window.valid_output_file_types)
+========
     mock_prompt.assert_called_once_with(window, "Cave Story Randomizer", [""])
+>>>>>>>> origin/main:test/games/cave_story/gui/test_cs_game_export_dialog.py
     assert window.output_file_edit.text() == ""
 
 
 def test_save_options(skip_qtbot, tmp_path):
     options = Options(tmp_path)
+<<<<<<<< HEAD:test/games/super_metroid/gui/test_sm_game_export_dialog.py
+    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
+    window.output_file_edit.setText("somewhere/game.iso")
+========
 
     window = CSGameExportDialog(options, {}, "MyHash", True)
     window.output_file_edit.setText("somewhere/foo")
+>>>>>>>> origin/main:test/games/cave_story/gui/test_cs_game_export_dialog.py
 
     # Run
     window.save_options()
 
     # Assert
+<<<<<<<< HEAD:test/games/super_metroid/gui/test_sm_game_export_dialog.py
+    assert options.options_for_game(RandovaniaGame.SUPER_METROID).output_directory == Path("somewhere")
+========
     assert options.options_for_game(RandovaniaGame.CAVE_STORY).output_directory == Path("somewhere/foo")
 
 
@@ -83,3 +123,4 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
         spoiler_output=tmp_path.joinpath("output.rdvgame"),
         output_path=tmp_path.joinpath("output"),
     )
+>>>>>>>> origin/main:test/games/cave_story/gui/test_cs_game_export_dialog.py

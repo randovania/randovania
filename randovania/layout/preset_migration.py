@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 22
+CURRENT_VERSION = 23
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -541,17 +541,27 @@ def _migrate_v19(preset: dict) -> dict:
 
     return preset
 
+
 def _migrate_v20(preset: dict) -> dict:
     if preset["game"] == "prime1":
         preset["configuration"]["spring_ball"] = False
 
     return preset
 
+
 def _migrate_v21(preset: dict) -> dict:
     if preset["game"] == "prime1":
         preset["configuration"]["deterministic_idrone"] = True
 
     return preset
+
+
+def _migrate_v22(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"].pop("disable_adam_convos")
+
+    return preset
+
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -575,6 +585,7 @@ _MIGRATIONS = {
     19: _migrate_v19,  # v3.3.0dev721
     20: _migrate_v20,
     21: _migrate_v21,
+    22: _migrate_v22,
 }
 
 

@@ -103,7 +103,7 @@ _ignore_pickups_for_game = {
 @pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups"), [
     pytest.param(
         game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
-        marks=pytest.mark.xfail if game.data.experimental else []
+        id=game.value,
     )
     for game in RandovaniaGame
 ])
