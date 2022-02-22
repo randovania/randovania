@@ -1152,7 +1152,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Door to Proto EMMI Introduction (Lower)": {
+                "Door from Proto EMMI Introduction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1175,7 +1175,7 @@
                         "node_name": "Door to Melee Tutorial Room (Lower)"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Access Open",
+                    "dock_weakness": "Access Closed",
                     "connections": {
                         "West of Blob": {
                             "type": "and",
@@ -1349,7 +1349,7 @@
                         }
                     }
                 },
-                "Door to Proto EMMI Introduction (Upper)": {
+                "Door to Proto EMMI Introduction": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1399,7 +1399,7 @@
                     "pickup_index": 31,
                     "major_location": false,
                     "connections": {
-                        "Door to Proto EMMI Introduction (Upper)": {
+                        "Door to Proto EMMI Introduction": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1630,13 +1630,11 @@
                     "description": "",
                     "extra": {},
                     "connections": {
-                        "Door to Proto EMMI Introduction (Lower)": {
-                            "type": "resource",
+                        "Door from Proto EMMI Introduction": {
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "ArtariaProtoCU",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Save Station South": {
@@ -2956,7 +2954,7 @@
                                                     "type": "resource",
                                                     "data": {
                                                         "type": "tricks",
-                                                        "name": "Combat",
+                                                        "name": "Pseudo",
                                                         "amount": 2,
                                                         "negate": false
                                                     }
@@ -3517,17 +3515,23 @@
                     "dock_weakness": "EMMI Door",
                     "connections": {
                         "Dock to Arbitrary Enky Room (DoorEmmy06)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Can Slide"
                         },
-                        "Tile Group (BOMB MISSILE)": {
-                            "type": "and",
+                        "Tunnel to Arbitrary Enky Room": {
+                            "type": "or",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
                             }
                         }
                     }
@@ -3705,54 +3709,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB MISSILE)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 7900.0,
-                        "y": 3600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_004",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "BOMB",
-                            "MISSILE"
-                        ]
-                    },
-                    "connections": {
-                        "Dock to Arbitrary Enky Room (DoorEmmy07)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tunnel to Arbitrary Enky Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Cross Comb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Power Bomb"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Tile Group (WEIGHT)": {
                     "node_type": "generic",
                     "heal": false,
@@ -3806,10 +3762,6 @@
                                     {
                                         "type": "template",
                                         "data": "Lay Bomb"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Lay Cross Comb"
                                     },
                                     {
                                         "type": "template",
@@ -7097,8 +7049,7 @@
                     "description": "",
                     "extra": {
                         "actor_name": "ItemSphere_ChargeBeam",
-                        "actor_def": "actordef:actors/items/itemsphere_chargebeam/charclasses/itemsphere_chargebeam.bmsad",
-                        "map_icon_actor": "powerup_chargebeam"
+                        "actor_def": "actordef:actors/items/itemsphere_chargebeam/charclasses/itemsphere_chargebeam.bmsad"
                     },
                     "pickup_index": 0,
                     "major_location": true,
@@ -7788,7 +7739,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Melee Tutorial Room",
-                        "node_name": "Door to Proto EMMI Introduction (Lower)"
+                        "node_name": "Door from Proto EMMI Introduction"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -7822,7 +7773,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "Melee Tutorial Room",
-                        "node_name": "Door to Proto EMMI Introduction (Upper)"
+                        "node_name": "Door to Proto EMMI Introduction"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
@@ -13184,6 +13135,41 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tunnel to Chain Reaction Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bomb",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 3,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -13412,8 +13398,7 @@
                     "description": "",
                     "extra": {
                         "actor_name": "IT_VARIA_GEN_001",
-                        "actor_def": "actordef:actors/items/itemsphere_variasuit/charclasses/itemsphere_variasuit.bmsad",
-                        "map_icon_actor": "powerup_variasuit"
+                        "actor_def": "actordef:actors/items/itemsphere_variasuit/charclasses/itemsphere_variasuit.bmsad"
                     },
                     "pickup_index": 23,
                     "major_location": true,
@@ -14081,8 +14066,7 @@
                     "description": "",
                     "extra": {
                         "actor_name": "ItemSphere_GrappleBeam",
-                        "actor_def": "actordef:actors/items/itemsphere_grapplebeam/charclasses/itemsphere_grapplebeam.bmsad",
-                        "map_icon_actor": "powerup_grapplebeam"
+                        "actor_def": "actordef:actors/items/itemsphere_grapplebeam/charclasses/itemsphere_grapplebeam.bmsad"
                     },
                     "pickup_index": 25,
                     "major_location": true,
@@ -14434,13 +14418,6 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Start Point": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Start Point": {
                             "type": "and",
                             "data": {
@@ -20229,10 +20206,6 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
-                                    },
-                                    {
-                                        "type": "template",
                                         "data": "Lay Power Bomb"
                                     }
                                 ]
@@ -20536,10 +20509,6 @@
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Cross Comb"
-                                    },
-                                    {
-                                        "type": "template",
                                         "data": "Lay Power Bomb"
                                     }
                                 ]
@@ -20649,36 +20618,19 @@
                             }
                         },
                         "Event - ArbEnky Blob West": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s010_cave:default:breakablecave016",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Shoot Beam"
-                                                }
-                                            ]
-                                        }
+                                        "type": "template",
+                                        "data": "Shoot Beam"
                                     },
                                     {
                                         "type": "resource",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Wave",
+                                            "type": "events",
+                                            "name": "s010_cave:default:breakablecave016",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -23203,8 +23155,7 @@
                     "description": "",
                     "extra": {
                         "actor_name": "ItemSphere_ScrewAttack",
-                        "actor_def": "actordef:actors/items/itemsphere_screwattack/charclasses/itemsphere_screwattack.bmsad",
-                        "map_icon_actor": "powerup_screwattack"
+                        "actor_def": "actordef:actors/items/itemsphere_screwattack/charclasses/itemsphere_screwattack.bmsad"
                     },
                     "pickup_index": 27,
                     "major_location": true,
@@ -24369,7 +24320,7 @@
                                 "negate": false
                             }
                         },
-                        "Early Screw Jump": {
+                        "Lower-Left Ledge": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -24673,7 +24624,7 @@
                                 "items": []
                             }
                         },
-                        "Early Screw Jump": {
+                        "Lower-Left Ledge": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -24711,7 +24662,7 @@
                         }
                     }
                 },
-                "Early Screw Jump": {
+                "Lower-Left Ledge": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -26312,6 +26263,13 @@
                     "extra": {},
                     "connections": {
                         "Dock to EMMI Zone Exit North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (POWERBEAM) 5": {
                             "type": "and",
                             "data": {
                                 "comment": null,

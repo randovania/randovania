@@ -257,8 +257,8 @@ Melee Tutorial Room
 Extra - total_boundings: {'x1': 10800.0, 'x2': 14900.0, 'y1': -8500.0, 'y2': -1200.0}
 Extra - polygon: [[14900.0, -1200.0], [12800.0, -1200.0], [12800.0, -2000.0], [10800.0, -2000.0], [10800.0, -8500.0], [13800.0, -8500.0], [13800.0, -7000.0], [14900.0, -4100.0]]
 Extra - asset_id: collision_camera_003
-> Door to Proto EMMI Introduction (Lower); Heals? False
-  * Access Open to Proto EMMI Introduction/Door to Melee Tutorial Room (Lower)
+> Door from Proto EMMI Introduction; Heals? False
+  * Access Closed to Proto EMMI Introduction/Door to Melee Tutorial Room (Lower)
   * Extra - actor_name: Door010 (CL-PW,OP)
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -308,7 +308,7 @@ Extra - asset_id: collision_camera_003
   > Near Missile Tank 1
       Morph Ball
 
-> Door to Proto EMMI Introduction (Upper); Heals? False
+> Door to Proto EMMI Introduction; Heals? False
   * Power Beam Door to Proto EMMI Introduction/Door to Melee Tutorial Room (Upper)
   * Extra - actor_name: Door055 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
@@ -323,7 +323,7 @@ Extra - asset_id: collision_camera_003
   * Pickup 31; Major Location? False
   * Extra - actor_name: item_missiletank_005
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Door to Proto EMMI Introduction (Upper)
+  > Door to Proto EMMI Introduction
       Trivial
   > East of Blob
       Trivial
@@ -369,8 +369,8 @@ Extra - asset_id: collision_camera_003
       Trivial
 
 > West of Blob; Heals? False; Spawn Point
-  > Door to Proto EMMI Introduction (Lower)
-      After Artaria - Proto Central Unit
+  > Door from Proto EMMI Introduction
+      Trivial
   > Door to Save Station South
       After Artaria - Proto EMMI Blob
   > Event - Proto EMMI Blob (East Side)
@@ -626,7 +626,7 @@ Extra - asset_id: collision_camera_006
   > Event - First Chase Blob
       Any of the following:
           Wave Beam or Shoot Diffusion Beam
-          Morph Ball and Combat (Intermediate) and Shoot Charge Beam
+          Morph Ball and Pseudo-Wave Beam (Intermediate) and Shoot Charge Beam
   > Warp from Entrance
       After Artaria - First Chase Blob
 
@@ -763,9 +763,9 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: DoorEmmy07
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Arbitrary Enky Room (DoorEmmy06)
-      Trivial
-  > Tile Group (BOMB MISSILE)
-      Trivial
+      Can Slide
+  > Tunnel to Arbitrary Enky Room
+      Lay Bomb or Lay Power Bomb
 
 > Door to EMMI First Chase End (DoorPowerPower_001); Heals? False
   * Power Beam Door to EMMI First Chase End/Door to Teleport to Dairon (DoorPowerPower_001)
@@ -824,17 +824,6 @@ Extra - asset_id: collision_camera_008
   > Door to EMMI Zone Exit North (Upper)
       Trivial
 
-> Tile Group (BOMB MISSILE); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_004
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB', 'MISSILE')
-  > Dock to Arbitrary Enky Room (DoorEmmy07)
-      Trivial
-  > Tunnel to Arbitrary Enky Room
-      Lay Bomb or Lay Cross Comb or Lay Power Bomb
-
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_024
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
@@ -846,7 +835,7 @@ Extra - asset_id: collision_camera_008
 > Tunnel to Arbitrary Enky Room; Heals? False
   * Morph Ball Tunnel to Arbitrary Enky Room/Tunnel to Teleport to Dairon
   > Tile Group (WEIGHT)
-      Lay Bomb or Lay Cross Comb or Lay Power Bomb
+      Lay Bomb or Lay Power Bomb
 
 > Tunnel to EMMI Zone Exit North; Heals? False
   * Morph Ball Tunnel to EMMI Zone Exit North/Tunnel to Teleport to Dairon
@@ -1541,7 +1530,6 @@ Extra - asset_id: collision_camera_014
   * Pickup 0; Major Location? True
   * Extra - actor_name: ItemSphere_ChargeBeam
   * Extra - actor_def: actordef:actors/items/itemsphere_chargebeam/charclasses/itemsphere_chargebeam.bmsad
-  * Extra - map_icon_actor: powerup_chargebeam
   > Start Point
       Trivial
 
@@ -1687,7 +1675,7 @@ Extra - total_boundings: {'x1': 14800.0, 'x2': 17800.0, 'y1': -3700.0, 'y2': -12
 Extra - polygon: [[17800.0, -1200.0], [14800.0, -1200.0], [14800.0, -3700.0], [17800.0, -3700.0]]
 Extra - asset_id: collision_camera_016
 > Door to Melee Tutorial Room (Lower); Heals? False
-  * Power Beam Door to Melee Tutorial Room/Door to Proto EMMI Introduction (Lower)
+  * Power Beam Door to Melee Tutorial Room/Door from Proto EMMI Introduction
   * Extra - actor_name: Door010 (CL-PW,OP)
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1698,7 +1686,7 @@ Extra - asset_id: collision_camera_016
       Trivial
 
 > Door to Melee Tutorial Room (Upper); Heals? False
-  * Power Beam Door to Melee Tutorial Room/Door to Proto EMMI Introduction (Upper)
+  * Power Beam Door to Melee Tutorial Room/Door to Proto EMMI Introduction
   * Extra - actor_name: Door055 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2668,6 +2656,8 @@ Extra - asset_id: collision_camera_030
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Tile Group (POWERBEAM)
       Trivial
+  > Tunnel to Chain Reaction Room
+      Bomb and Morph Ball and Movement (Advanced)
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -2719,7 +2709,6 @@ Extra - asset_id: collision_camera_031
   * Pickup 23; Major Location? True
   * Extra - actor_name: IT_VARIA_GEN_001
   * Extra - actor_def: actordef:actors/items/itemsphere_variasuit/charclasses/itemsphere_variasuit.bmsad
-  * Extra - map_icon_actor: powerup_variasuit
   > Start Point
       Trivial
 
@@ -2852,7 +2841,6 @@ Extra - asset_id: collision_camera_033
   * Pickup 25; Major Location? True
   * Extra - actor_name: ItemSphere_GrappleBeam
   * Extra - actor_def: actordef:actors/items/itemsphere_grapplebeam/charclasses/itemsphere_grapplebeam.bmsad
-  * Extra - map_icon_actor: powerup_grapplebeam
   > Start Point
       Trivial
 
@@ -4196,7 +4184,7 @@ Extra - asset_id: collision_camera_070
   * Extra - actor_name: Item_MissileTank011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tunnel to Teleport to Dairon
-      Lay Bomb or Lay Cross Comb or Lay Power Bomb
+      Lay Bomb or Lay Power Bomb
   > Start Point
       Morph Ball and After Artaria - ArbEnky Blob West
 
@@ -4256,7 +4244,7 @@ Extra - asset_id: collision_camera_070
 > Tunnel to Teleport to Dairon; Heals? False
   * Morph Ball Tunnel to Teleport to Dairon/Tunnel to Arbitrary Enky Room
   > Pickup (Missile Tank)
-      Lay Bomb or Lay Cross Comb or Lay Power Bomb
+      Lay Bomb or Lay Power Bomb
 
 > Start Point; Heals? False; Spawn Point
   > Door to Navigation Station North (Upper)
@@ -4268,9 +4256,7 @@ Extra - asset_id: collision_camera_070
           Morph Ball
           After Artaria - ArbEnky Blob West and Can Slide
   > Event - ArbEnky Blob West
-      Any of the following:
-          Wave Beam
-          After Artaria - ArbEnky Blob East and Shoot Beam
+      After Artaria - ArbEnky Blob East and Shoot Beam
   > Event - ArbEnky Blob East
       Shoot Beam
 
@@ -4788,7 +4774,6 @@ Extra - asset_id: collision_camera_081
   * Pickup 27; Major Location? True
   * Extra - actor_name: ItemSphere_ScrewAttack
   * Extra - actor_def: actordef:actors/items/itemsphere_screwattack/charclasses/itemsphere_screwattack.bmsad
-  * Extra - map_icon_actor: powerup_screwattack
   > Start Point - Screw Attack
       Trivial
 
@@ -5000,7 +4985,7 @@ Extra - asset_id: collision_camera_081
                   Water Bomb Jump (Intermediate) and Perform Water Cross Jump
   > Blob - Right
       After Artaria - Screw Attack Water Blob
-  > Early Screw Jump
+  > Lower-Left Ledge
       Any of the following:
           Gravity Suit
           Water Bomb Jump (Beginner) and Perform Water Bomb Jump
@@ -5039,7 +5024,7 @@ Extra - asset_id: collision_camera_081
           Water Bomb Jump (Intermediate) and Perform Water Cross Jump
   > Tile Group (SCREWATTACK) 2
       Trivial
-  > Early Screw Jump
+  > Lower-Left Ledge
       Trivial
 
 > Tunnel to Shortcut to Screw Attack; Heals? False
@@ -5047,7 +5032,7 @@ Extra - asset_id: collision_camera_081
   > Teleporter to Cataris
       After Artaria - Screw Attack Grapple Block
 
-> Early Screw Jump; Heals? False
+> Lower-Left Ledge; Heals? False
   > Start Point 2
       Space Jump and Movement (Intermediate)
   > Blob - Left
@@ -5421,6 +5406,8 @@ Extra - asset_id: collision_camera_088
 
 > Start Point; Heals? False; Spawn Point
   > Dock to EMMI Zone Exit North
+      Trivial
+  > Tile Group (POWERBEAM) 5
       Trivial
 
 ----------------
