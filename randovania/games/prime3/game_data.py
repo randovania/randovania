@@ -7,6 +7,11 @@ from randovania.games.prime3.layout.preset_describer import (
 )
 
 
+def _options():
+    from randovania.interface_common.options import PerGameOptions
+    return PerGameOptions
+
+
 def _gui() -> game.GameGui:
     from randovania.games.prime3.item_database import prime3_progressive_items
     from randovania.games.prime3 import gui
@@ -66,6 +71,8 @@ game_data: game.GameData = game.GameData(
             format_params=corruption_format_params,
         )
     ),
+
+    options=_options,
 
     gui=_gui,
 

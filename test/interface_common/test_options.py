@@ -33,19 +33,17 @@ def test_migrate_from_v11(option):
 
     # Assert
     expected_data = {
-        "per_game_options": {
-            "prime2": {
-                "cosmetic_patches": {
-                    "disable_hud_popup": True,
-                    "speed_up_credits": True,
-                    "open_map": True,
-                    "pickup_markers": True,
-                    "unvisited_room_names": True
-                },
-                'input_path': None,
-                'output_directory': None,
-                'output_format': None,
+        "game_prime2": {
+            "cosmetic_patches": {
+                "disable_hud_popup": True,
+                "speed_up_credits": True,
+                "open_map": True,
+                "pickup_markers": True,
+                "unvisited_room_names": True
             },
+            'input_path': None,
+            'output_directory': None,
+            'output_format': None,
         }
     }
     assert new_data == expected_data
@@ -220,11 +218,9 @@ def test_load_from_disk_invalid_json(ignore_decode_errors: bool,
     option = Options(Path(tmpdir))
     tmpdir.join("config.json").write_text(
         json.dumps(randovania.interface_common.persisted_options.serialized_data_for_options({
-            "per_game_options": {
-                "prime2": {
-                    "cosmetic_patches": {
-                        "pickup_model_style": "invalid-value"
-                    }
+            "game_prime2": {
+                "cosmetic_patches": {
+                    "pickup_model_style": "invalid-value"
                 }
             }
         })),

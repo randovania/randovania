@@ -5,8 +5,11 @@ import pytest
 from PySide2 import QtCore
 
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
+from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.games.prime2.gui.dialog.game_export_dialog import EchoesGameExportDialog
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.interface_common.options import Options
 
 
@@ -24,7 +27,10 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         expected_default_name = "Echoes Randomizer - MyHash"
 
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = output_directory
+    options.options_for_game.return_value = EchoesPerGameOptions(
+        cosmetic_patches=EchoesCosmeticPatches.default(),
+        output_directory=output_directory,
+    )
 
     window = EchoesGameExportDialog(options, {}, "MyHash", True)
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
@@ -44,7 +50,10 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = None
+    options.options_for_game.return_value = EchoesPerGameOptions(
+        cosmetic_patches=EchoesCosmeticPatches.default(),
+        output_directory=None,
+    )
     window = EchoesGameExportDialog(options, {}, "MyHash", True)
     mock_prompt.return_value = None
 
@@ -81,7 +90,10 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
 
     options = MagicMock()
     options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.return_value.input_path = None
+    options.options_for_game.return_value = EchoesPerGameOptions(
+        cosmetic_patches=EchoesCosmeticPatches.default(),
+        input_path=None,
+    )
 
     contents_path = tmp_path.joinpath("internal_copies", "prime2", "contents")
     contents_path.mkdir(parents=True)
@@ -128,8 +140,11 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
     # Setup
     options = MagicMock()
     options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.return_value.input_path = tmp_path.joinpath("input/game.iso")
-    options.options_for_game.return_value.output_directory = tmp_path.joinpath("output")
+    options.options_for_game.return_value = EchoesPerGameOptions(
+        cosmetic_patches=EchoesCosmeticPatches.default(),
+        input_path=tmp_path.joinpath("input/game.iso"),
+        output_directory=tmp_path.joinpath("output"),
+    )
     window = EchoesGameExportDialog(options, {}, "MyHash", True)
 
     # Run

@@ -3,6 +3,11 @@ from randovania.games.super_metroid.layout.super_metroid_configuration import Su
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 
 
+def _options():
+    from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
+    return SuperMetroidPerGameOptions
+
+
 def _gui() -> game.GameGui:
     from randovania.games.super_metroid import gui
 
@@ -88,6 +93,8 @@ game_data: game.GameData = game.GameData(
         configuration=SuperMetroidConfiguration,
         cosmetic_patches=SuperMetroidCosmeticPatches
     ),
+
+    options=_options,
 
     gui=_gui,
 
