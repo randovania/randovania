@@ -23,6 +23,7 @@ class EchoesGameExportParams(GameExportParams):
     contents_files_path: Path
     backup_files_path: Path
     prime_path: Optional[Path]
+    use_prime_models: bool
 
 
 class EchoesGameExporter(GameExporter):
@@ -84,7 +85,7 @@ class EchoesGameExporter(GameExporter):
         )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
-        if patch_data.pop("convert_other_game_assets", False) or True:
+        if export_params.use_prime_models:
             from randovania.patching.prime import asset_conversion
             asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
 

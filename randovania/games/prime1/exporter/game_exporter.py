@@ -23,6 +23,7 @@ class PrimeGameExportParams(GameExportParams):
     output_path: Path
     echoes_input_path: Path
     echoes_contents_path: Path
+    echoes_backup_path: Path
     use_echoes_models: bool
 
 
@@ -58,12 +59,22 @@ class PrimeGameExporter(GameExporter):
 
         #Deal with echoes
         if export_params.use_echoes_models and export_params.echoes_input_path is not None:
+            unpack_updaters = status_update_lib.split_progress_update(updaters[0], 2)
             echoes_contents_path = export_params.echoes_contents_path
+            echoes_backup_path = export_params.echoes_backup_path
             shutil.rmtree(echoes_contents_path, ignore_errors=True)
+            shutil.rmtree(echoes_backup_path, ignore_errors=True)
             iso_packager.unpack_iso(
                 iso=export_params.echoes_input_path,
                 game_files_path=echoes_contents_path,
-                progress_update=updaters[0],
+                progress_update=unpack_updaters[0],
+            )
+
+            from randovania.games.prime2.patcher import claris_randomizer
+            claris_randomizer.create_pak_packups(
+                echoes_contents_path,
+                echoes_backup_path,
+                unpack_updaters[1]
             )
 
         new_config = copy.copy(patch_data)

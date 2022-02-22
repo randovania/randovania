@@ -138,7 +138,7 @@ prime1_assets = {
 }
 
 
-def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable):
+def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable):
     next_id = 0xFFFF0000
 
     def id_generator(asset_type):
@@ -151,6 +151,7 @@ def convert_prime1_pickups(echoes_files_path: Path, cache_path: Path, randomizer
         return result
 
     updaters = status_update_lib.split_progress_update(status_update, 3)
+    cache_path = Options.with_default_data_dir().internal_copies_path.joinpath("prime2", "prime1_models")
 
     if get_asset_cache_version(RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME) >= ECHOES_MODEL_VERSION:
         print("Reading assets from cache")

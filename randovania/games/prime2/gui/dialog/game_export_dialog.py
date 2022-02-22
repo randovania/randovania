@@ -111,6 +111,13 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             if self._prompt_input_file:
                 per_game_changes["input_path"] = self.input_file
 
+            if self._use_prime_models:
+                prime_options = options.options_for_game(RandovaniaGame.METROID_PRIME)
+                prime_changes = {
+                    "input_path": self.prime_file
+                }
+                options.set_options_for_game(RandovaniaGame.METROID_PRIME, dataclasses.replace(prime_options, **prime_changes))
+
             options.set_options_for_game(self._game, dataclasses.replace(per_game, **per_game_changes))
 
     # Getters
@@ -215,4 +222,5 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             contents_files_path=self._contents_file_path,
             backup_files_path=backup_files_path,
             prime_path=self.prime_file,
+            use_prime_models=self._use_prime_models,
         )
