@@ -2,7 +2,7 @@ import json
 import os
 from unittest.mock import MagicMock, ANY, patch
 
-from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams
+from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams, adjust_model_names
 
 
 def test_patch_game(mocker, tmp_path):
@@ -48,3 +48,55 @@ def test_patch_game(mocker, tmp_path):
     }
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(json.dumps(expected, indent=4, separators=(',', ': ')), ANY)
+
+
+def test_adjust_model_names():
+    # Setup
+    patcher_data = {
+        "levelData": {
+            "Impact Crater": {
+                "rooms": {
+                    "A room": {
+                        "pickups": [
+                            {"model": {"game": "prime1", "name": "Missile"}},
+                            {"model": {"game": "prime1", "name": "Space Jump Boots"}},
+                            {"model": {"game": "prime2", "name": "MissileLauncher"}},
+                            {"model": {"game": "prime2", "name": "BoostBall"}},
+                            {"model": {"game": "prime2", "name": "SpiderBall"}},
+                            {"model": {"game": "prime2", "name": "DarkAmmoExpansion"}},
+                        ]
+                    }
+                }
+            }
+        }
+    }
+
+    asset_metadata = {
+        "items": {
+            "prime2_MissileLauncher": {},
+            "prime2_BoostBall": {}
+        }
+    }
+
+    # Run
+    adjust_model_names(patcher_data, asset_metadata, True)
+
+    # Assert
+    assert patcher_data == {
+        "levelData": {
+            "Impact Crater": {
+                "rooms": {
+                    "A room": {
+                        "pickups": [
+                            {"model": "Missile"},
+                            {"model": "Space Jump Boots"},
+                            {"model": "Missile"},
+                            {"model": "prime2_BoostBall"},
+                            {"model": "Spider Ball"},
+                            {"model": "Nothing"},
+                        ]
+                    }
+                }
+            }
+        }
+    }
