@@ -5,7 +5,6 @@ from randovania.games.dread.layout.preset_describer import (
     dread_format_params, dread_expected_items,
     dread_unexpected_items
 )
-from randovania.games.game import GameData, GameLayout, GamePresetDescriber
 
 
 def _gui() -> game.GameGui:
@@ -45,10 +44,10 @@ def _generator() -> game.GameGenerator:
     )
 
 
-game_data: GameData = GameData(
+game_data: game.GameData = game.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
-    experimental=True,
+    development_state=game.DevelopmentState.EXPERIMENTAL,
 
     presets=[
         {
@@ -58,10 +57,10 @@ game_data: GameData = GameData(
 
     faq=[],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=DreadConfiguration,
         cosmetic_patches=DreadCosmeticPatches,
-        preset_describer=GamePresetDescriber(
+        preset_describer=game.GamePresetDescriber(
             expected_items=dread_expected_items,
             unexpected_items=dread_unexpected_items,
             format_params=dread_format_params,

@@ -17,7 +17,7 @@ from qasync import asyncSlot
 import randovania
 from randovania import VERSION, get_readme
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.games.game import RandovaniaGame
+from randovania.games.game import RandovaniaGame, DevelopmentState
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.common_qt_lib import open_directory_in_explorer
@@ -134,7 +134,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             game_menu = QtWidgets.QMenu(self.menu_open)
             game_menu.setTitle(_t(game.long_name))
             game_menu.game = game
-            if not game.data.experimental:
+            if not game.data.development_state.is_stable:
                 self.menu_open.addAction(game_menu.menuAction())
             self.game_menus.append(game_menu)
 
@@ -224,7 +224,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
         for game_menu, edit_action in zip(self.game_menus, self.menu_action_edits):
             game: RandovaniaGame = game_menu.game
-            if self.menu_action_experimental_games.isChecked() or not game.data.experimental:
+            if game.data.development_state.can_view(self.menu_action_experimental_games.isChecked()):
                 self.menu_open.addAction(game_menu.menuAction())
 
     # Delayed Initialization
