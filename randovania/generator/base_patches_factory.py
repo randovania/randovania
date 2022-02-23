@@ -38,19 +38,30 @@ class BasePatchesFactory:
         patches = dataclasses.replace(game.create_game_patches(),
                                       player_index=player_index)
 
-        if rng_required or rng is not None:
-            # Elevators
+        # Elevators
+        try:
             patches = self.add_elevator_connections_to_patches(configuration, rng, patches)
+        except MissingRng as e:
+            if rng_required:
+                raise e
 
-            # Configurable Nodes
+        # Configurable Nodes
+        try:
             patches = patches.assign_node_configuration(
                 self.configurable_node_assignment(configuration, game, rng)
             )
+        except MissingRng as e:
+            if rng_required:
+                raise e
 
-            # Starting Location
+        # Starting Location
+        try:
             patches = patches.assign_starting_location(
                 self.starting_location_for_configuration(configuration, game, rng))
-
+        except MissingRng as e:
+            if rng_required:
+                raise e
+        
         return patches
 
     def add_elevator_connections_to_patches(self,

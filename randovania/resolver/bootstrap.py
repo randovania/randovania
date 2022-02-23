@@ -7,7 +7,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
-from randovania.game_description.world.node import PlayerShipNode, NodeContext
+from randovania.game_description.world.node import PlayerShipNode, NodeContext, ResourceNode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel
@@ -79,6 +79,7 @@ class Bootstrap:
         starting_energy, energy_per_tank = self.energy_config(configuration)
 
         if starting_node.is_resource_node:
+            assert isinstance(starting_node, ResourceNode)
             add_resource_gain_to_current_resources(
                 starting_node.resource_gain_on_collect(NodeContext(
                     game.world_list.identifier_for_node(starting_node),
