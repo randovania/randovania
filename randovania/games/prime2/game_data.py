@@ -1,5 +1,4 @@
 from randovania.games import game
-from randovania.games.game import GameData, GameLayout, GamePresetDescriber
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.preset_describer import (
@@ -47,10 +46,10 @@ def _exporter():
     return EchoesGameExporter()
 
 
-game_data: GameData = GameData(
+game_data: game.GameData = game.GameData(
     short_name="Echoes",
     long_name="Metroid Prime 2: Echoes",
-    experimental=False,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
@@ -107,10 +106,10 @@ This means you need Boost Ball to fight Spider Guardian."""),
          "The energy gate that disappears after the pirate fight in Torvus Temple blocks this door."),
     ],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,
-        preset_describer=GamePresetDescriber(
+        preset_describer=game.GamePresetDescriber(
             expected_items=echoes_expected_items,
             unexpected_items=echoes_unexpected_items,
             format_params=echoes_format_params,

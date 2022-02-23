@@ -39,7 +39,7 @@ def _exporter():
 game_data: game.GameData = game.GameData(
     short_name="Blank",
     long_name="Blank Development Game",
-    experimental=True,
+    development_state=game.DevelopmentState.DEVELOPMENT,
 
     presets=[
         {

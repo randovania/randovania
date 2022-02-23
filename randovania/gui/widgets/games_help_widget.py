@@ -18,7 +18,7 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
                 continue
 
             index = self.addTab(game.gui.help_widget(), game.long_name)
-            self.setTabVisible(index, not game.data.experimental or self._experimental_visible)
+            self.setTabVisible(index, game.data.development_state.can_view(self._experimental_visible))
             self._index_for_game[game] = index
 
     def showEvent(self, arg: QtGui.QShowEvent) -> None:
@@ -32,4 +32,4 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
         self._experimental_visible = visible
         if self._index_for_game is not None:
             for game, index in self._index_for_game.items():
-                self.setTabVisible(index, not game.data.experimental or self._experimental_visible)
+                self.setTabVisible(index, game.data.development_state.can_view(self._experimental_visible))
