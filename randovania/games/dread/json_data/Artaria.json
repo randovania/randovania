@@ -3704,17 +3704,29 @@
                             "data": "Can Slide"
                         },
                         "Tunnel to Arbitrary Enky Room": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Lay Bomb"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "template",
-                                        "data": "Lay Power Bomb"
+                                        "data": "Shoot Missile"
                                     }
                                 ]
                             }
@@ -4712,12 +4724,29 @@
                     "dock_weakness": "Access Open",
                     "connections": {
                         "Door to EMMI Zone Exit Southwest (DoorFrame_004)": {
-                            "type": "resource",
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Space",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Flash",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door to Wide Beam Block Room (DoorFrame_006)": {
