@@ -38,6 +38,7 @@ from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.lib import location_list
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
@@ -154,6 +155,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
+        self.force_location_button.clicked.connect(self._force_location)
 
         self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
             self.preset.configuration.trick_level.pretty_description,
@@ -323,6 +325,17 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self._actions.pop()
         self.actions_list.takeItem(len(self._actions))
         self._refresh_for_new_action()
+
+    def _force_location(self):
+        world_list = self.game_description.world_list
+        area_locations = location_list.area_locations_with_filter(self.game_description.game, lambda area: True)
+        location_names = [world_list.area_name(world_list.area_by_area_location(it))
+                            for it in area_locations]
+        selected_name = QtWidgets.QInputDialog.getItem(self, "Force New Location", "Select your current room",
+                                                        location_names, 0, False)
+        area_location = area_locations[location_names.index(selected_name[0])]
+        node = world_list.resolve_teleporter_connection(area_location)
+        self._add_new_action(node)
 
     def _on_tree_node_double_clicked(self, item: QTreeWidgetItem, _):
         node: Optional[Node] = getattr(item, "node", None)
