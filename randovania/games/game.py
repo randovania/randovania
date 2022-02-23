@@ -26,6 +26,7 @@ if typing.TYPE_CHECKING:
     from randovania.gui.game_details.game_details_tab import GameDetailsTab
     from randovania.gui.lib.window_manager import WindowManager
     from randovania.gui.preset_settings.preset_tab import PresetTab
+    from randovania.interface_common.options import PerGameOptions
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
@@ -142,6 +143,9 @@ class GameData:
     layout: GameLayout
     """Contains game-specific settings available for presets."""
 
+    options: Callable[[], Type[PerGameOptions]]
+    """Contains game-specific persisted values."""
+
     gui: Callable[[], GameGui]
     """Contains game-specific GUI windows."""
 
@@ -206,6 +210,10 @@ class RandovaniaGame(BitPackEnum, Enum):
     @classmethod
     def sorted_all_games(cls) -> list[RandovaniaGame]:
         return sorted(cls.all_games(), key=lambda g: g.long_name)
+
+    @cached_property
+    def options(self) -> Type[PerGameOptions]:
+        return self.data.options()
 
     @cached_property
     def gui(self) -> GameGui:

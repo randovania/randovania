@@ -7,6 +7,11 @@ from randovania.games.prime2.layout.preset_describer import (
 )
 
 
+def _options():
+    from randovania.games.prime2.exporter.options import EchoesPerGameOptions
+    return EchoesPerGameOptions
+
+
 def _gui() -> game.GameGui:
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
     from randovania.games.prime2 import gui
@@ -115,6 +120,8 @@ This means you need Boost Ball to fight Spider Guardian."""),
             format_params=echoes_format_params,
         )
     ),
+
+    options=_options,
 
     gui=_gui,
 

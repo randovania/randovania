@@ -7,6 +7,11 @@ from randovania.games.dread.layout.preset_describer import (
 )
 
 
+def _options():
+    from randovania.games.dread.exporter.options import DreadPerGameOptions
+    return DreadPerGameOptions
+
+
 def _gui() -> game.GameGui:
     from randovania.games.dread import gui
     from randovania.games.dread.item_database import progressive_items
@@ -66,6 +71,8 @@ game_data: game.GameData = game.GameData(
             format_params=dread_format_params,
         )
     ),
+
+    options=_options,
 
     gui=_gui,
 

@@ -5,7 +5,9 @@ import pytest
 from PySide2 import QtCore
 
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
+from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.cave_story.gui.dialog.game_export_dialog import CSGameExportDialog
+from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
 
@@ -24,7 +26,10 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         expected_default_name = "Cave Story Randomizer"
 
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = output_directory
+    options.options_for_game.return_value = CSPerGameOptions(
+        cosmetic_patches=CSCosmeticPatches.default(),
+        output_directory=output_directory,
+    )
 
     window = CSGameExportDialog(options, {}, "MyHash", True)
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
@@ -43,7 +48,10 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = None
+    options.options_for_game.return_value = CSPerGameOptions(
+        cosmetic_patches=CSCosmeticPatches.default(),
+        output_directory=None,
+    )
 
     window = CSGameExportDialog(options, {}, "MyHash", True)
     mock_prompt.return_value = None
@@ -72,7 +80,10 @@ def test_save_options(skip_qtbot, tmp_path):
 def test_get_game_export_params(skip_qtbot, tmp_path):
     # Setup
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = tmp_path.joinpath("output")
+    options.options_for_game.return_value = CSPerGameOptions(
+        cosmetic_patches=CSCosmeticPatches.default(),
+        output_directory=tmp_path.joinpath("output"),
+    )
     window = CSGameExportDialog(options, {}, "MyHash", True)
 
     # Run

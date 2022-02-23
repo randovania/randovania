@@ -1,6 +1,6 @@
 import logging
 
-_CURRENT_OPTIONS_FILE_VERSION = 16
+_CURRENT_OPTIONS_FILE_VERSION = 17
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -79,12 +79,23 @@ def _convert_v15(options: dict) -> dict:
     return options
 
 
+def _convert_v16(options: dict) -> dict:
+    per_game_options = options.pop("per_game_options", {})
+
+    for game_name in ["prime1", "prime2", "cave_story"]:
+        if game_name in per_game_options:
+            options[f"game_{game_name}"] = per_game_options[game_name]
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     11: _convert_v11,
     12: _convert_v12,
     13: _convert_v13,
     14: _convert_v14,
     15: _convert_v15,
+    16: _convert_v16,
 }
 
 

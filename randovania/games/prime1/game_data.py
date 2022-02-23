@@ -7,6 +7,11 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 
 
+def _options():
+    from randovania.games.prime1.exporter.options import PrimePerGameOptions
+    return PrimePerGameOptions
+
+
 def _gui() -> game.GameGui:
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
     from randovania.games.prime1 import gui
@@ -93,6 +98,8 @@ game_data: game.GameData = game.GameData(
             format_params=prime_format_params,
         )
     ),
+
+    options=_options,
 
     gui=_gui,
 

@@ -4,6 +4,7 @@ from pathlib import Path
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
+from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file, output_file_validator, add_field_validation,
     spoiler_path_for
@@ -23,6 +24,7 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
 
         self._base_output_name = f"SM Randomizer - {word_hash}"
         per_game = options.options_for_game(self._game)
+        assert isinstance(per_game, SuperMetroidPerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
@@ -62,12 +64,13 @@ class SuperMetroidGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_
                 options.auto_save_spoiler = self.auto_save_spoiler
 
             per_game = options.options_for_game(self._game)
-            per_game_changes = {
-                "input_path": self.input_file,
-                "output_directory": self.output_file.parent,
-                "output_format": self._selected_output_format,
-            }
-            options.set_options_for_game(self._game, dataclasses.replace(per_game, **per_game_changes))
+            assert isinstance(per_game, SuperMetroidPerGameOptions)
+            options.set_options_for_game(self._game, dataclasses.replace(
+                per_game,
+                input_path=self.input_file,
+                output_directory=self.output_file.parent,
+                output_format=self._selected_output_format,
+            ))
 
     # Getters
     @property
