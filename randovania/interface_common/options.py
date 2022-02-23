@@ -73,22 +73,6 @@ class PerGameOptions:
         raise NotImplementedError()
 
 
-def serialize_per_game_dict(val: dict[RandovaniaGame, PerGameOptions]) -> dict:
-    return {
-        key.value: value.as_json
-        for key, value in val.items()
-    }
-
-
-def decode_per_game_dict(val: dict) -> dict[RandovaniaGame, PerGameOptions]:
-    result = {}
-    for key, value in val.items():
-        game: RandovaniaGame = RandovaniaGame(key)
-        result[game] = game.options.from_json(value)
-
-    return result
-
-
 _SERIALIZER_FOR_FIELD = {
     "last_changelog_displayed": Serializer(identity, str),
     "advanced_validate_seed_after": Serializer(identity, bool),
@@ -105,10 +89,13 @@ _SERIALIZER_FOR_FIELD = {
 
 
 def add_per_game_serializer():
+    def make_decoder(g):
+        return lambda it: g.options.from_json(it)
+
     for game in RandovaniaGame.all_games():
         _SERIALIZER_FOR_FIELD[f"game_{game.value}"] = Serializer(
             lambda it: it.as_json,
-            game.options.from_json,
+            make_decoder(game),
         )
 
 

@@ -140,7 +140,7 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
     options = MagicMock()
     options.options_for_game.return_value = DreadPerGameOptions(
         cosmetic_patches=DreadCosmeticPatches.default(),
-        input_directory=tmp_path.joinpath("input/game.iso"),
+        input_directory=tmp_path.joinpath("input"),
         output_directory=tmp_path.joinpath("output"),
     )
     window = DreadGameExportDialog(options, {}, "MyHash", True)
@@ -151,6 +151,6 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
     # Assert
     assert result == DreadGameExportParams(
         spoiler_output=tmp_path.joinpath("output.rdvgame"),
-        input_path=tmp_path.joinpath("input/game.iso"),
+        input_path=tmp_path.joinpath("input"),
         output_path=tmp_path.joinpath("output"),
     )
