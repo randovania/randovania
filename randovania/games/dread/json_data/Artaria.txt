@@ -504,6 +504,10 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Early Cloak Room (Water Blob)
+      All of the following:
+          Morph Ball and Movement (Beginner)
+          Walljump (Beginner) or Lay Bomb
   > Start Point
       Trivial
 
@@ -525,7 +529,12 @@ Extra - asset_id: collision_camera_005
   > Door to EMMI Zone Entrance Hallway
       Can Slide
   > Next to Pickup
-      Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+      Any of the following:
+          Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+          All of the following:
+              Single-wall Wall Jump (Intermediate)
+              Flash Shift or Morph Ball
+          Flash Shift and Walljump (Advanced)
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 4; Major Location? False
@@ -569,6 +578,10 @@ Extra - asset_id: collision_camera_005
       Any of the following:
           Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
           Walljump (Beginner) and Use Spin Boost
+          Flash Shift and Walljump (Intermediate)
+          All of the following:
+              Single-wall Wall Jump (Intermediate)
+              Flash Shift or Morph Ball
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -982,7 +995,7 @@ Extra - asset_id: collision_camera_010
   > Door to EMMI Zone Exit Northwest
       Space Jump or Simple IBJ
   > Door to Wide Beam Block Room (DoorFrame_007)
-      Space Jump
+      Flash Shift or Space Jump
   > Tunnel to EMMI Zone Exit Northwest
       Morph Ball and Single-wall Wall Jump (Intermediate)
   > Start Point
@@ -1257,9 +1270,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
   > Event - Early SA Shortcut Blob
-      All of the following:
-          Morph Ball
-          Lay Bomb or Lay Cross Comb
+      Morph Ball and Lay Bomb
   > Energy Recharge
       Morph Ball and After Artaria - Early SA Shortcut Blob
   > Tunnel to EMMI Zone Exit Northwest
@@ -1345,13 +1356,6 @@ Extra - asset_id: collision_camera_011
           After Artaria - Post Chain Reaction Debris or Before Artaria - Chain Reaction Device
   > Tile Group (MISSILE)
       Morph Ball
-  > Event - Post Chain Reaction Debris (Below)
-      Shoot Beam
-
-> Event - Post Chain Reaction Debris (Below); Heals? False
-  * Event Artaria - Post Chain Reaction Debris
-  > Under Teleportal
-      Trivial
 
 > Event - Destroy Post Chain Reaction Debris (Above); Heals? False
   * Event Artaria - Post Chain Reaction Debris
@@ -2157,16 +2161,30 @@ Extra - asset_id: collision_camera_023_B
               Any of the following:
                   Varia Suit
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 500
-              Grapple Beam or Spider Magnet or Space Jump
+              Any of the following:
+                  Spider Magnet or Space Jump
+                  All of the following:
+                      Grapple Beam
+                      Any of the following:
+                          Movement (Intermediate)
+                          Heat/Cold Runs (Intermediate) and Lava Damage ≥ 40
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 11; Major Location? False
   * Extra - actor_name: Item_MissileTank007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Hot Room Hub
-      All of the following:
-          Varia Suit
-          Grapple Beam or Gravity Suit or Spider Magnet or Space Jump
+      Any of the following:
+          Gravity Suit
+          All of the following:
+              Varia Suit
+              Any of the following:
+                  Spider Magnet or Space Jump
+                  All of the following:
+                      Grapple Beam
+                      Any of the following:
+                          Movement (Intermediate)
+                          Heat/Cold Runs (Intermediate) and Lava Damage ≥ 40
 
 > Start Point; Heals? False; Spawn Point
   > Door to Hot Room Hub
@@ -2610,7 +2628,7 @@ Extra - asset_id: collision_camera_029
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Pickup (Missile+ Tank)
-      Gravity Suit and Lava Damage ≥ 200 and Can Slide
+      Gravity Suit and Morph Ball and Lava Damage ≥ 200
   > Tile Group (POWERBEAM)
       Any of the following:
           Varia Suit
@@ -2668,9 +2686,7 @@ Extra - asset_id: collision_camera_030
   > Door to Varia Suit Room
       Morph Ball and After Artaria - Chain Reaction Grapple Block
   > Tile Group (SPEEDBOOST)
-      Any of the following:
-          Flash Shift
-          Cross Bomb and Use Spin Boost
+      Flash Shift or Lay Cross Comb or Use Spin Boost
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -3369,8 +3385,6 @@ Extra - asset_id: collision_camera_055
 
 > Tunnel to Teleport to Cataris (Morph Puzzle); Heals? False
   * Morph Ball Tunnel to Teleport to Cataris/Tunnel to Chain Reaction Access (Morph Puzzle)
-  > Tunnel to Waterfall
-      Morph Ball
   > Start Point
       Morph Ball
 
@@ -3733,7 +3747,7 @@ Extra - asset_id: collision_camera_061
   > Dock to EMMI Zone Hub
       Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
   > Tunnel to EMMI Zone Hub
-      Morph Ball and Speed Booster and Movement (Beginner)
+      Movement (Beginner) and Ballspark
 
 ----------------
 Cold Introduction
@@ -4204,9 +4218,7 @@ Extra - asset_id: collision_camera_070
   * Extra - actor_name: DoorEmmy06
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Total Recharge
-      Any of the following:
-          Before Artaria - Central Unit or Shoot Ice Missile
-          Knowledge (Beginner) and Lay Power Bomb
+      Before Artaria - Central Unit or Destroy Enky
 
 > Dock to Teleport to Dairon (DoorEmmy07); Heals? False
   * EMMI Door to Teleport to Dairon/Dock to Arbitrary Enky Room (DoorEmmy07)
@@ -4237,9 +4249,7 @@ Extra - asset_id: collision_camera_070
   > Door to Navigation Station North (Thermal)
       Trivial
   > Dock to Teleport to Dairon (DoorEmmy06)
-      Any of the following:
-          Before Artaria - Central Unit or Shoot Ice Missile
-          Knowledge (Beginner) and Lay Power Bomb
+      Before Artaria - Central Unit or Destroy Enky
 
 > Tunnel to Teleport to Dairon; Heals? False
   * Morph Ball Tunnel to Teleport to Dairon/Tunnel to Arbitrary Enky Room
