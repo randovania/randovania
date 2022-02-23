@@ -460,6 +460,7 @@ async def test_save_iso(window, mocker, echoes_game_description):
     game.exporter.export_game.assert_called_once_with(
         patch_data,
         game.gui.export_dialog.return_value.get_game_export_params.return_value,
+        window._options,
         progress_update=ANY,
     )
 

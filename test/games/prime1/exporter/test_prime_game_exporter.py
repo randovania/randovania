@@ -13,6 +13,7 @@ def test_patch_game(mocker, tmp_path):
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True}
     progress_update = MagicMock()
+    options = MagicMock()
 
     exporter = PrimeGameExporter()
 
@@ -28,6 +29,7 @@ def test_patch_game(mocker, tmp_path):
             echoes_contents_path=None,
             use_echoes_models=False,
         ),
+        options,
         progress_update
     )
 
