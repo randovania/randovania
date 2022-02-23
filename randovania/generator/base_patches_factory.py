@@ -31,6 +31,7 @@ class BasePatchesFactory:
                             game: GameDescription,
                             is_multiworld: bool,
                             player_index: int,
+                            rng_required: bool = True
                             ) -> GamePatches:
         """
         """
@@ -38,17 +39,29 @@ class BasePatchesFactory:
                                       player_index=player_index)
 
         # Elevators
-        patches = self.add_elevator_connections_to_patches(configuration, rng, patches)
+        try:
+            patches = self.add_elevator_connections_to_patches(configuration, rng, patches)
+        except MissingRng as e:
+            if rng_required:
+                raise e
 
         # Configurable Nodes
-        patches = patches.assign_node_configuration(
-            self.configurable_node_assignment(configuration, game, rng)
-        )
+        try:
+            patches = patches.assign_node_configuration(
+                self.configurable_node_assignment(configuration, game, rng)
+            )
+        except MissingRng as e:
+            if rng_required:
+                raise e
 
         # Starting Location
-        patches = patches.assign_starting_location(
-            self.starting_location_for_configuration(configuration, game, rng))
-
+        try:
+            patches = patches.assign_starting_location(
+                self.starting_location_for_configuration(configuration, game, rng))
+        except MissingRng as e:
+            if rng_required:
+                raise e
+        
         return patches
 
     def add_elevator_connections_to_patches(self,
