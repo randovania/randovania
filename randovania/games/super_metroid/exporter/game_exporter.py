@@ -5,6 +5,7 @@ from pathlib import Path
 import SuperDuperMetroid.ROM_Patcher
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
 
 
@@ -31,7 +32,7 @@ class SuperMetroidGameExporter(GameExporter):
         """
         return False
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams,
+    def export_game(self, patch_data: dict, export_params: GameExportParams, options: Options,
                     progress_update: status_update_lib.ProgressUpdateCallable):
         assert isinstance(export_params, SuperMetroidGameExportParams)
 

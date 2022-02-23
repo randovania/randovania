@@ -9,6 +9,7 @@ import py_randomprime
 
 from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
+from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
@@ -30,7 +31,7 @@ class PrimeGameExportParams(GameExportParams):
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
 
     bad_models = ["prime2_MissileLauncher", "prime2_MissileExpansionPrime1"]
-    if assets_meta is not None and use_external_assets:
+    if use_external_assets:
         model_list = [str(i) for i in assets_meta["items"].keys()]
         for m in bad_models:
             if m in model_list:
@@ -41,14 +42,14 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
     for level in patch_data["levelData"].values():
         for room in level["rooms"].values():
             for pickup in room["pickups"]:
-                model = pickup.pop("model")
-                if model["game"] == RandovaniaGame.METROID_PRIME.value:
-                    converted_model_name = model["name"]
+                model = PickupModel.from_json(pickup.pop("model"))
+                if model.game == RandovaniaGame.METROID_PRIME:
+                    converted_model_name = model.name
                 else:
-                    converted_model_name = "{}_{}".format(model["game"], model["name"])
+                    converted_model_name = "{}_{}".format(model.game.value, model.name)
 
-                if converted_model_name not in model_list and model["game"] != RandovaniaGame.METROID_PRIME.value:
-                    converted_model_name = _MODEL_MAPPING.get((RandovaniaGame(model["game"]), model["name"]), "Nothing")
+                if converted_model_name not in model_list and model.game != RandovaniaGame.METROID_PRIME:
+                    converted_model_name = _MODEL_MAPPING.get((model.game, model.name), "Nothing")
 
                 pickup['model'] = converted_model_name
 
@@ -70,7 +71,7 @@ class PrimeGameExporter(GameExporter):
         """
         return False
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams,
+    def export_game(self, patch_data: dict, export_params: GameExportParams, options: Options,
                     progress_update: status_update_lib.ProgressUpdateCallable) -> None:
         assert isinstance(export_params, PrimeGameExportParams)
 
@@ -118,13 +119,13 @@ class PrimeGameExporter(GameExporter):
         )
 
         if use_external_assets:
-            assets_path = Options.with_default_data_dir().internal_copies_path.joinpath(
+            assets_path = options.internal_copies_path.joinpath(
                 RandovaniaGame.METROID_PRIME.value,
                 f"{RandovaniaGame.METROID_PRIME_ECHOES.value}_models")
             assets_meta = asset_conversion.convert_prime2_pickups(assets_path, updaters[1])
             new_config["externAssetsDir"] = os.fspath(assets_path)
         else:
-            assets_meta = None
+            assets_meta = {}
 
         # Replace models
         adjust_model_names(new_config, assets_meta, use_external_assets)

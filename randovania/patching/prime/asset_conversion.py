@@ -22,25 +22,19 @@ from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 PRIME_MODELS_VERSION = 1
-ECHOES_MODEL_VERSION = 1
+ECHOES_MODELS_VERSION = 1
 
 
-def delete_converted_assets(target_game: RandovaniaGame, source_game: RandovaniaGame):
-    asset_dir = Options.with_default_data_dir().internal_copies_path.joinpath(target_game.value, f"{source_game.value}_models")
+def delete_converted_assets(assets_dir: Path):
+    shutil.rmtree(assets_dir, ignore_errors=True)
+
+
+def get_asset_cache_version(assets_dir: Path) -> int:
     try:
-        if asset_dir.is_dir():
-            shutil.rmtree(asset_dir)
-    except OSError:
-        raise
-
-
-def get_asset_cache_version(target_game: RandovaniaGame, source_game: RandovaniaGame) -> int:
-    asset_dir = Options.with_default_data_dir().internal_copies_path.joinpath(target_game.value, f"{source_game.value}_models")
-    try:
-        with open(asset_dir.joinpath("meta.json")) as metafile:
+        with open(assets_dir.joinpath("meta.json")) as metafile:
             metadata = json.load(metafile)
             return int(metadata["version"])
-    except OSError:
+    except FileNotFoundError:
         return 0
 
 
@@ -138,7 +132,7 @@ prime1_assets = {
 }
 
 
-def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable):
+def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable):
     next_id = 0xFFFF0000
 
     def id_generator(asset_type):
@@ -151,41 +145,34 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
         return result
 
     updaters = status_update_lib.split_progress_update(status_update, 3)
-    cache_path = Options.with_default_data_dir().internal_copies_path.joinpath("prime2", "prime1_models")
 
-    if get_asset_cache_version(RandovaniaGame.METROID_PRIME_ECHOES, RandovaniaGame.METROID_PRIME) >= ECHOES_MODEL_VERSION:
-        print("Reading assets from cache")
-        converted_assets = {}
-        # Read assets from cache if available
-        for asset_path in cache_path.glob("*"):
-            if asset_path.suffix[1:].upper() not in conversions.ALL_FORMATS:
-                continue
-            type = asset_path.suffix[1:]
-            asset_id = int(asset_path.stem)
-
-            construct_class = format_for(type)
-
-            raw = asset_path.read_bytes()
-            decoded_from_raw = construct_class.parse(raw, target_game=Game.ECHOES)
-            converted_asset = ConvertedAsset(
-                id=asset_id,
-                type=type,
-                resource=decoded_from_raw,
-            )
-            converted_assets[asset_id] = converted_asset
-
-        with open(cache_path.joinpath("meta.json"), "r")as data_additions_file:
+    if get_asset_cache_version(assets_path) >= ECHOES_MODELS_VERSION:
+        with open(assets_path.joinpath("meta.json"), "r")as data_additions_file:
             randomizer_data_additions = json.load(data_additions_file)["data"]
 
+        converted_assets = {}
+        # Read assets from cache if available
+        for item in randomizer_data_additions:
+            for asset in item["Assets"]:
+                asset_type = asset["Type"]
+                asset_id = asset["AssetID"]
+                asset_path = assets_path.joinpath("{}.{}".format(asset_id, asset_type))
+                construct_class = format_for(asset_type)
+
+                raw = asset_path.read_bytes()
+                decoded_from_raw = construct_class.parse(raw, target_game=Game.ECHOES)
+                converted_asset = ConvertedAsset(
+                    id=asset_id,
+                    type=asset_type,
+                    resource=decoded_from_raw,
+                )
+                converted_assets[asset_id] = converted_asset
 
     else:
-        print("Creating assets....")
-
         try:
             asset_provider = prime_asset_provider()
         except RuntimeError:
             return
-
 
         start = time.time()
         with asset_provider:
@@ -212,10 +199,10 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
                     )
             updaters[1]("Finished converting Prime 1 assets", 1)
             # Cache these assets here
-            cache_path.mkdir(exist_ok=True, parents=True)
+            assets_path.mkdir(exist_ok=True, parents=True)
             for asset in converter.converted_assets.values():
                 assetdata = format_for(asset.type).build(asset.resource, target_game=Game.ECHOES)
-                cache_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
+                assets_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
                     assetdata
                 )
 
@@ -253,8 +240,8 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
                 "Assets": dependencies
             })
         meta_dict["data"] = randomizer_data_additions
-        with open(cache_path.joinpath("meta.json"), "w")as data_additions_file:
-            json.dump(meta_dict, data_additions_file)
+        with open(assets_path.joinpath("meta.json"), "w")as data_additions_file:
+            json.dump(meta_dict, data_additions_file, indent=4)
         end = time.time()
         # logging.debug(f"Time took: {end - start}")
 
@@ -299,13 +286,13 @@ def convert_prime1_pickups(echoes_files_path: Path, randomizer_data: dict, statu
 
 def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
-    if get_asset_cache_version(RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES) >= ECHOES_MODEL_VERSION:
+    if get_asset_cache_version(output_path) >= ECHOES_MODELS_VERSION:
         with open(metafile, "r") as md:
             return json.load(md)
 
     next_id = 0xFFFF0000
 
-    delete_converted_assets(RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES)
+    delete_converted_assets(output_path)
 
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
     with randomizer_data_path.open() as randomizer_data_file:
@@ -399,7 +386,7 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
     output_path.mkdir(exist_ok=True, parents=True)
     with output_path.joinpath("meta.json").open("w") as meta_out:
         metadata = {
-            "version": ECHOES_MODEL_VERSION,
+            "version": ECHOES_MODELS_VERSION,
             "items": {
                 name: {
                     "ancs": asset.ancs,

@@ -1118,7 +1118,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
                                                      options.options_for_game(game).cosmetic_patches.as_json)
 
-        all_presets = self._game_session.presets
         other_worlds = [p.game for p in self._game_session.presets]
         dialog = game.gui.export_dialog(options, patch_data, self._game_session.game_details.word_hash, False, other_worlds)
         result = await async_dialog.execute_dialog(dialog)
@@ -1131,6 +1130,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await game_exporter.export_game(
             exporter=game.exporter,
             export_dialog=dialog,
+            options=options,
             patch_data=patch_data,
             layout_for_spoiler=None,
             background=self,
