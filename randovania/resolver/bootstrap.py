@@ -78,7 +78,7 @@ class Bootstrap:
 
         starting_energy, energy_per_tank = self.energy_config(configuration)
 
-        if isinstance(starting_node, PlayerShipNode):
+        if starting_node.is_resource_node:
             add_resource_gain_to_current_resources(
                 starting_node.resource_gain_on_collect(NodeContext(
                     game.world_list.identifier_for_node(starting_node),

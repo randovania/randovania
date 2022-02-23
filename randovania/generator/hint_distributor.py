@@ -118,13 +118,14 @@ class HintDistributor(ABC):
 
         return patches
 
-    async def assign_pre_filler_hints(self, patches: GamePatches, prefill: PreFillParams) -> GamePatches:
+    async def assign_pre_filler_hints(self, patches: GamePatches, prefill: PreFillParams, rng_required: bool = True) -> GamePatches:
         patches = await self.assign_specific_location_hints(patches, prefill)
         logbook_nodes = self.get_generic_logbook_nodes(prefill)
-        prefill.rng.shuffle(logbook_nodes)
-        patches = await self.assign_guaranteed_indices_hints(patches, logbook_nodes, prefill)
-        patches = await self.assign_other_hints(patches, logbook_nodes, prefill)
-        patches = await self.assign_joke_hints(patches, logbook_nodes, prefill)
+        if rng_required or prefill.rng is not None:
+            prefill.rng.shuffle(logbook_nodes)
+            patches = await self.assign_guaranteed_indices_hints(patches, logbook_nodes, prefill)
+            patches = await self.assign_other_hints(patches, logbook_nodes, prefill)
+            patches = await self.assign_joke_hints(patches, logbook_nodes, prefill)
         return patches
 
     async def assign_post_filler_hints(self, patches: GamePatches, rng: Random,

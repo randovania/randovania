@@ -33,15 +33,16 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 
 
 async def create_player_pool(rng: Random, configuration: BaseConfiguration,
-                             player_index: int, num_players: int) -> PlayerPool:
+                             player_index: int, num_players: int, rng_required: bool = True) -> PlayerPool:
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
     base_patches = game_generator.base_patches_factory.create_base_patches(configuration, rng, game,
                                                                            num_players > 1,
-                                                                           player_index=player_index)
-
+                                                                           player_index=player_index,
+                                                                           rng_required=rng_required)
+    
     base_patches = await game_generator.hint_distributor.assign_pre_filler_hints(
         base_patches,
         PreFillParams(
@@ -49,13 +50,15 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
             configuration,
             game,
             num_players > 1,
-        )
+        ),
+        rng_required=rng_required
     )
 
     item_pool, pickup_assignment, initial_items = pool_creator.calculate_pool_results(configuration,
                                                                                       game.resource_database,
                                                                                       base_patches,
-                                                                                      rng)
+                                                                                      rng,
+                                                                                      rng_required=rng_required)
     target_assignment = {
         index: PickupTarget(pickup, player_index)
         for index, pickup in pickup_assignment.items()
