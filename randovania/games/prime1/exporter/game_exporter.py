@@ -15,7 +15,7 @@ from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
 from randovania.patching.patchers.gamecube import iso_packager
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
-from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING, _STARTING_ITEM_NAME_TO_INDEX
+from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 
 
 @dataclasses.dataclass(frozen=True)

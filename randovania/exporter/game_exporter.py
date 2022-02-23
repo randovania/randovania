@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Optional
 
 from randovania.lib import status_update_lib
-from randovania.interface_common.options import Options
 
 
 @dataclasses.dataclass(frozen=True)
@@ -26,6 +25,6 @@ class GameExporter:
         """
         raise NotImplementedError()
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams, options: Options,
+    def export_game(self, patch_data: dict, export_params: GameExportParams,
                     progress_update: status_update_lib.ProgressUpdateCallable) -> None:
         raise NotImplementedError()
