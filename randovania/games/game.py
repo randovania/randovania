@@ -8,7 +8,7 @@ from pathlib import Path
 from random import Random
 from typing import Callable, Iterable, Optional, Type
 
-from randovania import get_file_path
+import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
@@ -99,6 +99,25 @@ class GameGenerator:
     """(Optional) """
 
 
+class DevelopmentState(Enum):
+    STABLE = "stable"
+    EXPERIMENTAL = "experimental"
+    DEVELOPMENT = "development"
+
+    @property
+    def is_stable(self):
+        return self == DevelopmentState.STABLE
+
+    def can_view(self, allow_experimental: bool) -> bool:
+        if self.is_stable:
+            return True
+
+        if not allow_experimental:
+            return False
+
+        return self == DevelopmentState.EXPERIMENTAL or randovania.is_dev_version()
+
+
 @dataclass(frozen=True)
 class GameData:
     """Contains all game-specific behavior as required by Randovania."""
@@ -109,9 +128,10 @@ class GameData:
     long_name: str
     """Full name, used throughout the GUI where space is not an issue."""
 
-    experimental: bool
-    """Controls whether the "Experimental Games" setting must be enabled in order to see the game in Randovania.
-    Default to True until given approval."""
+    development_state: DevelopmentState
+    """Controls how mature the game is considered to be. Various part of the UI display different games depending on
+    the development state.
+    Games start in DEVELOPMENT, change to EXPERIMENTAL when somewhat usable and move to STABLE when given approval."""
 
     presets: Iterable[dict[str, str]]
     """List of at least one dict mapping the key "path" to a path to the given preset."""
@@ -169,7 +189,7 @@ class RandovaniaGame(BitPackEnum, Enum):
 
     @property
     def data_path(self) -> Path:
-        return get_file_path().joinpath("games", self.value)
+        return randovania.get_file_path().joinpath("games", self.value)
 
     @property
     def short_name(self) -> str:

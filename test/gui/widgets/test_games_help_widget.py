@@ -36,7 +36,7 @@ def test_set_experimental_visible_after_show(skip_qtbot):
 
     assert widget._index_for_game
     for game, index in widget._index_for_game.items():
-        assert widget.isTabVisible(index) != game.data.experimental
+        assert widget.isTabVisible(index) != game.data.development_state
 
     # Run
     widget.set_experimental_visible(True)

@@ -1,5 +1,4 @@
 from randovania.games import game
-from randovania.games.game import GameData, GameLayout, GamePresetDescriber
 from randovania.games.prime1.layout.preset_describer import (
     prime_expected_items, prime_unexpected_items,
     prime_format_params,
@@ -45,10 +44,10 @@ def _exporter():
     return PrimeGameExporter()
 
 
-game_data: GameData = GameData(
+game_data: game.GameData = game.GameData(
     short_name="Prime",
     long_name="Metroid Prime",
-    experimental=False,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
@@ -85,10 +84,10 @@ game_data: GameData = GameData(
          "meaning that all versions of Prime are guaranteed to be logically completable when randomized."),
     ],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,
-        preset_describer=GamePresetDescriber(
+        preset_describer=game.GamePresetDescriber(
             expected_items=prime_expected_items,
             unexpected_items=prime_unexpected_items,
             format_params=prime_format_params,
