@@ -4,6 +4,7 @@ from pathlib import Path
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
+from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
     spoiler_path_for, add_field_validation, output_file_validator,
@@ -23,6 +24,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         self._base_output_name = f"Prime Randomizer - {word_hash}"
         per_game = options.options_for_game(self._game)
+        assert isinstance(per_game, PrimePerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
@@ -62,13 +64,13 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
                 options.auto_save_spoiler = self.auto_save_spoiler
 
             per_game = options.options_for_game(self._game)
-            per_game_changes = {
-                "input_path": self.input_file,
-                "output_directory": self.output_file.parent,
-                "output_format": self._selected_output_format,
-            }
-
-            options.set_options_for_game(self._game, dataclasses.replace(per_game, **per_game_changes))
+            assert isinstance(per_game, PrimePerGameOptions)
+            options.set_options_for_game(self._game, dataclasses.replace(
+                per_game,
+                input_path=self.input_file,
+                output_directory=self.output_file.parent,
+                output_format=self._selected_output_format,
+            ))
 
     # Getters
     @property

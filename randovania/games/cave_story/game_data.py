@@ -7,6 +7,11 @@ from randovania.games.cave_story.layout.preset_describer import (
 )
 
 
+def _options():
+    from randovania.games.cave_story.exporter.options import CSPerGameOptions
+    return CSPerGameOptions
+
+
 def _gui():
     from randovania.games.cave_story import gui
     from randovania.games.cave_story.item_database import progressive_items
@@ -71,6 +76,8 @@ game_data: game.GameData = game.GameData(
         ),
         get_ingame_hash=get_ingame_hash_str,
     ),
+
+    options=_options,
 
     gui=_gui,
 
