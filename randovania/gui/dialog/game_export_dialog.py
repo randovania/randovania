@@ -5,6 +5,7 @@ from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMessageBox
 
 from randovania.exporter.game_exporter import GameExportParams
+from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common.options import Options
 from randovania.layout.layout_description import LayoutDescription
@@ -21,9 +22,9 @@ class GameExportDialog(QtWidgets.QDialog):
     _patch_data: dict
     _word_hash: str
     _has_spoiler: bool
-    _games: list
+    _games: list[RandovaniaGame]
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games=[]):
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self._options = options
