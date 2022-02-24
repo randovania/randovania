@@ -80,15 +80,6 @@ class PrimeGameExporter(GameExporter):
 
         symbols = py_randomprime.symbols_for_file(input_file)
 
-        # Deal with echoes
-        if export_params.use_echoes_models:
-            updaters = status_update_lib.split_progress_update(progress_update, 3)
-            from randovania.games.prime2.exporter.game_exporter import extract_and_backup_iso
-            extract_and_backup_iso(export_params.echoes_input_path, export_params.echoes_contents_path,
-                                   export_params.echoes_backup_path, updaters[0])
-        else:
-            updaters = status_update_lib.split_progress_update(progress_update, 1)
-
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
         new_config["inputIso"] = os.fspath(input_file)
@@ -104,10 +95,16 @@ class PrimeGameExporter(GameExporter):
         )
 
         if export_params.use_echoes_models:
+            # TODO: Check if we actually need to extract echoes if there's cached models already
+            updaters = status_update_lib.split_progress_update(progress_update, 3)
             assets_path = export_params.asset_cache_path
+            from randovania.games.prime2.exporter.game_exporter import extract_and_backup_iso
+            extract_and_backup_iso(export_params.echoes_input_path, export_params.echoes_contents_path,
+                                   export_params.echoes_backup_path, updaters[0])
             assets_meta = asset_conversion.convert_prime2_pickups(assets_path, updaters[1])
             new_config["externAssetsDir"] = os.fspath(assets_path)
         else:
+            updaters = status_update_lib.split_progress_update(progress_update, 1)
             assets_meta = {}
 
         # Replace models

@@ -2,18 +2,27 @@ import json
 import os
 from unittest.mock import MagicMock, ANY, patch
 
+import pytest
+
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter, PrimeGameExportParams, adjust_model_names
 
 
-def test_patch_game(mocker, tmp_path):
+@pytest.mark.parametrize('use_echoes_models', [True, False])
+def test_patch_game(mocker, tmp_path, use_echoes_models):
     mock_symbols_for_file: MagicMock = mocker.patch("py_randomprime.symbols_for_file", return_value={
         "UpdateHintState__13CStateManagerFf": 0x80044D38,
     })
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
+    mock_extract_echoes: MagicMock = mocker.patch("randovania.games.prime2.exporter.game_exporter.extract_and_backup_iso")
+    mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
     patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True}
     progress_update = MagicMock()
-    options = MagicMock()
+
+    echoes_input_path = tmp_path.joinpath("echoes.iso")
+    echoes_backup_path = tmp_path.joinpath("internal_copies", "prime2", "backup")
+    echoes_contents_path = tmp_path.joinpath("internal_copies", "prime2", "contents")
+    asset_cache_path = tmp_path.joinpath("internal_copies", "prime1", "prime2_models")
 
     exporter = PrimeGameExporter()
 
@@ -24,11 +33,11 @@ def test_patch_game(mocker, tmp_path):
             spoiler_output=None,
             input_path=tmp_path.joinpath("input.iso"),
             output_path=tmp_path.joinpath("output.iso"),
-            echoes_input_path=None,
-            echoes_backup_path=None,
-            echoes_contents_path=None,
-            asset_cache_path=tmp_path.joinpath("internal_copies", "prime1", "prime2_models"),
-            use_echoes_models=False,
+            echoes_input_path=echoes_input_path,
+            echoes_backup_path=echoes_backup_path,
+            echoes_contents_path=echoes_contents_path,
+            asset_cache_path=asset_cache_path,
+            use_echoes_models=use_echoes_models,
         ),
         progress_update
     )
@@ -48,6 +57,12 @@ def test_patch_game(mocker, tmp_path):
         "inputIso": os.fspath(tmp_path.joinpath("input.iso")),
         "outputIso": os.fspath(tmp_path.joinpath("output.iso")),
     }
+
+    if use_echoes_models:
+        expected["externAssetsDir"] = os.fspath(asset_cache_path)
+        mock_extract_echoes.assert_called_once_with(echoes_input_path, echoes_contents_path, echoes_backup_path, ANY)
+        mock_asset_convert.assert_called_once_with(asset_cache_path, ANY)
+
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(json.dumps(expected, indent=4, separators=(',', ': ')), ANY)
 
