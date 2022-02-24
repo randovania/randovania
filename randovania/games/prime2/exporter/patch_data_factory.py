@@ -665,9 +665,9 @@ def _create_pickup_resources_for(resources: ResourceGain):
 def echoes_pickup_details_to_patcher(details: pickup_exporter.ExportedPickupDetails, rng: Random) -> dict:
     model = details.model.as_json
 
-    if model["name"] == "MissileExpansion"\
-            and model["game"] == RandovaniaGame.METROID_PRIME_ECHOES\
-            and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0:
+    if (model["name"] == "MissileExpansion"
+            and model["game"] == RandovaniaGame.METROID_PRIME_ECHOES
+            and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
         # If placing a missile expansion model, replace with Dark Missile Trooper model with a 1/8192 chance
         model["name"] = "MissileExpansionPrime1"
 
