@@ -1,3 +1,4 @@
+import typing
 from typing import Union, Tuple, Iterator, Dict
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -28,7 +29,7 @@ def add_resource_gain_to_current_resources(resource_gain: ResourceGain,
 
 
 def add_resources_into_another(target: CurrentResources, source: CurrentResources) -> None:
-    resource_gain: ResourceGain = source.items()
+    resource_gain = typing.cast(ResourceGain, source.items())
     add_resource_gain_to_current_resources(resource_gain, target)
 
 
