@@ -118,6 +118,7 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
     options = MagicMock()
     options.options_for_game.return_value.input_path = tmp_path.joinpath("input/game.iso")
     options.options_for_game.return_value.output_directory = tmp_path.joinpath("output")
+    options.internal_copies_path = tmp_path.joinpath("internal_copies")
     options.options_for_game.return_value.output_format = "iso"
     window = PrimeGameExportDialog(options, {}, "MyHash", True)
 
@@ -132,5 +133,6 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
         echoes_input_path=None,
         echoes_backup_path=None,
         echoes_contents_path=None,
+        asset_cache_path=tmp_path.joinpath("internal_copies", "prime1", "prime2_models"),
         use_echoes_models=False,
     )

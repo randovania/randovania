@@ -53,7 +53,6 @@ async def test_export_iso(skip_qtbot, mocker):
     game.exporter.export_game.assert_called_once_with(
         patch_data,
         game.gui.export_dialog.return_value.get_game_export_params.return_value,
-        options,
         progress_update=ANY,
     )
 

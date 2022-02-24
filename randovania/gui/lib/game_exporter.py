@@ -9,7 +9,6 @@ from randovania.exporter.game_exporter import GameExporter
 from randovania.gui.dialog.game_export_dialog import GameExportDialog
 from randovania.gui.lib import common_qt_lib, async_dialog
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
-from randovania.interface_common.options import Options
 from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.patching.patchers.exceptions import ExportFailure
@@ -18,7 +17,6 @@ from randovania.patching.patchers.exceptions import ExportFailure
 async def export_game(
         exporter: GameExporter,
         export_dialog: GameExportDialog,
-        options: Options,
         patch_data: dict,
         layout_for_spoiler: Optional[LayoutDescription],
         background: BackgroundTaskMixin,
@@ -34,7 +32,7 @@ async def export_game(
             "another window is exporting a game right now.")
 
     def work(progress_update: ProgressUpdateCallable):
-        exporter.export_game(patch_data, export_params, options, progress_update=progress_update)
+        exporter.export_game(patch_data, export_params, progress_update=progress_update)
 
         has_spoiler = layout_for_spoiler is not None and layout_for_spoiler.has_spoiler
         if export_params.spoiler_output is not None and has_spoiler:

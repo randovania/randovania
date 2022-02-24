@@ -150,6 +150,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = spoiler_path_for(self.auto_save_spoiler, self.output_file)
+        asset_cache_path = self._options.internal_copies_path.joinpath("prime1", "prime2_models")
 
         if self._use_echoes_models:
             backup_files_path = self._options.internal_copies_path.joinpath("prime2", "vanilla")
@@ -163,6 +164,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             echoes_input_path=self.echoes_file,
             echoes_contents_path=self._echoes_contents_path,
             echoes_backup_path=backup_files_path,
+            asset_cache_path=asset_cache_path,
             use_echoes_models=self._use_echoes_models,
         )
 

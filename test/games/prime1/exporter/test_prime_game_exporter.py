@@ -27,9 +27,9 @@ def test_patch_game(mocker, tmp_path):
             echoes_input_path=None,
             echoes_backup_path=None,
             echoes_contents_path=None,
+            asset_cache_path=tmp_path.joinpath("internal_copies", "prime1", "prime2_models"),
             use_echoes_models=False,
         ),
-        options,
         progress_update
     )
 

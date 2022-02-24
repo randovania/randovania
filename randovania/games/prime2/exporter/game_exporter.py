@@ -12,7 +12,6 @@ from randovania import get_data_path
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.games.prime2.patcher import claris_randomizer
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
-from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
 from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
@@ -22,6 +21,7 @@ class EchoesGameExportParams(GameExportParams):
     input_path: Optional[Path]
     output_path: Path
     contents_files_path: Path
+    asset_cache_path: Path
     backup_files_path: Path
     prime_path: Optional[Path]
     use_prime_models: bool
@@ -44,7 +44,7 @@ class EchoesGameExporter(GameExporter):
         """
         return True
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams, options: Options,
+    def export_game(self, patch_data: dict, export_params: GameExportParams,
                     progress_update: status_update_lib.ProgressUpdateCallable):
         assert isinstance(export_params, EchoesGameExportParams)
         updaters = status_update_lib.split_progress_update(progress_update, 4)
@@ -88,7 +88,7 @@ class EchoesGameExporter(GameExporter):
 
         if export_params.use_prime_models:
             from randovania.patching.prime import asset_conversion
-            assets_path = options.internal_copies_path.joinpath("prime2", "prime1_models")
+            assets_path = export_params.asset_cache_path
             asset_conversion.convert_prime1_pickups(contents_files_path, assets_path, randomizer_data, updaters[1])
 
         adjust_model_name(patch_data, randomizer_data)

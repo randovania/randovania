@@ -230,7 +230,6 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         await game_exporter.export_game(
             exporter=game.exporter,
             export_dialog=dialog,
-            options=options,
             patch_data=patch_data,
             layout_for_spoiler=layout,
             background=self,

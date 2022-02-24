@@ -5,7 +5,6 @@ from pathlib import Path
 from caver import patcher as caver_patcher
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
 
 
@@ -31,7 +30,7 @@ class CSGameExporter(GameExporter):
         """
         return False
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams, options: Options,
+    def export_game(self, patch_data: dict, export_params: GameExportParams,
                     progress_update: status_update_lib.ProgressUpdateCallable):
         assert isinstance(export_params, CSGameExportParams)
         self._busy = True

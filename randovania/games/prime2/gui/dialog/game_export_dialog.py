@@ -166,6 +166,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = spoiler_path_for(self.auto_save_spoiler, self.output_file)
         backup_files_path = self._options.internal_copies_path.joinpath("prime2", "vanilla")
+        asset_cache_path = self._options.internal_copies_path.joinpath("prime2", "prime1_models")
 
         return EchoesGameExportParams(
             spoiler_output=spoiler_output,
@@ -173,6 +174,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             output_path=self.output_file,
             contents_files_path=self._contents_file_path,
             backup_files_path=backup_files_path,
+            asset_cache_path=asset_cache_path,
             prime_path=self.prime_file,
             use_prime_models=self._use_prime_models,
         )

@@ -1130,7 +1130,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         await game_exporter.export_game(
             exporter=game.exporter,
             export_dialog=dialog,
-            options=options,
             patch_data=patch_data,
             layout_for_spoiler=None,
             background=self,

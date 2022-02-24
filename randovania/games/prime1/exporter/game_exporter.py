@@ -11,7 +11,6 @@ from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib
 from randovania.patching.patchers.gamecube import iso_packager
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
@@ -25,6 +24,7 @@ class PrimeGameExportParams(GameExportParams):
     echoes_input_path: Path
     echoes_contents_path: Path
     echoes_backup_path: Path
+    asset_cache_path: Path
     use_echoes_models: bool
 
 
@@ -71,7 +71,7 @@ class PrimeGameExporter(GameExporter):
         """
         return False
 
-    def export_game(self, patch_data: dict, export_params: GameExportParams, options: Options,
+    def export_game(self, patch_data: dict, export_params: GameExportParams,
                     progress_update: status_update_lib.ProgressUpdateCallable) -> None:
         assert isinstance(export_params, PrimeGameExportParams)
 
@@ -119,9 +119,7 @@ class PrimeGameExporter(GameExporter):
         )
 
         if use_external_assets:
-            assets_path = options.internal_copies_path.joinpath(
-                RandovaniaGame.METROID_PRIME.value,
-                f"{RandovaniaGame.METROID_PRIME_ECHOES.value}_models")
+            assets_path = export_params.asset_cache_path
             assets_meta = asset_conversion.convert_prime2_pickups(assets_path, updaters[1])
             new_config["externAssetsDir"] = os.fspath(assets_path)
         else:
