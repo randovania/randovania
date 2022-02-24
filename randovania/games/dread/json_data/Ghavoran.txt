@@ -12,7 +12,7 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_002
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Door to Right Entrance
+  > Elevator to Burenia - Transport to Ghavoran
       Trivial
 
 > Door to Right Entrance; Heals? False
@@ -23,8 +23,6 @@ Extra - asset_id: collision_camera_000
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Left Entrance
-      Trivial
   > Elevator to Burenia - Transport to Ghavoran
       Trivial
 
@@ -36,6 +34,8 @@ Extra - asset_id: collision_camera_000
   * Extra - target_spawn_point: elevator_forest_000_platform
   * Extra - start_point_actor_name: elevator_aqua_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_elevator/charclasses/weightactivatedplatform_elevator.bmsad
+  > Door to Left Entrance
+      Trivial
   > Door to Right Entrance
       Trivial
 
@@ -53,7 +53,7 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Spider Magnet Elevator
+  > Start Point
       Trivial
 
 > Door to Spider Magnet Elevator; Heals? False
@@ -64,7 +64,7 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Robot Fight Arena
+  > Start Point
       Trivial
   > Grapple Block Alcove
       After Ghavoran - grapplepulloff1x2_000 and Can Slide
@@ -82,7 +82,9 @@ Extra - asset_id: collision_camera_001
   > Grapple Block Alcove
       All of the following:
           Morph Ball and After Ghavoran - grapplepulloff1x2_000
-          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+          Any of the following:
+              Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+              Flash Shift and Walljump (Beginner)
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 97; Major Location? False
@@ -102,13 +104,17 @@ Extra - asset_id: collision_camera_001
   > Tile Group (MISSILE)
       All of the following:
           Morph Ball
-          Gravity Suit or Space Jump or Speed Booster
+          Any of the following:
+              Gravity Suit or Speed Booster or Use Spin Boost
+              Water Bomb Jump (Beginner) and Perform Water Bomb Jump
+              Water Bomb Jump (Intermediate) and Perform Water Cross Jump
   > Grapple Block Alcove
       All of the following:
           Morph Ball and Before Ghavoran - grapplepulloff1x2_000
           Any of the following:
               Spider Magnet or Space Jump
-              Flash Shift and Use Spin Boost
+              Movement (Beginner) and Use Spin Boost
+              Flash Shift and Grapple Beam and Walljump (Advanced)
 
 > Total Recharge; Heals? True
   * Extra - actor_name: totalrechargestation_001
@@ -122,6 +128,8 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoRobotForest
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Robot Fight Arena
+      Trivial
+  > Door to Spider Magnet Elevator
       Trivial
 
 > Tile Group (MISSILE); Heals? False
@@ -164,7 +172,7 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Left Entrance
+  > Start Point
       Trivial
 
 > Door to Left Entrance; Heals? False
@@ -175,12 +183,14 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Right Entrance
+  > Start Point
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoRobotSoldier
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Right Entrance
+      Trivial
   > Door to Left Entrance
       Trivial
 
@@ -263,7 +273,9 @@ Extra - asset_id: collision_camera_003
   > Floating Platform
       Any of the following:
           Grapple Beam or Space Jump or Simple IBJ
-          Spider Magnet and Use Spin Boost
+          All of the following:
+              Use Spin Boost
+              Spider Magnet or Walljump (Beginner)
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -340,15 +352,10 @@ Extra - asset_id: collision_camera_004
   * EMMI Door to Navigation Station Access/Dock to Blue EMMI Introduction
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
+  > Door to EMMI Zone Exit Southeast
+      Ballspark
   > Right Alcove
       Morph Ball
-
-> Tile Group (POWERBEAM); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_047
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
 
 > Tunnel to EMMI Zone Exit Southeast; Heals? False
   * Ghavoran EMMI Tunnel to EMMI Zone Exit Southeast/Tunnel to Blue EMMI Introduction
@@ -357,7 +364,12 @@ Extra - asset_id: collision_camera_004
 
 > Right Alcove; Heals? False
   > Door to EMMI Zone Exit Southeast
-      Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Simple IBJ
+      Any of the following:
+          Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
+          All of the following:
+              Walljump (Beginner)
+              Flash Shift or Use Spin Boost
+          Morph Ball and Single-wall Wall Jump (Intermediate)
   > Dock to Navigation Station Access
       Can Slide
 
@@ -412,8 +424,6 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Flipper Room
-      Trivial
   > Navigation Room
       Trivial
 
@@ -425,7 +435,7 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Navigation Station Access
+  > Navigation Room
       Trivial
 
 > Navigation Room; Heals? False; Spawn Point
@@ -436,6 +446,8 @@ Extra - asset_id: collision_camera_006
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
   * Extra - hint_id: FOREST_1
   > Door to Navigation Station Access
+      Trivial
+  > Door to Flipper Room
       Trivial
 
 ----------------
@@ -452,14 +464,8 @@ Extra - asset_id: collision_camera_007
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Elun Transport Access
-      After Ghavoran - Super Missile Rotatable
-  > Dock to Spin Boost Tower
-      After Ghavoran - Super Missile Rotatable Enky
-  > Event - Super Missile Rotatable
-      Before Ghavoran - Super Missile Rotatable
-  > Event - Super Missile Rotatable Enky
-      Destroy Enky
+  > Start Point
+      Trivial
 
 > Door to Elun Transport Access; Heals? False
   * Super Missile Door to Elun Transport Access/Door to Flipper Room
@@ -469,7 +475,7 @@ Extra - asset_id: collision_camera_007
   * Extra - left_shield_def: actordef:actors/props/doorshieldsupermissile/charclasses/doorshieldsupermissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Navigation Station
+  > Start Point
       After Ghavoran - Super Missile Rotatable
   > Tunnel to Spider Magnet Elevator
       Before Ghavoran - Super Missile Rotatable
@@ -479,10 +485,18 @@ Extra - asset_id: collision_camera_007
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Navigation Station
       Trivial
+  > Door to Elun Transport Access
+      After Ghavoran - Super Missile Rotatable
+  > Dock to Spin Boost Tower
+      After Ghavoran - Super Missile Rotatable Enky
+  > Event - Super Missile Rotatable
+      Before Ghavoran - Super Missile Rotatable
+  > Event - Super Missile Rotatable Enky
+      Destroy Enky
 
 > Dock to Spin Boost Tower; Heals? False
   * Open Passage to Spin Boost Tower/Dock to Flipper Room
-  > Door to Navigation Station
+  > Start Point
       After Ghavoran - Super Missile Rotatable Enky
   > Event - Super Missile Rotatable Enky
       Destroy Enky
@@ -538,7 +552,9 @@ Extra - asset_id: collision_camera_008
   > Event - Breakable (grapplepulloff1x2_002)
       Grapple Beam
   > Tunnel to Super Missile Room Access
-      Simple IBJ or Use Spin Boost
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Beginner)
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 99; Major Location? False
@@ -598,20 +614,17 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   > Bomb Ledge
       Any of the following:
-          Space Jump or Simple IBJ
+          Grapple Beam or Space Jump or Simple IBJ
           All of the following:
-              Spider Magnet
-              Flash Shift or Grapple Beam or Use Spin Boost
-          All of the following:
-              Grapple Beam
-              Flash Shift or Walljump (Beginner)
+              Flash Shift or Use Spin Boost
+              Spider Magnet or Walljump (Beginner)
 
 > Pickup (Missile+ Tank); Heals? False
   * Pickup 102; Major Location? False
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
   > Tunnel to Super Missile Room
-      Trivial
+      Morph Ball
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -661,6 +674,10 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_def: None
   > Door to Super Missile Room Access (Super Lock)
       Trivial
+  > Start Point
+      Shinesink Clip (Expert) and Can SSC
+  > Tunnel to Super Missile Room Access
+      Flash Shift and Walljump (Beginner)
 
 > Door to Super Missile Room Access (Super Lock); Heals? False
   * Power Beam Door to Super Missile Room Access/Door to Super Missile Room (Super Lock)
@@ -675,9 +692,7 @@ Extra - asset_id: collision_camera_010
   > Tunnel to Super Missile Room Access
       All of the following:
           Morph Ball
-          Any of the following:
-              Speed Booster or Simple IBJ or Use Spin Boost
-              Flash Shift and Walljump (Beginner)
+          Speed Booster or Simple IBJ or Use Spin Boost
 
 > Door to Super Missile Room Access (Missile Lock); Heals? False
   * Missile Door to Super Missile Room Access/Door to Super Missile Room (Missile Lock)
@@ -739,6 +754,8 @@ Extra - asset_id: collision_camera_011
       Any of the following:
           Grapple Beam or Use Spin Boost
           Gravity Suit and Simple IBJ
+          Water Bomb Jump (Intermediate) and Perform Water Cross Jump
+          Flash Shift and Walljump (Beginner)
 
 > Dock to Map Station Access (dooremmy_003); Heals? False
   * EMMI Door to Map Station Access/Dock to EMMI Zone Exit Southeast (dooremmy_003)
@@ -757,6 +774,8 @@ Extra - asset_id: collision_camera_011
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Blue EMMI Introduction
+      Trivial
   > Dock to Map Station Access (dooremmy_003)
       Flash Shift or Grapple Beam or Spider Magnet or Slide Jump (Beginner) or Use Spin Boost
   > Tunnel to Blue EMMI Introduction
@@ -780,14 +799,19 @@ Extra - asset_id: collision_camera_012
       Morph Ball
   > Ledge Grab
       Any of the following:
-          Flash Shift and Grapple Beam
+          All of the following:
+              Grapple Beam
+              Flash Shift or Spider Magnet or Use Spin Boost
           All of the following:
               Gravity Suit
               Simple IBJ or Use Spin Boost
-  > Stick to Spider Magnet Wall
-      All of the following:
-          Spider Magnet
-          Flash Shift or Grapple Beam or Gravity Suit or Space Jump
+          All of the following:
+              Water Bomb Jump (Intermediate)
+              Any of the following:
+                  Perform Water Cross Jump
+                  All of the following:
+                      Perform Water Bomb Jump
+                      Walljump (Beginner) or Use Spin Boost
 
 > Dock to EMMI Zone Exit Southeast (dooremmy_003); Heals? False
   * EMMI Door to EMMI Zone Exit Southeast/Dock to Map Station Access (dooremmy_003)
@@ -862,10 +886,6 @@ Extra - asset_id: collision_camera_012
       Morph Ball
   > Tile Group (BOMB) 2
       Morph Ball
-
-> Stick to Spider Magnet Wall; Heals? False
-  > Ledge Grab
-      Trivial
 
 ----------------
 Map Station
@@ -945,7 +965,11 @@ Extra - asset_id: collision_camera_014
   > Upper Platform
       Any of the following:
           Grapple Beam or Simple IBJ or Use Spin Boost
-          Flash Shift and Spider Magnet
+          All of the following:
+              Spider Magnet
+              Flash Shift or Slide Jump (Intermediate) or Walljump (Beginner)
+          Flash Shift and Walljump (Beginner)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
 
 > Tunnel to EMMI Zone Middle Path; Heals? False
   * Ghavoran EMMI Tunnel to EMMI Zone Middle Path/Tunnel to EMMI Zone Exit West
@@ -972,7 +996,10 @@ Extra - asset_id: collision_camera_015
   > Dock to EMMI Zone Exit West (Upper)
       Trivial
   > Spin Boost Ledge
-      Gravity Suit or Water Bomb Jump (Beginner) or Use Spin Boost
+      Any of the following:
+          Gravity Suit or Use Spin Boost
+          Water Bomb Jump (Beginner) and Perform Water Bomb Jump
+          Water Bomb Jump (Intermediate) and Perform Water Cross Jump
 
 > Dock to EMMI Zone Exit West (Upper); Heals? False
   * EMMI Door to EMMI Zone Exit West/Dock to Early Ice Room (Upper)
@@ -992,7 +1019,7 @@ Extra - asset_id: collision_camera_015
   > Dock to EMMI Zone Exit West (Lower)
       Trivial
   > Dock to EMMI Zone Exit Northwest
-      Simple IBJ or Use Spin Boost
+      Movement (Beginner) or Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 ----------------
 EMMI Zone Exit Northwest
@@ -1047,15 +1074,17 @@ Extra - asset_id: collision_camera_017
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Dock to Central Unit Access
       Trivial
-
-> Dock to Central Unit Access; Heals? False
-  * EMMI Door to Central Unit Access/Dock to Central Unit
   > Event - Ghavoran Central Unit
       Destroy Central Unit
 
+> Dock to Central Unit Access; Heals? False
+  * EMMI Door to Central Unit Access/Dock to Central Unit
+  > Start Point
+      Trivial
+
 > Event - Ghavoran Central Unit; Heals? False
   * Event Ghavoran - Central Unit
-  > Dock to Central Unit Access
+  > Start Point
       Trivial
 
 ----------------
@@ -1087,7 +1116,7 @@ Extra - asset_id: collision_camera_018
   > Door to EMMI Zone Exit West (doorgrapplegrapple_006)
       Trivial
   > Door to EMMI Zone Exit Northeast
-      Flash Shift or Grapple Beam or Gravity Suit or Morph Ball
+      Flash Shift or Grapple Beam or Gravity Suit or Morph Ball or Use Spin Boost
 
 > Door to EMMI Zone Exit Northeast; Heals? False
   * Charge Beam Door to EMMI Zone Exit Northeast/Door to EMMI Zone Middle Path
@@ -1144,7 +1173,9 @@ Extra - asset_id: collision_camera_019
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to EMMI Zone Exit Northeast (doorpowerpower_010)
-      Flash Shift or Space Jump
+      Any of the following:
+          Flash Shift or Space Jump
+          Spin Boost and Slide Jump (Beginner)
   > Room Center
       Trivial
 
@@ -1162,8 +1193,20 @@ Extra - asset_id: collision_camera_019
 > Room Center; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_IceMissiles
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to EMMI Zone Exit Northeast (doorpowerpower_010)
+      Any of the following:
+          Grapple Beam or Space Jump or Simple IBJ
+          Morph Ball and Single-wall Wall Jump (Intermediate)
+          All of the following:
+              Walljump (Beginner)
+              Flash Shift or Use Spin Boost
   > Door to EMMI Zone Exit Northeast (doorpowerpower_011)
       Trivial
+  > Door to EMMI Zone Exit Northwest
+      Any of the following:
+          Space Jump or Simple IBJ
+          Morph Ball and Single-wall Wall Jump (Intermediate)
+          Walljump (Beginner) and Use Spin Boost
   > Dock to Central Unit
       Can Slide
   > Pickup (Ice Missile)
@@ -1172,7 +1215,7 @@ Extra - asset_id: collision_camera_019
 > Dock to Central Unit; Heals? False
   * EMMI Door to Central Unit/Dock to Central Unit Access
   > Tunnel to EMMI Zone Exit Northwest
-      Space Jump or Speed Booster or Simple IBJ
+      Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
   > Room Center
       Can Slide
 
@@ -1275,10 +1318,20 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
+  > Event - Breakable (grapplepulloff1x2_000)
+      All of the following:
+          # Due to Movement (Beginner) being impossible with these items, forced ice missile for them if coming fomr this dock
+          Grapple Beam and Shoot Ice Missile
+          Flash Shift or Spider Magnet
   > Dock to Flipper Room
       Trivial
   > Energy Part Platform
-      Flash Shift or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+      Any of the following:
+          # Adjusted logic here due to Movement (Beginner) being impossible from here for the grapple block with certain items
+          Simple IBJ or Use Spin Boost
+          Speed Booster and After Ghavoran - Super Missile Rotatable Enky
+          Flash Shift and Spider Magnet
+          Spider Magnet and Slide Jump (Beginner) and Walljump (Beginner)
 
 > Pickup (Power Bomb Tank); Heals? False
   * Pickup 96; Major Location? False
@@ -1352,11 +1405,14 @@ Extra - asset_id: collision_camera_021
 > Dock to Flipper Room; Heals? False
   * Open Passage to Flipper Room/Dock to Spin Boost Tower
   > Door to Save Station Center
-      Grapple Beam or Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Grapple Beam or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          Speed Booster and After Ghavoran - Super Missile Rotatable Enky
+          Flash Shift and Spider Magnet
 
 > Upper Center Platform; Heals? False
   > Dock to EMMI Zone Exit Northeast (dooremmy)
-      Flash Shift or Use Spin Boost
+      Flash Shift or Simple IBJ or Use Spin Boost
   > Dock to EMMI Zone Exit Northeast (dooremmy_007)
       After Ghavoran - Ammo Recharge Enky Below
   > Energy Part Platform
@@ -1376,9 +1432,12 @@ Extra - asset_id: collision_camera_021
 
 > Ledge Below PB Tank; Heals? False
   > Door to Above Pulse Radar
-      Simple IBJ or Use Spin Boost
+      Movement (Beginner) or Simple IBJ or Use Spin Boost
   > Pickup (Power Bomb Tank)
-      Infinite Bomb Jump (Intermediate) or Use Spin Boost
+      Any of the following:
+          Use Spin Boost
+          Bomb and Morph Ball and Infinite Bomb Jump (Intermediate)
+          Flash Shift and Speed Booster and After Ghavoran - Ammo Recharge Enky Above and Movement (Intermediate) and Speedbooster Conservation (Beginner) and Walljump (Beginner)
   > E-Tank Alcove
       Trivial
 
@@ -1392,7 +1451,9 @@ Extra - asset_id: collision_camera_021
   > Tile Group (MISSILE)
       After Ghavoran - grapplepulloff1x2_000
   > Upper Center Platform
-      Simple IBJ or Use Spin Boost
+      Any of the following:
+          Simple IBJ or Use Spin Boost
+          Speed Booster and After Ghavoran - Super Missile Rotatable Enky
 
 > Event - Ammo Recharge Enky (Above); Heals? False
   * Event Ghavoran - Ammo Recharge Enky Above
@@ -1417,8 +1478,6 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Door to Chozo Warrior Arena
-      Trivial
   > Save Station
       Trivial
 
@@ -1430,7 +1489,7 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Spin Boost Tower
+  > Save Station
       Trivial
 
 > Save Station; Heals? False; Spawn Point
@@ -1439,6 +1498,8 @@ Extra - asset_id: collision_camera_022
   * Extra - start_point_actor_name: savestation_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_save/charclasses/weightactivatedplatform_save.bmsad
   > Door to Spin Boost Tower
+      Trivial
+  > Door to Chozo Warrior Arena
       Trivial
 
 ----------------
@@ -1455,7 +1516,7 @@ Extra - asset_id: collision_camera_023
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Total Recharge Station North
+  > Start Point
       Trivial
 
 > Door to Total Recharge Station North; Heals? False
@@ -1466,7 +1527,7 @@ Extra - asset_id: collision_camera_023
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Save Station Center
+  > Start Point
       Trivial
 
 > Start Point; Heals? False; Spawn Point
@@ -1474,13 +1535,15 @@ Extra - asset_id: collision_camera_023
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Save Station Center
       Trivial
+  > Door to Total Recharge Station North
+      Trivial
 
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_024
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Door to Save Station Center
+  > Start Point
       Trivial
 
 > Dock to Teleport to Burenia; Heals? False
@@ -1504,12 +1567,20 @@ Extra - asset_id: collision_camera_024
   * Extra - right_shield_def: None
   > Door to Above Golzuna
       Any of the following:
-          Space Jump or Speed Booster or Infinite Bomb Jump (Beginner)
-          Ice Missile and Movement (Intermediate) and Use Spin Boost
+          Space Jump or Speed Booster or Simple IBJ
+          All of the following:
+              Use Spin Boost
+              Any of the following:
+                  Ice Missile and After Elun - Release X Parasites and Movement (Intermediate)
+                  Morph Ball and Single-wall Wall Jump (Intermediate)
   > Door to Energy Recharge Station
       Trivial
-  > Tile Group (SPEEDBOOST) 2
-      Speed Booster
+  > Pickup (Energy Part)
+      All of the following:
+          Ballspark
+          Space Jump or Simple IBJ
+  > Pickup Ledge
+      Flash Shift and Walljump (Beginner) and Use Spin Boost
 
 > Door to Above Golzuna; Heals? False
   * Power Beam Door to Above Golzuna/Door to Golzuna Tower
@@ -1520,6 +1591,8 @@ Extra - asset_id: collision_camera_024
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Save Station East
+      Trivial
+  > Pickup Ledge
       Trivial
 
 > Door to Energy Recharge Station; Heals? False
@@ -1559,17 +1632,19 @@ Extra - asset_id: collision_camera_024
   * Pickup 112; Major Location? True
   * Extra - actor_name: item_energyfragment
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Tile Group (SPEEDBOOST) 1
+  > Door to Save Station East
       Morph Ball
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 113; Major Location? False
   * Extra - actor_name: item_missiletank
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Door to Save Station East
-      Ballspark
   > Tile Group (WEIGHT) 3
       Morph Ball
+  > Pickup Ledge
+      Any of the following:
+          After Ghavoran - Pulse Radar Enky and Ballspark
+          Bomb and Movement (Expert) and Lay Cross Comb
 
 > Tile Group (BOMB) 1; Heals? False
   * Configurable Node
@@ -1578,7 +1653,9 @@ Extra - asset_id: collision_camera_024
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
   > Pickup (Missile Tank)
-      Ballspark
+      Any of the following:
+          Lay Cross Comb
+          After Ghavoran - Pulse Radar Enky and Ballspark
   > Tile Group (BOMB) 3
       Morph Ball
   > Tile Group (POWERBEAM) 3
@@ -1593,30 +1670,6 @@ Extra - asset_id: collision_camera_024
   > Tile Group (POWERBEAM) 2
       Morph Ball
   > Tunnel to Above Pulse Radar
-      Morph Ball
-
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_038
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Energy Part)
-      All of the following:
-          Morph Ball
-          Space Jump or Simple IBJ
-  > Tile Group (SPEEDBOOST) 2
-      Can Slide
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_036
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Above Golzuna
-      Flash Shift or Use Spin Boost
-  > Tile Group (SPEEDBOOST) 1
       Morph Ball
 
 > Tile Group (WEIGHT) 2; Heals? False
@@ -1693,6 +1746,16 @@ Extra - asset_id: collision_camera_024
   * Open Passage to Energy Recharge Station/Dock to Golzuna Tower
   > Tile Group (POWERBEAM) 3
       Trivial
+
+> Pickup Ledge; Heals? False
+  > Door to Save Station East
+      Trivial
+  > Door to Above Golzuna
+      Any of the following:
+          Flash Shift and Walljump (Intermediate)
+          Morph Ball and Single-wall Wall Jump (Intermediate)
+  > Pickup (Missile Tank)
+      Morph Ball
 
 ----------------
 Teleport to Burenia
@@ -1789,7 +1852,12 @@ Extra - asset_id: collision_camera_024
   > Tile Group (SCREWATTACK)
       Morph Ball
   > Pickup (Missile Tank)
-      Lay Cross Comb
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Cross Bomb
+              Movement (Intermediate) and Use Spin Boost
+              Flash Shift and Movement (Expert)
 
 > Tunnel to Energy Recharge Station (Top); Heals? False
   * Morph Ball Tunnel to Energy Recharge Station/Tunnel to Teleport to Burenia (Top)
@@ -1803,7 +1871,12 @@ Extra - asset_id: collision_camera_024
   > Tile Group (WEIGHT) 1
       Morph Ball
   > Dock to Energy Recharge Station
-      Lay Cross Comb
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Cross Bomb
+              Movement (Intermediate) and Use Spin Boost
+              Flash Shift and Movement (Expert)
 
 > Dock to Total Recharge Station North; Heals? False
   * Open Passage to Total Recharge Station North/Dock to Teleport to Burenia
@@ -1827,9 +1900,11 @@ Extra - asset_id: collision_camera_025_B
   > Door to Teleport to Burenia (Missile)
       All of the following:
           Morph Ball and Before Ghavoran - grapplepulloff1x2_002
-          Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
-  > Door to Teleport to Burenia (Power Beam)
-      Infinite Bomb Jump (Intermediate) or Use Spin Boost
+          Grapple Beam or Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
+  > Start Point
+      Any of the following:
+          Use Spin Boost
+          Infinite Bomb Jump (Intermediate) and Lay Bomb
 
 > Door to Teleport to Burenia (Missile); Heals? False
   * Missile Door to Teleport to Burenia/Door to Total Recharge Station North
@@ -1847,7 +1922,7 @@ Extra - asset_id: collision_camera_025_B
       Morph Ball
   > Dock to Transport to Ferenia
       After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - grapplepulloff1x2_002
-  > Event - Pull Grapple Block (grapplepulloff1x2_002)
+  > Event - Pull Grapple Block (Front) (grapplepulloff1x2_002)
       Grapple Beam and After Ghavoran - Ferenia Transport Enky Left
   > Event - Ferenia Transport Enky Left
       Destroy Enky
@@ -1862,10 +1937,8 @@ Extra - asset_id: collision_camera_025_B
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door from Chozo Warrior Arena
+  > Start Point
       Trivial
-  > Event - Storm Missile Gate
-      Activate Storm Missile Locks
 
 > Total Recharge; Heals? True
   * Extra - actor_name: totalrechargestation_000
@@ -1878,8 +1951,12 @@ Extra - asset_id: collision_camera_025_B
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorForest
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door from Chozo Warrior Arena
+      Trivial
   > Door to Teleport to Burenia (Power Beam)
       Trivial
+  > Event - Storm Missile Gate
+      Activate Storm Missile Locks
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_025
@@ -1921,14 +1998,14 @@ Extra - asset_id: collision_camera_025_B
   * Open Passage to Transport to Ferenia/Dock to Total Recharge Station North
   > Door to Teleport to Burenia (Missile)
       After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - grapplepulloff1x2_002
-  > Event - Pull Grapple Block (grapplepulloff1x2_002)
-      After Ghavoran - Ferenia Transport Enky Right and Break/Move Grapple Block from Behind
   > Event - Ferenia Transport Enky Left
       After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - grapplepulloff1x2_002 and Destroy Enky
   > Event - Ferenia Transport Enky Right
       Destroy Enky
+  > Event - Pull Grapple Block (Back) (grapplepulloff1x2_002)
+      After Ghavoran - Ferenia Transport Enky Right and Break/Move Grapple Block from Behind
 
-> Event - Pull Grapple Block (grapplepulloff1x2_002); Heals? False
+> Event - Pull Grapple Block (Front) (grapplepulloff1x2_002); Heals? False
   * Event Ghavoran - grapplepulloff1x2_002
   > Door to Teleport to Burenia (Missile)
       Trivial
@@ -1952,6 +2029,11 @@ Extra - asset_id: collision_camera_025_B
 
 > Event - Ferenia Transport Enky Right; Heals? False
   * Event Ghavoran - Ferenia Transport Enky Right
+  > Dock to Transport to Ferenia
+      Trivial
+
+> Event - Pull Grapple Block (Back) (grapplepulloff1x2_002); Heals? False
+  * Event Ghavoran - grapplepulloff1x2_002
   > Dock to Transport to Ferenia
       Trivial
 
@@ -2044,13 +2126,18 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Door to Cross Bomb Tutorial
-      Before Elun - Release X Parasites
   > Before Golzuna
       After Elun - Release X Parasites
 
 > Start Point; Heals? False; Spawn Point
   > Door to Cross Bomb Tutorial
+      Trivial
+
+> Dock from Above Golzuna; Heals? False
+  * Blocked Passage to Above Golzuna/Dock to Golzuna Arena
+  > Before Golzuna
+      After Elun - Release X Parasites
+  > Start Point
       Trivial
 
 ----------------
@@ -2115,7 +2202,9 @@ Extra - asset_id: collision_camera_028
 > Tunnel to Map Station Access; Heals? False
   * Morph Ball Tunnel to Map Station Access/Tunnel to Map Station Access Secret
   > Get on Bomb Block
-      Gravity Suit
+      Any of the following:
+          Gravity Suit
+          Space Jump and Movement (Intermediate)
 
 > Get on Bomb Block; Heals? False
   > Tile Group (BOMB) 1
@@ -2160,24 +2249,13 @@ blast shields
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Flipper Room
       Trivial
-  > Tile Group (SPEEDBOOST)
-      Trivial
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_021
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Missile Tank)
-      Trivial
 
 > Center Platform; Heals? False
   > Door to Flipper Room
       Trivial
   > Door to Transport to Elun
       Trivial
-  > Tile Group (SPEEDBOOST)
+  > Pickup (Missile Tank)
       Speed Booster
 
 ----------------
@@ -2255,6 +2333,8 @@ Extra - asset_id: collision_camera_031
       Morph Ball
   > Tile Group (BOMB) 2
       Morph Ball
+  > Dock to Teleport to Burenia
+      Trivial
   > Left Water Ledge
       Trivial
 
@@ -2320,7 +2400,9 @@ Extra - asset_id: collision_camera_031
 > Tunnel to Teleport to Burenia (Bottom); Heals? False
   * Morph Ball Tunnel to Teleport to Burenia/Tunnel to Energy Recharge Station (Bottom)
   > Left Water Ledge
-      Gravity Suit or Water Bomb Jump (Beginner) or Use Spin Boost
+      Any of the following:
+          Gravity Suit or Water Bomb Jump (Intermediate) or Perform Water Cross Jump or Use Spin Boost
+          Water Bomb Jump (Beginner) and Perform Water Bomb Jump
 
 > Dock to Teleport to Burenia; Heals? False
   * Open Passage to Teleport to Burenia/Dock to Energy Recharge Station
@@ -2343,10 +2425,11 @@ Extra - asset_id: collision_camera_031
       Trivial
   > Dock to Teleport to Burenia
       Any of the following:
-          Space Jump or Speed Booster
+          Space Jump
           All of the following:
               Gravity Suit
               Flash Shift or Simple IBJ or Use Spin Boost
+          Morph Ball and Speed Booster and After Ghavoran - Pulse Radar Enky
 
 > Top Room; Heals? False
   > Life Recharge
@@ -2505,7 +2588,9 @@ Extra - asset_id: collision_camera_033
   > Tile Group (WEIGHT) 2
       Can Slide
   > Alcove 2
-      Lay Cross Comb
+      Any of the following:
+          Lay Cross Comb
+          Flash Shift and Morph Ball and Movement (Expert)
 
 > Tile Group (WEIGHT) 1; Heals? False
   * Extra - actor_name: breakabletilegroup_009
@@ -2545,17 +2630,23 @@ Extra - asset_id: collision_camera_033
   > Tile Group (WEIGHT) 1
       Morph Ball
   > Alcove 2
-      Lay Cross Comb
+      Any of the following:
+          Lay Cross Comb
+          Flash Shift and Morph Ball and Movement (Expert)
 
 > Alcove 2; Heals? False
   > Tile Group (BOMB) 2
-      Lay Cross Comb
+      Any of the following:
+          Lay Cross Comb
+          Flash Shift and Morph Ball and Movement (Expert)
   > Tile Group (WEIGHT) 1
       Can Slide
   > Tile Group (WEIGHT) 2
       Morph Ball
   > Alcove 1
-      Lay Cross Comb
+      Any of the following:
+          Lay Cross Comb
+          Flash Shift and Morph Ball and Movement (Expert)
 
 ----------------
 Transport to Hanubia
@@ -2607,7 +2698,9 @@ Extra - asset_id: collision_camera_035
   > Tunnel to Flipper Room (Tunnel)
       All of the following:
           Morph Ball and After Ghavoran - Super Missile Magnet Platform Lowered
-          Grapple Beam or Simple IBJ or Use Spin Boost
+          Any of the following:
+              Grapple Beam or Single-wall Wall Jump (Intermediate) or Simple IBJ or Use Spin Boost
+              Flash Shift and Walljump (Beginner)
 
 > Tunnel to Super Missile Room Access; Heals? False
   * Morph Ball Tunnel to Super Missile Room Access/Tunnel to Spider Magnet Elevator
@@ -2648,6 +2741,8 @@ Extra - asset_id: collision_camera_036
       Trivial
   > Tunnel to Golzuna Arena
       Morph Ball
+  > Dock to Golzuna Arena
+      Shinesink Clip (Expert) and Can SSC
 
 > Door from Cross Bomb Tutorial; Heals? False
   * Access Closed to Cross Bomb Tutorial/Door to Above Golzuna
@@ -2664,6 +2759,9 @@ Extra - asset_id: collision_camera_036
   * Morph Ball Tunnel to Golzuna Arena/Tunnel to Above Golzuna
   > Door to Golzuna Tower
       Morph Ball
+
+> Dock to Golzuna Arena; Heals? False
+  * Open Passage to Golzuna Arena/Dock from Above Golzuna
 
 ----------------
 Transport to Elun
@@ -2750,6 +2848,10 @@ Extra - asset_id: collision_camera_039
       Morph Ball
   > Tile Group (POWERBEAM) 1
       Can Slide
+  > Tile Group (POWERBEAM) 2
+      All of the following:
+          Morph Ball
+          Lay Bomb or Lay Power Bomb or Shoot Diffusion or Wave
 
 > Door from Golzuna Tower; Heals? False
   * Access Closed to Golzuna Tower/Door to Above Pulse Radar
@@ -2785,7 +2887,7 @@ Extra - asset_id: collision_camera_039
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Pickup (Missile Tank)
-      Trivial
+      Morph Ball
   > Tile Group (POWERBEAM) 3
       Can Slide
 
