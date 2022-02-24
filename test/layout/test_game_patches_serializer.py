@@ -141,7 +141,7 @@ def test_encode(patches_with_data):
     expected, patches = patches_with_data
 
     # Run
-    encoded = game_patches_serializer.serialize_single(0, 1, patches, RandovaniaGame.METROID_PRIME_ECHOES)
+    encoded = game_patches_serializer.serialize_single(0, 1, patches)
 
     # Assert
     for key, value in expected["locations"].items():
@@ -231,7 +231,7 @@ async def test_round_trip_generated_patches(default_preset):
     all_patches = description.all_patches
 
     # Run
-    encoded = game_patches_serializer.serialize(all_patches, {0: default_preset.game})
+    encoded = game_patches_serializer.serialize(all_patches)
     decoded = game_patches_serializer.decode(encoded, {0: preset.configuration})
 
     # Assert

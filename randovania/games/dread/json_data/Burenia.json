@@ -1317,12 +1317,50 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Flash",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "HBJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Cross Comb"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -1475,6 +1513,32 @@
                                             "name": "WBJ",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_002",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s040_aqua:default:db_reg_aq_001",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4257,7 +4321,8 @@
                         "actor_name": "accesspoint_000",
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "accesspoint_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
+                        "hint_id": "AQUA_1"
                     },
                     "string_asset_id": 7,
                     "lore_type": "generic",
@@ -8553,7 +8618,8 @@
                         "actor_name": "accesspoint_001",
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "accesspoint_001_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
+                        "hint_id": "AQUA_2"
                     },
                     "string_asset_id": 8,
                     "lore_type": "generic",
@@ -10463,22 +10529,121 @@
                     },
                     "connections": {
                         "Start Point 3": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "ways to get up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Combat tricks",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Max difficulty",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "less than vanilla requirements",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Wide Beam"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Super Missile"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Charge Beam"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Vanilla requirements",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Plasma Beam"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Ice Missile"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "PB cheese",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -11621,7 +11786,8 @@
                     "description": "",
                     "extra": {
                         "actor_name": "itemsphere_gravitysuit",
-                        "actor_def": "actordef:actors/items/itemsphere_gravitysuit/charclasses/itemsphere_gravitysuit.bmsad"
+                        "actor_def": "actordef:actors/items/itemsphere_gravitysuit/charclasses/itemsphere_gravitysuit.bmsad",
+                        "map_icon_actor": "powerup_gravitysuit"
                     },
                     "pickup_index": 79,
                     "major_location": true,

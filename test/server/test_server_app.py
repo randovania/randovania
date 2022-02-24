@@ -5,7 +5,7 @@ import pytest
 
 from randovania.network_common.error import NotLoggedIn, ServerError, InvalidSession
 from randovania.server import database
-from randovania.server.server_app import ServerApp
+from randovania.server.server_app import ServerApp, EnforceDiscordRole
 
 
 @pytest.fixture(name="server_app")
@@ -18,6 +18,7 @@ def server_app_fixture(flask_app):
     flask_app.config["DISCORD_REDIRECT_URI"] = "http://127.0.0.1:5000/callback/"
     flask_app.config["FERNET_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
     flask_app.config["GUEST_KEY"] = b's2D-pjBIXqEqkbeRvkapeDn82MgZXLLQGZLTgqqZ--A='
+    flask_app.config["ENFORCE_ROLE"] = None
     server = ServerApp(flask_app)
     server.metrics.summary = MagicMock()
     server.metrics.summary.return_value.side_effect = lambda x: x
@@ -172,3 +173,32 @@ def test_on_success_exception(server_app):
     # Assert
     custom.assert_called_once_with(server_app)
     assert result == ServerError().as_json
+
+
+@pytest.mark.parametrize("valid", [False, True])
+def test_verify_user(mocker, valid):
+    # Setup
+    mock_session = mocker.patch("requests.Session")
+    mock_session.return_value.headers = {}
+    mock_session.return_value.get.return_value.json.return_value = {
+        "roles": ["5678" if valid else "67689"]
+    }
+
+    # Run
+    enforce = EnforceDiscordRole({
+        "guild_id": 1234,
+        "role_id": 5678,
+        "token": "da_token",
+    })
+    result = enforce.verify_user(2345)
+
+    # Assert
+    assert result == valid
+    mock_session.return_value.get.assert_called_once_with(
+        "https://discordapp.com/api/guilds/1234/members/2345"
+    )
+    mock_session.return_value.get.return_value.json.assert_called_once_with()
+    assert mock_session.return_value.headers == {
+        "Authorization": "Bot da_token",
+    }
+

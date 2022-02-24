@@ -27,7 +27,7 @@ def _state_for_blank(preset_manager, default_filler_config) -> player_state.Play
     return player_state.PlayerState(
         index=0,
         game=game,
-        initial_state=game.game.data.generator().bootstrap.calculate_starting_state(
+        initial_state=game.game.generator.bootstrap.calculate_starting_state(
             game,
             game.create_game_patches(),
             preset_manager.default_preset_for_game(game.game).get_preset().configuration,

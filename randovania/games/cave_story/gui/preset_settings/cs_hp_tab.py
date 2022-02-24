@@ -11,8 +11,12 @@ class PresetCSHP(PresetTab, Ui_PresetCSHP):
 
         self.starting_hp_spin_box.valueChanged.connect(self._on_starting_hp_changed)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "HP"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return True
 
     def _on_starting_hp_changed(self):

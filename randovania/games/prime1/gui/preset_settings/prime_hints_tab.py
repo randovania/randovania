@@ -23,8 +23,12 @@ class PresetPrimeHints(PresetTab, Ui_PresetPrimeHints):
 
         self.hint_artifact_combo.currentIndexChanged.connect(self._on_art_combo_changed)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Hints"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     def _on_art_combo_changed(self, new_index: int):

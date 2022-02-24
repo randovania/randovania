@@ -6,7 +6,7 @@ from PySide2 import QtWidgets
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.world.node import LogbookNode
-from randovania.games.cave_story.patcher.caver_patcher import get_hints
+from randovania.games.cave_story.exporter.patch_data_factory import get_hints
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
@@ -14,7 +14,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib.dict_lib import iterate_key_sorted
 
 
-class HintDetailsTab(GameDetailsTab):
+class CSHintDetailsTab(GameDetailsTab):
     def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
         super().__init__(parent, game)
         self.tree_widget = QtWidgets.QTreeWidget(parent)
@@ -25,13 +25,15 @@ class HintDetailsTab(GameDetailsTab):
     def tab_title(self) -> str:
         return "Hints"
 
-    def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
+    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
+                       players: PlayersConfiguration):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(3)
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])
 
         game = default_database.game_description_for(self.game_enum)
         world_list = game.world_list
+        patches = all_patches[players.player_index]
 
         asset_to_node = {
             node.resource(): node
@@ -41,13 +43,13 @@ class HintDetailsTab(GameDetailsTab):
 
         per_world: dict[str, dict[str, tuple[str, str]]] = collections.defaultdict(dict)
 
-        hints = get_hints({players.player_index: patches}, players, Random())
+        hints = get_hints(all_patches, players, Random())
         for asset, hint in patches.hints.items():
             node = asset_to_node[asset]
             source_world = world_list.nodes_to_world(node)
             source_name = world_list.node_name(node)
 
-            hint_text = hints[asset._string_asset_id]
+            hint_text = hints[asset.asset_id]
 
             hint = patches.hints[asset]
             if hint.target is None:

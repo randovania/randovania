@@ -1,23 +1,21 @@
 import collections
-import re
+import random
 
 from PySide2 import QtWidgets
 
+from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.hint import HintType
 from randovania.game_description.world.node import LogbookNode
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib.dict_lib import iterate_key_sorted
-from randovania.patching.prime.patcher_file_lib import hints
-from randovania.patching.prime.patcher_file_lib.hint_lib import AreaNamer
-from randovania.patching.prime.patcher_file_lib.hint_name_creator import LocationHintCreator
 
 
-class HintDetailsTab(GameDetailsTab):
+class EchoesHintDetailsTab(GameDetailsTab):
     def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
         super().__init__(parent, game)
         self.tree_widget = QtWidgets.QTreeWidget(parent)
@@ -28,13 +26,15 @@ class HintDetailsTab(GameDetailsTab):
     def tab_title(self) -> str:
         return "Hints"
 
-    def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
+    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
+                       players: PlayersConfiguration):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(3)
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])
 
         game = default_database.game_description_for(self.game_enum)
         world_list = game.world_list
+        patches = all_patches[players.player_index]
 
         asset_to_node = {
             node.resource(): node
@@ -42,36 +42,19 @@ class HintDetailsTab(GameDetailsTab):
             if isinstance(node, LogbookNode)
         }
 
-        location_formatters = hints.create_location_formatters(AreaNamer(world_list), world_list, patches, players)
-
         per_world: dict[str, dict[str, tuple[str, str]]] = collections.defaultdict(dict)
-        style_re = re.compile(r"&push;&main-color=#(.{6,8});([^&]+?)&pop;")
-
-        def replace_text(m):
-            return m.group(2)
+        namer = EchoesHintNamer(all_patches, players)
+        exporter = HintExporter(namer, random.Random(0), ["A joke hint."])
 
         for asset, hint in patches.hints.items():
             node = asset_to_node[asset]
             source_world = world_list.nodes_to_world(node)
             source_name = world_list.node_name(node)
 
-            if hint.hint_type == HintType.JOKE:
-                hint_text = "A joke hint."
-
-            elif hint.hint_type == HintType.RED_TEMPLE_KEY_SET:
-                hint_text = f"Keys hint for {hint.dark_temple.value}"
-
-            else:
-                hint_text = LocationHintCreator(world_list, {}, None, []).create_message_for_hint(
-                    hint,
-                    {players.player_index: patches},
-                    players,
-                    location_formatters,
-                )
-                hint_text = style_re.sub(replace_text, hint_text)
+            hint_text = exporter.create_message_for_hint(hint, all_patches, players, False)
 
             if hint.target is None:
-                hinted_pickup = "No target for hint"
+                hinted_pickup = ""
             else:
                 target = patches.pickup_assignment.get(hint.target)
                 if target is None:

@@ -1,6 +1,4 @@
 import datetime
-import datetime
-import typing
 
 import pytest
 from PySide2 import QtWidgets
@@ -12,9 +10,12 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
-from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, User, GameSessionAction, \
-    GameSessionActions, GameDetails
+from randovania.network_client.game_session import (
+    GameSessionEntry, PlayerSessionEntry, User, GameSessionAction,
+    GameSessionActions, GameDetails,
+)
 from randovania.network_common.admin_actions import SessionAdminGlobalAction
+from randovania.network_common.error import NotAuthorizedForAction
 from randovania.network_common.session_state import GameSessionState
 
 
@@ -64,7 +65,6 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
             seed_hash="AB12",
             word_hash="Chykka Required",
             spoiler=True,
-            permalink="<permalink>",
         ),
         state=GameSessionState.IN_PROGRESS,
         generation_in_progress=None,
@@ -232,7 +232,12 @@ async def test_update_logic_settings_window(window, mocker, has_game):
         execute_dialog.assert_not_awaited()
 
 
-async def test_change_password(window, mocker):
+@pytest.mark.parametrize(["action", "method_name"], [
+    (SessionAdminGlobalAction.CHANGE_TITLE, "rename_session"),
+    (SessionAdminGlobalAction.CHANGE_PASSWORD, "change_password"),
+    (SessionAdminGlobalAction.DUPLICATE_SESSION, "duplicate_session"),
+])
+async def test_change_password_title_or_duplicate(window, mocker, action, method_name):
     def set_text_value(dialog: QtWidgets.QInputDialog):
         dialog.setTextValue("magoo")
         return QtWidgets.QDialog.Accepted
@@ -242,16 +247,17 @@ async def test_change_password(window, mocker):
     window._admin_global_action = AsyncMock()
 
     # Run
-    await window.change_password()
+    await getattr(window, method_name)()
 
     # Assert
     execute_dialog.assert_awaited_once()
-    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.CHANGE_PASSWORD, "magoo")
+    window._admin_global_action.assert_awaited_once_with(action, "magoo")
 
 
 async def test_generate_game(window, mocker, preset_manager):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout")
     mock_randint: MagicMock = mocker.patch("random.randint", return_value=5000)
+    mock_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
 
     spoiler = True
     game_session = MagicMock()
@@ -265,6 +271,9 @@ async def test_generate_game(window, mocker, preset_manager):
     await window.generate_game(spoiler, retries=3)
 
     # Assert
+    mock_warning.assert_awaited_once_with(
+        window, "Multiworld Limitation", ANY,
+    )
     mock_randint.assert_called_once_with(0, 2 ** 31)
     mock_generate_layout.assert_called_once_with(
         progress_update=ANY,
@@ -316,22 +325,35 @@ async def test_check_dangerous_presets(window, mocker):
     assert not result
 
 
-async def test_copy_permalink(window, mocker):
+async def test_copy_permalink_is_admin(window, mocker):
     mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    game_session = MagicMock(spec=GameSessionEntry)
-    game_session.game_details = MagicMock()
-    game_session.game_details.permalink = "<permalink>"
-
-    window._game_session = game_session
+    window._admin_global_action = AsyncMock(return_value="<permalink>")
 
     # Run
     await window.copy_permalink()
 
     # Assert
+    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
     execute_dialog.assert_awaited_once()
     assert execute_dialog.call_args.args[0].textValue() == "<permalink>"
     mock_set_clipboard.assert_called_once_with("<permalink>")
+
+
+async def test_copy_permalink_not_admin(window, mocker):
+    mock_set_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
+    execute_warning: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
+    execute_dialog: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
+    window._admin_global_action = AsyncMock(side_effect=NotAuthorizedForAction)
+
+    # Run
+    await window.copy_permalink()
+
+    # Assert
+    window._admin_global_action.assert_awaited_once_with(SessionAdminGlobalAction.REQUEST_PERMALINK, None)
+    execute_warning.assert_awaited_once_with(window, "Unauthorized", "You're not authorized to perform that action.")
+    execute_dialog.assert_not_awaited()
+    mock_set_clipboard.assert_not_called()
 
 
 async def test_import_permalink(window, mocker):
@@ -406,33 +428,36 @@ async def test_finish_session(window, accept, mocker):
         window.network_client.session_admin_global.assert_not_awaited()
 
 
-async def test_save_iso(window, mocker, preset_manager, echoes_game_description):
-    mock_input_dialog = mocker.patch("randovania.gui.game_session_window.GameInputDialog")
+async def test_save_iso(window, mocker, echoes_game_description):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.Accepted)
 
+    preset = MagicMock()
     window._game_session = MagicMock()
     window._game_session.players[window.network_client.current_user.id].is_observer = False
     window._game_session.players[window.network_client.current_user.id].row = 0
-    window._game_session.presets = {0: preset_manager.default_preset}
-    layout_configuration = preset_manager.default_preset.get_preset().configuration
+    window._game_session.presets = {0: preset}
     window.network_client.session_admin_player = AsyncMock()
 
-    patcher_provider = typing.cast(MagicMock, window._window_manager.patcher_provider)
-    patcher = patcher_provider.patcher_for_game.return_value
-    patcher.is_busy = False
+    patch_data = window.network_client.session_admin_player.return_value
+
+    game = preset.game
+    game.exporter.is_busy = False
 
     # Run
     await window.save_iso()
 
     # Assert
-    patcher_provider.patcher_for_game.assert_called_once_with(layout_configuration.game)
-    mock_execute_dialog.assert_awaited_once_with(mock_input_dialog.return_value)
-    patcher.patch_game.assert_called_once_with(
-        mock_input_dialog.return_value.input_file,
-        mock_input_dialog.return_value.output_file,
-        window.network_client.session_admin_player.return_value,
-        window._options.internal_copies_path,
+    game.gui.export_dialog.assert_called_once_with(
+        window._options,
+        patch_data,
+        window._game_session.game_details.word_hash,
+        False,
+    )
+    mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
+    game.exporter.export_game.assert_called_once_with(
+        patch_data,
+        game.gui.export_dialog.return_value.get_game_export_params.return_value,
         progress_update=ANY,
     )
 

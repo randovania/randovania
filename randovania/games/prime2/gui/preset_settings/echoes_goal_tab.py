@@ -26,8 +26,12 @@ class PresetEchoesGoal(PresetTab, Ui_PresetEchoesGoal):
         # Default to False, since the slider defaults to a non-collect keys value.
         self._set_slider_visible(False)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Goal"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     def _set_slider_visible(self, visible: bool):

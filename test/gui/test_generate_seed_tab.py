@@ -36,7 +36,7 @@ def test_add_new_preset(tab, preset_manager):
 
 @pytest.mark.parametrize("has_existing_window", [False, True])
 async def test_on_customize_button(tab, mocker, has_existing_window):
-    mock_settings_window = mocker.patch("randovania.gui.generate_seed_tab.LogicSettingsWindow")
+    mock_settings_window = mocker.patch("randovania.gui.generate_seed_tab.CustomizePresetDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     mock_execute_dialog.return_value = QtWidgets.QDialog.Accepted
     tab._add_new_preset = MagicMock()
@@ -93,7 +93,7 @@ def test_click_on_preset_tree(tab, preset_manager, game: RandovaniaGame, skip_qt
     # Run
     item = tab.window.create_preset_tree.preset_to_item.get(preset.uuid)
     # assert item.parent().text(0) == "1"
-    if game.data.experimental and not allow_experimental:
+    if not game.data.development_state.can_view(allow_experimental):
         assert item is None
     else:
         tab.window.create_preset_tree.selectionModel().reset()

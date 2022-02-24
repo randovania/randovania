@@ -1,20 +1,21 @@
 from randovania.games import game
-from randovania.games.game import GameData, GameLayout
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
-from randovania.games.super_metroid.patcher.super_duper_metroid_patcher import SuperDuperMetroidPatcher
+
+
+def _options():
+    from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
+    return SuperMetroidPerGameOptions
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.super_metroid.gui.dialog.super_cosmetic_patches_dialog import SuperCosmeticPatchesDialog
-    from randovania.games.super_metroid.gui.preset_settings import super_metroid_preset_tabs
-    from randovania.games.super_metroid.gui.super_metroid_help_widget import SuperMetroidHelpWidget
+    from randovania.games.super_metroid import gui
 
     return game.GameGui(
-        tab_provider=super_metroid_preset_tabs,
-        cosmetic_dialog=SuperCosmeticPatchesDialog,
-        input_file_text=("an SFC/SMC file", "the Super Famicom/SNES", "SFC/SMC"),
-        help_widget=lambda: SuperMetroidHelpWidget(),
+        tab_provider=gui.super_metroid_preset_tabs,
+        cosmetic_dialog=gui.SuperCosmeticPatchesDialog,
+        export_dialog=gui.SuperMetroidGameExportDialog,
+        help_widget=lambda: gui.SuperMetroidHelpWidget(),
     )
 
 
@@ -32,10 +33,20 @@ def _generator() -> game.GameGenerator:
     )
 
 
-game_data: GameData = GameData(
+def _patch_data_factory():
+    from randovania.games.super_metroid.exporter.patch_data_factory import SuperMetroidPatchDataFactory
+    return SuperMetroidPatchDataFactory
+
+
+def _exporter():
+    from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExporter
+    return SuperMetroidGameExporter()
+
+
+game_data: game.GameData = game.GameData(
     short_name="SM",
     long_name="Super Metroid",
-    experimental=True,
+    development_state=game.DevelopmentState.EXPERIMENTAL,
 
     presets=[
         {
@@ -78,14 +89,18 @@ game_data: GameData = GameData(
          "No."),
     ],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=SuperMetroidConfiguration,
         cosmetic_patches=SuperMetroidCosmeticPatches
     ),
+
+    options=_options,
 
     gui=_gui,
 
     generator=_generator,
 
-    patcher=SuperDuperMetroidPatcher(),
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )

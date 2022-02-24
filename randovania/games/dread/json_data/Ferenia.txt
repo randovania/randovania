@@ -636,8 +636,6 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tile Group (WEIGHT) 1
       Morph Ball
-  > Tile Group (BOMB)
-      Morph Ball
 
 > Pickup (Missile Tank - Right); Heals? False
   * Pickup 132; Major Location? False
@@ -652,17 +650,6 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
   > Tunnel to Speedboost Slopes Maze
-      Trivial
-
-> Tile Group (BOMB); Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_040
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Pickup (Missile Tank - Left)
-      Morph Ball
-  > Tile Group (WEIGHT) 2
       Trivial
 
 > Tile Group (WEIGHT) 2; Heals? False
@@ -710,8 +697,15 @@ Extra - asset_id: collision_camera_011
 
 > Tunnel to Speedboost Slopes Maze; Heals? False
   * Morph Ball Tunnel to Speedboost Slopes Maze/Tunnel to Separate Tunnels Room
-  > Tile Group (BOMB)
-      Use Spin Boost
+  > Pickup (Missile Tank - Left)
+      All of the following:
+          Any of the following:
+              # A way to destroy the bomb blocks quickly
+              Lay Cross Comb or Lay Power Bomb
+              Space Jump and Movement (Intermediate) and Lay Bomb
+          Any of the following:
+              # A way to climb into the tunnel, after the bomb blocks are gone
+              Infinite Bomb Jump (Intermediate) or Walljump (Advanced) or Use Spin Boost
   > Tile Group (WEIGHT) 2
       Trivial
 
@@ -787,6 +781,7 @@ Extra - asset_id: collision_camera_012
   * Pickup 119; Major Location? True
   * Extra - actor_name: itemsphere_spacejump
   * Extra - actor_def: actordef:actors/items/itemsphere_spacejump/charclasses/itemsphere_spacejump.bmsad
+  * Extra - map_icon_name: powerup_spacejump
   > Start Point 1
       Trivial
 
@@ -999,11 +994,22 @@ Extra - asset_id: collision_camera_012
   > Tile Group (BOMB) 3
       Any of the following:
           All of the following:
-              Grapple Beam or Spider Magnet
+              Spider Magnet
               Flash Shift or Use Spin Boost
           All of the following:
               Gravity Suit
               Infinite Bomb Jump (Beginner) or Shoot Ice Missile or Use Spin Boost
+          All of the following:
+              Grapple Beam
+              Any of the following:
+                  Space Jump
+                  All of the following:
+                      Any of the following:
+                          # Grappling without spider magnet / space jump requires some movement trick as it requires letting go at the right time for momentum
+                          Flash Shift or Use Spin Boost
+                      Any of the following:
+                          Movement (Intermediate)
+                          Movement (Beginner) and Shoot Ice Missile
   > Underwater Bottom
       Trivial
 
@@ -1247,6 +1253,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
   * Extra - start_point_actor_name: accesspoint_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
+  * Extra - hint_id: SANC_1
   > Door to Space Jump Room
       Trivial
 

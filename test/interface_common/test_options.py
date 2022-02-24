@@ -8,6 +8,8 @@ import pytest
 
 import randovania.interface_common.options
 import randovania.interface_common.persisted_options
+from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.interface_common import update_checker
 from randovania.interface_common.options import Options, DecodeFailedException, InfoAlert
 
@@ -33,19 +35,17 @@ def test_migrate_from_v11(option):
 
     # Assert
     expected_data = {
-        "per_game_options": {
-            "prime2": {
-                "cosmetic_patches": {
-                    "disable_hud_popup": True,
-                    "speed_up_credits": True,
-                    "open_map": True,
-                    "pickup_markers": True,
-                    "unvisited_room_names": True
-                },
-                'input_path': None,
-                'output_directory': None,
-                'output_format': None,
+        "game_prime2": {
+            "cosmetic_patches": {
+                "disable_hud_popup": True,
+                "speed_up_credits": True,
+                "open_map": True,
+                "pickup_markers": True,
+                "unvisited_room_names": True
             },
+            'input_path': None,
+            'output_directory': None,
+            'output_format': None,
         }
     }
     assert new_data == expected_data
@@ -109,6 +109,38 @@ def test_changing_field_without_context_manager_should_error(option: Options):
     assert str(exception.value) == "Attempting to edit an Options, but it wasn't made editable"
 
 
+def test_getting_unknown_field_should_error(option: Options):
+    # Run
+    with pytest.raises(AttributeError) as exception:
+        assert option.something_that_does_not_exist is None
+
+    # Assert
+    assert str(exception.value) == "something_that_does_not_exist"
+
+
+def test_getting_unknown_game_should_error(option: Options):
+    # Run
+    with pytest.raises(AttributeError) as exception:
+        assert option.game_unknown_game is None
+
+    # Assert
+    assert str(exception.value) == "game_unknown_game"
+
+
+def test_set_options_for_game_with_wrong_type(option: Options):
+    # Run
+    with pytest.raises(ValueError) as exception:
+        option.set_options_for_game(RandovaniaGame.METROID_PRIME, EchoesPerGameOptions(
+            cosmetic_patches=RandovaniaGame.METROID_PRIME_ECHOES.data.layout.cosmetic_patches.default(),
+        ))
+
+    # Assert
+    assert str(exception.value) == (
+        "Expected <class 'randovania.games.prime1.exporter.options.PrimePerGameOptions'>, "
+        "got <class 'randovania.games.prime2.exporter.options.EchoesPerGameOptions'>"
+    )
+
+
 @patch("randovania.interface_common.options.get_persisted_options_from_data", autospec=True)
 @patch("randovania.interface_common.options.Options._read_persisted_options", return_value=None, autospec=True)
 def test_load_from_disk_no_data(mock_read_persisted_options: MagicMock,
@@ -153,10 +185,10 @@ def test_load_from_disk_with_data(mock_read_persisted_options: MagicMock,
     for field_name, serializer in new_serializers.items():
         serializer.decode.assert_called_once_with(persisted_options[field_name])
 
-    mock_set_field.assert_has_calls(
+    mock_set_field.assert_has_calls([
         call(option, field_name, new_serializers[field_name].decode.return_value)
         for field_name in fields_to_test
-    )
+    ])
 
 
 # TODO: test with an actual field as well
@@ -220,11 +252,9 @@ def test_load_from_disk_invalid_json(ignore_decode_errors: bool,
     option = Options(Path(tmpdir))
     tmpdir.join("config.json").write_text(
         json.dumps(randovania.interface_common.persisted_options.serialized_data_for_options({
-            "per_game_options": {
-                "prime2": {
-                    "cosmetic_patches": {
-                        "pickup_model_style": "invalid-value"
-                    }
+            "game_prime2": {
+                "cosmetic_patches": {
+                    "pickup_model_style": "invalid-value"
                 }
             }
         })),

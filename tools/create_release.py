@@ -15,8 +15,8 @@ import tenacity
 
 from randovania import VERSION
 from randovania.cli import database
-from randovania.games.game import RandovaniaGame
 from randovania.games import default_data
+from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
 _ROOT_FOLDER = Path(__file__).parents[1]
@@ -93,10 +93,13 @@ async def main():
 
     if is_production():
         server_suffix = "randovania"
+        client_id = 618134325921316864
     else:
         server_suffix = "randovania-staging"
+        client_id = 887825192208969828
+
     configuration = {
-        "discord_client_id": 618134325921316864,
+        "discord_client_id": client_id,
         "server_address": f"https://randovania.metroidprime.run/{server_suffix}",
         "socketio_path": f"/{server_suffix}/socket.io",
     }

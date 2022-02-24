@@ -48,8 +48,12 @@ class PresetSuperPatchConfiguration(PresetTab, Ui_PresetPatcherSuperPatches):
             checkbox.stateChanged.connect(functools.partial(self._on_patch_checkbox_changed, name, checkbox))
         self.update_controls(editor.configuration.patches)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Game Patches"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return True
 
     def _on_patch_checkbox_changed(self, field_name: str, checkbox: QCheckBox, value: int):

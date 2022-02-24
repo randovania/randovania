@@ -51,16 +51,17 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
                 continue
 
             if row > 1:
-                self.trick_difficulties_layout.addItem(QtWidgets.QSpacerItem(20, 40,
-                                                                             QtWidgets.QSizePolicy.Minimum,
-                                                                             QtWidgets.QSizePolicy.Expanding))
+                self.trick_difficulties_layout.addItem(QtWidgets.QSpacerItem(
+                    20, 40,
+                    QtWidgets.QSizePolicy.Minimum,
+                    QtWidgets.QSizePolicy.Expanding
+                ))
 
             trick_label = QtWidgets.QLabel(self.trick_level_scroll_contents)
             trick_label.setSizePolicy(size_policy)
             trick_label.setWordWrap(True)
             trick_label.setFixedWidth(100)
             trick_label.setText(trick.long_name)
-
             self.trick_difficulties_layout.addWidget(trick_label, row, 1, 1, 1)
 
             slider_layout = QtWidgets.QGridLayout()
@@ -99,8 +100,12 @@ class PresetTrickLevel(PresetTab, Ui_PresetTrickLevel):
 
         self.trick_level_layout.addLayout(self.trick_difficulties_layout)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Trick Level"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     @property

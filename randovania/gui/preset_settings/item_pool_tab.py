@@ -26,7 +26,7 @@ from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
-from randovania.patching.prime.patcher_file_lib import item_names
+from randovania.exporter import item_names
 from randovania.resolver.exceptions import InvalidConfiguration
 
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
@@ -77,8 +77,12 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self._create_progressive_widgets(item_database)
         self._create_ammo_pickup_boxes(size_policy, item_database)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Item Pool"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     def on_preset_changed(self, preset: Preset):
@@ -388,7 +392,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def _create_progressive_widgets(self, item_database: ItemDatabase):
         self._progressive_widgets = []
 
-        all_progressive = self.game.data.gui().progressive_item_gui_tuples
+        all_progressive = self.game.gui.progressive_item_gui_tuples
 
         layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
             self._boxes_for_category[item_database.major_items[progressive_item_name].item_category.name][:2]

@@ -1,24 +1,27 @@
 from randovania.games import game
-from randovania.games.game import GameData, GameLayout, GamePresetDescriber
-from randovania.games.prime1.layout.preset_describer import prime_expected_items, prime_unexpected_items, \
-    prime_format_params
+from randovania.games.prime1.layout.preset_describer import (
+    prime_expected_items, prime_unexpected_items,
+    prime_format_params,
+)
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
-from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher
+
+
+def _options():
+    from randovania.games.prime1.exporter.options import PrimePerGameOptions
+    return PrimePerGameOptions
 
 
 def _gui() -> game.GameGui:
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
-    from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog
-    from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs
-    from randovania.games.prime1.gui.prime_help_widget import PrimeHelpWidget
+    from randovania.games.prime1 import gui
 
     return game.GameGui(
-        tab_provider=prime1_preset_tabs,
-        cosmetic_dialog=PrimeCosmeticPatchesDialog,
-        input_file_text=("an ISO file", "the Nintendo Gamecube", "Gamecube ISO"),
+        tab_provider=gui.prime1_preset_tabs,
+        cosmetic_dialog=gui.PrimeCosmeticPatchesDialog,
+        export_dialog=gui.PrimeGameExportDialog,
         spoiler_visualizer=(TeleporterDetailsTab,),
-        help_widget=lambda: PrimeHelpWidget(),
+        help_widget=lambda: gui.PrimeHelpWidget(),
     )
 
 
@@ -36,10 +39,20 @@ def _generator() -> game.GameGenerator:
     )
 
 
-game_data: GameData = GameData(
+def _patch_data_factory():
+    from randovania.games.prime1.exporter.patch_data_factory import PrimePatchDataFactory
+    return PrimePatchDataFactory
+
+
+def _exporter():
+    from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter
+    return PrimeGameExporter()
+
+
+game_data: game.GameData = game.GameData(
     short_name="Prime",
     long_name="Metroid Prime",
-    experimental=False,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
@@ -76,19 +89,23 @@ game_data: GameData = GameData(
          "meaning that all versions of Prime are guaranteed to be logically completable when randomized."),
     ],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,
-        preset_describer=GamePresetDescriber(
+        preset_describer=game.GamePresetDescriber(
             expected_items=prime_expected_items,
             unexpected_items=prime_unexpected_items,
             format_params=prime_format_params,
         )
     ),
 
+    options=_options,
+
     gui=_gui,
 
     generator=_generator,
 
-    patcher=RandomprimePatcher()
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )

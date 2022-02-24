@@ -25,8 +25,12 @@ class PresetCSObjective(PresetTab, Ui_PresetCSObjective):
         # Default to False, since the default objective is Normal Ending
         self.b2_check.setVisible(False)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Objective"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     def _on_objective_changed(self):

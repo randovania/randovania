@@ -99,7 +99,10 @@ class GameSession(BaseModel):
 
     @layout_description.setter
     def layout_description(self, description: Optional[LayoutDescription]):
-        self.layout_description_json = json.dumps(description.as_json) if description is not None else None
+        if description is not None:
+            self.layout_description_json = json.dumps(description.as_json(force_spoiler=True))
+        else:
+            self.layout_description_json = None
 
     @property
     def creation_datetime(self) -> datetime.datetime:
@@ -165,7 +168,6 @@ class GameSession(BaseModel):
                 "spoiler": description.has_spoiler,
                 "word_hash": description.shareable_word_hash,
                 "seed_hash": description.shareable_hash,
-                "permalink": description.permalink.as_base64_str,
             }
 
         return BinaryGameSessionEntry.build({

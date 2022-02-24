@@ -25,7 +25,7 @@ def test_load_multiworld(test_files_dir):
     input_data["schema_version"] = description_migration.CURRENT_VERSION
 
     # Assert
-    as_json = result.as_json
+    as_json = result.as_json()
     del input_data["info"]
     del as_json["info"]
 

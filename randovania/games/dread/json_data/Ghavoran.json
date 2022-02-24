@@ -2081,7 +2081,8 @@
                         "actor_name": "accesspoint_000",
                         "actor_def": "actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad",
                         "start_point_actor_name": "accesspoint_000_platform",
-                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad"
+                        "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad",
+                        "hint_id": "FOREST_1"
                     },
                     "string_asset_id": 10,
                     "lore_type": "generic",
@@ -3270,7 +3271,8 @@
                     "description": "",
                     "extra": {
                         "actor_name": "itemsphere_supermissile",
-                        "actor_def": "actordef:actors/items/itemsphere_supermissile/charclasses/itemsphere_supermissile.bmsad"
+                        "actor_def": "actordef:actors/items/itemsphere_supermissile/charclasses/itemsphere_supermissile.bmsad",
+                        "map_icon_actor": "powerup_supermissile"
                     },
                     "pickup_index": 100,
                     "major_location": true,
@@ -7077,6 +7079,105 @@
                                 "items": []
                             }
                         },
+                        "Pickup (Missile Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Spin",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Tile Group (SPEEDBOOST) 2": {
                             "type": "resource",
                             "data": {
@@ -10123,7 +10224,8 @@
                     "description": "",
                     "extra": {
                         "actor_name": "itemsphere_doublejump",
-                        "actor_def": "actordef:actors/items/itemsphere_doublejump/charclasses/itemsphere_doublejump.bmsad"
+                        "actor_def": "actordef:actors/items/itemsphere_doublejump/charclasses/itemsphere_doublejump.bmsad",
+                        "map_icon_actor": "powerup_doublejump"
                     },
                     "pickup_index": 104,
                     "major_location": true,

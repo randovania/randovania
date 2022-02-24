@@ -13,7 +13,6 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
-from randovania.gui.dialog.game_input_dialog import GameInputDialog
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
@@ -217,22 +216,21 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         if game == RandovaniaGame.METROID_PRIME_CORRUPTION:
             return await self._show_dialog_for_prime3_layout()
 
-        patcher = self._window_manager.patcher_provider.patcher_for_game(game)
+        cosmetic_patches = options.options_for_game(game).cosmetic_patches
+        data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
+        patch_data = data_factory.create_data()
 
-        dialog = GameInputDialog(options, patcher, layout.shareable_word_hash, has_spoiler, game)
+        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler)
         result = await async_dialog.execute_dialog(dialog)
         if result != QDialog.Accepted:
             return
 
         dialog.save_options()
-        patch_data = patcher.create_patch_data(layout, self.players_configuration,
-                                               options.options_for_game(game).cosmetic_patches)
-        self._can_stop_background_process = patcher.export_can_be_aborted
+        self._can_stop_background_process = game.exporter.export_can_be_aborted
         await game_exporter.export_game(
-            patcher=patcher,
-            input_dialog=dialog,
+            exporter=game.exporter,
+            export_dialog=dialog,
             patch_data=patch_data,
-            internal_copies_path=options.internal_copies_path,
             layout_for_spoiler=layout,
             background=self,
             progress_update_signal=self.progress_update_signal,
@@ -308,14 +306,13 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._game_details_tabs.clear()
 
         if description.has_spoiler:
-            patches = description.all_patches[current_player]
             players_config = self.players_configuration
 
-            spoiler_visualizer = list(preset.game.data.gui().spoiler_visualizer)
+            spoiler_visualizer = list(preset.game.gui.spoiler_visualizer)
             spoiler_visualizer.insert(0, PickupDetailsTab)
             for missing_tab in spoiler_visualizer:
                 new_tab = missing_tab(self.layout_info_tab, preset.game)
-                new_tab.update_content(preset.configuration, patches, players_config)
+                new_tab.update_content(preset.configuration, description.all_patches, players_config)
                 self.layout_info_tab.addTab(new_tab.widget(), f"Spoiler: {new_tab.tab_title()}")
                 self._game_details_tabs.append(new_tab)
 

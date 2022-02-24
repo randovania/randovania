@@ -76,6 +76,7 @@ def create_app():
     app.config["DISCORD_CLIENT_SECRET"] = configuration["server_config"]["discord_client_secret"]
     app.config["DISCORD_REDIRECT_URI"] = f'{configuration["server_address"]}/login_callback'
     app.config["FERNET_KEY"] = configuration["server_config"]["fernet_key"].encode("ascii")
+    app.config["ENFORCE_ROLE"] = configuration["server_config"].get("enforce_role")
     version_checking = ClientVersionCheck(configuration["server_config"]["client_version_checking"])
 
     database.db.init(configuration["server_config"]['database_path'])

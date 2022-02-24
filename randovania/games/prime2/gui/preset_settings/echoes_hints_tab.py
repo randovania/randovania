@@ -23,8 +23,12 @@ class PresetEchoesHints(PresetTab, Ui_PresetEchoesHints):
 
         self.hint_sky_temple_key_combo.currentIndexChanged.connect(self._on_stk_combo_changed)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Hints"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     def _on_stk_combo_changed(self, new_index: int):

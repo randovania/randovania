@@ -25,12 +25,14 @@ class TeleporterDetailsTab(GameDetailsTab):
             return "Teleporters"
         return "Elevators"
 
-    def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
+    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
+                       players: PlayersConfiguration):
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Source", "Destination"])
 
         world_list = default_database.game_description_for(self.game_enum).world_list
+        patches = all_patches[players.player_index]
 
         per_world: dict[str, dict[str, str]] = collections.defaultdict(dict)
 
