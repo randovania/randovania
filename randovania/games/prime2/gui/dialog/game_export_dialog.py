@@ -80,8 +80,9 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         self.prime_file_button.clicked.connect(self._on_prime_file_button)
 
         if RandovaniaGame.METROID_PRIME in games:
-            self._use_prime_models = True
-            self.prime_models_check.setChecked(True)
+            self._use_prime_models = RandovaniaGame.METROID_PRIME in per_game.use_external_models
+            self.prime_models_check.setChecked(self._use_prime_models)
+            self._on_prime_models_check()
             self.prime_models_check.clicked.connect(self._on_prime_models_check)
             prime_options = options.options_for_game(RandovaniaGame.METROID_PRIME)
             if prime_options.input_path is not None:
@@ -123,9 +124,17 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             if self._prompt_input_file:
                 per_game_changes["input_path"] = self.input_file
 
+            use_external_models = per_game.use_external_models.copy()
+            if not self.prime_models_check.isHidden():
+                if self._use_prime_models:
+                    use_external_models.add(RandovaniaGame.METROID_PRIME)
+                else:
+                    use_external_models.discard(RandovaniaGame.METROID_PRIME)
+
             options.set_options_for_game(self._game, dataclasses.replace(
                 per_game,
                 output_directory=self.output_file.parent,
+                use_external_models=use_external_models,
                 **per_game_changes,
             ))
 
@@ -135,7 +144,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
                 assert isinstance(prime_options, PrimePerGameOptions)
                 options.set_options_for_game(RandovaniaGame.METROID_PRIME, dataclasses.replace(
                     prime_options,
-                    input_file=self.prime_file,
+                    input_path=self.prime_file,
                 ))
 
     # Getters

@@ -48,8 +48,9 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         # Echoes ISO input
         if RandovaniaGame.METROID_PRIME_ECHOES in games:
-            self._use_echoes_models = True
-            self.echoes_models_check.setChecked(True)
+            self._use_echoes_models = RandovaniaGame.METROID_PRIME_ECHOES in per_game.use_external_models
+            self.echoes_models_check.setChecked(self._use_echoes_models)
+            self._on_echoes_models_check()
             self.echoes_models_check.clicked.connect(self._on_echoes_models_check)
             self._echoes_contents_path = options.internal_copies_path.joinpath("prime2", "contents")
             self._prompt_input_file_echoes = check_extracted_game(self.echoes_file_edit, self.echoes_file_button,
@@ -99,11 +100,19 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
             per_game = options.options_for_game(self._game)
             assert isinstance(per_game, PrimePerGameOptions)
+            use_external_models = per_game.use_external_models.copy()
+            if not self.echoes_models_check.isHidden():
+                if self._use_echoes_models:
+                    use_external_models.add(RandovaniaGame.METROID_PRIME_ECHOES)
+                else:
+                    use_external_models.discard(RandovaniaGame.METROID_PRIME_ECHOES)
+
             options.set_options_for_game(self._game, dataclasses.replace(
                 per_game,
                 input_path=self.input_file,
                 output_directory=self.output_file.parent,
                 output_format=self._selected_output_format,
+                use_external_models=use_external_models,
             ))
             if self._prompt_input_file_echoes:
                 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
