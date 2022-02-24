@@ -44,12 +44,12 @@ def print_retcon_loop_start(game: GameDescription,
 
 def print_new_resources(game: GameDescription,
                         reach: GeneratorReach,
-                        seen_count: Dict[ResourceInfo, int],
+                        seen_count: dict[ResourceInfo, int],
                         label: str,
                         ):
     world_list = game.world_list
     if debug.debug_level() > 1:
         for index, count in seen_count.items():
             if count == 1:
-                node = find_node_with_resource(index, world_list.all_nodes)
+                node = find_node_with_resource(index, reach.node_context(), world_list.all_nodes)
                 print("-> New {}: {}".format(label, world_list.node_name(node, with_world=True)))

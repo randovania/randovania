@@ -11,13 +11,13 @@ from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
 from randovania.game_description.requirements import ResourceRequirement
-from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.game_description.resources.pickup_entry import PickupEntry, \
-    ResourceLock, PickupModel
+from randovania.game_description.resources.pickup_entry import (
+    PickupEntry, ResourceLock, PickupModel,
+)
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
-from randovania.game_description.world.resource_node import PickupNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.resource_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
@@ -37,11 +37,13 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
         {"configurable_nodes": [("Agon Wastes/Mining Plaza/Translator Gate", "Cobalt"),
                                 ("Torvus Bog/Great Bridge/Translator Gate", "Emerald")]},
         {"pickup": "Morph Ball Bomb"},
-        {"hint": [1000, {"hint_type": "location",
-                         "dark_temple": None,
-                         "precision": {"location": "detailed", "item": "detailed", "relative": None,
-                                       "include_owner": False},
-                         "target": 50}]},
+        {"hint": ['Torvus Bog/Catacombs/Lore Scan', {
+            "hint_type": "location",
+            "dark_temple": None,
+            "precision": {"location": "detailed", "item": "detailed",
+                          "relative": None,
+                          "include_owner": False},
+            "target": 50}]},
     ],
     name="patches_with_data")
 def _patches_with_data(request, echoes_game_description, echoes_item_database):
@@ -130,9 +132,9 @@ def _patches_with_data(request, echoes_game_description, echoes_item_database):
         data["locations"]["Temple Grounds"]['Transport to Agon Wastes/Pickup (Missile)'] = pickup_name
 
     if request.param.get("hint"):
-        asset, hint = request.param.get("hint")
-        patches = patches.assign_hint(LogbookAsset(asset), Hint.from_json(hint))
-        data["hints"][str(asset)] = hint
+        identifier, hint = request.param.get("hint")
+        patches = patches.assign_hint(NodeIdentifier.from_string(identifier), Hint.from_json(hint))
+        data["hints"][identifier] = hint
 
     return data, patches
 

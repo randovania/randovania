@@ -18,7 +18,7 @@ class EventPickupNode(ResourceNode):
     def __repr__(self):
         return "EventPickupNode({!r} -> {}+{})".format(
             self.name,
-            self.event_node.resource().long_name,
+            self.event_node.event.long_name,
             self.pickup_node.pickup_index.index,
         )
 
@@ -26,10 +26,10 @@ class EventPickupNode(ResourceNode):
     def is_resource_node(self) -> bool:
         return True
 
-    def resource(self) -> ResourceInfo:
+    def resource(self, context: NodeContext) -> ResourceInfo:
         return self.pickup_node.pickup_index
 
-    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
         return ResourceRequirement(self.pickup_node.pickup_index, 1, False)
 
     def can_collect(self, context: NodeContext) -> bool:

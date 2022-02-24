@@ -35,23 +35,16 @@ class CSHintDetailsTab(GameDetailsTab):
         world_list = game.world_list
         patches = all_patches[players.player_index]
 
-        asset_to_node = {
-            node.resource(): node
-            for node in game.world_list.all_nodes
-            if isinstance(node, LogbookNode)
-        }
-
         per_world: dict[str, dict[str, tuple[str, str]]] = collections.defaultdict(dict)
 
         hints = get_hints(all_patches, players, Random())
-        for asset, hint in patches.hints.items():
-            node = asset_to_node[asset]
+        for identifier, hint in patches.hints.items():
+            node = world_list.node_by_identifier(identifier)
             source_world = world_list.nodes_to_world(node)
             source_name = world_list.node_name(node)
 
-            hint_text = hints[asset.asset_id]
-
-            hint = patches.hints[asset]
+            hint_text = hints[identifier]
+            hint = patches.hints[identifier]
             if hint.target is None:
                 hinted_pickup = "No target for hint"
             else:

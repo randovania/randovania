@@ -43,8 +43,8 @@ class GeneratorReach:
     def act_on(self, node: ResourceNode) -> None:
         raise NotImplementedError()
 
-    def context_for(self) -> NodeContext:
-        return self.state.context_for()
+    def node_context(self) -> NodeContext:
+        return self.state.node_context()
 
     # Node stuff
 

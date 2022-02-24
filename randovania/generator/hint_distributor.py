@@ -2,7 +2,7 @@ import copy
 import dataclasses
 from abc import ABC
 from random import Random
-from typing import Iterator, Union, Optional, Callable, Dict
+from typing import Iterator, Union, Optional, Callable
 
 from randovania.game_description import node_search
 from randovania.game_description.game_description import GameDescription
@@ -11,11 +11,10 @@ from randovania.game_description.hint import (
     Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision,
     HintRelativeAreaName, RelativeDataArea, RelativeDataItem
 )
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.resource_node import PickupNode, LoreType, LogbookNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.resource_node import PickupNode, LoreType, LogbookNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.player_state import PlayerState
@@ -47,11 +46,12 @@ class HintDistributor(ABC):
     def num_joke_hints(self) -> int:
         return 0
 
-    def get_generic_logbook_nodes(self, prefill: PreFillParams):
-        return [node
-                for node in prefill.game.world_list.all_nodes
-                if isinstance(node, LogbookNode)
-                and node.lore_type.holds_generic_hint]
+    def get_generic_logbook_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
+        return [
+            prefill.game.world_list.identifier_for_node(node)
+            for node in prefill.game.world_list.all_nodes
+            if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint
+        ]
 
     async def get_specific_pickup_precision_pair_overrides(self, patches: GamePatches, prefill: PreFillParams
                                                            ) -> dict[NodeIdentifier, PrecisionPair]:
@@ -67,10 +67,11 @@ class HintDistributor(ABC):
         wl = prefill.game.world_list
         for node in wl.all_nodes:
             if isinstance(node, LogbookNode) and node.lore_type == LoreType.SPECIFIC_PICKUP:
+                identifier = wl.identifier_for_node(node)
                 patches = patches.assign_hint(
-                    node.resource(),
+                    identifier,
                     Hint(HintType.LOCATION,
-                         specific_location_precisions.get(wl.identifier_for_node(node), default_precision),
+                         specific_location_precisions.get(identifier, default_precision),
                          PickupIndex(node.hint_index))
                 )
 
@@ -79,53 +80,54 @@ class HintDistributor(ABC):
     async def get_guranteed_hints(self, patches: GamePatches, prefill: PreFillParams) -> list[HintTargetPrecision]:
         return []
 
-    async def assign_guaranteed_indices_hints(self, patches: GamePatches, nodes: list[LogbookNode],
+    async def assign_guaranteed_indices_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
                                               prefill: PreFillParams) -> GamePatches:
         # Specific Pickup/any LogbookNode Hints
         indices_with_hint = await self.get_guranteed_hints(patches, prefill)
         prefill.rng.shuffle(indices_with_hint)
 
-        all_logbook_nodes = [node for node in nodes if node.resource() not in patches.hints]
-        prefill.rng.shuffle(all_logbook_nodes)
+        all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]
+        prefill.rng.shuffle(all_hint_identifiers)
 
         for index, precision in indices_with_hint:
-            if not all_logbook_nodes:
+            if not all_hint_identifiers:
                 break
 
-            logbook_node = all_logbook_nodes.pop()
-            patches = patches.assign_hint(logbook_node.resource(), Hint(HintType.LOCATION, precision, index))
-            nodes.remove(logbook_node)
+            identifier = all_hint_identifiers.pop()
+            patches = patches.assign_hint(identifier, Hint(HintType.LOCATION, precision, index))
+            identifiers.remove(identifier)
 
         return patches
 
-    async def assign_other_hints(self, patches: GamePatches, nodes: list[LogbookNode],
+    async def assign_other_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
                                  prefill: PreFillParams) -> GamePatches:
         return patches
 
-    async def assign_joke_hints(self, patches: GamePatches, nodes: list[LogbookNode],
+    async def assign_joke_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
                                 prefill: PreFillParams) -> GamePatches:
 
-        all_logbook_nodes = [node for node in nodes if node.resource() not in patches.hints]
-        prefill.rng.shuffle(all_logbook_nodes)
+        all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]
+        prefill.rng.shuffle(all_hint_identifiers)
 
         num_joke = self.num_joke_hints
 
-        while num_joke > 0 and all_logbook_nodes:
-            logbook_asset = (node := all_logbook_nodes.pop()).resource()
-            patches = patches.assign_hint(logbook_asset, Hint(HintType.JOKE, None))
+        while num_joke > 0 and all_hint_identifiers:
+            identifier = all_hint_identifiers.pop()
+            patches = patches.assign_hint(identifier, Hint(HintType.JOKE, None))
             num_joke -= 1
-            nodes.remove(node)
+            identifiers.remove(identifier)
 
         return patches
 
-    async def assign_pre_filler_hints(self, patches: GamePatches, prefill: PreFillParams, rng_required: bool = True) -> GamePatches:
+    async def assign_pre_filler_hints(self, patches: GamePatches, prefill: PreFillParams,
+                                      rng_required: bool = True) -> GamePatches:
         patches = await self.assign_specific_location_hints(patches, prefill)
-        logbook_nodes = self.get_generic_logbook_nodes(prefill)
+        hint_identifiers = self.get_generic_logbook_nodes(prefill)
         if rng_required or prefill.rng is not None:
-            prefill.rng.shuffle(logbook_nodes)
-            patches = await self.assign_guaranteed_indices_hints(patches, logbook_nodes, prefill)
-            patches = await self.assign_other_hints(patches, logbook_nodes, prefill)
-            patches = await self.assign_joke_hints(patches, logbook_nodes, prefill)
+            prefill.rng.shuffle(hint_identifiers)
+            patches = await self.assign_guaranteed_indices_hints(patches, hint_identifiers, prefill)
+            patches = await self.assign_other_hints(patches, hint_identifiers, prefill)
+            patches = await self.assign_joke_hints(patches, hint_identifiers, prefill)
         return patches
 
     async def assign_post_filler_hints(self, patches: GamePatches, rng: Random,
@@ -134,7 +136,7 @@ class HintDistributor(ABC):
         # Since we haven't added expansions yet, these hints will always be for items added by the filler.
         full_hints_patches = self.fill_unassigned_hints(
             patches, player_state.game.world_list, rng,
-            player_state.scan_asset_initial_pickups,
+            player_state.hint_initial_pickups,
         )
         return await self.assign_precision_to_hints(full_hints_patches, rng, player_pool, player_state)
 
@@ -153,13 +155,13 @@ class HintDistributor(ABC):
     def fill_unassigned_hints(self, patches: GamePatches,
                               world_list: WorldList,
                               rng: Random,
-                              scan_asset_initial_pickups: dict[LogbookAsset, frozenset[PickupIndex]],
+                              scan_asset_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
                               ) -> GamePatches:
         new_hints = copy.copy(patches.hints)
 
         # Get all LogbookAssets from the WorldList
-        potential_hint_locations: set[LogbookAsset] = {
-            node.resource()
+        potential_hint_locations: set[NodeIdentifier] = {
+            world_list.identifier_for_node(node)
             for node in world_list.all_nodes
             if isinstance(node, LogbookNode)
         }
@@ -329,33 +331,34 @@ class HintDistributor(ABC):
         :return:
         """
 
-        hints_to_replace: Dict[LogbookAsset, Hint] = {
-            asset: hint
-            for asset, hint in patches.hints.items()
+        hints_to_replace: dict[NodeIdentifier, Hint] = {
+            identifier: hint
+            for identifier, hint in patches.hints.items()
             if hint.precision is None and hint.hint_type == HintType.LOCATION
         }
 
         relative_hint_providers = self._get_relative_hint_providers()
-        asset_ids = list(hints_to_replace.keys())
-        rng.shuffle(asset_ids)
+        identifiers = list(hints_to_replace.keys())
+        rng.shuffle(identifiers)
 
-        while asset_ids and relative_hint_providers:
-            new_hint = relative_hint_providers.pop()(player_state, patches, rng, hints_to_replace[asset_ids[-1]].target)
+        while identifiers and relative_hint_providers:
+            new_hint = relative_hint_providers.pop()(player_state, patches, rng,
+                                                     hints_to_replace[identifiers[-1]].target)
             if new_hint is not None:
-                hints_to_replace[asset_ids.pop()] = new_hint
+                hints_to_replace[identifiers.pop()] = new_hint
 
         # Add random precisions
         precisions = []
-        for asset_id in asset_ids:
+        for identifier in identifiers:
             precisions = random_lib.create_weighted_list(rng, precisions, self.precision_pair_weighted_list)
             precision = precisions.pop()
 
-            hints_to_replace[asset_id] = dataclasses.replace(hints_to_replace[asset_id], precision=precision)
+            hints_to_replace[identifier] = dataclasses.replace(hints_to_replace[identifier], precision=precision)
 
         # Replace the hints the in the patches
         return dataclasses.replace(patches, hints={
-            asset: hints_to_replace.get(asset, hint)
-            for asset, hint in patches.hints.items()
+            identifier: hints_to_replace.get(identifier, hint)
+            for identifier, hint in patches.hints.items()
         })
 
 

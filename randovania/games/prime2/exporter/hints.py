@@ -6,8 +6,8 @@ from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import LogbookNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.common.prime_family.exporter.hint_namer import colorize_text
@@ -31,14 +31,15 @@ def create_patches_hints(all_patches: Dict[int, GamePatches],
                          ) -> list:
     exporter = HintExporter(namer, rng, JOKE_HINTS)
 
-    hints_for_asset: dict[LogbookAsset, str] = {}
-    for asset, hint in all_patches[players_config.player_index].hints.items():
-        hints_for_asset[asset] = exporter.create_message_for_hint(hint, all_patches, players_config, True)
+    hints_for_asset: dict[NodeIdentifier, str] = {}
+    for identifier, hint in all_patches[players_config.player_index].hints.items():
+        hints_for_asset[identifier] = exporter.create_message_for_hint(hint, all_patches, players_config, True)
 
     return [
         create_simple_logbook_hint(
             logbook_node.string_asset_id,
-            hints_for_asset.get(logbook_node.resource(), "Someone forgot to leave a message."),
+            hints_for_asset.get(world_list.identifier_for_node(logbook_node),
+                                "Someone forgot to leave a message."),
         )
         for logbook_node in world_list.all_nodes
         if isinstance(logbook_node, LogbookNode)
