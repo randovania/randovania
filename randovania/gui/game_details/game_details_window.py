@@ -220,7 +220,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
         patch_data = data_factory.create_data()
 
-        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler)
+        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler, [game])
         result = await async_dialog.execute_dialog(dialog)
         if result != QDialog.Accepted:
             return
