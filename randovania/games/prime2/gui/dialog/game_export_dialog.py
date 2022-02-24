@@ -3,6 +3,8 @@ import shutil
 from pathlib import Path
 from typing import Optional
 
+from PySide2.QtWidgets import QLineEdit, QPushButton
+
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
@@ -30,6 +32,23 @@ def delete_internal_copy(internal_copies_path: Path):
     internal_copies_path = internal_copies_path.joinpath("prime2")
     if internal_copies_path.exists():
         shutil.rmtree(internal_copies_path)
+
+
+def check_extracted_game(input_file_edit: QLineEdit, input_file_button: QPushButton, contents_file_path: Path) -> bool:
+    prompt_input_file = not has_internal_copy(contents_file_path)
+    input_file_edit.setEnabled(prompt_input_file)
+
+    if prompt_input_file:
+        input_file_button.setText("Select File")
+    else:
+        input_file_button.setText("Delete internal copy")
+        input_file_edit.setText(_VALID_GAME_TEXT)
+
+    return prompt_input_file
+
+
+def echoes_input_validator(input_file: Path, prompt_input_file: bool, input_file_edit: QLineEdit) -> bool:
+    return not input_file.is_file() if prompt_input_file else input_file_edit.text() != _VALID_GAME_TEXT
 
 
 class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
@@ -79,8 +98,8 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         add_field_validation(
             accept_button=self.accept_button,
             fields={
-                self.input_file_edit: lambda: (not self.input_file.is_file() if self._prompt_input_file
-                                               else self.input_file_edit.text() != _VALID_GAME_TEXT),
+                self.input_file_edit: lambda: echoes_input_validator(self.input_file, self._prompt_input_file,
+                                                                     self.input_file_edit),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
                 self.prime_file_edit: lambda: self._use_prime_models and not self.prime_file.is_file(),
             }
@@ -126,15 +145,6 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         return self.auto_save_spoiler_check.isChecked()
 
     # Checks
-    def check_extracted_game(self):
-        self._prompt_input_file = not has_internal_copy(self._contents_file_path)
-        self.input_file_edit.setEnabled(self._prompt_input_file)
-
-        if self._prompt_input_file:
-            self.input_file_button.setText("Select File")
-        else:
-            self.input_file_button.setText("Delete internal copy")
-            self.input_file_edit.setText(_VALID_GAME_TEXT)
 
     # Input file
     def _on_input_file_button(self):

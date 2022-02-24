@@ -5,9 +5,9 @@ from typing import Optional
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
-from randovania.gui.lib import common_qt_lib
-from randovania.games.prime2.gui.dialog.game_export_dialog import has_internal_copy, delete_internal_copy, \
-    _VALID_GAME_TEXT
+from randovania.games.prime2.gui.dialog.game_export_dialog import (
+    has_internal_copy, delete_internal_copy, check_extracted_game, echoes_input_validator
+)
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
     spoiler_path_for, add_field_validation, output_file_validator,
@@ -48,7 +48,8 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         if RandovaniaGame.METROID_PRIME_ECHOES in games:
             self._use_echoes_models = True
             self._echoes_contents_path = options.internal_copies_path.joinpath("prime2", "contents")
-            self.check_extracted_echoes()
+            self._prompt_input_file_echoes = check_extracted_game(self.echoes_file_edit, self.echoes_file_button,
+                                                                  self._echoes_contents_path)
             echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
             if self._prompt_input_file_echoes and echoes_options.input_path is not None:
                 self.echoes_file_edit.setText(str(echoes_options.input_path))
@@ -71,9 +72,10 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             fields={
                 self.input_file_edit: lambda: not self.input_file.is_file(),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-                self.echoes_file_edit: lambda: self._use_echoes_models and (not self.echoes_file.is_file()
-                                                                            if self._prompt_input_file_echoes
-                                                                            else self.echoes_file_edit.text() != _VALID_GAME_TEXT),
+                self.echoes_file_edit: lambda: (self._use_echoes_models
+                                                and echoes_input_validator(self.echoes_file,
+                                                                           self._prompt_input_file_echoes,
+                                                                           self.echoes_file_edit)),
             }
         )
 
@@ -146,7 +148,8 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         else:
             delete_internal_copy(self._options.internal_copies_path)
             self.echoes_file_edit.setText("")
-            self.check_extracted_echoes()
+            self._prompt_input_file_echoes = check_extracted_game(self.echoes_file_edit, self.echoes_file_button,
+                                                                  self._echoes_contents_path)
 
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = spoiler_path_for(self.auto_save_spoiler, self.output_file)
@@ -167,13 +170,3 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             asset_cache_path=asset_cache_path,
             use_echoes_models=self._use_echoes_models,
         )
-
-    def check_extracted_echoes(self):
-        self._prompt_input_file_echoes = not has_internal_copy(self._echoes_contents_path)
-        self.echoes_file_edit.setEnabled(self._prompt_input_file_echoes)
-
-        if self._prompt_input_file_echoes:
-            self.echoes_file_button.setText("Select File")
-        else:
-            self.echoes_file_button.setText("Delete internal copy")
-            self.echoes_file_edit.setText(_VALID_GAME_TEXT)
