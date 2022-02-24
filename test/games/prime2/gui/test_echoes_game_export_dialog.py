@@ -5,6 +5,7 @@ import pytest
 from PySide2 import QtCore
 
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
@@ -136,16 +137,35 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
     ])
 
 
-def test_get_game_export_params(skip_qtbot, tmp_path):
+@pytest.mark.parametrize("is_prime_multi", [False, True])
+@pytest.mark.parametrize("use_external_models", [False, True])
+def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_external_models):
     # Setup
+    games = [RandovaniaGame.METROID_PRIME_ECHOES]
+    if is_prime_multi:
+        games.append(RandovaniaGame.METROID_PRIME)
+        prime_path = tmp_path.joinpath("input/prime.iso")
+    else:
+        prime_path = None
+
+    if use_external_models:
+        models = {RandovaniaGame.METROID_PRIME}
+    else:
+        models = {}
+
     options = MagicMock()
     options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.return_value = EchoesPerGameOptions(
+    options.options_for_game.side_effect = [EchoesPerGameOptions(
         cosmetic_patches=EchoesCosmeticPatches.default(),
         input_path=tmp_path.joinpath("input/game.iso"),
         output_directory=tmp_path.joinpath("output"),
-    )
-    window = EchoesGameExportDialog(options, {}, "MyHash", True, [])
+        use_external_models=models,
+    ),
+                                            PrimePerGameOptions(
+                                                cosmetic_patches=PrimeCosmeticPatches.default(),
+                                                input_path=prime_path,
+                                            )]
+    window = EchoesGameExportDialog(options, {}, "MyHash", True, games)
 
     # Run
     result = window.get_game_export_params()
@@ -158,6 +178,6 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
         contents_files_path=tmp_path.joinpath("internal_copies", "prime2", "contents"),
         backup_files_path=tmp_path.joinpath("internal_copies", "prime2", "vanilla"),
         asset_cache_path=tmp_path.joinpath("internal_copies", "prime2", "prime1_models"),
-        prime_path=None,
-        use_prime_models=False,
+        prime_path=prime_path,
+        use_prime_models=is_prime_multi and use_external_models,
     )
