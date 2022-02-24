@@ -26,7 +26,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     def _game(self):
         return RandovaniaGame.METROID_PRIME
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games=[]):
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
         self._base_output_name = f"Prime Randomizer - {word_hash}"

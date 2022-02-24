@@ -59,11 +59,12 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
     def _game(self):
         return RandovaniaGame.METROID_PRIME_ECHOES
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games=[]):
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
         self.default_output_name = f"Echoes Randomizer - {word_hash}"
-        self._prompt_input_file = check_extracted_game(self.input_file_edit, self.input_file_button, self._contents_file_path)
+        self._prompt_input_file = check_extracted_game(self.input_file_edit, self.input_file_button,
+                                                       self._contents_file_path)
 
         per_game = options.options_for_game(self._game)
 
