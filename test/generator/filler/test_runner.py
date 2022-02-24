@@ -11,7 +11,7 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import LogbookNode
+from randovania.game_description.world.resource_node import LogbookNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner

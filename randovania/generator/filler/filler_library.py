@@ -5,7 +5,8 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.world.node import Node, PickupNode, ResourceNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.resource_node import PickupNode, ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
 
 

@@ -26,9 +26,10 @@ from randovania.game_description.world.dock import (
     DockWeakness, DockType, DockWeaknessDatabase, DockLockType
 )
 from randovania.game_description.world.node import (
-    GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
-    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
+    GenericNode, DockNode, TeleporterNode, Node,
+    ConfigurableNode, NodeLocation
 )
+from randovania.game_description.world.resource_node import PickupNode, EventNode, LoreType, LogbookNode, PlayerShipNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList

@@ -2,7 +2,8 @@ import copy
 from typing import Iterator, List
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import Node, ResourceNode, PickupNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.resource_node import PickupNode, ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver.state import State
 
@@ -21,7 +22,7 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 def _filter_collectable(resource_nodes: Iterator[ResourceNode], reach: GeneratorReach) -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.can_collect(reach.context_for(resource_node)):
+        if resource_node.can_collect(reach.context_for()):
             yield resource_node
 
 
@@ -68,7 +69,7 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
             break
 
         for action in actions:
-            if action.can_collect(reach.context_for(action)):
+            if action.can_collect(reach.context_for()):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 

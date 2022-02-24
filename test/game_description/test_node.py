@@ -2,7 +2,8 @@ import pytest
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
-from randovania.game_description.world.node import LogbookNode, LoreType, NodeContext
+from randovania.game_description.world.node import NodeContext
+from randovania.game_description.world.resource_node import LoreType, LogbookNode
 
 
 @pytest.fixture(
@@ -40,7 +41,7 @@ def test_logbook_node_can_collect(logbook_node,
     has_translator, scan_visor, translator, node = logbook_node
 
     def ctx(resources):
-        return NodeContext(None, empty_patches, resources, (), None)
+        return NodeContext(empty_patches, resources, None, None)
 
     assert not node.can_collect(ctx({}))
     assert node.can_collect(ctx({scan_visor: 1})) != has_translator
@@ -58,7 +59,7 @@ def test_logbook_node_resource_gain_on_collect(logbook_node,
     node = logbook_node[-1]
 
     # Run
-    gain = node.resource_gain_on_collect(NodeContext(None, empty_patches, {}, (), None))
+    gain = node.resource_gain_on_collect(NodeContext(empty_patches, {}, None, None))
 
     # Assert
     assert convert_resource_gain_to_current_resources(gain) == {node.resource(): 1}

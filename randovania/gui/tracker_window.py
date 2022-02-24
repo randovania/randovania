@@ -23,7 +23,8 @@ from randovania.game_description.resources.resource_info import add_resource_gai
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node, ResourceNode, ConfigurableNode, TeleporterNode, DockNode
+from randovania.game_description.world.node import Node, ConfigurableNode, TeleporterNode, DockNode
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
@@ -495,7 +496,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
                         resource_node = typing.cast(ResourceNode, node)
-                        node_item.setDisabled(not resource_node.can_collect(state.context_for(resource_node)))
+                        node_item.setDisabled(not resource_node.can_collect(state.context_for()))
                         node_item.setCheckState(0, QtCore.Qt.Checked if is_collected else QtCore.Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
@@ -858,7 +859,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.context_for(node)),
+            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.context_for()),
                                                    state.resources)
 
         return state

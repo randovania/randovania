@@ -10,7 +10,8 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import PickupNode, TeleporterNode
+from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.resource_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer

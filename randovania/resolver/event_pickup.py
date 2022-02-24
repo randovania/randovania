@@ -6,7 +6,8 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import ResourceRequirement, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceGain, CurrentResources, ResourceInfo
-from randovania.game_description.world.node import EventNode, PickupNode, ResourceNode, Node, NodeContext
+from randovania.game_description.world.node import Node, NodeContext
+from randovania.game_description.world.resource_node import PickupNode, EventNode, ResourceNode
 
 
 @dataclasses.dataclass(frozen=True)

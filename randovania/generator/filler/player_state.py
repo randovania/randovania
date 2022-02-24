@@ -8,7 +8,8 @@ from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import ResourceNode, TeleporterNode
+from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import reach_lib

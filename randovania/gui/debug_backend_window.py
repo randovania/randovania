@@ -11,7 +11,7 @@ from randovania.game_connection.connector.echoes_remote_connector import EchoesR
 from randovania.game_connection.executor.memory_operation import MemoryOperation, MemoryOperationExecutor
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.world.node import PickupNode
+from randovania.game_description.world.resource_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_dol_versions
 from randovania.gui.generated.debug_backend_window_ui import Ui_DebugBackendWindow

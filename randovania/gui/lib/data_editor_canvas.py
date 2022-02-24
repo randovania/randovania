@@ -8,8 +8,9 @@ from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
 
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node, \
+from randovania.game_description.world.node import GenericNode, DockNode, TeleporterNode, Node, \
     NodeLocation
+from randovania.game_description.world.resource_node import PickupNode, EventNode
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.resolver.state import State

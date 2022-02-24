@@ -12,7 +12,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
     ConditionalResources, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node import PickupNode
+from randovania.game_description.world.resource_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration

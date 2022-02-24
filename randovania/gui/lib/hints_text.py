@@ -1,7 +1,7 @@
 from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
-from randovania.game_description.world.node import LogbookNode, LoreType
+from randovania.game_description.world.resource_node import LoreType, LogbookNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 
