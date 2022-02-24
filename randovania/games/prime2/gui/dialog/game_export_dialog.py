@@ -63,7 +63,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
         self.default_output_name = f"Echoes Randomizer - {word_hash}"
-        self.check_extracted_game()
+        self._prompt_input_file = check_extracted_game(self.input_file_edit, self.input_file_button, self._contents_file_path)
 
         per_game = options.options_for_game(self._game)
 
@@ -78,12 +78,15 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
 
         if RandovaniaGame.METROID_PRIME in games:
             self._use_prime_models = True
+            self.prime_models_check.setChecked(True)
+            self.prime_models_check.clicked.connect(self._on_prime_models_check)
             prime_options = options.options_for_game(RandovaniaGame.METROID_PRIME)
             if prime_options.input_path is not None:
                 self.prime_file_edit.setText(str(prime_options.input_path))
 
         else:
             self._use_prime_models = False
+            self.prime_models_check.hide()
             self.prime_file_edit.hide()
             self.prime_file_label.hide()
             self.prime_file_button.hide()
@@ -155,7 +158,8 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         else:
             delete_internal_copy(self._options.internal_copies_path)
             self.input_file_edit.setText("")
-            self.check_extracted_game()
+            self._prompt_input_file = check_extracted_game(self.input_file_edit, self.input_file_button,
+                                                           self._contents_file_path)
 
     # Output File
     def _on_output_file_button(self):
@@ -168,6 +172,13 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         prime_file = prompt_for_input_file(self, self.prime_file, self.prime_file_edit, ["iso"])
         if prime_file is not None:
             self.prime_file_edit.setText(str(prime_file.absolute()))
+
+    def _on_prime_models_check(self):
+        use_prime_models = self.prime_models_check.isChecked()
+        self._use_prime_models = use_prime_models
+        self.prime_file_edit.setEnabled(use_prime_models)
+        self.prime_file_label.setEnabled(use_prime_models)
+        self.prime_file_button.setEnabled(use_prime_models)
 
     @property
     def _contents_file_path(self):

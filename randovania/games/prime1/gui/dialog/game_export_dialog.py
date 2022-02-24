@@ -47,6 +47,8 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         # Echoes ISO input
         if RandovaniaGame.METROID_PRIME_ECHOES in games:
             self._use_echoes_models = True
+            self.echoes_models_check.setChecked(True)
+            self.echoes_models_check.clicked.connect(self._on_echoes_models_check)
             self._echoes_contents_path = options.internal_copies_path.joinpath("prime2", "contents")
             self._prompt_input_file_echoes = check_extracted_game(self.echoes_file_edit, self.echoes_file_button,
                                                                   self._echoes_contents_path)
@@ -56,6 +58,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         else:
             self._use_echoes_models = False
             self._echoes_contents_path = None
+            self.echoes_models_check.hide()
             self.echoes_file_edit.hide()
             self.echoes_file_label.hide()
             self.echoes_file_button.hide()
@@ -140,6 +143,14 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             self.output_file_edit.setText(str(output_file))
 
     # Echoes input
+    def _on_echoes_models_check(self):
+        use_echoes_models = self.echoes_models_check.isChecked()
+        self._use_echoes_models = use_echoes_models
+        if self._prompt_input_file_echoes:
+            self.echoes_file_edit.setEnabled(use_echoes_models)
+        self.echoes_file_label.setEnabled(use_echoes_models)
+        self.echoes_file_button.setEnabled(use_echoes_models)
+
     def _on_echoes_file_button(self):
         if self._prompt_input_file_echoes:
             input_file = prompt_for_input_file(self, self.input_file_edit, ["iso"])

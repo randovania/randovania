@@ -7,57 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>508</width>
-    <height>299</height>
+    <height>337</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Game Patching</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="10" column="0">
-    <widget class="QPushButton" name="accept_button">
-     <property name="text">
-      <string>Accept</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <layout class="QHBoxLayout" name="output_format_layout">
-     <item>
-      <widget class="QLabel" name="output_format_label">
-       <property name="text">
-        <string>Output Format</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="description_label">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to create the randomized game, an ISO file of Metroid Prime for the Nintendo Gamecube is necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0">
-    <widget class="QCheckBox" name="auto_save_spoiler_check">
-     <property name="text">
-      <string>Include a spoiler log on same directory</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QLineEdit" name="output_file_edit">
-     <property name="placeholderText">
-      <string>Path where to place randomized game</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="input_file_label">
+   <item row="3" column="0" colspan="2">
+    <widget class="QLabel" name="output_file_label">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -65,7 +23,35 @@
       </size>
      </property>
      <property name="text">
-      <string>Input File (Vanilla Gamecube ISO)</string>
+      <string>Output File</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0">
+    <widget class="QPushButton" name="accept_button">
+     <property name="text">
+      <string>Accept</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QCheckBox" name="auto_save_spoiler_check">
+     <property name="text">
+      <string>Include a spoiler log on same directory</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QCheckBox" name="echoes_models_check">
+     <property name="text">
+      <string>Use correct models for Echoes items</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="echoes_file_label">
+     <property name="text">
+      <string>Echoes ISO File (for item models)</string>
      </property>
     </widget>
    </item>
@@ -82,7 +68,7 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="2">
+   <item row="9" column="2">
     <widget class="QPushButton" name="echoes_file_button">
      <property name="minimumSize">
       <size>
@@ -95,10 +81,10 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="echoes_file_label">
+   <item row="12" column="2">
+    <widget class="QPushButton" name="cancel_button">
      <property name="text">
-      <string>Echoes ISO File (for item models)</string>
+      <string>Cancel</string>
      </property>
     </widget>
    </item>
@@ -106,26 +92,6 @@
     <widget class="QLineEdit" name="input_file_edit">
      <property name="placeholderText">
       <string>Path to vanilla Gamecube ISO</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="2">
-    <widget class="QPushButton" name="cancel_button">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QLabel" name="output_file_label">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Output File</string>
      </property>
     </widget>
    </item>
@@ -142,13 +108,54 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="input_file_label">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Input File (Vanilla Gamecube ISO)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
     <widget class="QLineEdit" name="echoes_file_edit">
      <property name="text">
       <string/>
      </property>
      <property name="placeholderText">
       <string>Path to vanilla Echoes Gamecube ISO</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <layout class="QHBoxLayout" name="output_format_layout">
+     <item>
+      <widget class="QLabel" name="output_format_label">
+       <property name="text">
+        <string>Output Format</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QLineEdit" name="output_file_edit">
+     <property name="placeholderText">
+      <string>Path where to place randomized game</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="description_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to create the randomized game, an ISO file of Metroid Prime for the Nintendo Gamecube is necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
