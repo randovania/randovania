@@ -117,6 +117,35 @@ class EchoesGameExporter(GameExporter):
         )
 
 
+def extract_and_backup_iso(input_path: Path, contents_files_path: Path, backup_files_path: Path,
+                           progress_update: status_update_lib.ProgressUpdateCallable):
+    if input_path is not None:
+        unpack_updaters = status_update_lib.split_progress_update(progress_update, 2)
+        shutil.rmtree(contents_files_path, ignore_errors=True)
+        shutil.rmtree(backup_files_path, ignore_errors=True)
+        iso_packager.unpack_iso(
+            iso=input_path,
+            game_files_path=contents_files_path,
+            progress_update=unpack_updaters[0],
+        )
+        claris_randomizer.create_pak_backups(
+            contents_files_path,
+            backup_files_path,
+            unpack_updaters[1]
+        )
+    else:
+        try:
+            claris_randomizer.restore_pak_backups(
+                contents_files_path,
+                backup_files_path,
+                progress_update
+            )
+        except FileNotFoundError:
+            raise RuntimeError(
+                "Your internal copy is missing files.\nPlease press 'Delete internal copy' and select "
+                "a clean game ISO.")
+
+
 @functools.lru_cache()
 def decode_randomizer_data() -> dict:
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")

@@ -172,7 +172,7 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
         try:
             asset_provider = prime_asset_provider()
         except RuntimeError:
-            return
+            raise
 
         start = time.time()
         with asset_provider:

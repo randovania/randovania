@@ -80,29 +80,14 @@ class PrimeGameExporter(GameExporter):
 
         symbols = py_randomprime.symbols_for_file(input_file)
 
-        use_external_assets = export_params.use_echoes_models
-
-        updaters = status_update_lib.split_progress_update(progress_update, 3)
-
         # Deal with echoes
-        if export_params.use_echoes_models and export_params.echoes_input_path is not None:
-            unpack_updaters = status_update_lib.split_progress_update(updaters[0], 2)
-            echoes_contents_path = export_params.echoes_contents_path
-            echoes_backup_path = export_params.echoes_backup_path
-            shutil.rmtree(echoes_contents_path, ignore_errors=True)
-            shutil.rmtree(echoes_backup_path, ignore_errors=True)
-            iso_packager.unpack_iso(
-                iso=export_params.echoes_input_path,
-                game_files_path=echoes_contents_path,
-                progress_update=unpack_updaters[0],
-            )
-
-            from randovania.games.prime2.patcher import claris_randomizer
-            claris_randomizer.create_pak_backups(
-                echoes_contents_path,
-                echoes_backup_path,
-                unpack_updaters[1]
-            )
+        if export_params.use_echoes_models:
+            updaters = status_update_lib.split_progress_update(progress_update, 3)
+            from randovania.games.prime2.exporter.game_exporter import extract_and_backup_iso
+            extract_and_backup_iso(export_params.echoes_input_path, export_params.echoes_contents_path,
+                                   export_params.echoes_backup_path, updaters[0])
+        else:
+            updaters = status_update_lib.split_progress_update(progress_update, 1)
 
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
@@ -118,7 +103,7 @@ class PrimeGameExporter(GameExporter):
                 symbols=symbols)
         )
 
-        if use_external_assets:
+        if export_params.use_echoes_models:
             assets_path = export_params.asset_cache_path
             assets_meta = asset_conversion.convert_prime2_pickups(assets_path, updaters[1])
             new_config["externAssetsDir"] = os.fspath(assets_path)
@@ -126,7 +111,7 @@ class PrimeGameExporter(GameExporter):
             assets_meta = {}
 
         # Replace models
-        adjust_model_names(new_config, assets_meta, use_external_assets)
+        adjust_model_names(new_config, assets_meta, export_params.use_echoes_models)
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:
@@ -137,7 +122,7 @@ class PrimeGameExporter(GameExporter):
         try:
             py_randomprime.patch_iso_raw(
                 patch_as_str,
-                py_randomprime.ProgressNotifier(lambda percent, msg: updaters[2](msg, percent)),
+                py_randomprime.ProgressNotifier(lambda percent, msg: updaters[-1](msg, percent)),
             )
         except BaseException as e:
             if isinstance(e, Exception):
