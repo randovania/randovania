@@ -190,27 +190,5 @@ class PatcherMaker(Patcher):
         """
         
         self._busy = True
-        import subprocess
-        new_config = copy.copy(patch_data)
-        my_seed = new_config.pop("description")
-        Path(output_file.joinpath("Deltarune Randomizer " + my_seed)).mkdir(exist_ok=True)
-        tomakepath = Path(output_file.joinpath("Deltarune Randomizer " + my_seed))
-        copyDir(input_file,tomakepath)
-        subprocess.run([str(deltpatcher.GetDeltaPath().joinpath("xdelta.exe")), '-f', '-d','-s',str(input_file.joinpath("data.win")), str(deltpatcher.GetDeltaPath().joinpath("PATCH THIS.xdelta")),str(tomakepath.joinpath("data.win"))],check=True)
-        Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").unlink(missing_ok=True)
-        has_spoiler = new_config.pop("has_spoiler")
-        patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
-        if has_spoiler:
-            Path(tomakepath).joinpath("Deltarune Randomizer "+my_seed+"-patcher.json").write_text(patch_as_str)
-        with Path(tomakepath).joinpath("Deltarune Randomizer Seed.txt").open("w") as f:
-            for item in patch_data["pickups"]:
-                f.write(str(item["pickup_index"]))
-                f.write('\n')
-                f.write(str(item["item_index"]))
-                f.write('\n')
-                f.write(str(item["progressive"]))
-                f.write('\n')
-            for item in patch_data["starting_items"]:
-                f.write(str(item["item_index"]))
-                f.write('\n')
+        deltapatcher.patchfile(input_file, output_file, patch_data)
         self._busy = False
