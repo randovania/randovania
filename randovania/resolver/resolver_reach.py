@@ -6,7 +6,8 @@ from typing import Dict, Set, Iterator, Tuple, FrozenSet
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements, \
     RequirementAnd, Requirement
-from randovania.game_description.world.node import ResourceNode, Node
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
@@ -144,7 +145,7 @@ class ResolverReach:
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action, energy in self.possible_actions(state):
-            for resource, amount in action.resource_gain_on_collect(state.context_for(action)):
+            for resource, amount in action.resource_gain_on_collect(state.context_for()):
                 if resource in interesting_resources:
                     yield action, energy
                     break
@@ -155,5 +156,5 @@ class ResolverReach:
             if not node.is_resource_node:
                 continue
             node = typing.cast(ResourceNode, node)
-            if node.can_collect(state.context_for(node)):
+            if node.can_collect(state.context_for()):
                 yield node

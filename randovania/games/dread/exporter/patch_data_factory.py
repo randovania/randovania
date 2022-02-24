@@ -11,7 +11,8 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import Node, LogbookNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.resource_node import LogbookNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration

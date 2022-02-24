@@ -7,7 +7,8 @@ from randovania.game_description.resources.resource_info import convert_resource
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
-from randovania.game_description.world.node import EventNode, Node, PickupNode, DockNode, TeleporterNode
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode
+from randovania.game_description.world.resource_node import PickupNode, EventNode
 from randovania.game_description.world.world import World
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")

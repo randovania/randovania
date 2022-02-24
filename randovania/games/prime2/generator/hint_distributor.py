@@ -6,7 +6,7 @@ from randovania.game_description.hint import (
     PrecisionPair, HintDarkTemple, Hint, HintType
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node import LogbookNode
+from randovania.game_description.world.resource_node import LogbookNode
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool

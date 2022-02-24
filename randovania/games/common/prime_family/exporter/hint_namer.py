@@ -9,7 +9,7 @@ from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.world.node import PickupNode
+from randovania.game_description.world.resource_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration

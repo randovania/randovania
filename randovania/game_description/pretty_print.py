@@ -9,9 +9,9 @@ from randovania.game_description.requirements import (
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import (
-    Node, DockNode, TeleporterNode, PickupNode, EventNode,
-    ConfigurableNode, LogbookNode, LoreType, PlayerShipNode
+    Node, DockNode, TeleporterNode, ConfigurableNode
 )
+from randovania.game_description.world.resource_node import PickupNode, EventNode, LoreType, LogbookNode, PlayerShipNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 

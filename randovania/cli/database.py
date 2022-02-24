@@ -367,7 +367,8 @@ def render_worlds_graph_logic(args):
     import hashlib
     import re
     import graphviz
-    from randovania.game_description.world.node import PickupNode, DockNode, TeleporterNode
+    from randovania.game_description.world.node import DockNode, TeleporterNode
+    from randovania.game_description.world.resource_node import PickupNode
 
     gd = load_game_description(args)
     dot = graphviz.Digraph(comment=gd.game.long_name)
@@ -520,7 +521,7 @@ def render_worlds_graph(sub_parsers):
 
 
 def pickups_per_area_command_logic(args):
-    from randovania.game_description.world.node import PickupNode
+    from randovania.game_description.world.resource_node import PickupNode
     gd = load_game_description(args)
 
     for world in gd.world_list.worlds:

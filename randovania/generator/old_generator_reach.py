@@ -3,7 +3,8 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementSet, Requirement, ResourceRequirement, RequirementAnd
-from randovania.game_description.world.node import Node, ResourceNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator import graph as graph_module
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver.state import State
@@ -275,7 +276,7 @@ class OldGeneratorReach(GeneratorReach):
         all_nodes = self.all_nodes
         new_dangerous_resources = set(
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.state.context_for(node))
+            for resource, quantity in node.resource_gain_on_collect(self.state.context_for())
             if resource in self.game.dangerous_resources
         )
         new_state = self.state.act_on_node(node)

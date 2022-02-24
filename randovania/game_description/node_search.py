@@ -4,7 +4,8 @@ from randovania.game_description.game_patches import GamePatches, ElevatorConnec
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, ResourceNode
+from randovania.game_description.world.node import Node, DockNode, TeleporterNode
+from randovania.game_description.world.resource_node import PickupNode, ResourceNode
 from randovania.game_description.world.world_list import WorldList
 
 

@@ -12,7 +12,7 @@ from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
 from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import LogbookNode, PickupNode
+from randovania.game_description.world.resource_node import PickupNode, LogbookNode
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches

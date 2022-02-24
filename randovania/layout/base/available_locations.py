@@ -7,7 +7,7 @@ from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPa
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.node import PickupNode
+from randovania.game_description.world.resource_node import PickupNode
 from randovania.games.game import RandovaniaGame
 
 
