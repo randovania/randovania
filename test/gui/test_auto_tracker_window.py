@@ -56,7 +56,7 @@ async def test_on_timer_update(current_status: GameConnectionStatus, correct_gam
     window._update_timer.start.assert_called_once_with()
 
 
-@pytest.mark.parametrize("name", ["Metroid Prime 1 - Pixel Art (Standard)", "Metroid Prime 2 - Game Art (Full)"])
+@pytest.mark.parametrize("name", ["Metroid Prime 1 - Game Art (Standard)", "Metroid Prime 2 - Game Art (Full)"])
 def test_create_tracker(window: AutoTrackerWindow, name):
     window.create_tracker()
     assert len(window._tracker_elements) == 0

@@ -1,30 +1,29 @@
 from randovania.games import game
-from randovania.games.game import GameData, GameLayout, GamePresetDescriber
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.preset_describer import (
     echoes_format_params, echoes_unexpected_items,
     echoes_expected_items
 )
-from randovania.games.prime2.patcher.claris_patcher import ClarisPatcher
+
+
+def _options():
+    from randovania.games.prime2.exporter.options import EchoesPerGameOptions
+    return EchoesPerGameOptions
 
 
 def _gui() -> game.GameGui:
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.prime2 import gui
     from randovania.games.prime2.item_database import prime2_progressive_items
-    from randovania.games.prime2.gui.dialog.echoes_cosmetic_patches_dialog import EchoesCosmeticPatchesDialog
-    from randovania.games.prime2.gui.preset_settings import prime2_preset_tabs
-    from randovania.games.prime2.gui.translator_gate_details_tab import TranslatorGateDetailsTab
-    from randovania.games.prime2.gui.hint_details_tab import EchoesHintDetailsTab
-    from randovania.games.prime2.gui.echoes_help_widget import EchoesHelpWidget
 
     return game.GameGui(
-        tab_provider=prime2_preset_tabs,
-        cosmetic_dialog=EchoesCosmeticPatchesDialog,
-        input_file_text=("an ISO file", "the Nintendo Gamecube", "Gamecube ISO"),
+        tab_provider=gui.prime2_preset_tabs,
+        cosmetic_dialog=gui.EchoesCosmeticPatchesDialog,
+        export_dialog=gui.EchoesGameExportDialog,
         progressive_item_gui_tuples=prime2_progressive_items.gui_tuples(),
-        spoiler_visualizer=(TeleporterDetailsTab, TranslatorGateDetailsTab, EchoesHintDetailsTab),
-        help_widget=lambda: EchoesHelpWidget(),
+        spoiler_visualizer=(TeleporterDetailsTab, gui.TranslatorGateDetailsTab, gui.EchoesHintDetailsTab),
+        help_widget=lambda: gui.EchoesHelpWidget(),
     )
 
 
@@ -42,10 +41,20 @@ def _generator() -> game.GameGenerator:
     )
 
 
-game_data: GameData = GameData(
+def _patch_data_factory():
+    from randovania.games.prime2.exporter.patch_data_factory import EchoesPatchDataFactory
+    return EchoesPatchDataFactory
+
+
+def _exporter():
+    from randovania.games.prime2.exporter.game_exporter import EchoesGameExporter
+    return EchoesGameExporter()
+
+
+game_data: game.GameData = game.GameData(
     short_name="Echoes",
     long_name="Metroid Prime 2: Echoes",
-    experimental=False,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
@@ -102,19 +111,23 @@ This means you need Boost Ball to fight Spider Guardian."""),
          "The energy gate that disappears after the pirate fight in Torvus Temple blocks this door."),
     ],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,
-        preset_describer=GamePresetDescriber(
+        preset_describer=game.GamePresetDescriber(
             expected_items=echoes_expected_items,
             unexpected_items=echoes_unexpected_items,
             format_params=echoes_format_params,
         )
     ),
 
+    options=_options,
+
     gui=_gui,
 
     generator=_generator,
 
-    patcher=ClarisPatcher()
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )

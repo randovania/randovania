@@ -136,10 +136,10 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.persistence_path = persistence_path
 
     async def configure(self):
-        player_pool = await generator.create_player_pool(Random(0), self.game_configuration, 0, 1)
+        player_pool = await generator.create_player_pool(None, self.game_configuration, 0, 1, rng_required=False)
         pool_patches = player_pool.patches
 
-        bootstrap = self.game_configuration.game.data.generator().bootstrap
+        bootstrap = self.game_configuration.game.generator.bootstrap
 
         self.game_description, self._initial_state = bootstrap.logic_bootstrap(
             self.preset.configuration,

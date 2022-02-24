@@ -6,6 +6,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
+from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.item_pool import PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -16,7 +17,9 @@ def pool_creator(results: PoolResults,
                  base_patches: GamePatches,
                  rng: Random) -> None:
     assert isinstance(configuration, CSConfiguration)
-    if base_patches is None or rng is None:
+    if rng is None:
+        raise MissingRng("Pool Creator")
+    if base_patches is None:
         return
 
     def get_valid_indices(indices):

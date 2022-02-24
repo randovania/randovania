@@ -3,7 +3,7 @@
     "extra": {},
     "areas": {
         "Start Point": {
-            "default_node": "Event - Start Point",
+            "default_node": "Room Spawn",
             "valid_starting_location": true,
             "extra": {
                 "map_name": "Start",
@@ -79,13 +79,6 @@
                         "different_strongly_connected_component": true
                     },
                     "connections": {
-                        "Door to First Cave": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Event - Start Point": {
                             "type": "and",
                             "data": {
@@ -124,10 +117,12 @@
                         "z": 0.0
                     },
                     "description": "",
-                    "extra": {},
+                    "extra": {
+                        "different_strongly_connected_component": true
+                    },
                     "event_name": "startPoint",
                     "connections": {
-                        "Room Spawn": {
+                        "Door to First Cave": {
                             "type": "and",
                             "data": {
                                 "comment": null,

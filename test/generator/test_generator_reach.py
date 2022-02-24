@@ -34,7 +34,7 @@ from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 def run_bootstrap(preset: Preset):
     game = default_database.game_description_for(preset.game).make_mutable_copy()
-    generator = game.game.data.generator()
+    generator = game.game.generator
 
     game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database,
                                                                          preset.configuration)
@@ -103,7 +103,7 @@ _ignore_pickups_for_game = {
 @pytest.mark.parametrize(("game_enum", "ignore_events", "ignore_pickups"), [
     pytest.param(
         game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
-        marks=pytest.mark.xfail if game.data.experimental else []
+        id=game.value,
     )
     for game in RandovaniaGame
 ])
@@ -214,7 +214,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 def test_reach_size_from_start_echoes(small_echoes_game_description, default_layout_configuration):
     # Setup
     game: GameDescription = small_echoes_game_description
-    generator = game.game.data.generator()
+    generator = game.game.generator
 
     specific_levels = {
         trick.short_name: LayoutTrickLevel.maximum()

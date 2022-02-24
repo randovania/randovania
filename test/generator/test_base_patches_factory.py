@@ -24,7 +24,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                      skip_final_bosses: bool,
                                                      default_layout_configuration):
     # Setup
-    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
+    patches_factory = echoes_game_description.game.generator.base_patches_factory
     expected = dataclasses.replace(echoes_game_description.create_game_patches())
     if skip_final_bosses:
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
@@ -51,7 +51,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
                                                     skip_final_bosses: bool,
                                                     default_layout_configuration):
     # Setup
-    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
+    patches_factory = echoes_game_description.game.generator.base_patches_factory
     game = echoes_game_description
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
@@ -139,7 +139,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
 
 def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, default_layout_configuration):
     # Setup
-    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
+    patches_factory = echoes_game_description.game.generator.base_patches_factory
     scan_visor = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Scan Visor")
     emerald = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Emerald Translator")
 
@@ -172,7 +172,7 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
 
 def test_gate_assignment_for_configuration_all_random(echoes_game_description, default_layout_configuration):
     # Setup
-    patches_factory = echoes_game_description.game.data.generator().base_patches_factory
+    patches_factory = echoes_game_description.game.generator.base_patches_factory
     scan_visor = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Scan Visor")
     violet = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Violet Translator")
     emerald = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Emerald Translator")

@@ -1,6 +1,5 @@
 import collections
 
-import pytest
 from PySide2 import QtWidgets, QtCore
 from mock import MagicMock, AsyncMock, call, ANY
 
@@ -9,13 +8,12 @@ from randovania.games.prime3.layout.corruption_cosmetic_patches import Corruptio
 from randovania.gui.game_details.game_details_window import GameDetailsWindow
 from randovania.gui.game_details.pickup_details_tab import PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.layout_description import LayoutDescription
 
 
 async def test_export_iso(skip_qtbot, mocker):
     # Setup
-    mock_input_dialog = mocker.patch("randovania.gui.game_details.game_details_window.GameInputDialog")
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=QtWidgets.QDialog.Accepted)
 
@@ -23,13 +21,13 @@ async def test_export_iso(skip_qtbot, mocker):
     options.output_directory = None
 
     window_manager = MagicMock()
-    patcher_provider = window_manager.patcher_provider
-    patcher = patcher_provider.patcher_for_game.return_value
-    patcher.is_busy = False
 
     window = GameDetailsWindow(window_manager, options)
     window.layout_description = MagicMock()
     window._player_names = {}
+    game = window.layout_description.get_preset.return_value.game
+    game.exporter.is_busy = False
+    patch_data = game.patch_data_factory.return_value.create_data.return_value
 
     players_config = PlayersConfiguration(
         player_index=window.current_player_index,
@@ -40,14 +38,21 @@ async def test_export_iso(skip_qtbot, mocker):
     await window._export_iso()
 
     # Assert
-    mock_execute_dialog.assert_awaited_once()
-    patcher.create_patch_data.assert_called_once_with(window.layout_description, players_config,
-                                                      options.options_for_game.return_value.cosmetic_patches)
-    patcher.patch_game.assert_called_once_with(
-        mock_input_dialog.return_value.input_file,
-        mock_input_dialog.return_value.output_file,
-        patcher.create_patch_data.return_value,
-        window._options.internal_copies_path,
+    game.patch_data_factory.assert_called_once_with(
+        window.layout_description,
+        players_config,
+        options.options_for_game.return_value.cosmetic_patches
+    )
+    game.gui.export_dialog.assert_called_once_with(
+        options,
+        patch_data,
+        window.layout_description.shareable_word_hash,
+        window.layout_description.has_spoiler,
+    )
+    mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
+    game.exporter.export_game.assert_called_once_with(
+        patch_data,
+        game.gui.export_dialog.return_value.get_game_export_params.return_value,
         progress_update=ANY,
     )
 
