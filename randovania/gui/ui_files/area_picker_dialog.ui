@@ -46,19 +46,27 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="3">
-    <widget class="QDialogButtonBox" name="confirmButtonBox">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+   <item row="0" column="2">
+    <widget class="QLabel" name="nodeLabel">
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
      </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+     <property name="text">
+      <string>Node</string>
      </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="worldLabel">
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>World</string>
      </property>
     </widget>
    </item>
@@ -75,18 +83,6 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="worldLabel">
-     <property name="font">
-      <font>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>World</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QLabel" name="areaLabel">
      <property name="font">
@@ -99,17 +95,58 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="nodeLabel">
-     <property name="font">
-      <font>
-       <bold>true</bold>
-      </font>
+   <item row="3" column="2">
+    <widget class="QDialogButtonBox" name="confirmButtonBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="text">
-      <string>Node</string>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
+   </item>
+   <item row="2" column="0" rowspan="3" colspan="2">
+    <layout class="QHBoxLayout" name="nodeFiltersLayout">
+     <property name="rightMargin">
+      <number>208</number>
+     </property>
+     <item>
+      <widget class="QCheckBox" name="locationsCheckBox">
+       <property name="text">
+        <string>Locations</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="pickupsCheckBox">
+       <property name="text">
+        <string>Pickups</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="eventsCheckBox">
+       <property name="text">
+        <string>Events</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
