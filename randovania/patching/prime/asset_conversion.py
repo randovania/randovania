@@ -318,11 +318,23 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
         )
         logging.info(f"Finished loading PAKs: {time.time() - start}")
 
+        # These aren't guaranteed to be available in the paks yet, so skip them for now
+        models_to_skip = [
+            "VioletTranslator",
+            "AmberTranslator",
+            "EmeraldTranslator",
+            "CobaltTranslator",
+            "DarkBeamAmmoExpansion",
+            "LightBeamAmmoExpansion"
+        ]
+
         result = {}
         assets_to_change = [
             data
             for data in randomizer_data["ModelData"]
-            if data["Model"] != Game.ECHOES.invalid_asset_id and data["AnimSet"] != Game.ECHOES.invalid_asset_id
+            if (data["Model"] != Game.ECHOES.invalid_asset_id
+                and data["AnimSet"] != Game.ECHOES.invalid_asset_id
+                and data["Name"] not in models_to_skip)
         ]
 
         for i, data in enumerate(assets_to_change):
@@ -335,7 +347,7 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
                     scale=data["Scale"][0],
                 )
             except (InvalidAssetId, UnknownAssetId) as e:
-                logging.error("Unable to convert {}: {}".format(data["Name"], e))
+                raise RuntimeError("Unable to convert {}: {}".format(data["Name"], e))
     end = time.time()
     logging.info(f"Time took: {end - start}")
 
