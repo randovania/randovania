@@ -18,10 +18,10 @@ from randovania.game_description.world.resource_node import PickupNode, LogbookN
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter import hints
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.patcher import echoes_items
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.games.prime2.exporter import hints
 
 
 @pytest.fixture(name="players_config")
@@ -70,10 +70,12 @@ def test_create_hints_nothing(empty_patches, players_config, mocker):
     patches = dataclasses.replace(
         empty_patches,
         hints={
-            logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED,
-                                                        include_owner=False),
-                                          pickup_index)
+            world_list.identifier_for_node(logbook_node): Hint(
+                HintType.LOCATION,
+                PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED,
+                              include_owner=False),
+                pickup_index,
+            )
         })
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
@@ -98,7 +100,7 @@ def test_create_hints_item_joke(empty_patches, players_config):
     patches = dataclasses.replace(
         empty_patches,
         hints={
-            logbook_node.resource(): Hint(HintType.JOKE, None)
+            world_list.identifier_for_node(logbook_node): Hint(HintType.JOKE, None)
         })
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
@@ -251,9 +253,11 @@ def test_create_hints_item_location(empty_patches, blank_pickup, item, location,
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair(location[0], location_precision, include_owner=owner),
-                                          pickup_index)
+            world_list.identifier_for_node(logbook_node): Hint(
+                HintType.LOCATION,
+                PrecisionPair(location[0], location_precision, include_owner=owner),
+                pickup_index,
+            )
         })
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
@@ -295,10 +299,12 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, blank_
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair(HintLocationPrecision.GUARDIAN, item[0],
-                                                        include_owner=False),
-                                          pickup_index)
+            world_list.identifier_for_node(logbook_node): Hint(
+                HintType.LOCATION,
+                PrecisionPair(HintLocationPrecision.GUARDIAN, item[0],
+                              include_owner=False),
+                pickup_index,
+            )
         })
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)
@@ -333,10 +339,12 @@ def test_create_hints_light_suit_location(empty_patches, players_config, blank_p
             pickup_index: PickupTarget(blank_pickup, 0),
         },
         hints={
-            logbook_node.resource(): Hint(HintType.LOCATION,
-                                          PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0],
-                                                        include_owner=False),
-                                          pickup_index)
+            world_list.identifier_for_node(logbook_node): Hint(
+                HintType.LOCATION,
+                PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION, item[0],
+                              include_owner=False),
+                pickup_index,
+            )
         })
     rng = MagicMock()
     namer = EchoesHintNamer({0: patches}, players_config)

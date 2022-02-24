@@ -6,7 +6,7 @@ from randovania.game_description.hint import (
     PrecisionPair, HintDarkTemple, Hint, HintType
 )
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.resource_node import LogbookNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
@@ -34,18 +34,18 @@ class EchoesHintDistributor(HintDistributor):
             g(115, HintLocationPrecision.GUARDIAN),  # Annihilator Beam (Quadraxis)
         ]
 
-    async def assign_other_hints(self, patches: GamePatches, nodes: list[LogbookNode],
+    async def assign_other_hints(self, patches: GamePatches, identifiers: list[NodeIdentifier],
                                  prefill: PreFillParams) -> GamePatches:
-        all_logbook_nodes = [node for node in nodes if node.resource() not in patches.hints]
-        prefill.rng.shuffle(all_logbook_nodes)
+        all_hint_identifiers = [identifier for identifier in identifiers if identifier not in patches.hints]
+        prefill.rng.shuffle(all_hint_identifiers)
 
         # Dark Temple hints
         temple_hints = list(enum_lib.iterate_enum(HintDarkTemple))
-        while all_logbook_nodes and temple_hints:
-            logbook_asset = (node := all_logbook_nodes.pop()).resource()
-            patches = patches.assign_hint(logbook_asset, Hint(HintType.RED_TEMPLE_KEY_SET, None,
-                                                              dark_temple=temple_hints.pop(0)))
-            nodes.remove(node)
+        while all_hint_identifiers and temple_hints:
+            identifier = all_hint_identifiers.pop()
+            patches = patches.assign_hint(identifier, Hint(HintType.RED_TEMPLE_KEY_SET, None,
+                                                           dark_temple=temple_hints.pop(0)))
+            identifiers.remove(identifier)
 
         return patches
 

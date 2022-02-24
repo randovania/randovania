@@ -2,14 +2,13 @@ import typing
 from typing import Union, Tuple, Iterator
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
 ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo,
-                     PickupIndex, LogbookAsset, NodeIdentifier]
+                     PickupIndex, NodeIdentifier]
 ResourceQuantity = Tuple[ResourceInfo, int]
 ResourceGainTuple = Tuple[ResourceQuantity, ...]
 ResourceGain = Iterator[ResourceQuantity]

@@ -75,7 +75,7 @@ class ResolverReach:
             if node != initial_state.node:
                 reach_nodes[node] = energy
 
-            requirement_to_leave = node.requirement_to_leave(initial_state.patches, initial_state.resources)
+            requirement_to_leave = node.requirement_to_leave(initial_state.node_context(), initial_state.resources)
 
             for target_node, requirement in logic.game.world_list.potential_nodes_from(node, initial_state.patches):
                 if target_node is None:
@@ -145,7 +145,7 @@ class ResolverReach:
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action, energy in self.possible_actions(state):
-            for resource, amount in action.resource_gain_on_collect(state.context_for()):
+            for resource, amount in action.resource_gain_on_collect(state.node_context()):
                 if resource in interesting_resources:
                     yield action, energy
                     break
@@ -156,5 +156,5 @@ class ResolverReach:
             if not node.is_resource_node:
                 continue
             node = typing.cast(ResourceNode, node)
-            if node.can_collect(state.context_for()):
+            if node.can_collect(state.node_context()):
                 yield node

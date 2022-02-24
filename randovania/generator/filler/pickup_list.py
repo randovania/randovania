@@ -144,7 +144,8 @@ def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
     that satisfies on unreachable nodes"""
     state = reach.state
     possible_sets = list(reach.unreachable_nodes_with_requirements().values())
-    uncollected_resources = [node.resource() for node in uncollected_resource_nodes]
+    context = reach.node_context()
+    uncollected_resources = [node.resource(context) for node in uncollected_resource_nodes]
 
     all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
 

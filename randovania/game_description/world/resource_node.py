@@ -5,7 +5,6 @@ from typing import Optional
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import Requirement, ResourceRequirement, RequirementAnd
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import CurrentResources, ResourceInfo, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
@@ -20,7 +19,7 @@ class ResourceNode(Node):
     def is_resource_node(self) -> bool:
         return True
 
-    def resource(self) -> ResourceInfo:
+    def resource(self, context: NodeContext) -> ResourceInfo:
         raise NotImplementedError
 
     def can_collect(self, context: NodeContext) -> bool:
@@ -38,14 +37,14 @@ class PickupNode(ResourceNode):
     def __repr__(self):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
-    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
         # FIXME: using non-resource as key in CurrentResources
         if current_resources.get("add_self_as_requirement_to_resources") == 1:
             return ResourceRequirement(self.pickup_index, 1, False)
         else:
             return Requirement.trivial()
 
-    def resource(self) -> ResourceInfo:
+    def resource(self, context: NodeContext) -> ResourceInfo:
         return self.pickup_index
 
     def can_collect(self, context: NodeContext) -> bool:
@@ -67,13 +66,13 @@ class EventNode(ResourceNode):
     def __repr__(self):
         return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
 
-    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
         if current_resources.get("add_self_as_requirement_to_resources") == 1:
             return ResourceRequirement(self.event, 1, False)
         else:
             return Requirement.trivial()
 
-    def resource(self) -> ResourceInfo:
+    def resource(self, context: NodeContext) -> ResourceInfo:
         return self.event
 
     def can_collect(self, context: NodeContext) -> bool:
@@ -127,7 +126,7 @@ class LogbookNode(ResourceNode):
             f"/{extra}" if extra is not None else ""
         )
 
-    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
         items = []
         if self.scan_visor is not None:
             items.append(ResourceRequirement(self.scan_visor, 1, False))
@@ -136,8 +135,8 @@ class LogbookNode(ResourceNode):
 
         return RequirementAnd(items)
 
-    def resource(self) -> ResourceInfo:
-        return LogbookAsset(self.string_asset_id)
+    def resource(self, context: NodeContext) -> NodeIdentifier:
+        return context.node_provider.identifier_for_node(self)
 
     def can_collect(self, context: NodeContext) -> bool:
         """
@@ -146,7 +145,7 @@ class LogbookNode(ResourceNode):
         :return:
         """
         current_resources = context.current_resources
-        if current_resources.get(self.resource(), 0) != 0:
+        if current_resources.get(self.resource(context), 0) != 0:
             return False
 
         if self.scan_visor is not None:
@@ -159,7 +158,7 @@ class LogbookNode(ResourceNode):
         return True
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        yield self.resource(), 1
+        yield self.resource(context), 1
 
 
 @dataclasses.dataclass(frozen=True)
@@ -171,10 +170,10 @@ class PlayerShipNode(ResourceNode):
     def visor_requirement(self):
         return ResourceRequirement(self.item_to_summon, 1, False)
 
-    def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
-        return RequirementAnd([self.is_unlocked, ResourceRequirement(self.resource(), 1, False)])
+    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
+        return RequirementAnd([self.is_unlocked, ResourceRequirement(self.resource(context), 1, False)])
 
-    def resource(self) -> SimpleResourceInfo:
+    def resource(self, context: NodeContext) -> SimpleResourceInfo:
         return SimpleResourceInfo(f"Ship Node {self.index}", f"Ship{self.index}", ResourceType.NODE_IDENTIFIER)
 
     def can_collect(self, context: NodeContext) -> bool:
@@ -184,11 +183,11 @@ class PlayerShipNode(ResourceNode):
         :return:
         """
         current_resources = context.current_resources
-        if current_resources.get(self.item_to_summon, 0) == 0 and current_resources.get(self.resource(), 0) == 0:
+        if current_resources.get(self.item_to_summon, 0) == 0 and current_resources.get(self.resource(context), 0) == 0:
             return False
 
         return any(
-            current_resources.get(node.resource(), 0) == 0
+            current_resources.get(node.resource(context), 0) == 0
             for node in context.node_provider.all_nodes
             if isinstance(node, PlayerShipNode) and node.is_unlocked.satisfied(current_resources, 0, context.database)
         )
@@ -197,14 +196,14 @@ class PlayerShipNode(ResourceNode):
         for node in context.node_provider.all_nodes:
             if isinstance(node, PlayerShipNode) and node.is_unlocked.satisfied(
                     context.current_resources, 0, context.database):
-                yield node.resource(), 1
+                yield node.resource(context), 1
 
 
 @dataclasses.dataclass(frozen=True)
 class DockShieldNode(ResourceNode):
     dock_identifier: NodeIdentifier
 
-    def resource(self) -> ResourceInfo:
+    def resource(self, context: NodeContext) -> ResourceInfo:
         return self.dock_identifier
 
     def can_collect(self, context: NodeContext) -> bool:

@@ -1,5 +1,4 @@
 from enum import unique, Enum
-from typing import Dict
 
 
 @unique
@@ -16,7 +15,7 @@ class ResourceType(str, Enum):
     NODE_IDENTIFIER = "node_identifier"
 
     @classmethod
-    def indices(cls) -> Dict["ResourceType", int]:
+    def indices(cls) -> dict["ResourceType", int]:
         return {
             ResourceType.ITEM: 0,
             ResourceType.EVENT: 1,

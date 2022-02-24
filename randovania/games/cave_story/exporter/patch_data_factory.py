@@ -9,9 +9,9 @@ from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import PickupNode, LogbookNode
 from randovania.games.cave_story.exporter.hint_namer import CSHintNamer
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
@@ -74,7 +74,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
 
         entrances = {}  # TODO: entrance rando
 
-        hints_for_asset = get_hints(self.description.all_patches, self.players_config, hint_rng)
+        hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
         hints = {}
         for logbook_node in game_description.world_list.all_nodes:
             if not isinstance(logbook_node, LogbookNode):
@@ -86,8 +86,9 @@ class CSPatchDataFactory(BasePatchDataFactory):
 
             if hints.get(mapname) is None:
                 hints[mapname] = {}
+
             hints[mapname][event] = {
-                "text": hints_for_asset[logbook_node.string_asset_id],
+                "text": hints_for_identifier[game_description.world_list.identifier_for_node(logbook_node)],
                 "facepic": logbook_node.extra.get("facepic", "0000"),
                 "ending": logbook_node.extra.get("ending", "<END")
             }
@@ -312,8 +313,8 @@ class CSPatchDataFactory(BasePatchDataFactory):
                          ("Large Life Capsule", "0014")]
         for name, event in life_capsules:
             amount = \
-            self.configuration.major_items_configuration.items_state[self.item_db.major_items[name]].included_ammo[
-                0]
+                self.configuration.major_items_configuration.items_state[self.item_db.major_items[name]].included_ammo[
+                    0]
             head[event] = {
                 "needle": f".!<ML%+....",
                 "script": f"{amount}!<ML+{num_to_tsc_value(amount).decode('utf-8')}"
@@ -329,17 +330,19 @@ class CSPatchDataFactory(BasePatchDataFactory):
         }
 
 
-def get_hints(all_patches: dict[int, GamePatches], players_config: PlayersConfiguration, hint_rng: Random):
+def get_hints(all_patches: dict[int, GamePatches], players_config: PlayersConfiguration, hint_rng: Random,
+              ) -> dict[NodeIdentifier, str]:
     namer = CSHintNamer(all_patches, players_config)
     exporter = HintExporter(namer, hint_rng, JOKE_HINTS)
 
-    hints_for_asset: dict[LogbookAsset, str] = {}
+    hints_for_asset: dict[NodeIdentifier, str] = {}
     for asset, hint in all_patches[players_config.player_index].hints.items():
         hints_for_asset[asset] = exporter.create_message_for_hint(hint, all_patches, players_config, True)
 
     starts = ["I hear that", "Rumour has it,", "They say"]
     mids = ["can be found", "is", "is hidden"]
+
     return {
-        asset.asset_id: hint.format(start=hint_rng.choice(starts), mid=hint_rng.choice(mids))
-        for asset, hint in hints_for_asset.items()
+        identifier: hint.format(start=hint_rng.choice(starts), mid=hint_rng.choice(mids))
+        for identifier, hint in hints_for_asset.items()
     }

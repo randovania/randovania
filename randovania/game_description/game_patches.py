@@ -6,7 +6,6 @@ from typing import Tuple, Iterator, Optional
 from randovania.game_description.assignment import PickupAssignment, NodeConfigurationAssignment, PickupTarget
 from randovania.game_description.hint import Hint
 from randovania.game_description.requirements import Requirement
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.resources.resource_type import ResourceType
@@ -33,7 +32,7 @@ class GamePatches:
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: CurrentResources
     starting_location: AreaIdentifier
-    hints: dict[LogbookAsset, Hint]
+    hints: dict[NodeIdentifier, Hint]
 
     def assign_new_pickups(self, assignments: Iterator[Tuple[PickupIndex, PickupTarget]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
@@ -70,7 +69,7 @@ class GamePatches:
 
         return dataclasses.replace(self, starting_items=current)
 
-    def assign_hint(self, logbook: LogbookAsset, hint: Hint) -> "GamePatches":
+    def assign_hint(self, identifier: NodeIdentifier, hint: Hint) -> "GamePatches":
         current = copy.copy(self.hints)
-        current[logbook] = hint
+        current[identifier] = hint
         return dataclasses.replace(self, hints=current)

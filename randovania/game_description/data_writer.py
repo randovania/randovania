@@ -243,7 +243,7 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
         data.update(common_fields)
-        data["event_name"] = node.resource().short_name
+        data["event_name"] = node.event.short_name
 
     elif isinstance(node, ConfigurableNode):
         data["node_type"] = "configurable_node"

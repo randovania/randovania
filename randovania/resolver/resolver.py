@@ -59,7 +59,7 @@ def _should_check_if_action_is_safe(state: State,
     :return:
     """
     if any(resource in dangerous_resources
-           for resource in action.resource_gain_on_collect(state.context_for())):
+           for resource in action.resource_gain_on_collect(state.node_context())):
         return False
 
     if isinstance(action, EventNode):

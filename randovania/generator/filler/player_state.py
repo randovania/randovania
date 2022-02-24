@@ -1,14 +1,14 @@
 import collections
 import re
-from typing import List, DefaultDict, Dict, FrozenSet, Tuple, Iterator, Set
+from typing import List, DefaultDict, FrozenSet, Tuple, Iterator, Set
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -30,12 +30,12 @@ from randovania.resolver.state import State
 class PlayerState:
     index: int
     game: GameDescription
-    pickups_left: List[PickupEntry]
+    pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
     pickup_index_seen_count: DefaultDict[PickupIndex, int]
-    scan_asset_seen_count: DefaultDict[LogbookAsset, int]
-    scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]]
-    _unfiltered_potential_actions: Tuple[PickupCombinations, Tuple[ResourceNode, ...]]
+    hint_seen_count: DefaultDict[NodeIdentifier, int]
+    hint_initial_pickups: dict[NodeIdentifier, FrozenSet[PickupIndex]]
+    _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
     num_random_starting_items_placed: int
     num_assigned_pickups: int
 
@@ -55,9 +55,9 @@ class PlayerState:
         self.configuration = configuration
 
         self.pickup_index_seen_count = collections.defaultdict(int)
-        self.scan_asset_seen_count = collections.defaultdict(int)
+        self.hint_seen_count = collections.defaultdict(int)
         self.event_seen_count = collections.defaultdict(int)
-        self.scan_asset_initial_pickups = {}
+        self.hint_initial_pickups = {}
         self.num_random_starting_items_placed = 0
         self.num_assigned_pickups = 0
         self.num_actions = 0
@@ -80,12 +80,12 @@ class PlayerState:
         print_new_resources(self.game, self.reach, self.pickup_index_seen_count, "Pickup Index")
 
     def _advance_scan_asset_seen_count(self):
-        for scan_asset in self.reach.state.collected_scan_assets:
-            self.scan_asset_seen_count[scan_asset] += 1
-            if self.scan_asset_seen_count[scan_asset] == 1:
-                self.scan_asset_initial_pickups[scan_asset] = frozenset(self.reach.state.collected_pickup_indices)
+        for hint_identifier in self.reach.state.collected_hints:
+            self.hint_seen_count[hint_identifier] += 1
+            if self.hint_seen_count[hint_identifier] == 1:
+                self.hint_initial_pickups[hint_identifier] = frozenset(self.reach.state.collected_pickup_indices)
 
-        print_new_resources(self.game, self.reach, self.scan_asset_seen_count, "Scan Asset")
+        print_new_resources(self.game, self.reach, self.hint_seen_count, "Scan Asset")
 
     def _advance_event_seen_count(self):
         for resource, quantity in self.reach.state.resources.items():

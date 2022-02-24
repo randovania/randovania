@@ -3,20 +3,19 @@ from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementSet, Requirement, ResourceRequirement, RequirementAnd
-from randovania.game_description.world.node import Node
+from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator import graph as graph_module
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver.state import State
 
 
-def _extra_requirement_for_node(game: GameDescription, node: Node) -> Optional[Requirement]:
+def _extra_requirement_for_node(game: GameDescription, context: NodeContext, node: Node) -> Optional[Requirement]:
     extra_requirement = None
 
     if node.is_resource_node:
-        resource_node: ResourceNode = node
-
-        node_resource = resource_node.resource()
+        assert isinstance(node, ResourceNode)
+        node_resource = node.resource(context)
         if node_resource in game.dangerous_resources:
             extra_requirement = ResourceRequirement(node_resource, 1, False)
 
@@ -91,8 +90,8 @@ class OldGeneratorReach(GeneratorReach):
         return reach
 
     def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
-        extra_requirement = _extra_requirement_for_node(self._game, node)
-        requirement_to_leave = node.requirement_to_leave(self._state.patches, self._state.resources)
+        extra_requirement = _extra_requirement_for_node(self._game, self.node_context(), node)
+        requirement_to_leave = node.requirement_to_leave(self._state.node_context(), self._state.resources)
 
         for target_node, requirement in self._game.world_list.potential_nodes_from(node, self.state.patches):
             if target_node is None:
@@ -140,7 +139,8 @@ class OldGeneratorReach(GeneratorReach):
         """
         # We can't advance past a resource node if we haven't collected it
         if node.is_resource_node:
-            return self._state.has_resource(node.resource())
+            assert isinstance(node, ResourceNode)
+            return self._state.has_resource(node.resource(self.node_context()))
         else:
             return True
 
@@ -276,7 +276,7 @@ class OldGeneratorReach(GeneratorReach):
         all_nodes = self.all_nodes
         new_dangerous_resources = set(
             resource
-            for resource, quantity in node.resource_gain_on_collect(self.state.context_for())
+            for resource, quantity in node.resource_gain_on_collect(self.state.node_context())
             if resource in self.game.dangerous_resources
         )
         new_state = self.state.act_on_node(node)

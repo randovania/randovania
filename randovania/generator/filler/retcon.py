@@ -9,9 +9,10 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node import NodeContext
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator import reach_lib
 from randovania.generator.filler.action import Action, action_name
 from randovania.generator.filler.filler_library import UnableToGenerate, should_have_hint, UncollectedState, \
@@ -19,8 +20,8 @@ from randovania.generator.filler.filler_library import UnableToGenerate, should_
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.generator_reach import GeneratorReach
-from randovania.resolver import debug
 from randovania.lib.random_lib import select_element_with_weight
+from randovania.resolver import debug
 
 _DANGEROUS_ACTION_MULTIPLIER = 0.75
 _EVENTS_WEIGHT_MULTIPLIER = 0.5
@@ -255,7 +256,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
             UncollectedState.from_reach(index_owner_state.reach),
             pickup_index,
             rng,
-            index_owner_state.scan_asset_initial_pickups,
+            index_owner_state.hint_initial_pickups,
         )
         if hint_location is not None:
             index_owner_state.reach.state.patches = index_owner_state.reach.state.patches.assign_hint(
@@ -269,7 +270,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
 
         spoiler_entry = pickup_placement_spoiler_entry(current_player.index, action, index_owner_state.game,
                                                        pickup_index, hint_location, index_owner_state.index,
-                                                       len(player_states) > 1)
+                                                       len(player_states) > 1, index_owner_state.reach.node_context())
 
     else:
         current_player.num_random_starting_items_placed += 1
@@ -317,17 +318,17 @@ def _calculate_hint_location_for_action(action: PickupEntry,
                                         current_uncollected: UncollectedState,
                                         pickup_index: PickupIndex,
                                         rng: Random,
-                                        scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]],
-                                        ) -> Optional[LogbookAsset]:
+                                        hint_initial_pickups: dict[NodeIdentifier, FrozenSet[PickupIndex]],
+                                        ) -> Optional[NodeIdentifier]:
     """
     Calculates where a hint for the given action should be placed.
     :return: A LogbookAsset to use, or None if no hint should be placed.
     """
     if should_have_hint(action.item_category):
         potential_hint_locations = [
-            logbook_asset
-            for logbook_asset in current_uncollected.logbooks
-            if pickup_index not in scan_asset_initial_pickups[logbook_asset]
+            identifier
+            for identifier in current_uncollected.logbooks
+            if pickup_index not in hint_initial_pickups[identifier]
         ]
         if potential_hint_locations:
             return rng.choice(sorted(potential_hint_locations))
@@ -349,17 +350,17 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
 
 
 def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: GameDescription,
-                                   pickup_index: PickupIndex, hint: Optional[LogbookAsset],
-                                   player_index: int, add_indices: bool) -> str:
+                                   pickup_index: PickupIndex, hint_identifier: Optional[NodeIdentifier],
+                                   player_index: int, add_indices: bool, node_context: NodeContext) -> str:
     world_list = game.world_list
-    if hint is not None:
+    if hint_identifier is not None:
         hint_string = " with hint at {}".format(
-            world_list.node_name(find_node_with_resource(hint, world_list.all_nodes),
+            world_list.node_name(world_list.node_by_identifier(hint_identifier),
                                  with_world=True, distinguish_dark_aether=True))
     else:
         hint_string = ""
 
-    pickup_node = find_node_with_resource(pickup_index, world_list.all_nodes)
+    pickup_node = find_node_with_resource(pickup_index, node_context, world_list.all_nodes)
     return "{4}{0} at {3}{1}{2}".format(
         action.name,
         world_list.node_name(pickup_node, with_world=True, distinguish_dark_aether=True),
