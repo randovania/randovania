@@ -1,9 +1,15 @@
 import dataclasses
 import json
+from enum import Enum
 from pathlib import Path
 
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.lib import status_update_lib
+
+
+class DreadModFormat(Enum):
+    RYUJINX = "ryujinx"
+    ATMOSPHERE = "atmosphere"
 
 
 @dataclasses.dataclass(frozen=True)

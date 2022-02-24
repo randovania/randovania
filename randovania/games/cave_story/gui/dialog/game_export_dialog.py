@@ -3,6 +3,7 @@ from pathlib import Path
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.cave_story.exporter.game_exporter import CSGameExportParams
+from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, add_field_validation, is_directory_validator, prompt_for_output_directory, spoiler_path_for
@@ -20,6 +21,7 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
         per_game = options.options_for_game(self._game)
+        assert isinstance(per_game, CSPerGameOptions)
 
         # Output
         self.output_file_button.clicked.connect(self._on_output_file_button)
@@ -41,10 +43,11 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
                 options.auto_save_spoiler = self.auto_save_spoiler
 
             per_game = options.options_for_game(self._game)
-            per_game_changes = {
-                "output_directory": self.output_file,
-            }
-            options.set_options_for_game(self._game, dataclasses.replace(per_game, **per_game_changes))
+            assert isinstance(per_game, CSPerGameOptions)
+            options.set_options_for_game(self._game, dataclasses.replace(
+                per_game,
+                output_directory=self.output_file,
+            ))
 
     # Getters
     @property

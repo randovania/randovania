@@ -6,7 +6,9 @@ from PySide2 import QtCore
 
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams
+from randovania.games.super_metroid.exporter.options import SuperMetroidPerGameOptions
 from randovania.games.super_metroid.gui.dialog.game_export_dialog import SuperMetroidGameExportDialog
+from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
 from randovania.interface_common.options import Options
 
 
@@ -24,8 +26,11 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         expected_default_name = "SM Randomizer - MyHash"
 
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = output_directory
-    options.options_for_game.return_value.output_format = "iso"
+    options.options_for_game.return_value = SuperMetroidPerGameOptions(
+        cosmetic_patches=SuperMetroidCosmeticPatches.default(),
+        output_directory=output_directory,
+        output_format="iso",
+    )
 
     window = SuperMetroidGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
@@ -45,8 +50,11 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = None
-    options.options_for_game.return_value.output_format = "smc"
+    options.options_for_game.return_value = SuperMetroidPerGameOptions(
+        cosmetic_patches=SuperMetroidCosmeticPatches.default(),
+        output_directory=None,
+        output_format="smc",
+    )
     window = SuperMetroidGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = None
 
@@ -75,9 +83,12 @@ def test_get_game_export_params(skip_qtbot, tmp_path, save_spoiler: bool):
     # Setup
     options = MagicMock()
     options.auto_save_spoiler = save_spoiler
-    options.options_for_game.return_value.input_path = tmp_path.joinpath("input/game.sfc")
-    options.options_for_game.return_value.output_directory = tmp_path.joinpath("output")
-    options.options_for_game.return_value.output_format = "smc"
+    options.options_for_game.return_value = SuperMetroidPerGameOptions(
+        cosmetic_patches=SuperMetroidCosmeticPatches.default(),
+        input_path=tmp_path.joinpath("input/game.sfc"),
+        output_directory=tmp_path.joinpath("output"),
+        output_format="smc",
+    )
     window = SuperMetroidGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run

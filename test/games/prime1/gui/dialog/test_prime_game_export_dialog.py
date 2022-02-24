@@ -4,9 +4,12 @@ from unittest.mock import MagicMock, call
 import pytest
 from PySide2 import QtCore
 
+from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
+from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime1.gui.dialog.game_export_dialog import PrimeGameExportDialog
+from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.interface_common.options import Options
 
 
@@ -24,8 +27,11 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         expected_default_name = "Prime Randomizer - MyHash"
 
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = output_directory
-    options.options_for_game.return_value.output_format = "iso"
+    options.options_for_game.return_value = PrimePerGameOptions(
+        cosmetic_patches=PrimeCosmeticPatches.default(),
+        output_directory=output_directory,
+        output_format="iso",
+    )
 
     window = PrimeGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
@@ -45,8 +51,11 @@ def test_on_output_file_button_cancel(skip_qtbot, tmp_path, mocker):
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_output_file", autospec=True)
 
     options = MagicMock()
-    options.options_for_game.return_value.output_directory = None
-    options.options_for_game.return_value.output_format = "iso"
+    options.options_for_game.return_value = PrimePerGameOptions(
+        cosmetic_patches=PrimeCosmeticPatches.default(),
+        output_directory=None,
+        output_format="iso",
+    )
     window = PrimeGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = None
     assert window.output_file_edit.text() == ""
@@ -83,7 +92,11 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
                                ])
 
     options = MagicMock()
-    options.options_for_game.return_value.input_path = None
+    options.options_for_game.return_value = PrimePerGameOptions(
+        cosmetic_patches=PrimeCosmeticPatches.default(),
+        input_path=None,
+        output_format="iso",
+    )
 
     window = PrimeGameExportDialog(options, {}, "MyHash", True, [])
     assert window.input_file_edit.text() == ""
@@ -116,10 +129,13 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
 def test_get_game_export_params(skip_qtbot, tmp_path):
     # Setup
     options = MagicMock()
-    options.options_for_game.return_value.input_path = tmp_path.joinpath("input/game.iso")
-    options.options_for_game.return_value.output_directory = tmp_path.joinpath("output")
     options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.return_value.output_format = "iso"
+    options.options_for_game.return_value = PrimePerGameOptions(
+        cosmetic_patches=PrimeCosmeticPatches.default(),
+        input_path=tmp_path.joinpath("input/game.iso"),
+        output_directory=tmp_path.joinpath("output"),
+        output_format="iso",
+    )
     window = PrimeGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run

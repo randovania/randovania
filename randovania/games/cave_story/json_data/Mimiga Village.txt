@@ -15,10 +15,8 @@ Extra - starting_script: <EVE0091
   > Refill
       Trivial
 
-> Room Spawn; Heals? False
+> Room Spawn; Heals? False; Spawn Point
   * Extra - different_strongly_connected_component: True
-  > Door to First Cave
-      Trivial
   > Event - Start Point
       Trivial
 
@@ -26,9 +24,10 @@ Extra - starting_script: <EVE0091
   > Save Point
       Trivial
 
-> Event - Start Point; Heals? False; Spawn Point
+> Event - Start Point; Heals? False
   * Event Start in Start Point
-  > Room Spawn
+  * Extra - different_strongly_connected_component: True
+  > Door to First Cave
       Trivial
 
 ----------------

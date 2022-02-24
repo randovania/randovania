@@ -2,6 +2,11 @@ from randovania.games import game
 from randovania.games.blank import layout
 
 
+def _options():
+    from randovania.interface_common.options import PerGameOptions
+    return PerGameOptions
+
+
 def _gui() -> game.GameGui:
     from randovania.games.blank import gui
 
@@ -53,6 +58,8 @@ game_data: game.GameData = game.GameData(
         configuration=layout.BlankConfiguration,
         cosmetic_patches=layout.BlankCosmeticPatches,
     ),
+
+    options=_options,
 
     gui=_gui,
 

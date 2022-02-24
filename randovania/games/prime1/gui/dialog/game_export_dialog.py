@@ -5,6 +5,7 @@ from typing import Optional
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
+from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.gui.dialog.game_export_dialog import (
     has_internal_copy, delete_internal_copy, check_extracted_game, echoes_input_validator
 )
@@ -31,6 +32,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
         self._base_output_name = f"Prime Randomizer - {word_hash}"
         per_game = options.options_for_game(self._game)
+        assert isinstance(per_game, PrimePerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
@@ -96,20 +98,21 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
                 options.auto_save_spoiler = self.auto_save_spoiler
 
             per_game = options.options_for_game(self._game)
-            per_game_changes = {
-                "input_path": self.input_file,
-                "output_directory": self.output_file.parent,
-                "output_format": self._selected_output_format,
-            }
-
+            assert isinstance(per_game, PrimePerGameOptions)
+            options.set_options_for_game(self._game, dataclasses.replace(
+                per_game,
+                input_path=self.input_file,
+                output_directory=self.output_file.parent,
+                output_format=self._selected_output_format,
+            ))
             if self._prompt_input_file_echoes:
+                from randovania.games.prime2.exporter.options import EchoesPerGameOptions
                 echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
-                echoes_changes = {
-                    "input_path": self.echoes_file
-                }
-                options.set_options_for_game(self._game, dataclasses.replace(echoes_options, **echoes_changes))
-
-            options.set_options_for_game(self._game, dataclasses.replace(per_game, **per_game_changes))
+                assert isinstance(echoes_options, EchoesPerGameOptions)
+                options.set_options_for_game(RandovaniaGame.METROID_PRIME_ECHOES, dataclasses.replace(
+                    echoes_options,
+                    input_path=self.echoes_file,
+                ))
 
     # Getters
     @property

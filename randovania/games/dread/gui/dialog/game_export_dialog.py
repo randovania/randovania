@@ -3,6 +3,7 @@ from pathlib import Path
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams
+from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, add_field_validation, prompt_for_output_directory, prompt_for_input_directory,
@@ -21,6 +22,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         super().__init__(options, patch_data, word_hash, spoiler, games)
 
         per_game = options.options_for_game(self._game)
+        assert isinstance(per_game, DreadPerGameOptions)
 
         # Input
         self.input_file_button.clicked.connect(self._on_input_file_button)
@@ -28,8 +30,8 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         # Output
         self.output_file_button.clicked.connect(self._on_output_file_button)
 
-        if per_game.input_path is not None:
-            self.input_file_edit.setText(str(per_game.input_path))
+        if per_game.input_directory is not None:
+            self.input_file_edit.setText(str(per_game.input_directory))
 
         if per_game.output_directory is not None:
             output_path = per_game.output_directory
@@ -49,11 +51,12 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
                 options.auto_save_spoiler = self.auto_save_spoiler
 
             per_game = options.options_for_game(self._game)
-            per_game_changes = {
-                "input_path": self.input_file,
-                "output_directory": self.output_file,
-            }
-            options.set_options_for_game(self._game, dataclasses.replace(per_game, **per_game_changes))
+            assert isinstance(per_game, DreadPerGameOptions)
+            options.set_options_for_game(self._game, dataclasses.replace(
+                per_game,
+                input_directory=self.input_file,
+                output_directory=self.output_file,
+            ))
 
     # Getters
     @property

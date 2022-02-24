@@ -1,11 +1,10 @@
-import copy
 import dataclasses
 import json
 import uuid
 from distutils.version import StrictVersion
 from enum import Enum
 from pathlib import Path
-from typing import Optional, TypeVar, Callable, Any, Set, List, Dict
+from typing import Optional, TypeVar, Callable, Any, Set, List
 
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.games.game import RandovaniaGame
@@ -58,17 +57,11 @@ def decode_if_not_none(value, decoder):
 @dataclasses.dataclass(frozen=True)
 class PerGameOptions:
     cosmetic_patches: BaseCosmeticPatches
-    input_path: Optional[Path] = None
-    output_directory: Optional[Path] = None
-    output_format: Optional[str] = None
 
     @property
     def as_json(self):
         return {
             "cosmetic_patches": self.cosmetic_patches.as_json,
-            "input_path": str(self.input_path) if self.input_path is not None else None,
-            "output_directory": str(self.output_directory) if self.output_directory is not None else None,
-            "output_format": self.output_format if self.output_format is not None else None,
         }
 
     @classmethod
@@ -76,28 +69,8 @@ class PerGameOptions:
         return cls(cosmetic_patches=game.data.layout.cosmetic_patches())
 
     @classmethod
-    def from_json(cls, value, game: RandovaniaGame) -> "PerGameOptions":
-        cosmetic_patches = game.data.layout.cosmetic_patches.from_json(value["cosmetic_patches"])
-        return PerGameOptions(
-            cosmetic_patches=cosmetic_patches,
-            input_path=decode_if_not_none(value["input_path"], Path),
-            output_format=value["output_format"],
-            output_directory=decode_if_not_none(value["output_directory"], Path),
-        )
-
-
-def serialize_per_game_dict(val: Dict[RandovaniaGame, PerGameOptions]) -> dict:
-    return {
-        key.value: value.as_json
-        for key, value in val.items()
-    }
-
-
-def decode_per_game_dict(val: dict) -> Dict[RandovaniaGame, PerGameOptions]:
-    return {
-        RandovaniaGame(key): PerGameOptions.from_json(value, game=RandovaniaGame(key))
-        for key, value in val.items()
-    }
+    def from_json(cls, value: dict) -> "PerGameOptions":
+        raise NotImplementedError()
 
 
 _SERIALIZER_FOR_FIELD = {
@@ -108,12 +81,25 @@ _SERIALIZER_FOR_FIELD = {
     "dark_mode": Serializer(identity, bool),
     "experimental_games": Serializer(identity, bool),
     "selected_preset_uuid": Serializer(str, uuid.UUID),
-    "per_game_options": Serializer(serialize_per_game_dict, decode_per_game_dict),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
     "game_backend": Serializer(lambda it: it.value, MemoryExecutorChoice),
     "nintendont_ip": Serializer(identity, str),
     "selected_tracker": Serializer(identity, str),
 }
+
+
+def add_per_game_serializer():
+    def make_decoder(g):
+        return lambda it: g.options.from_json(it)
+
+    for game in RandovaniaGame.all_games():
+        _SERIALIZER_FOR_FIELD[f"game_{game.value}"] = Serializer(
+            lambda it: it.as_json,
+            make_decoder(game),
+        )
+
+
+add_per_game_serializer()
 
 
 def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -> T:
@@ -147,8 +133,7 @@ class Options:
     _dark_mode: Optional[bool] = None
     _experimental_games: Optional[bool] = None
     _selected_preset_uuid: Optional[uuid.UUID] = None
-    _per_game_options: Optional[Dict[RandovaniaGame, PerGameOptions]] = None
-    _displayed_alerts: Optional[Set[InfoAlert]] = None
+    _displayed_alerts: Optional[set[InfoAlert]] = None
     _game_backend: Optional[MemoryExecutorChoice] = None
     _nintendont_ip: Optional[str] = None
     _selected_tracker: Optional[str] = None
@@ -157,6 +142,24 @@ class Options:
         self._data_dir = data_dir
         self._user_dir = user_dir or data_dir
         self._last_changelog_displayed = str(update_checker.strict_current_version())
+
+        for game in RandovaniaGame.all_games():
+            self._set_field(f"game_{game.value}", None)
+
+    def __getattr__(self, item):
+        if isinstance(item, str) and item.startswith("game_"):
+            game_name = item[len("game_"):]
+            try:
+                game: RandovaniaGame = RandovaniaGame(game_name)
+            except ValueError:
+                raise AttributeError(item)
+
+            result = getattr(self, f"_{item}", None)
+            if result is None:
+                result = game.options.default_for_game(game)
+            return result
+
+        raise AttributeError(item)
 
     @classmethod
     def with_default_data_dir(cls) -> "Options":
@@ -274,16 +277,10 @@ class Options:
 
     def reset_to_defaults(self):
         self._check_editable_and_mark_dirty()
-        self._advanced_validate_seed_after = None
-        self._advanced_timeout_during_generation = None
-        self._auto_save_spoiler = None
-        self._per_game_options = None
-        self._displayed_alerts = None
-        self._dark_mode = None
-        self._experimental_games = None
-        self._game_backend = None
-        self._nintendont_ip = None
-        self._selected_tracker = None
+        for field_name in _SERIALIZER_FOR_FIELD.keys():
+            if field_name == "last_changelog_displayed":
+                continue
+            self._set_field(field_name, None)
 
     # Files paths
     @property
@@ -400,21 +397,14 @@ class Options:
             with self:
                 self.displayed_alerts = alerts
 
-    @property
-    def per_game_options(self):
-        return _return_with_default(self._per_game_options, lambda: {})
-
-    @per_game_options.setter
-    def per_game_options(self, value):
-        self._edit_field("per_game_options", value)
-
     def options_for_game(self, game: RandovaniaGame) -> PerGameOptions:
-        return self.per_game_options.get(game, PerGameOptions.default_for_game(game))
+        return getattr(self, f"game_{game.value}")
 
     def set_options_for_game(self, game: RandovaniaGame, per_game: PerGameOptions):
-        per_game_options = copy.copy(self.per_game_options)
-        per_game_options[game] = per_game
-        self.per_game_options = per_game_options
+        if type(per_game) != game.options:
+            raise ValueError(f"Expected {game.options}, got {type(per_game)}")
+
+        self._edit_field(f"game_{game.value}", per_game)
 
     # Advanced
 
