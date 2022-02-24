@@ -204,15 +204,6 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (SPEEDBOOST) 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Speed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Wide Beam Block - Adjacent": {
                             "type": "or",
                             "data": {
@@ -504,47 +495,6 @@
                         }
                     }
                 },
-                "Tile Group (SPEEDBOOST) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 18000.0,
-                        "y": 7600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_001",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (SPEEDBOOST) 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Wide Beam Block - Above": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Top Floor": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -571,76 +521,6 @@
                             }
                         },
                         "Wide Beam Block - Above": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 18000.0,
-                        "y": 5500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_027",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Save Station East": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST) 3": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Speed",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 18000.0,
-                        "y": 7000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_028",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (SPEEDBOOST) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST) 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -721,13 +601,6 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (SPEEDBOOST) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Tile Group (POWERBEAM)": {
                             "type": "and",
                             "data": {
@@ -735,11 +608,38 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (SPEEDBOOST) 3": {
+                        "Top Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Speed Booster blocks Destroyed": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -769,7 +669,38 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (SPEEDBOOST) 1": {
+                        "Wide Beam Block - Above": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Event - Speed Booster blocks Destroyed": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 17871.0,
+                        "y": 7400.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "DaironTeleportToArtariaSpeedBlocksDestroyed",
+                    "connections": {
+                        "Top Floor": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4189,24 +4120,100 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Vanilla requirements / tricks",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": "Vanilla",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Magnet",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": "Ways to get up there",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Grapple",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Spin Boost"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Tricks",
+                                                        "items": [
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "grapple beam and movement",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Grapple",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": "Spin boost and movement",
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Use Spin Boost"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Movement",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -4214,7 +4221,7 @@
                                     {
                                         "type": "or",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "Varia check",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -4226,12 +4233,29 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Cold",
-                                                        "amount": 100,
-                                                        "negate": false
+                                                        "comment": "heat runs",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Heat",
+                                                                    "amount": 300,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]

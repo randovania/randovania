@@ -10529,22 +10529,121 @@
                     },
                     "connections": {
                         "Start Point 3": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": "ways to get up",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Combat tricks",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Max difficulty",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "less than vanilla requirements",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Wide Beam"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Super Missile"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Charge Beam"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "Vanilla requirements",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Plasma Beam"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Ice Missile"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "PB cheese",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Combat",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
