@@ -9,7 +9,7 @@ import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
-from PySide2 import QtCore, QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 import randovania
 from randovania.games.game import RandovaniaGame
@@ -233,7 +233,7 @@ def start_logger(data_dir: Path, is_preview: bool):
 
 
 def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
-    os.environ['QT_API'] = "PySide2"
+    os.environ['QT_API'] = "PySide6"
     import qasync
     loop: asyncio.AbstractEventLoop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)

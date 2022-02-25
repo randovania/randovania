@@ -1,6 +1,6 @@
 import collections
 
-from PySide2 import QtWidgets, QtCore
+from PySide6 import QtWidgets, QtCore
 from mock import MagicMock, AsyncMock, call, ANY
 
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -102,7 +102,7 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
 
 async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game_description):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    mock_clipboard: MagicMock = mocker.patch("PySide2.QtWidgets.QApplication.clipboard")
+    mock_clipboard: MagicMock = mocker.patch("PySide6.QtWidgets.QApplication.clipboard")
 
     options = MagicMock()
     options.options_for_game.return_value.cosmetic_patches = CorruptionCosmeticPatches()

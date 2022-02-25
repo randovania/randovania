@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock, call, ANY
 
 import pytest
-from PySide2.QtCore import QPoint
+from PySide6.QtCore import QPoint
 
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
@@ -26,7 +26,7 @@ def _canvas(skip_qtbot, dread_game_description):
 
 def test_paintEvent(skip_qtbot, canvas, mocker):
     event = MagicMock()
-    mock_painter: MagicMock = mocker.patch("PySide2.QtGui.QPainter")
+    mock_painter: MagicMock = mocker.patch("PySide6.QtGui.QPainter")
 
     # Run
     canvas.paintEvent(event)
@@ -58,7 +58,7 @@ def test_mouseDoubleClickEvent_node(skip_qtbot, canvas):
 
 
 def test_contextMenuEvent(skip_qtbot, canvas, mocker):
-    mock_qmenu: MagicMock = mocker.patch("PySide2.QtWidgets.QMenu")
+    mock_qmenu: MagicMock = mocker.patch("PySide6.QtWidgets.QMenu")
 
     event = MagicMock()
     event.globalPos.return_value = QPoint(100, 200)

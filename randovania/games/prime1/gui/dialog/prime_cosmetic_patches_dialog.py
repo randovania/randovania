@@ -1,9 +1,9 @@
 import dataclasses
 from functools import partial
 
-from PySide2.QtCore import QSize
-from PySide2.QtGui import QColor
-from PySide2.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QLabel, QSlider, \
+from PySide6.QtCore import QSize
+from PySide6.QtGui import QColor
+from PySide6.QtWidgets import QColorDialog, QFrame, QLayout, QMessageBox, QSizePolicy, QWidget, QLabel, QSlider, \
     QCheckBox
 
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches

@@ -1,6 +1,6 @@
 import logging
 
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.gui.lib import async_dialog
 from randovania.interface_common.options import Options, DecodeFailedException
