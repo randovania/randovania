@@ -1,7 +1,7 @@
 import copy
 from typing import List, Any, Tuple, Optional
 
-from PySide2.QtCore import QTimer, Signal, QObject
+from PySide6.QtCore import QTimer, Signal, QObject
 from qasync import asyncSlot
 
 from randovania.game_connection.connection_backend import ConnectionBackend

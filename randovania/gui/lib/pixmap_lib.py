@@ -1,5 +1,5 @@
-from PySide2.QtCore import QSize, Qt
-from PySide2.QtGui import QPixmap, QImage, QPainter
+from PySide6.QtCore import QSize, Qt
+from PySide6.QtGui import QPixmap, QImage, QPainter
 
 
 def paint_with_opacity(pixmap: QPixmap, opacity: float):

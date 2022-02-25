@@ -1,5 +1,5 @@
-from PySide2.QtGui import QPixmap, QMouseEvent
-from PySide2.QtWidgets import QLabel, QWidget
+from PySide6.QtGui import QPixmap, QMouseEvent
+from PySide6.QtWidgets import QLabel, QWidget
 
 
 class ClickableLabel(QLabel):

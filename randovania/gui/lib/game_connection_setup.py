@@ -1,7 +1,7 @@
 from typing import Optional
 
 import wiiload
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets, QtGui
 from qasync import asyncSlot
 
 from randovania import get_data_path
@@ -14,10 +14,10 @@ from randovania.interface_common.options import Options, InfoAlert
 
 
 class GameConnectionSetup:
-    use_dolphin_backend: QtWidgets.QAction
-    use_nintendont_backend: QtWidgets.QAction
-    connect_to_game: QtWidgets.QAction
-    upload_nintendont_action: QtWidgets.QAction
+    use_dolphin_backend: QtGui.QAction
+    use_nintendont_backend: QtGui.QAction
+    connect_to_game: QtGui.QAction
+    upload_nintendont_action: QtGui.QAction
 
     def __init__(self, parent: QtWidgets.QWidget, label: QtWidgets.QLabel,
                  connection: GameConnection, options: Options):
@@ -31,7 +31,7 @@ class GameConnectionSetup:
 
     def create_backend_entries(self, menu: QtWidgets.QMenu):
         def _create_check(text: str, on_triggered, default: Optional[bool] = None):
-            action = QtWidgets.QAction(menu)
+            action = QtGui.QAction(menu)
             action.setText(text)
             action.setCheckable(True)
             if default is not None:
@@ -49,7 +49,7 @@ class GameConnectionSetup:
         menu.addAction(self.connect_to_game)
 
     def create_upload_nintendont_action(self, menu: QtWidgets.QMenu):
-        self.upload_nintendont_action = QtWidgets.QAction(menu)
+        self.upload_nintendont_action = QtGui.QAction(menu)
         self.upload_nintendont_action.setText("Upload Nintendont to Homebrew Channel")
         self.upload_nintendont_action.triggered.connect(self.on_upload_nintendont_action)
         menu.addAction(self.upload_nintendont_action)

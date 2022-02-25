@@ -6,7 +6,7 @@ import typing
 from pathlib import Path
 from typing import Iterator, Optional
 
-from PySide2 import QtWidgets, QtGui
+from PySide6 import QtWidgets, QtGui
 
 from randovania import get_data_path
 
@@ -212,7 +212,7 @@ def get_game_connection():
 
 
 def show_install_visual_cpp_redist(details: str):
-    from PySide2 import QtWidgets
+    from PySide6 import QtWidgets
 
     download_url = 'https://aka.ms/vs/16/release/vc_redist.x64.exe'
     support_url = 'https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads'
@@ -231,7 +231,7 @@ def show_install_visual_cpp_redist(details: str):
 
 
 def set_clipboard(text: str):
-    from PySide2 import QtWidgets
+    from PySide6 import QtWidgets
     QtWidgets.QApplication.clipboard().setText(text)
 
 

@@ -12,7 +12,7 @@ import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
-    from PySide2 import QtWidgets
+    from PySide6 import QtWidgets
 
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import BasePatchDataFactory

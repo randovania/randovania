@@ -4,8 +4,8 @@ import functools
 import re
 from typing import Dict
 
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import Node, PickupNode

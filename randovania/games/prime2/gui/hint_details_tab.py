@@ -1,7 +1,7 @@
 import collections
 import random
 
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description import default_database

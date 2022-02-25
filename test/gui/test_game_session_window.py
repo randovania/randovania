@@ -1,7 +1,7 @@
 import datetime
 
 import pytest
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 from mock import MagicMock, AsyncMock, ANY
 
 from randovania.game_connection.game_connection import GameConnection
@@ -465,7 +465,7 @@ async def test_save_iso(window, mocker, echoes_game_description):
 @pytest.mark.parametrize("is_member", [False, True])
 async def test_on_close_event(window: GameSessionWindow, mocker, is_member):
     # Setup
-    super_close_event = mocker.patch("PySide2.QtWidgets.QMainWindow.closeEvent")
+    super_close_event = mocker.patch("PySide6.QtWidgets.QMainWindow.closeEvent")
     event = MagicMock()
     window._game_session = MagicMock()
     window._game_session.players = [window.network_client.current_user.id] if is_member else []
