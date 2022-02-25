@@ -374,7 +374,6 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             identifier = self.game.world_list.identifier_for_node(self.node)
             return ConfigurableNode(
                 name, heal, location, description, extra, index,
-                dataclasses.replace(identifier, node_name=name),
             )
 
         elif node_type == LogbookNode:

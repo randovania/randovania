@@ -103,10 +103,8 @@ class TeleporterNode(Node):
 
 @dataclasses.dataclass(frozen=True)
 class ConfigurableNode(Node):
-    self_identifier: NodeIdentifier
-
     def __repr__(self):
         return "ConfigurableNode({!r})".format(self.name)
 
     def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
-        return context.patches.configurable_nodes[self.self_identifier]
+        return context.patches.configurable_nodes[context.node_provider.identifier_for_node(self)]
