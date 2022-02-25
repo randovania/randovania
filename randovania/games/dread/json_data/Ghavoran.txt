@@ -1326,7 +1326,7 @@ Extra - asset_id: collision_camera_021
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_004
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Event - Breakable (grapplepulloff1x2_000)
+  > Event - Breakable (grapplepulloff1x2_003)
       All of the following:
           # Due to Movement (Beginner) being impossible with these items, forced ice missile for them if coming fomr this dock
           Grapple Beam and Shoot Ice Missile
@@ -1384,8 +1384,8 @@ Extra - asset_id: collision_camera_021
   > E-Tank Alcove
       Trivial
 
-> Event - Breakable (grapplepulloff1x2_000); Heals? False
-  * Event Ghavoran - grapplepulloff1x2_000
+> Event - Breakable (grapplepulloff1x2_003); Heals? False
+  * Event Ghavoran - grapplepulloff1x2_003
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Energy Part Platform
@@ -1408,7 +1408,7 @@ Extra - asset_id: collision_camera_021
   > Pickup (Energy Part)
       Morph Ball
   > Energy Part Platform
-      Trivial
+      After Ghavoran - grapplepulloff1x2_003
 
 > Dock to Flipper Room; Heals? False
   * Open Passage to Flipper Room/Dock to Spin Boost Tower
@@ -1452,12 +1452,12 @@ Extra - asset_id: collision_camera_021
 > Energy Part Platform; Heals? False
   > Door to Save Station Center
       Trivial
-  > Event - Breakable (grapplepulloff1x2_000)
+  > Event - Breakable (grapplepulloff1x2_003)
       All of the following:
           Grapple Beam
           Movement (Beginner) or Shoot Ice Missile
   > Tile Group (MISSILE)
-      After Ghavoran - grapplepulloff1x2_000
+      After Ghavoran - grapplepulloff1x2_003
   > Upper Center Platform
       Any of the following:
           Simple IBJ or Use Spin Boost
@@ -1589,7 +1589,6 @@ Extra - asset_id: collision_camera_024
           Space Jump or Simple IBJ
   > Pickup Ledge
       Flash Shift and Walljump (Beginner) and Use Spin Boost
-
 > Door to Above Golzuna; Heals? False
   * Power Beam Door to Above Golzuna/Door to Golzuna Tower
   * Extra - actor_name: doorpowerpower_015
@@ -1907,7 +1906,7 @@ Extra - asset_id: collision_camera_025_B
   * Extra - right_shield_def: None
   > Door to Teleport to Burenia (Missile)
       All of the following:
-          Morph Ball and Before Ghavoran - grapplepulloff1x2_002
+          Morph Ball and Before Ghavoran - grapplepulloff1x2_001
           Grapple Beam or Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
   > Start Point
       Any of the following:
@@ -1923,19 +1922,17 @@ Extra - asset_id: collision_camera_025_B
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   > Door from Chozo Warrior Arena
-      Morph Ball and Before Ghavoran - grapplepulloff1x2_002
+      Morph Ball and Before Ghavoran - grapplepulloff1x2_001
   > Total Recharge
       Trivial
-  > Tile Group (SCREWATTACK)
-      Morph Ball
   > Dock to Transport to Ferenia
-      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - grapplepulloff1x2_002
-  > Event - Pull Grapple Block (Front) (grapplepulloff1x2_002)
+      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - grapplepulloff1x2_001
+  > Event - Pull Grapple Block (Front) (grapplepulloff1x2_001)
       Grapple Beam and After Ghavoran - Ferenia Transport Enky Left
   > Event - Ferenia Transport Enky Left
       Destroy Enky
   > Event - Ferenia Transport Enky Right
-      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - grapplepulloff1x2_002 and Destroy Enky
+      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - grapplepulloff1x2_001 and Destroy Enky
 
 > Door to Teleport to Burenia (Power Beam); Heals? False
   * Power Beam Door to Teleport to Burenia/Door from Total Recharge Station North
@@ -1963,6 +1960,14 @@ Extra - asset_id: collision_camera_025_B
       Trivial
   > Door to Teleport to Burenia (Power Beam)
       Trivial
+  > Tile Group (SCREWATTACK)
+      Any of the following:
+          Space Jump or Simple IBJ
+          All of the following:
+              Use Spin Boost
+              Any of the following:
+                  Walljump (Beginner)
+                  Slide and Slide Jump (Beginner)
   > Event - Storm Missile Gate
       Activate Storm Missile Locks
 
@@ -2005,16 +2010,16 @@ Extra - asset_id: collision_camera_025_B
 > Dock to Transport to Ferenia; Heals? False
   * Open Passage to Transport to Ferenia/Dock to Total Recharge Station North
   > Door to Teleport to Burenia (Missile)
-      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - grapplepulloff1x2_002
+      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - grapplepulloff1x2_001
   > Event - Ferenia Transport Enky Left
-      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - grapplepulloff1x2_002 and Destroy Enky
+      After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - grapplepulloff1x2_001 and Destroy Enky
   > Event - Ferenia Transport Enky Right
       Destroy Enky
-  > Event - Pull Grapple Block (Back) (grapplepulloff1x2_002)
+  > Event - Pull Grapple Block (Back) (grapplepulloff1x2_001)
       After Ghavoran - Ferenia Transport Enky Right and Break/Move Grapple Block from Behind
 
-> Event - Pull Grapple Block (Front) (grapplepulloff1x2_002); Heals? False
-  * Event Ghavoran - grapplepulloff1x2_002
+> Event - Pull Grapple Block (Front) (grapplepulloff1x2_001); Heals? False
+  * Event Ghavoran - grapplepulloff1x2_001
   > Door to Teleport to Burenia (Missile)
       Trivial
 
@@ -2040,8 +2045,8 @@ Extra - asset_id: collision_camera_025_B
   > Dock to Transport to Ferenia
       Trivial
 
-> Event - Pull Grapple Block (Back) (grapplepulloff1x2_002); Heals? False
-  * Event Ghavoran - grapplepulloff1x2_002
+> Event - Pull Grapple Block (Back) (grapplepulloff1x2_001); Heals? False
+  * Event Ghavoran - grapplepulloff1x2_001
   > Dock to Transport to Ferenia
       Trivial
 

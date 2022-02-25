@@ -6666,7 +6666,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
-                        "Event - Breakable (grapplepulloff1x2_000)": {
+                        "Event - Breakable (grapplepulloff1x2_003)": {
                             "type": "and",
                             "data": {
                                 "comment": "Due to Movement (Beginner) being impossible with these items, forced ice missile for them if coming fomr this dock",
@@ -7019,7 +7019,7 @@
                         }
                     }
                 },
-                "Event - Breakable (grapplepulloff1x2_000)": {
+                "Event - Breakable (grapplepulloff1x2_003)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -7032,7 +7032,7 @@
                         "actor_name": "grapplepulloff1x2_000",
                         "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
                     },
-                    "event_name": "s050_forest:default:grapplepulloff1x2_000",
+                    "event_name": "s050_forest:default:grapplepulloff1x2_003",
                     "connections": {
                         "Energy Part Platform": {
                             "type": "and",
@@ -7096,10 +7096,12 @@
                             }
                         },
                         "Energy Part Platform": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "s050_forest:default:grapplepulloff1x2_003",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -7498,7 +7500,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Breakable (grapplepulloff1x2_000)": {
+                        "Event - Breakable (grapplepulloff1x2_003)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7540,7 +7542,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s050_forest:default:grapplepulloff1x2_000",
+                                "name": "s050_forest:default:grapplepulloff1x2_003",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -9639,7 +9641,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -9773,7 +9775,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -9797,15 +9799,6 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (SCREWATTACK)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Dock to Transport to Ferenia": {
                             "type": "and",
                             "data": {
@@ -9815,7 +9808,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -9841,7 +9834,7 @@
                                 ]
                             }
                         },
-                        "Event - Pull Grapple Block (Front) (grapplepulloff1x2_002)": {
+                        "Event - Pull Grapple Block (Front) (grapplepulloff1x2_001)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -9884,7 +9877,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -9988,6 +9981,82 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Tile Group (SCREWATTACK)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    }
+                                ]
                             }
                         },
                         "Event - Storm Missile Gate": {
@@ -10147,7 +10216,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -10186,7 +10255,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "GhavoranFereniaTransportEnkyLeft",
+                                            "name": "GhavoranFereniaTransportEnkyRight",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -10195,7 +10264,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -10207,7 +10276,7 @@
                             "type": "template",
                             "data": "Destroy Enky"
                         },
-                        "Event - Pull Grapple Block (Back) (grapplepulloff1x2_002)": {
+                        "Event - Pull Grapple Block (Back) (grapplepulloff1x2_001)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -10230,7 +10299,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (Front) (grapplepulloff1x2_002)": {
+                "Event - Pull Grapple Block (Front) (grapplepulloff1x2_001)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -10240,7 +10309,7 @@
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "s050_forest:default:grapplepulloff1x2_002",
+                    "event_name": "s050_forest:default:grapplepulloff1x2_001",
                     "connections": {
                         "Door to Teleport to Burenia (Missile)": {
                             "type": "and",
@@ -10350,7 +10419,7 @@
                         }
                     }
                 },
-                "Event - Pull Grapple Block (Back) (grapplepulloff1x2_002)": {
+                "Event - Pull Grapple Block (Back) (grapplepulloff1x2_001)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -10360,7 +10429,7 @@
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "s050_forest:default:grapplepulloff1x2_002",
+                    "event_name": "s050_forest:default:grapplepulloff1x2_001",
                     "connections": {
                         "Dock to Transport to Ferenia": {
                             "type": "and",
