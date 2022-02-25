@@ -294,7 +294,6 @@ class WorldReader:
             elif node_type == "configurable_node":
                 return ConfigurableNode(
                     **generic_args,
-                    self_identifier=NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
                 )
 
             elif node_type == "logbook":

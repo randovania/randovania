@@ -166,7 +166,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     node_a = GenericNode("Node A", True, None, "", {}, 0)
     node_b = GenericNode("Node B", True, None, "", {}, 1)
     node_c = GenericNode("Node C", True, None, "", {}, 2)
-    translator_node = ConfigurableNode("Translator Gate", True, None, "", {}, 3, translator_identif)
+    translator_node = ConfigurableNode("Translator Gate", True, None, "", {}, 3)
 
     world_list = WorldList([
         World("Test World", [

@@ -126,16 +126,6 @@ class Editor:
                                 ),
                             )
 
-                    elif isinstance(node, ConfigurableNode):
-                        if node.self_identifier.area_identifier == old_identifier:
-                            new_node = dataclasses.replace(
-                                node,
-                                self_identifier=dataclasses.replace(
-                                    node.self_identifier,
-                                    area_identifier=new_identifier,
-                                ),
-                            )
-
                     if new_node is not None:
                         self.replace_node(area, node, new_node)
 
