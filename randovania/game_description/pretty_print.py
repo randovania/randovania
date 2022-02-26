@@ -164,11 +164,21 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             output.write("\n* Extra - {}: {}".format(extra_name, extra_field))
 
         for weakness in game.dock_weakness_database.get_by_type(dock_type):
-            output.write(f"\n  * {weakness.name}; Lock type: {weakness.lock_type.name}\n")
+            output.write(f"\n  * {weakness.name}\n")
             for extra_name, extra_field in weakness.extra.items():
-                output.write("\n      Extra - {}: {}".format(extra_name, extra_field))
-            for level, text in pretty_print_requirement(weakness.requirement):
+                output.write("      Extra - {}: {}\n".format(extra_name, extra_field))
+
+            output.write("      Open:\n")
+            for level, text in pretty_print_requirement(weakness.requirement, level=1):
                 output.write("      {}{}\n".format("    " * level, text))
+
+            if weakness.lock is not None:
+                output.write(f"      Lock type: {weakness.lock}\n")
+                for level, text in pretty_print_requirement(weakness.lock.requirement, level=1):
+                    output.write("      {}{}\n".format("    " * level, text))
+            else:
+                output.write("      No lock\n")
+            output.write("\n")
 
 
 def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:

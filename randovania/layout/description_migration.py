@@ -250,7 +250,6 @@ def _migrate_v10(json_dict: dict) -> dict:
             asset_id_conversion[game["game"]][asset_id]: hint
             for asset_id, hint in game["hints"].items()
         }
-        pass
 
     return json_dict
 

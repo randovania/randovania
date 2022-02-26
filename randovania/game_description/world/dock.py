@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import unique, Enum
-from typing import Iterator
+from typing import Iterator, Optional
 
 from frozendict import frozendict
 
@@ -9,21 +9,30 @@ from randovania.game_description.requirements import Requirement
 
 @unique
 class DockLockType(Enum):
-    FRONT_ALWAYS_BACK_FREE = 0
-    FRONT_BLAST_BACK_FREE_UNLOCK = 1
-    FRONT_BLAST_BACK_BLAST = 2
-    FRONT_BLAST_BACK_IMPOSSIBLE = 3
+    FRONT_BLAST_BACK_FREE_UNLOCK = "front-blast-back-free-unlock"
+    FRONT_BLAST_BACK_BLAST = "front-blast-back-blast"
+    FRONT_BLAST_BACK_IF_MATCHING = "front-blast-back-if-matching"
+    FRONT_BLAST_BACK_IMPOSSIBLE = "front-blast-back-impossible"
+
+
+@dataclass(frozen=True, order=True)
+class DockLock:
+    lock_type: DockLockType
+    requirement: Requirement
+
+    def __repr__(self):
+        return self.lock_type.name
 
 
 @dataclass(frozen=True, order=True)
 class DockWeakness:
     name: str
-    lock_type: DockLockType
     extra: frozendict
     requirement: Requirement
+    lock: Optional[DockLock]
 
     def __hash__(self):
-        return hash((self.name, self.lock_type, self.extra))
+        return hash((self.name, self.extra))
 
     def __repr__(self):
         return self.name

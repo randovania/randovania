@@ -1,5 +1,7 @@
 import dataclasses
+import typing
 
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.dock import DockType, DockWeakness
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -18,9 +20,11 @@ class DockNode(Node):
     TeleporterNode is expected to be used exceptionally, where it can be reasonable to list all of them in the
     UI for user selection (elevator rando, for example).
     """
-    default_connection: NodeIdentifier
     dock_type: DockType
+    default_connection: NodeIdentifier
     default_dock_weakness: DockWeakness
+    override_default_open_requirement: typing.Optional[Requirement]
+    override_default_lock_requirement: typing.Optional[Requirement]
 
     def __hash__(self):
         return hash((self.index, self.name, self.default_connection))

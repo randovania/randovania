@@ -340,9 +340,10 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
             return DockNode(
                 name, heal, location, description, extra, index,
-                self.game.world_list.identifier_for_node(connection_node),
                 self.dock_type_combo.currentData(),
+                self.game.world_list.identifier_for_node(connection_node),
                 self.dock_weakness_combo.currentData(),
+                None, None,
             )
 
         elif node_type == PickupNode:

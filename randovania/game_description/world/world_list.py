@@ -162,7 +162,9 @@ class WorldList(NodeProvider):
 
                 forward_weakness = patches.dock_weakness.get(self.identifier_for_node(node),
                                                              node.default_dock_weakness)
-                requirement = forward_weakness.requirement
+                reqs = [forward_weakness.requirement]
+                if forward_weakness.lock is not None:
+                    reqs.append(forward_weakness.lock.requirement)
 
                 # TODO: only add requirement if the blast shield has not been destroyed yet
 
@@ -170,15 +172,19 @@ class WorldList(NodeProvider):
                     # TODO: Target node is expected to be a dock. Should this error?
                     back_weakness = patches.dock_weakness.get(self.identifier_for_node(target_node),
                                                               target_node.default_dock_weakness)
-                    if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
-                        requirement = RequirementAnd([requirement, back_weakness.requirement])
+                    lock_type = None
+                    if back_weakness.lock is not None:
+                        lock_type = back_weakness.lock.lock_type
 
-                    elif back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE:
+                    if lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
+                        reqs.append(back_weakness.lock.requirement)
+
+                    elif lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE:
                         # FIXME: this should check if we've already openend the back
                         if back_weakness != forward_weakness:
-                            requirement = Requirement.impossible()
+                            reqs.append(Requirement.impossible())
 
-                yield target_node, requirement
+                yield target_node, RequirementAnd(reqs).simplify() if len(reqs) != 1 else reqs[0]
 
             except ValueError:
                 # TODO: fix data to not having docks pointing to nothing
