@@ -58,7 +58,7 @@ class Node:
     def is_resource_node(self) -> bool:
         return False
 
-    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext) -> Requirement:
         return Requirement.trivial()
 
 
@@ -106,5 +106,5 @@ class ConfigurableNode(Node):
     def __repr__(self):
         return "ConfigurableNode({!r})".format(self.name)
 
-    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext) -> Requirement:
         return context.patches.configurable_nodes[context.node_provider.identifier_for_node(self)]
