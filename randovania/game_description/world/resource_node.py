@@ -37,9 +37,9 @@ class PickupNode(ResourceNode):
     def __repr__(self):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
-    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext) -> Requirement:
         # FIXME: using non-resource as key in CurrentResources
-        if current_resources.get("add_self_as_requirement_to_resources") == 1:
+        if context.current_resources.get("add_self_as_requirement_to_resources") == 1:
             return ResourceRequirement(self.pickup_index, 1, False)
         else:
             return Requirement.trivial()
@@ -66,8 +66,8 @@ class EventNode(ResourceNode):
     def __repr__(self):
         return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
 
-    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
-        if current_resources.get("add_self_as_requirement_to_resources") == 1:
+    def requirement_to_leave(self, context: NodeContext) -> Requirement:
+        if context.current_resources.get("add_self_as_requirement_to_resources") == 1:
             return ResourceRequirement(self.event, 1, False)
         else:
             return Requirement.trivial()
@@ -126,7 +126,7 @@ class LogbookNode(ResourceNode):
             f"/{extra}" if extra is not None else ""
         )
 
-    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext) -> Requirement:
         items = []
         if self.scan_visor is not None:
             items.append(ResourceRequirement(self.scan_visor, 1, False))
@@ -166,7 +166,7 @@ class PlayerShipNode(ResourceNode):
     is_unlocked: Requirement
     item_to_summon: ItemResourceInfo
 
-    def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
+    def requirement_to_leave(self, context: NodeContext) -> Requirement:
         return RequirementAnd([self.is_unlocked, ResourceRequirement(self.resource(context), 1, False)])
 
     def resource(self, context: NodeContext) -> NodeIdentifier:

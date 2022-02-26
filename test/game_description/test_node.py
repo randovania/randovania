@@ -27,9 +27,13 @@ def test_logbook_node_requirements_to_leave(logbook_node,
                                             empty_patches):
     # Setup
     has_translator, scan_visor, translator, node = logbook_node
+    node_provider = MagicMock()
+
+    def ctx(resources):
+        return NodeContext(empty_patches, resources, MagicMock(), node_provider)
 
     # Run
-    to_leave = node.requirement_to_leave(empty_patches, {})
+    to_leave = node.requirement_to_leave(ctx({}))
 
     # Assert
     assert not to_leave.satisfied({}, 99, None)

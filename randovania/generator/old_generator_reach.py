@@ -91,7 +91,7 @@ class OldGeneratorReach(GeneratorReach):
 
     def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
         extra_requirement = _extra_requirement_for_node(self._game, self.node_context(), node)
-        requirement_to_leave = node.requirement_to_leave(self._state.node_context(), self._state.resources)
+        requirement_to_leave = node.requirement_to_leave(self._state.node_context())
 
         for target_node, requirement in self._game.world_list.potential_nodes_from(node, self.state.patches):
             if target_node is None:

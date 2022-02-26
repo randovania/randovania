@@ -51,6 +51,7 @@ class ResolverReach:
 
         checked_nodes: Dict[Node, int] = {}
         database = initial_state.resource_database
+        context = initial_state.node_context()
 
         # Keys: nodes to check
         # Value: how much energy was available when visiting that node
@@ -75,7 +76,7 @@ class ResolverReach:
             if node != initial_state.node:
                 reach_nodes[node] = energy
 
-            requirement_to_leave = node.requirement_to_leave(initial_state.node_context(), initial_state.resources)
+            requirement_to_leave = node.requirement_to_leave(context)
 
             for target_node, requirement in logic.game.world_list.potential_nodes_from(node, initial_state.patches):
                 if target_node is None:
