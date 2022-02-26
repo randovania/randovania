@@ -123,10 +123,12 @@ class OldGeneratorReach(GeneratorReach):
                     # print("* Queue path to", self.game.world_list.node_name(target_node))
                     paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
-                    # print("* Unreachable", self.game.world_list.node_name(target_node), requirement)
+                    # print("* Unreachable", self.game.world_list.node_name(target_node), ", missing:",
+                    #       requirement.as_str)
                     self._unreachable_paths[path.node, target_node] = requirement
             # print("> done")
 
+        # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
 
     def _can_advance(self,
@@ -140,7 +142,7 @@ class OldGeneratorReach(GeneratorReach):
         # We can't advance past a resource node if we haven't collected it
         if node.is_resource_node:
             assert isinstance(node, ResourceNode)
-            return self._state.has_resource(node.resource(self.node_context()))
+            return node.is_collected(self.node_context())
         else:
             return True
 
