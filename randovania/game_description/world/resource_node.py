@@ -166,10 +166,6 @@ class PlayerShipNode(ResourceNode):
     is_unlocked: Requirement
     item_to_summon: ItemResourceInfo
 
-    @property
-    def visor_requirement(self):
-        return ResourceRequirement(self.item_to_summon, 1, False)
-
     def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
         return RequirementAnd([self.is_unlocked, ResourceRequirement(self.resource(context), 1, False)])
 
