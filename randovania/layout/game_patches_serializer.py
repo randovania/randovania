@@ -13,7 +13,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.resource_node import PickupNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration

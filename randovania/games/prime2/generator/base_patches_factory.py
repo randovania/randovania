@@ -7,7 +7,7 @@ from randovania.game_description.requirements import (RequirementAnd,
                                                       ResourceRequirement)
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import (ConfigurableNode)
+from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFactory, MissingRng)

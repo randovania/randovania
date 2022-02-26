@@ -14,9 +14,14 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import MissingResource, find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import Node, GenericNode, DockNode, TeleporterNode, ConfigurableNode, \
-    NodeLocation
-from randovania.game_description.world.resource_node import PickupNode, EventNode, LoreType, LogbookNode, PlayerShipNode
+from randovania.game_description.world.node import Node, GenericNode, NodeLocation
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world import World
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.generated.node_details_popup_ui import Ui_NodeDetailsPopup

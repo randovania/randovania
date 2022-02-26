@@ -8,7 +8,8 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import CurrentResources, \
     add_resource_gain_to_current_resources
 from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.resource_node import PlayerShipNode, ResourceNode
+from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.world.player_ship_node import PlayerShipNode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.trick_level import LayoutTrickLevel

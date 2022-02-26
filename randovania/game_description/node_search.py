@@ -3,8 +3,10 @@ from typing import Dict, Optional
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode
-from randovania.game_description.world.resource_node import PickupNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 
 

@@ -23,7 +23,10 @@ from randovania.game_description.resources.resource_info import add_resource_gai
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node, ConfigurableNode, TeleporterNode, DockNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World

@@ -5,7 +5,7 @@ from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.resource_node import LogbookNode
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.games.cave_story.exporter.patch_data_factory import get_hints
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab

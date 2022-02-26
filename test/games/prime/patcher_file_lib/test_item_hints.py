@@ -14,7 +14,8 @@ from randovania.game_description.hint import (
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.resource_node import PickupNode, LogbookNode
+from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame

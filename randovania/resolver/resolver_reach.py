@@ -76,7 +76,7 @@ class ResolverReach:
             if node != initial_state.node:
                 reach_nodes[node] = energy
 
-            requirement_to_leave = node.requirement_to_leave(context)
+            requirement_to_leave = node.requirement_to_leave(initial_state.node_context())
 
             for target_node, requirement in logic.game.world_list.potential_nodes_from(node, initial_state.patches):
                 if target_node is None:

@@ -13,7 +13,8 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeaknessDatabase
-from randovania.game_description.world.node import GenericNode, ConfigurableNode
+from randovania.game_description.world.node import GenericNode
+from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
