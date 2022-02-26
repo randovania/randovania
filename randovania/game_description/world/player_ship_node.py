@@ -1,11 +1,20 @@
+from __future__ import annotations
+
 import dataclasses
+import typing
 
 from randovania.game_description.requirements import Requirement, RequirementAnd, ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGain
-from randovania.game_description.world.node import NodeContext
+from randovania.game_description.world.node import NodeContext, Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
+
+
+def _all_ship_nodes(context: NodeContext) -> typing.Iterator[PlayerShipNode]:
+    for node in context.node_provider.all_nodes:
+        if isinstance(node, PlayerShipNode):
+            yield node
 
 
 @dataclasses.dataclass(frozen=True)
@@ -31,12 +40,16 @@ class PlayerShipNode(ResourceNode):
 
         return any(
             current_resources.get(node.resource(context), 0) == 0
-            for node in context.node_provider.all_nodes
-            if isinstance(node, PlayerShipNode) and node.is_unlocked.satisfied(current_resources, 0, context.database)
+            for node in _all_ship_nodes(context)
+            if node.is_unlocked.satisfied(current_resources, 0, context.database)
         )
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        for node in context.node_provider.all_nodes:
-            if isinstance(node, PlayerShipNode) and node.is_unlocked.satisfied(
-                    context.current_resources, 0, context.database):
+        for node in _all_ship_nodes(context):
+            if node.is_unlocked.satisfied(context.current_resources, 0, context.database):
                 yield node.resource(context), 1
+
+    def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
+        for node in _all_ship_nodes(context):
+            if node != self:
+                yield node, node.is_unlocked

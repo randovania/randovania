@@ -9,14 +9,34 @@ from randovania.game_description.requirements import Requirement
 
 @unique
 class DockLockType(Enum):
+    """
+    Represents how dock locks handle being opened from the back. This usually varies per-game.
+
+    FRONT_BLAST_BACK_FREE_UNLOCK:
+        opening from the back removes the lock permanently. Used by Metroid Prime 2: Echoes.
+
+    FRONT_BLAST_BACK_BLAST:
+        blocks access from the back, but can be destroyed normally from the back. Used by Metroid Prime.
+
+    FRONT_BLAST_BACK_IMPOSSIBLE:
+        blocks access from the back, must be opened from that side.
+
+    FRONT_BLAST_BACK_IF_MATCHING:
+        blocks access from the back. Can be destroyed from the back if both sides of the dock matches.
+        Used by Metroid Dread.
+    """
     FRONT_BLAST_BACK_FREE_UNLOCK = "front-blast-back-free-unlock"
     FRONT_BLAST_BACK_BLAST = "front-blast-back-blast"
-    FRONT_BLAST_BACK_IF_MATCHING = "front-blast-back-if-matching"
     FRONT_BLAST_BACK_IMPOSSIBLE = "front-blast-back-impossible"
+    FRONT_BLAST_BACK_IF_MATCHING = "front-blast-back-if-matching"
 
 
 @dataclass(frozen=True, order=True)
 class DockLock:
+    """
+    Represents the dock has a lock that must be destroyed before it can be used.
+    Used by things like `Door locked by Missiles`.
+    """
     lock_type: DockLockType
     requirement: Requirement
 
@@ -26,6 +46,12 @@ class DockLock:
 
 @dataclass(frozen=True, order=True)
 class DockWeakness:
+    """
+    Represents one specific type of dock with an specific requirement. Can be things like `Door locked by Plasma Beam`,
+    `Tunnel you can slide through`, `Portal activated by Scan Visor`.
+    The requirements for the weakness is required for every single use, but
+    only from the front. The lock's requirement (if a lock is present) only needs to be satisfied once.
+    """
     name: str
     extra: frozendict
     requirement: Requirement
@@ -44,6 +70,7 @@ class DockWeakness:
 
 @dataclass(frozen=True)
 class DockType:
+    """Represents a kind of dock for the game. Can be things like Door, Tunnel, Portal."""
     short_name: str
     long_name: str
     extra: frozendict

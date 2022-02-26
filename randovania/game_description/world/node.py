@@ -66,6 +66,7 @@ class Node:
         """
         yield from []
 
+
 @dataclasses.dataclass(frozen=True)
 class GenericNode(Node):
     pass

@@ -6,6 +6,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeakness, DockLockType, DockType, DockLock
 from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -30,10 +31,16 @@ def test_connections_from_dock_blast_shield(empty_patches):
 
     world = World("W", [area_1, area_2], {})
     world_list = WorldList([world])
+    context = NodeContext(
+        patches=empty_patches,
+        current_resources={},
+        database=None,
+        node_provider=world_list,
+    )
 
     # Run
-    result_1 = list(world_list.connections_from(node_1, empty_patches))
-    result_2 = list(world_list.connections_from(node_2, empty_patches))
+    result_1 = list(node_1.connections_from(context))
+    result_2 = list(node_2.connections_from(context))
 
     # Assert
     assert result_1 == [
