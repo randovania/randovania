@@ -220,7 +220,7 @@ def refresh_all_logic(args):
             if errors:
                 logging.warning("Integrity errors for %s:\n%s", game.long_name,
                                 "\n".join(errors))
-                if not game.data.development_state.is_stable:
+                if game.data.development_state.is_stable:
                     should_stop = True
 
     if should_stop:
