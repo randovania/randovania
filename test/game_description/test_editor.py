@@ -6,7 +6,7 @@ from randovania.game_description import data_reader
 from randovania.game_description.editor import Editor
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import DockNode
+from randovania.game_description.world.dock_node import DockNode
 
 
 @pytest.fixture(name="game_editor")

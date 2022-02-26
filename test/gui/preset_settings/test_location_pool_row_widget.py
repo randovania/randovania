@@ -1,7 +1,7 @@
 import pytest
 
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.world.resource_node import PickupNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
 from randovania.interface_common.preset_editor import PresetEditor

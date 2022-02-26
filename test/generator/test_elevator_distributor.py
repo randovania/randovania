@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator import elevator_distributor
 from randovania.generator.elevator_distributor import ElevatorHelper

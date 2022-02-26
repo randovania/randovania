@@ -4,7 +4,7 @@ from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import QComboBox
 
 from randovania.game_description import default_database
-from randovania.game_description.world.node import ConfigurableNode
+from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data

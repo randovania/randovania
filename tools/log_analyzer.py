@@ -12,7 +12,8 @@ from statistics import stdev
 from typing import Dict, Tuple, Optional, List, Iterable, Set
 
 from randovania.game_description.default_database import game_description_for
-from randovania.game_description.world.resource_node import PickupNode, LogbookNode
+from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.layout_description import LayoutDescription
 

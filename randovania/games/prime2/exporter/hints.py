@@ -8,7 +8,7 @@ from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.resource_node import LogbookNode
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.common.prime_family.exporter.hint_namer import colorize_text
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer

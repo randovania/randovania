@@ -17,7 +17,7 @@ from randovania.game_description.resources.pickup_entry import (
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.resource_node import PickupNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator

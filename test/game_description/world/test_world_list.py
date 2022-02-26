@@ -5,7 +5,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeakness, DockLockType, DockType
-from randovania.game_description.world.node import DockNode
+from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
