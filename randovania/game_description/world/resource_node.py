@@ -169,8 +169,8 @@ class PlayerShipNode(ResourceNode):
     def requirement_to_leave(self, context: NodeContext, current_resources: CurrentResources) -> Requirement:
         return RequirementAnd([self.is_unlocked, ResourceRequirement(self.resource(context), 1, False)])
 
-    def resource(self, context: NodeContext) -> SimpleResourceInfo:
-        return SimpleResourceInfo(f"Ship Node {self.index}", f"Ship{self.index}", ResourceType.NODE_IDENTIFIER)
+    def resource(self, context: NodeContext) -> NodeIdentifier:
+        return context.node_provider.identifier_for_node(self)
 
     def can_collect(self, context: NodeContext) -> bool:
         """
