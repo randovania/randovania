@@ -8474,7 +8474,7 @@
                 "asset_id": "collision_camera_021"
             },
             "nodes": {
-                "Door from Navigation Station North": {
+                "Door to Navigation Station North": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -8497,7 +8497,7 @@
                         "node_name": "Door to David Jaffe Room"
                     },
                     "dock_type": "door",
-                    "dock_weakness": "Access Closed",
+                    "dock_weakness": "Access Open",
                     "connections": {
                         "Start Point": {
                             "type": "and",
@@ -8578,11 +8578,13 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door from Navigation Station North": {
-                            "type": "and",
+                        "Door to Navigation Station North": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "AccessClosedDavidJaffe",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Door to Thermal Door Tutorial": {
@@ -16684,7 +16686,7 @@
                     "destination": {
                         "world_name": "Artaria",
                         "area_name": "David Jaffe Room",
-                        "node_name": "Door from Navigation Station North"
+                        "node_name": "Door to Navigation Station North"
                     },
                     "dock_type": "door",
                     "dock_weakness": "Charge Beam Door",
@@ -16694,6 +16696,39 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Event - Unlock David Jaffe Room": {
+                            "type": "or",
+                            "data": {
+                                "comment": "Temporary requirement until dock works properly",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Charge Beam"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -16841,6 +16876,27 @@
                             }
                         },
                         "Door to Arbitrary Enky Room (Thermal)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Unlock David Jaffe Room": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 12850.0,
+                        "y": 3200.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "AccessClosedDavidJaffe",
+                    "connections": {
+                        "Door to David Jaffe Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,

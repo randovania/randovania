@@ -213,7 +213,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Spider Magnet Elevator": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -247,7 +247,7 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door to Robot Fight Arena": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -362,6 +362,32 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -461,12 +487,49 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "and",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WBJ",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Perform Water Bomb Jump"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "WBJ",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Perform Water Cross Jump"
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -529,8 +592,8 @@
                                                             {
                                                                 "type": "resource",
                                                                 "data": {
-                                                                    "type": "items",
-                                                                    "name": "Flash",
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
                                                                     "amount": 1,
                                                                     "negate": false
                                                                 }
@@ -538,6 +601,41 @@
                                                             {
                                                                 "type": "template",
                                                                 "data": "Use Spin Boost"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
@@ -590,6 +688,13 @@
                     },
                     "connections": {
                         "Door to Robot Fight Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Spider Magnet Elevator": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2542,6 +2647,32 @@
                                     {
                                         "type": "template",
                                         "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -5963,6 +6094,53 @@
                     "dock_type": "door",
                     "dock_weakness": "Plasma Beam Door",
                     "connections": {
+                        "Event - Breakable (grapplepulloff1x2_003)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Due to Movement (Beginner) being impossible with these items, forced ice missile for them if coming fomr this dock",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Ice Missile"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Dock to Flipper Room": {
                             "type": "and",
                             "data": {
@@ -5973,41 +6151,118 @@
                         "Energy Part Platform": {
                             "type": "or",
                             "data": {
-                                "comment": null,
+                                "comment": "Adjusted logic here due to Movement (Beginner) being impossible from here for the grapple block with certain items",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Magnet",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
                                         "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSuperRotatableEnky",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Flash",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Slide",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Slide",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6192,7 +6447,7 @@
                         }
                     }
                 },
-                "Event - Breakable (grapplepulloff1x2_000)": {
+                "Event - Breakable (grapplepulloff1x2_003)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -6205,7 +6460,7 @@
                         "actor_name": "grapplepulloff1x2_000",
                         "actor_def": "actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad"
                     },
-                    "event_name": "s050_forest:default:grapplepulloff1x2_000",
+                    "event_name": "s050_forest:default:grapplepulloff1x2_003",
                     "connections": {
                         "Energy Part Platform": {
                             "type": "and",
@@ -6269,10 +6524,12 @@
                             }
                         },
                         "Energy Part Platform": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "s050_forest:default:grapplepulloff1x2_003",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -6318,12 +6575,29 @@
                                         "data": "Simple IBJ"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSuperRotatableEnky",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -6333,6 +6607,32 @@
                                             "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6368,6 +6668,10 @@
                                     {
                                         "type": "template",
                                         "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
                                     }
                                 ]
                             }
@@ -6475,6 +6779,15 @@
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -6489,12 +6802,100 @@
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranAmmoRechargeEnkyAbove",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -6527,7 +6928,7 @@
                                 "items": []
                             }
                         },
-                        "Event - Breakable (grapplepulloff1x2_000)": {
+                        "Event - Breakable (grapplepulloff1x2_003)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6569,7 +6970,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s050_forest:default:grapplepulloff1x2_000",
+                                "name": "s050_forest:default:grapplepulloff1x2_003",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -6586,6 +6987,32 @@
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranSuperRotatableEnky",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -8416,7 +8843,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -8440,15 +8867,6 @@
                                                     "data": {
                                                         "type": "items",
                                                         "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
                                                         "amount": 1,
                                                         "negate": false
                                                     }
@@ -8490,23 +8908,35 @@
                                 ]
                             }
                         },
-                        "Door to Teleport to Burenia (Power Beam)": {
+                        "Start Point": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "IBJ",
-                                            "amount": 2,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
                                     }
                                 ]
                             }
@@ -8547,7 +8977,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": true
                                         }
@@ -8571,15 +9001,6 @@
                                 "items": []
                             }
                         },
-                        "Tile Group (SCREWATTACK)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Dock to Transport to Ferenia": {
                             "type": "and",
                             "data": {
@@ -8589,7 +9010,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8615,7 +9036,7 @@
                                 ]
                             }
                         },
-                        "Event - Pull Grapple Block (grapplepulloff1x2_002)": {
+                        "Event - Pull Grapple Block (Front) (grapplepulloff1x2_001)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8658,7 +9079,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8702,16 +9123,12 @@
                     "dock_type": "door",
                     "dock_weakness": "Power Beam Door",
                     "connections": {
-                        "Door from Chozo Warrior Arena": {
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Storm Missile Gate": {
-                            "type": "template",
-                            "data": "Activate Storm Missile Locks"
                         }
                     }
                 },
@@ -8754,12 +9171,99 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
+                        "Door from Chozo Warrior Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Door to Teleport to Burenia (Power Beam)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Tile Group (SCREWATTACK)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Storm Missile Gate": {
+                            "type": "template",
+                            "data": "Activate Storm Missile Locks"
                         }
                     }
                 },
@@ -8914,7 +9418,7 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
                                             "amount": 1,
                                             "negate": false
                                         }
@@ -8940,7 +9444,41 @@
                                 ]
                             }
                         },
-                        "Event - Pull Grapple Block (grapplepulloff1x2_002)": {
+                        "Event - Ferenia Transport Enky Left": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Destroy Enky"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranFereniaTransportEnkyRight",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s050_forest:default:grapplepulloff1x2_001",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Event - Ferenia Transport Enky Right": {
+                            "type": "template",
+                            "data": "Destroy Enky"
+                        },
+                        "Event - Pull Grapple Block (Back) (grapplepulloff1x2_001)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8960,44 +9498,10 @@
                                     }
                                 ]
                             }
-                        },
-                        "Event - Ferenia Transport Enky Left": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Destroy Enky"
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "GhavoranFereniaTransportEnkyLeft",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s050_forest:default:grapplepulloff1x2_002",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Event - Ferenia Transport Enky Right": {
-                            "type": "template",
-                            "data": "Destroy Enky"
                         }
                     }
                 },
-                "Event - Pull Grapple Block (grapplepulloff1x2_002)": {
+                "Event - Pull Grapple Block (Front) (grapplepulloff1x2_001)": {
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
@@ -9007,7 +9511,7 @@
                     },
                     "description": "",
                     "extra": {},
-                    "event_name": "s050_forest:default:grapplepulloff1x2_002",
+                    "event_name": "s050_forest:default:grapplepulloff1x2_001",
                     "connections": {
                         "Door to Teleport to Burenia (Missile)": {
                             "type": "and",
@@ -9107,6 +9611,27 @@
                     "description": "",
                     "extra": {},
                     "event_name": "GhavoranFereniaTransportEnkyRight",
+                    "connections": {
+                        "Dock to Transport to Ferenia": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Pull Grapple Block (Back) (grapplepulloff1x2_001)": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 9072.39,
+                        "y": 2693.52,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "s050_forest:default:grapplepulloff1x2_001",
                     "connections": {
                         "Dock to Transport to Ferenia": {
                             "type": "and",
