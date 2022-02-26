@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import Optional, Set
 
 import pypresence
-from PySide2.QtCore import Signal
-from PySide2.QtWidgets import QWidget
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QWidget
 
 import randovania
 from randovania.gui.lib import async_dialog

@@ -2,7 +2,7 @@ from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from randovania.games.game import RandovaniaGame
 from randovania.games.super_metroid.exporter.game_exporter import SuperMetroidGameExportParams

@@ -1,8 +1,8 @@
 import re
 from typing import Iterator, Dict
 
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QWidget
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QWidget
 
 from randovania.game_description import default_database
 from randovania.game_description.requirements import RequirementSet, ResourceRequirement

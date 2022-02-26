@@ -1,7 +1,7 @@
 from typing import Tuple
 
-from PySide2.QtCore import Signal
-from PySide2.QtWidgets import QGraphicsOpacityEffect, QWidget
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_database import ResourceDatabase

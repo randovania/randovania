@@ -1,9 +1,9 @@
 import re
 from typing import Optional, List, Tuple
 
-from PySide2.QtCore import Qt
-from PySide2.QtGui import QIntValidator
-from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox, \
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QIntValidator
+from PySide6.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLabel, QGridLayout, QHBoxLayout, QComboBox, \
     QLineEdit
 
 import randovania.game_description.pretty_print

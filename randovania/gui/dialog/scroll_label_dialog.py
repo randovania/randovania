@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.gui.generated.scroll_label_dialog_ui import Ui_ScrollLabelDialog
 from randovania.gui.lib import common_qt_lib

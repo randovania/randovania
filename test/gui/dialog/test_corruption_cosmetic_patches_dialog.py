@@ -1,4 +1,4 @@
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from randovania.games.prime3.gui.dialog.corruption_cosmetic_patches_dialog import CorruptionCosmeticPatchesDialog
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches, CorruptionSuit

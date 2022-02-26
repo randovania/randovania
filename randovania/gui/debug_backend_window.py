@@ -3,8 +3,8 @@ import random
 import struct
 from typing import List, Optional, Dict
 
-from PySide2 import QtWidgets, QtCore
-from PySide2.QtWidgets import QMainWindow
+from PySide6 import QtWidgets, QtCore
+from PySide6.QtWidgets import QMainWindow
 from qasync import asyncSlot
 
 from randovania.game_connection.connector.echoes_remote_connector import EchoesRemoteConnector

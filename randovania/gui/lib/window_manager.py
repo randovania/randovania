@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from PySide2.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.close_event_widget import CloseEventWidget

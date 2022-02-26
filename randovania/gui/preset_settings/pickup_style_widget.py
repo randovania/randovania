@@ -1,6 +1,6 @@
-from PySide2 import QtWidgets
-from PySide2.QtCore import Signal
-from PySide2.QtWidgets import QDialog, QWidget
+from PySide6 import QtWidgets
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QDialog, QWidget
 
 from randovania.gui.generated.widget_pickup_style_ui import Ui_PickupStyleWidget
 from randovania.interface_common.preset_editor import PresetEditor

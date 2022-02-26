@@ -4,9 +4,9 @@ import re
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui, QtWidgets
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
+from PySide6 import QtGui, QtWidgets
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check

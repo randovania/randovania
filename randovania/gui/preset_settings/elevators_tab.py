@@ -3,7 +3,7 @@ import dataclasses
 import functools
 from typing import Dict, Optional
 
-from PySide2 import QtWidgets, QtCore
+from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.area import Area

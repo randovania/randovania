@@ -1,7 +1,7 @@
 import dataclasses
 from typing import Iterable, Optional
 
-from PySide2.QtWidgets import *
+from PySide6.QtWidgets import *
 
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame

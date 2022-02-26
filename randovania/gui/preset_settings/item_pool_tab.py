@@ -3,7 +3,7 @@ import dataclasses
 from functools import partial
 from typing import Dict, Tuple, List
 
-from PySide2 import QtWidgets, QtCore
+from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo

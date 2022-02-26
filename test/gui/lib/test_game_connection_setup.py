@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 from mock import MagicMock, AsyncMock
 
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
@@ -58,7 +58,7 @@ async def test_on_upload_nintendont_action_no_dol(setup, mocker, tmpdir):
 
 
 async def test_on_upload_nintendont_action_with_dol(setup, mocker, tmpdir):
-    mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")
+    mock_message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
     mocker.patch("randovania.gui.lib.game_connection_setup.get_data_path", return_value=Path(tmpdir))
     execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.warning", new_callable=AsyncMock)
     mock_upload = mocker.patch("wiiload.upload_file", new_callable=AsyncMock)

@@ -3,8 +3,8 @@ import math
 import os
 from typing import Optional, Type, NamedTuple, Union
 
-from PySide2 import QtWidgets, QtGui, QtCore
-from PySide2.QtCore import QPointF, QRectF, QSizeF, Signal
+from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
 
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.area import Area
@@ -84,15 +84,15 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
         super().__init__(parent)
 
-        self._show_all_connections_action = QtWidgets.QAction("Show all node connections", self)
+        self._show_all_connections_action = QtGui.QAction("Show all node connections", self)
         self._show_all_connections_action.setCheckable(True)
         self._show_all_connections_action.setChecked(False)
         self._show_all_connections_action.triggered.connect(self.update)
 
-        self._create_node_action = QtWidgets.QAction("Create node here", self)
+        self._create_node_action = QtGui.QAction("Create node here", self)
         self._create_node_action.triggered.connect(self._on_create_node)
 
-        self._move_node_action = QtWidgets.QAction("Move selected node here", self)
+        self._move_node_action = QtGui.QAction("Move selected node here", self)
         self._move_node_action.triggered.connect(self._on_move_node)
 
     def _on_create_node(self):
@@ -297,7 +297,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
             menu.addMenu(sub_menu)
 
         if not areas_at_mouse:
-            sub_menu = QtWidgets.QAction("No areas here", self)
+            sub_menu = QtGui.QAction("No areas here", self)
             sub_menu.setEnabled(False)
             menu.addAction(sub_menu)
 
@@ -345,7 +345,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
                 menu.addMenu(sub_menu)
 
         if not nodes_at_mouse:
-            sub_menu = QtWidgets.QAction("No other nodes here", self)
+            sub_menu = QtGui.QAction("No other nodes here", self)
             sub_menu.setEnabled(False)
             menu.addAction(sub_menu)
 

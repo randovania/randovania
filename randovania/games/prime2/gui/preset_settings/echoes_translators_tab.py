@@ -1,7 +1,7 @@
 import functools
 
-from PySide2 import QtWidgets, QtCore
-from PySide2.QtWidgets import QComboBox
+from PySide6 import QtWidgets, QtCore
+from PySide6.QtWidgets import QComboBox
 
 from randovania.game_description import default_database
 from randovania.game_description.world.node import ConfigurableNode
