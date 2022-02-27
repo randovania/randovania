@@ -1,4 +1,4 @@
-def gui_tuples():
+def tuples():
     return [
         (
             "Progressive Beam",

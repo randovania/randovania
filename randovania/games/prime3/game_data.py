@@ -2,8 +2,7 @@ from randovania.games import game
 from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
 from randovania.games.prime3.layout.preset_describer import (
-    corruption_format_params, corruption_unexpected_items,
-    corruption_expected_items
+    CorruptionPresetDescriber
 )
 
 
@@ -13,14 +12,14 @@ def _options():
 
 
 def _gui() -> game.GameGui:
-    from randovania.games.prime3.item_database import prime3_progressive_items
+    from randovania.games.prime3.item_database import progressive_items
     from randovania.games.prime3 import gui
 
     return game.GameGui(
         tab_provider=gui.prime3_preset_tabs,
         cosmetic_dialog=gui.CorruptionCosmeticPatchesDialog,
         export_dialog=gui.CorruptionGameExportDialog,
-        progressive_item_gui_tuples=prime3_progressive_items.gui_tuples(),
+        progressive_item_gui_tuples=progressive_items.tuples(),
         help_widget=lambda: gui.CorruptionHelpWidget(),
     )
 
@@ -65,11 +64,7 @@ game_data: game.GameData = game.GameData(
     layout=game.GameLayout(
         configuration=CorruptionConfiguration,
         cosmetic_patches=CorruptionCosmeticPatches,
-        preset_describer=game.GamePresetDescriber(
-            expected_items=corruption_expected_items,
-            unexpected_items=corruption_unexpected_items,
-            format_params=corruption_format_params,
-        )
+        preset_describer=CorruptionPresetDescriber(),
     ),
 
     options=_options,

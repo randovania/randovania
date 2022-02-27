@@ -1,95 +1,54 @@
-from typing import Dict, List
-
+from randovania.game_description.item.major_item import MajorItem
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.preset_describer import format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
-    has_vanilla_item, message_for_required_mains
+from randovania.layout.preset_describer import (
+    GamePresetDescriber,
+    fill_template_strings_from_tree, message_for_required_mains, handle_progressive_expected_counts, has_shuffled_item,
+)
 
 
-def dread_format_params(configuration: BaseConfiguration) -> dict[str, list[str]]:
-    assert isinstance(configuration, DreadConfiguration)
+class DreadPresetDescriber(GamePresetDescriber):
+    def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
+        assert isinstance(configuration, DreadConfiguration)
 
-    major_items = configuration.major_items_configuration
+        major_items = configuration.major_items_configuration
+        template_strings = super().format_params(configuration)
 
-    template_strings = format_params_base(configuration)
+        if configuration.energy_per_tank != 100:
+            template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
 
-    if configuration.energy_per_tank != 100:
-        template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
-
-    extra_message_tree = {
-        "Item Pool": [
-            {
-                "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
-                "Progressive Charge Beam": has_shuffled_item(major_items, "Progressive Charge Beam"),
-                "Progressive Missile": has_shuffled_item(major_items, "Progressive Missile"),
-                "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
-                "Progressive Spin": has_shuffled_item(major_items, "Progressive Spin")
-            }
-        ],
-        "Gameplay": [
-            {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
-        ],
-        "Game Changes": [
-            message_for_required_mains(
-                configuration.ammo_configuration,
+        extra_message_tree = {
+            "Item Pool": [
                 {
-                    "Power Bomb needs Main": "Power Bomb Expansion",
+                    "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),
+                    "Progressive Charge Beam": has_shuffled_item(major_items, "Progressive Charge Beam"),
+                    "Progressive Missile": has_shuffled_item(major_items, "Progressive Missile"),
+                    "Progressive Suit": has_shuffled_item(major_items, "Progressive Suit"),
+                    "Progressive Spin": has_shuffled_item(major_items, "Progressive Spin")
                 }
-            )
-        ]
-    }
-    fill_template_strings_from_tree(template_strings, extra_message_tree)
+            ],
+            "Gameplay": [
+                {f"Elevators/Shuttles: {configuration.elevators.description()}": not configuration.elevators.is_vanilla}
+            ],
+            "Game Changes": [
+                message_for_required_mains(
+                    configuration.ammo_configuration,
+                    {
+                        "Power Bomb needs Main": "Power Bomb Expansion",
+                    }
+                )
+            ]
+        }
+        fill_template_strings_from_tree(template_strings, extra_message_tree)
 
-    return template_strings
+        return template_strings
 
+    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+        count = super().expected_shuffled_item_count(configuration)
+        majors = configuration.major_items_configuration
 
-dread_expected_items = {"Missiles"}
+        from randovania.games.dread.item_database import progressive_items
+        for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
+            handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 
-
-def dread_unexpected_items(configuration: MajorItemsConfiguration) -> set[str]:
-    unexpected_items = dread_expected_items.copy()
-
-    if not has_vanilla_item(configuration, "Hyper Beam"):
-        unexpected_items.add("Hyper Beam")
-    if not has_vanilla_item(configuration, "Metroid Suit"):
-        unexpected_items.add("Metroid Suit")
-
-    if has_shuffled_item(configuration, "Progressive Beam"):
-        unexpected_items.add("Wide Beam")
-        unexpected_items.add("Plasma Beam")
-        unexpected_items.add("Wave Beam")
-    else:
-        unexpected_items.add("Progressive Beam")
-
-    if has_shuffled_item(configuration, "Progressive Charge Beam"):
-        unexpected_items.add("Charge Beam")
-        unexpected_items.add("Diffusion Beam")
-    else:
-        unexpected_items.add("Progressive Charge Beam")
-
-    if has_shuffled_item(configuration, "Progressive Missile"):
-        unexpected_items.add("Super Missile")
-        unexpected_items.add("Ice Missile")
-    else:
-        unexpected_items.add("Progressive Missile")
-
-    if has_shuffled_item(configuration, "Progressive Suit"):
-        unexpected_items.add("Varia Suit")
-        unexpected_items.add("Gravity Suit")
-    else:
-        unexpected_items.add("Progressive Suit")
-
-    if has_shuffled_item(configuration, "Progressive Bomb"):
-        unexpected_items.add("Bomb")
-        unexpected_items.add("Cross Bomb")
-    else:
-        unexpected_items.add("Progressive Bomb")
-
-    if has_shuffled_item(configuration, "Progressive Spin"):
-        unexpected_items.add("Spin Boost")
-        unexpected_items.add("Space Jump")
-    else:
-        unexpected_items.add("Progressive Spin")
-
-    return unexpected_items
+        return count

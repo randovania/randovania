@@ -2,8 +2,7 @@ from randovania.games import game
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.dread.layout.preset_describer import (
-    dread_format_params, dread_expected_items,
-    dread_unexpected_items
+    DreadPresetDescriber
 )
 
 
@@ -20,7 +19,7 @@ def _gui() -> game.GameGui:
         tab_provider=gui.dread_preset_tabs,
         cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
         export_dialog=gui.DreadGameExportDialog,
-        progressive_item_gui_tuples=progressive_items.gui_tuples(),
+        progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(gui.DreadHintDetailsTab,),
     )
 
@@ -65,11 +64,7 @@ game_data: game.GameData = game.GameData(
     layout=game.GameLayout(
         configuration=DreadConfiguration,
         cosmetic_patches=DreadCosmeticPatches,
-        preset_describer=game.GamePresetDescriber(
-            expected_items=dread_expected_items,
-            unexpected_items=dread_unexpected_items,
-            format_params=dread_format_params,
-        )
+        preset_describer=DreadPresetDescriber()
     ),
 
     options=_options,

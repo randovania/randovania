@@ -1,68 +1,54 @@
 from collections import defaultdict
 
+from randovania.game_description.item.major_item import MajorItem
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
-from randovania.layout.preset_describer import format_params_base, fill_template_strings_from_tree, has_shuffled_item, \
-    message_for_required_mains
+from randovania.layout.preset_describer import (
+    GamePresetDescriber,
+    fill_template_strings_from_tree, message_for_required_mains, handle_progressive_expected_counts,
+)
 
 
-def cs_format_params(configuration: BaseConfiguration) -> dict[str, list[str]]:
-    assert isinstance(configuration, CSConfiguration)
+class CSPresetDescriber(GamePresetDescriber):
+    def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
+        assert isinstance(configuration, CSConfiguration)
 
-    template_strings = defaultdict(list)
-    template_strings["Objective"].append(configuration.objective.long_name)
-    template_strings.update(format_params_base(configuration))
+        template_strings = defaultdict(list)
+        template_strings["Objective"].append(configuration.objective.long_name)
+        template_strings.update(super().format_params(configuration))
 
-    extra_message_tree = {
-        "Item Placement": [
-            {
-                "Puppies anywhere": configuration.puppies_anywhere,
-                "Puppies in Sand Zone only": not configuration.puppies_anywhere
-            }
-        ],
-        "Game Changes": [
-            message_for_required_mains(
-                configuration.ammo_configuration,
-                {"Missiles need main Launcher": "Missile Expansion"}
-            ),
-            {"No falling blocks in B2": configuration.no_blocks}
-        ],
-        "Difficulty": [
-            {f"Starting HP: {configuration.starting_hp}": configuration.starting_hp != 3}
-        ]
-    }
-    fill_template_strings_from_tree(template_strings, extra_message_tree)
+        extra_message_tree = {
+            "Item Placement": [
+                {
+                    "Puppies anywhere": configuration.puppies_anywhere,
+                    "Puppies in Sand Zone only": not configuration.puppies_anywhere
+                }
+            ],
+            "Game Changes": [
+                message_for_required_mains(
+                    configuration.ammo_configuration,
+                    {"Missiles need main Launcher": "Missile Expansion"}
+                ),
+                {"No falling blocks in B2": configuration.no_blocks}
+            ],
+            "Difficulty": [
+                {f"Starting HP: {configuration.starting_hp}": configuration.starting_hp != 3}
+            ]
+        }
+        fill_template_strings_from_tree(template_strings, extra_message_tree)
 
-    return template_strings
+        return template_strings
 
+    def expected_shuffled_item_count(self, configuration: BaseConfiguration) -> dict[MajorItem, int]:
+        count = super().expected_shuffled_item_count(configuration)
+        majors = configuration.major_items_configuration
 
-cs_expected_items = set()
+        from randovania.games.cave_story.item_database import progressive_items
+        for (progressive_item_name, non_progressive_items) in progressive_items.tuples():
+            handle_progressive_expected_counts(count, majors, progressive_item_name, non_progressive_items)
 
-
-def cs_unexpected_items(configuration: MajorItemsConfiguration) -> set[str]:
-    unexpected_items = cs_expected_items.copy()
-
-    if has_shuffled_item(configuration, "Progressive Polar Star"):
-        unexpected_items.add("Polar Star")
-        unexpected_items.add("Spur")
-    else:
-        unexpected_items.add("Progressive Polar Star")
-
-    if has_shuffled_item(configuration, "Progressive Booster"):
-        unexpected_items.add("Booster 0.8")
-        unexpected_items.add("Booster 2.0")
-    else:
-        unexpected_items.add("Progressive Booster")
-
-    if has_shuffled_item(configuration, "Progressive Missile Launcher"):
-        unexpected_items.add("Missile Launcher")
-        unexpected_items.add("Super Missile Launcher")
-    else:
-        unexpected_items.add("Super Missile Launcher")
-
-    return unexpected_items
+        return count
 
 
 hash_items = {
