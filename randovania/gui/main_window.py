@@ -134,7 +134,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
             game_menu = QtWidgets.QMenu(self.menu_open)
             game_menu.setTitle(_t(game.long_name))
             game_menu.game = game
-            if not game.data.development_state.is_stable:
+
+            if game.data.development_state.can_view(False):
                 self.menu_open.addAction(game_menu.menuAction())
             self.game_menus.append(game_menu)
 
