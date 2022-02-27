@@ -74,7 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Nothing.
+- Added: Using Screw Attack as a trickless means to obtain Grand Windchamber item after seeker puzzles
 
 ## [4.0.1] - Unreleased
 
