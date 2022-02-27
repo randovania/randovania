@@ -1,7 +1,6 @@
 from randovania.games import game
 from randovania.games.prime1.layout.preset_describer import (
-    prime_expected_items, prime_unexpected_items,
-    prime_format_params,
+    PrimePresetDescriber,
 )
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
@@ -92,11 +91,7 @@ game_data: game.GameData = game.GameData(
     layout=game.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,
-        preset_describer=game.GamePresetDescriber(
-            expected_items=prime_expected_items,
-            unexpected_items=prime_unexpected_items,
-            format_params=prime_format_params,
-        )
+        preset_describer=PrimePresetDescriber()
     ),
 
     options=_options,
