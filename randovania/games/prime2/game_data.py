@@ -2,8 +2,7 @@ from randovania.games import game
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
 from randovania.games.prime2.layout.preset_describer import (
-    echoes_format_params, echoes_unexpected_items,
-    echoes_expected_items
+    EchoesPresetDescriber
 )
 
 
@@ -15,13 +14,13 @@ def _options():
 def _gui() -> game.GameGui:
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
     from randovania.games.prime2 import gui
-    from randovania.games.prime2.item_database import prime2_progressive_items
+    from randovania.games.prime2.item_database import progressive_items
 
     return game.GameGui(
         tab_provider=gui.prime2_preset_tabs,
         cosmetic_dialog=gui.EchoesCosmeticPatchesDialog,
         export_dialog=gui.EchoesGameExportDialog,
-        progressive_item_gui_tuples=prime2_progressive_items.gui_tuples(),
+        progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(TeleporterDetailsTab, gui.TranslatorGateDetailsTab, gui.EchoesHintDetailsTab),
         help_widget=lambda: gui.EchoesHelpWidget(),
     )
@@ -114,11 +113,7 @@ This means you need Boost Ball to fight Spider Guardian."""),
     layout=game.GameLayout(
         configuration=EchoesConfiguration,
         cosmetic_patches=EchoesCosmeticPatches,
-        preset_describer=game.GamePresetDescriber(
-            expected_items=echoes_expected_items,
-            unexpected_items=echoes_unexpected_items,
-            format_params=echoes_format_params,
-        )
+        preset_describer=EchoesPresetDescriber(),
     ),
 
     options=_options,

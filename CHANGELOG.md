@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Implemented support for changing the title for a game session.
 - Added: A button for duplicating a session, including the generated game and all rows.
 - Added: Multiworld sessions can now be generated without spoilers.
+- Added: Preset descriptions now include if some item has a different number of copies shuffled.
 - Changed: Multiworld damage logic incompatibility warning now displays every time.
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
@@ -74,7 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Nothing.
+- Added: Using Screw Attack as a trickless means to obtain Grand Windchamber item after seeker puzzles
 
 ## [4.0.1] - Unreleased
 
