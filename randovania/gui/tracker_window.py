@@ -17,6 +17,7 @@ from matplotlib.axes import Axes
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
+from randovania import game_description
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, Requirement
@@ -35,9 +36,11 @@ from randovania.games.prime2.layout.translator_configuration import LayoutTransl
 from randovania.generator import generator
 from randovania.gui.dialog.scroll_label_dialog import ScrollLabelDialog
 from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
+from randovania.gui.lib import area_picker
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.lib import location_list
 from randovania.layout.lib.teleporters import TeleporterShuffleMode, TeleporterConfiguration
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
@@ -154,6 +157,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
+        self.force_location_button.clicked.connect(self._add_manual_action)
 
         self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
             self.preset.configuration.trick_level.pretty_description,
@@ -323,6 +327,13 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self._actions.pop()
         self.actions_list.takeItem(len(self._actions))
         self._refresh_for_new_action()
+
+    def _add_manual_action(self):
+        world_list = self.game_description.world_list
+        node_id = area_picker.get_node("Select the action you'd like to add.", self, self.game_description.game, "Add Manual Action")
+        if node_id is not None:
+            node = world_list.node_by_identifier(node_id)
+            self._add_new_action(node)
 
     def _on_tree_node_double_clicked(self, item: QTreeWidgetItem, _):
         node: Optional[Node] = getattr(item, "node", None)
