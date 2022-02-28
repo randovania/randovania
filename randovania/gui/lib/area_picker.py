@@ -11,6 +11,14 @@ from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
 
 def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
+    """
+    Opens a modal dialog for the user to pick a specific node.
+
+    :param parent: the parent widget that spawns the dialog
+    :param game: the game whose nodes will be used
+    :param valid_areas: limit the areas shown in the dialog to the areas in this list
+    :return: a NodeIdentifier of the selected node, or None if the dialog was canceled
+    """
     dialog = AreaPickerDialog(parent, game, valid_areas)
     result = dialog.exec()
     if result == QtWidgets.QDialog.DialogCode.Accepted:
@@ -19,6 +27,14 @@ def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[
         return None
 
 def get_area(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
+    """
+    Opens a modal dialog for the user to pick a specific area.
+
+    :param parent: the parent widget that spawns the dialog
+    :param game: the game whose areas will be used
+    :param valid_areas: limit the areas shown in the dialog to the areas in this list
+    :return: an AreaIdentifier of the selected area, or None if the dialog was canceled
+    """
     dialog = AreaPickerDialog(parent, game, valid_areas, False)
     result = dialog.exec()
     if result == QtWidgets.QDialog.DialogCode.Accepted:
