@@ -10,37 +10,39 @@ from randovania.gui.generated.area_picker_dialog_ui import Ui_AreaPickerDialog
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
 
-def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
+def get_node(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
     """
     Opens a modal dialog for the user to pick a specific node.
 
+    :param header_text: the instructional text at the top of the dialog
     :param parent: the parent widget that spawns the dialog
     :param game: the game whose nodes will be used
     :param valid_areas: limit the areas shown in the dialog to the areas in this list
     :return: a NodeIdentifier of the selected node, or None if the dialog was canceled
     """
-    dialog = AreaPickerDialog(parent, game, valid_areas)
-    result = dialog.exec()
-    if result == QtWidgets.QDialog.DialogCode.Accepted:
-        return NodeIdentifier(AreaIdentifier(dialog.current_world.name, dialog.current_area.name), dialog.current_node.name)
-    else:
-        return None
+    world, area, node = _get_item(header_text, parent, game, valid_areas, True)
+    return None if not node else NodeIdentifier(AreaIdentifier(world.name, area.name), node.name)
 
-def get_area(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
+def get_area(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
     """
     Opens a modal dialog for the user to pick a specific area.
 
+    :param header_text: the instructional text at the top of the dialog
     :param parent: the parent widget that spawns the dialog
     :param game: the game whose areas will be used
     :param valid_areas: limit the areas shown in the dialog to the areas in this list
     :return: an AreaIdentifier of the selected area, or None if the dialog was canceled
     """
-    dialog = AreaPickerDialog(parent, game, valid_areas, False)
+    world, _, area = _get_item(header_text, parent, game, valid_areas, False)
+    return None if not area else AreaIdentifier(world.name, area.name)
+
+def _get_item(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node = True) -> tuple[Optional[World], Optional[Area], Optional[Node]]:
+    dialog = AreaPickerDialog(header_text, parent, game, valid_areas, pick_node)
     result = dialog.exec()
     if result == QtWidgets.QDialog.DialogCode.Accepted:
-        return AreaIdentifier(dialog.current_world.name, dialog.current_node.name)
+        return (dialog.current_world, dialog.current_area, dialog.current_node)
     else:
-        return None
+        return (None, None, None)
 
 
 class AreaPickerModel(QtCore.QSortFilterProxyModel):
@@ -164,7 +166,7 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
     current_area: Optional[Area] = None
     current_node: Optional[Node] = None
 
-    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node: bool = True):
+    def __init__(self, header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node: bool = True):
         super().__init__(parent)
         self.setupUi(self)
         world_list = default_database.game_description_for(game).world_list
@@ -176,6 +178,12 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
         self.searchLineEdit.returnPressed.connect(self._confirm_selection)
         self.confirmButtonBox.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(False)
         self.searchLineEdit.setFocus()
+        if header_text:
+            self.headerLabel.setText(header_text)
+        else:
+            self.headerLabel.hide()
+            self.headerLine.hide()
+        # Cheap way of setting up the window to pick nodes or just areas
         if self._pick_node:
             self.areaList.selectionModel().currentChanged.connect(self._update_nodes)
             self.nodeList.selectionModel().currentChanged.connect(self._node_selected)
