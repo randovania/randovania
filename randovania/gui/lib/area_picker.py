@@ -10,8 +10,8 @@ from randovania.gui.generated.area_picker_dialog_ui import Ui_AreaPickerDialog
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
 
-def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, filter: Optional[Callable[[Node], bool]]=None) -> Optional[NodeIdentifier]:
-    dialog = AreaPickerDialog(parent, game)
+def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier]) -> Optional[NodeIdentifier]:
+    dialog = AreaPickerDialog(parent, game, valid_areas)
     result = dialog.exec()
     if result == QtWidgets.QDialog.DialogCode.Accepted:
         return NodeIdentifier(AreaIdentifier(dialog.current_world.name, dialog.current_area.name), dialog.current_node.name)
@@ -33,10 +33,11 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
     current_area: Optional[Area]
     current_node: Optional[Node]
 
-    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame):
+    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None):
         super().__init__(parent)
         self.setupUi(self)
         self._world_list = default_database.game_description_for(game).world_list
+        self._model = AreaPickerFilterProxyModel(self, valid_areas)
         self._build_model()
         self.current_world = None
         self.current_area = None
@@ -67,14 +68,12 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
             top_level.appendRow(world_item)
         model.appendRow(top_level)
         model.sort(0)
-        proxy_model = AreaPickerFilterProxyModel(self)
-        proxy_model.setSourceModel(model)
-        self._model = proxy_model
-        self.worldList.setModel(proxy_model)
-        self.areaList.setModel(proxy_model)
-        self.nodeList.setModel(proxy_model)
+        self._model.setSourceModel(model)
+        self.worldList.setModel(self._model)
+        self.areaList.setModel(self._model)
+        self.nodeList.setModel(self._model)
         self._empty_index = self.worldList.rootIndex()
-        self.worldList.setRootIndex(proxy_model.index(0, 0))
+        self.worldList.setRootIndex(self._model.index(0, 0))
         self.areaList.setEnabled(False)
         self.nodeList.setEnabled(False)
 
@@ -135,12 +134,14 @@ class AreaPickerFilterProxyModel(QtCore.QSortFilterProxyModel):
     _show_locations: bool
     _show_pickups: bool
     _show_events: bool
+    _valid_areas: list[AreaIdentifier]
     _LOCATION_NODES: list[type] = [DockNode, GenericNode, TeleporterNode]
     _PICKUP_NODES: list[type] = [PickupNode]
     _EVENT_NODES: list[type] = [EventNode]
 
-    def __init__(self, parent: AreaPickerDialog):
+    def __init__(self, parent: AreaPickerDialog, valid_areas: list[AreaIdentifier] = None):
         super().__init__(parent)
+        self._valid_areas = valid_areas
         self._show_locations = parent.locationsCheckBox.isChecked()
         self._show_pickups = parent.pickupsCheckBox.isChecked()
         self._show_events = parent.eventsCheckBox.isChecked()
@@ -166,6 +167,10 @@ class AreaPickerFilterProxyModel(QtCore.QSortFilterProxyModel):
         self._show_events = state == Qt.Checked
         self.invalidateFilter()
 
+    def _is_in_valid_area(self, node: Node):
+        area_id = self.parent()._world_list.node_to_area_location(node)
+        return not self._valid_areas or area_id in self._valid_areas
+
     def _filter_location(self, node: Node) -> bool:
         return self._show_locations and self._isany(node, self._LOCATION_NODES)
     def _filter_pickup(self, node: Node) -> bool:
@@ -178,14 +183,21 @@ class AreaPickerFilterProxyModel(QtCore.QSortFilterProxyModel):
             not self._isany(node, self._LOCATION_NODES + self._PICKUP_NODES + self._EVENT_NODES)
 
     def filterAcceptsRow(self, source_row: int, source_parent: Union[QtCore.QModelIndex, QtCore.QPersistentModelIndex]) -> bool:
+        """
+        Determines if the current item should or should not be accepted into the model,
+        called automatically for each item.
+        """
         source_index = self.sourceModel().index(source_row, 0, source_parent)
         data = source_index.data(Qt.UserRole)
-        return any([filter(data) for filter in self._default_filters])
+        return any([filter(data) for filter in self._default_filters]) and \
+            self._is_in_valid_area(data)
 
     def invalidateFilter(self):
+        """Invalidates the filter and updates it according to the current filter parameters."""
         super().invalidateFilter()
         self.parent().validate_root_indexes()
 
     @staticmethod
     def _isany(obj: object, types: list[type]):
+        """Checks if the object is any type in a list of types."""
         return any ([isinstance(obj, t) for t in types])
