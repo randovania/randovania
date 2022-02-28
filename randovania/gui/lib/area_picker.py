@@ -1,4 +1,4 @@
-from typing import Callable, Optional, Union
+from typing import Callable, Iterable, Optional, Union
 from randovania.game_description import default_database
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -10,7 +10,7 @@ from randovania.gui.generated.area_picker_dialog_ui import Ui_AreaPickerDialog
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
 
-def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier]) -> Optional[NodeIdentifier]:
+def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
     dialog = AreaPickerDialog(parent, game, valid_areas)
     result = dialog.exec()
     if result == QtWidgets.QDialog.DialogCode.Accepted:
@@ -18,8 +18,114 @@ def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[
     else:
         return None
 
+
+class AreaPickerModel(QtCore.QSortFilterProxyModel):
+    _world_list: WorldList
+    _show_locations: bool = True
+    _show_pickups: bool = True
+    _show_events: bool = True
+    _valid_areas: list[AreaIdentifier]
+    _LOCATION_NODES: list[type] = [DockNode, GenericNode, TeleporterNode]
+    _PICKUP_NODES: list[type] = [PickupNode]
+    _EVENT_NODES: list[type] = [EventNode]
+
+    def __init__(self, parent: Optional[QtCore.QObject], world_list: WorldList, valid_areas: list[AreaIdentifier] = None):
+        super().__init__(parent)
+        self.setSourceModel(self._build_model(world_list))
+        self._world_list = world_list
+        self._valid_areas = valid_areas
+        # Lets us filter nodes only; worlds/areas with visible nodes will appear
+        self.setRecursiveFilteringEnabled(True)
+        self._default_filters = [
+            self._filter_location,
+            self._filter_pickup,
+            self._filter_event,
+            self._none_of_above
+        ]
+
+    @staticmethod
+    def _build_model(world_list: WorldList) -> QtGui.QStandardItemModel:
+        model = QtGui.QStandardItemModel()
+        top_level = QtGui.QStandardItem()
+        for world in world_list.worlds:
+            world_item = QtGui.QStandardItem(world.name)
+            world_item.setData(world, Qt.UserRole)
+            world_item.setEditable(False)
+            for area in world.areas:
+                area_item = QtGui.QStandardItem(area.name)
+                area_item.setData(area, Qt.UserRole)
+                area_item.setEditable(False)
+                for node in area.nodes:
+                    node_item = QtGui.QStandardItem(node.name)
+                    node_item.setData(node, Qt.UserRole)
+                    node_item.setEditable(False)
+                    area_item.appendRow(node_item)
+                world_item.appendRow(area_item)
+            top_level.appendRow(world_item)
+        model.appendRow(top_level)
+        model.sort(0)
+        return model
+
+    def set_show_locations(self, state):
+        self._show_locations = state == Qt.Checked
+        self.invalidateFilter()
+    def set_show_pickups(self, state):
+        self._show_pickups = state == Qt.Checked
+        self.invalidateFilter()
+    def set_show_events(self, state):
+        self._show_events = state == Qt.Checked
+        self.invalidateFilter()
+
+    def _is_in_valid_area(self, node: Node):
+        area_id = self._world_list.node_to_area_location(node)
+        return not self._valid_areas or area_id in self._valid_areas
+
+    def _filter_location(self, node: Node) -> bool:
+        return self._show_locations and self._isany(node, self._LOCATION_NODES)
+    def _filter_pickup(self, node: Node) -> bool:
+        return self._show_pickups and self._isany(node, self._PICKUP_NODES)
+    def _filter_event(self, node: Node) -> bool:
+        return self._show_events and self._isany(node, self._EVENT_NODES)
+    # Shows nodes that don't fall under any of the above criteria
+    def _none_of_above(self, node: Node) -> bool:
+        return isinstance(node, Node) and \
+            not self._isany(node, self._LOCATION_NODES + self._PICKUP_NODES + self._EVENT_NODES)
+
+    def filterAcceptsRow(self, source_row: int, source_parent: Union[QtCore.QModelIndex, QtCore.QPersistentModelIndex]) -> bool:
+        """
+        Determines if the current item should or should not be accepted into the model,
+        called automatically for each item.
+        """
+        source_index = self.sourceModel().index(source_row, 0, source_parent)
+        data = source_index.data(Qt.UserRole)
+        return any([filter(data) for filter in self._default_filters]) and \
+            self._is_in_valid_area(data)
+
+    def all_areas(self) -> Iterable[tuple[QtCore.QModelIndex, QtCore.QModelIndex]]:
+        root = self.index(0, 0)
+        i = 0
+        while self.hasIndex(i, 0, root):
+            world_index = self.index(i, 0, root)
+            j = 0
+            while self.hasIndex(j, 0, world_index):
+                area_index = self.index(j, 0, world_index)
+                yield world_index, area_index
+                j += 1
+            i += 1
+
+    def invalidateFilter(self):
+        """Invalidates the filter and updates it according to the current filter parameters."""
+        super().invalidateFilter()
+        self.parent().validate_root_indexes()
+
+    @staticmethod
+    def _isany(obj: object, types: list[type]):
+        """Checks if the object is any type in a list of types."""
+        return any ([isinstance(obj, t) for t in types])
+
+
 class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
-    _model: QtCore.QAbstractItemModel
+    _model: AreaPickerModel
     _world_list: WorldList
     _empty_index: QtCore.QModelIndex
     worldList: QtWidgets.QListView
@@ -29,46 +135,29 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
     area_combo_box: QtWidgets.QComboBox
     node_combo_box: QtWidgets.QComboBox
     confirm_buttons: QtWidgets.QDialogButtonBox
-    current_world: Optional[World]
-    current_area: Optional[Area]
-    current_node: Optional[Node]
+    current_world: Optional[World] = None
+    current_area: Optional[Area] = None
+    current_node: Optional[Node] = None
 
     def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None):
         super().__init__(parent)
         self.setupUi(self)
-        self._world_list = default_database.game_description_for(game).world_list
-        self._model = AreaPickerFilterProxyModel(self, valid_areas)
-        self._build_model()
-        self.current_world = None
-        self.current_area = None
-        self.current_node = None
+        world_list = default_database.game_description_for(game).world_list
+        self._model = AreaPickerModel(self, world_list, valid_areas)
+        self._setup_lists()
         self.worldList.selectionModel().currentChanged.connect(self._update_areas)
         self.areaList.selectionModel().currentChanged.connect(self._update_nodes)
         self.nodeList.selectionModel().currentChanged.connect(self._node_selected)
+        self.locationsCheckBox.stateChanged.connect(self._model.set_show_locations)
+        self.pickupsCheckBox.stateChanged.connect(self._model.set_show_pickups)
+        self.eventsCheckBox.stateChanged.connect(self._model.set_show_events)
         self.nodeList.doubleClicked.connect(self._confirm_selection)
         self.searchLineEdit.textEdited.connect(self._update_search)
         self.searchLineEdit.returnPressed.connect(self._confirm_selection)
         self.confirmButtonBox.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(False)
         self.searchLineEdit.setFocus()
 
-    def _build_model(self):
-        model = QtGui.QStandardItemModel()
-        top_level = QtGui.QStandardItem()
-        for world in self._world_list.worlds:
-            world_item = QtGui.QStandardItem(world.name)
-            world_item.setData(world, Qt.UserRole)
-            for area in world.areas:
-                area_item = QtGui.QStandardItem(area.name)
-                area_item.setData(area, Qt.UserRole)
-                for node in area.nodes:
-                    node_item = QtGui.QStandardItem(node.name)
-                    node_item.setData(node, Qt.UserRole)
-                    area_item.appendRow(node_item)
-                world_item.appendRow(area_item)
-            top_level.appendRow(world_item)
-        model.appendRow(top_level)
-        model.sort(0)
-        self._model.setSourceModel(model)
+    def _setup_lists(self):
         self.worldList.setModel(self._model)
         self.areaList.setModel(self._model)
         self.nodeList.setModel(self._model)
@@ -104,8 +193,8 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
         self.nodeList.selectionModel().clear()
 
     def _node_selected(self, node: QtCore.QModelIndex):
-        self._enable_confirm(node.isValid())
         self.current_node = node.data(Qt.UserRole)
+        self._enable_confirm(node.isValid())
 
     def _enable_confirm(self, enable: bool):
         self.confirmButtonBox.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(enable)
@@ -114,90 +203,9 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
         if not text:
             return
         text = text.lower()
-        root: QtCore.QModelIndex = self.worldList.rootIndex()
-        i = 0
-        while self._model.hasIndex(i, 0, root):
-            world_index = self._model.index(i, 0, root)
-            j = 0
-            while self._model.hasIndex(j, 0, world_index):
-                area_index = self._model.index(j, 0, world_index)
-                if area_index.data(Qt.UserRole).name.lower().startswith(text):
-                    self.worldList.selectionModel().setCurrentIndex(world_index, QtCore.QItemSelectionModel.SelectCurrent)
-                    self.areaList.selectionModel().setCurrentIndex(area_index, QtCore.QItemSelectionModel.SelectCurrent)
-                    self.nodeList.selectionModel().setCurrentIndex(self._model.index(0, 0, area_index), QtCore.QItemSelectionModel.SelectCurrent)
-                    return
-                j += 1
-            i += 1
-
-
-class AreaPickerFilterProxyModel(QtCore.QSortFilterProxyModel):
-    _show_locations: bool
-    _show_pickups: bool
-    _show_events: bool
-    _valid_areas: list[AreaIdentifier]
-    _LOCATION_NODES: list[type] = [DockNode, GenericNode, TeleporterNode]
-    _PICKUP_NODES: list[type] = [PickupNode]
-    _EVENT_NODES: list[type] = [EventNode]
-
-    def __init__(self, parent: AreaPickerDialog, valid_areas: list[AreaIdentifier] = None):
-        super().__init__(parent)
-        self._valid_areas = valid_areas
-        self._show_locations = parent.locationsCheckBox.isChecked()
-        self._show_pickups = parent.pickupsCheckBox.isChecked()
-        self._show_events = parent.eventsCheckBox.isChecked()
-        parent.locationsCheckBox.stateChanged.connect(self._set_show_locations)
-        parent.pickupsCheckBox.stateChanged.connect(self._set_show_pickups)
-        parent.eventsCheckBox.stateChanged.connect(self._set_show_events)
-        # Lets us filter nodes only; worlds/areas with visible nodes will appear
-        self.setRecursiveFilteringEnabled(True)
-        self._default_filters = [
-            self._filter_location,
-            self._filter_pickup,
-            self._filter_event,
-            self._none_of_above
-        ]
-    
-    def _set_show_locations(self, state):
-        self._show_locations = state == Qt.Checked
-        self.invalidateFilter()
-    def _set_show_pickups(self, state):
-        self._show_pickups = state == Qt.Checked
-        self.invalidateFilter()
-    def _set_show_events(self, state):
-        self._show_events = state == Qt.Checked
-        self.invalidateFilter()
-
-    def _is_in_valid_area(self, node: Node):
-        area_id = self.parent()._world_list.node_to_area_location(node)
-        return not self._valid_areas or area_id in self._valid_areas
-
-    def _filter_location(self, node: Node) -> bool:
-        return self._show_locations and self._isany(node, self._LOCATION_NODES)
-    def _filter_pickup(self, node: Node) -> bool:
-        return self._show_pickups and self._isany(node, self._PICKUP_NODES)
-    def _filter_event(self, node: Node) -> bool:
-        return self._show_events and self._isany(node, self._EVENT_NODES)
-    # Shows nodes that don't fall under any of the above criteria
-    def _none_of_above(self, node: Node) -> bool:
-        return isinstance(node, Node) and \
-            not self._isany(node, self._LOCATION_NODES + self._PICKUP_NODES + self._EVENT_NODES)
-
-    def filterAcceptsRow(self, source_row: int, source_parent: Union[QtCore.QModelIndex, QtCore.QPersistentModelIndex]) -> bool:
-        """
-        Determines if the current item should or should not be accepted into the model,
-        called automatically for each item.
-        """
-        source_index = self.sourceModel().index(source_row, 0, source_parent)
-        data = source_index.data(Qt.UserRole)
-        return any([filter(data) for filter in self._default_filters]) and \
-            self._is_in_valid_area(data)
-
-    def invalidateFilter(self):
-        """Invalidates the filter and updates it according to the current filter parameters."""
-        super().invalidateFilter()
-        self.parent().validate_root_indexes()
-
-    @staticmethod
-    def _isany(obj: object, types: list[type]):
-        """Checks if the object is any type in a list of types."""
-        return any ([isinstance(obj, t) for t in types])
+        for world_index, area_index in self._model.all_areas():
+            if area_index.data(Qt.UserRole).name.lower().startswith(text):
+                self.worldList.selectionModel().setCurrentIndex(world_index, QtCore.QItemSelectionModel.SelectCurrent)
+                self.areaList.selectionModel().setCurrentIndex(area_index, QtCore.QItemSelectionModel.SelectCurrent)
+                self.nodeList.selectionModel().setCurrentIndex(self._model.index(0, 0, area_index), QtCore.QItemSelectionModel.SelectCurrent)
+                return
