@@ -20,8 +20,8 @@ def get_node(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, 
     :param valid_areas: limit the areas shown in the dialog to the areas in this list
     :return: a NodeIdentifier of the selected node, or None if the dialog was canceled
     """
-    world, area, node = _get_item(header_text, parent, game, valid_areas, True)
-    return None if not node else NodeIdentifier(AreaIdentifier(world.name, area.name), node.name)
+    accepted, world, area, node = _get_item(header_text, parent, game, valid_areas, True, "Select Node")
+    return None if not accepted else NodeIdentifier(AreaIdentifier(world.name, area.name), node.name)
 
 def get_area(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
     """
@@ -33,16 +33,16 @@ def get_area(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, 
     :param valid_areas: limit the areas shown in the dialog to the areas in this list
     :return: an AreaIdentifier of the selected area, or None if the dialog was canceled
     """
-    world, _, area = _get_item(header_text, parent, game, valid_areas, False)
-    return None if not area else AreaIdentifier(world.name, area.name)
+    accepted, world, area, _ = _get_item(header_text, parent, game, valid_areas, False, "Select Area")
+    return None if not accepted else AreaIdentifier(world.name, area.name)
 
-def _get_item(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node = True) -> tuple[Optional[World], Optional[Area], Optional[Node]]:
-    dialog = AreaPickerDialog(header_text, parent, game, valid_areas, pick_node)
+def _get_item(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node = True, window_title: str = None) -> tuple[bool, Optional[World], Optional[Area], Optional[Node]]:
+    dialog = AreaPickerDialog(header_text, parent, game, valid_areas, pick_node, window_title)
     result = dialog.exec()
     if result == QtWidgets.QDialog.DialogCode.Accepted:
-        return (dialog.current_world, dialog.current_area, dialog.current_node)
+        return (True, dialog.current_world, dialog.current_area, dialog.current_node)
     else:
-        return (None, None, None)
+        return (False, None, None, None)
 
 
 class AreaPickerModel(QtCore.QSortFilterProxyModel):
@@ -166,7 +166,7 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
     current_area: Optional[Area] = None
     current_node: Optional[Node] = None
 
-    def __init__(self, header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node: bool = True):
+    def __init__(self, header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node: bool = True, window_title: str = None):
         super().__init__(parent)
         self.setupUi(self)
         world_list = default_database.game_description_for(game).world_list
@@ -178,6 +178,8 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
         self.searchLineEdit.returnPressed.connect(self._confirm_selection)
         self.confirmButtonBox.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(False)
         self.searchLineEdit.setFocus()
+        if window_title:
+            self.setWindowTitle(window_title)
         if header_text:
             self.headerLabel.setText(header_text)
         else:
@@ -192,7 +194,7 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
             self.eventsCheckBox.stateChanged.connect(self._model.set_show_events)
             self.nodeList.doubleClicked.connect(self._confirm_selection)
         else:
-            self.areaList.selectionModel().currentChanged.connect(self._node_selected)
+            self.areaList.selectionModel().currentChanged.connect(self._area_selected)
             self.areaList.doubleClicked.connect(self._confirm_selection)
             self.nodeLabel.hide()
             self.nodeList.hide()
@@ -224,7 +226,7 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
             self._enable_confirm(False)
 
     def _confirm_selection(self):
-        if self.current_node is not None:
+        if self.current_node or not self._pick_node and self.current_area:
             self.accept()
 
     def _update_areas(self, world: QtCore.QModelIndex):
@@ -240,6 +242,10 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
     def _node_selected(self, node: QtCore.QModelIndex):
         self.current_node = node.data(Qt.UserRole)
         self._enable_confirm(node.isValid())
+
+    def _area_selected(self, area: QtCore.QModelIndex):
+        self.current_area = area.data(Qt.UserRole)
+        self._enable_confirm(area.isValid())
 
     def _enable_confirm(self, enable: bool):
         self.confirmButtonBox.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(enable)
