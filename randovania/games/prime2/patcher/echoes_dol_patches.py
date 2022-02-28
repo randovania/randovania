@@ -369,7 +369,7 @@ def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
         nop(),
     ])
 
-    from randovania.games.prime2.patcher.claris_patcher_file import item_id_for_item_resource
+    from randovania.games.prime2.exporter.patch_data_factory import item_id_for_item_resource
 
     for item in ["Double Damage", "Unlimited Missiles", "Unlimited Beam Ammo"]:
         index = item_id_for_item_resource(resource_database.get_item_by_name(item))

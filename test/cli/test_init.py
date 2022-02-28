@@ -5,19 +5,18 @@ import pytest
 from randovania import cli
 
 
-@patch("randovania.cli.echoes.create_subparsers", autospec=True)
-@patch("randovania.cli.gui.create_subparsers", autospec=True)
-def test_create_subparsers(mock_gui_create_subparsers: MagicMock,
-                           mock_echoes_create_subparsers: MagicMock,
-                           ):
+def test_create_subparsers(mocker):
     # Setup
+    mock_layout_create_subparsers = mocker.patch("randovania.cli.layout.create_subparsers")
+    mock_gui_create_subparsers = mocker.patch("randovania.cli.gui.create_subparsers")
+
     root_parser = MagicMock()
 
     # Run
     cli.create_subparsers(root_parser)
 
     # Assert
-    mock_echoes_create_subparsers.assert_called_once_with(root_parser)
+    mock_layout_create_subparsers.assert_called_once_with(root_parser)
     mock_gui_create_subparsers.assert_called_once_with(root_parser)
 
 
@@ -77,14 +76,17 @@ def test_run_cli(mock_create_parser: MagicMock,
                  ):
     # Setup
     argv = [MagicMock(), MagicMock(), MagicMock()]
+    mock_run_args.return_value = 1234
 
     # Run
-    cli.run_cli(argv)
+    with pytest.raises(SystemExit) as p:
+        cli.run_cli(argv)
 
     # Assert
     mock_create_parser.return_value.parse_args.assert_called_once_with(argv[1:])
     mock_run_args.assert_called_once_with(mock_create_parser.return_value,
                                           mock_create_parser.return_value.parse_args.return_value)
+    assert p.value.code == 1234
 
 
 def test_run_pytest(mocker):

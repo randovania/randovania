@@ -26,12 +26,25 @@ from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
-from randovania.patching.prime.patcher_file_lib import item_names
+from randovania.exporter import item_names
 from randovania.resolver.exceptions import InvalidConfiguration
 
-_EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = ("A total of {total} will be available."
-                                       "\n{from_items} will be provided from major items."
-                                       "\n{maximum} is the maximum you can have at once.")
+_EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
+    "For a total of {total} from this source."
+    "\n{from_items} will be provided from other sources."
+    "\n{maximum} is the maximum you can have at once.\n"
+    "\nResources from sources like this are not considered by logic!"
+)
+
+
+def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
+    separator_line = QtWidgets.QFrame(parent)
+    separator_line.setFrameShape(QtWidgets.QFrame.HLine)
+    separator_line.setFrameShadow(QtWidgets.QFrame.Sunken)
+    transparent = QtWidgets.QGraphicsOpacityEffect(separator_line)
+    transparent.setOpacity(0.33)
+    separator_line.setGraphicsEffect(transparent)
+    return separator_line
 
 
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
@@ -61,11 +74,15 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         self._create_categories_boxes(item_database, size_policy)
         self._create_customizable_default_items(item_database)
         self._create_major_item_boxes(item_database, self.game_description.resource_database)
-        self._create_ammo_pickup_boxes(size_policy, item_database)
         self._create_progressive_widgets(item_database)
+        self._create_ammo_pickup_boxes(size_policy, item_database)
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Item Pool"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return False
 
     def on_preset_changed(self, preset: Preset):
@@ -87,7 +104,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         # Major Items
         for _, _, elements in self._boxes_for_category.values():
             for major_item, widget in elements.items():
-                widget.state = major_configuration.items_state[major_item]
+                widget.set_new_state(major_configuration.items_state[major_item])
 
         # Progressive Items
         for progressive_widget in self._progressive_widgets:
@@ -97,12 +114,16 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             )
 
         # Ammo
-        ammo_provided = major_configuration.calculate_provided_ammo()
         ammo_configuration = layout.ammo_configuration
+
+        ammo_provided = major_configuration.calculate_provided_ammo()
+        for ammo, state in ammo_configuration.items_state.items():
+            for ammo_index, count in enumerate(state.ammo_count):
+                ammo_provided[ammo.items[ammo_index]] += count * state.pickup_count
 
         resource_database = self.game_description.resource_database
 
-        item_for_index: Dict[int, ItemResourceInfo] = {
+        item_for_index: Dict[str, ItemResourceInfo] = {
             ammo_index: resource_database.get_item(ammo_index)
             for ammo_index in ammo_provided.keys()
         }
@@ -114,9 +135,9 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             if widgets.require_major_item_check is not None:
                 widgets.require_major_item_check.setChecked(state.requires_major_item)
 
-            totals = []
+            self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):
-                totals.append(ammo_provided[ammo.items[ammo_index]] + count * state.pickup_count)
+                self_counts.append(count * state.pickup_count)
                 self._ammo_item_count_spinboxes[ammo.name][ammo_index].setValue(count)
 
             try:
@@ -128,17 +149,20 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
                     _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT.format(
                         total=" and ".join(
                             item_names.add_quantity_to_resource(item_for_index[ammo_index].long_name,
-                                                                total, True)
-                            for ammo_index, total in zip(ammo.items, totals)
+                                                                self_count, True)
+                            for ammo_index, self_count in zip(ammo.items, self_counts)
                         ),
                         from_items=" and ".join(
                             item_names.add_quantity_to_resource(item_for_index[ammo_index].long_name,
-                                                                ammo_provided[ammo_index], True)
-                            for ammo_index in ammo.items
+                                                                ammo_provided[ammo_index] - self_count,
+                                                                True)
+                            for ammo_index, self_count in zip(ammo.items, self_counts)
                         ),
                         maximum=" and ".join(
                             item_names.add_quantity_to_resource(item_for_index[ammo_index].long_name,
-                                                                item_for_index[ammo_index].max_capacity, True)
+                                                                min(ammo_provided[ammo_index],
+                                                                    item_for_index[ammo_index].max_capacity),
+                                                                True)
                             for ammo_index in ammo.items
                         )
                     )
@@ -177,7 +201,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         categories = set()
         for major_item in item_database.major_items.values():
-            if not major_item.required:
+            if not major_item.hide_from_gui:
                 categories.add(major_item.item_category)
 
         all_categories = list(item_database.item_categories.values())
@@ -229,7 +253,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
     def _create_major_item_boxes(self, item_database: ItemDatabase, resource_database: ResourceDatabase):
         for major_item in item_database.major_items.values():
-            if major_item.required or major_item.item_category.name == "energy_tank":
+            if major_item.hide_from_gui or major_item.item_category.name == "energy_tank":
                 continue
 
             category_box, category_layout, elements = self._boxes_for_category[major_item.item_category.name]
@@ -267,6 +291,14 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             "morph_ball_related": "morph_ball",
             "missile_related": "missile",
         }
+
+        layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
+            self._boxes_for_category[broad_to_category.get(ammo.broad_category.name, ammo.broad_category.name)][:2]
+            for ammo in item_database.ammo.values()
+        }
+
+        for box, layout in layouts_with_lines:
+            layout.addWidget(_create_separator(box), layout.rowCount(), 0, 1, -1)
 
         for ammo in item_database.ammo.values():
             category_box, category_layout, _ = self._boxes_for_category[broad_to_category.get(ammo.broad_category.name,
@@ -360,7 +392,15 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
     def _create_progressive_widgets(self, item_database: ItemDatabase):
         self._progressive_widgets = []
 
-        all_progressive = self.game.data.gui().progressive_item_gui_tuples
+        all_progressive = self.game.gui.progressive_item_gui_tuples
+
+        layouts_with_lines: set[tuple[Foldable, QtWidgets.QGridLayout]] = {
+            self._boxes_for_category[item_database.major_items[progressive_item_name].item_category.name][:2]
+            for (progressive_item_name, non_progressive_items) in all_progressive
+        }
+
+        for box, layout in layouts_with_lines:
+            layout.addWidget(_create_separator(box), layout.rowCount(), 0, 1, -1)
 
         for (progressive_item_name, non_progressive_items) in all_progressive:
             progressive_item = item_database.major_items[progressive_item_name]
@@ -373,4 +413,4 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
             )
             widget.setText("Use progressive {}".format(" → ".join(non_progressive_items)))
             self._progressive_widgets.append(widget)
-            layout.addWidget(widget)
+            layout.addWidget(widget, layout.rowCount(), 0, 1, -1)

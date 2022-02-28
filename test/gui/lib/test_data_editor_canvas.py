@@ -69,7 +69,7 @@ def test_contextMenuEvent(skip_qtbot, canvas, mocker):
 
     # Assert
     mock_qmenu.assert_any_call(canvas)
-    mock_qmenu.assert_any_call('Area: collision_camera_045 (A)', canvas)
+    mock_qmenu.assert_any_call('Area: First Tutorial Access', canvas)
     event.globalPos.assert_has_calls([call(), call()])
     mock_qmenu.return_value.exec_.assert_called_once_with(QPoint(100, 200))
 

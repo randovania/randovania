@@ -114,6 +114,12 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _widget_for_pickup: Dict[PickupEntry, Union[QCheckBox, QtWidgets.QComboBox]]
     _during_setup = False
 
+    @classmethod
+    async def create_new(cls, persistence_path: Path, preset: Preset) -> "TrackerWindow":
+        result = cls(persistence_path, preset)
+        await result.configure()
+        return result
+
     def __init__(self, persistence_path: Path, preset: Preset):
         super().__init__()
         self.setupUi(self)
@@ -125,16 +131,21 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self._world_name_to_item = {}
         self._area_name_to_item = {}
         self._node_to_item = {}
+        self.preset = preset
         self.game_configuration = preset.configuration
         self.persistence_path = persistence_path
 
-        player_pool = generator.create_player_pool(Random(0), self.game_configuration, 0, 1)
+    async def configure(self):
+        player_pool = await generator.create_player_pool(None, self.game_configuration, 0, 1, rng_required=False)
         pool_patches = player_pool.patches
-        self.game_description, self._initial_state = self.game_configuration.game.data.generator.bootstrap.logic_bootstrap(
-            preset.configuration,
+
+        bootstrap = self.game_configuration.game.generator.bootstrap
+
+        self.game_description, self._initial_state = bootstrap.logic_bootstrap(
+            self.preset.configuration,
             player_pool.game,
             pool_patches)
-        self.logic = Logic(self.game_description, preset.configuration)
+        self.logic = Logic(self.game_description, self.preset.configuration)
         self.map_canvas.select_game(self.game_description.game)
 
         self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
@@ -145,7 +156,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
 
         self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
-            preset.configuration.trick_level.pretty_description,
+            self.preset.configuration.trick_level.pretty_description,
             ", ".join(
                 resource.short_name
                 for resource in pool_patches.starting_items.keys()
@@ -177,14 +188,14 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
             self.graph_map_world_combo.addItem(world.name, world)
         self.graph_map_world_combo.currentIndexChanged.connect(self.on_graph_map_world_combo)
 
-        persistence_path.mkdir(parents=True, exist_ok=True)
-        previous_state = _load_previous_state(persistence_path, preset.configuration)
+        self.persistence_path.mkdir(parents=True, exist_ok=True)
+        previous_state = _load_previous_state(self.persistence_path, self.preset.configuration)
 
         if not self.apply_previous_state(previous_state):
             self.setup_starting_location(None)
 
-            VersionedPreset.with_preset(preset).save_to_file(
-                _persisted_preset_path(persistence_path)
+            VersionedPreset.with_preset(self.preset).save_to_file(
+                _persisted_preset_path(self.persistence_path)
             )
             self._add_new_action(self._initial_state.node)
 
@@ -194,7 +205,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
         starting_location = None
         needs_starting_location = len(self.game_configuration.starting_location.locations) > 1
-        resource_db = self.game_description.resource_database
         configurable_nodes = {}
 
         try:
@@ -805,19 +815,22 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 row_for_parent[parent_widget] = row
                 column_for_parent[parent_widget] = column
 
-        for parent_widget, parent_layout, pickup, quantity in non_expansions_with_quantity:
-            if column_for_parent[parent_widget] != 0:
-                column_for_parent[parent_widget] = 0
-                row_for_parent[parent_widget] += 1
+            # Prepare the rows for the spin boxes below
+            row_for_parent[parent_widget] = num_rows
+            column_for_parent[parent_widget] = 0
 
+        for parent_widget, parent_layout, pickup, quantity in non_expansions_with_quantity:
             self._create_widgets_with_quantity(pickup, parent_widget, parent_layout,
                                                row_for_parent[parent_widget],
                                                quantity)
             row_for_parent[parent_widget] += 1
 
-    def state_for_current_configuration(self) -> Optional[State]:
-        all_nodes = self.game_description.world_list.all_nodes
+        for parent_widget, _ in parent_widgets.values():
+            # Nothing was added to this box
+            if row_for_parent[parent_widget] == column_for_parent.get(parent_widget) == 0:
+                parent_widget.setVisible(False)
 
+    def state_for_current_configuration(self) -> Optional[State]:
         state = self._initial_state.copy()
         if self._actions:
             state.node = self._actions[-1]

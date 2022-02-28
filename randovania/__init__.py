@@ -13,6 +13,10 @@ def is_frozen() -> bool:
     return getattr(sys, "frozen", False)
 
 
+def is_dev_version():
+    return ".dev" in VERSION
+
+
 def get_file_path() -> Path:
     if is_frozen():
         file_dir = Path(getattr(sys, "_MEIPASS"))

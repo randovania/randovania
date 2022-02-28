@@ -17,8 +17,10 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
 
     return [
         PresetTrickLevel(editor, game_description, window_manager),
-        PresetElevators(editor, game_description),
-        PresetMetroidStartingArea(editor, game_description),
+        *([
+            PresetElevators(editor, game_description),
+            PresetMetroidStartingArea(editor, game_description),
+        ] if window_manager.is_preview_mode else []),
         PresetGeneration(editor, game_description),
         PresetLocationPool(editor, game_description),
         MetroidPresetItemPool(editor)

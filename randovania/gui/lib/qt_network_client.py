@@ -14,7 +14,7 @@ from randovania.network_client.game_session import GameSessionEntry, User, GameS
     GameSessionAuditLog
 from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
 from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
-                                             NotLoggedIn)
+                                             NotLoggedIn, UserNotAuthorized)
 
 
 class QtNetworkClient(QWidget, NetworkClient):
@@ -37,7 +37,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         from randovania.gui.lib import common_qt_lib
         common_qt_lib.set_default_window_icon(self)
 
-        if "discord_client_id" in self.configuration:
+        if self.configuration.get("discord_client_id") is not None:
             self.discord = pypresence.AioClient(self.configuration["discord_client_id"])
             self.discord._events_on = False  # workaround for broken AioClient
         else:
@@ -144,6 +144,12 @@ def handle_network_errors(fn):
         except NotAuthorizedForAction:
             await async_dialog.warning(self, "Unauthorized",
                                        "You're not authorized to perform that action.")
+
+        except UserNotAuthorized:
+            await async_dialog.warning(
+                self, "Unauthorized",
+                "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
+            )
 
         except UnableToConnect as e:
             s = e.reason.replace('\n', '<br />')

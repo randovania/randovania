@@ -1,5 +1,5 @@
 {
-    "schema_version": 2,
+    "schema_version": 3,
     "item_categories": {
         "beam": {
             "long_name": "Beams",
@@ -98,9 +98,12 @@
             "progression": [
                 "Power"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": true,
+            "hide_from_gui": true,
+            "must_be_starting": true,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -112,9 +115,12 @@
             "progression": [
                 "Wide"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -126,9 +132,12 @@
             "progression": [
                 "Plasma"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -136,13 +145,16 @@
         "Wave Beam": {
             "item_category": "beam",
             "broad_category": "beam_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_wavebeam",
             "progression": [
                 "Wave"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -151,13 +163,16 @@
         "Hyper Beam": {
             "item_category": "beam",
             "broad_category": "beam_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_hyperbeam",
             "progression": [
                 "Hyper"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": true,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -166,15 +181,18 @@
         "Progressive Beam": {
             "item_category": "beam",
             "broad_category": "beam_related",
-            "model_name": "itemsphere",
+            "model_name": "PROGRESSIVE_BEAM",
             "progression": [
                 "Wide",
                 "Plasma",
                 "Wave"
             ],
+            "default_shuffled_count": 3,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -186,9 +204,12 @@
             "progression": [
                 "Charge"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -200,9 +221,12 @@
             "progression": [
                 "Diffusion"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -210,14 +234,17 @@
         "Progressive Charge Beam": {
             "item_category": "beam",
             "broad_category": "beam_related",
-            "model_name": "itemsphere",
+            "model_name": "PROGRESSIVE_CHARGE",
             "progression": [
                 "Charge",
                 "Diffusion"
             ],
+            "default_shuffled_count": 2,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -229,9 +256,12 @@
             "progression": [
                 "Grapple"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -243,70 +273,85 @@
             "progression": [
                 "MissileLauncher"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
             "ammo": [
                 "MissileAmmo"
             ],
             "unlocks_ammo": true,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": true,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
         },
-        "Super Missiles": {
+        "Super Missile": {
             "item_category": "missile",
             "broad_category": "missile_related",
             "model_name": "powerup_supermissile",
             "progression": [
                 "Supers"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
             "original_index": 100
         },
-        "Ice Missiles": {
+        "Ice Missile": {
             "item_category": "missile",
             "broad_category": "missile_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_icemissile",
             "progression": [
                 "Ice"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
             "original_index": 146
         },
-        "Progressive Missiles": {
+        "Progressive Missile": {
             "item_category": "missile",
             "broad_category": "missile_related",
-            "model_name": "itemsphere",
+            "model_name": "PROGRESSIVE_MISSILE",
             "progression": [
                 "Supers",
                 "Ice"
             ],
+            "default_shuffled_count": 2,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
         },
-        "Storm Missiles": {
+        "Storm Missile": {
             "item_category": "missile",
             "broad_category": "missile_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_stormmissile",
             "progression": [
                 "Storm"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -315,13 +360,16 @@
         "Phantom Cloak": {
             "item_category": "aeion",
             "broad_category": "aeion",
-            "model_name": "itemsphere",
+            "model_name": "powerup_opticcamo",
             "progression": [
                 "Cloak"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -334,9 +382,12 @@
             "progression": [
                 "Flash"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -348,9 +399,12 @@
             "progression": [
                 "Pulse"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -363,9 +417,12 @@
             "progression": [
                 "PowerSuit"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": true,
+            "hide_from_gui": true,
+            "must_be_starting": true,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -377,9 +434,12 @@
             "progression": [
                 "Varia"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -391,9 +451,12 @@
             "progression": [
                 "Gravity"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -401,13 +464,16 @@
         "Metroid Suit": {
             "item_category": "suit",
             "broad_category": "life_support",
-            "model_name": "itemsphere",
+            "model_name": "powerup_metroidsuit",
             "progression": [
                 "HyperSuit"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": true,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -416,14 +482,17 @@
         "Progressive Suit": {
             "item_category": "suit",
             "broad_category": "life_support",
-            "model_name": "itemsphere",
+            "model_name": "PROGRESSIVE_SUIT",
             "progression": [
                 "Varia",
                 "Gravity"
             ],
+            "default_shuffled_count": 2,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -431,13 +500,16 @@
         "Morph Ball": {
             "item_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_morphball",
             "progression": [
                 "Morph"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -450,9 +522,12 @@
             "progression": [
                 "Bomb"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -460,13 +535,16 @@
         "Cross Bomb": {
             "item_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_crossbomb",
             "progression": [
                 "Cross"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -475,14 +553,17 @@
         "Progressive Bomb": {
             "item_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "itemsphere",
+            "model_name": "PROGRESSIVE_BOMB",
             "progression": [
                 "Bomb",
                 "Cross"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -490,15 +571,18 @@
         "Power Bomb": {
             "item_category": "morph_ball",
             "broad_category": "morph_ball_related",
-            "model_name": "itemsphere",
+            "model_name": "powerup_powerbomb",
             "progression": [
                 "MainPB"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [
                 "PBAmmo"
             ],
             "unlocks_ammo": true,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -506,13 +590,16 @@
         "Slide": {
             "item_category": "misc",
             "broad_category": "misc",
-            "model_name": "itemsphere",
+            "model_name": "powerup_slide",
             "progression": [
                 "Slide"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 1,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": true,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -520,13 +607,16 @@
         "Spider Magnet": {
             "item_category": "misc",
             "broad_category": "misc",
-            "model_name": "itemsphere",
+            "model_name": "powerup_spidermagnet",
             "progression": [
                 "Magnet"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -534,13 +624,16 @@
         "Speed Booster": {
             "item_category": "misc",
             "broad_category": "misc",
-            "model_name": "itemsphere",
+            "model_name": "powerup_speedbooster",
             "progression": [
                 "Speed"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -553,9 +646,12 @@
             "progression": [
                 "Spin"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {},
@@ -568,9 +664,12 @@
             "progression": [
                 "Space"
             ],
+            "default_shuffled_count": 0,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -578,14 +677,17 @@
         "Progressive Spin": {
             "item_category": "misc",
             "broad_category": "misc",
-            "model_name": "itemsphere",
+            "model_name": "PROGRESSIVE_SPIN",
             "progression": [
                 "Spin",
                 "Space"
             ],
+            "default_shuffled_count": 2,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -597,9 +699,12 @@
             "progression": [
                 "Screw"
             ],
+            "default_shuffled_count": 1,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -611,9 +716,12 @@
             "progression": [
                 "ETank"
             ],
+            "default_shuffled_count": 8,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
@@ -625,16 +733,19 @@
             "progression": [
                 "EFragment"
             ],
+            "default_shuffled_count": 16,
+            "default_starting_count": 0,
             "ammo": [],
             "unlocks_ammo": false,
-            "required": false,
+            "hide_from_gui": false,
+            "must_be_starting": false,
             "probability_offset": 0,
             "probability_multiplier": 1,
             "extra": {}
         }
     },
     "ammo": {
-        "Missile Expansion": {
+        "Missile Tank": {
             "model_name": "item_missiletank",
             "items": [
                 "MissileAmmo"
@@ -642,7 +753,7 @@
             "broad_category": "missile_related",
             "extra": {}
         },
-        "Missile+ Expansion": {
+        "Missile+ Tank": {
             "model_name": "item_missiletankplus",
             "items": [
                 "MissileAmmo"
@@ -650,13 +761,15 @@
             "broad_category": "missile_related",
             "extra": {}
         },
-        "Power Bomb Expansion": {
+        "Power Bomb Tank": {
             "model_name": "item_powerbombtank",
             "items": [
                 "PBAmmo"
             ],
             "broad_category": "morph_ball_related",
-            "extra": {}
+            "extra": {},
+            "temporary": "PBAmmo",
+            "unlocked_by": "MainPB"
         }
     },
     "default_items": {}

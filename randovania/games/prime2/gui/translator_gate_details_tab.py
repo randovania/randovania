@@ -5,8 +5,8 @@ from PySide2 import QtWidgets
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.gui.preset_settings.echoes_translators_tab import gate_data
-from randovania.games.prime2.patcher.claris_patcher_file import translator_index_for_requirement
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -24,13 +24,16 @@ class TranslatorGateDetailsTab(GameDetailsTab):
     def tab_title(self) -> str:
         return "Translator Gate"
 
-    def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
+    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
+                       players: PlayersConfiguration):
+
         self.tree_widget.clear()
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Gate", "Requirement"])
 
         game = default_database.game_description_for(self.game_enum)
         world_list = game.world_list
+        patches = all_patches[players.player_index]
 
         gate_index_to_name, identifier_to_gate = gate_data()
 
@@ -47,7 +50,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
             source_world = world_list.world_by_area_location(source_loc.area_identifier)
             source_name = gate_index_to_name[identifier_to_gate[source_loc]]
 
-            index = translator_index_for_requirement(requirement)
+            index = patch_data_factory.translator_index_for_requirement(requirement)
             per_world[source_world.name][source_name] = items_by_id[index]
 
         for world_name, world_contents in iterate_key_sorted(per_world):

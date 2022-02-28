@@ -1,4 +1,4 @@
-def gui_tuples():
+def tuples():
     return [
         (
             "Progressive Beam",
@@ -9,8 +9,8 @@ def gui_tuples():
             ("Charge Beam", "Diffusion Beam")
         ),
         (
-            "Progressive Missiles",
-            ("Super Missiles", "Ice Missiles")
+            "Progressive Missile",
+            ("Super Missile", "Ice Missile")
         ),
         (
             "Progressive Suit",

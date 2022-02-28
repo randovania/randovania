@@ -6,7 +6,9 @@
             "Nothing": {
                 "long_name": "Nothing",
                 "max_capacity": 1,
-                "extra": {}
+                "extra": {
+                    "item_id": "ITEM_NONE"
+                }
             },
             "Power": {
                 "long_name": "Power Beam",
@@ -68,21 +70,21 @@
                 "extra": {}
             },
             "Supers": {
-                "long_name": "Super Missiles",
+                "long_name": "Super Missile",
                 "max_capacity": 1,
                 "extra": {
                     "item_id": "ITEM_WEAPON_SUPER_MISSILE"
                 }
             },
             "Ice": {
-                "long_name": "Ice Missiles",
+                "long_name": "Ice Missile",
                 "max_capacity": 1,
                 "extra": {
                     "item_id": "ITEM_WEAPON_ICE_MISSILE"
                 }
             },
             "Storm": {
-                "long_name": "Storm Missiles",
+                "long_name": "Storm Missile",
                 "max_capacity": 1,
                 "extra": {
                     "item_id": "ITEM_MULTILOCKON"
@@ -206,7 +208,7 @@
                 }
             },
             "EFragment": {
-                "long_name": "Energy Fragment",
+                "long_name": "Energy Part",
                 "max_capacity": 16,
                 "extra": {
                     "item_id": "ITEM_LIFE_SHARDS"
@@ -244,10 +246,6 @@
             }
         },
         "events": {
-            "Event1": {
-                "long_name": "Generic Event",
-                "extra": {}
-            },
             "s010_cave:default:breakablecave019": {
                 "long_name": "Artaria - Screw Attack Water Blob",
                 "extra": {}
@@ -377,11 +375,11 @@
                 "extra": {}
             },
             "s020_magma:default:db_hdoor_mg_002": {
-                "long_name": "Cataris - db_hdoor_mg_002",
+                "long_name": "Cataris - Ghavoran Teleporter Upper-right Tunnel Blob",
                 "extra": {}
             },
             "s020_magma:default:db_dside_mg_003": {
-                "long_name": "Cataris - db_dside_mg_003",
+                "long_name": "Cataris - Ghavoran Teleporter Lower-left Tunnel Blob",
                 "extra": {}
             },
             "s020_magma:default:db_dside_mg_002": {
@@ -428,24 +426,8 @@
                 "long_name": "Cataris - db_reg_mg_021",
                 "extra": {}
             },
-            "s020_magma:default:db_dside_mg_003b_000": {
-                "long_name": "Cataris - db_dside_mg_003b_000",
-                "extra": {}
-            },
             "s020_magma:default:db_reg_mg_020": {
                 "long_name": "Cataris - db_reg_mg_020",
-                "extra": {}
-            },
-            "s020_magma:default:db_hdoor_mg_002b_000": {
-                "long_name": "Cataris - db_hdoor_mg_002b_000",
-                "extra": {}
-            },
-            "s020_magma:default:db_dside_mg_001b_000": {
-                "long_name": "Cataris - db_dside_mg_001b_000",
-                "extra": {}
-            },
-            "s020_magma:default:db_dside_mg_002b_000": {
-                "long_name": "Cataris - db_dside_mg_002b_000",
                 "extra": {}
             },
             "s030_baselab:default:powergenerator_002": {
@@ -469,7 +451,7 @@
                 "extra": {}
             },
             "s030_baselab:default:db_reg_b1_001": {
-                "long_name": "Dairon - db_reg_b1_001",
+                "long_name": "Dairon - Freezer Hidden Left Blob",
                 "extra": {}
             },
             "s030_baselab:default:db_reg_b1_002": {
@@ -613,7 +595,7 @@
                 "extra": {}
             },
             "s020_magma:default:grapplepulloff1x2_001": {
-                "long_name": "Cataris - grapplepulloff1x2_001",
+                "long_name": "Cataris - Green Teleport Grapple Block",
                 "extra": {}
             },
             "s030_baselab:default:grapplepulloff1x2_007": {
@@ -849,11 +831,11 @@
                 "extra": {}
             },
             "GhavoranSupersRotatable": {
-                "long_name": "Ghavoran - Super Missiles Rotatable",
+                "long_name": "Ghavoran - Super Missile Rotatable",
                 "extra": {}
             },
             "GhavoraSupersMagnetPlatformLowered": {
-                "long_name": "Ghavoran - Super Missiles Magnet Platform Lowered",
+                "long_name": "Ghavoran - Super Missile Magnet Platform Lowered",
                 "extra": {}
             },
             "GhavoranPulseRadarEnky": {
@@ -869,7 +851,7 @@
                 "extra": {}
             },
             "GhavoranSuperRotatableEnky": {
-                "long_name": "Ghavoran - Super Missiles Rotatable Enky",
+                "long_name": "Ghavoran - Super Missile Rotatable Enky",
                 "extra": {}
             },
             "GhavoranFereniaTransportEnkyLeft": {
@@ -930,6 +912,14 @@
             },
             "DaironGrappleBlockElevatorFerenia": {
                 "long_name": "Dairon - Pull Grapple Block below Ferenia Elevator",
+                "extra": {}
+            },
+            "ElunReleaseX": {
+                "long_name": "Elun - Release X Parasites",
+                "extra": {}
+            },
+            "DaironTeleportToArtariaSpeedBlocksDestroyed": {
+                "long_name": "Dairon - Teleport To Artaria Speed Blocks Destroyed",
                 "extra": {}
             }
         },
@@ -996,6 +986,16 @@
             },
             "SSC": {
                 "long_name": "Shinesink Clip",
+                "description": "",
+                "extra": {}
+            },
+            "Suitless": {
+                "long_name": "Heat/Cold Runs",
+                "description": "",
+                "extra": {}
+            },
+            "RGrapple": {
+                "long_name": "Reverse Grapple Block",
                 "description": "",
                 "extra": {}
             }
@@ -1659,8 +1659,25 @@
                             "data": "Shoot Ice Missile"
                         },
                         {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
                         }
                     ]
                 }
@@ -1851,6 +1868,41 @@
                         }
                     ]
                 }
+            },
+            "Break/Move Grapple Block from Behind": {
+                "type": "and",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Grapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Slide",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "RGrapple",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
@@ -1945,8 +1997,37 @@
                         "lock_type": 3,
                         "extra": {},
                         "requirement": {
-                            "type": "template",
-                            "data": "Shoot Charge Beam"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Charge Beam"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Knowledge",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Power Bomb"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     },
                     "Wide Beam Door": {
@@ -2053,54 +2134,10 @@
                     }
                 }
             },
-            "other": {
-                "name": "Dock",
+            "tunnel": {
+                "name": "Tunnel",
                 "extra": {},
                 "items": {
-                    "Open Passage": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    },
-                    "Not Determined": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    },
-                    "Blocked Passage": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    },
-                    "EMMI Door": {
-                        "lock_type": 0,
-                        "extra": {},
-                        "requirement": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    },
                     "Slide Tunnel": {
                         "lock_type": 0,
                         "extra": {},
@@ -2247,6 +2284,56 @@
                                         }
                                     }
                                 ]
+                            }
+                        }
+                    }
+                }
+            },
+            "other": {
+                "name": "Dock",
+                "extra": {},
+                "items": {
+                    "Open Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Not Determined": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "Blocked Passage": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    },
+                    "EMMI Door": {
+                        "lock_type": 0,
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }

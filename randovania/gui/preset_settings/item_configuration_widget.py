@@ -6,7 +6,8 @@ from PySide2.QtWidgets import QGraphicsOpacityEffect, QWidget
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.generated.item_configuration_popup_ui import Ui_ItemConfigurationPopup
-from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.major_item_state import MajorItemState, MajorItemStateCase
+from randovania.lib import enum_lib
 
 
 class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
@@ -26,26 +27,39 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         self.separator_line.setGraphicsEffect(transparent)
         self.separator_line.hide()
 
+        for case in enum_lib.iterate_enum(MajorItemStateCase):
+            if case == MajorItemStateCase.VANILLA and item.original_index is None:
+                continue
+            if case == MajorItemStateCase.STARTING_ITEM and len(item.progression) > 1:
+                continue
+
+            self.state_case_combo.addItem(case.pretty_text, case)
+
+        self.priority_combo.addItem("Very Low", 0.25)
+        self.priority_combo.addItem("Low", 0.50)
+        self.priority_combo.addItem("Normal", 1.0)
+        self.priority_combo.addItem("High", 1.5)
+        self.priority_combo.addItem("Very High", 2.0)
+        self.priority_combo.setCurrentIndex(self.priority_combo.findData(1.0))
+
         # connect
-        self.excluded_radio.toggled.connect(self._on_select_excluded)
-        self.vanilla_radio.toggled.connect(self._on_select_vanilla)
-        self.starting_radio.toggled.connect(self._on_select_starting)
-        self.shuffled_radio.toggled.connect(self._on_select_shuffled)
-        self.shuffled_spinbox.valueChanged.connect(self._on_shuffled_value)
-        self.provided_ammo_spinbox.valueChanged.connect(self._on_shuffled_value)
+        self.state_case_combo.currentIndexChanged.connect(self._on_select_case)
+        self.vanilla_check.toggled.connect(self._on_select)
+        self.starting_check.toggled.connect(self._on_select)
+        self.shuffled_spinbox.valueChanged.connect(self._on_select)
+        self.provided_ammo_spinbox.valueChanged.connect(self._on_select)
+        self.priority_combo.currentIndexChanged.connect(self._on_select)
 
         # Update
-        self.vanilla_radio.setEnabled(item.original_index is not None)
-
-        if not self.vanilla_radio.isEnabled():
-            self.vanilla_radio.setToolTip(
+        self.vanilla_check.setEnabled(item.original_index is not None)
+        if not self.vanilla_check.isEnabled():
+            self.vanilla_check.setToolTip(
                 "This item does not exist in the original game, so there's no vanilla location.")
 
-        # At least one radio should be selected
-        for radio in (self.shuffled_radio, self.starting_radio, self.vanilla_radio):
-            if radio.isEnabled():
-                radio.setChecked(True)
-                break
+        self.starting_check.setEnabled(len(item.progression) <= 1)
+        if not self.starting_check.isEnabled():
+            self.starting_check.setToolTip(
+                "Progressive items are not allowed to be marked as starting.")
 
         if item.ammo_index:
             ammo_names = " and ".join(
@@ -61,62 +75,69 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
             self.provided_ammo_label.hide()
             self.provided_ammo_spinbox.hide()
 
-        if self._item.required:
+        self.set_custom_fields_visible(False)
+        if self._item.must_be_starting:
             self.item_name_label.setToolTip(
                 "This item is necessary for the game to function properly and can't be removed.")
-            self.setEnabled(False)
-            self.state = self._create_state(num_included_in_starting_items=1)
+            self.state_case_combo.setEnabled(False)
+            self.case = MajorItemStateCase.STARTING_ITEM
         else:
             if self._item.warning is not None:
                 self.warning_label.setText(self._item.warning)
             else:
                 self.warning_label.setVisible(False)
-            self.state = starting_state
+            self.set_new_state(starting_state)
+
+    def set_custom_fields_visible(self, visible: bool):
+        for item in [self.vanilla_check, self.starting_check, self.priority_label,
+                     self.priority_combo, self.shuffled_spinbox]:
+            item.setVisible(visible)
 
     @property
     def item(self):
         return self._item
 
     @property
+    def case(self) -> MajorItemStateCase:
+        return self.state_case_combo.currentData()
+
+    @case.setter
+    def case(self, value: MajorItemStateCase):
+        new_index = self.state_case_combo.findData(value)
+        if new_index != self.state_case_combo.currentIndex():
+            self.state_case_combo.setCurrentIndex(new_index)
+        else:
+            self._on_select_case(new_index)
+
+    @property
     def state(self) -> MajorItemState:
-        if not self.excluded_radio.isChecked():
+        if self.case == MajorItemStateCase.CUSTOM:
             return MajorItemState(
-                include_copy_in_original_location=self.vanilla_radio.isChecked(),
-                num_shuffled_pickups=self.shuffled_spinbox.value() if self.shuffled_radio.isChecked() else 0,
-                num_included_in_starting_items=1 if self.starting_radio.isChecked() else 0,
+                include_copy_in_original_location=self.vanilla_check.isChecked(),
+                num_shuffled_pickups=self.shuffled_spinbox.value(),
+                num_included_in_starting_items=1 if self.starting_check.isChecked() else 0,
+                priority=self.priority_combo.currentData(),
                 included_ammo=self.included_ammo,
             )
         else:
-            return MajorItemState(
-                include_copy_in_original_location=False,
-                num_shuffled_pickups=0,
-                num_included_in_starting_items=0,
-                included_ammo=self.included_ammo,
-            )
+            return MajorItemState.from_case(self.case, self.included_ammo)
 
-    @state.setter
-    def state(self, value: MajorItemState):
-        self._update_for_state(value)
+    def set_new_state(self, value: MajorItemState):
+        if self.state != value:
+            self.case = value.case
+            self._update_for_state(value)
 
     def _update_for_state(self, state):
-        self.shuffled_spinbox.setEnabled(False)
-
         if state.included_ammo:
             self.provided_ammo_spinbox.setValue(state.included_ammo[0])
 
-        if state.include_copy_in_original_location and self.vanilla_radio.isEnabled():
-            self.vanilla_radio.setChecked(True)
+        self.vanilla_check.setChecked(state.include_copy_in_original_location)
+        self.shuffled_spinbox.setValue(state.num_shuffled_pickups)
+        self.starting_check.setChecked(state.num_included_in_starting_items > 0)
 
-        elif state.num_shuffled_pickups > 0 and self.shuffled_radio.isEnabled():
-            self.shuffled_radio.setChecked(True)
-            self.shuffled_spinbox.setEnabled(True)
-            self.shuffled_spinbox.setValue(state.num_shuffled_pickups)
-
-        elif state.num_included_in_starting_items > 0:
-            self.starting_radio.setChecked(True)
-
-        else:
-            self.excluded_radio.setChecked(True)
+        priority_index = self.priority_combo.findData(state.priority)
+        if priority_index >= 0:
+            self.priority_combo.setCurrentIndex(priority_index)
 
         self.Changed.emit()
 
@@ -126,36 +147,12 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
     def button_box_rejected(self):
         self.reject()
 
-    def _on_included_box_toggle(self, enabled: bool):
-        self._update_for_state(self.state)
+    def _on_select_case(self, _):
+        self.set_custom_fields_visible(self.case == MajorItemStateCase.CUSTOM)
+        self.Changed.emit()
 
-    def _on_select_excluded(self, value: bool):
+    def _on_select(self, value):
         self._update_for_state(self.state)
-
-    def _on_select_vanilla(self, value: bool):
-        self._update_for_state(self.state)
-
-    def _on_select_starting(self, value: bool):
-        self._update_for_state(self.state)
-
-    def _on_select_shuffled(self, value: bool):
-        self._update_for_state(self.state)
-
-    def _on_shuffled_value(self, value: int):
-        self._update_for_state(self.state)
-
-    def _create_state(self,
-                      *,
-                      include_copy_in_original_location=False,
-                      num_shuffled_pickups=0,
-                      num_included_in_starting_items=0,
-                      ):
-        return MajorItemState(
-            include_copy_in_original_location=include_copy_in_original_location,
-            num_shuffled_pickups=num_shuffled_pickups,
-            num_included_in_starting_items=num_included_in_starting_items,
-            included_ammo=self.included_ammo,
-        )
 
     @property
     def included_ammo(self) -> Tuple[int, ...]:

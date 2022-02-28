@@ -97,7 +97,7 @@ def test_load_previous_state_success(tmp_path: Path, default_preset):
 
 
 @pytest.mark.parametrize("shuffle_advanced", [False, True])
-def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset, shuffle_advanced,
+async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset, shuffle_advanced,
                               echoes_game_description):
     configuration = default_echoes_preset.configuration
     assert isinstance(configuration, EchoesConfiguration)
@@ -283,7 +283,7 @@ def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset,
     tmp_path.joinpath("state.json").write_text(json.dumps(state), "utf-8")
 
     # Run
-    window = tracker_window.TrackerWindow(tmp_path, preset)
+    window = await tracker_window.TrackerWindow.create_new(tmp_path, preset)
     skip_qtbot.add_widget(window)
 
     # Assert

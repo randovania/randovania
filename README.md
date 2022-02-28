@@ -49,6 +49,37 @@ So have fun and start randomizing.
 In the [releases page](https://github.com/randovania/randovania/releases), we have zip files
 with everything ready to use. Just extract and run!
 
+## Linux
+
+### Running (in-source)
+
+1. Clone this repository (downloading the source zip is not supported and will not work)
+2. Open a terminal in the repository root
+3. Fetch the tags from the repo:
+
+   `$ git fetch --tags`
+4. Checkout the latest tag (replace v4.0.1 with the latest release version):
+
+   `$ git checkout v4.0.1`
+5. Prepare the virtual environment and install dependencies:
+   
+   `$ tools/prepare_virtual_env.sh`
+6. Run the program from source:
+
+   `$ tools/start_client.sh`
+
+### Running Natively and Multiworld
+
+1. Activate the virtual environment and generate the necessary configuration.json, as well as build a native application:
+
+   ```console
+   $ . venv/bin/activate
+   (venv) $ export PRODUCTION=true
+   (venv) $ python tools/create_release.py
+   ```
+2. Navigate into the build/randovania directory
+3. Install the generated randovania.pkg or run the generated executable
+
 <!-- Begin COMMUNITY -->
 
 # Community
@@ -81,8 +112,8 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 [Menu Mod README](https://www.dropbox.com/s/yhqqafaxfo3l4vn/Echoes%20Menu.7z?file_subpath=%2FEchoes+Menu%2Freadme.txt).
 
 ### Metroid Prime 3: Corruption
-* Game patching written by gollop.
-* Room data collected by Dyceron and [KirbymastaH](https://www.twitch.tv/kirbymastah).
+* Game patching written by [gollop](https://github.com/gollop).
+* Room data collected by [Dyceron](https://www.twitch.tv/dyceron) and [KirbymastaH](https://www.twitch.tv/kirbymastah).
 
 ### Super Metroid
 * Game Patching and Logic Database by [SolventMercury](https://github.com/SolventMercury).
@@ -95,10 +126,12 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 * Based on the [original randomizer](https://shru.itch.io/cave-story-randomizer) by shru.
 * Features contributions from [many others](https://github.com/cave-story-randomizer/cave-story-randomizer/graphs/contributors).
 
+### Metroid Dread
+* Game Patching by [Henrique Gemignani](https://github.com/henriquegemignani/) and [duncathan_salt](https://twitter.com/duncathan_salt).
+* Room data initially collected by [KirbymastaH](https://www.twitch.tv/kirbymastah) (connections), [Dyceron](https://www.twitch.tv/dyceron) (area names) and Henrique Gemignani (initial structure).
+* Morph Ball and Speed Booster pickup textures created by [BigSharkZ](https://www.youtube.com/BigSharkZ). Spider Magnet pickup texture by duncathan_salt with help from BigSharkZ. 
+
 ## Auto Tracker
-
-Classic theme uses assets derived from [this spritesheet](https://www.spriters-resource.com/custom_edited/metroidcustoms/sheet/23198/) from ChaosMiles07 and Ridleymaster, with edits from SpaghettiToastBook.
-
 Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedKirby).
 
 ## Multiworld
@@ -110,7 +143,7 @@ Server and logic written by Henrique, including Dolphin and Nintendont integrati
 
 ## Dependencies
 
-* [Python 3.9 64-bit](https://www.python.org/ftp/python/3.9.5/python-3.9.5-amd64.exe)
+* [Python 3.9 64-bit](https://www.python.org/ftp/python/3.9.10/python-3.9.10-amd64.exe)
 * [Git](https://git-scm.com/downloads)
 
 ## Setup
@@ -126,6 +159,13 @@ Getting started:
 In order to start Randovania, open:
    1. Windows: `tools/start_client.bat`
    2. Linux/macOS: `tools/start_client.sh` 
+
+In order to update your repository:
+   1. Update the git repository. (With `git pull` or anything else)
+   2. Make sure that Randovania is closed.
+   3. Re-run the steps from "Getting Started", starting at step 2.
+      1. In case of unexpected errors, delete the `venv` in the root of the repository and start again.
+   4. Open Randovania normally.
 
 In order to run the tests:
    1. Run both "Getting started" and "Start Randovania" steps. 

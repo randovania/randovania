@@ -30,7 +30,7 @@ async def test_on_message_from_bot(mocker):
     (False, "v4.0.0\n", "4.0.0"),
 ])
 def test_get_version_success(mocker, is_dev, git_result, expected_result):
-    mocker.patch("randovania.server.discord.preset_lookup._is_dev_version", return_value=is_dev)
+    mocker.patch("randovania.is_dev_version", return_value=is_dev)
     mocker.patch("subprocess.run", return_value=subprocess.CalledProcessError(0, [], output=git_result))
     result = preset_lookup.get_version("foo", b'J/A')
     assert result == expected_result

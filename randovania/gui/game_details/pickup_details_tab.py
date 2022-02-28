@@ -12,7 +12,7 @@ from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.generated.pickup_details_tab_ui import Ui_PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.patching.prime.patcher_file_lib import item_names
+from randovania.exporter import item_names
 
 
 def _show_pickup_spoiler(button: QtWidgets.QPushButton):
@@ -50,7 +50,9 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
     def tab_title(self) -> str:
         return "Pickups"
 
-    def update_content(self, configuration: BaseConfiguration, patches: GamePatches, players: PlayersConfiguration):
+    def update_content(self, configuration: BaseConfiguration, all_patches: dict[int, GamePatches],
+                       players: PlayersConfiguration):
+        patches = all_patches[players.player_index]
         pickup_names = {
             pickup.pickup.name
             for pickup in patches.pickup_assignment.values()

@@ -30,7 +30,7 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
 @pytest.fixture(
     params=[
         {"encoded": b'\x00\x00\x00', "replace": {}},
-        {"encoded": b'\x03\x1b\xa0\x00', "replace": {
+        {"encoded": b'\x03\x1b\xa8\x00', "replace": {
             "items_state": {
                 "Spider Ball": {
                     "include_copy_in_original_location": True,
@@ -44,7 +44,9 @@ def _create_config_for(game: RandovaniaGame, replace: dict):
     name="prime2_data")
 def _prime2_data(request):
     return (
-    request.param["encoded"], *_create_config_for(RandovaniaGame.METROID_PRIME_ECHOES, request.param["replace"]))
+        request.param["encoded"],
+        *_create_config_for(RandovaniaGame.METROID_PRIME_ECHOES, request.param["replace"])
+    )
 
 
 @pytest.fixture(

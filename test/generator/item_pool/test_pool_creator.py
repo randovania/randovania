@@ -47,7 +47,7 @@ def test_cs_item_pool_creator(default_cs_configuration: CSConfiguration, puppies
         LayoutTrickLevel.HYPERMODE)
     default_cs_configuration = dataclasses.replace(default_cs_configuration, trick_level=tricks)
 
-    base_patches = GamePatches(0, {}, {}, {}, {}, {}, {}, starting_area, {})
+    base_patches = GamePatches(0, game_description.game, {}, {}, {}, {}, {}, {}, starting_area, {})
     rng = Random()
 
     result = pool_creator.calculate_pool_results(

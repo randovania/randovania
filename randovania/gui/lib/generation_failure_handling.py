@@ -5,6 +5,7 @@ from qasync import asyncSlot
 
 from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.gui.lib import async_dialog, common_qt_lib
+from randovania.gui.lib.scroll_message_box import ScrollMessageBox
 from randovania.resolver.exceptions import GenerationFailure, ImpossibleForSolver
 
 
@@ -22,16 +23,21 @@ class GenerationFailureHandler(QtWidgets.QWidget):
 
     @asyncSlot(GenerationFailure)
     async def _show_failed_generation_exception(self, exception: GenerationFailure):
-        box = QtWidgets.QMessageBox(
+        box = ScrollMessageBox(
             QtWidgets.QMessageBox.Critical,
             "An error occurred while generating game",
             str(exception), QtWidgets.QMessageBox.Ok, self.parent)
         common_qt_lib.set_default_window_icon(box)
 
         if isinstance(exception.source, UnableToGenerate):
-            box.setText(box.text() + "\n\nClick 'Show Details' to see a report of where the failure occurred.\n"
-                                     "Double check if your settings aren't impossible, or try again.")
-            box.setDetailedText(str(exception.source))
+            box.label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+            box.setText(
+                "{0}\n\nClick 'Show Details' to see a report of where the failure occurred.\n"
+                "Double check if your settings aren't impossible, or try again.\n\n"
+                "Details: {1}".format(
+                    box.text(),
+                    exception.source
+                ))
 
         elif isinstance(exception.source, ImpossibleForSolver):
             box.setText(box.text() + "\n\nRandovania sometimes generates games with insufficient Energy Tanks. "

@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Sequence
 
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
@@ -58,7 +58,7 @@ def create_major_item(item: MajorItem,
         item_category=item.item_category,
         broad_category=item.broad_category,
         probability_offset=item.probability_offset,
-        probability_multiplier=item.probability_multiplier,
+        probability_multiplier=item.probability_multiplier * state.priority,
         unlocks_resource=item.unlocks_ammo,
         respects_lock=ammo_requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database) if ammo is not None else None,
@@ -66,7 +66,7 @@ def create_major_item(item: MajorItem,
 
 
 def create_ammo_expansion(ammo: Ammo,
-                          ammo_count: Tuple[int, ...],
+                          ammo_count: Sequence[int],
                           requires_major_item: bool,
                           resource_database: ResourceDatabase,
                           ) -> PickupEntry:

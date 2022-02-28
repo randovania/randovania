@@ -7,6 +7,7 @@ from frozendict import frozendict
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.lib import frozen_lib
 
 
 @dataclass(frozen=True)
@@ -17,9 +18,12 @@ class MajorItem:
     broad_category: ItemCategory
     model_name: str
     progression: Tuple[str, ...]
+    default_shuffled_count: int
+    default_starting_count: int
     ammo_index: Tuple[str, ...] = tuple()
     unlocks_ammo: bool = False
-    required: bool = False
+    hide_from_gui: bool = False
+    must_be_starting: bool = False
     original_index: Optional[PickupIndex] = None
     probability_offset: int = 0
     probability_multiplier: float = 1
@@ -39,15 +43,18 @@ class MajorItem:
             item_category=item_categories[value["item_category"]],
             broad_category=item_categories[value["broad_category"]],
             model_name=value["model_name"],
-            progression=tuple(value["progression"]),
-            ammo_index=tuple(value.get("ammo", [])),
+            progression=frozen_lib.wrap(value["progression"]),
+            default_shuffled_count=value["default_shuffled_count"],
+            default_starting_count=value["default_starting_count"],
+            ammo_index=frozen_lib.wrap(value.get("ammo", [])),
             unlocks_ammo=value.get("unlocks_ammo", False),
-            required=value.get("required", False),
+            hide_from_gui=value.get("hide_from_gui", False),
+            must_be_starting=value.get("must_be_starting", False),
             original_index=PickupIndex(value["original_index"]) if "original_index" in value else None,
             probability_offset=value["probability_offset"],
             probability_multiplier=value["probability_multiplier"],
             warning=value.get("warning"),
-            extra=frozendict(value.get("extra", {}))
+            extra=frozen_lib.wrap(value.get("extra", {}))
         )
 
     @property
@@ -56,13 +63,16 @@ class MajorItem:
             "item_category": self.item_category.name,
             "broad_category": self.broad_category.name,
             "model_name": self.model_name,
-            "progression": list(self.progression),
-            "ammo": list(self.ammo_index),
+            "progression": frozen_lib.unwrap(self.progression),
+            "default_shuffled_count": self.default_shuffled_count,
+            "default_starting_count": self.default_starting_count,
+            "ammo": frozen_lib.unwrap(self.ammo_index),
             "unlocks_ammo": self.unlocks_ammo,
-            "required": self.required,
+            "hide_from_gui": self.hide_from_gui,
+            "must_be_starting": self.must_be_starting,
             "probability_offset": self.probability_offset,
             "probability_multiplier": self.probability_multiplier,
-            "extra": self.extra
+            "extra": frozen_lib.unwrap(self.extra),
         }
         if self.original_index is not None:
             result["original_index"] = self.original_index.index

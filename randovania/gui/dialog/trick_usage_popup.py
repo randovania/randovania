@@ -97,7 +97,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
             return
 
         # Update
-        trick_resources = self._game_description.game.data.generator.bootstrap.trick_resources_for_configuration(
+        trick_resources = self._game_description.game.generator.bootstrap.trick_resources_for_configuration(
             trick_level, database)
 
         lines = []

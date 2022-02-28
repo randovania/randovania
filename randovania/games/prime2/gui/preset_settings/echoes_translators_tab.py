@@ -3,11 +3,11 @@ import functools
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QComboBox
 
-import randovania.games.prime2.patcher.claris_patcher
 from randovania.game_description import default_database
 from randovania.game_description.world.node import ConfigurableNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement, TranslatorConfiguration
 from randovania.gui.generated.preset_echoes_translators_ui import Ui_PresetEchoesTranslators
@@ -26,7 +26,7 @@ def _translator_config(editor: PresetEditor) -> TranslatorConfiguration:
 
 def gate_data():
     db = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
-    randomizer_data = randovania.games.prime2.patcher.claris_patcher.decode_randomizer_data()
+    randomizer_data = decode_randomizer_data()
 
     gate_index_to_name = {
         gate["Index"]: gate["Name"]
@@ -72,8 +72,12 @@ class PresetEchoesTranslators(PresetTab, Ui_PresetEchoesTranslators):
             self.translators_layout.addWidget(combo, 3 + i, 1, 1, 2)
             self._combo_for_gate[combo.identifier] = combo
 
-    @property
-    def uses_patches_tab(self) -> bool:
+    @classmethod
+    def tab_title(cls) -> str:
+        return "Translators Gate"
+
+    @classmethod
+    def uses_patches_tab(cls) -> bool:
         return True
 
     def _on_randomize_all_gates_pressed(self):

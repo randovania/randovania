@@ -19,23 +19,13 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.lib import frozen_lib
 
 
 class NodeLocation(NamedTuple):
     x: float
     y: float
     z: float
-
-
-def wrap_frozen(x):
-    if isinstance(x, dict):
-        return frozendict((key, wrap_frozen(value)) for key, value in x.items())
-
-    elif isinstance(x, list):
-        return tuple(wrap_frozen(value) for value in x)
-
-    else:
-        return x
 
 
 class NodeContext(NamedTuple):
@@ -65,7 +55,7 @@ class Node:
         if not isinstance(self.extra, frozendict):
             if not isinstance(self.extra, dict):
                 raise ValueError(f"Expected dict for extra, got {type(self.extra)}")
-            object.__setattr__(self, "extra", wrap_frozen(self.extra))
+            object.__setattr__(self, "extra", frozen_lib.wrap(self.extra))
 
     @property
     def is_resource_node(self) -> bool:
@@ -104,7 +94,7 @@ class DockNode(Node):
     the door leads to.
 
     This is the default way a node connects to another area, expected to be used in every area and it implies the
-    areas are "phyisically" next to each other.
+    areas are "physically" next to each other.
 
     TeleporterNode is expected to be used exceptionally, where it can be reasonable to list all of them in the
     UI for user selection (elevator rando, for example).
@@ -184,7 +174,7 @@ class EventNode(ResourceNode):
 
 
 @dataclasses.dataclass(frozen=True)
-class ConfigurableNode(ResourceNode):
+class ConfigurableNode(Node):
     self_identifier: NodeIdentifier
 
     def __repr__(self):
@@ -192,23 +182,6 @@ class ConfigurableNode(ResourceNode):
 
     def requirement_to_leave(self, patches: GamePatches, current_resources: CurrentResources) -> Requirement:
         return patches.configurable_nodes[self.self_identifier]
-
-    def resource(self) -> ResourceInfo:
-        return SimpleResourceInfo(f"Configurable Node {self.index}", f"Node{self.index}", ResourceType.GATE_INDEX)
-
-    def can_collect(self, context: NodeContext) -> bool:
-        """
-        Checks if this TranslatorGate can be opened with the given resources and translator gate mapping
-        :param context:
-        :return:
-        """
-        if context.current_resources.get(self.resource(), 0) != 0:
-            return False
-        return context.patches.configurable_nodes[context.self_identifier].satisfied(
-            context.current_resources, 0, context.database)
-
-    def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        yield self.resource(), 1
 
 
 class LoreType(Enum):

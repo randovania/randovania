@@ -1,31 +1,57 @@
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
-from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
-from randovania.games.prime1.generator.item_pool.pool_creator import prime1_specific_pool
-from randovania.games.prime1.layout.preset_describer import prime_expected_items, prime_unexpected_items, \
-    prime_format_params
+from randovania.games import game
+from randovania.games.prime1.layout.preset_describer import (
+    PrimePresetDescriber,
+)
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
-from randovania.games.prime1.patcher.randomprime_patcher import RandomprimePatcher
-from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
 
 
-def _prime_gui():
-    from randovania.games.prime1.gui.preset_settings import prime1_preset_tabs
-    from randovania.games.prime1.gui.dialog.prime_cosmetic_patches_dialog import PrimeCosmeticPatchesDialog
+def _options():
+    from randovania.games.prime1.exporter.options import PrimePerGameOptions
+    return PrimePerGameOptions
+
+
+def _gui() -> game.GameGui:
     from randovania.gui.game_details.teleporter_details_tab import TeleporterDetailsTab
+    from randovania.games.prime1 import gui
 
-    return GameGui(
-        tab_provider=prime1_preset_tabs,
-        cosmetic_dialog=PrimeCosmeticPatchesDialog,
-        input_file_text=("an ISO file", "the Nintendo Gamecube", "Gamecube ISO"),
+    return game.GameGui(
+        tab_provider=gui.prime1_preset_tabs,
+        cosmetic_dialog=gui.PrimeCosmeticPatchesDialog,
+        export_dialog=gui.PrimeGameExportDialog,
         spoiler_visualizer=(TeleporterDetailsTab,),
+        help_widget=lambda: gui.PrimeHelpWidget(),
     )
 
 
-game_data: GameData = GameData(
+def _generator() -> game.GameGenerator:
+    from randovania.games.prime1.generator.item_pool.pool_creator import prime1_specific_pool
+    from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
+    from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
+    from randovania.generator.hint_distributor import AllJokesHintDistributor
+
+    return game.GameGenerator(
+        item_pool_creator=prime1_specific_pool,
+        bootstrap=PrimeBootstrap(),
+        base_patches_factory=PrimeTrilogyBasePatchesFactory(),
+        hint_distributor=AllJokesHintDistributor(),
+    )
+
+
+def _patch_data_factory():
+    from randovania.games.prime1.exporter.patch_data_factory import PrimePatchDataFactory
+    return PrimePatchDataFactory
+
+
+def _exporter():
+    from randovania.games.prime1.exporter.game_exporter import PrimeGameExporter
+    return PrimeGameExporter()
+
+
+game_data: game.GameData = game.GameData(
     short_name="Prime",
     long_name="Metroid Prime",
-    experimental=False,
+    development_state=game.DevelopmentState.STABLE,
 
     presets=[
         {
@@ -62,23 +88,19 @@ game_data: GameData = GameData(
          "meaning that all versions of Prime are guaranteed to be logically completable when randomized."),
     ],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=PrimeConfiguration,
         cosmetic_patches=PrimeCosmeticPatches,
-        preset_describer=GamePresetDescriber(
-            expected_items=prime_expected_items,
-            unexpected_items=prime_unexpected_items,
-            format_params=prime_format_params
-        )
+        preset_describer=PrimePresetDescriber()
     ),
 
-    gui=_prime_gui,
+    options=_options,
 
-    generator=GameGenerator(
-        item_pool_creator=prime1_specific_pool,
-        bootstrap=PrimeBootstrap(),
-        base_patches_factory=PrimeTrilogyBasePatchesFactory()
-    ),
+    gui=_gui,
 
-    patcher=RandomprimePatcher()
+    generator=_generator,
+
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )

@@ -5,15 +5,41 @@ import flask
 import flask_discord
 import flask_socketio
 import peewee
+import requests
 import socketio
 from cryptography.fernet import Fernet
 from flask_discord import DiscordOAuth2Session
 from prometheus_flask_exporter import PrometheusMetrics
 
 from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession
-from randovania.patching.patcher_provider import PatcherProvider
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
+
+
+class EnforceDiscordRole:
+    guild_id: int
+    role_id: str
+    session: requests.Session
+
+    def __init__(self, config: dict):
+        self.guild_id = config["guild_id"]
+        self.role_id = str(config["role_id"])
+        self.session = requests.Session()
+        self.session.headers["Authorization"] = "Bot {}".format(config["token"])
+
+    def verify_user(self, user_id: int) -> bool:
+        r = self.session.get("https://discordapp.com/api/guilds/{}/members/{}".format(self.guild_id, user_id))
+        try:
+            result = r.json()
+            if r.ok:
+                return self.role_id in result["roles"]
+            else:
+                logger().warning("Unable to verify user %s: %s", user_id, r.text)
+                return False
+
+        except requests.RequestException as e:
+            logger().warning("Unable to verify user %s: %s / %s", user_id, r.text, str(e))
+            return True
 
 
 class ServerApp:
@@ -22,7 +48,7 @@ class ServerApp:
     metrics: PrometheusMetrics
     fernet_encrypt: Fernet
     guest_encrypt: Optional[Fernet] = None
-    patcher_provider: PatcherProvider
+    enforce_role: Optional[EnforceDiscordRole] = None
 
     def __init__(self, app: flask.Flask):
         self.app = app
@@ -32,7 +58,8 @@ class ServerApp:
         self.fernet_encrypt = Fernet(app.config["FERNET_KEY"])
         if app.config["GUEST_KEY"] is not None:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
-        self.patcher_provider = PatcherProvider()
+        if app.config["ENFORCE_ROLE"] is not None:
+            self.enforce_role = EnforceDiscordRole(app.config["ENFORCE_ROLE"])
 
     def get_server(self) -> socketio.Server:
         return self.sio.server

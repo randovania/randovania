@@ -1,31 +1,57 @@
-from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
-from randovania.games.dread.generator.pool_creator import pool_creator
+from randovania.games import game
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
-from randovania.games.dread.layout.preset_describer import dread_format_params, dread_expected_items, \
-    dread_unexpected_items
-from randovania.games.dread.patcher.open_dread_patcher import OpenDreadPatcher
-from randovania.games.game import GameData, GameGenerator, GameGui, GameLayout, GamePresetDescriber
-from randovania.resolver.bootstrap import MetroidBootstrap
+from randovania.games.dread.layout.preset_describer import (
+    DreadPresetDescriber
+)
 
 
-def _dread_gui():
-    from randovania.games.dread.gui.dialog.dread_cosmetic_patches_dialog import DreadCosmeticPatchesDialog
-    from randovania.games.dread.gui.preset_settings import dread_preset_tabs
+def _options():
+    from randovania.games.dread.exporter.options import DreadPerGameOptions
+    return DreadPerGameOptions
+
+
+def _gui() -> game.GameGui:
+    from randovania.games.dread import gui
     from randovania.games.dread.item_database import progressive_items
 
-    return GameGui(
-        tab_provider=dread_preset_tabs,
-        cosmetic_dialog=DreadCosmeticPatchesDialog,
-        input_file_text=("an extracted RomFS folder", "the Nintendo Switch", "RomFS folder"),
-        progressive_item_gui_tuples=progressive_items.gui_tuples()
+    return game.GameGui(
+        tab_provider=gui.dread_preset_tabs,
+        cosmetic_dialog=gui.DreadCosmeticPatchesDialog,
+        export_dialog=gui.DreadGameExportDialog,
+        progressive_item_gui_tuples=progressive_items.tuples(),
+        spoiler_visualizer=(gui.DreadHintDetailsTab,),
     )
 
 
-game_data: GameData = GameData(
+def _patch_data_factory():
+    from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory
+    return DreadPatchDataFactory
+
+
+def _exporter():
+    from randovania.games.dread.exporter.game_exporter import DreadGameExporter
+    return DreadGameExporter()
+
+
+def _generator() -> game.GameGenerator:
+    from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
+    from randovania.games.dread.generator.pool_creator import pool_creator
+    from randovania.resolver.bootstrap import MetroidBootstrap
+    from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
+
+    return game.GameGenerator(
+        item_pool_creator=pool_creator,
+        base_patches_factory=DreadBasePatchesFactory(),
+        bootstrap=MetroidBootstrap(),
+        hint_distributor=DreadHintDistributor(),
+    )
+
+
+game_data: game.GameData = game.GameData(
     short_name="Dread",
     long_name="Metroid Dread",
-    experimental=True,
+    development_state=game.DevelopmentState.EXPERIMENTAL,
 
     presets=[
         {
@@ -33,26 +59,21 @@ game_data: GameData = GameData(
         }
     ],
 
-    faq={
-    }.items(),
+    faq=[],
 
-    layout=GameLayout(
+    layout=game.GameLayout(
         configuration=DreadConfiguration,
         cosmetic_patches=DreadCosmeticPatches,
-        preset_describer=GamePresetDescriber(
-            expected_items=dread_expected_items,
-            unexpected_items=dread_unexpected_items,
-            format_params=dread_format_params
-        )
+        preset_describer=DreadPresetDescriber()
     ),
 
-    gui=_dread_gui,
+    options=_options,
 
-    generator=GameGenerator(
-        item_pool_creator=pool_creator,
-        base_patches_factory=DreadBasePatchesFactory(),
-        bootstrap=MetroidBootstrap()
-    ),
+    gui=_gui,
 
-    patcher=OpenDreadPatcher()
+    generator=_generator,
+
+    patch_data_factory=_patch_data_factory,
+
+    exporter=_exporter,
 )

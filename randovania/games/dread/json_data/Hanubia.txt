@@ -89,8 +89,8 @@ Extra - asset_id: collision_camera_002
   > Missile Tank Alcove
       Trivial
 
-> Dock to collision_camera_009 (H); Heals? False
-  * Morph Ball Tunnel to collision_camera_009 (H)/Dock to Ferenia Shortcut
+> Tunnel to Speedboost Puzzle Room; Heals? False
+  * Morph Ball Tunnel to Speedboost Puzzle Room/Tunnel to Ferenia Shortcut
   > Tile Group (SCREWATTACK) 2
       Trivial
   > Tile Group (BOMB) 4
@@ -101,6 +101,8 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: grapplepulloff1x2_000
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Door to Transport to Ferenia
+      Trivial
+  > Tile Group (SCREWATTACK) 2
       Trivial
 
 > Tile Group (POWERBEAM); Heals? False
@@ -150,8 +152,10 @@ Extra - asset_id: collision_camera_002
   * Extra - tile_types: ('SCREWATTACK',)
   > Door to Transport to Ferenia
       Morph Ball and After Hanubia - grapplepulloff1x2_000
-  > Dock to collision_camera_009 (H)
+  > Tunnel to Speedboost Puzzle Room
       Trivial
+  > Event - Breakable (Pull Grapple Block)
+      Break/Move Grapple Block from Behind
 
 > Tile Group (BOMB) 3; Heals? False
   * Configurable Node
@@ -168,7 +172,7 @@ Extra - asset_id: collision_camera_002
   * Extra - actor_name: breakabletilegroup_038
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
-  > Dock to collision_camera_009 (H)
+  > Tunnel to Speedboost Puzzle Room
       Morph Ball
   > Tile Group (BOMB) 2
       Morph Ball
@@ -182,12 +186,12 @@ Extra - asset_id: collision_camera_002
       Morph Ball
 
 ----------------
-Navigation Room
+Navigation Station
 Extra - total_boundings: {'x1': -500.0, 'x2': 1600.0, 'y1': -1100.0, 'y2': 42.0}
 Extra - polygon: [[1600.0, 42.0], [-500.0, 42.0], [-500.0, -1100.0], [1600.0, -1100.0]]
 Extra - asset_id: collision_camera_003
 > Door to Entrance Tall Room; Heals? False
-  * Power Beam Door to Entrance Tall Room/Door to Navigation Room
+  * Power Beam Door to Entrance Tall Room/Door to Navigation Station
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -197,8 +201,8 @@ Extra - asset_id: collision_camera_003
   > Navigation Room
       Trivial
 
-> Door to collision_camera_009 (H); Heals? False
-  * Power Beam Door to collision_camera_009 (H)/Door to Navigation Room (Bottom)
+> Door to Speedboost Puzzle Room; Heals? False
+  * Power Beam Door to Speedboost Puzzle Room/Door to Navigation Station (Bottom)
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -208,8 +212,8 @@ Extra - asset_id: collision_camera_003
   > Navigation Room
       Trivial
 
-> Door from collision_camera_009 (H); Heals? False
-  * Access Closed to collision_camera_009 (H)/Door to Navigation Room (Top)
+> Door from Speedboost Puzzle Room; Heals? False
+  * Access Closed to Speedboost Puzzle Room/Door to Navigation Station (Top)
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -220,15 +224,17 @@ Extra - asset_id: collision_camera_003
       Trivial
 
 > Navigation Room; Heals? False; Spawn Point
+  * Logbook Generic for b
   * Extra - actor_name: accesspoint_000
   * Extra - actor_def: actordef:actors/props/accesspoint/charclasses/accesspoint.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_access_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_access/charclasses/weightactivatedplatform_access.bmsad
+  * Extra - hint_id: SHIP_1
   > Door to Entrance Tall Room
       Trivial
-  > Door to collision_camera_009 (H)
+  > Door to Speedboost Puzzle Room
       Trivial
-  > Door from collision_camera_009 (H)
+  > Door from Speedboost Puzzle Room
       Trivial
 
 ----------------
@@ -245,11 +251,11 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Navigation Room
+  > Door to Navigation Station
       Trivial
 
-> Door to Navigation Room; Heals? False
-  * Power Beam Door to Navigation Room/Door to Entrance Tall Room
+> Door to Navigation Station; Heals? False
+  * Power Beam Door to Navigation Station/Door to Entrance Tall Room
   * Extra - actor_name: doorpowerpower_001
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -265,8 +271,8 @@ Extra - asset_id: collision_camera_004
   > Start Point
       Trivial
 
-> Door to collision_camera_006 (H); Heals? False
-  * Wave Beam Door to collision_camera_006 (H)/Door to Entrance Tall Room
+> Door to Total Recharge Station North; Heals? False
+  * Wave Beam Door to Total Recharge Station North/Door to Entrance Tall Room
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
@@ -306,7 +312,7 @@ Extra - asset_id: collision_camera_004
       Trivial
 
 > Next to Hyper Block; Heals? False
-  > Door to collision_camera_006 (H)
+  > Door to Total Recharge Station North
       Before Escape Sequence
   > Event - Breakable (block_hyperbeam_000)
       Hyper Beam
@@ -318,7 +324,7 @@ Extra - asset_id: collision_camera_004
       Trivial
 
 > Inside breakable tube; Heals? False
-  > Door to Navigation Room
+  > Door to Navigation Station
       Before Escape Sequence
   > Dock to Escape Room 3
       After Escape Sequence
@@ -337,13 +343,13 @@ Extra - asset_id: collision_camera_004
   * Extra - actor_def: actordef:actors/props/ammorecharge/charclasses/ammorecharge.bmsad
   * Extra - start_point_actor_name: ammorecharge_000_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_ammo/charclasses/weightactivatedplatform_ammo.bmsad
-  > Door to Navigation Room
+  > Door to Navigation Station
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_10
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Navigation Room
+  > Door to Navigation Station
       Trivial
 
 > Tile Group (SCREWATTACK); Heals? False
@@ -376,8 +382,8 @@ Gold Chozo Warrior Arena
 Extra - total_boundings: {'x1': 3900.0, 'x2': 6300.0, 'y1': 3169.77001953125, 'y2': 4311.77001953125}
 Extra - polygon: [[6300.0, 4311.77001953125], [3900.0, 4311.77001953125], [3900.0, 3169.77001953125], [6300.0, 3169.77001953125]]
 Extra - asset_id: collision_camera_005
-> Door to collision_camera_006 (H); Heals? False
-  * Power Beam Door to collision_camera_006 (H)/Door to Gold Chozo Warrior Arena
+> Door to Total Recharge Station North; Heals? False
+  * Power Beam Door to Total Recharge Station North/Door to Gold Chozo Warrior Arena
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam
@@ -401,19 +407,19 @@ Extra - asset_id: collision_camera_005
 > Gold Chozo Fight; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_CWX_Elite
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to collision_camera_006 (H)
+  > Door to Total Recharge Station North
       Trivial
   > Door to Transport to Itorash
       Trivial
 
 ----------------
-collision_camera_006 (H)
+Total Recharge Station North
 (Valid Starting Location)
 Extra - total_boundings: {'x1': -500.0, 'x2': 4000.0, 'y1': 1500.0, 'y2': 5100.0}
 Extra - polygon: [[4000.0, 5100.0], [-500.0, 5100.0], [-500.0, 1500.0], [4000.0, 1500.0]]
 Extra - asset_id: collision_camera_006
 > Door to Entrance Tall Room; Heals? False
-  * Power Beam Door to Entrance Tall Room/Door to collision_camera_006 (H)
+  * Power Beam Door to Entrance Tall Room/Door to Total Recharge Station North
   * Extra - actor_name: doorpowerpower_005
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_002
@@ -426,7 +432,7 @@ Extra - asset_id: collision_camera_006
       Morph Ball and After Hanubia - grapplepulloff1x2_001
 
 > Door to Gold Chozo Warrior Arena; Heals? False
-  * Wave Beam Door to Gold Chozo Warrior Arena/Door to collision_camera_006 (H)
+  * Wave Beam Door to Gold Chozo Warrior Arena/Door to Total Recharge Station North
   * Extra - actor_name: doorpowerpower_006
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam
@@ -494,11 +500,11 @@ Extra - asset_id: collision_camera_007
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Elevator to Itorash - Main Room
+  > Elevator to Itorash - Transport to Hanubia
       Trivial
 
-> Elevator to Itorash - Main Room; Heals? False; Spawn Point
-  * Teleporter to Itorash - Main Room
+> Elevator to Itorash - Transport to Hanubia; Heals? False; Spawn Point
+  * Teleporter to Itorash - Transport to Hanubia
   * Extra - actor_name: capsulelaunchershipyard_000
   * Extra - actor_def: actordef:actors/props/capsulelaunchershipyard/charclasses/capsulelaunchershipyard.bmsad
   * Extra - elevator_component: CCapsuleUsableComponent
@@ -527,13 +533,13 @@ Extra - asset_id: collision_camera_008
       Simple IBJ or Use Spin Boost
 
 ----------------
-collision_camera_009 (H)
+Speedboost Puzzle Room
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 1500.0, 'x2': 4500.0, 'y1': -2300.0, 'y2': 600.0}
 Extra - polygon: [[4500.0, 600.0], [1500.0, 600.0], [1500.0, -1350.0], [2400.0, -1650.0], [2400.0, -2300.0], [4500.0, -2300.0]]
 Extra - asset_id: collision_camera_009
-> Door to Navigation Room (Bottom); Heals? False
-  * Power Beam Door to Navigation Room/Door to collision_camera_009 (H)
+> Door to Navigation Station (Bottom); Heals? False
+  * Power Beam Door to Navigation Station/Door to Speedboost Puzzle Room
   * Extra - actor_name: doorpowerpower_002
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -543,8 +549,8 @@ Extra - asset_id: collision_camera_009
   > Tile Group (BOMB)
       Trivial
 
-> Door to collision_camera_010 (H); Heals? False
-  * Wave Beam Door to collision_camera_010 (H)/Door from collision_camera_009 (H)
+> Door to Tank Room; Heals? False
+  * Wave Beam Door to Tank Room/Door from Speedboost Puzzle Room
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
@@ -561,8 +567,8 @@ Extra - asset_id: collision_camera_009
   > Tile Group (BOMB SPEEDBOOST)
       Morph Ball
 
-> Door from collision_camera_010 (H); Heals? False
-  * Access Closed to collision_camera_010 (H)/Door to collision_camera_009 (H)
+> Door from Tank Room; Heals? False
+  * Access Closed to Tank Room/Door to Speedboost Puzzle Room
   * Extra - actor_name: doorclosedpower_001
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -574,8 +580,8 @@ Extra - asset_id: collision_camera_009
   > Tile Group (BOMB SPEEDBOOST)
       Trivial
 
-> Door to Navigation Room (Top); Heals? False
-  * Wave Beam Door to Navigation Room/Door from collision_camera_009 (H)
+> Door to Navigation Station (Top); Heals? False
+  * Wave Beam Door to Navigation Station/Door from Speedboost Puzzle Room
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -585,8 +591,8 @@ Extra - asset_id: collision_camera_009
   > Start Point 2
       Trivial
 
-> Dock to Ferenia Shortcut; Heals? False
-  * Morph Ball Tunnel to Ferenia Shortcut/Dock to collision_camera_009 (H)
+> Tunnel to Ferenia Shortcut; Heals? False
+  * Morph Ball Tunnel to Ferenia Shortcut/Tunnel to Speedboost Puzzle Room
   > Start Point 1
       Morph Ball and After Hanubia - grapplepulloff1x2
 
@@ -600,9 +606,9 @@ Extra - asset_id: collision_camera_009
 > Start Point 1; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_StrongReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to collision_camera_010 (H)
+  > Door to Tank Room
       Trivial
-  > Dock to Ferenia Shortcut
+  > Tunnel to Ferenia Shortcut
       Morph Ball and After Hanubia - grapplepulloff1x2
   > Event - Pull Grapple Block (grapplepulloff1x2)
       Grapple Beam
@@ -612,9 +618,9 @@ Extra - asset_id: collision_camera_009
 > Start Point 2; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_AccessPoint_10B
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door from collision_camera_010 (H)
+  > Door from Tank Room
       Trivial
-  > Door to Navigation Room (Top)
+  > Door to Navigation Station (Top)
       Trivial
 
 > Tile Group (BOMB); Heals? False
@@ -622,7 +628,7 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_name: breakabletilegroup_030
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
-  > Door to Navigation Room (Bottom)
+  > Door to Navigation Station (Bottom)
       Trivial
   > Start Point 1
       Can Slide
@@ -634,52 +640,52 @@ Extra - asset_id: collision_camera_009
   * Extra - tile_types: ('BOMB', 'SPEEDBOOST')
   > Pickup (Power Bomb Tank)
       Morph Ball
-  > Door from collision_camera_010 (H)
+  > Door from Tank Room
       Trivial
 
 ----------------
-collision_camera_010 (H)
+Tank Room
 Extra - total_boundings: {'x1': 4400.0, 'x2': 6500.0, 'y1': -1800.0, 'y2': 600.0}
 Extra - polygon: [[6500.0, 600.0], [4400.0, 600.0], [4400.0, -1800.0], [6500.0, -1800.0]]
 Extra - asset_id: collision_camera_010
-> Door from collision_camera_009 (H); Heals? False
-  * Access Closed to collision_camera_009 (H)/Door to collision_camera_010 (H)
+> Door from Speedboost Puzzle Room; Heals? False
+  * Access Closed to Speedboost Puzzle Room/Door to Tank Room
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_000
   * Extra - left_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to E.M.M.I. Zone Entrance (Bottom)
+  > Dock to EMMI Zone Exit West (Bottom)
       Trivial
 
-> Dock to E.M.M.I. Zone Entrance (Bottom); Heals? False
-  * EMMI Door to E.M.M.I. Zone Entrance/Dock to collision_camera_010 (H) (dooremmy_000)
+> Dock to EMMI Zone Exit West (Bottom); Heals? False
+  * EMMI Door to EMMI Zone Exit West/Dock to Tank Room (dooremmy_000)
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door from collision_camera_009 (H)
+  > Door from Speedboost Puzzle Room
       Before Escape Sequence
   > Tile Group (BOMB)
       Simple IBJ or Use Spin Boost
 
-> Dock to E.M.M.I. Zone Entrance (Top); Heals? False
-  * EMMI Door to E.M.M.I. Zone Entrance/Dock to collision_camera_010 (H) (dooremmy_001)
+> Dock to EMMI Zone Exit West (Top); Heals? False
+  * EMMI Door to EMMI Zone Exit West/Dock to Tank Room (dooremmy_001)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door to collision_camera_009 (H)
+  > Door to Speedboost Puzzle Room
       Before Escape Sequence
   > Tile Group (POWERBOMB)
       Trivial
 
-> Door to collision_camera_009 (H); Heals? False
-  * Power Beam Door to collision_camera_009 (H)/Door from collision_camera_010 (H)
+> Door to Speedboost Puzzle Room; Heals? False
+  * Power Beam Door to Speedboost Puzzle Room/Door from Tank Room
   * Extra - actor_name: doorclosedpower_001
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to E.M.M.I. Zone Entrance (Top)
+  > Dock to EMMI Zone Exit West (Top)
       Trivial
 
 > Tile Group (BOMB); Heals? False
@@ -687,7 +693,7 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: breakabletilegroup_033
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
-  > Dock to E.M.M.I. Zone Entrance (Bottom)
+  > Dock to EMMI Zone Exit West (Bottom)
       Trivial
   > Tile Group (POWERBOMB)
       Trivial
@@ -697,33 +703,33 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_name: breakabletilegroup_045
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to E.M.M.I. Zone Entrance (Top)
+  > Dock to EMMI Zone Exit West (Top)
       Trivial
   > Tile Group (BOMB)
       Trivial
 
 ----------------
-E.M.M.I. Zone Entrance
+EMMI Zone Exit West
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 6400.0, 'x2': 8500.0, 'y1': -2800.0, 'y2': 650.0}
 Extra - polygon: [[8500.0, 650.0], [6400.0, 650.0], [6400.0, -2800.0], [8500.0, -2800.0]]
 Extra - asset_id: collision_camera_011
-> Dock to collision_camera_010 (H) (dooremmy_000); Heals? False
-  * EMMI Door to collision_camera_010 (H)/Dock to E.M.M.I. Zone Entrance (Bottom)
+> Dock to Tank Room (dooremmy_000); Heals? False
+  * EMMI Door to Tank Room/Dock to EMMI Zone Exit West (Bottom)
   * Extra - actor_name: dooremmy_000
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Start Point
       Trivial
 
-> Dock to collision_camera_010 (H) (dooremmy_001); Heals? False
-  * EMMI Door to collision_camera_010 (H)/Dock to E.M.M.I. Zone Entrance (Top)
+> Dock to Tank Room (dooremmy_001); Heals? False
+  * EMMI Door to Tank Room/Dock to EMMI Zone Exit West (Top)
   * Extra - actor_name: dooremmy_001
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (BOMB) 1
       Trivial
 
-> Door to Red E.M.M.I Arena; Heals? False
-  * Wave Beam Door to Red E.M.M.I Arena/Door from E.M.M.I. Zone Entrance
+> Door to Orange EMMI Introduction; Heals? False
+  * Wave Beam Door to Orange EMMI Introduction/Door from EMMI Zone Exit West
   * Extra - actor_name: doorpowerclosed_001
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
@@ -733,22 +739,22 @@ Extra - asset_id: collision_camera_011
   > Start Point
       Trivial
 
-> Dock to Central Unit Room; Heals? False
-  * Morph Ball Tunnel to Central Unit Room/Dock to E.M.M.I. Zone Entrance
+> Tunnel to Central Unit; Heals? False
+  * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit West
   > Tile Group (BOMB) 2
       Trivial
 
 > Dock to Escape Room 3; Heals? False
-  * Open Passage to Escape Room 3/Dock to E.M.M.I. Zone Entrance
+  * Open Passage to Escape Room 3/Dock to EMMI Zone Exit West
   > Start Point
       After Escape Sequence
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_PowerBomb
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Dock to collision_camera_010 (H) (dooremmy_000)
+  > Dock to Tank Room (dooremmy_000)
       Trivial
-  > Door to Red E.M.M.I Arena
+  > Door to Orange EMMI Introduction
       Before Escape Sequence
   > Dock to Escape Room 3
       After Escape Sequence
@@ -758,7 +764,7 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: breakabletilegroup_047
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
-  > Dock to collision_camera_010 (H) (dooremmy_001)
+  > Dock to Tank Room (dooremmy_001)
       Trivial
   > Tile Group (BOMB) 2
       Trivial
@@ -768,86 +774,86 @@ Extra - asset_id: collision_camera_011
   * Extra - actor_name: breakabletilegroup_034
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('BOMB',)
-  > Dock to Central Unit Room
+  > Tunnel to Central Unit
       Trivial
   > Tile Group (BOMB) 1
       Trivial
 
 ----------------
-Central Unit Room
+Central Unit
 Extra - total_boundings: {'x1': 8400.0, 'x2': 10500.0, 'y1': -900.0, 'y2': 650.0}
 Extra - polygon: [[10500.0, 650.0], [8400.0, 650.0], [8400.0, -900.0], [10500.0, -900.0]]
 Extra - asset_id: collision_camera_012
-> Dock to collision_camera_013 (H); Heals? False
-  * Morph Ball Tunnel to collision_camera_013 (H)/Dock to Central Unit Room
+> Tunnel to EMMI Zone Exit East; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to Central Unit
   > Start Point
       Trivial
 
-> Dock to E.M.M.I. Zone Entrance; Heals? False
-  * Morph Ball Tunnel to E.M.M.I. Zone Entrance/Dock to Central Unit Room
+> Tunnel to EMMI Zone Exit West; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Exit West/Tunnel to Central Unit
   > Start Point
       Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: centralunitmagmacontroller_000
   * Extra - start_point_actor_def: actordef:actors/props/centralunitmagmacontroller/charclasses/centralunitmagmacontroller.bmsad
-  > Dock to collision_camera_013 (H)
+  > Tunnel to EMMI Zone Exit East
       Simple IBJ or Use Spin Boost
-  > Dock to E.M.M.I. Zone Entrance
+  > Tunnel to EMMI Zone Exit West
       Any of the following:
           Space Jump or Simple IBJ
           Speed Booster and Speedbooster Conservation (Beginner)
 
 ----------------
-collision_camera_013 (H)
+EMMI Zone Exit East
 Extra - total_boundings: {'x1': 10400.0, 'x2': 13500.0, 'y1': -2200.0, 'y2': 500.0}
 Extra - polygon: [[13500.0, 500.0], [10400.0, 500.0], [10400.0, -1300.0], [10700.0, -1300.0], [10700.0, -2200.0], [13500.0, -2200.0]]
 Extra - asset_id: collision_camera_013
-> Dock to collision_camera_015 (H) (dooremmy_002); Heals? False
-  * EMMI Door to collision_camera_015 (H)/Dock to collision_camera_013 (H) (dooremmy_002)
+> Dock to Total Recharge Station East (dooremmy_002); Heals? False
+  * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (dooremmy_002)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Event - Break PB Tube (block_pbtube_2)
       Lay Power Bomb
-  > Dock to Central Unit Room
+  > Tunnel to Central Unit
       After Hanubia - block_pbtube_2
 
-> Dock to collision_camera_015 (H) (dooremmy_003); Heals? False
-  * EMMI Door to collision_camera_015 (H)/Dock to collision_camera_013 (H) (dooremmy_003)
+> Dock to Total Recharge Station East (dooremmy_003); Heals? False
+  * EMMI Door to Total Recharge Station East/Dock to EMMI Zone Exit East (dooremmy_003)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Dock to Red E.M.M.I Arena
+  > Tunnel to Orange EMMI Introduction
       Trivial
 
 > Event - Break PB Tube (block_pbtube_2); Heals? False
   * Event Hanubia - block_pbtube_2
   * Extra - actor_name: block_pbtube_2
   * Extra - actor_def: actordef:actors/props/block_pbtube_002/charclasses/block_pbtube_002.bmsad
-  > Dock to collision_camera_015 (H) (dooremmy_002)
+  > Dock to Total Recharge Station East (dooremmy_002)
       Trivial
-  > Dock to Central Unit Room
+  > Tunnel to Central Unit
       Trivial
 
-> Dock to Central Unit Room; Heals? False
-  * Morph Ball Tunnel to Central Unit Room/Dock to collision_camera_013 (H)
-  > Dock to collision_camera_015 (H) (dooremmy_002)
+> Tunnel to Central Unit; Heals? False
+  * Morph Ball Tunnel to Central Unit/Tunnel to EMMI Zone Exit East
+  > Dock to Total Recharge Station East (dooremmy_002)
       After Hanubia - block_pbtube_2
   > Event - Break PB Tube (block_pbtube_2)
       Lay Power Bomb
 
-> Dock to Red E.M.M.I Arena; Heals? False
-  * Morph Ball Tunnel to Red E.M.M.I Arena/Dock to collision_camera_013 (H)
-  > Dock to collision_camera_015 (H) (dooremmy_003)
+> Tunnel to Orange EMMI Introduction; Heals? False
+  * Morph Ball Tunnel to Orange EMMI Introduction/Tunnel to EMMI Zone Exit East
+  > Dock to Total Recharge Station East (dooremmy_003)
       Trivial
 
 ----------------
-Red E.M.M.I Arena
+Orange EMMI Introduction
 (Valid Starting Location)
 Extra - total_boundings: {'x1': 8400.0, 'x2': 10800.0, 'y1': -2628.360107421875, 'y2': -1486.3599853515625}
 Extra - polygon: [[10800.0, -1486.3599853515625], [8400.0, -1486.3599853515625], [8400.0, -2628.360107421875], [10800.0, -2628.360107421875]]
 Extra - asset_id: collision_camera_014
-> Door from E.M.M.I. Zone Entrance; Heals? False
-  * Access Closed to E.M.M.I. Zone Entrance/Door to Red E.M.M.I Arena
+> Door from EMMI Zone Exit West; Heals? False
+  * Access Closed to EMMI Zone Exit West/Door to Orange EMMI Introduction
   * Extra - actor_name: doorpowerclosed_001
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwavebeam_001
@@ -857,45 +863,49 @@ Extra - asset_id: collision_camera_014
   > Start Point
       Trivial
 
-> Dock to collision_camera_013 (H); Heals? False
-  * Morph Ball Tunnel to collision_camera_013 (H)/Dock to Red E.M.M.I Arena
+> Tunnel to EMMI Zone Exit East; Heals? False
+  * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to Orange EMMI Introduction
   > Start Point
       Trivial
 
 > Event - Red Chozo Warrior Fight; Heals? False
   * Event Hanubia Red Chozo Fight
-  > Pickup (Red E.M.M.I.)
+  > Pickup (Power Bomb)
       Trivial
 
-> Pickup (Red E.M.M.I.); Heals? False
+> Pickup (Power Bomb); Heals? False
   * Pickup 137; Major Location? True
+  * Extra - pickup_type: emmi
+  * Extra - actor_def: actors/characters/emmyshipyard/charclasses/emmyshipyard.bmsad
+  * Extra - string_key: GUI_ITEM_ACQUIRED_POWER_BOMB
+  * Extra - callback_function: OnEmmyShipyardAbilityObtained
   > Start Point
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoWarriorX
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door from E.M.M.I. Zone Entrance
+  > Door from EMMI Zone Exit West
       After Hanubia Red Chozo Fight
-  > Dock to collision_camera_013 (H)
+  > Tunnel to EMMI Zone Exit East
       After Hanubia Red Chozo Fight
   > Event - Red Chozo Warrior Fight
       Trivial
 
 ----------------
-collision_camera_015 (H)
+Total Recharge Station East
 Extra - total_boundings: {'x1': 13400.0, 'x2': 16800.0, 'y1': -4000.0, 'y2': -100.0}
 Extra - polygon: [[16800.0, -100.0], [13400.0, -100.0], [13400.0, -4000.0], [16100.0, -4000.0], [16800.0, -3700.0]]
 Extra - asset_id: collision_camera_015
-> Dock to collision_camera_013 (H) (dooremmy_002); Heals? False
-  * EMMI Door to collision_camera_013 (H)/Dock to collision_camera_015 (H) (dooremmy_002)
+> Dock to EMMI Zone Exit East (dooremmy_002); Heals? False
+  * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (dooremmy_002)
   * Extra - actor_name: dooremmy_002
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (POWERBOMB) 2
       Trivial
 
-> Dock to collision_camera_013 (H) (dooremmy_003); Heals? False
-  * EMMI Door to collision_camera_013 (H)/Dock to collision_camera_015 (H) (dooremmy_003)
+> Dock to EMMI Zone Exit East (dooremmy_003); Heals? False
+  * EMMI Door to EMMI Zone Exit East/Dock to Total Recharge Station East (dooremmy_003)
   * Extra - actor_name: dooremmy_003
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Total Recharge
@@ -904,7 +914,7 @@ Extra - asset_id: collision_camera_015
       Trivial
 
 > Dock to Escape Room 2; Heals? False
-  * Open Passage to Escape Room 2/Dock to collision_camera_015 (H)
+  * Open Passage to Escape Room 2/Dock to Total Recharge Station East
   > Tile Group (POWERBOMB) 3
       Trivial
 
@@ -913,7 +923,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: weightactivatedplatform_total_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
-  > Dock to collision_camera_013 (H) (dooremmy_003)
+  > Dock to EMMI Zone Exit East (dooremmy_003)
       Trivial
 
 > Tile Group (POWERBOMB) 1; Heals? False
@@ -921,7 +931,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: breakabletilegroup_035
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to collision_camera_013 (H) (dooremmy_003)
+  > Dock to EMMI Zone Exit East (dooremmy_003)
       Before Escape Sequence
   > Tile Group (POWERBOMB) 2
       Trivial
@@ -933,7 +943,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: breakabletilegroup_037
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to collision_camera_013 (H) (dooremmy_002)
+  > Dock to EMMI Zone Exit East (dooremmy_002)
       Trivial
   > Tile Group (POWERBOMB) 1
       Trivial
@@ -943,7 +953,7 @@ Extra - asset_id: collision_camera_015
   * Extra - actor_name: breakabletilegroup_011
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to collision_camera_013 (H) (dooremmy_003)
+  > Dock to EMMI Zone Exit East (dooremmy_003)
       Trivial
   > Dock to Escape Room 2
       Trivial
@@ -955,8 +965,8 @@ Escape Room 3
 Extra - total_boundings: {'x1': -500.0, 'x2': 6500.0, 'y1': -8600.0, 'y2': -1900.0}
 Extra - polygon: [[6500.0, -1900.0], [4400.0, -1900.0], [4400.0, -3800.0], [-500.0, -3900.0], [-500.0, -7600.0], [900.0, -7600.0], [1500.0, -7900.0], [2700.0, -7900.0], [4100.0, -8600.0], [6500.0, -8600.0]]
 Extra - asset_id: collision_camera_016
-> Dock to E.M.M.I. Zone Entrance; Heals? False
-  * Open Passage to E.M.M.I. Zone Entrance/Dock to Escape Room 3
+> Dock to EMMI Zone Exit West; Heals? False
+  * Open Passage to EMMI Zone Exit West/Dock to Escape Room 3
   > Tile Group (POWERBOMB) 1
       Trivial
 
@@ -970,7 +980,7 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_name: breakabletilegroup_012
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to E.M.M.I. Zone Entrance
+  > Dock to EMMI Zone Exit West
       Trivial
   > Tile Group (POWERBOMB) 2
       Trivial
@@ -1137,8 +1147,8 @@ Extra - asset_id: collision_camera_018
   > Tile Group (POWERBOMB) 1
       Trivial
 
-> Dock to collision_camera_015 (H); Heals? False
-  * Open Passage to collision_camera_015 (H)/Dock to Escape Room 2
+> Dock to Total Recharge Station East; Heals? False
+  * Open Passage to Total Recharge Station East/Dock to Escape Room 2
   > Tile Group (POWERBOMB) 3
       Trivial
 
@@ -1197,7 +1207,7 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_name: breakabletilegroup_010
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - tile_types: ('POWERBOMB',)
-  > Dock to collision_camera_015 (H)
+  > Dock to Total Recharge Station East
       Trivial
   > Tile Group (SCREWATTACK) 3
       Trivial

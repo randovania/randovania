@@ -82,13 +82,12 @@ class LayoutDescription:
     def from_json_dict(cls, json_dict: dict) -> "LayoutDescription":
         json_dict = description_migration.convert_to_current_version(json_dict)
 
-        has_spoiler = "game_modifications" in json_dict
-        if not has_spoiler:
-            raise ValueError("Unable to read details of seed log with spoiler disabled")
+        if "game_modifications" not in json_dict:
+            raise ValueError("Unable to read details of a race game file")
 
         generator_parameters = GeneratorParameters(
             seed_number=json_dict["info"]["seed"],
-            spoiler=has_spoiler,
+            spoiler=json_dict["info"]["has_spoiler"],
             presets=[
                 VersionedPreset(preset).get_preset()
                 for preset in json_dict["info"]["presets"]
@@ -142,24 +141,19 @@ class LayoutDescription:
     def _serialized_patches(self):
         cached_result = object.__getattribute__(self, "__cached_serialized_patches")
         if cached_result is None:
-            cached_result = game_patches_serializer.serialize(
-                self.all_patches,
-                {
-                    index: preset.game
-                    for index, preset in enumerate(self.all_presets)
-                })
+            cached_result = game_patches_serializer.serialize(self.all_patches)
             object.__setattr__(self, "__cached_serialized_patches", cached_result)
 
         return cached_result
 
-    @property
-    def as_json(self) -> dict:
+    def as_json(self, *, force_spoiler: bool = False) -> dict:
         result = {
             "schema_version": description_migration.CURRENT_VERSION,
             "info": {
                 "randovania_version": self.randovania_version_text,
                 "randovania_version_git": self.randovania_version_git.hex(),
                 "permalink": self.permalink.as_base64_str,
+                "has_spoiler": self.has_spoiler,
                 "seed": self.generator_parameters.seed_number,
                 "hash": self.shareable_hash,
                 "word_hash": self.shareable_word_hash,
@@ -170,7 +164,7 @@ class LayoutDescription:
             }
         }
 
-        if self.has_spoiler:
+        if self.has_spoiler or force_spoiler:
             result["game_modifications"] = self._serialized_patches
             result["item_order"] = self.item_order
 
@@ -202,4 +196,4 @@ class LayoutDescription:
 
     def save_to_file(self, json_path: Path):
         with json_path.open("w") as open_file:
-            json.dump(self.as_json, open_file, indent=4, separators=(',', ': '))
+            json.dump(self.as_json(), open_file, indent=4, separators=(',', ': '))

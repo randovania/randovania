@@ -1,15 +1,17 @@
+import dataclasses
 from typing import List
 
 import pytest
 
+import randovania.games.prime2.exporter.hints
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.games.prime2.patcher import echoes_items
 from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.patching.prime.patcher_file_lib import sky_temple_key_hint, hint_lib
 
 
 def _create_hint_text(hide_area: bool,
@@ -44,25 +46,22 @@ def make_useless_stk_hint(key_number: int) -> List[str]:
 @pytest.mark.parametrize("hide_area", [False, True])
 def test_create_hints_all_placed(hide_area: bool, multiworld: bool, empty_patches):
     # Setup
-    prime_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME)
     echoes_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
-
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
-    area_namers = {
-        0: hint_lib.AreaNamer(echoes_game.world_list),
-        1: hint_lib.AreaNamer(prime_game.world_list),
-    }
 
     patches = empty_patches.assign_new_pickups([
         (PickupIndex(17 + key),
          PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game.resource_database), 0))
         for key in range(5 if multiworld else 9)
     ])
+    patches = dataclasses.replace(patches, game_enum=RandovaniaGame.METROID_PRIME_ECHOES)
+
     other_patches = empty_patches.assign_new_pickups([
         (PickupIndex(17 + key),
          PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game.resource_database), 0))
         for key in range(5, 9)
     ])
+    other_patches = dataclasses.replace(other_patches, game_enum=RandovaniaGame.METROID_PRIME)
     assets = [0xD97685FE, 0x32413EFD, 0xDD8355C3, 0x3F5F4EBA, 0xD09D2584,
               0x3BAA9E87, 0xD468F5B9, 0x2563AE34, 0xCAA1C50A]
 
@@ -91,12 +90,14 @@ def test_create_hints_all_placed(hide_area: bool, multiworld: bool, empty_patche
         for i, (asset_id, text) in enumerate(zip(assets, locations))
     ]
 
+    namer = EchoesHintNamer({0: patches, 1: other_patches}, players_config)
+
     # Run
-    result = sky_temple_key_hint.create_hints(
+    result = randovania.games.prime2.exporter.hints.create_stk_hints(
         {0: patches, 1: other_patches} if multiworld else {0: patches},
         players_config,
         echoes_game.resource_database,
-        area_namers,
+        namer,
         hide_area)
 
     # Assert
@@ -114,6 +115,8 @@ def test_create_hints_all_starting(hide_area: bool, multiworld: bool,
         echoes_game_description.resource_database.get_item(echoes_items.SKY_TEMPLE_KEY_ITEMS[key]): 1
         for key in range(9)
     })
+    patches = dataclasses.replace(patches, game_enum=echoes_game_description.game)
+    namer = EchoesHintNamer({0: patches}, players_config)
 
     expected = [
         {"asset_id": 0xD97685FE,
@@ -137,14 +140,15 @@ def test_create_hints_all_starting(hide_area: bool, multiworld: bool,
     ]
 
     # Run
-    result = sky_temple_key_hint.create_hints({0: patches}, players_config, echoes_game_description.resource_database,
-                                              area_namer, hide_area)
+    result = randovania.games.prime2.exporter.hints.create_stk_hints({0: patches}, players_config,
+                                                                     echoes_game_description.resource_database,
+                                                                     namer, hide_area)
 
     # Assert
     assert result == expected
 
 
-def test_hide_hints():
+def test_hide_hints(empty_patches):
     # Setup
     expected = [
         {"asset_id": 0xD97685FE,
@@ -167,8 +171,10 @@ def test_hide_hints():
          "strings": make_useless_stk_hint(9)},
     ]
 
+    namer = EchoesHintNamer({0: empty_patches}, PlayersConfiguration(0, {}))
+
     # Run
-    result = sky_temple_key_hint.hide_hints()
+    result = randovania.games.prime2.exporter.hints.hide_stk_hints(namer)
 
     # Assert
     assert result == expected

@@ -24,6 +24,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                      skip_final_bosses: bool,
                                                      default_layout_configuration):
     # Setup
+    patches_factory = echoes_game_description.game.generator.base_patches_factory
     expected = dataclasses.replace(echoes_game_description.create_game_patches())
     if skip_final_bosses:
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
@@ -36,7 +37,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                                skip_final_bosses=skip_final_bosses))
 
     # Run
-    result = echoes_game_description.game.data.generator.base_patches_factory.add_elevator_connections_to_patches(
+    result = patches_factory.add_elevator_connections_to_patches(
         config,
         Random(0),
         echoes_game_description.create_game_patches())
@@ -50,6 +51,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
                                                     skip_final_bosses: bool,
                                                     default_layout_configuration):
     # Setup
+    patches_factory = echoes_game_description.game.generator.base_patches_factory
     game = echoes_game_description
     layout_configuration = dataclasses.replace(
         default_layout_configuration,
@@ -122,7 +124,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
         elevator_connection=elevator_connection)
 
     # Run
-    result = echoes_game_description.game.data.generator.base_patches_factory.add_elevator_connections_to_patches(
+    result = patches_factory.add_elevator_connections_to_patches(
         layout_configuration,
         Random(0),
         game.create_game_patches(),
@@ -137,6 +139,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
 
 def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, default_layout_configuration):
     # Setup
+    patches_factory = echoes_game_description.game.generator.base_patches_factory
     scan_visor = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Scan Visor")
     emerald = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Emerald Translator")
 
@@ -155,7 +158,7 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
     rng = MagicMock()
 
     # Run
-    results = echoes_game_description.game.data.generator.base_patches_factory.configurable_node_assignment(
+    results = patches_factory.configurable_node_assignment(
         configuration, echoes_game_description, rng)
 
     # Assert
@@ -169,6 +172,7 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
 
 def test_gate_assignment_for_configuration_all_random(echoes_game_description, default_layout_configuration):
     # Setup
+    patches_factory = echoes_game_description.game.generator.base_patches_factory
     scan_visor = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Scan Visor")
     violet = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Violet Translator")
     emerald = find_resource_info_with_long_name(echoes_game_description.resource_database.item, "Emerald Translator")
@@ -196,79 +200,13 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
     rng.choice.side_effect = choices * len(translator_configuration.translator_requirement)
 
     # Run
-    results = echoes_game_description.game.data.generator.base_patches_factory.configurable_node_assignment(
+    results = patches_factory.configurable_node_assignment(
         configuration, echoes_game_description, rng)
 
     # Assert
     assert list(results.values()) == requirements[:len(translator_configuration.translator_requirement)]
 
 
-@pytest.mark.parametrize("is_multiworld", [False, True])
-def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is_multiworld):
-    # Setup
-    layout_configuration = MagicMock()
-    layout_configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
-    rng = MagicMock()
-
-    def _light_suit_location_hint(number: int):
-        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.LIGHT_SUIT_LOCATION,
-                                                     HintItemPrecision.DETAILED, include_owner=False),
-                    PickupIndex(number))
-
-    def _guardian_hint(number: int):
-        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.GUARDIAN,
-                                                     HintItemPrecision.DETAILED, include_owner=False),
-                    PickupIndex(number))
-
-    def _keybearer_hint(number: int):
-        return Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.KEYBEARER,
-                                                     HintItemPrecision.BROAD_CATEGORY,
-                                                     include_owner=True),
-                    PickupIndex(number))
-
-    expected = {
-        # Keybearer
-        LogbookAsset(0xE3B417BF): _keybearer_hint(11),
-        LogbookAsset(0x65206511): _keybearer_hint(15),
-        LogbookAsset(0x28E8C41A): _keybearer_hint(19),
-        # Agon
-        LogbookAsset(0x150E8DB8): _keybearer_hint(45),
-        LogbookAsset(0xDE525E1D): _keybearer_hint(53),
-        # Torvus
-        LogbookAsset(0x58C62CB3): _keybearer_hint(68),
-        LogbookAsset(0x939AFF16): _keybearer_hint(91),
-        # Sanctuary
-        LogbookAsset(0x62CC4DC3): _keybearer_hint(117),
-        LogbookAsset(0xA9909E66): _keybearer_hint(106),
-
-        # Locations with hints
-        LogbookAsset(1041207119): _light_suit_location_hint(24),
-        LogbookAsset(4115881194): _guardian_hint(43),
-        LogbookAsset(1948976790): _guardian_hint(79),
-        LogbookAsset(3212301619): _guardian_hint(115),
-
-        # Dark Temple hints
-        LogbookAsset(67497535): Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.AGON_WASTES),
-        LogbookAsset(4072633400): Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG),
-        LogbookAsset(0x82919C91): Hint(HintType.RED_TEMPLE_KEY_SET, None,
-                                       dark_temple=HintDarkTemple.SANCTUARY_FORTRESS),
-
-        # Jokes
-        LogbookAsset(0x49CD4F34): Hint(HintType.JOKE, None),
-        LogbookAsset(0x9F94AC29): Hint(HintType.JOKE, None),
-    }
-
-    # Run
-    result = echoes_game_description.game.data.generator.base_patches_factory.add_default_hints_to_patches(
-        layout_configuration, echoes_game_description,
-        rng, empty_patches, echoes_game_description.world_list, num_joke=2, is_multiworld=is_multiworld)
-
-    # Assert
-    rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
-    assert result.hints == expected
-
-
-@patch("randovania.generator.base_patches_factory.BasePatchesFactory.add_default_hints_to_patches", autospec=True)
 @patch("randovania.generator.base_patches_factory.BasePatchesFactory.starting_location_for_configuration",
        autospec=True)
 @patch("randovania.generator.base_patches_factory.BasePatchesFactory.configurable_node_assignment", autospec=True)
@@ -277,7 +215,6 @@ def test_add_default_hints_to_patches(echoes_game_description, empty_patches, is
 def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock,
                              mock_gate_assignment_for_configuration: MagicMock,
                              mock_starting_location_for_config: MagicMock,
-                             mock_add_default_hints_to_patches: MagicMock,
                              mocker,
                              ):
     # Setup
@@ -314,9 +251,4 @@ def test_create_base_patches(mock_add_elevator_connections_to_patches: MagicMock
     mock_starting_location_for_config.assert_called_once_with(factory, layout_configuration, game, rng)
     patches[3].assign_starting_location.assert_called_once_with(mock_starting_location_for_config.return_value)
 
-    # Hints
-    mock_add_default_hints_to_patches.assert_called_once_with(factory, layout_configuration, game, rng, patches[4],
-                                                              game.world_list, num_joke=2,
-                                                              is_multiworld=is_multiworld)
-
-    assert result is mock_add_default_hints_to_patches.return_value
+    assert result is patches[4]

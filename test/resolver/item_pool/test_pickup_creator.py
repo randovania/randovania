@@ -36,8 +36,10 @@ def test_create_pickup_for(percentage: bool, echoes_item_database, echoes_resour
         broad_category=generic_item_category,
         model_name="SuperModel",
         progression=("DarkVisor", "MorphBall", "Bombs"),
+        default_starting_count=0,
+        default_shuffled_count=1,
         ammo_index=("EnergyTank", "DarkAmmo"),
-        required=False,
+        must_be_starting=False,
         original_index=None,
         probability_offset=5,
     )

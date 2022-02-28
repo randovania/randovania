@@ -5,6 +5,7 @@ from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import add_resources_into_another
+from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
 from randovania.generator.item_pool.major_items import add_major_items
@@ -20,7 +21,8 @@ def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
 def calculate_pool_results(layout_configuration: BaseConfiguration,
                            resource_database: ResourceDatabase,
                            base_patches: GamePatches = None,
-                           rng: Random = None
+                           rng: Random = None,
+                           rng_required: bool = False
                            ) -> PoolResults:
     """
     Creates a PoolResults with all starting items and pickups in fixed locations, as well as a list of
@@ -39,9 +41,13 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     # Adding ammo to the pool
     base_results.pickups.extend(add_ammo(resource_database,
                                          layout_configuration.ammo_configuration))
-
-    layout_configuration.game.data.generator.item_pool_creator(base_results, layout_configuration, resource_database,
-                                                               base_patches, rng)
+    try:
+        layout_configuration.game.generator.item_pool_creator(
+            base_results, layout_configuration, resource_database, base_patches, rng,
+        )
+    except MissingRng as e:
+        if rng_required:
+            raise e
 
     return base_results
 
@@ -55,7 +61,7 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> Tuple[int, int]:
     game_description = default_database.game_description_for(layout.game)
     num_pickup_nodes = game_description.world_list.num_pickup_nodes
 
-    pool_pickups, pool_assignment, _ = calculate_pool_results(layout, game_description.resource_database)
+    pool_pickups, pool_assignment, _ = calculate_pool_results(layout, game_description.resource_database, rng_required=False)
     min_starting_items = layout.major_items_configuration.minimum_random_starting_items
 
     pool_count = len(pool_pickups) + len(pool_assignment)

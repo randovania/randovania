@@ -16,7 +16,6 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
-from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -58,21 +57,20 @@ def _find_area_with_teleporter(world_list: WorldList, teleporter: NodeIdentifier
     return world_list.area_by_area_location(teleporter.area_location)
 
 
-def serialize_single(player_index: int, num_players: int, patches: GamePatches, game_enum: RandovaniaGame) -> dict:
+def serialize_single(player_index: int, num_players: int, patches: GamePatches) -> dict:
     """
     Encodes a given GamePatches into a JSON-serializable dict.
     :param player_index:
     :param num_players:
     :param patches:
-    :param game_enum:
     :return:
     """
-    game = default_database.game_description_for(game_enum)
+    game = default_database.game_description_for(patches.game_enum)
     world_list = game.world_list
 
     result = {
         # This field helps schema migrations, if nothing else
-        "game": game_enum.value,
+        "game": patches.game_enum.value,
         "starting_location": patches.starting_location.as_string,
         "starting_items": {
             resource_info.long_name: quantity
@@ -199,6 +197,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
 
     return GamePatches(
         player_index=player_index,
+        game_enum=game.game,
         pickup_assignment=pickup_assignment,  # PickupAssignment
         elevator_connection=elevator_connection,  # ElevatorConnection
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
@@ -223,8 +222,8 @@ def decode(game_modifications: List[dict],
     }
 
 
-def serialize(all_patches: Dict[int, GamePatches], all_games: Dict[int, RandovaniaGame]) -> List[dict]:
+def serialize(all_patches: Dict[int, GamePatches]) -> List[dict]:
     return [
-        serialize_single(index, len(all_patches), patches, all_games[index])
+        serialize_single(index, len(all_patches), patches)
         for index, patches in all_patches.items()
     ]

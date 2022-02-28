@@ -13,6 +13,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.games.game import RandovaniaGame
 
 ElevatorConnection = dict[NodeIdentifier, Optional[AreaIdentifier]]
 
@@ -24,6 +25,7 @@ class GamePatches:
     * Swapping pickup locations
     """
     player_index: int
+    game_enum: RandovaniaGame
     pickup_assignment: PickupAssignment
     elevator_connection: ElevatorConnection
     dock_connection: dict[NodeIdentifier, Optional[NodeIdentifier]]

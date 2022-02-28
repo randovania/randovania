@@ -7,7 +7,6 @@ from randovania.gui.lib.close_event_widget import CloseEventWidget
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
-from randovania.patching.patcher_provider import PatcherProvider
 
 
 class WindowManager(QMainWindow):
@@ -21,11 +20,7 @@ class WindowManager(QMainWindow):
     def preset_manager(self) -> PresetManager:
         raise NotImplemented()
 
-    @property
-    def patcher_provider(self) -> PatcherProvider:
-        raise NotImplemented()
-
-    def open_map_tracker(self, configuration: Preset):
+    async def open_map_tracker(self, configuration: Preset):
         raise NotImplemented()
 
     def open_data_visualizer_at(self, world_name: Optional[str], area_name: Optional[str],

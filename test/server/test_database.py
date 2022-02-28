@@ -19,9 +19,6 @@ def test_init(tmpdir):
 @pytest.mark.parametrize("has_description", [False, True])
 def test_GameSession_create_session_entry(clean_database, has_description, test_files_dir, mocker):
     # Setup
-    mocker.patch("randovania.layout.permalink.Permalink.as_base64_str", new_callable=PropertyMock,
-                 return_value="<the-permalink>")
-
     description = LayoutDescription.from_file(test_files_dir.joinpath("log_files", "seed_a.rdvgame"))
     someone = database.User.create(name="Someone")
     s = database.GameSession.create(name="Debug", num_teams=1, creator=someone)
@@ -30,7 +27,6 @@ def test_GameSession_create_session_entry(clean_database, has_description, test_
         s.layout_description = description
         s.save()
         game_details = {
-            'permalink': '<the-permalink>',
             'seed_hash': 'N2UXD7NB',
             'spoiler': True,
             'word_hash': 'Temple Bridge Quad',
