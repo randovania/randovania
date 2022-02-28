@@ -330,7 +330,6 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def _force_location(self):
         world_list = self.game_description.world_list
-        print(world_list._nodes_to_area)
         node_id = area_picker.get_node(self, self.game_description.game)
         if node_id is not None:
             node = world_list.node_by_identifier(node_id)
