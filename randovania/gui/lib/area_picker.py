@@ -18,6 +18,14 @@ def get_node(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[
     else:
         return None
 
+def get_area(parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
+    dialog = AreaPickerDialog(parent, game, valid_areas, False)
+    result = dialog.exec()
+    if result == QtWidgets.QDialog.DialogCode.Accepted:
+        return AreaIdentifier(dialog.current_world.name, dialog.current_node.name)
+    else:
+        return None
+
 
 class AreaPickerModel(QtCore.QSortFilterProxyModel):
     _world_list: WorldList
@@ -128,6 +136,7 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
     _model: AreaPickerModel
     _world_list: WorldList
     _empty_index: QtCore.QModelIndex
+    _pick_node: bool
     worldList: QtWidgets.QListView
     areaList: QtWidgets.QListView
     nodeList: QtWidgets.QListView
@@ -139,23 +148,35 @@ class AreaPickerDialog(QtWidgets.QDialog, Ui_AreaPickerDialog):
     current_area: Optional[Area] = None
     current_node: Optional[Node] = None
 
-    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None):
+    def __init__(self, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node: bool = True):
         super().__init__(parent)
         self.setupUi(self)
         world_list = default_database.game_description_for(game).world_list
+        self._pick_node = pick_node
         self._model = AreaPickerModel(self, world_list, valid_areas)
         self._setup_lists()
         self.worldList.selectionModel().currentChanged.connect(self._update_areas)
-        self.areaList.selectionModel().currentChanged.connect(self._update_nodes)
-        self.nodeList.selectionModel().currentChanged.connect(self._node_selected)
-        self.locationsCheckBox.stateChanged.connect(self._model.set_show_locations)
-        self.pickupsCheckBox.stateChanged.connect(self._model.set_show_pickups)
-        self.eventsCheckBox.stateChanged.connect(self._model.set_show_events)
-        self.nodeList.doubleClicked.connect(self._confirm_selection)
         self.searchLineEdit.textEdited.connect(self._update_search)
         self.searchLineEdit.returnPressed.connect(self._confirm_selection)
         self.confirmButtonBox.button(QtWidgets.QDialogButtonBox.Ok).setEnabled(False)
         self.searchLineEdit.setFocus()
+        if self._pick_node:
+            self.areaList.selectionModel().currentChanged.connect(self._update_nodes)
+            self.nodeList.selectionModel().currentChanged.connect(self._node_selected)
+            self.locationsCheckBox.stateChanged.connect(self._model.set_show_locations)
+            self.pickupsCheckBox.stateChanged.connect(self._model.set_show_pickups)
+            self.eventsCheckBox.stateChanged.connect(self._model.set_show_events)
+            self.nodeList.doubleClicked.connect(self._confirm_selection)
+        else:
+            self.areaList.selectionModel().currentChanged.connect(self._node_selected)
+            self.areaList.doubleClicked.connect(self._confirm_selection)
+            self.nodeLabel.hide()
+            self.nodeList.hide()
+            self.filterLabel.hide()
+            self.locationsCheckBox.hide()
+            self.pickupsCheckBox.hide()
+            self.eventsCheckBox.hide()
+            self.resize(534, self.height())
 
     def _setup_lists(self):
         self.worldList.setModel(self._model)
