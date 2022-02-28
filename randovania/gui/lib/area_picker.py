@@ -5,7 +5,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
-from randovania.game_description.world.node import DockNode, EventNode, GenericNode, Node, NodeIdentifier, PickupNode, ResourceNode
+from randovania.game_description.world.node import DockNode, EventNode, GenericNode, Node, NodeIdentifier, PickupNode, ResourceNode, TeleporterNode
 from randovania.gui.generated.area_picker_dialog_ui import Ui_AreaPickerDialog
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
@@ -135,6 +135,9 @@ class AreaPickerFilterProxyModel(QtCore.QSortFilterProxyModel):
     _show_locations: bool
     _show_pickups: bool
     _show_events: bool
+    _LOCATION_NODES: list[type] = [DockNode, GenericNode, TeleporterNode]
+    _PICKUP_NODES: list[type] = [PickupNode]
+    _EVENT_NODES: list[type] = [EventNode]
 
     def __init__(self, parent: AreaPickerDialog):
         super().__init__(parent)
@@ -149,7 +152,8 @@ class AreaPickerFilterProxyModel(QtCore.QSortFilterProxyModel):
         self._default_filters = [
             self._filter_location,
             self._filter_pickup,
-            self._filter_event
+            self._filter_event,
+            self._none_of_above
         ]
     
     def _set_show_locations(self, state):
@@ -163,11 +167,15 @@ class AreaPickerFilterProxyModel(QtCore.QSortFilterProxyModel):
         self.invalidateFilter()
 
     def _filter_location(self, node: Node) -> bool:
-        return self._show_locations and (isinstance(node, DockNode) or isinstance(node, GenericNode))
+        return self._show_locations and self._isany(node, self._LOCATION_NODES)
     def _filter_pickup(self, node: Node) -> bool:
-        return self._show_pickups and isinstance(node, PickupNode)
+        return self._show_pickups and self._isany(node, self._PICKUP_NODES)
     def _filter_event(self, node: Node) -> bool:
-        return self._show_events and isinstance(node, EventNode)
+        return self._show_events and self._isany(node, self._EVENT_NODES)
+    # Shows nodes that don't fall under any of the above criteria
+    def _none_of_above(self, node: Node) -> bool:
+        return isinstance(node, Node) and \
+            not self._isany(node, self._LOCATION_NODES + self._PICKUP_NODES + self._EVENT_NODES)
 
     def filterAcceptsRow(self, source_row: int, source_parent: Union[QtCore.QModelIndex, QtCore.QPersistentModelIndex]) -> bool:
         source_index = self.sourceModel().index(source_row, 0, source_parent)
@@ -177,3 +185,7 @@ class AreaPickerFilterProxyModel(QtCore.QSortFilterProxyModel):
     def invalidateFilter(self):
         super().invalidateFilter()
         self.parent().validate_root_indexes()
+
+    @staticmethod
+    def _isany(obj: object, types: list[type]):
+        return any ([isinstance(obj, t) for t in types])
