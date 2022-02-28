@@ -5,8 +5,51 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.2.0] - Unreleased
 
-## [4.1.0] - Unreleased
+- Nothing.
+
+### Cave Story
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime 2: Echoes
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+## [4.1.1] - Unreleased
+
+- Nothing.
+
+## [4.1.0] - 2022-03-01
 
 - Added: /randovania-faq command was added to the Discord bot, which sends FAQ messages.
 - Added: Randovania now checks if the entire database is strongly connected, allowing for manual exceptions.
@@ -77,7 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Using Screw Attack as a trickless means to obtain Grand Windchamber item after seeker puzzles
 
-## [4.0.1] - Unreleased
+## [4.0.1] - 2022-01-30
 
 - Changed: The UI for 1HP Mode now only shows up for Echoes.
 - Fixed: Support for non-NTSC Metroid Prime 1 ISOs restored.
