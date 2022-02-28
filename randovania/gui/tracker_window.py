@@ -157,7 +157,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.hide_collected_resources_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
         self.undo_last_action_button.clicked.connect(self._undo_last_action)
-        self.force_location_button.clicked.connect(self._force_location)
+        self.force_location_button.clicked.connect(self._add_manual_action)
 
         self.configuration_label.setText("Trick Level: {}; Starts with:\n{}".format(
             self.preset.configuration.trick_level.pretty_description,
@@ -328,9 +328,9 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.actions_list.takeItem(len(self._actions))
         self._refresh_for_new_action()
 
-    def _force_location(self):
+    def _add_manual_action(self):
         world_list = self.game_description.world_list
-        node_id = area_picker.get_node(self, self.game_description.game, self.game_configuration.starting_location.locations)
+        node_id = area_picker.get_node("Select the action you'd like to add.", self, self.game_description.game, "Add Manual Action")
         if node_id is not None:
             node = world_list.node_by_identifier(node_id)
             self._add_new_action(node)

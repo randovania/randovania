@@ -10,7 +10,7 @@ from randovania.gui.generated.area_picker_dialog_ui import Ui_AreaPickerDialog
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
 
-def get_node(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
+def get_node(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, title_text: str = None, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
     """
     Opens a modal dialog for the user to pick a specific node.
 
@@ -20,10 +20,10 @@ def get_node(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, 
     :param valid_areas: limit the areas shown in the dialog to the areas in this list
     :return: a NodeIdentifier of the selected node, or None if the dialog was canceled
     """
-    accepted, world, area, node = _get_item(header_text, parent, game, valid_areas, True, "Select Node")
+    accepted, world, area, node = _get_item(header_text, parent, game, valid_areas, True, title_text if title_text else "Select Node")
     return None if not accepted else NodeIdentifier(AreaIdentifier(world.name, area.name), node.name)
 
-def get_area(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
+def get_area(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, title_text: str = None, valid_areas: list[AreaIdentifier] = None) -> Optional[NodeIdentifier]:
     """
     Opens a modal dialog for the user to pick a specific area.
 
@@ -33,7 +33,7 @@ def get_area(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, 
     :param valid_areas: limit the areas shown in the dialog to the areas in this list
     :return: an AreaIdentifier of the selected area, or None if the dialog was canceled
     """
-    accepted, world, area, _ = _get_item(header_text, parent, game, valid_areas, False, "Select Area")
+    accepted, world, area, _ = _get_item(header_text, parent, game, valid_areas, False, title_text if title_text else "Select Area")
     return None if not accepted else AreaIdentifier(world.name, area.name)
 
 def _get_item(header_text: str, parent: QtWidgets.QWidget, game: RandovaniaGame, valid_areas: list[AreaIdentifier] = None, pick_node = True, window_title: str = None) -> tuple[bool, Optional[World], Optional[Area], Optional[Node]]:
