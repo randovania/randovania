@@ -1,6 +1,6 @@
 from typing import List
 
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.game_description import default_database
 from randovania.game_description.item.item_database import ItemDatabase

@@ -2,7 +2,7 @@ import dataclasses
 import uuid
 
 import pytest
-from PySide2.QtWidgets import *
+from PySide6.QtWidgets import *
 
 from randovania.game_description import default_database
 from randovania.games.cave_story.gui.preset_settings.cs_generation_tab import PresetCSGeneration

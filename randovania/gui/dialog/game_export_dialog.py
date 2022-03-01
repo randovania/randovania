@@ -1,8 +1,8 @@
 from pathlib import Path
 from typing import Optional, TypeVar, Type, Callable
 
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QMessageBox
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QMessageBox
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.gui.lib import common_qt_lib

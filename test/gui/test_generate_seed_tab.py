@@ -1,5 +1,5 @@
 import pytest
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 from mock import MagicMock, AsyncMock
 
 from randovania.games.game import RandovaniaGame, DevelopmentState
@@ -104,7 +104,7 @@ def test_click_on_preset_tree(tab, preset_manager, game: RandovaniaGame, skip_qt
         assert item is None
     else:
         tab.window.create_preset_tree.selectionModel().reset()
-        tab.window.create_preset_tree.setItemSelected(item, True)
+        item.setSelected(True)
 
         # Assert
         assert tab._current_preset_data.get_preset() == preset.get_preset()

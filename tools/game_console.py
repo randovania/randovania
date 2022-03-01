@@ -4,7 +4,7 @@ import logging.config
 import os
 import sys
 
-from PySide2.QtCore import QCoreApplication
+from PySide6.QtCore import QCoreApplication
 
 from randovania.game_connection.connection_base import GameConnectionStatus
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
@@ -41,7 +41,7 @@ def main():
 
     app = QCoreApplication(sys.argv)
 
-    os.environ['QT_API'] = "PySide2"
+    os.environ['QT_API'] = "PySide6"
     import qasync
     loop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)

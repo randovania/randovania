@@ -1,7 +1,7 @@
 import re
 from typing import List, Tuple
 
-from PySide2.QtWidgets import QDialog, QWidget
+from PySide6.QtWidgets import QDialog, QWidget
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement

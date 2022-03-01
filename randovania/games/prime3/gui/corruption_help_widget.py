@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.games_help_corruption_widget_ui import Ui_CorruptionHelpWidget

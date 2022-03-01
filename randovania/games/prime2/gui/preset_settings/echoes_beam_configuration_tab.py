@@ -1,8 +1,8 @@
 import dataclasses
 import functools
 
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QComboBox
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QComboBox
 
 from randovania.games.prime2.layout.beam_configuration import BeamAmmoConfiguration
 from randovania.gui.generated.preset_echoes_beam_configuration_ui import Ui_PresetEchoesBeamConfiguration

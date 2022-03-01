@@ -1,7 +1,7 @@
 import collections
 import functools
 
-from PySide2 import QtWidgets, QtCore
+from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription

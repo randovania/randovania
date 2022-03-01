@@ -4,11 +4,7 @@ import logging
 from enum import Enum
 from typing import Dict, List, Union, Optional
 
-import PySide2
-from PySide2 import QtWidgets
-from PySide2.QtCore import QTimer, Signal, Qt
-from PySide2.QtGui import QPixmap
-from PySide2.QtWidgets import QMainWindow, QLabel, QSpacerItem, QSizePolicy, QActionGroup
+from PySide6 import QtWidgets, QtGui, QtCore
 from qasync import asyncSlot
 
 from randovania import get_data_path
@@ -39,7 +35,7 @@ class FieldToCheck(Enum):
 
 @dataclasses.dataclass(frozen=True)
 class Element:
-    labels: List[Union[QLabel, ClickableLabel, ClickableLabel]]
+    labels: List[Union[QtWidgets.QLabel, ClickableLabel, ClickableLabel]]
     resources: List[ItemResourceInfo]
     text_template: str
     minimum_to_check: int
@@ -54,13 +50,13 @@ class Element:
             ))
 
 
-class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
+class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     _hooked = False
     _base_address: int
     trackers: Dict[str, str]
     _current_tracker_game: RandovaniaGame = None
     _current_tracker_name: str = None
-    give_item_signal = Signal(PickupEntry)
+    give_item_signal = QtCore.Signal(PickupEntry)
 
     def __init__(self, game_connection: GameConnection, options: Options):
         super().__init__()
@@ -73,9 +69,9 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
             self.trackers = json.load(trackers_file)["trackers"]
 
         self._action_to_name = {}
-        theme_group = QActionGroup(self)
+        theme_group = QtGui.QActionGroup(self)
         for name in self.trackers.keys():
-            action = QtWidgets.QAction(self.menu_tracker)
+            action = QtGui.QAction(self.menu_tracker)
             action.setText(name)
             action.setCheckable(True)
             action.setChecked(name == options.selected_tracker)
@@ -95,16 +91,16 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
 
         self.action_force_update.triggered.connect(self.on_force_update_button)
 
-        self._update_timer = QTimer(self)
+        self._update_timer = QtCore.QTimer(self)
         self._update_timer.setInterval(100)
         self._update_timer.timeout.connect(self._on_timer_update)
         self._update_timer.setSingleShot(True)
 
-    def showEvent(self, event: PySide2.QtGui.QShowEvent):
+    def showEvent(self, event: QtGui.QShowEvent):
         self._update_timer.start()
         super().showEvent(event)
 
-    def hideEvent(self, event: PySide2.QtGui.QHideEvent):
+    def hideEvent(self, event: QtGui.QHideEvent):
         self._update_timer.stop()
         super().hideEvent(event)
 
@@ -229,7 +225,7 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                     image_path = get_data_path().joinpath(path)
                     if not image_path.exists():
                         logging.error("Tracker asset not found: %s", image_path)
-                    pixmap = QPixmap(str(image_path))
+                    pixmap = QtGui.QPixmap(str(image_path))
 
                     label = ClickableLabel(self.inventory_group, paint_with_opacity(pixmap, 0.3),
                                            paint_with_opacity(pixmap, 1.0))
@@ -240,8 +236,8 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
                     labels.append(label)
 
             elif "label" in element:
-                label = QLabel(self.inventory_group)
-                label.setAlignment(Qt.AlignCenter)
+                label = QtWidgets.QLabel(self.inventory_group)
+                label.setAlignment(QtCore.Qt.AlignCenter)
                 text_template = element["label"]
                 labels.append(label)
 
@@ -259,7 +255,8 @@ class AutoTrackerWindow(QMainWindow, Ui_AutoTrackerWindow):
             for label in labels:
                 self.inventory_layout.addWidget(label, element["row"], element["column"])
 
-        self.inventory_spacer = QSpacerItem(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.inventory_spacer = QtWidgets.QSpacerItem(5, 5, QtWidgets.QSizePolicy.Expanding,
+                                                      QtWidgets.QSizePolicy.Expanding)
         self.inventory_layout.addItem(self.inventory_spacer, self.inventory_layout.rowCount(),
                                       self.inventory_layout.columnCount())
 
