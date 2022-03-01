@@ -1,8 +1,8 @@
 import pytest
 from PySide2 import QtWidgets
-from mock import MagicMock, AsyncMock, ANY
+from mock import MagicMock, AsyncMock
 
-from randovania.games.game import RandovaniaGame
+from randovania.games.game import RandovaniaGame, DevelopmentState
 from randovania.gui.generate_seed_tab import GenerateSeedTab
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.interface_common.options import Options
@@ -59,20 +59,27 @@ async def test_on_customize_button(tab, mocker, has_existing_window):
         tab._add_new_preset.assert_called_once()
 
 
-@pytest.mark.parametrize("game", RandovaniaGame)
-def test_on_options_changed_select_preset(tab, preset_manager, game: RandovaniaGame):
-    preset = preset_manager.default_preset_for_game(game)
+@pytest.mark.parametrize("allow_experimental", [False, True])
+def test_on_options_changed_select_preset(tab, preset_manager, game_enum, is_dev_version, allow_experimental):
+    preset = preset_manager.default_preset_for_game(game_enum)
 
     tab._window_manager.preset_manager = preset_manager
     tab.setup_ui()
 
+    tab._options.experimental_games = allow_experimental
     tab._options.selected_preset_uuid = preset.uuid
+
+    dev_state = game_enum.data.development_state
+    if dev_state.is_stable or (allow_experimental and (is_dev_version or dev_state == DevelopmentState.EXPERIMENTAL)):
+        expected_result = preset
+    else:
+        expected_result = None
 
     # Run
     tab.on_options_changed(tab._options)
 
     # Assert
-    assert tab._current_preset_data == preset
+    assert tab._current_preset_data == expected_result
 
 
 @pytest.mark.parametrize("allow_experimental", [False, True])
