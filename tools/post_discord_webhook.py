@@ -11,6 +11,11 @@ from randovania import VERSION
 
 
 async def post_to_discord():
+    try:
+        current_branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], check=True, stdout=subprocess.PIPE, text=True).stdout.strip()
+    except Exception:
+        current_branch = "<Unknown Branch>"
+
     git_result = subprocess.run(["git", "show"], check=True, stdout=subprocess.PIPE, text=True).stdout.split("\n")
     commit_hash = git_result[0].split()[1]
 
@@ -61,7 +66,7 @@ async def post_to_discord():
     webhook_data = {
         "embeds": [{
             "color": 0x2ecc71,
-            "title": f"Randovania {VERSION}",
+            "title": f"{current_branch} - Randovania {VERSION}",
             "url": f"https://github.com/randovania/randovania/commit/{commit_hash}",
             "description": message.strip(),
             "fields": fields,
