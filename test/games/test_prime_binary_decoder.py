@@ -74,7 +74,7 @@ def test_complex_encode(test_files_dir):
 
     # Run
     binary_data.encode(data, b)
-    # Whenever the file format changes, we can use the following line to force update our test file
+    # # Whenever the file format changes, we can use the following line to force update our test file
     # test_files_dir.joinpath("prime_data_as_binary.bin").write_bytes(b.getvalue()); assert False
 
     # Assert

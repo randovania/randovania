@@ -9,9 +9,15 @@ from randovania.game_description.requirements import (
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import (
-    Node, DockNode, TeleporterNode, PickupNode, EventNode,
-    ConfigurableNode, LogbookNode, LoreType, PlayerShipNode
+    Node
 )
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
@@ -158,11 +164,21 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             output.write("\n* Extra - {}: {}".format(extra_name, extra_field))
 
         for weakness in game.dock_weakness_database.get_by_type(dock_type):
-            output.write(f"\n  * {weakness.name}; Lock type: {weakness.lock_type.name}\n")
+            output.write(f"\n  * {weakness.name}\n")
             for extra_name, extra_field in weakness.extra.items():
-                output.write("\n      Extra - {}: {}".format(extra_name, extra_field))
-            for level, text in pretty_print_requirement(weakness.requirement):
+                output.write("      Extra - {}: {}\n".format(extra_name, extra_field))
+
+            output.write("      Open:\n")
+            for level, text in pretty_print_requirement(weakness.requirement, level=1):
                 output.write("      {}{}\n".format("    " * level, text))
+
+            if weakness.lock is not None:
+                output.write(f"      Lock type: {weakness.lock}\n")
+                for level, text in pretty_print_requirement(weakness.lock.requirement, level=1):
+                    output.write("      {}{}\n".format("    " * level, text))
+            else:
+                output.write("      No lock\n")
+            output.write("\n")
 
 
 def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:

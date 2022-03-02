@@ -13,8 +13,9 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import Node, LogbookNode
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
@@ -205,15 +206,16 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _encode_hints(self) -> list[dict]:
         namer = DreadHintNamer(self.description.all_patches, self.players_config)
-
         exporter = HintExporter(namer, self.rng, ["A joke hint."])
 
         return [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "hint_id": logbook_node.extra["hint_id"],
-                "text": exporter.create_message_for_hint(self.patches.hints[logbook_node.resource()],
-                                                         self.description.all_patches, self.players_config, True)
+                "text": exporter.create_message_for_hint(
+                    self.patches.hints[self.game.world_list.identifier_for_node(logbook_node)],
+                    self.description.all_patches, self.players_config, True
+                ),
             }
             for logbook_node in self.game.world_list.all_nodes
             if isinstance(logbook_node, LogbookNode)

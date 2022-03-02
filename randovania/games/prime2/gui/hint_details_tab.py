@@ -6,7 +6,7 @@ from PySide6 import QtWidgets
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.node import LogbookNode
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
@@ -36,18 +36,12 @@ class EchoesHintDetailsTab(GameDetailsTab):
         world_list = game.world_list
         patches = all_patches[players.player_index]
 
-        asset_to_node = {
-            node.resource(): node
-            for node in game.world_list.all_nodes
-            if isinstance(node, LogbookNode)
-        }
-
         per_world: dict[str, dict[str, tuple[str, str]]] = collections.defaultdict(dict)
         namer = EchoesHintNamer(all_patches, players)
         exporter = HintExporter(namer, random.Random(0), ["A joke hint."])
 
-        for asset, hint in patches.hints.items():
-            node = asset_to_node[asset]
+        for identifier, hint in patches.hints.items():
+            node = world_list.node_by_identifier(identifier)
             source_world = world_list.nodes_to_world(node)
             source_name = world_list.node_name(node)
 

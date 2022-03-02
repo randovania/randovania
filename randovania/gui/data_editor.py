@@ -15,7 +15,10 @@ from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation, EventNode
+from randovania.game_description.world.node import Node, GenericNode, NodeLocation
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games import default_data

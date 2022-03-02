@@ -1,5 +1,5 @@
 {
-    "schema_version": 8,
+    "schema_version": 9,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -1986,7 +1986,6 @@
                 "extra": {},
                 "items": {
                     "Normal Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -1994,257 +1993,293 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Dark Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Dark Beam"
-                        }
+                        },
+                        "lock": null
                     },
                     "Light Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Light Beam"
-                        }
+                        },
+                        "lock": null
                     },
                     "Annihilator Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Annihilator Beam"
-                        }
+                        },
+                        "lock": null
                     },
                     "Missile Blast Shield": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         }
                     },
                     "Super Missile Blast Shield": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Power",
-                                            "amount": 1,
-                                            "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Power",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Supers",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Charge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Supers",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Charge",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 5,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert)": {
-                        "lock_type": 1,
-                        "extra": {},
-                        "requirement": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Seekers",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "DarkVisor",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Use Screw Attack (Space Jump)"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Missile",
-                                                                                "amount": 4,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Knowledge",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missile",
-                                                                    "amount": 5,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missile",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SeekerlessLocks",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    },
-                    "Power Bomb Blast Shield": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "MorphBall",
-                                            "amount": 1,
-                                            "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Seekers",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "DarkVisor",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Use Screw Attack (Space Jump)"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Missile",
+                                                                                    "amount": 4,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Knowledge",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missile",
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Use Screw Attack (Space Jump)"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Missile",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "SeekerlessLocks",
+                                                            "amount": 4,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 1,
-                                            "negate": false
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Power Bomb Blast Shield": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MorphBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "PowerBomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Permanently Locked": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -2252,598 +2287,644 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Seeker Launcher Blast Shield (underwater; destructible by Screw Attack; Expert)": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Seekers",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Seekers",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "DarkVisor",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "DarkVisor",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Use Screw Attack (Space Jump)"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Missile",
-                                                                                "amount": 4,
-                                                                                "negate": false
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Use Screw Attack (Space Jump)"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Missile",
+                                                                                    "amount": 4,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Knowledge",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "AirUnderwater",
+                                                                                    "amount": 3,
+                                                                                    "negate": false
+                                                                                }
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Knowledge",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "AirUnderwater",
-                                                                                "amount": 3,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missile",
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missile",
-                                                                    "amount": 5,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                            ]
+                                                        }
                                                     }
-                                                }
-                                            ]
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Use Screw Attack (Space Jump)"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Missile",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "SeekerlessLocks",
+                                                            "amount": 4,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "AirUnderwater",
+                                                            "amount": 3,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missile",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SeekerlessLocks",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "AirUnderwater",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Power Bomb Blast Shield (destructible by Power Bomb Guardian)": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "MorphBall",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "PowerBomb",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "PowerBomb",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "events",
+                                                "name": "Event92",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "Event92",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Seeker Launcher Blast Shield (destructible with Screw Attack; Hypermode)": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Seekers",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Seekers",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "DarkVisor",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "DarkVisor",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Use Screw Attack (Space Jump)"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Missile",
-                                                                                "amount": 4,
-                                                                                "negate": false
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Use Screw Attack (Space Jump)"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Missile",
+                                                                                    "amount": 4,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Knowledge",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Knowledge",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missile",
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missile",
-                                                                    "amount": 5,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                            ]
+                                                        }
                                                     }
-                                                }
-                                            ]
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Use Screw Attack (Space Jump)"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Missile",
+                                                            "amount": 2,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "SeekerlessLocks",
+                                                            "amount": 5,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missile",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SeekerlessLocks",
-                                                        "amount": 5,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Seeker Launcher Blast Shield (destructible with Screw Attack; Advanced)": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Seekers",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Seekers",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "DarkVisor",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "DarkVisor",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Use Screw Attack (Space Jump)"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Missile",
-                                                                                "amount": 4,
-                                                                                "negate": false
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Use Screw Attack (Space Jump)"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Missile",
+                                                                                    "amount": 4,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Knowledge",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Knowledge",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missile",
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missile",
-                                                                    "amount": 5,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                            ]
+                                                        }
                                                     }
-                                                }
-                                            ]
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Use Screw Attack (Space Jump)"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Missile",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "SeekerlessLocks",
+                                                            "amount": 3,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missile",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SeekerlessLocks",
-                                                        "amount": 3,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Seeker Launcher Blast Shield (destructible with Screw Attack; Expert; 2 Missiles)": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Seekers",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Combat",
-                                                                    "amount": 1,
-                                                                    "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Seekers",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Combat",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "DarkVisor",
+                                                                        "amount": 1,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "DarkVisor",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "and",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "template",
-                                                                            "data": "Use Screw Attack (Space Jump)"
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "items",
-                                                                                "name": "Missile",
-                                                                                "amount": 4,
-                                                                                "negate": false
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "or",
+                                                        "data": {
+                                                            "comment": null,
+                                                            "items": [
+                                                                {
+                                                                    "type": "and",
+                                                                    "data": {
+                                                                        "comment": null,
+                                                                        "items": [
+                                                                            {
+                                                                                "type": "template",
+                                                                                "data": "Use Screw Attack (Space Jump)"
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "items",
+                                                                                    "name": "Missile",
+                                                                                    "amount": 4,
+                                                                                    "negate": false
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "resource",
+                                                                                "data": {
+                                                                                    "type": "tricks",
+                                                                                    "name": "Knowledge",
+                                                                                    "amount": 2,
+                                                                                    "negate": false
+                                                                                }
                                                                             }
-                                                                        },
-                                                                        {
-                                                                            "type": "resource",
-                                                                            "data": {
-                                                                                "type": "tricks",
-                                                                                "name": "Knowledge",
-                                                                                "amount": 2,
-                                                                                "negate": false
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "resource",
+                                                                    "data": {
+                                                                        "type": "items",
+                                                                        "name": "Missile",
+                                                                        "amount": 5,
+                                                                        "negate": false
+                                                                    }
                                                                 }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Missile",
-                                                                    "amount": 5,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
+                                                            ]
+                                                        }
                                                     }
-                                                }
-                                            ]
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "and",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "template",
+                                                        "data": "Use Screw Attack (Space Jump)"
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "Missile",
+                                                            "amount": 2,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "SeekerlessLocks",
+                                                            "amount": 4,
+                                                            "negate": false
+                                                        }
+                                                    }
+                                                ]
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Screw Attack (Space Jump)"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Missile",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SeekerlessLocks",
-                                                        "amount": 4,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     }
@@ -2854,7 +2935,6 @@
                 "extra": {},
                 "items": {
                     "Scan Portal": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -2864,10 +2944,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Dark Portal": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -2884,10 +2964,10 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Light Portal": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -2904,10 +2984,10 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "No Return Portal": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -2915,10 +2995,10 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Unknown Portal Type": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -2926,7 +3006,8 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             },
@@ -2935,7 +3016,6 @@
                 "extra": {},
                 "items": {
                     "Morph Ball Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -2945,7 +3025,8 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             },
@@ -2954,7 +3035,6 @@
                 "extra": {},
                 "items": {
                     "Open Passage": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -2962,10 +3042,10 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Not Determined": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -2973,7 +3053,8 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             }

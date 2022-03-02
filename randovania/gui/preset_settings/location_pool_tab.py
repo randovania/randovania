@@ -8,7 +8,8 @@ from PySide6 import QtWidgets
 from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import Node, PickupNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_location_pool_ui import Ui_PresetLocationPool
 from randovania.gui.lib.area_list_helper import AreaListHelper, dark_world_flags

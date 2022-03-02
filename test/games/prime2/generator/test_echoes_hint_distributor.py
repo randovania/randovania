@@ -4,8 +4,8 @@ import pytest
 
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     HintDarkTemple
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.hint_distributor import PreFillParams
@@ -37,34 +37,43 @@ async def test_add_default_hints_to_patches(echoes_game_description, empty_patch
 
     expected = {
         # Keybearer
-        LogbookAsset(0xE3B417BF): _keybearer_hint(11),
-        LogbookAsset(0x65206511): _keybearer_hint(15),
-        LogbookAsset(0x28E8C41A): _keybearer_hint(19),
+        'Temple Grounds/Landing Site/Keybearer Corpse (M-Dhe)': _keybearer_hint(11),
+        'Temple Grounds/Industrial Site/Keybearer Corpse (J-Fme)': _keybearer_hint(15),
+        'Temple Grounds/Storage Cavern A/Keybearer Corpse (D-Isl)': _keybearer_hint(19),
         # Agon
-        LogbookAsset(0x150E8DB8): _keybearer_hint(45),
-        LogbookAsset(0xDE525E1D): _keybearer_hint(53),
+        'Agon Wastes/Central Mining Station/Keybearer Corpse (J-Stl)': _keybearer_hint(45),
+        'Agon Wastes/Main Reactor/Keybearer Corpse (B-Stl)': _keybearer_hint(53),
         # Torvus
-        LogbookAsset(0x58C62CB3): _keybearer_hint(68),
-        LogbookAsset(0x939AFF16): _keybearer_hint(91),
+        'Torvus Bog/Torvus Lagoon/Keybearer Corpse (S-Dly)': _keybearer_hint(68),
+        'Torvus Bog/Catacombs/Keybearer Corpse (G-Sch)': _keybearer_hint(91),
         # Sanctuary
-        LogbookAsset(0x62CC4DC3): _keybearer_hint(117),
-        LogbookAsset(0xA9909E66): _keybearer_hint(106),
+        'Sanctuary Fortress/Sanctuary Entrance/Keybearer Corpse (S-Jrs)': _keybearer_hint(117),
+        'Sanctuary Fortress/Dynamo Works/Keybearer Corpse (C-Rch)': _keybearer_hint(106),
 
         # Locations with hints
-        LogbookAsset(1041207119): _light_suit_location_hint(24),
-        LogbookAsset(4115881194): _guardian_hint(43),
-        LogbookAsset(1948976790): _guardian_hint(79),
-        LogbookAsset(3212301619): _guardian_hint(115),
+        'Sanctuary Fortress/Sanctuary Energy Controller/Lore Scan': _light_suit_location_hint(24),
+        'Sanctuary Fortress/Main Gyro Chamber/Lore Scan': _guardian_hint(43),
+        'Sanctuary Fortress/Watch Station/Lore Scan': _guardian_hint(79),
+        'Sanctuary Fortress/Main Research/Lore Scan': _guardian_hint(115),
 
         # Dark Temple hints
-        LogbookAsset(67497535): Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.AGON_WASTES),
-        LogbookAsset(4072633400): Hint(HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG),
-        LogbookAsset(0x82919C91): Hint(HintType.RED_TEMPLE_KEY_SET, None,
-                                       dark_temple=HintDarkTemple.SANCTUARY_FORTRESS),
+        'Sanctuary Fortress/Hall of Combat Mastery/Lore Scan': Hint(
+            HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.AGON_WASTES
+        ),
+        'Sanctuary Fortress/Sanctuary Entrance/Lore Scan': Hint(
+            HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.TORVUS_BOG
+        ),
+        'Torvus Bog/Catacombs/Lore Scan': Hint(
+            HintType.RED_TEMPLE_KEY_SET, None, dark_temple=HintDarkTemple.SANCTUARY_FORTRESS
+        ),
 
         # Jokes
-        LogbookAsset(0x49CD4F34): Hint(HintType.JOKE, None),
-        LogbookAsset(0x9F94AC29): Hint(HintType.JOKE, None),
+        'Torvus Bog/Gathering Hall/Lore Scan': Hint(HintType.JOKE, None),
+        'Torvus Bog/Training Chamber/Lore Scan': Hint(HintType.JOKE, None),
+    }
+    expected = {
+        NodeIdentifier.from_string(ident_s): hint
+        for ident_s, hint in expected.items()
     }
 
     # Run
@@ -81,4 +90,3 @@ async def test_add_default_hints_to_patches(echoes_game_description, empty_patch
     # Assert
     rng.shuffle.assert_has_calls([call(ANY), call(ANY)])
     assert result.hints == expected
-

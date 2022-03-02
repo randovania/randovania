@@ -2,7 +2,9 @@ import copy
 from typing import Iterator, List
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.world.node import Node, ResourceNode, PickupNode
+from randovania.game_description.world.node import Node, NodeContext
+from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver.state import State
 
@@ -21,7 +23,7 @@ def filter_pickup_nodes(nodes: Iterator[Node]) -> Iterator[PickupNode]:
 
 def _filter_collectable(resource_nodes: Iterator[ResourceNode], reach: GeneratorReach) -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.can_collect(reach.context_for(resource_node)):
+        if resource_node.can_collect(reach.node_context()):
             yield resource_node
 
 
@@ -33,9 +35,10 @@ def _filter_reachable(nodes: Iterator[Node], reach: GeneratorReach) -> Iterator[
 
 def _filter_out_dangerous_actions(resource_nodes: Iterator[ResourceNode],
                                   game: GameDescription,
+                                  context: NodeContext,
                                   ) -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.resource() not in game.dangerous_resources:
+        if resource_node.resource(context) not in game.dangerous_resources:
             yield resource_node
 
 
@@ -43,7 +46,8 @@ def _get_safe_resources(reach: GeneratorReach) -> Iterator[ResourceNode]:
     yield from _filter_reachable(
         _filter_out_dangerous_actions(
             collectable_resource_nodes(reach.safe_nodes, reach),
-            reach.game),
+            reach.game,
+            reach.node_context()),
         reach
     )
 
@@ -68,7 +72,7 @@ def collect_all_safe_resources_in_reach(reach: GeneratorReach) -> None:
             break
 
         for action in actions:
-            if action.can_collect(reach.context_for(action)):
+            if action.can_collect(reach.node_context()):
                 # assert reach.is_safe_node(action)
                 reach.advance_to(reach.state.act_on_node(action), is_safe=True)
 

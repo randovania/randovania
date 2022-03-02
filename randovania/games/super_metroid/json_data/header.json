@@ -1,5 +1,5 @@
 {
-    "schema_version": 8,
+    "schema_version": 9,
     "game": "super_metroid",
     "resource_database": {
         "items": {
@@ -365,7 +365,6 @@
                 "extra": {},
                 "items": {
                     "Normal Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -373,74 +372,101 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Missile Door": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 5,
-                                            "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
                                         }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Super Missile Door": {
-                        "lock_type": 1,
-                        "extra": {},
-                        "requirement": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Supers",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    },
-                    "Power Bomb Door": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Supers",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
+                    },
+                    "Power Bomb Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Morph",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "PowerBomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "PowerBomb",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Permanently Locked": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -448,10 +474,10 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Draygon Defeated": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -461,10 +487,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Kraid Defeated": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -474,10 +500,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Wrecked Ship Powered": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -487,10 +513,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked after Wrecked Ship Powered": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -500,10 +526,10 @@
                                 "amount": 1,
                                 "negate": true
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Golden Torizo Defeated": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -513,10 +539,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Metal Pirates Defeated": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -526,10 +552,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Ridley Defeated": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -539,10 +565,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Metroid Room 1 Cleared": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -552,10 +578,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Metroid Room 2 Cleared": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -565,10 +591,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Metroid Room 3 Cleared": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -578,10 +604,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Locked until Metroid Room 4 Cleared": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -591,7 +617,8 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             },
@@ -600,7 +627,6 @@
                 "extra": {},
                 "items": {
                     "Morph Ball Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -610,7 +636,8 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             },
@@ -619,7 +646,6 @@
                 "extra": {},
                 "items": {
                     "Open Passage": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -627,10 +653,10 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Not Determined": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -638,7 +664,8 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             }
