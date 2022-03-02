@@ -10,12 +10,17 @@ from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, PickupNode, PlayerShipNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.node_provider import NodeProvider
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 
 
-class WorldList:
+class WorldList(NodeProvider):
     worlds: List[World]
 
     _nodes_to_area: Dict[Node, Area]

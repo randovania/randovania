@@ -10,7 +10,7 @@ from randovania.game_description.resources.pickup_entry import (PickupEntry, Con
                                                                 ResourceConversion)
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceGainTuple
-from randovania.game_description.world.node import PickupNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource

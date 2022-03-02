@@ -26,10 +26,17 @@ from randovania.game_description.world.dock import (
     DockWeakness, DockType, DockWeaknessDatabase, DockLockType
 )
 from randovania.game_description.world.node import (
-    GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
-    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
+    GenericNode, Node,
+    NodeLocation
 )
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -293,7 +300,6 @@ class WorldReader:
             elif node_type == "configurable_node":
                 return ConfigurableNode(
                     **generic_args,
-                    self_identifier=NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
                 )
 
             elif node_type == "logbook":

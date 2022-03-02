@@ -13,7 +13,9 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeaknessDatabase
-from randovania.game_description.world.node import ResourceNode, GenericNode, ConfigurableNode
+from randovania.game_description.world.node import GenericNode
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -165,7 +167,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     node_a = GenericNode("Node A", True, None, "", {}, 0)
     node_b = GenericNode("Node B", True, None, "", {}, 1)
     node_c = GenericNode("Node C", True, None, "", {}, 2)
-    translator_node = ConfigurableNode("Translator Gate", True, None, "", {}, 3, translator_identif)
+    translator_node = ConfigurableNode("Translator Gate", True, None, "", {}, 3)
 
     world_list = WorldList([
         World("Test World", [

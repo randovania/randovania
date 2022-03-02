@@ -15,8 +15,14 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
-from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    ConfigurableNode, LogbookNode, LoreType, PlayerShipNode
+from randovania.game_description.world.node import Node, GenericNode
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.lib import frozen_lib
@@ -243,7 +249,7 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
         data.update(common_fields)
-        data["event_name"] = node.resource().short_name
+        data["event_name"] = node.event.short_name
 
     elif isinstance(node, ConfigurableNode):
         data["node_type"] = "configurable_node"

@@ -23,7 +23,11 @@ from randovania.game_description.resources.resource_info import add_resource_gai
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node, ResourceNode, ConfigurableNode, TeleporterNode, DockNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
@@ -495,7 +499,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
                         resource_node = typing.cast(ResourceNode, node)
-                        node_item.setDisabled(not resource_node.can_collect(state.context_for(resource_node)))
+                        node_item.setDisabled(not resource_node.can_collect(state.node_context()))
                         node_item.setCheckState(0, QtCore.Qt.Checked if is_collected else QtCore.Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
@@ -698,10 +702,16 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
             self._initial_state.node = world_list.resolve_teleporter_connection(area_location)
 
+        def is_resource_node_present(node: Node, state: State):
+            if node.is_resource_node:
+                assert isinstance(node, ResourceNode)
+                return node.resource(state.node_context()) in self._initial_state.resources
+            return False
+
         self._starting_nodes = {
             node
             for node in world_list.all_nodes
-            if node.is_resource_node and node.resource() in self._initial_state.resources
+            if is_resource_node_present(node, self._initial_state)
         }
 
     def _change_item_quantity(self, pickup: PickupEntry, use_quantity_as_bool: bool, quantity: int):
@@ -858,7 +868,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.context_for(node)),
+            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.node_context()),
                                                    state.resources)
 
         return state
