@@ -10,7 +10,7 @@ from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node
+from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_provider import NodeProvider
@@ -147,59 +147,7 @@ class WorldList(NodeProvider):
 
         return node
 
-    def connections_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, Requirement]]:
-        """
-        Queries all nodes from other areas you can go from a given node. Aka, doors and teleporters
-        :param patches:
-        :param node:
-        :return: Generator of pairs Node + Requirement for going to that node
-        """
-        if isinstance(node, DockNode):
-            try:
-                target_node = self.resolve_dock_node(node, patches)
-                if target_node is None:
-                    return
-
-                forward_weakness = patches.dock_weakness.get(self.identifier_for_node(node),
-                                                             node.default_dock_weakness)
-                requirement = forward_weakness.requirement
-
-                # TODO: only add requirement if the blast shield has not been destroyed yet
-
-                if isinstance(target_node, DockNode):
-                    # TODO: Target node is expected to be a dock. Should this error?
-                    back_weakness = patches.dock_weakness.get(self.identifier_for_node(target_node),
-                                                              target_node.default_dock_weakness)
-                    if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
-                        requirement = RequirementAnd([requirement, back_weakness.requirement])
-
-                    elif back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE:
-                        # FIXME: this should check if we've already openend the back
-                        if back_weakness != forward_weakness:
-                            requirement = Requirement.impossible()
-
-                yield target_node, requirement
-
-            except ValueError:
-                # TODO: fix data to not having docks pointing to nothing
-                yield None, Requirement.impossible()
-
-        if isinstance(node, TeleporterNode):
-            try:
-                target_node = self.resolve_teleporter_node(node, patches)
-                if target_node is not None:
-                    yield target_node, Requirement.trivial()
-            except IndexError:
-                # TODO: fix data to not have teleporters pointing to areas with invalid default_node_index
-                logging.error("Teleporter is broken!", node)
-                yield None, Requirement.impossible()
-
-        if isinstance(node, PlayerShipNode):
-            for other_node in self.all_nodes:
-                if isinstance(other_node, PlayerShipNode) and other_node != node:
-                    yield other_node, other_node.is_unlocked
-
-    def area_connections_from(self, node: Node) -> Iterator[Tuple[Node, Requirement]]:
+    def area_connections_from(self, node: Node) -> Iterator[tuple[Node, Requirement]]:
         """
         Queries all nodes from the same area you can go from a given node.
         :param node:
@@ -209,14 +157,14 @@ class WorldList(NodeProvider):
         for target_node, requirements in area.connections[node].items():
             yield target_node, requirements
 
-    def potential_nodes_from(self, node: Node, patches: GamePatches) -> Iterator[Tuple[Node, Requirement]]:
+    def potential_nodes_from(self, node: Node, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
         """
         Queries all nodes you can go from a given node, checking doors, teleporters and other nodes in the same area.
         :param node:
-        :param patches:
+        :param context:
         :return: Generator of pairs Node + Requirement for going to that node
         """
-        yield from self.connections_from(node, patches)
+        yield from node.connections_from(context)
         yield from self.area_connections_from(node)
 
     def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,

@@ -1,5 +1,5 @@
 {
-    "schema_version": 8,
+    "schema_version": 9,
     "game": "prime2",
     "resource_database": {
         "items": {
@@ -106,7 +106,6 @@
                 "extra": {},
                 "items": {
                     "Normal Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -122,16 +121,26 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Permanently Locked": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": []
+                                }
                             }
                         }
                     }
@@ -142,7 +151,6 @@
                 "extra": {},
                 "items": {
                     "Scan Portal": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -158,7 +166,8 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             },
@@ -172,7 +181,6 @@
                 "extra": {},
                 "items": {
                     "Open Passage": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -180,10 +188,10 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Not Determined": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -191,7 +199,8 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             }
@@ -276,13 +285,15 @@
                             "extra": {
                                 "dock_index": 0
                             },
-                            "destination": {
+                            "dock_type": "door",
+                            "default_connection": {
                                 "world_name": "Temple Grounds",
                                 "area_name": "Service Access",
                                 "node_name": "Door to Landing Site"
                             },
-                            "dock_type": "door",
-                            "dock_weakness": "Normal Door",
+                            "default_dock_weakness": "Normal Door",
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
                             "connections": {
                                 "Save Station": {
                                     "type": "or",
@@ -319,13 +330,15 @@
                             "extra": {
                                 "dock_index": 0
                             },
-                            "destination": {
+                            "dock_type": "door",
+                            "default_connection": {
                                 "world_name": "Temple Grounds",
                                 "area_name": "Landing Site",
                                 "node_name": "Door to Service Access"
                             },
-                            "dock_type": "door",
-                            "dock_weakness": "Normal Door",
+                            "default_dock_weakness": "Normal Door",
+                            "override_default_open_requirement": null,
+                            "override_default_lock_requirement": null,
                             "connections": {}
                         },
                         "Luminoth Lore": {

@@ -7,7 +7,7 @@ from randovania.game_description.resources.resource_info import convert_resource
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
-from randovania.game_description.world.node import Node
+from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
@@ -152,8 +152,15 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
     for node in game.world_list.all_nodes:
         graph.add_node(node)
 
+    context = NodeContext(
+        patches=game.create_game_patches(),
+        current_resources={},
+        database=game.resource_database,
+        node_provider=game.world_list,
+    )
+
     for node in game.world_list.all_nodes:
-        for other, req in game.world_list.potential_nodes_from(node, game.create_game_patches()):
+        for other, req in game.world_list.potential_nodes_from(node, context):
             if req != Requirement.impossible():
                 graph.add_edge(node, other)
 

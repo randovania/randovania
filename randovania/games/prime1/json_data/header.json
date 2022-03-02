@@ -1,5 +1,5 @@
 {
-    "schema_version": 8,
+    "schema_version": 9,
     "game": "prime1",
     "resource_database": {
         "items": {
@@ -1195,7 +1195,6 @@
                 "extra": {},
                 "items": {
                     "Normal Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -1243,59 +1242,68 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Ice Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Ice Beam"
-                        }
+                        },
+                        "lock": null
                     },
                     "Wave Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Wave Beam"
-                        }
+                        },
+                        "lock": null
                     },
                     "Plasma Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Plasma Beam"
-                        }
+                        },
+                        "lock": null
                     },
                     "Missile Blast Shield": {
-                        "lock_type": 2,
                         "extra": {},
                         "requirement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 1,
-                                            "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-blast",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Any Beam"
                                         }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Any Beam"
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Permanently Locked": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -1303,7 +1311,8 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             },
@@ -1312,7 +1321,6 @@
                 "extra": {},
                 "items": {
                     "Morph Ball Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -1418,7 +1426,8 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             },
@@ -1427,7 +1436,6 @@
                 "extra": {},
                 "items": {
                     "Open Passage": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -1515,10 +1523,10 @@
                                     }
                                 ]
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Closed Passage": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -1526,10 +1534,10 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Not Determined": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -1537,7 +1545,8 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             }

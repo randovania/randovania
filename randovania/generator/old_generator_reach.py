@@ -93,7 +93,7 @@ class OldGeneratorReach(GeneratorReach):
         extra_requirement = _extra_requirement_for_node(self._game, self.node_context(), node)
         requirement_to_leave = node.requirement_to_leave(self._state.node_context())
 
-        for target_node, requirement in self._game.world_list.potential_nodes_from(node, self.state.patches):
+        for target_node, requirement in self._game.world_list.potential_nodes_from(node, self.node_context()):
             if target_node is None:
                 continue
 

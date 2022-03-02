@@ -1,5 +1,5 @@
 {
-    "schema_version": 8,
+    "schema_version": 9,
     "game": "prime3",
     "resource_database": {
         "items": {
@@ -1656,7 +1656,6 @@
                 "extra": {},
                 "items": {
                     "Normal Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -1664,10 +1663,10 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Plasma Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -1677,10 +1676,10 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Nova Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -1690,104 +1689,140 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Missile Blast Shield": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Missile",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "Missile",
+                                    "amount": 1,
+                                    "negate": false
+                                }
                             }
                         }
                     },
                     "Ice Missile Blast Shield": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 1,
-                                            "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "IceMissile",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "IceMissile",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Seeker Missiles Blast Shield": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 5,
-                                            "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 5,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Seekers",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Seekers",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Grapple Lasso Blast Shield": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "GrappleBeamPull",
-                                            "amount": 1,
-                                            "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "GrappleBeamPull",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
                                         }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     },
                     "Permanently Locked": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -1795,52 +1830,62 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Ice Missile Blast Shield (Vulnerable to Missiles)": {
-                        "lock_type": 1,
                         "extra": {},
                         "requirement": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Missile",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "IceMissile",
-                                                        "amount": 1,
-                                                        "negate": false
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "or",
+                                            "data": {
+                                                "comment": null,
+                                                "items": [
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "items",
+                                                            "name": "IceMissile",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
+                                                    },
+                                                    {
+                                                        "type": "resource",
+                                                        "data": {
+                                                            "type": "tricks",
+                                                            "name": "Knowledge",
+                                                            "amount": 1,
+                                                            "negate": false
+                                                        }
                                                     }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                                ]
+                                            }
                                         }
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         }
                     }
@@ -1851,7 +1896,6 @@
                 "extra": {},
                 "items": {
                     "Morph Ball Door": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "resource",
@@ -1861,7 +1905,8 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             },
@@ -1870,7 +1915,6 @@
                 "extra": {},
                 "items": {
                     "Open Passage": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "and",
@@ -1878,10 +1922,10 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     },
                     "Not Determined": {
-                        "lock_type": 0,
                         "extra": {},
                         "requirement": {
                             "type": "or",
@@ -1889,7 +1933,8 @@
                                 "comment": null,
                                 "items": []
                             }
-                        }
+                        },
+                        "lock": null
                     }
                 }
             }

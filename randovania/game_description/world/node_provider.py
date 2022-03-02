@@ -74,3 +74,14 @@ class NodeProvider:
             world_name=self.nodes_to_world(node).name,
             area_name=self.nodes_to_area(node).name,
         )
+
+    def default_node_for_area(self, connection: AreaIdentifier) -> Node:
+        area = self.area_by_area_location(connection)
+        if area.default_node is None:
+            raise IndexError("Area '{}' does not have a default_node".format(area.name))
+
+        node = area.node_with_name(area.default_node)
+        if node is None:
+            raise IndexError("Area '{}' default_node ({}) is missing".format(area.name, area.default_node))
+
+        return node

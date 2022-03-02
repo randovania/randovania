@@ -58,6 +58,14 @@ class Node:
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         return Requirement.trivial()
 
+    def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
+        """
+        Queries all nodes from other areas you can go from a given node. Aka, doors and teleporters
+        :param context:
+        :return: Generator of pairs Node + Requirement for going to that node
+        """
+        yield from []
+
 
 @dataclasses.dataclass(frozen=True)
 class GenericNode(Node):
