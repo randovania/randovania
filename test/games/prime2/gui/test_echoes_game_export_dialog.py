@@ -66,16 +66,26 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     assert window.output_file_edit.text() == ""
 
 
-def test_save_options(skip_qtbot, tmp_path):
+@pytest.mark.parametrize("is_prime_multi", [False, True])
+def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
     options = Options(tmp_path)
-    window = EchoesGameExportDialog(options, {}, "MyHash", True, [])
+    games = [RandovaniaGame.METROID_PRIME_ECHOES]
+    if is_prime_multi:
+        games.append(RandovaniaGame.METROID_PRIME)
+    window = EchoesGameExportDialog(options, {}, "MyHash", True, games)
     window.output_file_edit.setText("somewhere/game.iso")
+    if is_prime_multi:
+        skip_qtbot.mouseClick(window.prime_models_check, QtCore.Qt.LeftButton)
+        window.prime_file_edit.setText("somewhere/prime.iso")
 
     # Run
     window.save_options()
 
     # Assert
     assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).output_directory == Path("somewhere")
+    if is_prime_multi:
+        assert options.options_for_game(RandovaniaGame.METROID_PRIME).input_path == Path("somewhere/prime.iso")
+        assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).use_external_models == {RandovaniaGame.METROID_PRIME}
 
 
 def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
@@ -155,16 +165,18 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_extern
 
     options = MagicMock()
     options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.side_effect = [EchoesPerGameOptions(
-        cosmetic_patches=EchoesCosmeticPatches.default(),
-        input_path=tmp_path.joinpath("input/game.iso"),
-        output_directory=tmp_path.joinpath("output"),
-        use_external_models=models,
-    ),
-                                            PrimePerGameOptions(
-                                                cosmetic_patches=PrimeCosmeticPatches.default(),
-                                                input_path=prime_path,
-                                            )]
+    options.options_for_game.side_effect = [
+        EchoesPerGameOptions(
+            cosmetic_patches=EchoesCosmeticPatches.default(),
+            input_path=tmp_path.joinpath("input/game.iso"),
+            output_directory=tmp_path.joinpath("output"),
+            use_external_models=models,
+        ),
+        PrimePerGameOptions(
+            cosmetic_patches=PrimeCosmeticPatches.default(),
+            input_path=prime_path,
+        )
+    ]
     window = EchoesGameExportDialog(options, {}, "MyHash", True, games)
 
     # Run
@@ -181,3 +193,4 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_extern
         prime_path=prime_path,
         use_prime_models=is_prime_multi and use_external_models,
     )
+
