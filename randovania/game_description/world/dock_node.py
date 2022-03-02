@@ -54,12 +54,23 @@ class DockNode(Node):
         if target_identifier is None:
             # Explicitly connected to nothing.
             return
+
         target_node = provider.node_by_identifier(target_identifier)
 
         forward_weakness = patches.dock_weakness.get(self_identifier, self.default_dock_weakness)
-        reqs = [forward_weakness.requirement]
+
+        reqs = []
+
+        if forward_weakness is self.default_dock_weakness and self.override_default_open_requirement is not None:
+            reqs.append(self.override_default_open_requirement)
+        else:
+            reqs.append(forward_weakness.requirement)
+
         if forward_weakness.lock is not None:
-            reqs.append(forward_weakness.lock.requirement)
+            if forward_weakness is self.default_dock_weakness and self.override_default_lock_requirement is not None:
+                reqs.append(self.override_default_lock_requirement)
+            else:
+                reqs.append(forward_weakness.lock.requirement)
 
         # TODO: only add requirement if the blast shield has not been destroyed yet
 
