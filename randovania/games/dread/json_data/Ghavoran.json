@@ -9384,7 +9384,24 @@
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
-                    "connections": {}
+                    "connections": {
+                        "Before Golzuna": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Start Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Before Golzuna": {
                     "node_type": "generic",
@@ -9818,15 +9835,6 @@
                         ]
                     },
                     "connections": {
-                        "Door to Cross Bomb Tutorial": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "ElunReleaseX",
-                                "amount": 1,
-                                "negate": true
-                            }
-                        },
                         "Before Golzuna": {
                             "type": "resource",
                             "data": {
@@ -9850,6 +9858,44 @@
                     "extra": {},
                     "connections": {
                         "Door to Cross Bomb Tutorial": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Dock from Above Golzuna": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8073.47,
+                        "y": 6064.85,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Ghavoran",
+                        "area_name": "Above Golzuna",
+                        "node_name": "Dock to Golzuna Arena"
+                    },
+                    "default_dock_weakness": "Blocked Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Before Golzuna": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "ElunReleaseX",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "Start Point": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12541,6 +12587,27 @@
                                 "amount": 1,
                                 "negate": false
                             }
+                        },
+                        "Dock to Golzuna Arena": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Can SSC"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "SSC",
+                                            "amount": 4,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -12610,6 +12677,27 @@
                             }
                         }
                     }
+                },
+                "Dock to Golzuna Arena": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 8073.47,
+                        "y": 6064.85,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "other",
+                    "default_connection": {
+                        "world_name": "Ghavoran",
+                        "area_name": "Golzuna Arena",
+                        "node_name": "Dock from Above Golzuna"
+                    },
+                    "default_dock_weakness": "Open Passage",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {}
                 }
             }
         },
