@@ -53,6 +53,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: The error message when the client is incompatible is now properly displayed.
 - Fixed: Player inventory is now properly sent to the server in multiworld sessions.
 
+
+### Metroid Prime
+
+#### Patcher Changes
+
+- Fixed: Scan visor and X-Ray not displaying properly after taking an elevator when combat visor is shuffled.
+
+
 ## [4.1.0] - 2022-03-01
 
 - Added: /randovania-faq command was added to the Discord bot, which sends FAQ messages.
