@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Patcher Changes
 
-- Nothing.
+- Fixed: Scan visor and X-Ray not displaying properly after taking an elevator when combat visor is shuffled.
 
 #### Logic Database
 
