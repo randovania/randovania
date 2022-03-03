@@ -11,8 +11,8 @@
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
-                        "x": 87.35632183908046,
-                        "y": 199.42528735632183,
+                        "x": 305.34759358288767,
+                        "y": 194.6524064171123,
                         "z": 0
                     },
                     "description": "",
@@ -57,6 +57,34 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Explosive Depot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Back-Only Lock Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Blue Key Room (Exit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Door to Blue Key Room (Entrance)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -64,8 +92,8 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 195.4022988505747,
-                        "y": 92.5287356321839,
+                        "x": 61.74306734578382,
+                        "y": 206.22524052065646,
                         "z": 0
                     },
                     "description": "",
@@ -98,7 +126,7 @@
                         "area_name": "Boss Arena",
                         "node_name": "Door to Starting Area"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Explosive Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -115,14 +143,130 @@
                     "node_type": "pickup",
                     "heal": false,
                     "coordinates": {
-                        "x": 188.51,
-                        "y": 301.72,
-                        "z": 0.0
+                        "x": 134.22459893048128,
+                        "y": 314.0819964349376,
+                        "z": 0
                     },
                     "description": "",
                     "extra": {},
                     "pickup_index": 1,
                     "major_location": false,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Explosive Depot": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 365.95,
+                        "y": 383.6,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Explosive Depot",
+                        "node_name": "Door to Starting Area"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Back-Only Lock Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 236.79308050565535,
+                        "y": 382.63473053892216,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Back-Only Lock Room",
+                        "node_name": "Door to Starting Area"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Blue Key Room (Exit)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 203.2258064516129,
+                        "y": 36.44595359366156,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Blue Key Room",
+                        "node_name": "Door to Starting Area (Exit)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Blue Key Room (Entrance)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 379.7962648556876,
+                        "y": 12.676853423882278,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Blue Key Room",
+                        "node_name": "Door to Starting Area (Entrance)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Spawn Point": {
                             "type": "and",
@@ -138,7 +282,9 @@
         "Boss Arena": {
             "default_node": null,
             "valid_starting_location": false,
-            "extra": {},
+            "extra": {
+                "map_name": "Square"
+            },
             "nodes": {
                 "Door to Starting Area": {
                     "node_type": "dock",
@@ -235,6 +381,269 @@
                     "event_name": "Boss",
                     "connections": {
                         "Door to Starting Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Explosive Depot": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Square"
+            },
+            "nodes": {
+                "Door to Starting Area": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 116.96052339764915,
+                        "y": 15.080949212685738,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Starting Area",
+                        "node_name": "Door to Explosive Depot"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Pickup (Explosive)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Explosive)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 121.95054335772899,
+                        "y": 216.89953426480372,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 2,
+                    "major_location": true,
+                    "connections": {
+                        "Door to Starting Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Back-Only Lock Room": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Square"
+            },
+            "nodes": {
+                "Door to Starting Area": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 118.90108671545798,
+                        "y": 13.972055888223537,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Starting Area",
+                        "node_name": "Door to Back-Only Lock Room"
+                    },
+                    "default_dock_weakness": "Back-Only Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Event - Key Switch 1": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Key Switch 1": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 116.52131782945736,
+                        "y": 204.33624031007753,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "KeySwitch1",
+                    "connections": {
+                        "Door to Starting Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Blue Key Room": {
+            "default_node": "Spawn Point",
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Square"
+            },
+            "nodes": {
+                "Door to Starting Area (Exit)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 62.983399358611585,
+                        "y": 234.64912280701753,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Starting Area",
+                        "node_name": "Door to Blue Key Room (Exit)"
+                    },
+                    "default_dock_weakness": "Blue Key Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Starting Area (Entrance)": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 204.25298179535466,
+                        "y": 213.27683615819214,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Starting Area",
+                        "node_name": "Door to Blue Key Room (Entrance)"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Key Switch 2": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 62.22536095417451,
+                        "y": 74.38794726930325,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "event_name": "KeySwitch2",
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Blue Key)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 157.17200251098555,
+                        "y": 97.92843691148781,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "pickup_index": 4,
+                    "major_location": true,
+                    "connections": {
+                        "Spawn Point": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Spawn Point": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 131.27746390458253,
+                        "y": 156.7796610169492,
+                        "z": 0
+                    },
+                    "description": "",
+                    "extra": {},
+                    "connections": {
+                        "Door to Starting Area (Exit)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Event - Key Switch 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Pickup (Blue Key)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
