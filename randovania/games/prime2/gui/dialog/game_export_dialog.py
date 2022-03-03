@@ -187,7 +187,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
 
     # Prime input
     def _on_prime_file_button(self):
-        prime_file = prompt_for_input_file(self, self.prime_file, self.prime_file_edit, ["iso"])
+        prime_file = prompt_for_input_file(self, self.prime_file_edit, ["iso"])
         if prime_file is not None:
             self.prime_file_edit.setText(str(prime_file.absolute()))
 
