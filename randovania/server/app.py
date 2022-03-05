@@ -114,6 +114,10 @@ def create_app():
             app.logger.info(f"Client {sid} at {environ['REMOTE_ADDR']} ({forwarded_for}) with "
                             f"version {client_app_version} connected.")
 
+        except ConnectionRefusedError:
+            # Do not wrap if it's already a ConnectionRefusedError
+            raise
+
         except Exception as e:
             logging.exception(f"Unknown exception when testing the client's headers: {e}")
             raise ConnectionRefusedError(f"Unable to check if request is valid: {e}.\n"
