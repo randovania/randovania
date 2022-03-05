@@ -4,10 +4,20 @@ from randovania.lib.construct_lib import OptionalValue
 
 BinStr = CString("utf-8")
 
-BinaryInventory = PrefixedArray(
+OldBinaryInventory = PrefixedArray(
     VarInt,
     Struct(
         index=VarInt,
+        amount=VarInt,
+        capacity=VarInt,
+    )
+)
+
+
+BinaryInventory = PrefixedArray(
+    VarInt,
+    Struct(
+        name=BinStr,
         amount=VarInt,
         capacity=VarInt,
     )
