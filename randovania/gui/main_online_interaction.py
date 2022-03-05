@@ -1,3 +1,4 @@
+import asyncio
 from typing import Optional
 
 from PySide2 import QtWidgets
@@ -6,7 +7,7 @@ from qasync import asyncSlot
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.game_session_window import GameSessionWindow
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
-from randovania.gui.lib import common_qt_lib, async_dialog
+from randovania.gui.lib import common_qt_lib, async_dialog, wait_dialog
 from randovania.gui.lib.qt_network_client import handle_network_errors, QtNetworkClient
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.gui.online_game_list_window import GameSessionBrowserDialog
@@ -20,18 +21,15 @@ async def ensure_logged_in(parent: Optional[QtWidgets.QWidget], network_client: 
         return True
 
     if network_client.connection_state.is_disconnected:
-        message_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.NoIcon, "Connecting",
-                                            "Connecting to server...", QtWidgets.QMessageBox.Cancel,
-                                            parent)
-        common_qt_lib.set_default_window_icon(message_box)
-
-        connecting = network_client.connect_to_server()
-        message_box.rejected.connect(connecting.cancel)
-        message_box.show()
         try:
-            await connecting
-        finally:
-            message_box.close()
+            await wait_dialog.cancellable_wait(
+                parent,
+                network_client.connect_to_server(),
+                "Connecting",
+                "Connecting to server...",
+            )
+        except asyncio.CancelledError:
+            return False
 
     if network_client.current_user is None:
         await async_dialog.execute_dialog(LoginPromptDialog(network_client))
@@ -89,11 +87,22 @@ class OnlineInteractions(QtWidgets.QWidget):
 
         network_client = self.network_client
         browser = GameSessionBrowserDialog(network_client)
-        await browser.refresh()
+
+        try:
+            await wait_dialog.cancellable_wait(
+                self,
+                asyncio.ensure_future(browser.refresh()),
+                "Communicating",
+                "Requesting the session list...",
+            )
+        except asyncio.CancelledError:
+            return
+
         if await async_dialog.execute_dialog(browser) == browser.Accepted:
             self.game_session_window = await GameSessionWindow.create_and_update(
-                network_client, common_qt_lib.get_game_connection(), self.preset_manager,
-                self.window_manager, self.options)
+                network_client, common_qt_lib.get_game_connection(),
+                self.preset_manager, self.window_manager, self.options,
+            )
             if self.game_session_window is not None:
                 self.game_session_window.show()
 

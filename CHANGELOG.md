@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: The game details window now displays the Randovania version the game was generated with. 
 - Added: You can now import a game layout/spoiler file in multiworld sessions. 
+- Changed: A popup shows up while waiting for the game session list.
 - Fixed: The error message when the client is incompatible is now properly displayed.
 - Fixed: Player inventory is now properly sent to the server in multiworld sessions.
 
