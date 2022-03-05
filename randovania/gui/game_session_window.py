@@ -215,7 +215,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.generate_game_without_spoiler_action = QtWidgets.QAction("Generate without spoiler",
                                                                       self.background_process_menu)
         self.import_permalink_action = QtWidgets.QAction("Import permalink", self.background_process_menu)
-        self.import_layout_action = QtGui.QAction("Import game/spoiler", self.background_process_menu)
+        self.import_layout_action = QtWidgets.QAction("Import game/spoiler", self.background_process_menu)
 
         self.background_process_menu.addAction(self.generate_game_with_spoiler_action)
         self.background_process_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
