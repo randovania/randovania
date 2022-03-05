@@ -18,6 +18,8 @@ class MajorItem:
     broad_category: ItemCategory
     model_name: str
     progression: Tuple[str, ...]
+    default_shuffled_count: int
+    default_starting_count: int
     ammo_index: Tuple[str, ...] = tuple()
     unlocks_ammo: bool = False
     hide_from_gui: bool = False
@@ -42,6 +44,8 @@ class MajorItem:
             broad_category=item_categories[value["broad_category"]],
             model_name=value["model_name"],
             progression=frozen_lib.wrap(value["progression"]),
+            default_shuffled_count=value["default_shuffled_count"],
+            default_starting_count=value["default_starting_count"],
             ammo_index=frozen_lib.wrap(value.get("ammo", [])),
             unlocks_ammo=value.get("unlocks_ammo", False),
             hide_from_gui=value.get("hide_from_gui", False),
@@ -60,6 +64,8 @@ class MajorItem:
             "broad_category": self.broad_category.name,
             "model_name": self.model_name,
             "progression": frozen_lib.unwrap(self.progression),
+            "default_shuffled_count": self.default_shuffled_count,
+            "default_starting_count": self.default_starting_count,
             "ammo": frozen_lib.unwrap(self.ammo_index),
             "unlocks_ammo": self.unlocks_ammo,
             "hide_from_gui": self.hide_from_gui,

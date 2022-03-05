@@ -14,9 +14,15 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness
-from randovania.game_description.world.node import Node, GenericNode, DockNode, PickupNode, TeleporterNode, EventNode, \
-    ConfigurableNode, LogbookNode, LoreType, PlayerShipNode
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness, DockLock
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.node import Node, GenericNode
+from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.lib import frozen_lib
@@ -69,6 +75,13 @@ def write_requirement(requirement: Requirement) -> dict:
 
     else:
         raise ValueError(f"Unknown requirement type: {type(requirement)}")
+
+
+def write_optional_requirement(requirement: Optional[Requirement]) -> Optional[dict]:
+    if requirement is None:
+        return None
+    else:
+        return write_requirement(requirement)
 
 
 # Resource
@@ -170,11 +183,21 @@ def write_resource_database(resource_database: ResourceDatabase):
 
 # Dock Weakness Database
 
+def write_dock_lock(dock_lock: Optional[DockLock]) -> Optional[dict]:
+    if dock_lock is None:
+        return None
+
+    return {
+        "lock_type": dock_lock.lock_type.value,
+        "requirement": write_requirement(dock_lock.requirement)
+    }
+
+
 def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
     return {
-        "lock_type": dock_weakness.lock_type.value,
         "extra": frozen_lib.unwrap(dock_weakness.extra),
-        "requirement": write_requirement(dock_weakness.requirement)
+        "requirement": write_requirement(dock_weakness.requirement),
+        "lock": write_dock_lock(dock_weakness.lock),
     }
 
 
@@ -223,9 +246,11 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, DockNode):
         data["node_type"] = "dock"
         data.update(common_fields)
-        data["destination"] = node.default_connection.as_json
         data["dock_type"] = node.dock_type.short_name
-        data["dock_weakness"] = node.default_dock_weakness.name
+        data["default_connection"] = node.default_connection.as_json
+        data["default_dock_weakness"] = node.default_dock_weakness.name
+        data["override_default_open_requirement"] = write_optional_requirement(node.override_default_open_requirement)
+        data["override_default_lock_requirement"] = write_optional_requirement(node.override_default_lock_requirement)
 
     elif isinstance(node, PickupNode):
         data["node_type"] = "pickup"
@@ -243,7 +268,7 @@ def write_node(node: Node) -> dict:
     elif isinstance(node, EventNode):
         data["node_type"] = "event"
         data.update(common_fields)
-        data["event_name"] = node.resource().short_name
+        data["event_name"] = node.event.short_name
 
     elif isinstance(node, ConfigurableNode):
         data["node_type"] = "configurable_node"

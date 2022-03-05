@@ -3,14 +3,16 @@ import dataclasses
 from typing import Optional, Tuple, Iterator
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources, \
     add_resource_gain_to_current_resources, add_resources_into_another, convert_resource_gain_to_current_resources
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import ResourceNode, Node, NodeContext
+from randovania.game_description.world.node import Node, NodeContext
+from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.game_description.world.world_list import WorldList
 
 
@@ -88,10 +90,11 @@ class State:
                 yield resource
 
     @property
-    def collected_scan_assets(self) -> Iterator[LogbookAsset]:
+    def collected_hints(self) -> Iterator[NodeIdentifier]:
         for resource, count in self.resources.items():
-            if isinstance(resource, LogbookAsset) and count > 0:
-                yield resource
+            if isinstance(resource, NodeIdentifier) and count > 0:
+                if isinstance(self.world_list.node_by_identifier(resource), LogbookNode):
+                    yield resource
 
     @property
     def collected_events(self) -> Iterator[ResourceInfo]:
@@ -124,12 +127,12 @@ class State:
         :return:
         """
 
-        if not node.can_collect(self.context_for(node)):
+        if not node.can_collect(self.node_context()):
             raise ValueError(
                 "Trying to collect an uncollectable node'{}'".format(node))
 
         new_resources = copy.copy(self.resources)
-        add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.context_for(node)),
+        add_resource_gain_to_current_resources(node.resource_gain_on_collect(self.node_context()),
                                                new_resources)
 
         energy = new_energy
@@ -193,13 +196,12 @@ class State:
             self.game_data,
         )
 
-    def context_for(self, node: Node) -> NodeContext:
+    def node_context(self) -> NodeContext:
         return NodeContext(
-            self.game_data.world_list.identifier_for_node(node),
             self.patches,
             self.resources,
-            self.game_data.world_list.all_nodes,
             self.resource_database,
+            self.game_data.world_list,
         )
 
 

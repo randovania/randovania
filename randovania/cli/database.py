@@ -220,7 +220,7 @@ def refresh_all_logic(args):
             if errors:
                 logging.warning("Integrity errors for %s:\n%s", game.long_name,
                                 "\n".join(errors))
-                if not game.data.development_state.is_stable:
+                if game.data.development_state.is_stable:
                     should_stop = True
 
     if should_stop:
@@ -367,7 +367,9 @@ def render_worlds_graph_logic(args):
     import hashlib
     import re
     import graphviz
-    from randovania.game_description.world.node import PickupNode, DockNode, TeleporterNode
+    from randovania.game_description.world.teleporter_node import TeleporterNode
+    from randovania.game_description.world.dock_node import DockNode
+    from randovania.game_description.world.pickup_node import PickupNode
 
     gd = load_game_description(args)
     dot = graphviz.Digraph(comment=gd.game.long_name)
@@ -520,7 +522,7 @@ def render_worlds_graph(sub_parsers):
 
 
 def pickups_per_area_command_logic(args):
-    from randovania.game_description.world.node import PickupNode
+    from randovania.game_description.world.pickup_node import PickupNode
     gd = load_game_description(args)
 
     for world in gd.world_list.worlds:
@@ -542,7 +544,7 @@ def rename_docks_logic(args):
     from randovania.game_description import data_writer
     from randovania.game_description import pretty_print
     from randovania.game_description.editor import Editor
-    from randovania.game_description.world.node import DockNode
+    from randovania.game_description.world.dock_node import DockNode
     from randovania.game_description import integrity_check
 
     game = RandovaniaGame(args.game)

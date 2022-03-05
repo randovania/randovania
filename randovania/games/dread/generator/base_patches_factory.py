@@ -7,7 +7,7 @@ from randovania.game_description.requirements import (
     RequirementAnd,
     ResourceRequirement,
 )
-from randovania.game_description.world.node import ConfigurableNode
+from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
 

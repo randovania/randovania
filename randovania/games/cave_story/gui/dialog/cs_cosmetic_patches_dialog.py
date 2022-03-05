@@ -1,7 +1,7 @@
 import dataclasses
 
-from PySide2.QtGui import QPixmap
-from PySide2.QtWidgets import QWidget
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QWidget
 
 from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPatches, CSSong, MusicRandoType, MyChar, \
     SongGame

@@ -1,7 +1,7 @@
 import dataclasses
 import functools
 
-from PySide2.QtWidgets import QCheckBox
+from PySide6.QtWidgets import QCheckBox
 
 from randovania.games.super_metroid.layout.super_metroid_patch_configuration import SuperPatchConfiguration
 from randovania.gui.generated.preset_patcher_super_patches_ui import Ui_PresetPatcherSuperPatches

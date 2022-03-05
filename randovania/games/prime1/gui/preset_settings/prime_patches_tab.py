@@ -1,6 +1,6 @@
 import typing
 
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.games.prime1.layout.prime_configuration import LayoutCutsceneMode
 from randovania.gui.generated.preset_prime_patches_ui import Ui_PresetPrimePatches

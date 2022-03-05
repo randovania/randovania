@@ -42,6 +42,8 @@ def _major_item_state(request, echoes_item_database, generic_item_category):
         broad_category=generic_item_category,
         model_name="Model Name",
         progression=(request.param.get("progression", "Power"),),
+        default_starting_count=0,
+        default_shuffled_count=1,
         ammo_index=request.param.get("ammo_index", ()),
         must_be_starting=True,
         original_index=None,

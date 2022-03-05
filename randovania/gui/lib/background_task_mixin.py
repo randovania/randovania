@@ -5,7 +5,7 @@ import threading
 import traceback
 from typing import Optional
 
-from PySide2.QtCore import Signal
+from PySide6.QtCore import Signal
 
 import randovania.games.prime2.patcher.csharp_subprocess
 

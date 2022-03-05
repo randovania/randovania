@@ -1,5 +1,4 @@
 from enum import unique, Enum
-from typing import Dict
 
 
 @unique
@@ -12,12 +11,11 @@ class ResourceType(str, Enum):
     MISC = "misc"
     _INDEXED = "_indexed"
     PICKUP_INDEX = "pickup_index"
-    GATE_INDEX = "gate_index"
     LOGBOOK_INDEX = "logbook_index"
-    SHIP_NODE = "ship_node"
+    NODE_IDENTIFIER = "node_identifier"
 
     @classmethod
-    def indices(cls) -> Dict["ResourceType", int]:
+    def indices(cls) -> dict["ResourceType", int]:
         return {
             ResourceType.ITEM: 0,
             ResourceType.EVENT: 1,
@@ -27,9 +25,8 @@ class ResourceType(str, Enum):
             ResourceType.MISC: 5,
             ResourceType._INDEXED: 6,
             ResourceType.PICKUP_INDEX: 7,
-            ResourceType.GATE_INDEX: 8,
             ResourceType.LOGBOOK_INDEX: 9,
-            ResourceType.SHIP_NODE: 10
+            ResourceType.NODE_IDENTIFIER: 10
         }
 
     @classmethod

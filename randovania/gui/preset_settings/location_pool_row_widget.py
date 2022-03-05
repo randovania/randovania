@@ -1,7 +1,7 @@
-from PySide2.QtCore import Signal
-from PySide2.QtWidgets import QDialog
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QDialog
 
-from randovania.game_description.world.node import PickupNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.gui.generated.widget_location_pool_row_ui import Ui_LocationPoolRowWidget
 
 

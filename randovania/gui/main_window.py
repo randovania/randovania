@@ -10,8 +10,8 @@ from functools import partial
 from pathlib import Path
 from typing import Optional, List
 
-from PySide2 import QtCore, QtWidgets, QtGui
-from PySide2.QtCore import QUrl, Signal, Qt
+from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6.QtCore import QUrl, Signal, Qt
 from qasync import asyncSlot
 
 import randovania
@@ -61,7 +61,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
     _is_preview_mode: bool = False
     _experimental_games_visible: bool = False
 
-    menu_new_version: Optional[QtWidgets.QAction] = None
+    menu_new_version: Optional[QtGui.QAction] = None
     _current_version_url: Optional[str] = None
     _options: Options
     _data_visualizer: Optional[QtWidgets.QWidget] = None
@@ -134,7 +134,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
             game_menu = QtWidgets.QMenu(self.menu_open)
             game_menu.setTitle(_t(game.long_name))
             game_menu.game = game
-            if not game.data.development_state.is_stable:
+
+            if game.data.development_state.can_view(False):
                 self.menu_open.addAction(game_menu.menuAction())
             self.game_menus.append(game_menu)
 
@@ -142,7 +143,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             game_trick_details_menu.setTitle(_t("Trick Details"))
             self._setup_trick_difficulties_menu_on_show(game_trick_details_menu, game)
 
-            game_data_visualizer_action = QtWidgets.QAction(game_menu)
+            game_data_visualizer_action = QtGui.QAction(game_menu)
             game_data_visualizer_action.setText(_t("Data Visualizer"))
             game_data_visualizer_action.triggered.connect(partial(self._open_data_visualizer_for_game, game))
 
@@ -150,7 +151,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             game_menu.addAction(game_data_visualizer_action)
 
             # Data Editor
-            action = QtWidgets.QAction(self)
+            action = QtGui.QAction(self)
             action.setText(_t(game.long_name))
             self.menu_internal.addAction(action)
             action.triggered.connect(partial(self._open_data_editor_for_game, game))
@@ -356,7 +357,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     def display_new_version(self, version: update_checker.VersionDescription):
         if self.menu_new_version is None:
-            self.menu_new_version = QtWidgets.QAction("", self)
+            self.menu_new_version = QtGui.QAction("", self)
             self.menu_new_version.triggered.connect(self.open_version_link)
             self.menu_bar.addAction(self.menu_new_version)
 
@@ -469,7 +470,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             used_difficulties = difficulties_for_trick(game, trick)
             for trick_level in enum_lib.iterate_enum(LayoutTrickLevel):
                 if trick_level in used_difficulties:
-                    difficulty_action = QtWidgets.QAction(self)
+                    difficulty_action = QtGui.QAction(self)
                     difficulty_action.setText(trick_level.long_name)
                     trick_menu.addAction(difficulty_action)
                     difficulty_action.triggered.connect(

@@ -1,4 +1,4 @@
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from randovania.games.cave_story.layout.cs_configuration import CSObjective
 from randovania.gui.generated.preset_cs_objective_ui import Ui_PresetCSObjective

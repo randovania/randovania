@@ -1,6 +1,6 @@
 import pypresence
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QDialog
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QDialog
 from qasync import asyncSlot
 
 from randovania.gui.generated.login_prompt_dialog_ui import Ui_LoginPromptDialog

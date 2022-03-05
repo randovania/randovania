@@ -7,8 +7,8 @@ from functools import partial
 from pathlib import Path
 from typing import Optional, Callable
 
-from PySide2 import QtWidgets, QtCore, QtGui
-from PySide2.QtCore import QTimer
+from PySide6 import QtWidgets, QtCore, QtGui
+from PySide6.QtCore import QTimer
 from qasync import asyncSlot
 
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
@@ -41,30 +41,30 @@ def persist_layout(history_dir: Path, description: LayoutDescription):
 
 
 class PresetMenu(QtWidgets.QMenu):
-    action_customize: QtWidgets.QAction
-    action_delete: QtWidgets.QAction
-    action_history: QtWidgets.QAction
-    action_export: QtWidgets.QAction
-    action_duplicate: QtWidgets.QAction
-    action_map_tracker: QtWidgets.QAction
-    action_required_tricks: QtWidgets.QAction
+    action_customize: QtGui.QAction
+    action_delete: QtGui.QAction
+    action_history: QtGui.QAction
+    action_export: QtGui.QAction
+    action_duplicate: QtGui.QAction
+    action_map_tracker: QtGui.QAction
+    action_required_tricks: QtGui.QAction
 
-    action_import: QtWidgets.QAction
-    action_view_deleted: QtWidgets.QAction
+    action_import: QtGui.QAction
+    action_view_deleted: QtGui.QAction
 
     preset: Optional[VersionedPreset]
 
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__(parent)
-        self.action_customize = QtWidgets.QAction(parent)
-        self.action_delete = QtWidgets.QAction(parent)
-        self.action_history = QtWidgets.QAction(parent)
-        self.action_export = QtWidgets.QAction(parent)
-        self.action_duplicate = QtWidgets.QAction(parent)
-        self.action_map_tracker = QtWidgets.QAction(parent)
-        self.action_required_tricks = QtWidgets.QAction(parent)
-        self.action_import = QtWidgets.QAction(parent)
-        self.action_view_deleted = QtWidgets.QAction(parent)
+        self.action_customize = QtGui.QAction(parent)
+        self.action_delete = QtGui.QAction(parent)
+        self.action_history = QtGui.QAction(parent)
+        self.action_export = QtGui.QAction(parent)
+        self.action_duplicate = QtGui.QAction(parent)
+        self.action_map_tracker = QtGui.QAction(parent)
+        self.action_required_tricks = QtGui.QAction(parent)
+        self.action_import = QtGui.QAction(parent)
+        self.action_view_deleted = QtGui.QAction(parent)
 
         self.action_customize.setText("Customize")
         self.action_delete.setText("Delete")
@@ -105,7 +105,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
     _logic_settings_window: Optional[CustomizePresetDialog] = None
     _has_set_from_last_selected: bool = False
     _preset_menu: PresetMenu
-    _action_delete: QtWidgets.QAction
+    _action_delete: QtGui.QAction
     _original_show_event: Callable[[QtGui.QShowEvent], None]
 
     def __init__(self, window: Ui_MainWindow, window_manager: WindowManager, options: Options):

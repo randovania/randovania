@@ -13,7 +13,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -58,7 +58,7 @@ jobs:
       -
         name: Login to DockerHub
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v1.13.0 
+        uses: docker/login-action@v1.14.0 
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -92,10 +92,10 @@ jobs:
     if: ${{ github.event_name != 'pull_request' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2.3.2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.7
 
@@ -110,7 +110,7 @@ jobs:
           known_hosts: ${{ secrets.SERVER_KNOWN_HOSTS }}
 
       - name: start deployment
-        uses: bobheadxi/deployments@v0.6.2
+        uses: bobheadxi/deployments@v1.1.0
         id: deployment
         with:
           step: start
@@ -121,7 +121,7 @@ jobs:
         run: python tools/deploy_server.py
 
       - name: update deployment status
-        uses: bobheadxi/deployments@v0.6.2
+        uses: bobheadxi/deployments@v1.1.0
         # Using 0.4.3 because of this: https://github.com/bobheadxi/deployments/issues/27
         if: always()
         with:

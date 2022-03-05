@@ -1,15 +1,10 @@
 import dataclasses
 from random import Random
-from unittest.mock import MagicMock, patch, call, ANY
+from unittest.mock import MagicMock, patch
 
 import pytest
 
-from randovania.game_description.hint import (
-    Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, HintDarkTemple,
-)
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
-from randovania.game_description.resources.logbook_asset import LogbookAsset
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier

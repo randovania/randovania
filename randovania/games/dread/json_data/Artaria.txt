@@ -85,6 +85,20 @@ Extra - asset_id: collision_camera_000
   > Tile Group (MISSILE) 2
       Can Slide
 
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_054
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
+
+> Tile Group (POWERBEAM) 3; Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_055
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
+
 > Tile Group (MISSILE) 2; Heals? False
   * Configurable Node
   * Extra - actor_name: breakabletilegroup_056
@@ -123,13 +137,7 @@ Extra - asset_id: collision_camera_000
       Wave Beam or Shoot Diffusion Beam
   > Ammo Recharge
       Any of the following:
-          All of the following:
-              Can Slide Underwater
-              Any of the following:
-                  Gravity Suit or Use Spin Boost
-                  Flash Shift and Walljump (Beginner)
-                  Water Bomb Jump (Beginner) and Lay Bomb
-                  Water Bomb Jump (Intermediate) and Lay Cross Comb
+          Can Slide Underwater
           Before Artaria - EMMI Zone Water Device and Can Slide
 
 > Tunnel to First Tutorial Access; Heals? False
@@ -180,7 +188,7 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Melee Tutorial West
       Trivial
 
 > Door to Melee Tutorial West; Heals? False
@@ -191,23 +199,21 @@ Extra - asset_id: collision_camera_001
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to First Tutorial
       Trivial
+  > Pickup (Energy Tank)
+      Can Slide
 
 > Pickup (Energy Tank); Heals? False
   * Pickup 3; Major Location? False
   * Extra - actor_name: Item_EnergyTank001
   * Extra - actor_def: actordef:actors/items/item_energytank/charclasses/item_energytank.bmsad
-  > Start Point
+  > Door to First Tutorial
       Can Slide
 
 > Start Point; Heals? False; Spawn Point
   > Door to First Tutorial
       Trivial
-  > Door to Melee Tutorial West
-      Trivial
-  > Pickup (Energy Tank)
-      Can Slide
 
 ----------------
 Melee Tutorial West
@@ -222,9 +228,9 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Navigation Station South
+      Simple IBJ or Use Spin Boost
   > Tunnel to Melee Tutorial Room
-      Trivial
-  > Start Point
       Trivial
 
 > Door to Navigation Station South; Heals? False
@@ -235,20 +241,16 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Charge Tutorial
       Trivial
 
 > Tunnel to Melee Tutorial Room; Heals? False
   * Slide Tunnel to Melee Tutorial Room/Tunnel to Melee Tutorial West
-  > Start Point
+  > Door to Charge Tutorial
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Door to Charge Tutorial
-      Trivial
-  > Door to Navigation Station South
-      Simple IBJ or Use Spin Boost
-  > Tunnel to Melee Tutorial Room
       Trivial
 
 ----------------
@@ -265,6 +267,8 @@ Extra - asset_id: collision_camera_003
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Tunnel to Melee Tutorial West
+      Trivial
   > West of Blob
       Trivial
 
@@ -356,7 +360,7 @@ Extra - asset_id: collision_camera_003
 
 > Tunnel to Melee Tutorial West; Heals? False
   * Slide Tunnel to Melee Tutorial West/Tunnel to Melee Tutorial Room
-  > West of Blob
+  > Door from Proto EMMI Introduction
       Trivial
   > Near Missile Tank 1
       Any of the following:
@@ -377,8 +381,6 @@ Extra - asset_id: collision_camera_003
       Before Artaria - Proto EMMI Blob and Can Slide
   > East of Blob
       Morph Ball and After Artaria - Proto EMMI Blob
-  > Tunnel to Melee Tutorial West
-      Trivial
   > Event - Proto EMMI Blob (West Side)
       Wave Beam or Pseudo-Wave Beam (Beginner) or Shoot Diffusion Beam
 
@@ -403,12 +405,12 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Save Station South
+      Trivial
   > Next to Water Introduction Blob
       Any of the following:
           Can Slide Underwater
           Before Artaria - Water Introduction Blob and Can Slide
-  > Start Point
-      Trivial
 
 > Door to Save Station South; Heals? False
   * Power Beam Door to Save Station South/Door to Early Cloak Room
@@ -418,8 +420,12 @@ Extra - asset_id: collision_camera_004
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Melee Tutorial Room
       Trivial
+  > Event - Early Cloak Blob
+      Wave Beam or Pseudo-Wave Beam (Intermediate) or Shoot Diffusion Beam
+  > Above Early Cloak Blob
+      After Artaria - Early Cloak Blob
 
 > Dock to EMMI Zone First Entrance (Main); Heals? False
   * EMMI Door to EMMI Zone First Entrance/Dock to Early Cloak Room (Water Blob)
@@ -471,24 +477,18 @@ Extra - asset_id: collision_camera_004
       Shoot Beam
 
 > Above Early Cloak Blob; Heals? False
+  > Door to Save Station South
+      After Artaria - Early Cloak Blob
   > Door to Path to Corpius
       Trivial
   > Dock to EMMI Zone First Entrance (DoorEmmy10_000)
       Trivial
   > Event - Early Cloak Blob
       Shoot Beam
-  > Start Point
-      After Artaria - Early Cloak Blob
 
 > Start Point; Heals? False; Spawn Point
-  > Door to Melee Tutorial Room
-      Trivial
   > Door to Save Station South
       Trivial
-  > Event - Early Cloak Blob
-      Wave Beam or Pseudo-Wave Beam (Intermediate) or Shoot Diffusion Beam
-  > Above Early Cloak Blob
-      After Artaria - Early Cloak Blob
 
 ----------------
 EMMI Zone First Entrance
@@ -504,11 +504,7 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Dock to Early Cloak Room (Water Blob)
-      All of the following:
-          Morph Ball and Movement (Beginner)
-          Walljump (Beginner) or Lay Bomb
-  > Start Point
+  > Door from White EMMI Arena
       Trivial
 
 > Door from White EMMI Arena; Heals? False
@@ -519,6 +515,8 @@ Extra - asset_id: collision_camera_005
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to EMMI Zone Entrance Hallway
+      Trivial
   > Start Point
       Trivial
 
@@ -529,12 +527,7 @@ Extra - asset_id: collision_camera_005
   > Door to EMMI Zone Entrance Hallway
       Can Slide
   > Next to Pickup
-      Any of the following:
-          Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
-          All of the following:
-              Single-wall Wall Jump (Intermediate)
-              Flash Shift or Morph Ball
-          Flash Shift and Walljump (Advanced)
+      Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 4; Major Location? False
@@ -562,26 +555,18 @@ Extra - asset_id: collision_camera_005
       After Artaria - EMMI Magnet Door Lock
   > Next to Pickup
       All of the following:
-          Use Spin Boost
+          Knowledge (Beginner) and Use Spin Boost
           After Artaria - EMMI Magnet Door Lock or Knowledge (Intermediate)
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_EmmyCave
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to EMMI Zone Entrance Hallway
-      Trivial
   > Door from White EMMI Arena
       Trivial
   > Door to White EMMI Introduction
       Trivial
   > Tile Group (POWERBEAM)
-      Any of the following:
-          Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
-          Walljump (Beginner) and Use Spin Boost
-          Flash Shift and Walljump (Intermediate)
-          All of the following:
-              Single-wall Wall Jump (Intermediate)
-              Flash Shift or Morph Ball
+      Grapple Beam or Spider Magnet or Space Jump or Simple IBJ
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -629,18 +614,10 @@ Extra - asset_id: collision_camera_006
           # Spider ceiling wall here. Probably don't need an event for it.
           Spider Magnet or Simple IBJ or Use Spin Boost
   > Door to EMMI Zone Ballspark Hallway
-      Any of the following:
-          Simple IBJ or Use Spin Boost
-          Morph Ball and Single-wall Wall Jump (Intermediate)
+      Simple IBJ or Use Spin Boost
   > Door to EMMI Zone First Entrance
-      Any of the following:
-          Simple IBJ or Use Spin Boost
-          Morph Ball and Single-wall Wall Jump (Intermediate)
-  > Event - First Chase Blob
-      Any of the following:
-          Wave Beam or Shoot Diffusion Beam
-          Morph Ball and Pseudo-Wave Beam (Intermediate) and Shoot Charge Beam
-  > Warp from Entrance
+      After Artaria - EMMI First Chase
+  > Door to EMMI Zone Spinner
       After Artaria - First Chase Blob
 
 > Door to Teleport to Dairon (Thermal); Heals? False
@@ -677,10 +654,10 @@ Extra - asset_id: collision_camera_006
       All of the following:
           After Artaria - EMMI First Chase
           Simple IBJ or Use Spin Boost
+  > Door to EMMI Zone Spinner
+      After Artaria - EMMI First Chase and Can Slide
   > Event - EMMI First Chase
       Before Artaria - EMMI First Chase
-  > Warp from Entrance
-      After Artaria - EMMI First Chase and Can Slide
 
 > Door to EMMI Zone Spinner; Heals? False
   * Artaria Thermal Door to EMMI Zone Spinner/Door to White EMMI Introduction
@@ -690,16 +667,16 @@ Extra - asset_id: collision_camera_006
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Warp from Entrance
-      Trivial
+  > Door to Teleport to Dairon (Lower)
+      After Artaria - First Chase Blob
+  > Door to EMMI Zone First Entrance
+      Morph Ball and After Artaria - EMMI First Chase
 
 > Event - First Chase Blob; Heals? False
   * Event Artaria - First Chase Blob
   * Extra - actor_name: PRP_DB_CV_002
   * Extra - actor_def: actordef:actors/props/breakablecave002/charclasses/breakablecave002.bmsad
-  > Door to Teleport to Dairon (Lower)
-      Trivial
-  > Warp from Entrance
+  > Door to EMMI Zone Spinner
       Trivial
 
 > Event - EMMI First Chase; Heals? False
@@ -708,12 +685,6 @@ Extra - asset_id: collision_camera_006
       Trivial
 
 > Warp from Entrance; Heals? False; Spawn Point
-  > Door to Teleport to Dairon (Lower)
-      After Artaria - First Chase Blob
-  > Door to EMMI Zone First Entrance
-      Morph Ball
-  > Door to EMMI Zone Spinner
-      Trivial
   > Event - First Chase Blob
       Trivial
 
@@ -776,11 +747,9 @@ Extra - asset_id: collision_camera_008
   * Extra - actor_name: DoorEmmy07
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Dock to Arbitrary Enky Room (DoorEmmy06)
-      Can Slide
-  > Tunnel to Arbitrary Enky Room
-      All of the following:
-          Shoot Missile
-          Lay Bomb or Lay Power Bomb
+      Trivial
+  > Tile Group (BOMB MISSILE)
+      Trivial
 
 > Door to EMMI First Chase End (DoorPowerPower_001); Heals? False
   * Power Beam Door to EMMI First Chase End/Door to Teleport to Dairon (DoorPowerPower_001)
@@ -791,8 +760,6 @@ Extra - asset_id: collision_camera_008
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to White EMMI Introduction (Thermal)
-      Trivial
-  > Dock to Arbitrary Enky Room (DoorEmmy06)
       Trivial
 
 > Door to EMMI First Chase End (DoorFrame_015); Heals? False
@@ -818,7 +785,7 @@ Extra - asset_id: collision_camera_008
       Can Slide
 
 > Door to EMMI Zone Exit North (Upper); Heals? False
-  * Wide Beam Door to EMMI Zone Exit North/Door from Teleport to Dairon
+  * Wide Beam Door to EMMI Zone Exit North/Dock from Teleport to Dairon
   * Extra - actor_name: Door028
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -839,6 +806,28 @@ Extra - asset_id: collision_camera_008
   > Door to EMMI Zone Exit North (Upper)
       Trivial
 
+> Tile Group (BOMB MISSILE); Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_004
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB', 'MISSILE')
+  > Dock to Arbitrary Enky Room (DoorEmmy07)
+      Trivial
+  > Tile Group (BOMB) 1
+      Morph Ball
+
+> Tile Group (BOMB) 1; Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_023
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 2
+      Trivial
+  > Tunnel to Arbitrary Enky Room
+      Morph Ball
+
 > Tile Group (WEIGHT); Heals? False
   * Extra - actor_name: breakabletilegroup_024
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
@@ -847,15 +836,26 @@ Extra - asset_id: collision_camera_008
   > Dock to Arbitrary Enky Room (DoorEmmy07)
       Trivial
 
+> Tile Group (BOMB) 2; Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_063
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
+  > Tile Group (BOMB) 1
+      Morph Ball
+  > Tile Group (WEIGHT)
+      Morph Ball
+
 > Tunnel to Arbitrary Enky Room; Heals? False
   * Morph Ball Tunnel to Arbitrary Enky Room/Tunnel to Teleport to Dairon
-  > Tile Group (WEIGHT)
-      Lay Bomb or Lay Power Bomb
+  > Tile Group (BOMB) 1
+      Morph Ball
 
 > Tunnel to EMMI Zone Exit North; Heals? False
   * Morph Ball Tunnel to EMMI Zone Exit North/Tunnel to Teleport to Dairon
   > Dock to Arbitrary Enky Room (DoorEmmy07)
-      Trivial
+      Movement (Beginner)
 
 ----------------
 EMMI Zone Exit North
@@ -870,7 +870,9 @@ Extra - asset_id: collision_camera_009
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to EMMI Zone Dome
+      Trivial
+  > Dock from Teleport to Dairon
       Trivial
 
 > Door to EMMI Zone Dome; Heals? False
@@ -881,12 +883,12 @@ Extra - asset_id: collision_camera_009
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to Teleport to Dairon
+      Trivial
   > Tunnel to Teleport to Dairon
       Trivial
   > Tunnel to EMMI Zone Dome
       Morph Ball
-  > Start Point
-      Trivial
 
 > Dock to Shinespark Tower to Grapple; Heals? False
   * EMMI Door to Shinespark Tower to Grapple/Dock to EMMI Zone Exit North
@@ -904,15 +906,15 @@ Extra - asset_id: collision_camera_009
   > Tile Group (POWERBEAM)
       Trivial
 
-> Door from Teleport to Dairon; Heals? False
-  * Access Closed to Teleport to Dairon/Door to EMMI Zone Exit North (Upper)
+> Dock from Teleport to Dairon; Heals? False
+  * Blocked Passage to Teleport to Dairon/Door to EMMI Zone Exit North (Upper)
   * Extra - actor_name: Door028
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorwidebeam_000
   * Extra - right_shield_def: actordef:actors/props/doorwidebeam/charclasses/doorwidebeam.bmsad
-  > Start Point
+  > Door to Teleport to Dairon
       Trivial
 
 > Tile Group (POWERBEAM); Heals? False
@@ -963,10 +965,6 @@ Extra - asset_id: collision_camera_009
 > Start Point; Heals? False; Spawn Point
   > Door to Teleport to Dairon
       Trivial
-  > Door to EMMI Zone Dome
-      Trivial
-  > Door from Teleport to Dairon
-      Trivial
 
 ----------------
 EMMI Zone Hub
@@ -974,7 +972,7 @@ Extra - total_boundings: {'x1': -5200.0, 'x2': -1200.0, 'y1': -6200.0, 'y2': 270
 Extra - polygon: [[-1200.0, 2200.0], [-5200.0, 2200.0], [-5200.0, -5600.0], [-4800.0, -5600.0], [-3300.0, -6200.0], [-1200.0, -6200.0]]
 Extra - asset_id: collision_camera_010
 > Door to EMMI Zone Exit Northwest; Heals? False
-  * Wave Beam Door to EMMI Zone Exit Northwest/Door from EMMI Zone Hub
+  * Wave Beam Door to EMMI Zone Exit Northwest/Dock from EMMI Zone Hub
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -984,7 +982,7 @@ Extra - asset_id: collision_camera_010
   > Door to EMMI Zone Exit Southwest (DoorFrame_004)
       Trivial
   > Tunnel to EMMI Zone Exit Northwest
-      Morph Ball
+      Morph Ball and Knowledge (Beginner)
 
 > Door to EMMI Zone Exit Southwest (DoorFrame_004); Heals? False
   * Access Open to EMMI Zone Exit Southwest/Door to EMMI Zone Hub (DoorFrame_004)
@@ -996,11 +994,7 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_def: None
   > Door to EMMI Zone Exit Northwest
       Space Jump or Simple IBJ
-  > Door to Wide Beam Block Room (DoorFrame_007)
-      Flash Shift or Space Jump
-  > Tunnel to EMMI Zone Exit Northwest
-      Morph Ball and Single-wall Wall Jump (Intermediate)
-  > Start Point
+  > Door to EMMI Zone Exit Southwest (DoorFrame_005)
       Trivial
 
 > Door to EMMI Zone Exit Southwest (DoorFrame_005); Heals? False
@@ -1011,7 +1005,11 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to EMMI Zone Exit Southwest (DoorFrame_004)
+      Simple IBJ or Use Spin Boost
+  > Door to Wide Beam Block Room (DoorFrame_006)
+      Trivial
+  > Next to Water Device
       Trivial
 
 > Door to Wide Beam Block Room (DoorFrame_006); Heals? False
@@ -1022,11 +1020,11 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to EMMI Zone Exit Southwest (DoorFrame_005)
+      Trivial
   > Door to Wide Beam Block Room (DoorFrame_007)
       Simple IBJ or Use Spin Boost
   > Tunnel to Wide Beam Block Room
-      Trivial
-  > Start Point
       Trivial
 
 > Door to Wide Beam Block Room (DoorFrame_007); Heals? False
@@ -1037,15 +1035,10 @@ Extra - asset_id: collision_camera_010
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit Southwest (DoorFrame_004)
-      Flash Shift or Space Jump
   > Door to Wide Beam Block Room (DoorFrame_006)
       Trivial
   > Door to EMMI Zone Ballspark Hallway
-      Any of the following:
-          Spider Magnet or Space Jump or Simple IBJ
-          Grapple Beam and Walljump (Beginner)
-          Morph Ball and Single-wall Wall Jump (Intermediate)
+      Spider Magnet or Space Jump or Simple IBJ
 
 > Pickup (Power Bomb Tank); Heals? False
   * Pickup 19; Major Location? False
@@ -1105,27 +1098,19 @@ Extra - asset_id: collision_camera_010
       Morph Ball and Speed Booster and Speedbooster Conservation (Beginner)
 
 > Next to Water Device; Heals? False
+  > Door to EMMI Zone Exit Southwest (DoorFrame_005)
+      Trivial
   > Event - Water Device
       Trivial
   > Dock to EMMI Zone Exit South
-      Any of the following:
-          Simple IBJ or Use Spin Boost
-          Morph Ball and Single-wall Wall Jump (Intermediate)
+      Simple IBJ or Use Spin Boost
   > Tunnel to EMMI Zone Exit South
       Any of the following:
           Morph Ball
           Slide and After Artaria - EMMI Zone Water Device
-  > Start Point
-      Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Door to EMMI Zone Exit Southwest (DoorFrame_004)
-      Simple IBJ or Use Spin Boost
   > Door to EMMI Zone Exit Southwest (DoorFrame_005)
-      Trivial
-  > Door to Wide Beam Block Room (DoorFrame_006)
-      Trivial
-  > Next to Water Device
       Trivial
 
 ----------------
@@ -1146,9 +1131,10 @@ Extra - asset_id: collision_camera_011
       All of the following:
           Morph Ball
           Any of the following:
-              Use Spin Boost
-              Gravity Suit and Simple IBJ
-              Cross Bomb and Horizontal Bomb Jump (Intermediate)
+              Space Jump
+              All of the following:
+                  Gravity Suit
+                  Simple IBJ or Use Spin Boost
   > Tile Group (BOMB) 3
       Any of the following:
           Space Jump or Infinite Bomb Jump (Intermediate)
@@ -1219,13 +1205,11 @@ Extra - asset_id: collision_camera_011
   * Extra - start_point_actor_name: PRP_CV_EnergyStation002_WeightPlate
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
   > Event - Early SA Shortcut Blob
-      Wave Beam
+      Morph Ball and Wave Beam
   > Door to Varia Suit Tutorial South
       All of the following:
           After Artaria - Thermal Device
-          Any of the following:
-              Space Jump or Simple IBJ
-              Walljump (Intermediate) and Use Spin Boost
+          Space Jump or Simple IBJ
   > Teleporter to Cataris - Teleport to Artaria (Red)
       Trivial
   > Tile Group (BOMB) 1
@@ -1347,9 +1331,7 @@ Extra - asset_id: collision_camera_011
   > Dock to EMMI Zone Exit Northwest
       All of the following:
           Gravity Suit
-          Any of the following:
-              Simple IBJ or Use Spin Boost
-              Flash Shift and Walljump (Beginner)
+          Simple IBJ or Use Spin Boost
   > Event - Destroy Post Chain Reaction Debris (Below)
       Shoot Beam
   > Teleporter to Cataris - Teleport to Artaria (Red)
@@ -1429,25 +1411,25 @@ Extra - asset_id: collision_camera_013
   * Extra - right_shield_def: None
   > Door to Charge Beam Room
       Trivial
+  > Door from Cold Introduction
+      Trivial
   > Tile Group (POWERBOMB)
       Trivial
   > Tunnel to Charge Beam Room
       Trivial
-  > Start Point
-      Trivial
 
-> Door to Cold Introduction (Side Tunnel); Heals? False
-  * Missile Door to Cold Introduction/Door to Charge Beam Access (Side Tunnel)
+> Door from Cold Introduction; Heals? False
+  * Access Closed to Cold Introduction/Door to Charge Beam Access (Side Tunnel)
   * Extra - actor_name: Door003 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door003_missileShield
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Intro Room
       Trivial
 
-> Door to Cold Introduction (Cold); Heals? False
+> Door to Cold Introduction; Heals? False
   * Power Beam Door to Cold Introduction/Door to Charge Beam Access (Cold)
   * Extra - actor_name: Door004 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
@@ -1475,7 +1457,7 @@ Extra - asset_id: collision_camera_013
   * Event Artaria - Charge Beam Access Blob
   * Extra - actor_name: PRP_DB_CV_010
   * Extra - actor_def: actordef:actors/props/breakablecave010/charclasses/breakablecave010.bmsad
-  > Door to Cold Introduction (Cold)
+  > Door to Cold Introduction
       Trivial
 
 > Tile Group (POWERBOMB); Heals? False
@@ -1501,18 +1483,16 @@ Extra - asset_id: collision_camera_013
 
 > Dock to Cold Introduction; Heals? False
   * Open Passage to Cold Introduction/Dock to Charge Beam Access
-  > Door to Cold Introduction (Cold)
+  > Door to Cold Introduction
       After Artaria - Charge Beam Access Blob
 
 > Dock to Energy Recharge Station South; Heals? False
   * Open Passage to Energy Recharge Station South/Dock to Charge Beam Access
-  > Door to Cold Introduction (Cold)
+  > Door to Cold Introduction
       Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Door to Intro Room
-      Trivial
-  > Door to Cold Introduction (Side Tunnel)
+  > Door from Cold Introduction
       Trivial
 
 ----------------
@@ -1536,6 +1516,7 @@ Extra - asset_id: collision_camera_014
   * Pickup 0; Major Location? True
   * Extra - actor_name: ItemSphere_ChargeBeam
   * Extra - actor_def: actordef:actors/items/itemsphere_chargebeam/charclasses/itemsphere_chargebeam.bmsad
+  * Extra - map_icon_actor: powerup_chargebeam
   > Start Point
       Trivial
 
@@ -1570,9 +1551,7 @@ Extra - asset_id: collision_camera_015
   > Door to White EMMI Arena (DoorFrame_010)
       After Artaria - EMMI Magnet Platform Lowered
   > Door to White EMMI Arena (DoorFrame_011)
-      Any of the following:
-          Space Jump
-          Movement (Intermediate) and Walljump (Beginner) and Use Spin Boost
+      Space Jump
   > Tunnel to White EMMI Arena
       Trivial
   > Event - EMMI Magnet Platform Lowered
@@ -1618,9 +1597,7 @@ Extra - asset_id: collision_camera_015
   > Door to White EMMI Arena (1)
       Trivial
   > Pickup (Missile Tank)
-      Any of the following:
-          Before Artaria - EMMI Spinner Rotated
-          Grapple Beam and After Artaria - EMMI Spinner Rotated
+      Grapple Beam
   > Door to White EMMI Introduction
       After Artaria - EMMI Spinner Rotated
 
@@ -1632,7 +1609,7 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to White EMMI Introduction
       Trivial
 
 > Door to White EMMI Introduction; Heals? False
@@ -1645,17 +1622,15 @@ Extra - asset_id: collision_camera_015
   * Extra - right_shield_def: None
   > Door to White EMMI Arena (DoorFrame_011)
       After Artaria - EMMI Spinner Rotated
-  > Event - EMMI Spinner Rotated
+  > Door to Wide Beam Block Room
       Trivial
-  > Start Point
+  > Event - EMMI Spinner Rotated
       Trivial
 
 > Tunnel to White EMMI Arena; Heals? False
   * Slide Tunnel to White EMMI Arena/Tunnel to EMMI Zone Spinner
   > Door to White EMMI Arena (1)
-      Any of the following:
-          Space Jump
-          Movement (Beginner) and Walljump (Beginner) and Use Spin Boost
+      Space Jump
   > Door to White EMMI Arena (DoorFrame_009)
       Trivial
 
@@ -1671,8 +1646,6 @@ Extra - asset_id: collision_camera_015
 
 > Start Point; Heals? False; Spawn Point
   > Door to Wide Beam Block Room
-      Trivial
-  > Door to White EMMI Introduction
       Trivial
 
 ----------------
@@ -1699,8 +1672,13 @@ Extra - asset_id: collision_camera_016
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
-      Trivial
+  > Door to Proto EMMI Battle
+      After Artaria - Proto Central Unit or Can Slide
+  > Tile Group (BOMB)
+      All of the following:
+          # TODO: Check if it's viable to get this with ice missiles?
+          Morph Ball
+          Flash Shift or Use Spin Boost
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 13; Major Location? False
@@ -1719,16 +1697,10 @@ Extra - asset_id: collision_camera_016
   * Extra - right_shield_def: None
   > Door to Melee Tutorial Room (Lower)
       After Artaria - Proto Central Unit
-  > Start Point
-      All of the following:
-          After Artaria - Proto Central Unit
-          Any of the following:
-              Space Jump
-              Flash Shift and Simple IBJ
-              Walljump (Beginner) and Use Spin Boost
-              All of the following:
-                  Speed Booster
-                  Flash Shift or Use Spin Boost
+  > Door to Melee Tutorial Room (Upper)
+      Space Jump and After Artaria - Proto Central Unit
+  > Tile Group (BOMB)
+      Flash Shift and Simple IBJ
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -1736,21 +1708,14 @@ Extra - asset_id: collision_camera_016
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
+  > Door to Melee Tutorial Room (Upper)
+      Flash Shift or Use Spin Boost
   > Pickup (Missile Tank)
       Morph Ball
-  > Start Point
-      Flash Shift or Use Spin Boost
 
 > Start Point; Heals? False; Spawn Point
   > Door to Melee Tutorial Room (Upper)
       Trivial
-  > Door to Proto EMMI Battle
-      After Artaria - Central Unit or Can Slide
-  > Tile Group (BOMB)
-      All of the following:
-          # TODO: Check if it's viable to get this with ice missiles?
-          Morph Ball
-          Flash Shift or Use Spin Boost
 
 ----------------
 White EMMI Arena
@@ -1805,6 +1770,8 @@ Extra - asset_id: collision_camera_017
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to EMMI Zone Spinner (DoorFrame_009)
+      Trivial
   > Start Point
       Trivial
 
@@ -1816,7 +1783,7 @@ Extra - asset_id: collision_camera_017
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door from Central Unit Access
       Trivial
 
 > Door to EMMI Zone Spinner (DoorFrame_010); Heals? False
@@ -1852,8 +1819,6 @@ Extra - asset_id: collision_camera_017
       Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
   > Door from Central Unit Access
       Trivial
-  > Door to EMMI Zone Spinner (DoorFrame_009)
-      Trivial
   > Tunnel to EMMI Zone Spinner
       Trivial
 
@@ -1875,19 +1840,17 @@ Extra - asset_id: collision_camera_018
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Dock to Melee Tutorial Room
       Trivial
 
 > Dock to Melee Tutorial Room; Heals? False
   * EMMI Door to Melee Tutorial Room/Dock to EMMI Zone Entrance Hallway
   * Extra - actor_name: DoorEmmy11
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Start Point
+  > Door to EMMI Zone First Entrance
       Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Door to EMMI Zone First Entrance
-      Trivial
   > Dock to Melee Tutorial Room
       Trivial
 
@@ -2029,8 +1992,16 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Thermal Device
+      After Artaria - Thermal Device East Blob
+  > Event - Thermal Device East Blob
+      Shoot Diffusion or Wave
+  > Door to Magma Flow Vista
       Trivial
+  > Tunnel to David Jaffe Room
+      All of the following:
+          Morph Ball
+          Speed Booster or Simple IBJ
 
 > Door to Thermal Device; Heals? False
   * Artaria Thermal Door to Thermal Device/Door to Thermal Door Tutorial
@@ -2040,14 +2011,14 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Door to David Jaffe Room
+      After Artaria - Thermal Device East Blob
   > Door to Invisible Corpius Room
       After Artaria - Thermal Device West Blob
   > Event - Thermal Device East Blob
       Shoot Beam
   > Event - Thermal Device West Blob
       Wave Beam or Pseudo-Wave Beam (Intermediate)
-  > Start Point
-      After Artaria - Thermal Device East Blob
 
 > Door to Invisible Corpius Room; Heals? False
   * Access Open to Invisible Corpius Room/Door to Thermal Door Tutorial
@@ -2073,8 +2044,6 @@ Extra - asset_id: collision_camera_022
   * Event Artaria - Thermal Device West Blob
   * Extra - actor_name: db_reg_cv_021
   * Extra - actor_def: actordef:actors/props/db_reg_cv_020/charclasses/db_reg_cv_020.bmsad
-  > Door to Thermal Device
-      Trivial
   > Door to Invisible Corpius Room
       Trivial
 
@@ -2086,29 +2055,17 @@ Extra - asset_id: collision_camera_022
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to David Jaffe Room
       Trivial
 
 > Tunnel to David Jaffe Room; Heals? False
   * Morph Ball Tunnel to David Jaffe Room/Tunnel to Thermal Door Tutorial
-  > Start Point
+  > Door to David Jaffe Room
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Door to David Jaffe Room
       Trivial
-  > Door to Thermal Device
-      After Artaria - Thermal Device East Blob
-  > Event - Thermal Device East Blob
-      Shoot Diffusion or Wave
-  > Event - Thermal Device West Blob
-      Wave Beam
-  > Door to Magma Flow Vista
-      Trivial
-  > Tunnel to David Jaffe Room
-      All of the following:
-          Morph Ball
-          Speed Booster or Simple IBJ
 
 ----------------
 Magma Flow Vista
@@ -2123,7 +2080,7 @@ Extra - asset_id: collision_camera_023
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Hot Room Hub
       Trivial
 
 > Door to Hot Room Hub; Heals? False
@@ -2134,13 +2091,11 @@ Extra - asset_id: collision_camera_023
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Thermal Door Tutorial
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Door to Thermal Door Tutorial
-      Trivial
-  > Door to Hot Room Hub
       Trivial
 
 ----------------
@@ -2162,33 +2117,17 @@ Extra - asset_id: collision_camera_023_B
           All of the following:
               Any of the following:
                   Varia Suit
-                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 500
-              Any of the following:
-                  Spider Magnet
-                  All of the following:
-                      # Grapple beam / space jump movement
-                      Movement (Intermediate)
-                      Grapple Beam or Space Jump
-                  All of the following:
-                      # Speed booster way to get item
-                      Speed Booster and Movement (Intermediate) and Speedbooster Conservation (Intermediate)
+                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
+              Grapple Beam or Spider Magnet or Space Jump or Speed Booster
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 11; Major Location? False
   * Extra - actor_name: Item_MissileTank007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Hot Room Hub
-      Any of the following:
-          Gravity Suit
-          All of the following:
-              Varia Suit
-              Any of the following:
-                  Spider Magnet or Space Jump
-                  All of the following:
-                      Grapple Beam
-                      Any of the following:
-                          Movement (Intermediate)
-                          Heat/Cold Runs (Intermediate) and Lava Damage ≥ 40
+      All of the following:
+          Varia Suit
+          Spider Magnet or Space Jump
 
 > Start Point; Heals? False; Spawn Point
   > Door to Hot Room Hub
@@ -2209,7 +2148,7 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Lower Path to Cataris
       Trivial
 
 > Door to East Lava Missile Room; Heals? False
@@ -2246,9 +2185,9 @@ Extra - asset_id: collision_camera_024
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to East Lava Missile Room
+  > Door to Save Station East
       Trivial
-  > Start Point
+  > Door to East Lava Missile Room
       Trivial
 
 > Door to Magma Flow Vista; Heals? False
@@ -2264,8 +2203,6 @@ Extra - asset_id: collision_camera_024
 
 > Start Point; Heals? False; Spawn Point
   > Door to Save Station East
-      Trivial
-  > Door to Lower Path to Cataris
       Trivial
 
 ----------------
@@ -2311,8 +2248,8 @@ Chain Reaction Room
 Extra - total_boundings: {'x1': -12200.0, 'x2': -8100.0, 'y1': 4700.0, 'y2': 9200.0}
 Extra - polygon: [[-8100.0, 9200.0], [-12200.0, 9200.0], [-12200.0, 4700.0], [-8100.0, 4700.0]]
 Extra - asset_id: collision_camera_026
-> Door from Varia Suit Tutorial North; Heals? False
-  * Access Closed to Varia Suit Tutorial North/Door to Chain Reaction Room
+> Door to Varia Suit Tutorial North; Heals? False
+  * Power Beam Door to Varia Suit Tutorial North/Door to Chain Reaction Room
   * Extra - actor_name: Door057
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2330,7 +2267,7 @@ Extra - asset_id: collision_camera_026
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Event - Chain Reaction Device
       Before Artaria - Chain Reaction Device
 
 > Door to Varia Suit Tutorial South; Heals? False
@@ -2342,11 +2279,7 @@ Extra - asset_id: collision_camera_026
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Start Point
-      All of the following:
-          After Artaria - Chain Reaction Device
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 50
+      After Artaria - Chain Reaction Device
 
 > Event - Chain Reaction Device; Heals? False
   * Event Artaria - Chain Reaction Device
@@ -2354,28 +2287,34 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/props/deviceheat/charclasses/deviceheat.bmsad
   * Extra - start_point_actor_name: ev_chainreaction_weightactivatedplatform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_thermal/charclasses/weightactivatedplatform_thermal.bmsad
-  > Start Point
-      Trivial
+  > Tunnel to Shutter Platform Puzzle
+      All of the following:
+          Morph Ball
+          Spider Magnet or Walljump (Beginner) or Use Spin Boost
 
 > Start Point; Heals? False; Spawn Point
   * Extra - start_point_actor_name: SP_Checkpoint_ChainReaction
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Chain Reaction Access
-      Before Artaria - Chain Reaction Device
   > Door to Varia Suit Tutorial South
       All of the following:
           After Artaria - Chain Reaction Device
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 50
-  > Event - Chain Reaction Device
-      Before Artaria - Chain Reaction Device
-  > First Trap
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
+  > Next to Door
       All of the following:
+          # TODO: Segregate this room logically so heat logic is handled alongside the heat device event
           After Artaria - Chain Reaction Device
           Any of the following:
-              Varia Suit or Before Artaria - Chain Reaction Heated
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 200
+              Varia Suit
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300
+
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_033
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Configurable Node
@@ -2383,18 +2322,6 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Tunnel to Shutter Platform Puzzle
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit or Before Artaria - Chain Reaction Heated
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 150
-  > Next to Door
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 150
 
 > Tile Group (POWERBEAM) 3; Heals? False
   * Configurable Node
@@ -2402,18 +2329,6 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Next to Door
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit or Before Artaria - Chain Reaction Heated
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 250
-  > Below Magnet
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 50
 
 > Tile Group (POWERBEAM) 4; Heals? False
   * Configurable Node
@@ -2421,110 +2336,17 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > First Trap
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit or Before Artaria - Chain Reaction Heated
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 50
-  > Below Magnet
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit or Before Artaria - Chain Reaction Heated
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 250
 
 > Tunnel to Shutter Platform Puzzle; Heals? False
   * Slide Tunnel to Shutter Platform Puzzle/Tunnel to Chain Reaction Room
-  > Tile Group (POWERBEAM) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 150
-  > Next to Door
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 300
-  > Event - Chain Reaction Heated
-      Before Artaria - Chain Reaction Heated
 
 > Next to Door; Heals? False
-  > Door from Varia Suit Tutorial North
-      Trivial
-  > Tile Group (POWERBEAM) 2
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit or Before Artaria - Chain Reaction Heated
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 150
-  > Tile Group (POWERBEAM) 3
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 250
-  > Tunnel to Shutter Platform Puzzle
-      All of the following:
-          Morph Ball and After Artaria - Chain Reaction Heated
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 300
-  > Below Magnet
-      All of the following:
-          After Artaria - Chain Reaction Heated and Can Slide
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 300
-
-> First Trap; Heals? False
+  > Door to Varia Suit Tutorial North
+      After Artaria - Chain Reaction Device
   > Start Point
-      All of the following:
-          After Artaria - Chain Reaction Device
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 200
-  > Tile Group (POWERBEAM) 4
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit or Before Artaria - Chain Reaction Heated
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 50
-  > Below Magnet
-      All of the following:
-          Morph Ball and After Artaria - Chain Reaction Heated
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 300
-
-> Below Magnet; Heals? False
-  > Tile Group (POWERBEAM) 3
-      All of the following:
-          Morph Ball
-          Spider Magnet or Walljump (Beginner) or Use Spin Boost
-          Any of the following:
-              Varia Suit or Before Artaria - Chain Reaction Heated
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 50
-  > Next to Door
-      All of the following:
-          Morph Ball and After Artaria - Chain Reaction Heated
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 300
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
-  > First Trap
-      All of the following:
-          Morph Ball and After Artaria - Chain Reaction Heated
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 300
-
-> Event - Chain Reaction Heated; Heals? False
-  * Event Artaria - Chain Reaction Heated
-  > Tunnel to Shutter Platform Puzzle
       Trivial
+  > Tunnel to Shutter Platform Puzzle
+      Morph Ball and Varia Suit
 
 ----------------
 Varia Suit Tutorial South
@@ -2540,11 +2362,9 @@ Extra - asset_id: collision_camera_028
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Teleport to Cataris
-      All of the following:
-          After Artaria - Chain Reaction Device
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 100
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
 > Door to Teleport to Cataris; Heals? False
   * Charge Beam Door to Teleport to Cataris/Door to Varia Suit Tutorial South
@@ -2555,17 +2375,15 @@ Extra - asset_id: collision_camera_028
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Chain Reaction Room
-      All of the following:
-          After Artaria - Chain Reaction Device
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Advanced) and Heat Damage ≥ 100
+      Any of the following:
+          Varia Suit
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
 > Start Point; Heals? False; Spawn Point
   > Door to Chain Reaction Room
       Any of the following:
           Varia Suit
-          Heat/Cold Runs (Advanced) and Heat Damage ≥ 20
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 20
 
 ----------------
 Varia Suit Tutorial North
@@ -2573,7 +2391,7 @@ Extra - total_boundings: {'x1': -8200.0, 'x2': -6100.0, 'y1': 8100.0, 'y2': 9900
 Extra - polygon: [[-6100.0, 9900.0], [-8200.0, 9900.0], [-8200.0, 8100.0], [-6100.0, 8100.0]]
 Extra - asset_id: collision_camera_029
 > Door to Chain Reaction Room; Heals? False
-  * Charge Beam Door to Chain Reaction Room/Door from Varia Suit Tutorial North
+  * Charge Beam Door to Chain Reaction Room/Door to Varia Suit Tutorial North
   * Extra - actor_name: Door057
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2632,7 +2450,7 @@ Extra - asset_id: collision_camera_029
           Varia Suit
           Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Pickup (Missile+ Tank)
-      Gravity Suit and Morph Ball and Lava Damage ≥ 200
+      Gravity Suit and Lava Damage ≥ 200
   > Tile Group (POWERBEAM)
       Any of the following:
           Varia Suit
@@ -2678,8 +2496,6 @@ Extra - asset_id: collision_camera_030
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Tile Group (POWERBEAM)
       Trivial
-  > Tunnel to Chain Reaction Room
-      Bomb and Morph Ball and Movement (Advanced)
 
 > Tile Group (BOMB); Heals? False
   * Configurable Node
@@ -2690,7 +2506,7 @@ Extra - asset_id: collision_camera_030
   > Door to Varia Suit Room
       Morph Ball and After Artaria - Chain Reaction Grapple Block
   > Tile Group (SPEEDBOOST)
-      Flash Shift or Lay Cross Comb or Use Spin Boost
+      Flash Shift
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -2729,6 +2545,7 @@ Extra - asset_id: collision_camera_031
   * Pickup 23; Major Location? True
   * Extra - actor_name: IT_VARIA_GEN_001
   * Extra - actor_def: actordef:actors/items/itemsphere_variasuit/charclasses/itemsphere_variasuit.bmsad
+  * Extra - map_icon_actor: powerup_variasuit
   > Start Point
       Trivial
 
@@ -2765,7 +2582,7 @@ Extra - asset_id: collision_camera_031
   > Pickup (Varia Suit)
       Trivial
   > Door to Varia Suit Tutorial North
-      Can Slide
+      Morph Ball
 
 ----------------
 Spider Beam Tower
@@ -2780,7 +2597,18 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Transport to Dairon
+      Any of the following:
+          Space Jump or Infinite Bomb Jump (Intermediate)
+          All of the following:
+              Grapple Beam
+              Spider Magnet or Movement (Beginner)
+          All of the following:
+              Flash Shift
+              Any of the following:
+                  Walljump (Intermediate)
+                  Spider Magnet and Movement (Beginner)
+  > Door to Grapple Beam Tutorial
       Trivial
 
 > Door to Transport to Dairon; Heals? False
@@ -2791,7 +2619,7 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Save Station North
       Trivial
 
 > Door to Grapple Beam Tutorial; Heals? False
@@ -2802,33 +2630,17 @@ Extra - asset_id: collision_camera_032
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Save Station North
       Any of the following:
-          Space Jump or Simple IBJ
-          Morph Ball and Single-wall Wall Jump (Intermediate)
+          Space Jump or Walljump (Intermediate) or Simple IBJ
           All of the following:
               Spider Magnet
               Grapple Beam or Use Spin Boost
           Grapple Beam and Movement (Beginner)
+          Flash Shift and Walljump (Beginner)
 
 > Start Point; Heals? False; Spawn Point
   > Door to Save Station North
-      Trivial
-  > Door to Transport to Dairon
-      Any of the following:
-          Space Jump or Infinite Bomb Jump (Intermediate)
-          All of the following:
-              Movement (Beginner) and Use Spin Boost
-              Spider Magnet or Walljump (Beginner)
-          All of the following:
-              Grapple Beam
-              Spider Magnet or Movement (Beginner)
-          All of the following:
-              Flash Shift
-              Any of the following:
-                  Walljump (Intermediate)
-                  Spider Magnet and Movement (Beginner)
-  > Door to Grapple Beam Tutorial
       Trivial
 
 ----------------
@@ -2861,6 +2673,7 @@ Extra - asset_id: collision_camera_033
   * Pickup 25; Major Location? True
   * Extra - actor_name: ItemSphere_GrappleBeam
   * Extra - actor_def: actordef:actors/items/itemsphere_grapplebeam/charclasses/itemsphere_grapplebeam.bmsad
+  * Extra - map_icon_actor: powerup_grapplebeam
   > Start Point
       Trivial
 
@@ -2870,7 +2683,7 @@ Extra - asset_id: collision_camera_033
   > Door to Grapple Beam Tutorial
       Grapple Beam
   > Door from Grapple Beam Tutorial
-      Trivial
+      Grapple Beam
   > Pickup (Grapple Beam)
       Trivial
 
@@ -2914,18 +2727,16 @@ Extra - asset_id: collision_camera_045
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Tunnel to First Tutorial
       Trivial
 
 > Tunnel to First Tutorial; Heals? False
   * Morph Ball Tunnel to First Tutorial/Tunnel to First Tutorial Access
-  > Start Point
+  > Door to Energy Recharge Station South
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Door to Energy Recharge Station South
-      Trivial
-  > Tunnel to First Tutorial
       Trivial
 
 ----------------
@@ -2941,6 +2752,12 @@ Extra - asset_id: collision_camera_048
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to EMMI Zone Exit Northwest
+      Any of the following:
+          Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+          Flash Shift and Walljump (Beginner)
+  > Event - EMMI Single Use Slide
+      Before Artaria - EMMI Single Use Slide and Can Slide
   > Start Point
       Trivial
 
@@ -2997,8 +2814,8 @@ Extra - asset_id: collision_camera_048
 
 > Dock to EMMI Zone Exit Northwest; Heals? False
   * Open Passage to EMMI Zone Exit Northwest/Dock to EMMI Zone Dome
-  > Start Point
-      Speed Booster or Simple IBJ or Use Spin Boost
+  > Door to EMMI Zone Exit North
+      Simple IBJ or Use Spin Boost
 
 > Below Slide; Heals? False
   > Event - Slide Alternative Blob (Below)
@@ -3019,24 +2836,16 @@ Extra - asset_id: collision_camera_048
 
 > Event - EMMI Single Use Slide; Heals? False
   * Event Artaria - EMMI Single Use Slide
+  > Door to EMMI Zone Exit North
+      Morph Ball
   > Below Slide
       Can Slide
-  > Start Point
-      Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   > Door to EMMI Zone Exit North
       Trivial
-  > Dock to EMMI Zone Exit Northwest
-      Any of the following:
-          Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
-          Flash Shift and Walljump (Beginner)
-  > Event - EMMI Single Use Slide
-      Before Artaria - EMMI Single Use Slide and Can Slide
   > Event - Slide Alternative Blob (Above)
-      Any of the following:
-          Wave Beam or Pseudo-Wave Beam (Intermediate)
-          Morph Ball and Pseudo-Wave Beam (Intermediate) and Shoot Charge Beam
+      Pseudo-Wave Beam (Intermediate)
 
 > Event - Slide Alternative Blob (Above); Heals? False
   * Event Artaria - Slide Alternative Blob
@@ -3178,19 +2987,17 @@ Extra - asset_id: collision_camera_051
   * EMMI Door to Teleport to Cataris/Dock to EMMI Zone Exit Northwest
   * Extra - actor_name: DoorEmmy03
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Door from EMMI Zone Hub
+  > Dock from EMMI Zone Hub
       Flash Shift or Simple IBJ or Use Spin Boost
+  > Door to EMMI Zone Dome
+      Trivial
   > Tunnel to Teleport to Cataris
       Lay Bomb
   > Dock to EMMI Zone Dome
-      Any of the following:
-          Space Jump or Simple IBJ
-          Walljump (Beginner) and Use Spin Boost
-  > Start Point
-      Trivial
+      Space Jump or Simple IBJ
 
-> Door from EMMI Zone Hub; Heals? False
-  * Access Closed to EMMI Zone Hub/Door to EMMI Zone Exit Northwest
+> Dock from EMMI Zone Hub; Heals? False
+  * Blocked Passage to EMMI Zone Hub/Door to EMMI Zone Exit Northwest
   * Extra - actor_name: doorclosedpower_000
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3208,7 +3015,7 @@ Extra - asset_id: collision_camera_051
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Dock to Teleport to Cataris
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -3256,8 +3063,6 @@ Extra - asset_id: collision_camera_051
       Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Dock to Teleport to Cataris
-      Trivial
   > Door to EMMI Zone Dome
       Trivial
 
@@ -3274,7 +3079,7 @@ Extra - asset_id: collision_camera_053
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to EMMI Zone Hub
       Trivial
 
 > Door to EMMI Zone Hub; Heals? False
@@ -3285,7 +3090,7 @@ Extra - asset_id: collision_camera_053
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to White EMMI Introduction
       Trivial
 
 > Tile Group (POWERBEAM); Heals? False
@@ -3297,8 +3102,6 @@ Extra - asset_id: collision_camera_053
 
 > Start Point; Heals? False; Spawn Point
   > Door to White EMMI Introduction
-      Trivial
-  > Door to EMMI Zone Hub
       Trivial
 
 ----------------
@@ -3374,7 +3177,7 @@ Extra - asset_id: collision_camera_055
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Room Middle
-      Can Slide
+      Morph Ball
 
 > Door to Teleport to Cataris; Heals? False
   * Super Missile Door to Teleport to Cataris/Door to Chain Reaction Access
@@ -3387,9 +3190,23 @@ Extra - asset_id: collision_camera_055
   > Room Middle
       Trivial
 
+> Tile Group (POWERBEAM) 1; Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_028
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
+
+> Tile Group (POWERBEAM) 2; Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_029
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('POWERBEAM',)
+
 > Tunnel to Teleport to Cataris (Morph Puzzle); Heals? False
   * Morph Ball Tunnel to Teleport to Cataris/Tunnel to Chain Reaction Access (Morph Puzzle)
-  > Start Point
+  > Tunnel to Waterfall
       Morph Ball
 
 > Tunnel to Teleport to Cataris (Tunnel); Heals? False
@@ -3399,7 +3216,7 @@ Extra - asset_id: collision_camera_055
 
 > Tunnel to Waterfall; Heals? False
   * Morph Ball Tunnel to Waterfall/Tunnel to Chain Reaction Access
-  > Start Point
+  > Tunnel to Teleport to Cataris (Morph Puzzle)
       Morph Ball
 
 > Room Middle; Heals? False
@@ -3413,8 +3230,6 @@ Extra - asset_id: collision_camera_055
       Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Tunnel to Teleport to Cataris (Morph Puzzle)
-      Morph Ball
   > Tunnel to Waterfall
       Can Slide
 
@@ -3447,7 +3262,7 @@ Extra - asset_id: collision_camera_056
       Morph Ball
   > Tunnel to Chain Reaction Access
       Morph Ball
-  > Start Point
+  > Tower Middle
       Trivial
 
 > Pickup (Missile Tank); Heals? False
@@ -3476,7 +3291,7 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_def: None
   > Pickup (Missile Tank)
       Trivial
-  > Start Point
+  > Tower Middle
       Trivial
 
 > Event - Waterfall Rotatable; Heals? False
@@ -3507,8 +3322,16 @@ Extra - asset_id: collision_camera_056
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   > Event - Waterfall Rotatable
       Wave Beam or Shoot Diffusion Beam
-  > Dock to Red Chozo Arena
+  > Start Point
       After Artaria - Waterfall Rotatable
+
+> Start Point; Heals? False; Spawn Point
+  * Extra - start_point_actor_name: SP_Checkpoint_Pre_ChozoWarriorX
+  * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Freezer
+      After Artaria - Waterfall Rotatable
+  > Dock to Red Chozo Arena
+      Trivial
 
 > Tunnel to Chain Reaction Access; Heals? False
   * Morph Ball Tunnel to Chain Reaction Access/Tunnel to Waterfall
@@ -3518,39 +3341,20 @@ Extra - asset_id: collision_camera_056
 > Dock to Water Tunnel under Map; Heals? False
   * Open Passage to Water Tunnel under Map/Dock to Waterfall
   > Door to Map Station
-      Any of the following:
-          Gravity Suit or After Artaria - Water Reservoir Blob
-          Water Bomb Jump (Beginner) and Perform Water Bomb Jump
-          Water Bomb Jump (Intermediate) and Perform Water Cross Jump
+      Gravity Suit or After Artaria - Water Reservoir Blob
   > Right of Rotatable
-      Any of the following:
-          All of the following:
-              Gravity Suit
-              Any of the following:
-                  Space Jump or Simple IBJ
-                  Walljump (Beginner) and Use Spin Boost
-          All of the following:
-              After Artaria - Water Reservoir Blob and Water Bomb Jump (Intermediate)
-              Any of the following:
-                  All of the following:
-                      Perform Water Bomb Jump
-                      Any of the following:
-                          Space Jump or Single-wall Wall Jump (Intermediate)
-                          Walljump (Beginner) and Use Spin Boost
-                  All of the following:
-                      Perform Water Cross Jump
-                      Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      All of the following:
+          Gravity Suit
+          Space Jump or Simple IBJ
 
 > Dock to Red Chozo Arena; Heals? False
   * Open Passage to Red Chozo Arena/Dock to Waterfall
 
-> Start Point; Heals? False; Spawn Point
+> Tower Middle; Heals? False
   > Door to Save Station West
       Trivial
   > Door to Behind Waterfall
-      Any of the following:
-          Flash Shift or Use Spin Boost
-          Horizontal Bomb Jump (Beginner) and Lay Cross Comb
+      Flash Shift or Use Spin Boost
   > Right of Rotatable
       Trivial
 
@@ -3559,10 +3363,8 @@ Extra - asset_id: collision_camera_056
       After Artaria - Waterfall Rotatable
   > Dock to Water Tunnel under Map
       Trivial
-  > Start Point
-      Any of the following:
-          Space Jump
-          Movement (Intermediate) and Use Spin Boost
+  > Tower Middle
+      Use Spin Boost
 
 ----------------
 Water Tunnel under Map
@@ -3707,9 +3509,7 @@ Extra - asset_id: collision_camera_060
   > Dock to Water Tunnel under Map
       After Artaria - Water Reservoir Blob and Can Slide Underwater
   > Event - Water Reservoir Blob (Back)
-      Any of the following:
-          Wave Beam
-          Pseudo-Wave Beam (Intermediate) and Shoot Beam
+      Wave Beam
 
 > Dock to Water Tunnel under Map; Heals? False
   * Open Passage to Water Tunnel under Map/Dock to Water Reservoir
@@ -3732,26 +3532,24 @@ Extra - asset_id: collision_camera_061
   * EMMI Door to Energy Recharge Station South/Dock to EMMI Zone Exit South
   * Extra - actor_name: DoorEmmy01
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Start Point
-      Trivial
+  > Dock to EMMI Zone Hub
+      Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
+  > Tunnel to EMMI Zone Hub
+      Morph Ball and Speed Booster and Movement (Beginner)
 
 > Dock to EMMI Zone Hub; Heals? False
   * Open Passage to EMMI Zone Hub/Dock to EMMI Zone Exit South
-  > Start Point
+  > Dock to Energy Recharge Station South
       Trivial
 
 > Tunnel to EMMI Zone Hub; Heals? False
   * Morph Ball Tunnel to EMMI Zone Hub/Tunnel to EMMI Zone Exit South
-  > Start Point
+  > Dock to Energy Recharge Station South
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Dock to Energy Recharge Station South
       Trivial
-  > Dock to EMMI Zone Hub
-      Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
-  > Tunnel to EMMI Zone Hub
-      Movement (Beginner) and Ballspark
 
 ----------------
 Cold Introduction
@@ -3759,18 +3557,18 @@ Extra - total_boundings: {'x1': -9200.0, 'x2': -7100.0, 'y1': -8800.0, 'y2': -69
 Extra - polygon: [[-7100.0, -6900.0], [-9200.0, -6900.0], [-9200.0, -8800.0], [-7100.0, -8800.0]]
 Extra - asset_id: collision_camera_062
 > Door to Charge Beam Access (Side Tunnel); Heals? False
-  * Missile Door to Charge Beam Access/Door to Cold Introduction (Side Tunnel)
+  * Missile Door to Charge Beam Access/Door from Cold Introduction
   * Extra - actor_name: Door003 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door003_missileShield
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Dock to Charge Beam Access
       Trivial
 
 > Door to Charge Beam Access (Cold); Heals? False
-  * Power Beam Door to Charge Beam Access/Door to Cold Introduction (Cold)
+  * Power Beam Door to Charge Beam Access/Door to Cold Introduction
   * Extra - actor_name: Door004 (PW-PW)
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3807,7 +3605,7 @@ Extra - asset_id: collision_camera_062
 
 > Dock to Charge Beam Access; Heals? False
   * Open Passage to Charge Beam Access/Dock to Cold Introduction
-  > Start Point
+  > Door to Charge Beam Access (Side Tunnel)
       Trivial
 
 > Tile Group (BOMB); Heals? False
@@ -3823,8 +3621,6 @@ Extra - asset_id: collision_camera_062
 
 > Start Point; Heals? False; Spawn Point
   > Door to Charge Beam Access (Side Tunnel)
-      Trivial
-  > Dock to Charge Beam Access
       Trivial
 
 ----------------
@@ -3877,18 +3673,16 @@ Extra - asset_id: collision_camera_064
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Dock to Proto EMMI CU
       Trivial
 
 > Dock to Proto EMMI CU; Heals? False
   * Open Passage to Proto EMMI CU/Dock to Proto EMMI Battle
-  > Start Point
+  > Door to Proto EMMI Introduction
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Door to Proto EMMI Introduction
-      Trivial
-  > Dock to Proto EMMI CU
       Trivial
 
 ----------------
@@ -3907,9 +3701,10 @@ Extra - asset_id: collision_camera_065
   > Navigation Room
       Trivial
   > Event - Unlock David Jaffe Room
-      All of the following:
+      Any of the following:
           # Temporary requirement until dock works properly
           Shoot Charge Beam
+          Knowledge (Beginner) and Lay Power Bomb
 
 > Door to Invisible Corpius Room; Heals? False
   * Power Beam Door to Invisible Corpius Room/Door to Navigation Station North
@@ -3978,7 +3773,9 @@ Extra - asset_id: collision_camera_066
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Save Station East
+      Trivial
+  > Door from Thermal Device
       Trivial
 
 > Door to Save Station East; Heals? False
@@ -3989,7 +3786,7 @@ Extra - asset_id: collision_camera_066
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Thermal Device
       Trivial
 
 > Door from Thermal Device; Heals? False
@@ -4000,15 +3797,11 @@ Extra - asset_id: collision_camera_066
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Thermal Device
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Door to Thermal Device
-      Trivial
-  > Door to Save Station East
-      Trivial
-  > Door from Thermal Device
       Trivial
 
 ----------------
@@ -4049,6 +3842,8 @@ Extra - asset_id: collision_camera_067
   * Extra - right_shield_def: None
   > Pickup (Missile Tank)
       Trivial
+  > Tile Group (MISSILE)
+      Can Slide
 
 > Pickup (Missile Tank); Heals? False
   * Pickup 10; Major Location? False
@@ -4056,8 +3851,6 @@ Extra - asset_id: collision_camera_067
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Path to Thermal Device (Upper)
       Trivial
-  > Start Point
-      Can Slide and Shoot Missile
 
 > Event - Thermal Device; Heals? False
   * Event Artaria - Thermal Device
@@ -4075,10 +3868,21 @@ Extra - asset_id: collision_camera_067
       Trivial
   > Door to Thermal Door Tutorial
       Trivial
-  > Pickup (Missile Tank)
-      Morph Ball and Shoot Missile
   > Event - Thermal Device
       Trivial
+  > Tile Group (MISSILE)
+      Morph Ball
+
+> Tile Group (MISSILE); Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_049
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('MISSILE',)
+  > Door to Path to Thermal Device (Upper)
+      Morph Ball
+  > Start Point
+      Can Slide
 
 ----------------
 Navigation Station South
@@ -4132,7 +3936,13 @@ Extra - asset_id: collision_camera_069
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to EMMI Zone Hub (DoorFrame_007)
+      After Artaria - EMMI Wide Beam Block
+  > Event - EMMI Wide Beam Block
+      All of the following:
+          Push Wide Beam Block
+          Spider Magnet or Movement (Beginner)
+  > Tunnel to EMMI Zone Hub
       Trivial
 
 > Door to EMMI Zone Hub (DoorFrame_007); Heals? False
@@ -4143,9 +3953,9 @@ Extra - asset_id: collision_camera_069
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Spinner
+  > Door to EMMI Zone Hub (DoorFrame_006)
       After Artaria - EMMI Wide Beam Block
-  > Start Point
+  > Door to EMMI Zone Spinner
       After Artaria - EMMI Wide Beam Block
 
 > Door to EMMI Zone Spinner; Heals? False
@@ -4161,24 +3971,16 @@ Extra - asset_id: collision_camera_069
 
 > Event - EMMI Wide Beam Block; Heals? False
   * Event Artaria - EMMI Wide Beam Block
-  > Start Point
+  > Door to EMMI Zone Hub (DoorFrame_006)
       Trivial
 
 > Tunnel to EMMI Zone Hub; Heals? False
   * Slide Tunnel to EMMI Zone Hub/Tunnel to Wide Beam Block Room
-  > Start Point
+  > Door to EMMI Zone Hub (DoorFrame_006)
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Door to EMMI Zone Hub (DoorFrame_006)
-      Trivial
-  > Door to EMMI Zone Hub (DoorFrame_007)
-      After Artaria - EMMI Wide Beam Block
-  > Event - EMMI Wide Beam Block
-      All of the following:
-          Push Wide Beam Block
-          Spider Magnet or Movement (Beginner)
-  > Tunnel to EMMI Zone Hub
       Trivial
 
 ----------------
@@ -4194,6 +3996,8 @@ Extra - asset_id: collision_camera_070
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Teleport to Dairon (DoorEmmy07)
+      Morph Ball
   > Start Point
       Morph Ball or Before Artaria - ArbEnky Blob West
 
@@ -4201,8 +4005,8 @@ Extra - asset_id: collision_camera_070
   * Pickup 1; Major Location? False
   * Extra - actor_name: Item_MissileTank011
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tunnel to Teleport to Dairon
-      Lay Bomb or Lay Power Bomb
+  > Tile Group (BOMB)
+      Morph Ball
   > Start Point
       Morph Ball and After Artaria - ArbEnky Blob West
 
@@ -4222,14 +4026,16 @@ Extra - asset_id: collision_camera_070
   * Extra - actor_name: DoorEmmy06
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Total Recharge
-      Before Artaria - Central Unit or Destroy Enky
+      Before Artaria - Central Unit or Shoot Ice Missile
 
 > Dock to Teleport to Dairon (DoorEmmy07); Heals? False
   * EMMI Door to Teleport to Dairon/Dock to Arbitrary Enky Room (DoorEmmy07)
   * Extra - actor_name: DoorEmmy07
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Start Point
-      Can Slide
+  > Door to Navigation Station North (Upper)
+      Any of the following:
+          Morph Ball
+          Before Artaria - ArbEnky Blob West and Can Slide
 
 > Event - ArbEnky Blob West; Heals? False
   * Event Artaria - ArbEnky Blob West
@@ -4253,12 +4059,23 @@ Extra - asset_id: collision_camera_070
   > Door to Navigation Station North (Thermal)
       Trivial
   > Dock to Teleport to Dairon (DoorEmmy06)
-      Before Artaria - Central Unit or Destroy Enky
+      Before Artaria - Central Unit or Shoot Ice Missile
+
+> Tile Group (BOMB); Heals? False
+  * Configurable Node
+  * Extra - actor_name: breakabletilegroup_022
+  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
+  * Extra - actor_layer: breakables
+  * Extra - tile_types: ('BOMB',)
+  > Pickup (Missile Tank)
+      Morph Ball
+  > Tunnel to Teleport to Dairon
+      Morph Ball
 
 > Tunnel to Teleport to Dairon; Heals? False
   * Morph Ball Tunnel to Teleport to Dairon/Tunnel to Arbitrary Enky Room
-  > Pickup (Missile Tank)
-      Lay Bomb or Lay Power Bomb
+  > Tile Group (BOMB)
+      Morph Ball
 
 > Start Point; Heals? False; Spawn Point
   > Door to Navigation Station North (Upper)
@@ -4266,9 +4083,7 @@ Extra - asset_id: collision_camera_070
   > Pickup (Missile Tank)
       Morph Ball and After Artaria - ArbEnky Blob West
   > Dock to Teleport to Dairon (DoorEmmy07)
-      Any of the following:
-          Morph Ball
-          After Artaria - ArbEnky Blob West and Can Slide
+      After Artaria - ArbEnky Blob West and Can Slide
   > Event - ArbEnky Blob West
       After Artaria - ArbEnky Blob East and Shoot Beam
   > Event - ArbEnky Blob East
@@ -4294,7 +4109,7 @@ Extra - asset_id: collision_camera_071
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Teleport to Dairon (DoorFrame_015)
       Simple IBJ or Use Spin Boost
 
 > Door to Teleport to Dairon (DoorFrame_015); Heals? False
@@ -4305,7 +4120,9 @@ Extra - asset_id: collision_camera_071
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Teleport to Dairon (DoorPowerPower_001)
+      Space Jump or Simple IBJ
+  > Door to Teleport to Dairon (DoorFrame_016)
       Trivial
 
 > Door to Teleport to Dairon (DoorFrame_016); Heals? False
@@ -4318,17 +4135,11 @@ Extra - asset_id: collision_camera_071
   * Extra - right_shield_def: None
   > Dock to Invisible Corpius Room
       Can Slide
-  > Start Point
+  > Door to Teleport to Dairon (DoorFrame_015)
       Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Door to Teleport to Dairon (DoorPowerPower_001)
-      Any of the following:
-          Space Jump or Simple IBJ
-          Walljump (Beginner) and Use Spin Boost
   > Door to Teleport to Dairon (DoorFrame_015)
-      Trivial
-  > Door to Teleport to Dairon (DoorFrame_016)
       Trivial
 
 ----------------
@@ -4380,7 +4191,7 @@ Extra - asset_id: collision_camera_073
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Path to Corpius
       Trivial
 
 > Door to Path to Corpius; Heals? False
@@ -4391,7 +4202,9 @@ Extra - asset_id: collision_camera_073
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Invisible Corpius Room
+      Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+  > Door to Corpius Arena
       Trivial
 
 > Door to Corpius Arena; Heals? False
@@ -4403,15 +4216,11 @@ Extra - asset_id: collision_camera_073
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Path to Corpius
       Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Door to Invisible Corpius Room
-      Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
   > Door to Path to Corpius
-      Trivial
-  > Door to Corpius Arena
       Trivial
 
 ----------------
@@ -4447,8 +4256,10 @@ Extra - asset_id: collision_camera_075
   * EMMI Door to Water Reservoir/Dock to EMMI Zone Exit Southwest
   * Extra - actor_name: DoorEmmy02
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Start Point
-      Trivial
+  > Door to EMMI Zone Hub (DoorFrame_004)
+      Simple IBJ or Use Spin Boost
+  > Door to EMMI Zone Hub (DoorFrame_005)
+      Can Slide
 
 > Door to EMMI Zone Hub (DoorFrame_004); Heals? False
   * Access Open to EMMI Zone Hub/Door to EMMI Zone Exit Southwest (DoorFrame_004)
@@ -4458,9 +4269,9 @@ Extra - asset_id: collision_camera_075
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Hub (DoorFrame_005)
+  > Dock to Water Reservoir
       Trivial
-  > Start Point
+  > Door to EMMI Zone Hub (DoorFrame_005)
       Trivial
 
 > Door to EMMI Zone Hub (DoorFrame_005); Heals? False
@@ -4471,16 +4282,14 @@ Extra - asset_id: collision_camera_075
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Water Reservoir
+      Morph Ball
   > Door to EMMI Zone Hub (DoorFrame_004)
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Dock to Water Reservoir
       Trivial
-  > Door to EMMI Zone Hub (DoorFrame_004)
-      Simple IBJ or Use Spin Boost
-  > Door to EMMI Zone Hub (DoorFrame_005)
-      Can Slide
 
 ----------------
 Save Station North
@@ -4571,11 +4380,11 @@ Extra - asset_id: collision_camera_078
   > Door to Hot Room Hub
       Any of the following:
           Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 75
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Door to Transport to Cataris
       Any of the following:
           Varia Suit
-          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 125
+          Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
 
 > Door to Hot Room Hub; Heals? False
   * Charge Beam Door to Hot Room Hub/Door to Hot Cataris Shortcut
@@ -4589,18 +4398,23 @@ Extra - asset_id: collision_camera_078
       All of the following:
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 75
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
           Any of the following:
-              Use Spin Boost
-              All of the following:
-                  Flash Shift
-                  Grapple Beam or Spider Magnet
+              Spider Magnet or Use Spin Boost
+              Flash Shift and Grapple Beam
   > Door to Transport to Cataris
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
+      Any of the following:
+          All of the following:
+              Morph Ball
+              Any of the following:
+                  Varia Suit
+                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
+          All of the following:
+              Spider Magnet
+              Any of the following:
+                  # Spider magnet is super slow. Slow enough to warrant havin a separate heate damage value vs. taking this path with morph ball
+                  Varia Suit
+                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
 
 > Door to Transport to Cataris; Heals? False
   * Charge Beam Door to Transport to Cataris/Door to Hot Cataris Shortcut
@@ -4612,20 +4426,16 @@ Extra - asset_id: collision_camera_078
   * Extra - right_shield_def: None
   > Pickup (Missile Tank)
       All of the following:
-          Spider Magnet
           Flash Shift or Simple IBJ or Use Spin Boost
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 125
-          Any of the following:
-              Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 50
   > Door to Hot Room Hub
       All of the following:
           Can Slide
           Any of the following:
               Varia Suit
-              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
+              Heat/Cold Runs (Intermediate) and Heat Damage ≥ 100
 
 > Start Point; Heals? False; Spawn Point
   > Door to Hot Room Hub
@@ -4648,9 +4458,8 @@ Extra - asset_id: collision_camera_079
   * Extra - right_shield_def: None
   > Door to Transport to Cataris
       Any of the following:
-          Spider Magnet or Simple IBJ or Use Spin Boost
+          Spider Magnet or Morph Ball or Simple IBJ or Use Spin Boost
           Flash Shift and Grapple Beam
-          Morph Ball and Damage Boost (Beginner)
 
 > Door to Transport to Cataris; Heals? False
   * Power Beam Door to Transport to Cataris/Door to Lower Path to Cataris
@@ -4669,7 +4478,7 @@ Extra - total_boundings: {'x1': -27800.0, 'x2': -24100.0, 'y1': -1900.0, 'y2': -
 Extra - polygon: [[-24100.0, -758.0], [-27800.0, -758.0], [-27800.0, -1900.0], [-24100.0, -1900.0]]
 Extra - asset_id: collision_camera_080
 > Door to Screw Attack Room; Heals? False
-  * Missile Door to Screw Attack Room/Door to Transport to Burenia
+  * Missile Door to Screw Attack Room/Door from Transport to Burenia
   * Extra - actor_name: Door070
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door070_missileShield
@@ -4756,8 +4565,8 @@ Extra - asset_id: collision_camera_081
   > Next to Upper Tank
       Trivial
 
-> Door to Transport to Burenia; Heals? False
-  * Missile Door to Transport to Burenia/Door to Screw Attack Room
+> Door from Transport to Burenia; Heals? False
+  * Access Closed to Transport to Burenia/Door to Screw Attack Room
   * Extra - actor_name: Door070
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door070_missileShield
@@ -4770,10 +4579,8 @@ Extra - asset_id: collision_camera_081
       Morph Ball and After Artaria - Screw Attack Rotatable
   > Next to Upper Tank
       All of the following:
-          Before Artaria - Screw Attack Rotatable
-          Any of the following:
-              Flash Shift or Speed Booster or Movement (Beginner)
-              Horizontal Bomb Jump (Beginner) and Lay Cross Comb
+          # TODO: Check other options for avoiding flipping the rotatable
+          Flash Shift and Before Artaria - Screw Attack Rotatable
   > Event - Screw Attack Rotatable
       Before Artaria - Screw Attack Rotatable
 
@@ -4788,6 +4595,7 @@ Extra - asset_id: collision_camera_081
   * Pickup 27; Major Location? True
   * Extra - actor_name: ItemSphere_ScrewAttack
   * Extra - actor_def: actordef:actors/items/itemsphere_screwattack/charclasses/itemsphere_screwattack.bmsad
+  * Extra - map_icon_actor: powerup_screwattack
   > Start Point - Screw Attack
       Trivial
 
@@ -4844,26 +4652,10 @@ Extra - asset_id: collision_camera_081
           Any of the following:
               Space Jump or Simple IBJ
               Walljump (Beginner) and Use Spin Boost
-              Morph Ball and Single-wall Wall Jump (Intermediate)
-  > Event - Screw Attack Rotatable
-      All of the following:
-          Before Artaria - Screw Attack Rotatable and Knowledge (Beginner)
-          Any of the following:
-              Space Jump or Simple IBJ
-              Walljump (Beginner) and Use Spin Boost
-              Morph Ball and Single-wall Wall Jump (Intermediate)
   > Under left side blocks
-      Any of the following:
-          All of the following:
-              Gravity Suit
-              Walljump (Beginner) or Simple IBJ or Use Spin Boost
-          All of the following:
-              Water Bomb Jump (Intermediate)
-              Any of the following:
-                  Perform Water Cross Jump
-                  All of the following:
-                      Perform Water Bomb Jump
-                      Space Jump or Walljump (Beginner)
+      All of the following:
+          Gravity Suit
+          Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Start Point - Screw Attack; Heals? False
   * Extra - start_point_actor_name: SP_Checkpoint_ScrewAttack
@@ -4871,9 +4663,7 @@ Extra - asset_id: collision_camera_081
   > Pickup (Screw Attack)
       Trivial
   > Tile Group (SCREWATTACK) 3
-      Any of the following:
-          Simple IBJ or Use Spin Boost
-          Morph Ball and Single-wall Wall Jump (Intermediate)
+      Simple IBJ or Use Spin Boost
 
 > Teleporter to Cataris; Heals? False; Spawn Point
   * Teleporter to Cataris - Teleport to Artaria (Blue)
@@ -4892,9 +4682,7 @@ Extra - asset_id: collision_camera_081
   * Extra - start_point_actor_name: SP_Checkpoint_Cooldown
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
   > Door to Freezer (Door075)
-      All of the following:
-          Morph Ball
-          Walljump (Beginner) or Use Spin Boost
+      Morph Ball
   > Blob - Left
       Trivial
 
@@ -4915,7 +4703,7 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Transport to Burenia
+  > Door from Transport to Burenia
       After Artaria - Screw Attack Rotatable
   > Under left side blocks
       Trivial
@@ -4937,9 +4725,7 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
   > Start Point - Screw Attack
-      Any of the following:
-          Gravity Suit and Morph Ball
-          Water Bomb Jump (Beginner) and Simple IBJ
+      Gravity Suit and Morph Ball
 
 > Tile Group (WEIGHT) Upper; Heals? False
   * Extra - actor_name: breakabletilegroup_058
@@ -4988,32 +4774,21 @@ Extra - asset_id: collision_camera_081
               # TODO: difficulty of pseudo
               Pseudo-Wave Beam (Beginner) and Shoot Beam
   > Start Point 2
-      Any of the following:
-          All of the following:
-              Gravity Suit
-              Before Artaria - Screw Attack Water Blob or Use Spin Boost
-          All of the following:
-              Before Artaria - Screw Attack Water Blob
-              Any of the following:
-                  Water Bomb Jump (Beginner) and Perform Water Bomb Jump
-                  Water Bomb Jump (Intermediate) and Perform Water Cross Jump
+      Gravity Suit and Use Spin Boost
   > Blob - Right
       After Artaria - Screw Attack Water Blob
-  > Lower-Left Ledge
-      Any of the following:
+  > Under left side blocks
+      All of the following:
           Gravity Suit
-          Water Bomb Jump (Beginner) and Perform Water Bomb Jump
-          Water Bomb Jump (Intermediate) and Perform Water Cross Jump
+          Space Jump or Walljump (Beginner) or Simple IBJ
 
 > Next to Upper Tank; Heals? False
   > Pickup (Missile Tank, Top)
       Trivial
-  > Door to Transport to Burenia
+  > Door from Transport to Burenia
       All of the following:
-          Before Artaria - Screw Attack Rotatable
-          Any of the following:
-              Flash Shift or Movement (Beginner)
-              Horizontal Bomb Jump (Beginner) and Lay Cross Comb
+          # TODO: Check other options for avoiding flipping the rotatable
+          Flash Shift and Before Artaria - Screw Attack Rotatable
   > Total Recharge
       After Artaria - Screw Attack Rotatable
   > Tile Group (SCREWATTACK) 3
@@ -5025,34 +4800,19 @@ Extra - asset_id: collision_camera_081
   * Event Artaria - Screw Attack Rotatable
   > Total Recharge
       Trivial
-  > Next to Upper Tank
-      All of the following:
-          Knowledge (Beginner)
-          Walljump (Beginner) or Use Spin Boost
 
 > Under left side blocks; Heals? False
   > Total Recharge
-      Any of the following:
-          Gravity Suit
-          Water Bomb Jump (Beginner) and Perform Water Bomb Jump
-          Water Bomb Jump (Intermediate) and Perform Water Cross Jump
+      Gravity Suit
   > Tile Group (SCREWATTACK) 2
       Trivial
-  > Lower-Left Ledge
+  > Blob - Left
       Trivial
 
 > Tunnel to Shortcut to Screw Attack; Heals? False
   * Morph Ball Tunnel to Shortcut to Screw Attack/Tunnel to Screw Attack Room
   > Teleporter to Cataris
       After Artaria - Screw Attack Grapple Block
-
-> Lower-Left Ledge; Heals? False
-  > Start Point 2
-      Space Jump and Movement (Intermediate)
-  > Blob - Left
-      Trivial
-  > Under left side blocks
-      Space Jump or Walljump (Beginner) or Simple IBJ
 
 ----------------
 Freezer
@@ -5146,8 +4906,6 @@ Extra - asset_id: collision_camera_083
   * Extra - tile_types: ('SPEEDBOOST',)
   > Dock to Speed Hallway
       Trivial
-  > Start Point
-      Trivial
 
 > Dock to Speed Hallway; Heals? False
   * Open Passage to Speed Hallway/Dock to Speed Booster Bonus Room
@@ -5171,7 +4929,9 @@ Extra - asset_id: collision_camera_085
   * Extra - left_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:door_shield_plasma_000
   * Extra - right_shield_def: actordef:actors/props/door_shield_plasma/charclasses/door_shield_plasma.bmsad
-  > Start Point
+  > Door to Waterfall
+      Trivial
+  > Tunnel to Screw Attack Room
       Trivial
 
 > Door to Waterfall; Heals? False
@@ -5182,27 +4942,16 @@ Extra - asset_id: collision_camera_085
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Screw Attack Room
       Trivial
 
 > Tunnel to Screw Attack Room; Heals? False
   * Morph Ball Tunnel to Screw Attack Room/Tunnel to Shortcut to Screw Attack
-  > Start Point
-      After Artaria - Screw Attack Grapple Block
+  > Door to Screw Attack Room
+      Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Door to Screw Attack Room
-      Trivial
-  > Door to Waterfall
-      Trivial
-  > Tunnel to Screw Attack Room
-      After Artaria - Screw Attack Grapple Block
-  > Event - Screw Attack Shortcut Grapple Block
-      Grapple Beam and Reverse Grapple Block (Beginner)
-
-> Event - Screw Attack Shortcut Grapple Block; Heals? False
-  * Event Artaria - Screw Attack Grapple Block
-  > Start Point
       Trivial
 
 ----------------
@@ -5232,9 +4981,11 @@ Extra - asset_id: collision_camera_086
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SPEEDBOOST) 5
+  > Door to Red Chozo Arena
+      Can Slide
+  > Tile Group (MISSILE)
       Trivial
-  > Start Point
+  > Tile Group (SPEEDBOOST) 5
       Trivial
 
 > Door to Red Chozo Arena; Heals? False
@@ -5247,14 +4998,14 @@ Extra - asset_id: collision_camera_086
   * Extra - right_shield_def: None
   > Pickup (Energy Part)
       Trivial
+  > Door to Cold Introduction
+      Can Slide
   > Tile Group (SPEEDBOOST) 3
       Trivial
   > Tile Group (SPEEDBOOST) 4
       Trivial
   > Dock to Speed Booster Bonus Room
       Trivial
-  > Start Point
-      Can Slide
 
 > Tile Group (MISSILE); Heals? False
   * Configurable Node
@@ -5262,9 +5013,9 @@ Extra - asset_id: collision_camera_086
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('MISSILE',)
-  > Tile Group (SPEEDBOOST) 3
+  > Door to Cold Introduction
       Trivial
-  > Start Point
+  > Tile Group (SPEEDBOOST) 3
       Trivial
 
 > Tile Group (SPEEDBOOST) 1; Heals? False
@@ -5317,10 +5068,10 @@ Extra - asset_id: collision_camera_086
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SPEEDBOOST',)
+  > Door to Cold Introduction
+      Trivial
   > Tunnel to Cold Introduction
       Morph Ball
-  > Start Point
-      Trivial
 
 > Dock to Speed Booster Bonus Room; Heals? False
   * Open Passage to Speed Booster Bonus Room/Dock to Speed Hallway
@@ -5335,10 +5086,6 @@ Extra - asset_id: collision_camera_086
 > Start Point; Heals? False; Spawn Point
   > Door to Cold Introduction
       Trivial
-  > Door to Red Chozo Arena
-      Can Slide
-  > Tile Group (MISSILE)
-      Trivial
 
 ----------------
 Shinespark Tower to Grapple
@@ -5349,7 +5096,7 @@ Extra - asset_id: collision_camera_088
   * EMMI Door to EMMI Zone Exit North/Dock to Shinespark Tower to Grapple
   * Extra - actor_name: DoorEmmy05
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
-  > Start Point
+  > Tile Group (POWERBEAM) 5
       Trivial
 
 > Door to Save Station North; Heals? False
@@ -5413,15 +5160,13 @@ Extra - asset_id: collision_camera_088
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (POWERBEAM) 4
+  > Dock to EMMI Zone Exit North
       Trivial
-  > Start Point
+  > Tile Group (POWERBEAM) 4
       Trivial
 
 > Start Point; Heals? False; Spawn Point
   > Dock to EMMI Zone Exit North
-      Trivial
-  > Tile Group (POWERBEAM) 5
       Trivial
 
 ----------------
@@ -5439,8 +5184,8 @@ Extra - asset_id: collision_camera_089
   * Extra - right_shield_def: None
   > Door to Grapple Beam Room
       Trivial
-  > Start Point
-      Flash Shift
+  > Door to Spider Beam Tower
+      Flash Shift or Grapple Beam
 
 > Door to Grapple Beam Room; Heals? False
   * Missile Door to Grapple Beam Room/Door from Grapple Beam Tutorial
@@ -5450,7 +5195,7 @@ Extra - asset_id: collision_camera_089
   * Extra - left_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Spider Beam Tower
       Grapple Beam or Simple IBJ or Use Spin Boost
 
 > Door to Spider Beam Tower; Heals? False
@@ -5461,12 +5206,10 @@ Extra - asset_id: collision_camera_089
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Start Point
+  > Door to Grapple Beam Room
       Trivial
 
 > Start Point; Heals? False; Spawn Point
-  > Door to Grapple Beam Room
-      Trivial
   > Door to Spider Beam Tower
       Trivial
 
@@ -5551,9 +5294,7 @@ Extra - asset_id: collision_camera_091
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
   > Start Point
-      Any of the following:
-          Gravity Suit
-          Heat/Cold Runs (Beginner) and Cold Damage ≥ 10
+      Trivial
 
 > Dock to Waterfall; Heals? False
   * Open Passage to Waterfall/Dock to Red Chozo Arena

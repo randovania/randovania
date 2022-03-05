@@ -1,7 +1,7 @@
 import asyncio
 from typing import Optional
 
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.gui.lib import common_qt_lib
 
@@ -14,12 +14,15 @@ async def execute_dialog(dialog: QtWidgets.QDialog) -> QtWidgets.QDialog.DialogC
     """
     future = asyncio.get_event_loop().create_future()
 
-    dialog.finished.connect(future.set_result)
+    def set_result(result: QtWidgets.QDialog.DialogCode):
+        future.set_result(result)
+
+    dialog.finished.connect(set_result)
     try:
         dialog.show()
         return await future
     finally:
-        dialog.finished.disconnect(future.set_result)
+        dialog.finished.disconnect(set_result)
 
 
 async def message_box(parent: Optional[QtWidgets.QWidget],

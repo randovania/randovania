@@ -3,12 +3,12 @@ import dataclasses
 import functools
 from typing import Dict, Optional
 
-from PySide2 import QtWidgets, QtCore
+from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators

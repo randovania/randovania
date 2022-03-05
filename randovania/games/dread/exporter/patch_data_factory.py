@@ -1,6 +1,8 @@
 import logging
 import os
 from typing import Optional, Union
+from randovania import VERSION
+from open_dread_rando.version import version as open_dread_rando_version
 
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -11,8 +13,9 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import Node, LogbookNode
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
@@ -203,19 +206,40 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
     def _encode_hints(self) -> list[dict]:
         namer = DreadHintNamer(self.description.all_patches, self.players_config)
-
         exporter = HintExporter(namer, self.rng, ["A joke hint."])
 
         return [
             {
                 "accesspoint_actor": self._teleporter_ref_for(logbook_node),
                 "hint_id": logbook_node.extra["hint_id"],
-                "text": exporter.create_message_for_hint(self.patches.hints[logbook_node.resource()],
-                                                         self.description.all_patches, self.players_config, True)
+                "text": exporter.create_message_for_hint(
+                    self.patches.hints[self.game.world_list.identifier_for_node(logbook_node)],
+                    self.description.all_patches, self.players_config, True
+                ),
             }
             for logbook_node in self.game.world_list.all_nodes
             if isinstance(logbook_node, LogbookNode)
         ]
+    
+    def _static_text_changes(self) -> dict[str, str]:
+        full_hash = f"{self.description.shareable_word_hash} ({self.description.shareable_hash})"
+        text = {}
+        difficulty_labels = {
+            "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_HARD_UNLOCKED",
+            "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_NORMAL",
+            "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_EASY",
+            "GUI_DIFSELECTOR_LABEL_DESCRIPTOR_EXPERT"
+        }
+        for difficulty in difficulty_labels:
+            text[difficulty] = full_hash
+        
+        text["GUI_COMPANY_TITLE_SCREEN"] = "|".join([
+            f"Randovania {VERSION} - open-dread-rando {open_dread_rando_version}",
+            full_hash
+        ])
+
+        return text
+
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
@@ -254,6 +278,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 for source, target in self.patches.elevator_connection.items()
             ],
             "hints": self._encode_hints(),
+            "text_patches": self._static_text_changes(),
         }
 
 

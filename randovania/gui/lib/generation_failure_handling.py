@@ -1,6 +1,6 @@
 import multiprocessing
 
-from PySide2 import QtCore, QtWidgets
+from PySide6 import QtCore, QtWidgets
 from qasync import asyncSlot
 
 from randovania.generator.filler.filler_library import UnableToGenerate

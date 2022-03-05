@@ -5,8 +5,51 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.2.0] - Unreleased
 
-## [4.1.0] - Unreleased
+- Changed: Update to Qt 6.
+
+### Cave Story
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime
+
+- Nothing.
+
+#### Patcher Changes
+
+- Fixed: Scan visor and X-Ray not displaying properly after taking an elevator when combat visor is shuffled.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime 2: Echoes
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+## [4.1.1] - Unreleased
+
+- Fixed: The error message when the client is incompatible is now properly displayed.
+
+## [4.1.0] - 2022-03-01
 
 - Added: /randovania-faq command was added to the Discord bot, which sends FAQ messages.
 - Added: Randovania now checks if the entire database is strongly connected, allowing for manual exceptions.
@@ -16,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Implemented support for changing the title for a game session.
 - Added: A button for duplicating a session, including the generated game and all rows.
 - Added: Multiworld sessions can now be generated without spoilers.
+- Added: Preset descriptions now include if some item has a different number of copies shuffled.
 - Changed: Multiworld damage logic incompatibility warning now displays every time.
 - Changed: On generation failure, a count of how many nodes are accessible is now displayed.
 - Changed: Data Editor now lets you save non-experimental databases with integrity errors.
@@ -74,9 +118,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Nothing.
+- Added: Using Screw Attack as a trickless means to obtain Grand Windchamber item after seeker puzzles
 
-## [4.0.1] - Unreleased
+## [4.0.1] - 2022-01-30
 
 - Changed: The UI for 1HP Mode now only shows up for Echoes.
 - Fixed: Support for non-NTSC Metroid Prime 1 ISOs restored.
