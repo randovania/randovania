@@ -48,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.1.1] - Unreleased
 
 - Fixed: The error message when the client is incompatible is now properly displayed.
+- Fixed: Player inventory is now properly sent to the server in multiworld sessions.
 
 ## [4.1.0] - 2022-03-01
 
