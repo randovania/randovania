@@ -1,5 +1,4 @@
 import asyncio
-import functools
 import locale
 import logging.handlers
 import os
@@ -39,6 +38,8 @@ def catch_exceptions_async(loop, context):
     if 'future' in context:
         future: asyncio.Future = context['future']
         logger.exception(context["message"], exc_info=future.exception())
+    elif 'exception' in context:
+        logger.exception(context["message"], exc_info=context['exception'])
     else:
         logger.critical(str(context))
 
