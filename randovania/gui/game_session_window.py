@@ -18,7 +18,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
-from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter
+from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, file_prompts
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin
 from randovania.gui.lib.game_connection_setup import GameConnectionSetup
 from randovania.gui.lib.generation_failure_handling import GenerationFailureHandler
@@ -215,10 +215,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.generate_game_without_spoiler_action = QtWidgets.QAction("Generate without spoiler",
                                                                       self.background_process_menu)
         self.import_permalink_action = QtWidgets.QAction("Import permalink", self.background_process_menu)
+        self.import_layout_action = QtGui.QAction("Import game/spoiler", self.background_process_menu)
+
         self.background_process_menu.addAction(self.generate_game_with_spoiler_action)
         self.background_process_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
         self.background_process_menu.addAction(self.generate_game_without_spoiler_action)
         self.background_process_menu.addAction(self.import_permalink_action)
+        self.background_process_menu.addAction(self.import_layout_action)
         self.background_process_button.setMenu(self.background_process_menu)
 
         # Game Connection
@@ -267,6 +270,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         self.generate_game_with_spoiler_no_retry_action.triggered.connect(self.generate_game_with_spoiler_no_retry)
         self.generate_game_without_spoiler_action.triggered.connect(self.generate_game_without_spoiler)
         self.import_permalink_action.triggered.connect(self.import_permalink)
+        self.import_layout_action.triggered.connect(self.import_layout)
         self.background_process_button.clicked.connect(self.background_process_button_clicked)
 
         # Signals
@@ -999,6 +1003,34 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
     async def generate_game_without_spoiler(self):
         await self.generate_game(False, retries=None)
 
+    async def _should_overwrite_presets(self, parameters: GeneratorParameters, permalink_source: bool) -> bool:
+        if permalink_source:
+            source_name = "permalink"
+        else:
+            source_name = "game file"
+
+        if parameters.player_count != self._game_session.num_rows:
+            await async_dialog.warning(
+                self, "Incompatible permalink",
+                f"Given {source_name} is for {parameters.player_count} players, but "
+                f"this session only have {self._game_session.num_rows} rows.")
+            return False
+
+        if any(not preset_p.is_same_configuration(preset_s.get_preset())
+               for preset_p, preset_s in zip(parameters.presets, self._game_session.presets)):
+            response = await async_dialog.warning(
+                self, "Different presets",
+                f"Given {source_name} has different presets compared to the session.\n"
+                f"Do you want to overwrite the session's presets?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No
+            )
+            if response != QMessageBox.Yes:
+                return False
+
+        return True
+
+
     @asyncSlot()
     @handle_network_errors
     async def import_permalink(self):
@@ -1008,26 +1040,24 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             return
 
         permalink = dialog.get_permalink_from_field()
-        parameters = permalink.parameters
-        if parameters.player_count != self._game_session.num_rows:
-            return await async_dialog.warning(
-                self, "Incompatible permalink",
-                f"Given permalink is for {parameters.player_count} players, but "
-                f"this session only have {self._game_session.num_rows} rows.")
+        if await self._should_overwrite_presets(permalink.parameters, permalink_source=True):
+            await self.generate_game_with_permalink(permalink, retries=None)
 
-        if any(not preset_p.is_same_configuration(preset_s.get_preset())
-               for preset_p, preset_s in zip(parameters.presets, self._game_session.presets)):
-            response = await async_dialog.warning(
-                self, "Different presets",
-                f"Given permalink has different presets compared to the session.\n"
-                f"Do you want to overwrite the session's presets?",
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No
-            )
-            if response != QMessageBox.Yes:
-                return
+    @asyncSlot()
+    @handle_network_errors
+    async def import_layout(self):
+        json_path = await file_prompts.prompt_input_layout(self)
+        if json_path is None:
+            return
 
-        await self.generate_game_with_permalink(permalink, retries=None)
+        layout = LayoutDescription.from_file(json_path)
+        if await self._should_overwrite_presets(layout.generator_parameters, permalink_source=False):
+
+            await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, True)
+            try:
+                await self._upload_layout_description(layout)
+            finally:
+                await self._admin_global_action(SessionAdminGlobalAction.UPDATE_LAYOUT_GENERATION, False)
 
     async def _upload_layout_description(self, layout: LayoutDescription):
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_LAYOUT_DESCRIPTION,
