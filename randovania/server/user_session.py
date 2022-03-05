@@ -155,7 +155,7 @@ def setup_app(sio: ServerApp):
 
     @sio.app.route("/login")
     def browser_login_with_discord():
-        return sio.discord.create_session()
+        return sio.discord.create_session(scope=["identify"])
 
     @sio.app.route("/login_callback")
     def browser_discord_login_callback():
