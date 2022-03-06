@@ -405,36 +405,18 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         for area in world.areas:
             g.add_node(area)
 
+        context = state.node_context()
         for area in world.areas:
             nearby_areas = set()
             for node in area.nodes:
                 if node not in nodes_in_reach:
                     continue
 
-                if isinstance(node, DockNode):
-                    try:
-                        target_node = world_list.resolve_dock_node(node, state.patches)
-                        if target_node is None:
-                            continue
-                        forward_weakness = state.patches.dock_weakness.get(world_list.identifier_for_node(node),
-                                                                           node.default_dock_weakness)
-                        requirement = forward_weakness.requirement
-                        # TODO: only add requirement if the blast shield has not been destroyed yet
-
-                        if isinstance(target_node, DockNode):
-                            # TODO: Target node is expected to be a dock. Should this error?
-                            back_weakness = state.patches.dock_weakness.get(
-                                world_list.identifier_for_node(target_node),
-                                target_node.default_dock_weakness)
-                            if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
-                                requirement = RequirementAnd([requirement, back_weakness.requirement])
-
-                        if requirement.satisfied(state.resources, state.energy, state.resource_database):
-                            nearby_areas.add(world_list.nodes_to_area(target_node))
-
-                    except IndexError as e:
-                        logging.error(f"For {node.name} in {area.name}, received {e}")
-                        continue
+                for other_node, requirement in node.connections_from(context):
+                    if requirement.satisfied(state.resources, state.energy, state.resource_database):
+                        other_area = world_list.nodes_to_area(other_node)
+                        if other_area in world.areas:
+                            nearby_areas.add(other_area)
 
             for other_area in nearby_areas:
                 g.add_edge(area, other_area)
