@@ -326,10 +326,6 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
         seed = self.description.get_seed_for_player(self.players_config.player_index)
 
-        from randovania.interface_common.options import Options
-        from os import path
-        cache_dir = str(path.join(Options.with_default_data_dir().data_dir, "cache"))
-
         return {
             "seed": seed,
             "preferences": {
@@ -346,7 +342,6 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "quickplay": False,
                 "quiet": False,
                 "suitColors": suit_colors,
-                "cacheDir": cache_dir,
             },
             "gameConfig": {
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,
