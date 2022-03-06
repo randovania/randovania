@@ -83,8 +83,4 @@ def test_create_patch_data(test_files_dir, mocker):
     data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]
     expected_data["gameConfig"]["mainMenuMessage"] = expected_data["gameConfig"]["mainMenuMessage"].split("\n")[1]
 
-    # Ignore cacheDir because it is allowed to change from system to system
-    data["preferences"]["cacheDir"] = ""
-    expected_data["preferences"]["cacheDir"] = ""
-
     assert data == expected_data
