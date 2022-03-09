@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 import math
 import pprint
 import typing
 from random import Random
-from typing import Tuple, Iterator, Set, AbstractSet, Dict, \
-    Mapping, FrozenSet, Callable, List, Optional
+from typing import (
+    Iterator, AbstractSet, Mapping, FrozenSet, Callable, Optional,
+)
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
@@ -15,10 +18,13 @@ from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator import reach_lib
 from randovania.generator.filler.action import Action, action_name
-from randovania.generator.filler.filler_library import UnableToGenerate, should_have_hint, UncollectedState, \
+from randovania.generator.filler.filler_library import (
+    UnableToGenerate, should_have_hint, UncollectedState,
     find_node_with_resource
+)
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.player_state import PlayerState
+from randovania.generator.filler.types import WeightedLocations
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.lib.random_lib import select_element_with_weight
 from randovania.resolver import debug
@@ -28,7 +34,6 @@ _EVENTS_WEIGHT_MULTIPLIER = 0.5
 _INDICES_WEIGHT_MULTIPLIER = 1
 _LOGBOOKS_WEIGHT_MULTIPLIER = 1
 _VICTORY_WEIGHT = 1000
-WeightedLocations = Dict[Tuple["PlayerState", PickupIndex], float]
 
 
 def _calculate_reach_for_progression(reach: GeneratorReach,
@@ -40,8 +45,8 @@ def _calculate_reach_for_progression(reach: GeneratorReach,
 def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[PickupIndex],
                                          assigned_indices: AbstractSet[PickupIndex],
                                          seen_counts: Mapping[PickupIndex, int],
-                                         indices_groups: List[Set[PickupIndex]],
-                                         ) -> Dict[PickupIndex, float]:
+                                         indices_groups: list[set[PickupIndex]],
+                                         ) -> dict[PickupIndex, float]:
     result = {}
 
     for indices in indices_groups:
@@ -55,7 +60,7 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
     return result
 
 
-def _get_next_player(rng: Random, player_states: List[PlayerState], num_indices: int) -> Optional[PlayerState]:
+def _get_next_player(rng: Random, player_states: list[PlayerState], num_indices: int) -> Optional[PlayerState]:
     """
     Gets the next player a pickup should be placed for.
     :param rng:
@@ -63,7 +68,7 @@ def _get_next_player(rng: Random, player_states: List[PlayerState], num_indices:
     :param num_indices: The number of indices av
     :return:
     """
-    all_uncollected: Dict[PlayerState, UncollectedState] = {
+    all_uncollected: dict[PlayerState, UncollectedState] = {
         player_state: UncollectedState.from_reach(player_state.reach)
         for player_state in player_states
     }
@@ -107,7 +112,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
     :param num_available_indices: The number of indices available for placement.
     :return:
     """
-    actions_weights: Dict[Action, float] = {}
+    actions_weights: dict[Action, float] = {}
     current_uncollected = UncollectedState.from_reach(player_state.reach)
 
     actions = player_state.potential_actions(num_available_indices)
@@ -120,7 +125,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
 
     for action in actions:
         if isinstance(action, tuple):
-            pickups = typing.cast(Tuple[PickupEntry, ...], action)
+            pickups = typing.cast(tuple[PickupEntry, ...], action)
             base_weight = _calculate_weights_for(_calculate_reach_for_progression(player_state.reach, pickups),
                                                  current_uncollected)
 
@@ -157,9 +162,9 @@ def select_weighted_action(rng: Random, weighted_actions: dict[Action, float]) -
 
 
 def retcon_playthrough_filler(rng: Random,
-                              player_states: List[PlayerState],
+                              player_states: list[PlayerState],
                               status_update: Callable[[str], None],
-                              ) -> Tuple[Dict[PlayerState, GamePatches], Tuple[str, ...]]:
+                              ) -> tuple[dict[PlayerState, GamePatches], tuple[str, ...]]:
     """
     Runs the retcon logic.
     :param rng:
@@ -200,7 +205,7 @@ def retcon_playthrough_filler(rng: Random,
         action = select_weighted_action(rng, weighted_actions)
 
         if isinstance(action, tuple):
-            new_pickups: List[PickupEntry] = sorted(action)
+            new_pickups: list[PickupEntry] = sorted(action)
             rng.shuffle(new_pickups)
 
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
@@ -229,7 +234,7 @@ def retcon_playthrough_filler(rng: Random,
 
 def _assign_pickup_somewhere(action: PickupEntry,
                              current_player: PlayerState,
-                             player_states: List[PlayerState],
+                             player_states: list[PlayerState],
                              rng: Random,
                              all_locations_weighted: WeightedLocations,
                              ) -> str:
@@ -286,7 +291,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
     return spoiler_entry
 
 
-def _calculate_all_pickup_indices_weight(player_states: List[PlayerState]) -> WeightedLocations:
+def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> WeightedLocations:
     all_weights = {}
 
     total_assigned_pickups = sum(player_state.num_assigned_pickups for player_state in player_states)
