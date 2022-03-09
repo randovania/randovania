@@ -10,7 +10,7 @@ def test_patch_game(mocker, tmp_path):
         "UpdateHintState__13CStateManagerFf": 0x80044D38,
     })
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
-    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True}
+    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}}
     progress_update = MagicMock()
 
     exporter = PrimeGameExporter()
@@ -21,6 +21,7 @@ def test_patch_game(mocker, tmp_path):
         PrimeGameExportParams(
             None,
             tmp_path.joinpath("input.iso"), tmp_path.joinpath("output.iso"),
+            cache_path=tmp_path.joinpath("cache_path"),
         ),
         progress_update
     )
@@ -36,6 +37,9 @@ def test_patch_game(mocker, tmp_path):
                 247, 172, 44, 4, 0, 0, 56, 132, 255, 224, 64, 130, 255, 244, 124, 0, 4, 172, 76, 0, 1, 44, 187,
                 193, 0, 44, 128, 1, 0, 56, 124, 8, 3, 166, 56, 33, 0, 52, 78, 128, 0, 32
             ]
+        },
+        "preferences": {
+            "cacheDir": os.fspath(tmp_path.joinpath("cache_path")),
         },
         "inputIso": os.fspath(tmp_path.joinpath("input.iso")),
         "outputIso": os.fspath(tmp_path.joinpath("output.iso")),

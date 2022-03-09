@@ -16,6 +16,7 @@ from randovania.patching.prime import all_prime_dol_patches
 class PrimeGameExportParams(GameExportParams):
     input_path: Path
     output_path: Path
+    cache_path: Path
 
 
 class PrimeGameExporter(GameExporter):
@@ -42,6 +43,9 @@ class PrimeGameExporter(GameExporter):
         input_file = export_params.input_path
         output_file = export_params.output_path
 
+        export_params.cache_path.mkdir(parents=True, exist_ok=True)
+        cache_dir = os.fspath(export_params.cache_path)
+
         symbols = py_randomprime.symbols_for_file(input_file)
 
         new_config = copy.copy(patch_data)
@@ -57,6 +61,7 @@ class PrimeGameExporter(GameExporter):
                 ],
                 symbols=symbols)
         )
+        new_config["preferences"]["cacheDir"] = cache_dir
 
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:

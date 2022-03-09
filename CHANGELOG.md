@@ -59,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Patcher Changes
 
 - Fixed: Scan visor and X-Ray not displaying properly after taking an elevator when combat visor is shuffled.
+- Fixed: Some users receiving OS error when exporting ISO with non-vanilla suit colors.
 
 
 ## [4.1.0] - 2022-03-01
