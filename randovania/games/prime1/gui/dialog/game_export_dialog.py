@@ -100,9 +100,11 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = spoiler_path_for(self.auto_save_spoiler, self.output_file)
+        cache_path = self._options.internal_copies_path.joinpath("prime1", "randomprime_cache")
 
         return PrimeGameExportParams(
             spoiler_output=spoiler_output,
             input_path=self.input_file,
             output_path=self.output_file,
+            cache_path=cache_path,
         )
