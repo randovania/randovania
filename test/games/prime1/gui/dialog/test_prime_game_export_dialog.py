@@ -129,6 +129,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
 def test_get_game_export_params(skip_qtbot, tmp_path):
     # Setup
     options = MagicMock()
+    options.internal_copies_path = tmp_path.joinpath("internal")
     options.options_for_game.return_value = PrimePerGameOptions(
         cosmetic_patches=PrimeCosmeticPatches.default(),
         input_path=tmp_path.joinpath("input/game.iso"),
@@ -145,4 +146,5 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
         spoiler_output=tmp_path.joinpath("output", "Prime Randomizer - MyHash.rdvgame"),
         input_path=tmp_path.joinpath("input/game.iso"),
         output_path=tmp_path.joinpath("output", "Prime Randomizer - MyHash.iso"),
+        cache_path=tmp_path.joinpath("internal", "prime1", "randomprime_cache"),
     )

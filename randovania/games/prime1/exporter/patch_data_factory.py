@@ -341,7 +341,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "trilogyDiscPath": None,
                 "quickplay": False,
                 "quiet": False,
-                "suitColors": suit_colors
+                "suitColors": suit_colors,
             },
             "gameConfig": {
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,
