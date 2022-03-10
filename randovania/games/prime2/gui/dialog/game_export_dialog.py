@@ -3,7 +3,7 @@ import shutil
 from pathlib import Path
 from typing import Optional
 
-from PySide2.QtWidgets import QLineEdit, QPushButton
+from PySide6.QtWidgets import QLineEdit, QPushButton
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame

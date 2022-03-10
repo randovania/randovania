@@ -247,8 +247,6 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
 
 # Write to paks now
 
-    print("Converging")
-
     pak_updaters = status_update_lib.split_progress_update(updaters[2], 5)
     for pak_i in range(1, 6):
         pak_status = pak_updaters[pak_i - 1]
