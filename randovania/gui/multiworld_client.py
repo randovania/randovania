@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Set, Optional, AsyncContextManager
 
 import pid
-from PySide2.QtCore import QObject
+from PySide6.QtCore import QObject
 from qasync import asyncSlot
 
 from randovania.game_connection.game_connection import GameConnection

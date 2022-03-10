@@ -133,6 +133,12 @@ def game_enum(request) -> RandovaniaGame:
     return request.param
 
 
+@pytest.fixture(params=[False, True])
+def is_dev_version(request, mocker) -> bool:
+    mocker.patch("randovania.is_dev_version", return_value=request.param)
+    yield request.param
+
+
 @pytest.fixture()
 def generic_item_category() -> ItemCategory:
     return ItemCategory(

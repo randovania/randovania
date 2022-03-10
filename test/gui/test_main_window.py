@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Union
 
 import pytest
-from PySide2.QtWidgets import QDialog
+from PySide6.QtWidgets import QDialog
 from mock import AsyncMock, MagicMock, ANY
 
 from randovania.gui.main_window import MainWindow
@@ -130,7 +130,7 @@ def test_on_menu_action_previously_generated_games(default_main_window, mocker, 
     monkeypatch.setattr(os, "startfile", mock_start_file, raising=False)
     monkeypatch.setattr(subprocess, "run", mock_subprocess_run, raising=False)
     mocker.patch("platform.system", return_value=os_type)
-    mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")
+    mock_message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
 
     # Run
     if throw_exception:

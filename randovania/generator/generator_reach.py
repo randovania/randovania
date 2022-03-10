@@ -2,7 +2,8 @@ from typing import Iterator, Dict, Tuple
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementSet
-from randovania.game_description.world.node import Node, ResourceNode, NodeContext
+from randovania.game_description.world.node import Node, NodeContext
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.resolver.state import State
 
 
@@ -42,8 +43,8 @@ class GeneratorReach:
     def act_on(self, node: ResourceNode) -> None:
         raise NotImplementedError()
 
-    def context_for(self, node: Node) -> NodeContext:
-        return self.state.context_for(node)
+    def node_context(self) -> NodeContext:
+        return self.state.node_context()
 
     # Node stuff
 

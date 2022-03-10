@@ -12,7 +12,7 @@ import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
-    from PySide2 import QtWidgets
+    from PySide6 import QtWidgets
 
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import BasePatchDataFactory
@@ -30,21 +30,8 @@ if typing.TYPE_CHECKING:
     from randovania.interface_common.preset_editor import PresetEditor
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
-    from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
+    from randovania.layout.preset_describer import GamePresetDescriber
     from randovania.resolver.bootstrap import Bootstrap
-
-
-@dataclass(frozen=True)
-class GamePresetDescriber:
-    expected_items: set[str] = frozenset()
-    """Items most presets will start with. Only displayed when shuffled."""
-
-    unexpected_items: Callable[[MajorItemsConfiguration], set[str]] = lambda config: frozenset()
-    """Items not expected to be shuffled.
-    Includes `expected_items` as well as configurable items such as progressive items."""
-
-    format_params: Optional[Callable[[BaseConfiguration], dict[str, list[str]]]] = None
-    """Function providing any game-specific information to display in presets such as the goal."""
 
 
 @dataclass(frozen=True)
@@ -55,8 +42,8 @@ class GameLayout:
     cosmetic_patches: Type[BaseCosmeticPatches]
     """Cosmetic settings such as item icons on maps."""
 
-    preset_describer: GamePresetDescriber = GamePresetDescriber()
-    """(Optional) Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
+    preset_describer: GamePresetDescriber
+    """Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
     get_ingame_hash: Callable[[bytes], Optional[str]] = lambda h: None
     """(Optional) Takes a layout hash bytes and produces a string representing how the game 
@@ -156,6 +143,9 @@ class GameData:
 
     exporter: Callable[[], GameExporter]
     """Capable of exporting everything needed to play the randomized game."""
+
+    defaults_available_in_game_sessions: bool = False
+    """If this game is allowed by default in online game sessions."""
 
     permalink_reference_preset: Optional[str] = None
     """(Optional) Name of the preset used as reference to encode permalinks of this game.

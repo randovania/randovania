@@ -7,7 +7,7 @@ from construct import (Struct, Int32ub, Const, Byte, Float32b, Flag,
                        Short, PrefixedArray, Switch, VarInt, Float64b, Compressed)
 
 from randovania.game_description import game_migration
-from randovania.game_description.world.node import LoreType
+from randovania.game_description.world.logbook_node import LoreType
 from randovania.games.game import RandovaniaGame
 from randovania.lib.construct_lib import String, convert_to_raw_python, OptionalValue, ConstructDict, JsonEncodedValue
 
@@ -113,10 +113,15 @@ ConstructRequirementArray = Struct(
 requirement_type_map["and"] = ConstructRequirementArray
 requirement_type_map["or"] = ConstructRequirementArray
 
+ConstructDockLock = Struct(
+    lock_type=String,
+    requirement=ConstructRequirement,
+)
+
 ConstructDockWeakness = Struct(
-    lock_type=VarInt,
     extra=JsonEncodedValue,
     requirement=ConstructRequirement,
+    lock=OptionalValue(ConstructDockLock),
 )
 
 ConstructResourceDatabase = Struct(
@@ -182,9 +187,11 @@ ConstructNode = NodeAdapter(Struct(
             ),
             "dock": Struct(
                 **NodeBaseFields,
-                destination=ConstructNodeIdentifier,
                 dock_type=String,
-                dock_weakness=String,
+                default_connection=ConstructNodeIdentifier,
+                default_dock_weakness=String,
+                override_default_open_requirement=OptionalValue(ConstructRequirement),
+                override_default_lock_requirement=OptionalValue(ConstructRequirement),
             ),
             "pickup": Struct(
                 **NodeBaseFields,

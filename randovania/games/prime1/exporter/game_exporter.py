@@ -26,6 +26,7 @@ class PrimeGameExportParams(GameExportParams):
     echoes_backup_path: Path
     asset_cache_path: Path
     use_echoes_models: bool
+    cache_path: Path
 
 
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
@@ -78,6 +79,9 @@ class PrimeGameExporter(GameExporter):
         input_file = export_params.input_path
         output_file = export_params.output_path
 
+        export_params.cache_path.mkdir(parents=True, exist_ok=True)
+        cache_dir = os.fspath(export_params.cache_path)
+
         symbols = py_randomprime.symbols_for_file(input_file)
 
         new_config = copy.copy(patch_data)
@@ -93,6 +97,7 @@ class PrimeGameExporter(GameExporter):
                 ],
                 symbols=symbols)
         )
+        new_config["preferences"]["cacheDir"] = cache_dir
 
         if export_params.use_echoes_models:
             # TODO: Check if we actually need to extract echoes if there's cached models already

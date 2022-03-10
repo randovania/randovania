@@ -4,9 +4,9 @@ import re
 from pathlib import Path
 from typing import Dict, Optional
 
-from PySide2 import QtGui, QtWidgets
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
+from PySide6 import QtGui, QtWidgets
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
 from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
@@ -15,7 +15,10 @@ from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, DockNode, TeleporterNode, GenericNode, NodeLocation, EventNode
+from randovania.game_description.world.node import Node, GenericNode, NodeLocation
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games import default_data

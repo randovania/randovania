@@ -1,5 +1,6 @@
 from randovania.games import game
 from randovania.games.blank import layout
+from randovania.layout.preset_describer import GamePresetDescriber
 
 
 def _options():
@@ -57,6 +58,7 @@ game_data: game.GameData = game.GameData(
     layout=game.GameLayout(
         configuration=layout.BlankConfiguration,
         cosmetic_patches=layout.BlankCosmeticPatches,
+        preset_describer=GamePresetDescriber(),
     ),
 
     options=_options,

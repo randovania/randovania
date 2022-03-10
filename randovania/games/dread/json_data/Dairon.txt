@@ -51,8 +51,6 @@ Extra - asset_id: collision_camera_001
   * Extra - right_shield_def: None
   > Life Recharge
       Trivial
-  > Tile Group (SPEEDBOOST) 2
-      Speed Booster
   > Wide Beam Block - Adjacent
       Any of the following:
           Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
@@ -98,21 +96,8 @@ Extra - asset_id: collision_camera_001
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_teleport/charclasses/weightactivatedplatform_teleport.bmsad
   > Top Floor
       Any of the following:
-          Space Jump or Simple IBJ
+          Space Jump or Walljump (Advanced) or Simple IBJ
           Flash Shift and Walljump (Beginner)
-
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_001
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (SPEEDBOOST) 3
-      Trivial
-  > Wide Beam Block - Above
-      Trivial
-  > Top Floor
-      Trivial
 
 > Tile Group (POWERBEAM); Heals? False
   * Configurable Node
@@ -123,28 +108,6 @@ Extra - asset_id: collision_camera_001
   > Wide Beam Block - Adjacent
       Trivial
   > Wide Beam Block - Above
-      Trivial
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_027
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Save Station East
-      Trivial
-  > Tile Group (SPEEDBOOST) 3
-      Speed Booster
-
-> Tile Group (SPEEDBOOST) 3; Heals? False
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_028
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (SPEEDBOOST) 1
-      Trivial
-  > Tile Group (SPEEDBOOST) 2
       Trivial
 
 > Event - Push Wide Beam Block; Heals? False
@@ -163,19 +126,24 @@ Extra - asset_id: collision_camera_001
 > Wide Beam Block - Above; Heals? False
   > Door to Transport to Cataris
       Trivial
-  > Tile Group (SPEEDBOOST) 1
-      Trivial
   > Tile Group (POWERBEAM)
       Trivial
-  > Tile Group (SPEEDBOOST) 3
-      Trivial
+  > Top Floor
+      After Dairon - Teleport To Artaria Speed Blocks Destroyed
+  > Event - Speed Booster blocks Destroyed
+      Speed Booster
 
 > Top Floor; Heals? False
   > Pickup (Missile Tank)
       Trivial
   > Teleporter to Artaria - Teleport to Dairon
       Trivial
-  > Tile Group (SPEEDBOOST) 1
+  > Wide Beam Block - Above
+      After Dairon - Teleport To Artaria Speed Blocks Destroyed
+
+> Event - Speed Booster blocks Destroyed; Heals? False
+  * Event Dairon - Teleport To Artaria Speed Blocks Destroyed
+  > Top Floor
       Trivial
 
 ----------------
@@ -840,7 +808,7 @@ Extra - asset_id: collision_camera_010
 > Center Junction; Heals? False
   > Door to Teleport to Cataris
       All of the following:
-          Morph Ball
+          Morph Ball and After Dairon - powergenerator_001
           Any of the following:
               Varia Suit
               Heat/Cold Runs (Intermediate) and Heat Damage ≥ 120
@@ -881,8 +849,28 @@ Extra - asset_id: collision_camera_011
       Varia Suit or Heat Damage ≥ 100
   > Ceiling
       All of the following:
-          Grapple Beam or Simple IBJ or Use Spin Boost
-          Varia Suit or Cold Damage ≥ 100
+          Any of the following:
+              # Vanilla requirements / tricks
+              All of the following:
+                  # Vanilla
+                  Spider Magnet
+                  Any of the following:
+                      # Ways to get up there
+                      Grapple Beam or Use Spin Boost
+              Any of the following:
+                  # Tricks
+                  All of the following:
+                      # grapple beam and movement
+                      Grapple Beam and Movement (Intermediate)
+                  All of the following:
+                      # Spin boost and movement
+                      Movement (Beginner) and Use Spin Boost
+          Any of the following:
+              # Varia check
+              Varia Suit
+              All of the following:
+                  # heat runs
+                  Heat/Cold Runs (Intermediate) and Heat Damage ≥ 300
 
 > Event - Pull Grapple Block (grapplepulloff1x2_006); Heals? False
   * Event Dairon - grapplepulloff1x2_006
@@ -3125,7 +3113,7 @@ Extra - asset_id: collision_camera_042
 > Dock to Transport to Ghavoran; Heals? False
   * Open Passage to Transport to Ghavoran/Dock to Energy Recharge Station West
   > Door to Freezer (doorpowerpower_030)
-      Morph Ball
+      Morph Ball and After Dairon - powergenerator_002
 
 ----------------
 Transport to Cataris

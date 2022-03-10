@@ -248,5 +248,5 @@ async def test_session_self_update(client: NetworkClient):
 
     client._emit_without_result.assert_awaited_once_with(
         "game_session_self_update",
-        (1234, b"\x01\x00\x01\x01", "In-game (Dolphin)")
+        (1234, b'\x01None\x00\x01\x01', "In-game (Dolphin)")
     )

@@ -1,11 +1,11 @@
 import typing
 from typing import Optional, List, Union
 
-from PySide2 import QtWidgets
-from PySide2.QtCore import Qt
-from PySide2.QtGui import QIntValidator
-from PySide2.QtWidgets import QDialog
-from PySide2.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QHBoxLayout, QComboBox, \
+from PySide6 import QtWidgets
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QIntValidator
+from PySide6.QtWidgets import QDialog
+from PySide6.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QHBoxLayout, QComboBox, \
     QLineEdit
 
 from randovania.game_description.requirements import ResourceRequirement, Requirement, \

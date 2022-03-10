@@ -3,8 +3,8 @@ import datetime
 from typing import List, Optional
 
 import aiohttp
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QCheckBox
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QCheckBox
 from qasync import asyncSlot
 
 from randovania.games.game import RandovaniaGame

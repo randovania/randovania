@@ -1,6 +1,6 @@
 from typing import Union
 
-from randovania.game_description.world.node import ResourceNode
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator.filler.pickup_list import PickupCombination
 
 Action = Union[ResourceNode, PickupCombination]

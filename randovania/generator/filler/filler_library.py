@@ -2,10 +2,12 @@ from typing import Iterator, TypeVar, Dict, Any, Set, NamedTuple
 
 from randovania.game_description.assignment import PickupAssignment
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.world.node import Node, PickupNode, ResourceNode
+from randovania.game_description.world.node import Node, NodeContext
+from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.generator.generator_reach import GeneratorReach
 
 
@@ -42,14 +44,14 @@ def _filter_not_in_dict(elements: Iterator[X],
 
 class UncollectedState(NamedTuple):
     indices: Set[PickupIndex]
-    logbooks: Set[LogbookAsset]
+    logbooks: Set[NodeIdentifier]
     events: Set[ResourceInfo]
 
     @classmethod
     def from_reach(cls, reach: GeneratorReach) -> "UncollectedState":
         return UncollectedState(
             _filter_not_in_dict(reach.state.collected_pickup_indices, reach.state.patches.pickup_assignment),
-            _filter_not_in_dict(reach.state.collected_scan_assets, reach.state.patches.hints),
+            _filter_not_in_dict(reach.state.collected_hints, reach.state.patches.hints),
             set(reach.state.collected_events)
         )
 
@@ -62,8 +64,9 @@ class UncollectedState(NamedTuple):
 
 
 def find_node_with_resource(resource: ResourceInfo,
+                            context: NodeContext,
                             haystack: Iterator[Node],
                             ) -> ResourceNode:
     for node in haystack:
-        if isinstance(node, ResourceNode) and node.resource() == resource:
+        if isinstance(node, ResourceNode) and node.resource(context) == resource:
             return node

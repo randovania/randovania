@@ -1,6 +1,6 @@
 import dataclasses
 
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode
 from randovania.gui.generated.preset_echoes_hints_ui import Ui_PresetEchoesHints

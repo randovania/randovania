@@ -2,7 +2,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, call
 
 import pytest
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
@@ -151,4 +151,5 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
         echoes_contents_path=None,
         asset_cache_path=tmp_path.joinpath("internal_copies", "prime1", "prime2_models"),
         use_echoes_models=False,
+        cache_path=tmp_path.joinpath("internal_copies", "prime1", "randomprime_cache"),
     )

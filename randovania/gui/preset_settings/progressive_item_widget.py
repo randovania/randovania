@@ -1,7 +1,7 @@
 from typing import Iterable, Dict
 
-from PySide2 import QtWidgets
-from PySide2.QtCore import Qt
+from PySide6 import QtWidgets
+from PySide6.QtCore import Qt
 
 from randovania.game_description.item.major_item import MajorItem
 from randovania.interface_common.preset_editor import PresetEditor

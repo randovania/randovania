@@ -139,6 +139,12 @@ class MajorItemsConfiguration(BitPackValue):
             maximum_random_starting_items=maximum,
         )
 
+    def get_item_with_name(self, name: str) -> MajorItem:
+        for item in self.items_state.keys():
+            if item.name == name:
+                return item
+        raise KeyError(name)
+
     def replace_state_for_item(self, item: MajorItem, state: MajorItemState) -> "MajorItemsConfiguration":
         return self.replace_states({
             item: state

@@ -8,13 +8,12 @@ from randovania.game_description.assignment import PickupAssignment, PickupTarge
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.hint import Hint
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import PickupNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -91,8 +90,8 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
                                                                    num_players).items()
         },
         "hints": {
-            str(asset.asset_id): hint.as_json
-            for asset, hint in patches.hints.items()
+            identifier.as_string: hint.as_json
+            for identifier, hint in patches.hints.items()
         }
     }
     return result
@@ -192,8 +191,8 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
 
     # Hints
     hints = {}
-    for asset_id, hint in game_modifications["hints"].items():
-        hints[LogbookAsset(int(asset_id))] = Hint.from_json(hint)
+    for identifier_str, hint in game_modifications["hints"].items():
+        hints[NodeIdentifier.from_string(identifier_str)] = Hint.from_json(hint)
 
     return GamePatches(
         player_index=player_index,

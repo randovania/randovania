@@ -1,6 +1,7 @@
 from randovania.games import game
 from randovania.games.super_metroid.layout.super_metroid_configuration import SuperMetroidConfiguration
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches
+from randovania.layout.preset_describer import GamePresetDescriber
 
 
 def _options():
@@ -91,7 +92,8 @@ game_data: game.GameData = game.GameData(
 
     layout=game.GameLayout(
         configuration=SuperMetroidConfiguration,
-        cosmetic_patches=SuperMetroidCosmeticPatches
+        cosmetic_patches=SuperMetroidCosmeticPatches,
+        preset_describer=GamePresetDescriber(),
     ),
 
     options=_options,

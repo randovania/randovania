@@ -1,14 +1,15 @@
 import collections
 import re
-from typing import List, DefaultDict, Dict, FrozenSet, Tuple, Iterator, Set
+from typing import DefaultDict, Iterator
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import ResourceNode, TeleporterNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import reach_lib
@@ -16,9 +17,11 @@ from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.generator.filler.filler_library import UncollectedState
 from randovania.generator.filler.filler_logging import print_new_resources, print_retcon_loop_start
-from randovania.generator.filler.pickup_list import (get_pickups_that_solves_unreachable,
-                                                     get_pickups_with_interesting_resources,
-                                                     interesting_resources_for_reach, PickupCombinations)
+from randovania.generator.filler.pickup_list import (
+    get_pickups_that_solves_unreachable,
+    get_pickups_with_interesting_resources,
+    interesting_resources_for_reach, PickupCombinations,
+)
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.patching.prime import elevators
@@ -29,12 +32,12 @@ from randovania.resolver.state import State
 class PlayerState:
     index: int
     game: GameDescription
-    pickups_left: List[PickupEntry]
+    pickups_left: list[PickupEntry]
     configuration: FillerConfiguration
     pickup_index_seen_count: DefaultDict[PickupIndex, int]
-    scan_asset_seen_count: DefaultDict[LogbookAsset, int]
-    scan_asset_initial_pickups: Dict[LogbookAsset, FrozenSet[PickupIndex]]
-    _unfiltered_potential_actions: Tuple[PickupCombinations, Tuple[ResourceNode, ...]]
+    hint_seen_count: DefaultDict[NodeIdentifier, int]
+    hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]]
+    _unfiltered_potential_actions: tuple[PickupCombinations, tuple[ResourceNode, ...]]
     num_random_starting_items_placed: int
     num_assigned_pickups: int
 
@@ -42,7 +45,7 @@ class PlayerState:
                  index: int,
                  game: GameDescription,
                  initial_state: State,
-                 pickups_left: List[PickupEntry],
+                 pickups_left: list[PickupEntry],
                  configuration: FillerConfiguration,
                  ):
         self.index = index
@@ -54,9 +57,9 @@ class PlayerState:
         self.configuration = configuration
 
         self.pickup_index_seen_count = collections.defaultdict(int)
-        self.scan_asset_seen_count = collections.defaultdict(int)
+        self.hint_seen_count = collections.defaultdict(int)
         self.event_seen_count = collections.defaultdict(int)
-        self.scan_asset_initial_pickups = {}
+        self.hint_initial_pickups = {}
         self.num_random_starting_items_placed = 0
         self.num_assigned_pickups = 0
         self.num_actions = 0
@@ -79,12 +82,12 @@ class PlayerState:
         print_new_resources(self.game, self.reach, self.pickup_index_seen_count, "Pickup Index")
 
     def _advance_scan_asset_seen_count(self):
-        for scan_asset in self.reach.state.collected_scan_assets:
-            self.scan_asset_seen_count[scan_asset] += 1
-            if self.scan_asset_seen_count[scan_asset] == 1:
-                self.scan_asset_initial_pickups[scan_asset] = frozenset(self.reach.state.collected_pickup_indices)
+        for hint_identifier in self.reach.state.collected_hints:
+            self.hint_seen_count[hint_identifier] += 1
+            if self.hint_seen_count[hint_identifier] == 1:
+                self.hint_initial_pickups[hint_identifier] = frozenset(self.reach.state.collected_pickup_indices)
 
-        print_new_resources(self.game, self.reach, self.scan_asset_seen_count, "Scan Asset")
+        print_new_resources(self.game, self.reach, self.hint_seen_count, "Scan Asset")
 
     def _advance_event_seen_count(self):
         for resource, quantity in self.reach.state.resources.items():
@@ -107,12 +110,12 @@ class PlayerState:
 
         self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
 
-    def potential_actions(self, num_available_indices: int) -> List[Action]:
+    def potential_actions(self, num_available_indices: int) -> list[Action]:
         num_available_indices += (self.configuration.maximum_random_starting_items
                                   - self.num_random_starting_items_placed)
 
         pickups, uncollected_resource_nodes = self._unfiltered_potential_actions
-        result: List[Action] = [pickup_tuple for pickup_tuple in pickups
+        result: list[Action] = [pickup_tuple for pickup_tuple in pickups
                                 if len(pickup_tuple) <= num_available_indices]
 
         logical_resource_action = self.configuration.logical_resource_action
@@ -213,7 +216,7 @@ def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) 
 
 
 def build_available_indices(world_list: WorldList, configuration: FillerConfiguration,
-                            ) -> Tuple[List[Set[PickupIndex]], Set[PickupIndex]]:
+                            ) -> tuple[list[set[PickupIndex]], set[PickupIndex]]:
     """
     Groups indices into separated groups, so each group can be weighted separately.
     """

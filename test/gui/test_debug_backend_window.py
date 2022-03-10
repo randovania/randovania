@@ -1,5 +1,5 @@
 import pytest
-from PySide2.QtCore import Qt
+from PySide6.QtCore import Qt
 from mock import patch, MagicMock, AsyncMock
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector, DolRemotePatch

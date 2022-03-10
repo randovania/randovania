@@ -1,8 +1,8 @@
 import datetime
 from typing import List
 
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit
 from qasync import asyncSlot
 
 from randovania.gui.generated.game_session_browser_dialog_ui import Ui_GameSessionBrowserDialog
@@ -31,7 +31,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
 
         self.button_box.accepted.connect(self.attempt_join)
         self.button_box.rejected.connect(self.reject)
-        self.refresh_button.clicked.connect(self.refresh)
+        self.refresh_button.clicked.connect(self._refresh_slot)
 
         checks = (
             self.has_password_yes_check,
@@ -52,7 +52,6 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
         self.network_client.ConnectionStateUpdated.connect(self.on_server_connection_state_updated)
         self.on_server_connection_state_updated(self.network_client.connection_state)
 
-    @asyncSlot()
     @handle_network_errors
     async def refresh(self):
         self.refresh_button.setEnabled(False)
@@ -61,6 +60,10 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             self.update_list()
         finally:
             self.refresh_button.setEnabled(True)
+
+    @asyncSlot()
+    async def _refresh_slot(self):
+        await self.refresh()
 
     def on_selection_changed(self):
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(len(self.table_widget.selectedItems()) > 0)

@@ -7,11 +7,11 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision, \
     RelativeDataArea, RelativeDataItem
 from randovania.game_description.item.item_category import ItemCategory
-from randovania.game_description.resources.logbook_asset import LogbookAsset
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import LogbookNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
@@ -26,7 +26,8 @@ async def test_run_filler(echoes_game_description,
     rng = Random(5000)
     status_update = MagicMock()
 
-    logbook_nodes = [node for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
+    hint_identifiers = [echoes_game_description.world_list.identifier_for_node(node)
+                        for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
 
     player_pools = [
         await create_player_pool(rng, default_layout_configuration, 0, 1),
@@ -35,7 +36,8 @@ async def test_run_filler(echoes_game_description,
 
     patches = echoes_game_description.create_game_patches()
     patches = patches.assign_hint(
-        logbook_nodes[0].resource(), Hint(HintType.LOCATION, None, PickupIndex(0))
+        hint_identifiers[0],
+        Hint(HintType.LOCATION, None, PickupIndex(0))
     )
     action_log = (MagicMock(), MagicMock())
     player_state = MagicMock()
@@ -56,7 +58,7 @@ async def test_run_filler(echoes_game_description,
     remaining_items = filler_result.player_results[0].unassigned_pickups
 
     # Assert
-    assert len(result_patches.hints) == len(logbook_nodes)
+    assert len(result_patches.hints) == len(hint_identifiers)
     assert [hint for hint in result_patches.hints.values()
             if hint.precision is None] == []
     assert initial_pickup_count == len(remaining_items) + len(result_patches.pickup_assignment.values())
@@ -92,10 +94,11 @@ def test_add_hints_precision(empty_patches):
         Hint(HintType.LOCATION, None, PickupIndex(2)),
         Hint(HintType.LOCATION, None, PickupIndex(3)),
     ]
+    nc = NodeIdentifier.create
 
     initial_patches = empty_patches
     for i, hint in enumerate(hints):
-        initial_patches = initial_patches.assign_hint(LogbookAsset(i), hint)
+        initial_patches = initial_patches.assign_hint(nc("w", "a", f"{i}"), hint)
 
     hint_distributor = EchoesHintDistributor()
     hint_distributor._get_relative_hint_providers = MagicMock(
@@ -109,15 +112,15 @@ def test_add_hints_precision(empty_patches):
     failed_relative_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(2))
     relative_hint_provider.assert_called_once_with(player_state, initial_patches, rng, PickupIndex(3))
     assert result.hints == {
-        LogbookAsset(0): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
-                                                               HintItemPrecision.DETAILED,
-                                                               include_owner=False),
-                              PickupIndex(1)),
-        LogbookAsset(1): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.WORLD_ONLY,
-                                                               HintItemPrecision.PRECISE_CATEGORY,
-                                                               include_owner=True),
-                              PickupIndex(2)),
-        LogbookAsset(2): relative_hint_provider.return_value,
+        nc("w", "a", "0"): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.DETAILED,
+                                                                 HintItemPrecision.DETAILED,
+                                                                 include_owner=False),
+                                PickupIndex(1)),
+        nc("w", "a", "1"): Hint(HintType.LOCATION, PrecisionPair(HintLocationPrecision.WORLD_ONLY,
+                                                                 HintItemPrecision.PRECISE_CATEGORY,
+                                                                 include_owner=True),
+                                PickupIndex(2)),
+        nc("w", "a", "2"): relative_hint_provider.return_value,
     }
 
 

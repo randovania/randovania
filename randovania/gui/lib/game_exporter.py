@@ -2,8 +2,8 @@ import logging
 import traceback
 from typing import Optional
 
-from PySide2 import QtWidgets
-from PySide2.QtCore import Signal
+from PySide6 import QtWidgets
+from PySide6.QtCore import Signal
 
 from randovania.exporter.game_exporter import GameExporter
 from randovania.gui.dialog.game_export_dialog import GameExportDialog

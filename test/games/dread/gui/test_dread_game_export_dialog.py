@@ -2,7 +2,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, call
 
 import pytest
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams
 from randovania.games.dread.exporter.options import DreadPerGameOptions

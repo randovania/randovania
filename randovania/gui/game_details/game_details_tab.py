@@ -1,4 +1,4 @@
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
