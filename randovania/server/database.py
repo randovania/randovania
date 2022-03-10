@@ -121,12 +121,11 @@ class GameSession(BaseModel):
 
     @property
     def allowed_games(self) -> List[RandovaniaGame]:
-        games = [RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES]
-
-        if "prime3" in (self.dev_features or ""):
-            games.append(RandovaniaGame.METROID_PRIME_CORRUPTION)
-
-        return games
+        dev_features = self.dev_features or ""
+        return [
+            game for game in RandovaniaGame.sorted_all_games()
+            if game.data.defaults_available_in_game_sessions or game.value in dev_features
+        ]
 
     def describe_actions(self):
         description = self.layout_description
