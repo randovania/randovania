@@ -144,6 +144,9 @@ class GameData:
     exporter: Callable[[], GameExporter]
     """Capable of exporting everything needed to play the randomized game."""
 
+    defaults_available_in_game_sessions: bool = False
+    """If this game is allowed by default in online game sessions."""
+
     permalink_reference_preset: Optional[str] = None
     """(Optional) Name of the preset used as reference to encode permalinks of this game.
     If unset, the first of the list is used."""
