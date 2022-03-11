@@ -1,6 +1,6 @@
 import logging
 
-_CURRENT_OPTIONS_FILE_VERSION = 17
+_CURRENT_OPTIONS_FILE_VERSION = 18
 
 
 def _convert_logic(layout_logic: str) -> str:
@@ -92,6 +92,14 @@ def _convert_v16(options: dict) -> dict:
     return options
 
 
+def _convert_v17(options: dict) -> dict:
+    for game_name in ["prime1", "prime2"]:
+        if f"game_{game_name}" in options:
+           options[f"game_{game_name}"]["use_external_models"] = []
+
+    return options
+
+
 _CONVERTER_FOR_VERSION = {
     11: _convert_v11,
     12: _convert_v12,
@@ -99,6 +107,7 @@ _CONVERTER_FOR_VERSION = {
     14: _convert_v14,
     15: _convert_v15,
     16: _convert_v16,
+    17: _convert_v17,
 }
 
 
