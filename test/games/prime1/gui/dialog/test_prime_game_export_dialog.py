@@ -92,7 +92,8 @@ def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
         assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).input_path == Path("somewhere/echoes.iso")
 
 
-def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
+@pytest.mark.parametrize("test_echoes", [False, True])
+def test_on_input_file_button(skip_qtbot, tmp_path, mocker, test_echoes):
     # Setup
     tmp_path.joinpath("existing.iso").write_bytes(b"foo")
     mock_prompt = mocker.patch("randovania.gui.lib.common_qt_lib.prompt_user_for_vanilla_input_file", autospec=True,
@@ -104,38 +105,58 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
                                ])
 
     options = MagicMock()
-    options.options_for_game.return_value = PrimePerGameOptions(
+    options.options_for_game.side_effect = [PrimePerGameOptions(
         cosmetic_patches=PrimeCosmeticPatches.default(),
         input_path=None,
         output_format="iso",
-    )
+        use_external_models=[RandovaniaGame.METROID_PRIME_ECHOES]
+    ),
+        EchoesPerGameOptions(
+            cosmetic_patches=EchoesCosmeticPatches.default(),
+            input_path=None,
+        )
+    ]
 
-    window = PrimeGameExportDialog(options, {}, "MyHash", True, [])
-    assert window.input_file_edit.text() == ""
-    assert window.input_file_edit.has_error
+    games = [RandovaniaGame.METROID_PRIME]
+    if test_echoes:
+        mocker.patch("randovania.games.prime2.gui.dialog.game_export_dialog.has_internal_copy", return_value=False)
+        games.append(RandovaniaGame.METROID_PRIME_ECHOES)
 
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
-    assert window.input_file_edit.text() == ""
-    assert window.input_file_edit.has_error
+    window = PrimeGameExportDialog(options, {}, "MyHash", True, games)
 
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
-    assert window.input_file_edit.text() == str(tmp_path.joinpath("some/game.iso"))
-    assert window.input_file_edit.has_error
+    if test_echoes:
+        button = window.echoes_file_button
+        file_edit = window.echoes_file_edit
+    else:
+        button = window.input_file_button
+        file_edit = window.input_file_edit
 
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
-    assert window.input_file_edit.text() == str(tmp_path.joinpath("existing.iso"))
-    assert not window.input_file_edit.has_error
+    assert file_edit.text() == ""
+    assert file_edit.has_error
 
-    skip_qtbot.mouseClick(window.input_file_button, QtCore.Qt.LeftButton)
-    assert window.input_file_edit.text() == str(tmp_path.joinpath("missing_again.iso"))
-    assert window.input_file_edit.has_error
+    skip_qtbot.mouseClick(button, QtCore.Qt.LeftButton)
+    assert file_edit.text() == ""
+    assert file_edit.has_error
 
-    mock_prompt.assert_has_calls([
-        call(window, window.valid_input_file_types, existing_file=None),
-        call(window, window.valid_input_file_types, existing_file=None),
-        call(window, window.valid_input_file_types, existing_file=None),
-        call(window, window.valid_input_file_types, existing_file=tmp_path.joinpath("existing.iso")),
-    ])
+    skip_qtbot.mouseClick(button, QtCore.Qt.LeftButton)
+    assert file_edit.text() == str(tmp_path.joinpath("some/game.iso"))
+    assert file_edit.has_error
+
+    skip_qtbot.mouseClick(button, QtCore.Qt.LeftButton)
+    assert file_edit.text() == str(tmp_path.joinpath("existing.iso"))
+    assert not file_edit.has_error
+
+    skip_qtbot.mouseClick(button, QtCore.Qt.LeftButton)
+    assert file_edit.text() == str(tmp_path.joinpath("missing_again.iso"))
+    assert file_edit.has_error
+
+    if not test_echoes:
+        mock_prompt.assert_has_calls([
+            call(window, window.valid_input_file_types, existing_file=None),
+            call(window, window.valid_input_file_types, existing_file=None),
+            call(window, window.valid_input_file_types, existing_file=None),
+            call(window, window.valid_input_file_types, existing_file=tmp_path.joinpath("existing.iso")),
+        ])
 
 
 @pytest.mark.parametrize("is_echoes_multi", [False, True])
