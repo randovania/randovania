@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- Echoes Combat Visor placed in a Prime player's world now uses the new Combat Visor model.
 
 #### Patcher Changes
 
