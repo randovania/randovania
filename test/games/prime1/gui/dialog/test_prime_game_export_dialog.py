@@ -69,16 +69,27 @@ def test_on_output_file_button_cancel(skip_qtbot, tmp_path, mocker):
     assert window.output_file_edit.text() == ""
 
 
-def test_save_options(skip_qtbot, tmp_path):
+@pytest.mark.parametrize("is_prime_multi", [False, True])
+def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
     options = Options(tmp_path)
-    window = PrimeGameExportDialog(options, {}, "MyHash", True, [])
+    games = [RandovaniaGame.METROID_PRIME]
+    if is_prime_multi:
+        games.append(RandovaniaGame.METROID_PRIME_ECHOES)
+    window = PrimeGameExportDialog(options, {}, "MyHash", True, games)
     window.output_file_edit.setText("somewhere/game.iso")
+
+    if is_prime_multi:
+        skip_qtbot.mouseClick(window.echoes_models_check, QtCore.Qt.LeftButton)
+        window.echoes_file_edit.setText("somewhere/echoes.iso")
 
     # Run
     window.save_options()
 
     # Assert
     assert options.options_for_game(RandovaniaGame.METROID_PRIME).output_directory == Path("somewhere")
+    if is_prime_multi:
+        assert options.options_for_game(RandovaniaGame.METROID_PRIME).use_external_models == {RandovaniaGame.METROID_PRIME_ECHOES}
+        assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).input_path == Path("somewhere/echoes.iso")
 
 
 def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
