@@ -58,7 +58,7 @@ _STARTING_ITEM_NAME_TO_INDEX = {
 # "Unknown Item 2": "Unknown2",
 
 _MODEL_MAPPING = {
-    (RandovaniaGame.METROID_PRIME_ECHOES, "CombatVisor"): "Combat Visor",
+    (RandovaniaGame.METROID_PRIME_ECHOES, "CombatVisor INCOMPLETE"): "Combat Visor",
     (RandovaniaGame.METROID_PRIME_ECHOES, "ChargeBeam INCOMPLETE"): "Charge Beam",
     (RandovaniaGame.METROID_PRIME_ECHOES, "SuperMissile"): "Super Missile",
     (RandovaniaGame.METROID_PRIME_ECHOES, "ScanVisor INCOMPLETE"): "Scan Visor",
