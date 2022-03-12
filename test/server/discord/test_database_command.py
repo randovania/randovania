@@ -13,7 +13,6 @@ async def test_on_ready():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
     slash = cog.bot.slash
-    slash.sync_all_commands = AsyncMock()
 
     # Run
     await cog.on_ready()
@@ -31,7 +30,6 @@ async def test_on_ready():
         components=ANY,
         use_callback_name=False,
     )
-    slash.sync_all_commands.assert_awaited_once_with()
 
 
 async def test_database_command():
