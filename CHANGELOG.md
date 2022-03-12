@@ -45,7 +45,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing.
 
-## [4.1.1] - Unreleased
+## [4.1.2] - Unreleased
+
+- Nothing.
+
+## [4.1.1] - 2022-03-12
 
 - Added: The game details window now displays the Randovania version the game was generated with. 
 - Added: You can now import a game layout/spoiler file in multiworld sessions. 
