@@ -9,13 +9,13 @@ from randovania.games.game import RandovaniaGame
 from randovania.server.discord.database_command import DatabaseCommandCog, SplitWorld
 
 
-async def test_on_ready():
+async def test_add_commands():
     # Setup
     cog = DatabaseCommandCog({"guild": 1234}, MagicMock())
     slash = cog.bot.slash
 
     # Run
-    await cog.on_ready()
+    await cog.add_commands(slash)
 
     # Assert
     slash.add_slash_command.assert_called_once_with(
