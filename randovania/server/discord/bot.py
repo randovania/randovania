@@ -24,9 +24,7 @@ class RandovaniaBot(discord.ext.commands.Bot):
             if isinstance(cog, RandovaniaCog):
                 await cog.add_commands(self.slash)
 
-        await self.slash.sync_all_commands(
-            delete_from_unused_guilds=True,
-        )
+        await self.slash.sync_all_commands()
 
 
 def run():
