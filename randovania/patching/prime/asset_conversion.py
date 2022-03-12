@@ -144,15 +144,18 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
         next_id = result + 1
         return result
 
-    updaters = status_update_lib.split_progress_update(status_update, 3)
+    updaters = status_update_lib.split_progress_update(status_update, 2)
 
-    if get_asset_cache_version(assets_path) >= ECHOES_MODELS_VERSION:
+    # Restoring from cache causes game crashes when loading a room with a Prime model. Skipping until resolved
+    if get_asset_cache_version(assets_path) >= ECHOES_MODELS_VERSION and False:
         with open(assets_path.joinpath("meta.json"), "r")as data_additions_file:
             randomizer_data_additions = json.load(data_additions_file)["data"]
 
         converted_assets = {}
         # Read assets from cache if available
-        for item in randomizer_data_additions:
+        for i, item in enumerate(randomizer_data_additions):
+            item_name = item["Name"].replace('prime1_', '')
+            updaters[0](f"Restoring Prime 1 {item_name}", i/len(randomizer_data_additions))
             for asset in item["Assets"]:
                 asset_type = asset["Type"]
                 asset_id = asset["AssetID"]
@@ -176,14 +179,15 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
 
         start = time.time()
         with asset_provider:
-            updaters[0]("Loading Prime 1 PAKs", 0)
+            conversion_updaters = status_update_lib.split_progress_update(updaters[0], 2)
+            conversion_updaters[0]("Loading Prime 1 PAKs", 0)
             converter = AssetConverter(
                 target_game=Game.ECHOES,
                 asset_providers={Game.PRIME: asset_provider},
                 id_generator=id_generator,
                 converters=conversions.converter_for,
             )
-            updaters[0]("Finished loading Prime 1 PAKs", 1)
+            conversion_updaters[0]("Finished loading Prime 1 PAKs", 1)
             # logging.debug(f"Finished loading PAKs: {time.time() - start}")
 
             result = {}
@@ -197,15 +201,19 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
                         character=asset.character,
                         scale=asset.scale,
                     )
-            updaters[1]("Finished converting Prime 1 assets", 1)
+            conversion_updaters[1]("Finished converting Prime 1 assets", 1)
             # Cache these assets here
+            # This doesn't work properly so skip this for now
+            '''
             assets_path.mkdir(exist_ok=True, parents=True)
             for asset in converter.converted_assets.values():
                 assetdata = format_for(asset.type).build(asset.resource, target_game=Game.ECHOES)
+                if len(assetdata) % 32 != 0:
+                    assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
                 assets_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
                     assetdata
                 )
-
+            '''
         end = time.time()
         # logging.debug(f"Time took: {end - start}")
         converted_assets = converter.converted_assets
@@ -247,7 +255,7 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
 
 # Write to paks now
 
-    pak_updaters = status_update_lib.split_progress_update(updaters[2], 5)
+    pak_updaters = status_update_lib.split_progress_update(updaters[1], 5)
     for pak_i in range(1, 6):
         pak_status = pak_updaters[pak_i - 1]
         pak_path = echoes_files_path.joinpath("files", f"Metroid{pak_i}.pak")
