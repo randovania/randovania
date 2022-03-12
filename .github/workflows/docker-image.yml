@@ -13,7 +13,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -109,23 +109,32 @@ jobs:
           key: ${{ secrets.SERVER_DEPLOYMENT_KEY }}
           known_hosts: ${{ secrets.SERVER_KNOWN_HOSTS }}
 
+      - name: Decide environment
+        id: decide_env
+        run: |
+          ENV=staging
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            ENV=production
+          fi
+          echo ::set-output name=env::${ENV}
+
       - name: start deployment
         uses: bobheadxi/deployments@v0.6.2
         id: deployment
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: staging
+          env: ${{ steps.decide_env.outputs.env }}
 
       - name: deploy server
         run: python tools/deploy_server.py
 
       - name: update deployment status
         uses: bobheadxi/deployments@v0.6.2
-        # Using 0.4.3 because of this: https://github.com/bobheadxi/deployments/issues/27
         if: always()
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
