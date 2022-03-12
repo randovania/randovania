@@ -47,8 +47,6 @@ class FaqCommandCog(commands.Cog):
                 ],
             )
 
-        await self.bot.slash.sync_all_commands()
-
     async def faq_game_command(self, ctx: SlashContext, game: RandovaniaGame, question: str):
         for qid, (question_text, answer) in enumerate(game.data.faq):
             if f"question_{qid}" == question:

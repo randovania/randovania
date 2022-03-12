@@ -10,6 +10,7 @@ class RandovaniaBot(discord.ext.commands.Bot):
         self.slash = SlashCommand(
             self,
             debug_guild=configuration["debug_guild"],
+            sync_commands=True,
         )
         self.configuration = configuration
         self.load_extension("randovania.server.discord.preset_lookup")
