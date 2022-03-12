@@ -8,7 +8,7 @@ from typing import Optional
 
 import discord
 from discord.ext import commands
-from discord_slash import ComponentContext, ButtonStyle
+from discord_slash import ComponentContext, ButtonStyle, SlashCommand
 from discord_slash.utils import manage_components
 
 import randovania
@@ -18,6 +18,7 @@ from randovania.layout.permalink import Permalink, UnsupportedPermalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.server.discord.bot import RandovaniaBot
+from randovania.server.discord.randovania_cog import RandovaniaCog
 
 possible_links_re = re.compile(r'([A-Za-z0-9-_]{8,})')
 
@@ -175,14 +176,13 @@ async def reply_for_layout_description(message: discord.Message, description: La
     await message.reply(embed=embed, mention_author=False)
 
 
-class PermalinkLookupCog(commands.Cog):
+class PermalinkLookupCog(RandovaniaCog):
     def __init__(self, configuration: dict, bot: RandovaniaBot):
         self.configuration = configuration
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        self.bot.slash.add_component_callback(
+    async def add_commands(self, slash: SlashCommand):
+        slash.add_component_callback(
             self.on_request_presets,
             components=["attach_presets_of_permalink"],
             use_callback_name=False,
