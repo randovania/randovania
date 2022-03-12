@@ -9,7 +9,7 @@ def main():
     multiprocessing.freeze_support()
 
     import randovania
-    randovania.setup_logging('DEBUG', None)
+    randovania.setup_logging('INFO', None)
 
     logging.info("Starting Randovania...")
 

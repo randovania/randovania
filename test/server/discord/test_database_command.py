@@ -2,7 +2,6 @@ import io
 from pathlib import Path
 from unittest.mock import MagicMock, AsyncMock, ANY, call
 
-import pytest
 from discord_slash import ComponentType
 
 from randovania.games.game import RandovaniaGame
