@@ -182,8 +182,6 @@ class DatabaseCommandCog(commands.Cog):
             use_callback_name=False,
         )
 
-        await self.bot.slash.sync_all_commands()
-
     def _message_components_for_game(self, game: RandovaniaGame):
         options = []
         for i, (world, world_name, areas) in enumerate(self._split_worlds[game]):
