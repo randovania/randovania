@@ -11,7 +11,7 @@ import graphviz
 from PIL import ImageDraw
 from discord import Embed
 from discord.ext import commands
-from discord_slash import SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle
+from discord_slash import SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle, SlashCommand
 from discord_slash.utils import manage_commands, manage_components
 
 from randovania.game_description import default_database, pretty_print
@@ -22,6 +22,7 @@ from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
+from randovania.server.discord.randovania_cog import RandovaniaCog
 
 
 class SplitWorld(NamedTuple):
@@ -132,7 +133,7 @@ async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
     return world_options
 
 
-class DatabaseCommandCog(commands.Cog):
+class DatabaseCommandCog(RandovaniaCog):
     _split_worlds: Dict[RandovaniaGame, List[SplitWorld]]
 
     def __init__(self, configuration: dict, bot: RandovaniaBot):
@@ -141,9 +142,8 @@ class DatabaseCommandCog(commands.Cog):
         self._split_worlds = {}
         self._on_database_component_listener = {}
 
-    @commands.Cog.listener()
-    async def on_ready(self):
-        self.bot.slash.add_slash_command(
+    async def add_commands(self, slash: SlashCommand):
+        slash.add_slash_command(
             self.database_command,
             name=self.configuration.get("command_prefix", "") + "database-inspect",
             description="Consult the Randovania's logic database for one specific room.",
@@ -176,7 +176,7 @@ class DatabaseCommandCog(commands.Cog):
                 for j, area in enumerate(split_world.areas):
                     add_id(f"{game.value}_world_{i}_area_{j}", self.on_area_node_selection, game=game, area=area)
 
-        self.bot.slash.add_component_callback(
+        slash.add_component_callback(
             self.on_database_component,
             components=list(self._on_database_component_listener.keys()),
             use_callback_name=False,

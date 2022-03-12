@@ -6,14 +6,14 @@ from randovania.games.game import RandovaniaGame
 from randovania.server.discord.faq_command import FaqCommandCog
 
 
-async def test_on_ready():
+async def test_add_commands():
     # Setup
     cog = FaqCommandCog({"guild": 1234}, MagicMock())
     slash = cog.bot.slash
     slash.add_subcommand = MagicMock()
 
     # Run
-    await cog.on_ready()
+    await cog.add_commands(slash)
 
     # Assert
     slash.add_subcommand.assert_called()

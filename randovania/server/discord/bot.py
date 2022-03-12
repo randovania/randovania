@@ -1,7 +1,10 @@
+import logging
+
 import discord.ext.commands
 from discord_slash import SlashCommand
 
 import randovania
+from randovania.server.discord.randovania_cog import RandovaniaCog
 
 
 class RandovaniaBot(discord.ext.commands.Bot):
@@ -10,12 +13,20 @@ class RandovaniaBot(discord.ext.commands.Bot):
         self.slash = SlashCommand(
             self,
             debug_guild=configuration["debug_guild"],
-            sync_commands=True,
         )
         self.configuration = configuration
         self.load_extension("randovania.server.discord.preset_lookup")
         self.load_extension("randovania.server.discord.database_command")
         self.load_extension("randovania.server.discord.faq_command")
+
+    async def on_ready(self):
+        for cog in self.cogs.values():
+            if isinstance(cog, RandovaniaCog):
+                await cog.add_commands(self.slash)
+
+        await self.slash.sync_all_commands(
+            delete_from_unused_guilds=True,
+        )
 
 
 def run():
