@@ -81,9 +81,6 @@ def _convert_v15(options: dict) -> dict:
 
 def _convert_v16(options: dict) -> dict:
     per_game_options = options.pop("per_game_options", {})
-    for game_name in ["prime1", "prime2"]:
-        if game_name in per_game_options:
-            per_game_options[game_name]["use_external_models"] = []
 
     for game_name in ["prime1", "prime2", "cave_story"]:
         if game_name in per_game_options:
@@ -95,7 +92,7 @@ def _convert_v16(options: dict) -> dict:
 def _convert_v17(options: dict) -> dict:
     for game_name in ["prime1", "prime2"]:
         if f"game_{game_name}" in options:
-           options[f"game_{game_name}"]["use_external_models"] = []
+            options[f"game_{game_name}"]["use_external_models"] = []
 
     return options
 
