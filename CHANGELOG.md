@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.2.0] - Unreleased
 
+- Added: an experimental option to force first progression to be local.
 - Changed: Update to Qt 6.
 - Changed: The import preset menu in game sessions now has the presets of a game sorted by name, with the default presets on top.
 

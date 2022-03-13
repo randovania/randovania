@@ -23,8 +23,7 @@ from randovania.generator.filler.filler_library import (
     find_node_with_resource
 )
 from randovania.generator.filler.filler_logging import debug_print_collect_event
-from randovania.generator.filler.player_state import PlayerState
-from randovania.generator.filler.types import WeightedLocations
+from randovania.generator.filler.player_state import PlayerState, WeightedLocations
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.lib.random_lib import select_element_with_weight
 from randovania.resolver import debug
@@ -60,12 +59,13 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
     return result
 
 
-def _get_next_player(rng: Random, player_states: list[PlayerState], num_indices: int) -> Optional[PlayerState]:
+def _get_next_player(rng: Random, player_states: list[PlayerState],
+                     locations_weighted: WeightedLocations) -> Optional[PlayerState]:
     """
     Gets the next player a pickup should be placed for.
     :param rng:
     :param player_states:
-    :param num_indices: The number of indices av
+    :param locations_weighted: Which locations are available and their weight.
     :return:
     """
     all_uncollected: dict[PlayerState, UncollectedState] = {
@@ -82,7 +82,7 @@ def _get_next_player(rng: Random, player_states: list[PlayerState], num_indices:
     weighted_players = {
         player_state: _calculate_weight(player_state)
         for player_state in player_states
-        if not player_state.victory_condition_satisfied() and player_state.potential_actions(num_indices)
+        if not player_state.victory_condition_satisfied() and player_state.potential_actions(locations_weighted)
     }
     if weighted_players:
         if debug.debug_level() > 1:
@@ -104,18 +104,18 @@ def _get_next_player(rng: Random, player_states: list[PlayerState], num_indices:
 
 
 def weighted_potential_actions(player_state: PlayerState, status_update: Callable[[str], None],
-                               num_available_indices: int) -> dict[Action, float]:
+                               locations_weighted: WeightedLocations) -> dict[Action, float]:
     """
     Weights all potential actions based on current criteria.
     :param player_state:
     :param status_update:
-    :param num_available_indices: The number of indices available for placement.
+    :param locations_weighted: Which locations are available and their weight.
     :return:
     """
     actions_weights: dict[Action, float] = {}
     current_uncollected = UncollectedState.from_reach(player_state.reach)
 
-    actions = player_state.potential_actions(num_available_indices)
+    actions = player_state.potential_actions(locations_weighted)
     options_considered = 0
 
     def update_for_option():
@@ -197,11 +197,11 @@ def retcon_playthrough_filler(rng: Random,
 
     while True:
         all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
-        current_player = _get_next_player(rng, player_states, len(all_locations_weighted))
+        current_player = _get_next_player(rng, player_states, all_locations_weighted)
         if current_player is None:
             break
 
-        weighted_actions = weighted_potential_actions(current_player, action_report, len(all_locations_weighted))
+        weighted_actions = weighted_potential_actions(current_player, action_report, all_locations_weighted)
         action = select_weighted_action(rng, weighted_actions)
 
         if isinstance(action, tuple):
@@ -217,6 +217,7 @@ def retcon_playthrough_filler(rng: Random,
 
                 # TODO: this item is potentially dangerous and we should remove the invalidated paths
                 current_player.pickups_left.remove(new_pickup)
+
             current_player.num_actions += 1
         else:
             debug_print_collect_event(action, current_player.game)
@@ -248,10 +249,12 @@ def _assign_pickup_somewhere(action: PickupEntry,
     """
     assert action in current_player.pickups_left
 
-    if all_locations_weighted and (current_player.num_random_starting_items_placed
-                                   >= current_player.configuration.minimum_random_starting_items):
+    locations_weighted = current_player.filter_usable_locations(all_locations_weighted)
 
-        index_owner_state, pickup_index = select_element_with_weight(all_locations_weighted, rng)
+    if locations_weighted and (current_player.num_random_starting_items_placed
+                               >= current_player.configuration.minimum_random_starting_items):
+
+        index_owner_state, pickup_index = select_element_with_weight(locations_weighted, rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
         all_locations_weighted.pop((index_owner_state, pickup_index))
 
