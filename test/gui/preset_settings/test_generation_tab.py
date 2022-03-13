@@ -1,7 +1,9 @@
 import dataclasses
 import uuid
+from unittest.mock import MagicMock
 
 import pytest
+from PySide6 import QtCore
 from PySide6.QtWidgets import *
 
 from randovania.game_description import default_database
@@ -36,3 +38,19 @@ def test_on_preset_changed(skip_qtbot, preset_manager, game_data):
     # Assert
     assert window.trick_level_minimal_logic_check.isVisibleTo(parent) == has_min_logic
     assert window.game_specific_group.isVisibleTo(parent) == has_specific_settings
+
+
+def test_persist_local_first_progression(skip_qtbot, preset_manager):
+    parent = QGroupBox()
+    game = RandovaniaGame.BLANK
+
+    editor = MagicMock()
+    window = PresetGeneration(editor, default_database.game_description_for(game))
+    window.setParent(parent)
+
+    # Run
+    skip_qtbot.mouseClick(window.local_first_progression_check, QtCore.Qt.LeftButton)
+
+    # Assert
+    editor.__enter__.return_value.set_configuration_field.assert_called_once_with(
+        "first_progression_must_be_local", True)

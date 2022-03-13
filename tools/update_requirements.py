@@ -10,6 +10,13 @@ assert piptools is not None
 
 this_file = Path(__file__)
 parent = this_file.parents[1]
+custom_env = {
+    **os.environ,
+    "CUSTOM_COMPILE_COMMAND": "python {}".format(this_file.relative_to(parent).as_posix()),
+}
+
+is_quiet = "--quiet" in sys.argv
+stdout = subprocess.PIPE if is_quiet else None
 
 subprocess.run(
     [
@@ -25,10 +32,25 @@ subprocess.run(
         "requirements.in",
         "setup.py",
     ],
-    env={
-        **os.environ,
-        "CUSTOM_COMPILE_COMMAND": "python {}".format(this_file.relative_to(parent).as_posix()),
-    },
+    env=custom_env,
     check=True,
     cwd=parent,
+    stdout=stdout,
+    stderr=stdout,
+)
+
+subprocess.run(
+    [
+        sys.executable,
+        "-m",
+        "piptools",
+        "compile",
+        "--allow-unsafe",
+        "requirements-lint.in",
+    ],
+    env=custom_env,
+    check=True,
+    cwd=parent,
+    stdout=stdout,
+    stderr=stdout,
 )

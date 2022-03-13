@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import collections
 import re
 from typing import DefaultDict, Iterator
@@ -110,7 +112,8 @@ class PlayerState:
 
         self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)
 
-    def potential_actions(self, num_available_indices: int) -> list[Action]:
+    def potential_actions(self, locations_weighted: WeightedLocations) -> list[Action]:
+        num_available_indices = len(self.filter_usable_locations(locations_weighted))
         num_available_indices += (self.configuration.maximum_random_starting_items
                                   - self.num_random_starting_items_placed)
 
@@ -205,6 +208,16 @@ class PlayerState:
             "\n".join(teleporters) or "None",
         )
 
+    def filter_usable_locations(self, locations_weighted: WeightedLocations) -> WeightedLocations:
+        if self.configuration.first_progression_must_be_local and self.num_assigned_pickups == 0:
+            return {
+                loc: weight
+                for loc, weight in locations_weighted.items()
+                if loc[0] is self
+            }
+
+        return locations_weighted
+
 
 def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) -> Iterator[PickupIndex]:
     if randomization_mode is RandomizationMode.FULL:
@@ -227,3 +240,6 @@ def build_available_indices(world_list: WorldList, configuration: FillerConfigur
     all_indices = set().union(*indices_groups)
 
     return indices_groups, all_indices
+
+
+WeightedLocations = dict[tuple[PlayerState, PickupIndex], float]
