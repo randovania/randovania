@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed: Update to Qt 6.
 - Changed: The import preset menu in game sessions now has the presets of a game sorted by name, with the default presets on top.
+- Added: Prime and Echoes multiworlds can now use the proper model for foreign items if the player supplies a copy of the other game
 
 ### Cave Story
 
