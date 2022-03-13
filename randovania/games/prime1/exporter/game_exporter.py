@@ -31,14 +31,10 @@ class PrimeGameExportParams(GameExportParams):
 
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
 
-    bad_models = ["prime2_MissileLauncher", "prime2_MissileExpansionPrime1"]
+    model_list = []
     if use_external_assets:
-        model_list = [str(i) for i in assets_meta["items"].keys()]
-        for m in bad_models:
-            if m in model_list:
-                model_list.remove(m)
-    else:
-        model_list = []
+        bad_models = {"prime2_MissileLauncher", "prime2_MissileExpansionPrime1"}
+        model_list = list(set(assets_meta["items"]) - bad_models)
 
     for level in patch_data["levelData"].values():
         for room in level["rooms"].values():
@@ -48,9 +44,8 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
                     converted_model_name = model.name
                 else:
                     converted_model_name = "{}_{}".format(model.game.value, model.name)
-
-                if converted_model_name not in model_list and model.game != RandovaniaGame.METROID_PRIME:
-                    converted_model_name = _MODEL_MAPPING.get((model.game, model.name), "Nothing")
+                    if converted_model_name not in model_list:
+                        converted_model_name = _MODEL_MAPPING.get((model.game, model.name), "Nothing")
 
                 pickup['model'] = converted_model_name
 
