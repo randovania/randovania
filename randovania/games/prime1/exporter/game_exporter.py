@@ -99,19 +99,17 @@ class PrimeGameExporter(GameExporter):
         )
         new_config["preferences"]["cacheDir"] = cache_dir
 
+        assets_meta = {}
+        updaters = [progress_update]
         if export_params.use_echoes_models:
-            # TODO: Check if we actually need to extract echoes if there's cached models already
             assets_path = export_params.asset_cache_path
             if asset_conversion.get_asset_cache_version(assets_path) != asset_conversion.ECHOES_MODELS_VERSION:
                 updaters = status_update_lib.split_progress_update(progress_update, 3)
                 from randovania.games.prime2.exporter.game_exporter import extract_and_backup_iso
                 extract_and_backup_iso(export_params.echoes_input_path, export_params.echoes_contents_path,
                                        export_params.echoes_backup_path, updaters[0])
-                assets_meta = asset_conversion.convert_prime2_pickups(assets_path, updaters[1])
+            assets_meta = asset_conversion.convert_prime2_pickups(assets_path, updaters[1])
             new_config["externAssetsDir"] = os.fspath(assets_path)
-        else:
-            updaters = [progress_update]
-            assets_meta = {}
 
         # Replace models
         adjust_model_names(new_config, assets_meta, export_params.use_echoes_models)
