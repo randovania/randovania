@@ -51,6 +51,23 @@ with everything ready to use. Just extract and run!
 
 ## Linux
 
+### Building
+
+1. Clone this repository (downloading the source zip is not supported and will not work)
+2. Open a terminal in the repository root
+3. Fetch the tags from the repo:
+
+   `$ git fetch --tags`
+4. Checkout the latest tag (replace v4.0.1 with the latest release version):
+
+   `$ git checkout v4.0.1`
+5. Use the included Docker scripts to build an AppImage bundle:
+
+   `$ docker-compose -f docker-compose-appimage-builder.yml up --build`
+6. Run the AppImage (you may move this file anywhere if you wish):
+
+   `$ ./out/Randovania-*.AppImage`
+
 ### Running (in-source)
 
 1. Clone this repository (downloading the source zip is not supported and will not work)
