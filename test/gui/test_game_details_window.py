@@ -48,6 +48,7 @@ async def test_export_iso(skip_qtbot, mocker):
         patch_data,
         window.layout_description.shareable_word_hash,
         window.layout_description.has_spoiler,
+        [game]
     )
     mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
     game.exporter.export_game.assert_called_once_with(

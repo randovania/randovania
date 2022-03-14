@@ -34,13 +34,13 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
     )
     if other_player:
         shiny_stuff = {
-            'model': 'Missile',
+            'model': {'game': 'prime1', 'name': 'Missile'},
             'scanText': 'Your Missile Expansion. Provides 5 Missiles',
             'hudmemoText': 'Missile Expansion acquired!',
         }
     else:
         shiny_stuff = {
-            'model': 'Shiny Missile',
+            'model': {'game': 'prime1', 'name': 'Shiny Missile'},
             'scanText': 'Your Shiny Missile Expansion. Provides 5 Missiles',
             'hudmemoText': 'Shiny Missile Expansion acquired!',
         }
@@ -76,8 +76,8 @@ def test_create_patch_data(test_files_dir, mocker):
     with test_files_dir.joinpath("randomprime_expected_data.json").open("r") as file:
         expected_data = json.load(file)
 
-    # with test_files_dir.joinpath("randomprime_actual_data.json").open("w") as file:
-    #     file.write(json.dumps(data))
+    # with test_files_dir.joinpath("randomprime_expected_data.json").open("w") as file:
+    #     file.write(json.dumps(data, indent=4, separators=(',', ': ')))
 
     # Ignore the part of the main menu message which has the randovania version in it
     data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]

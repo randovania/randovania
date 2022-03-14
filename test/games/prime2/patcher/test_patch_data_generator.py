@@ -73,11 +73,11 @@ def test_adjust_model_name(randomizer_data):
     # Setup
     patcher_data = {
         "pickups": [
-            {"model_name": "DarkVisor"},
-            {"model_name": "SkyTempleKey"},
-            {"model_name": "MissileExpansion"},
-            {"model_name": "prime1_Boost Ball"},
-            {"model_name": "prime1_Plasma Beam"},
+            {"model": {"game": "prime2", "name": "DarkVisor"}},
+            {"model": {"game": "prime2", "name": "SkyTempleKey"}},
+            {"model": {"game": "prime2", "name": "MissileExpansion"}},
+            {"model": {"game": "prime1", "name": "Boost Ball"}},
+            {"model": {"game": "prime1", "name": "Plasma Beam"}},
         ]
     }
 
@@ -379,7 +379,7 @@ def test_pickup_data_for_seeker_launcher(echoes_item_database, echoes_resource_d
     assert result == {
         "pickup_index": 0,
         "scan": "Seeker Launcher",
-        "model_name": "SeekerLauncher",
+        "model": {"game": "prime2", "name": "SeekerLauncher"},
         "hud_text": ["Seeker Launcher acquired, but the Missile Launcher is required to use it.",
                      "Seeker Launcher acquired!"],
         'resources': [{'amount': 5, 'index': 71},
@@ -428,7 +428,7 @@ def test_pickup_data_for_pb_expansion_locked(simplified, echoes_item_database, e
     assert result == {
         "pickup_index": 0,
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
-        "model_name": "PowerBombExpansion",
+        "model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": hud_text,
         'resources': [{'amount': 2, 'index': 72},
                       {'amount': 1, 'index': 47}],
@@ -459,7 +459,7 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
     assert result == {
         "pickup_index": 0,
         "scan": "Power Bomb Expansion. Provides 2 Power Bombs and 1 Item Percentage",
-        "model_name": "PowerBombExpansion",
+        "model": {"game": "prime2", "name": "PowerBombExpansion"},
         "hud_text": ["Power Bomb Expansion acquired!"],
         'resources': [{'amount': 2, 'index': 43},
                       {'amount': 1, 'index': 47}],

@@ -32,7 +32,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         output_format="iso",
     )
 
-    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
+    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -55,7 +55,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
         output_directory=None,
         output_format="smc",
     )
-    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
+    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = None
 
     # Run
@@ -68,7 +68,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
 
 def test_save_options(skip_qtbot, tmp_path):
     options = Options(tmp_path)
-    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
+    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True, [])
     window.output_file_edit.setText("somewhere/game.smc")
 
     # Run
@@ -89,7 +89,7 @@ def test_get_game_export_params(skip_qtbot, tmp_path, save_spoiler: bool):
         output_directory=tmp_path.joinpath("output"),
         output_format="smc",
     )
-    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True)
+    window = SuperMetroidGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()

@@ -12,6 +12,7 @@ class PrimePerGameOptions(PerGameOptions):
     input_path: Optional[Path] = None
     output_directory: Optional[Path] = None
     output_format: str = "iso"
+    use_external_models: set[RandovaniaGame] = dataclasses.field(default_factory=set)
 
     @property
     def as_json(self):
@@ -20,6 +21,7 @@ class PrimePerGameOptions(PerGameOptions):
             "input_path": str(self.input_path) if self.input_path is not None else None,
             "output_directory": str(self.output_directory) if self.output_directory is not None else None,
             "output_format": self.output_format,
+            "use_external_models": [game.value for game in self.use_external_models]
         }
 
     @classmethod
@@ -31,4 +33,5 @@ class PrimePerGameOptions(PerGameOptions):
             input_path=decode_if_not_none(value["input_path"], Path),
             output_directory=decode_if_not_none(value["output_directory"], Path),
             output_format=value["output_format"],
+            use_external_models={RandovaniaGame(g) for g in value["use_external_models"]},
         )
