@@ -202,10 +202,10 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
                         scale=asset.scale,
                     )
             conversion_updaters[1]("Finished converting Prime 1 assets", 1)
+            assets_path.mkdir(exist_ok=True, parents=True)
             # Cache these assets here
             # This doesn't work properly so skip this for now
             '''
-            assets_path.mkdir(exist_ok=True, parents=True)
             for asset in converter.converted_assets.values():
                 assetdata = format_for(asset.type).build(asset.resource, target_game=Game.ECHOES)
                 if len(assetdata) % 32 != 0:
