@@ -72,6 +72,7 @@ class PlayerState:
 
     def update_for_new_state(self):
         debug.debug_print(f"\n>>> Updating state of {self}")
+
         self._advance_pickup_index_seen_count()
         self._advance_scan_asset_seen_count()
         self._advance_event_seen_count()

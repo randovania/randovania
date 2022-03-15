@@ -4,7 +4,7 @@ from typing import Tuple, List
 
 import pytest
 
-from randovania.game_description import default_database
+from randovania.game_description import default_database, derived_nodes
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement, ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -12,20 +12,23 @@ from randovania.game_description.resources.resource_info import add_resources_in
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.world.node import GenericNode
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
+from randovania.generator import reach_lib
 from randovania.generator.generator_reach import (
-    GeneratorReach)
+    GeneratorReach
+)
 from randovania.generator.item_pool import pool_creator
 from randovania.generator.old_generator_reach import OldGeneratorReach
-from randovania.generator.reach_lib import filter_pickup_nodes, collectable_resource_nodes, \
-    get_collectable_resource_nodes_of_reach, reach_with_all_safe_resources, advance_reach_with_possible_unsafe_resources
+from randovania.generator.reach_lib import (
+    advance_reach_with_possible_unsafe_resources
+)
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
@@ -38,6 +41,7 @@ def run_bootstrap(preset: Preset):
     game = default_database.game_description_for(preset.game).make_mutable_copy()
     generator = game.game.generator
 
+    derived_nodes.create_derived_nodes(game)
     game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database,
                                                                          preset.configuration)
     permalink = GeneratorParameters(
@@ -53,7 +57,7 @@ def run_bootstrap(preset: Preset):
 
 
 def _create_reach_with_unsafe(game: GameDescription, state: State) -> GeneratorReach:
-    return advance_reach_with_possible_unsafe_resources(reach_with_all_safe_resources(game, state))
+    return reach_lib.advance_reach_with_possible_unsafe_resources(reach_lib.reach_with_all_safe_resources(game, state))
 
 
 def _create_reaches_and_compare(game: GameDescription, state: State) -> Tuple[GeneratorReach, GeneratorReach]:
@@ -74,8 +78,8 @@ def _create_reaches_and_compare(game: GameDescription, state: State) -> Tuple[Ge
 def _compare_actions(first_reach: GeneratorReach,
                      second_reach: GeneratorReach,
                      ) -> Tuple[List[ResourceNode], List[ResourceNode]]:
-    first_actions = get_collectable_resource_nodes_of_reach(first_reach)
-    second_actions = get_collectable_resource_nodes_of_reach(second_reach)
+    first_actions = reach_lib.get_collectable_resource_nodes_of_reach(first_reach)
+    second_actions = reach_lib.get_collectable_resource_nodes_of_reach(second_reach)
     assert set(first_actions) == set(second_actions)
 
     return first_actions, second_actions
@@ -107,12 +111,12 @@ _ignore_pickups_for_game = {
         game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
         id=game.value,
     )
-    for game in RandovaniaGame
+    for game in [RandovaniaGame.METROID_DREAD]
 ])
 def test_database_collectable(preset_manager, game_enum, ignore_events, ignore_pickups):
     game, initial_state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset())
-    all_pickups = set(filter_pickup_nodes(game.world_list.all_nodes))
+    all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.all_nodes))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
                                                        game.resource_database)
     add_resources_into_another(initial_state.resources, pool_results.initial_resources)
@@ -128,8 +132,8 @@ def test_database_collectable(preset_manager, game_enum, ignore_events, ignore_p
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 
     reach = _create_reach_with_unsafe(game, initial_state.heal())
-    while list(collectable_resource_nodes(reach.nodes, reach)):
-        reach.act_on(next(iter(collectable_resource_nodes(reach.nodes, reach))))
+    while list(reach_lib.collectable_resource_nodes(reach.nodes, reach)):
+        reach.act_on(next(iter(reach_lib.collectable_resource_nodes(reach.nodes, reach))))
         reach = advance_reach_with_possible_unsafe_resources(reach)
 
     # print("\nCurrent reach:")
@@ -153,7 +157,7 @@ def test_database_collectable(preset_manager, game_enum, ignore_events, ignore_p
         for resource, quantity in reach.state.resources.items()
         if quantity > 0 and resource.resource_type == ResourceType.EVENT
     }
-    assert list(collectable_resource_nodes(reach.nodes, reach)) == []
+    assert list(reach_lib.collectable_resource_nodes(reach.nodes, reach)) == []
     assert sorted(collected_indices) == expected_pickups
     assert sorted(collected_events, key=lambda it: it.short_name) == expected_events
 
@@ -204,7 +208,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                           node_a, patches, None, StateGameData(echoes_resource_database, game.world_list, 100, 99))
 
     # Run
-    reach = reach_with_all_safe_resources(game, initial_state)
+    reach = reach_lib.reach_with_all_safe_resources(game, initial_state)
 
     # Assert
     if has_translator:
@@ -213,9 +217,12 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         assert set(reach.safe_nodes) == {node_a, node_b}
 
 
-def test_reach_size_from_start_echoes(small_echoes_game_description, default_layout_configuration):
+def test_reach_size_from_start_echoes(small_echoes_game_description, default_layout_configuration, mocker):
     # Setup
-    game: GameDescription = small_echoes_game_description
+    game: GameDescription = small_echoes_game_description.make_mutable_copy()
+    derived_nodes.create_derived_nodes(game)
+
+    mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
     generator = game.game.generator
 
     specific_levels = {
@@ -226,9 +233,11 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
     def item(name: str):
         return find_resource_info_with_long_name(game.resource_database.item, name)
 
+    ni = NodeIdentifier.create
+
     def nodes(*names: str):
         result = [
-            game.world_list.node_by_identifier(NodeIdentifier.create(*name.split("/")))
+            game.world_list.node_by_identifier(ni(*name.split("/")))
             for name in names
         ]
         result.sort(key=lambda it: it.index)
@@ -262,8 +271,10 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
 
     # Run
     reach = OldGeneratorReach.reach_from_state(game, state)
+    reach_lib.collect_all_safe_resources_in_reach(reach)
 
     # Assert
+
     assert list(reach.nodes) == nodes(
         "Temple Grounds/Path of Eyes/Front of Translator Gate",
         "Temple Grounds/Path of Eyes/Lore Scan",
@@ -272,8 +283,10 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
 
         "Temple Grounds/Torvus Transport Access/Door to Path of Eyes",
         "Temple Grounds/Torvus Transport Access/Door to Transport to Torvus Bog",
+        "Temple Grounds/Torvus Transport Access/Lock - Door to Transport to Torvus Bog",
 
         "Temple Grounds/Transport to Torvus Bog/Door to Torvus Transport Access",
+        "Temple Grounds/Transport to Torvus Bog/Lock - Door to Torvus Transport Access",
         "Temple Grounds/Transport to Torvus Bog/Elevator to Torvus Bog - Transport to Temple Grounds",
 
         "Torvus Bog/Transport to Temple Grounds/Elevator to Temple Grounds - Transport to Torvus Bog",
@@ -295,4 +308,4 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
 
         "Torvus Bog/Great Bridge/Door to Path of Roots",
     )
-    assert len(list(reach.safe_nodes)) == 20
+    assert len(list(reach.safe_nodes)) == 22

@@ -1,3 +1,4 @@
+import typing
 from typing import Tuple
 from unittest.mock import MagicMock
 
@@ -11,6 +12,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 
 
@@ -548,3 +550,12 @@ def test_requirement_set_constructor(echoes_resource_database):
             ("Space Jump Boots", 1),
         ],
     ]
+
+
+def test_node_identifier_as_requirement():
+    nic = NodeIdentifier.create
+    req = ResourceRequirement.simple(nic("W", "A", "N"))
+    db = typing.cast(ResourceDatabase, None)
+
+    assert not req.satisfied({}, 0, db)
+    assert req.satisfied({nic("W", "A", "N"): 1}, 0, db)

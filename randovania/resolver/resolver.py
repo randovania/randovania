@@ -1,7 +1,7 @@
 import asyncio
 from typing import Optional, Tuple, Callable, FrozenSet
 
-from randovania.game_description import default_database
+from randovania.game_description import default_database, derived_nodes
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
@@ -176,6 +176,7 @@ async def resolve(configuration: BaseConfiguration,
         status_update = _quiet_print
 
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
+    derived_nodes.create_derived_nodes(game)
     bootstrap = game.game.generator.bootstrap
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)

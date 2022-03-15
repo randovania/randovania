@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 import typing
 
-from randovania.game_description.requirements import Requirement, RequirementAnd
+from randovania.game_description.requirements import Requirement, RequirementAnd, ResourceRequirement
 from randovania.game_description.world.dock import DockType, DockWeakness, DockLockType
 from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -18,6 +18,16 @@ def _resolve_dock_node(context: NodeContext, node: DockNode) -> typing.Optional[
         return context.node_provider.node_by_identifier(connection)
     else:
         return None
+
+
+def _requirement_from_back(context: NodeContext, identifier: NodeIdentifier) -> typing.Optional[ResourceRequirement]:
+    target_node = context.node_provider.node_by_identifier(identifier)
+    if isinstance(target_node, DockNode):
+        weak = context.patches.dock_weakness.get(identifier, target_node.default_dock_weakness)
+        if weak.lock is not None:
+            return ResourceRequirement.simple(identifier)
+
+    return None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -45,50 +55,100 @@ class DockNode(Node):
     def __repr__(self):
         return "DockNode({!r} -> {})".format(self.name, self.default_connection)
 
-    def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        patches = context.patches
-        provider = context.node_provider
-        self_identifier = provider.identifier_for_node(self)
+    def get_lock_node_identifier_from_identifier(self, self_identifier: NodeIdentifier):
+        return dataclasses.replace(
+            self_identifier,
+            node_name=f"Lock - {self.name}",
+        )
 
-        target_identifier = patches.dock_connection.get(self_identifier, self.default_connection)
+    def get_lock_node_identifier(self, context: NodeContext) -> NodeIdentifier:
+        return self.get_lock_node_identifier_from_identifier(
+            context.node_provider.identifier_for_node(self),
+        )
+
+    def get_front_weakness(self, context: NodeContext) -> DockWeakness:
+        self_identifier = context.node_provider.identifier_for_node(self)
+        return context.patches.dock_weakness.get(self_identifier, self.default_dock_weakness)
+
+    def get_back_weakness(self, context: NodeContext) -> typing.Optional[DockWeakness]:
+        target_identifier = self.get_target_identifier(context)
+        if target_identifier is None:
+            return None
+
+        target_node = context.node_provider.node_by_identifier(target_identifier)
+        if isinstance(target_node, DockNode):
+            return context.patches.dock_weakness.get(target_identifier, target_node.default_dock_weakness)
+
+        return None
+
+    def _get_open_requirement(self, weakness: DockWeakness) -> Requirement:
+        if weakness is self.default_dock_weakness and self.override_default_open_requirement is not None:
+            return self.override_default_open_requirement
+        else:
+            return weakness.requirement
+
+    def _get_lock_requirement(self, weakness: DockWeakness) -> Requirement:
+        if weakness is self.default_dock_weakness and self.override_default_lock_requirement is not None:
+            return self.override_default_lock_requirement
+        else:
+            return weakness.lock.requirement
+
+    def _open_dock_connection(self, context: NodeContext, target_identifier: NodeIdentifier,
+                              ) -> tuple[Node, Requirement]:
+
+        forward_weakness = self.get_front_weakness(context)
+
+        reqs: list[Requirement] = [self._get_open_requirement(forward_weakness)]
+
+        # This dock has a lock, so require it
+        if forward_weakness.lock is not None:
+            reqs.append(ResourceRequirement.simple(context.node_provider.identifier_for_node(self)))
+
+        # The other dock has a lock, so require it
+        if (other_lock_req := _requirement_from_back(context, target_identifier)) is not None:
+            reqs.append(other_lock_req)
+
+        target_node = context.node_provider.node_by_identifier(target_identifier)
+        requirement = RequirementAnd(reqs).simplify() if len(reqs) != 1 else reqs[0]
+        return target_node, requirement
+
+    def _lock_connection(self, context: NodeContext) -> typing.Optional[tuple[Node, Requirement]]:
+        requirement = Requirement.trivial()
+
+        forward_weakness = self.get_front_weakness(context)
+        forward_lock = forward_weakness.lock
+
+        if forward_lock is not None:
+            requirement = self._get_lock_requirement(forward_weakness)
+
+        back_weakness = self.get_back_weakness(context)
+        back_lock = None
+        if back_weakness is not None:
+            back_lock = back_weakness.lock
+
+            if back_lock is not None and back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
+                requirement = RequirementAnd([requirement, back_lock.requirement])
+
+        if forward_lock is None and back_lock is None:
+            return None
+
+        lock_node = context.node_provider.node_by_identifier(self.get_lock_node_identifier(context))
+        return lock_node, requirement
+
+    def get_target_identifier(self, context: NodeContext) -> typing.Optional[NodeIdentifier]:
+        self_identifier = context.node_provider.identifier_for_node(self)
+        return context.patches.dock_connection.get(
+            self_identifier,
+            self.default_connection,
+        )
+
+    def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
+        target_identifier = self.get_target_identifier(context)
         if target_identifier is None:
             # Explicitly connected to nothing.
             return
 
-        target_node = provider.node_by_identifier(target_identifier)
-
-        forward_weakness = patches.dock_weakness.get(self_identifier, self.default_dock_weakness)
-
-        reqs = []
-
-        if forward_weakness is self.default_dock_weakness and self.override_default_open_requirement is not None:
-            reqs.append(self.override_default_open_requirement)
-        else:
-            reqs.append(forward_weakness.requirement)
-
-        if forward_weakness.lock is not None:
-            if forward_weakness is self.default_dock_weakness and self.override_default_lock_requirement is not None:
-                reqs.append(self.override_default_lock_requirement)
-            else:
-                reqs.append(forward_weakness.lock.requirement)
-
-        # TODO: only add requirement if the blast shield has not been destroyed yet
-
-        if isinstance(target_node, DockNode):
-            # TODO: Target node is expected to be a dock. Should this error?
-            back_weak = patches.dock_weakness.get(target_identifier, target_node.default_dock_weakness)
-            back_lock = back_weak.lock
-
-            if back_lock is None:
-                pass
-
-            elif back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
-                reqs.append(back_lock.requirement)
-
-            elif back_lock.lock_type in (DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE,
-                                         DockLockType.FRONT_BLAST_BACK_IF_MATCHING):
-                # FIXME: this should check if we've already openend the back
-                if back_weak != forward_weakness or back_lock.lock_type == DockLockType.FRONT_BLAST_BACK_IMPOSSIBLE:
-                    reqs.append(Requirement.impossible())
-
-        yield target_node, RequirementAnd(reqs).simplify() if len(reqs) != 1 else reqs[0]
+        yield self._open_dock_connection(context, target_identifier)
+        lock_connection = self._lock_connection(context)
+        if lock_connection is not None:
+            yield lock_connection

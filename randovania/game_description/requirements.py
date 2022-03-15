@@ -277,6 +277,10 @@ class ResourceRequirement(Requirement):
     negate: bool
 
     @classmethod
+    def simple(cls, simple: ResourceInfo) -> "ResourceRequirement":
+        return cls(simple, 1, False)
+
+    @classmethod
     def with_data(cls,
                   database: ResourceDatabase,
                   resource_type: ResourceType,
@@ -537,6 +541,12 @@ class RequirementSet:
             )
         for line in sorted(to_print):
             print_function(indent + line)
+
+    @property
+    def as_str(self):
+        l = []
+        self.pretty_print(print_function=l.append)
+        return " or ".join(l)
 
     @classmethod
     @lru_cache()
