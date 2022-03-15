@@ -39,7 +39,12 @@ class WorldList(NodeProvider):
 
     def _refresh_node_cache(self):
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
-        self._nodes = tuple(self._iterate_over_nodes())
+        self._nodes = tuple(sorted(self._iterate_over_nodes(), key=lambda it: it.index))
+
+        for i, node in enumerate(self._nodes):
+            if i != node.index:
+                raise ValueError(f"Incorrect index: {node.name} {node.index} expected {i}")
+
         self._pickup_index_to_node = {
             node.pickup_index: node
             for node in self._nodes
