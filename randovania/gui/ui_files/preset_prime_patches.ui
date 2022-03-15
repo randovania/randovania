@@ -111,7 +111,45 @@
            <item>
             <widget class="QLabel" name="description_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to improve the game experience, many quality of life changes are provided separated in 5 different groups.&lt;/p&gt;&lt;p&gt;For in-depth list of changes, see &lt;a href=&quot;https://github.com/toasterparty/randomprime/blob/randovania/doc/quality_of_life.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Quality of Life&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This section offers various impovements over the base game to better suit it for randomization and frequent playing.&lt;/p&gt;&lt;p&gt;For an in-depth list of changes, see &lt;a href=&quot;https://github.com/toasterparty/randomprime/blob/randovania/doc/quality_of_life.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Quality of Life Documentation&lt;/span&gt;&lt;/a&gt;.&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="openExternalLinks">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+            <item>
+            <widget class="QCheckBox" name="qol_game_breaking_check">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="text">
+              <string>Game Breaking</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="qol_game_breaking_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>90</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fixes crashes, soft-locks and other critical game functions that can ruin the randomizer experience. Reverts unwanted fixes made by Retro in versions after NTSC 0-00. Logic always assume this is enabled.&lt;br/&gt;&lt;br/&gt;If unsure leave this box checked!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -212,44 +250,6 @@
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="qol_game_breaking_check">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="text">
-              <string>Game Breaking</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="qol_game_breaking_label">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>60</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fixes softlocks and wrong room spawn points. Reverts changes made in later game versions.&lt;br/&gt;Logic always assume this is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-             <property name="openExternalLinks">
-              <bool>true</bool>
-             </property>
             </widget>
            </item>
            <item>
