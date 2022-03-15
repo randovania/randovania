@@ -218,7 +218,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
         patch_data = data_factory.create_data()
 
-        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler)
+        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler, [game])
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.Accepted:
             return
@@ -287,6 +287,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         ingame_hash_str = f"In-game Hash: {ingame_hash}<br/>" if ingame_hash is not None else ""
         title_text = """
         <p>
+            Generated with Randovania {description.randovania_version_text}<br />
             Seed Hash: {description.shareable_word_hash} ({description.shareable_hash})<br/>
             {ingame_hash_str}
             Preset Name: {preset.name}

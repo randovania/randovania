@@ -5,6 +5,7 @@ import logging
 import typing
 from typing import Optional, List, Tuple
 
+import construct
 import flask
 import flask_socketio
 import peewee
@@ -12,6 +13,7 @@ import peewee
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -20,7 +22,7 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 from randovania.network_common.admin_actions import SessionAdminGlobalAction, SessionAdminUserAction
-from randovania.network_common.binary_formats import BinaryInventory
+from randovania.network_common.binary_formats import BinaryInventory, OldBinaryInventory
 from randovania.network_common.error import (WrongPassword, NotAuthorizedForAction, InvalidAction)
 from randovania.network_common.pickup_serializer import BitPackPickupEntry
 from randovania.network_common.session_state import GameSessionState
@@ -775,10 +777,27 @@ def setup_app(sio: ServerApp):
 
                 inventory = []
                 if player.inventory is not None:
-                    for item in BinaryInventory.parse(player.inventory):
+                    try:
+                        parsed_inventory: list[dict] = BinaryInventory.parse(player.inventory)
+                    except construct.ConstructError:
+                        # Handle old format in an adhoc way
+                        # TODO 4.3: remove this code and purge all old inventory from the server db
+                        items_by_id: dict[int, ItemResourceInfo] = {
+                            item.extra["item_id"]: item
+                            for item in db.item
+                        }
+                        parsed_inventory = [
+                            {
+                                "name": items_by_id[item["index"]].short_name,
+                                **item,
+                            }
+                            for item in OldBinaryInventory.parse(player.inventory)
+                        ]
+
+                    for item in parsed_inventory:
                         if item["amount"] + item["capacity"] > 0:
                             inventory.append("{} x{}/{}".format(
-                                db.get_item(item["index"]).long_name,
+                                db.get_item(item["name"]).long_name,
                                 item["amount"], item["capacity"]
                             ))
 

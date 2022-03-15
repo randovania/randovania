@@ -44,7 +44,7 @@
          <x>0</x>
          <y>0</y>
          <width>479</width>
-         <height>813</height>
+         <height>911</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -116,6 +116,30 @@
             <widget class="QLabel" name="multi_pickup_label">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this setting is enabled, the generator will consider placing multiple items in multiple locations (e.g. Morph Ball and Bombs) in order to determine progression, rather than only a single item at a time as it is by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="local_first_progression_line">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="local_first_progression_check">
+             <property name="text">
+              <string>Require first progression to be local [Experimental]</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="local_first_progression_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ensures that that your first progression is placed in your own world, ensuring you always have something to do before potentially having to wait for progression.&lt;/p&gt;&lt;p&gt;This only changes anything in multiworld sessions.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Warning:&lt;/span&gt; This will make generation fail more frequently. Use with caution in sessions with many players and random starting locations.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

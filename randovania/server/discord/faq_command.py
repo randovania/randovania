@@ -1,22 +1,23 @@
 import functools
+import logging
 
 import discord
 from discord.ext import commands
-from discord_slash import SlashContext, SlashCommandOptionType
+from discord_slash import SlashContext, SlashCommandOptionType, SlashCommand
 from discord_slash.utils import manage_commands
 
 from randovania.games.game import RandovaniaGame
 from randovania.lib import enum_lib
 from randovania.server.discord.bot import RandovaniaBot
+from randovania.server.discord.randovania_cog import RandovaniaCog
 
 
-class FaqCommandCog(commands.Cog):
+class FaqCommandCog(RandovaniaCog):
     def __init__(self, configuration: dict, bot: RandovaniaBot):
         self.configuration = configuration
         self.bot = bot
 
-    @commands.Cog.listener()
-    async def on_ready(self):
+    async def add_commands(self, slash: SlashCommand):
         base_command = self.configuration.get("command_prefix", "") + "randovania-faq"
 
         for game in enum_lib.iterate_enum(RandovaniaGame):
@@ -29,7 +30,7 @@ class FaqCommandCog(commands.Cog):
                     return n[:97] + "..."
                 return n
 
-            self.bot.slash.add_subcommand(
+            slash.add_subcommand(
                 functools.partial(self.faq_game_command, game=game),
                 base_command,
                 name=game.value,
@@ -46,8 +47,6 @@ class FaqCommandCog(commands.Cog):
                     )
                 ],
             )
-
-        await self.bot.slash.sync_all_commands()
 
     async def faq_game_command(self, ctx: SlashContext, game: RandovaniaGame, question: str):
         for qid, (question_text, answer) in enumerate(game.data.faq):

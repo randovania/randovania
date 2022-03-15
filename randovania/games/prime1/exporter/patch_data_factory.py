@@ -58,6 +58,7 @@ _STARTING_ITEM_NAME_TO_INDEX = {
 # "Unknown Item 2": "Unknown2",
 
 _MODEL_MAPPING = {
+    (RandovaniaGame.METROID_PRIME_ECHOES, "CombatVisor INCOMPLETE"): "Combat Visor",
     (RandovaniaGame.METROID_PRIME_ECHOES, "ChargeBeam INCOMPLETE"): "Charge Beam",
     (RandovaniaGame.METROID_PRIME_ECHOES, "SuperMissile"): "Super Missile",
     (RandovaniaGame.METROID_PRIME_ECHOES, "ScanVisor INCOMPLETE"): "Scan Visor",
@@ -103,10 +104,7 @@ _LOCATIONS_GROUPED_TOGETHER = [
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
                                      rng: Random) -> dict:
-    if detail.model.game == RandovaniaGame.METROID_PRIME:
-        model_name = detail.model.name
-    else:
-        model_name = _MODEL_MAPPING.get((detail.model.game, detail.model.name), "Nothing")
+    model = detail.model.as_json
 
     scan_text = detail.scan_text
     hud_text = detail.hud_text[0]
@@ -120,16 +118,16 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         count = quantity
         break
 
-    if (model_name == "Missile" and not detail.other_player
+    if (model["name"] == "Missile" and not detail.other_player
             and "Missile Expansion" in hud_text
             and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
-        model_name = "Shiny Missile"
+        model["name"] = "Shiny Missile"
         hud_text = hud_text.replace("Missile Expansion", "Shiny Missile Expansion")
         scan_text = scan_text.replace("Missile Expansion", "Shiny Missile Expansion")
 
     result = {
         "type": pickup_type,
-        "model": model_name,
+        "model": model,
         "scanText": scan_text,
         "hudmemoText": hud_text,
         "currIncrease": count,
@@ -341,7 +339,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "trilogyDiscPath": None,
                 "quickplay": False,
                 "quiet": False,
-                "suitColors": suit_colors
+                "suitColors": suit_colors,
             },
             "gameConfig": {
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,

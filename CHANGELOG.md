@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.2.0] - Unreleased
 
+- Added: an experimental option to force first progression to be local.
 - Changed: Update to Qt 6.
+- Changed: The import preset menu in game sessions now has the presets of a game sorted by name, with the default presets on top.
+- Added: Prime and Echoes multiworlds can now use the proper model for foreign items if the player supplies a copy of the other game
 
 ### Cave Story
 
@@ -23,11 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- Echoes Combat Visor placed in a Prime player's world now uses the new Combat Visor model.
 
 #### Patcher Changes
 
-- Fixed: Scan visor and X-Ray not displaying properly after taking an elevator when combat visor is shuffled.
+- Nothing.
 
 #### Logic Database
 
@@ -45,9 +48,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing.
 
-## [4.1.1] - Unreleased
+## [4.1.2] - Unreleased
 
+- Added: The game details window now displays the Randovania version the game was generated with. 
+- Added: You can now import a game layout/spoiler file in multiworld sessions. 
+- Changed: A popup shows up while waiting for the game session list.
 - Fixed: The error message when the client is incompatible is now properly displayed.
+- Fixed: Player inventory is now properly sent to the server in multiworld sessions.
+
+## [4.1.1] - 2022-03-12
+
+- Added: The game details window now displays the Randovania version the game was generated with. 
+- Added: You can now import a game layout/spoiler file in multiworld sessions. 
+- Changed: A popup shows up while waiting for the game session list.
+- Fixed: The error message when the client is incompatible is now properly displayed.
+- Fixed: Player inventory is now properly sent to the server in multiworld sessions.
+
+
+### Metroid Prime
+
+#### Patcher Changes
+
+- Fixed: Scan visor and X-Ray not displaying properly after taking an elevator when combat visor is shuffled.
+- Fixed: Some users receiving OS error when exporting ISO with non-vanilla suit colors.
+
 
 ## [4.1.0] - 2022-03-01
 

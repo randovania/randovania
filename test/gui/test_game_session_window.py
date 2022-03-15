@@ -433,10 +433,11 @@ async def test_save_iso(window, mocker, echoes_game_description):
                                        return_value=QtWidgets.QDialog.Accepted)
 
     preset = MagicMock()
+    # preset.game = RandovaniaGame.METROID_PRIME_ECHOES
     window._game_session = MagicMock()
     window._game_session.players[window.network_client.current_user.id].is_observer = False
     window._game_session.players[window.network_client.current_user.id].row = 0
-    window._game_session.presets = {0: preset}
+    window._game_session.presets = [preset]
     window.network_client.session_admin_player = AsyncMock()
 
     patch_data = window.network_client.session_admin_player.return_value
@@ -453,6 +454,7 @@ async def test_save_iso(window, mocker, echoes_game_description):
         patch_data,
         window._game_session.game_details.word_hash,
         False,
+        [game],
     )
     mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
     game.exporter.export_game.assert_called_once_with(

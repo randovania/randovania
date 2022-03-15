@@ -34,6 +34,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     pickup_model_data_source: PickupModelDataSource
     multi_pickup_placement: bool
     logical_resource_action: LayoutLogicalResourceAction
+    first_progression_must_be_local: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -55,6 +56,10 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
 
     def dangerous_settings(self) -> List[str]:
         result = []
+
+        if self.first_progression_must_be_local:
+            result.append("Requiring first progression to be local causes increased generation failure.")
+
         for field in dataclasses.fields(self):
             f = getattr(self, field.name)
             if hasattr(f, "dangerous_settings"):

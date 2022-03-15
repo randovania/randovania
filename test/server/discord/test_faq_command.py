@@ -1,31 +1,25 @@
 from unittest.mock import MagicMock, AsyncMock, ANY
 
-import pytest
-
 from randovania.games.game import RandovaniaGame
 from randovania.server.discord.faq_command import FaqCommandCog
 
 
-async def test_on_ready():
+async def test_add_commands():
     # Setup
     cog = FaqCommandCog({"guild": 1234}, MagicMock())
     slash = cog.bot.slash
     slash.add_subcommand = MagicMock()
-    slash.sync_all_commands = AsyncMock()
 
     # Run
-    await cog.on_ready()
+    await cog.add_commands(slash)
 
     # Assert
     slash.add_subcommand.assert_called()
-    slash.sync_all_commands.assert_awaited_once_with()
 
 
 async def test_faq_game_command():
     # Setup
     cog = FaqCommandCog({}, MagicMock())
-    slash = cog.bot.slash
-    slash.sync_all_commands = AsyncMock()
     ctx = AsyncMock()
 
     # Run

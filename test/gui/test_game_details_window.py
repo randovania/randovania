@@ -48,6 +48,7 @@ async def test_export_iso(skip_qtbot, mocker):
         patch_data,
         window.layout_description.shareable_word_hash,
         window.layout_description.has_spoiler,
+        [game]
     )
     mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
     game.exporter.export_game.assert_called_once_with(
@@ -65,9 +66,16 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     options = MagicMock()
     description = MagicMock(spec=LayoutDescription)
     description.player_count = 1
+    description.shareable_hash = "12345"
+    description.shareable_word_hash = "Some Hash Words"
+    description.randovania_version_text = "v1.2.4"
     description.permalink.as_base64_str = "<permalink>"
     description.generator_parameters = MagicMock(spec=GeneratorParameters)
     description.has_spoiler = False
+
+    preset = description.get_preset.return_value
+    preset.game.data.layout.get_ingame_hash.return_value = "<image>"
+    preset.name = "CustomPreset"
 
     window = GameDetailsWindow(None, options)
     skip_qtbot.addWidget(window)
@@ -76,11 +84,19 @@ def test_update_layout_description_no_spoiler(skip_qtbot, mocker):
     window.update_layout_description(description)
 
     # Assert
-    mock_describer.assert_called_once_with(description.get_preset.return_value)
+    mock_describer.assert_called_once_with(preset)
     mock_merge.assert_has_calls([
         call(["a", "c"]),
         call(["b", "d"]),
     ])
+    assert window.layout_title_label.text() == ("""
+        <p>
+            Generated with Randovania v1.2.4<br />
+            Seed Hash: Some Hash Words (12345)<br/>
+            In-game Hash: <image><br/>
+            Preset Name: CustomPreset
+        </p>
+        """)
 
 
 def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):

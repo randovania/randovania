@@ -31,7 +31,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
         output_directory=output_directory,
     )
 
-    window = DreadGameExportDialog(options, {}, "MyHash", True)
+    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = tmp_path.joinpath("foo", "game.iso")
 
     # Run
@@ -53,7 +53,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
         output_directory=None,
     )
 
-    window = DreadGameExportDialog(options, {}, "MyHash", True)
+    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
     mock_prompt.return_value = None
 
     # Run
@@ -67,7 +67,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
 def test_save_options(skip_qtbot, tmp_path):
     options = Options(tmp_path)
 
-    window = DreadGameExportDialog(options, {}, "MyHash", True)
+    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
     window.output_file_edit.setText("somewhere/foo")
 
     # Run
@@ -96,7 +96,7 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
         input_directory=None,
     )
 
-    window = DreadGameExportDialog(options, {}, "MyHash", True)
+    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
     # Empty text field is an error
     assert window.input_file_edit.text() == ""
     assert window.input_file_edit.has_error
@@ -143,7 +143,7 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
         input_directory=tmp_path.joinpath("input"),
         output_directory=tmp_path.joinpath("output"),
     )
-    window = DreadGameExportDialog(options, {}, "MyHash", True)
+    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
 
     # Run
     result = window.get_game_export_params()
