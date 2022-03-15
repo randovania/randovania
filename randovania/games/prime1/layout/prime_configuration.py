@@ -56,7 +56,7 @@ class PrimeConfiguration(BaseConfiguration):
         if self.shuffle_item_pos:
             result.append("Shuffled item position")
 
-        if self.qol_game_breaking:
+        if not self.qol_game_breaking:
             result.append("Missing Game Breaking Fixes")
 
         return result
