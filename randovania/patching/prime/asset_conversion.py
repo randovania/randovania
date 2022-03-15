@@ -334,6 +334,11 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
             "LightBeamAmmoExpansion"
         ]
 
+        # Fix the Varia Suit's character in the suits ANCS referencing a missing skin.
+        # 0x3A5E2FE1 is Light Suit's skin
+        # this is fixed by Claris' patcher when exporting for Echoes
+        asset_provider.get_asset(0xa3e787b7).character_set.characters[0].skin_id = 0x3A5E2FE1
+
         result = {}
         assets_to_change = [
             data
