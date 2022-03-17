@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: New pixel icons for the auto tracker.
 - Changed: Standard tracker layouts for Prime, Echoes and Corruption now include a few more items.
 - Changed: Auto tracker game icons for Echoes beams now use the HUD icons instead of the pickup models.
+- Fixed: Randovania no longer hangs on start if there's a loop in the hierarchy of presets.
 
 ### Cave Story
 
