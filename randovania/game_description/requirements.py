@@ -546,7 +546,10 @@ class RequirementSet:
     def as_str(self):
         l = []
         self.pretty_print(print_function=l.append)
-        return " or ".join(l)
+        if len(l) > 1:
+            return " or ".join(f"({it})" for it in l)
+        else:
+            return l[0]
 
     @classmethod
     @lru_cache()

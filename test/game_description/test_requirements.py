@@ -512,8 +512,7 @@ def test_requirement_list_constructor(echoes_resource_database):
 
 
 def test_requirement_set_constructor(echoes_resource_database):
-    def item(name):
-        return search.find_resource_info_with_long_name(echoes_resource_database.item, name)
+    item = echoes_resource_database.get_item_by_name
 
     req_set = RequirementSet([
         RequirementList([
@@ -559,3 +558,49 @@ def test_node_identifier_as_requirement():
 
     assert not req.satisfied({}, 0, db)
     assert req.satisfied({nic("W", "A", "N"): 1}, 0, db)
+
+
+def test_set_as_str_impossible():
+    assert RequirementSet.impossible().as_str == "Impossible"
+
+
+def test_set_as_str_trivial():
+    assert RequirementSet.trivial().as_str == "Trivial"
+
+
+def test_set_as_str_things(echoes_resource_database):
+    item = echoes_resource_database.get_item_by_name
+
+    req_set = RequirementSet([
+        RequirementList([
+            ResourceRequirement(item("Screw Attack"), 1, False),
+            ResourceRequirement(item("Space Jump Boots"), 1, False),
+        ]),
+        RequirementList([
+            ResourceRequirement(item("Power Bomb"), 1, False),
+        ]),
+    ])
+
+    assert req_set.as_str == "(Power Bomb ≥ 1) or (Screw Attack ≥ 1, Space Jump Boots ≥ 1)"
+
+
+def test_set_hash(echoes_resource_database):
+    req_set_a = RequirementSet([
+        RequirementList([
+            ResourceRequirement(echoes_resource_database.get_item_by_name("Power Bomb"), 1, False),
+        ]),
+    ])
+    req_set_b = RequirementSet([
+        RequirementList([
+            ResourceRequirement(echoes_resource_database.get_item_by_name("Power Bomb"), 1, False),
+        ]),
+    ])
+
+    assert req_set_a == req_set_b
+    assert req_set_a is not req_set_b
+
+    hash_a = hash(req_set_a)
+    hash_b = hash(req_set_b)
+    assert hash_a == hash_b
+
+    assert hash_a == req_set_a._cached_hash
