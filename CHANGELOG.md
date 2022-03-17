@@ -29,7 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Echoes Combat Visor placed in a Prime player's world now uses the new Combat Visor model.
+- Fixed: Echoes Combat Visor placed in a Prime player's world now uses the new Combat Visor model.
+- Fixed: Deterministic Incinerator Drone RNG setting staying on even when checkbox was unchecked.
+- Added: Deterministic Maze RNG option for fairer racing
 
 #### Patcher Changes
 

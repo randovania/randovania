@@ -24,6 +24,7 @@ _FIELDS = [
     "items_every_room",
     "spring_ball",
     "deterministic_idrone",
+    "deterministic_maze",
 ]
 
 
