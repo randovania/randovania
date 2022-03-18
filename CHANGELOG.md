@@ -35,7 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Patcher Changes
 
-- Nothing.
+- Fixed: Soft-lock in Artifact Temple with Major Cutscene skips (players could leave during ghost cutscene and abort the layer change)
+- Changed: Updated [Quality of Life documentation](https://github.com/toasterparty/randomprime/blob/randovania/doc/quality_of_life.md)
 
 #### Logic Database
 
