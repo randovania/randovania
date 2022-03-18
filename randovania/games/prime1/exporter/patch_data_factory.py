@@ -20,6 +20,7 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
+from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -99,7 +100,6 @@ _LOCATIONS_GROUPED_TOGETHER = [
     ({15, 16}, None),  # Ruined Gallery
     ({52, 53}, None),  # Research Lab Aether
 ]
-
 
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
@@ -322,6 +322,30 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
+        if self.configuration.deterministic_idrone:
+            idrone_config = {
+                "eyeWaitInitialRandomTime": 0.0,
+                "eyeWaitRandomTime": 0.0,
+                "eyeStayUpRandomTime": 0.0,
+                "resetContraptionRandomTime": 0.0,
+                # ~~~ Justification for Divide by 2 ~~~
+                # These Timer RNG values are normally re-rolled inbetween each of the 4 phases,
+                # turning the zoid fight duration probability into a bell curve. With /2 we manipulate
+                # the (now linear) probability characteristic to more often generate "average zoid fights"
+                # while erring on the side of faster.
+                "eyeWaitInitialMinimumTime": 8.0 + self.rng.random() * 5.0 / 2.0,
+                "eyeWaitMinimumTime": 15.0 + self.rng.random() * 10.0 / 2.0,
+                "eyeStayUpMinimumTime": 8.0 + self.rng.random() * 3.0 / 2.0,
+                "resetContraptionMinimumTime": 3.0 + self.rng.random() * 3.0 / 2.0,
+            }
+        else:
+            idrone_config = None
+        
+        if self.configuration.deterministic_maze:
+            maze_seeds = [self.rng.choice(VANILLA_MAZE_SEEDS)]
+        else:
+            maze_seeds = None
+
         seed = self.description.get_seed_for_player(self.players_config.player_index)
 
         return {
@@ -348,21 +372,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "startingMemo": starting_memo,
                 "warpToStart": self.configuration.warp_to_start,
                 "springBall": self.configuration.spring_ball,
-                "incineratorDroneConfig": {
-                    "eyeWaitInitialRandomTime": 0.0,
-                    "eyeWaitRandomTime": 0.0,
-                    "eyeStayUpRandomTime": 0.0,
-                    "resetContraptionRandomTime": 0.0,
-                    # ~~~ Justification for Divide by 2 ~~~
-                    # These Timer RNG values are normally re-rolled inbetween each of the 4 phases,
-                    # turning the zoid fight duration probability into a bell curve. With /2 we manipulate
-                    # the (now linear) probability characteristic to more often generate "average zoid fights"
-                    # while erring on the side of faster.
-                    "eyeWaitInitialMinimumTime": 8.0 + self.rng.random() * 5.0 / 2.0,
-                    "eyeWaitMinimumTime": 15.0 + self.rng.random() * 10.0 / 2.0,
-                    "eyeStayUpMinimumTime": 8.0 + self.rng.random() * 3.0 / 2.0,
-                    "resetContraptionMinimumTime": 3.0 + self.rng.random() * 3.0 / 2.0,
-                },
+                "incineratorDroneConfig": idrone_config,
+                "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": self.configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
                 "heatDamagePerSec": self.configuration.heat_damage,
