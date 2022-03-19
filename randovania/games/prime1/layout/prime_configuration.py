@@ -34,6 +34,7 @@ class PrimeConfiguration(BaseConfiguration):
     items_every_room: bool
     spring_ball: bool
     deterministic_idrone: bool
+    deterministic_maze: bool
 
     main_plaza_door: bool
     backwards_frigate: bool

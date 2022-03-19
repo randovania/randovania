@@ -22,7 +22,7 @@ from randovania.lib import status_update_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 PRIME_MODELS_VERSION = 1
-ECHOES_MODELS_VERSION = 1
+ECHOES_MODELS_VERSION = 2
 
 
 def delete_converted_assets(assets_dir: Path):
@@ -338,6 +338,11 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
         # 0x3A5E2FE1 is Light Suit's skin
         # this is fixed by Claris' patcher when exporting for Echoes
         asset_provider.get_asset(0xa3e787b7).character_set.characters[0].skin_id = 0x3A5E2FE1
+
+        # Use echoes missile expansion for unlimited missiles instead of missile launcher
+        unlimited_missile_data = next(i for i in randomizer_data["ModelData"] if i["Index"] == 42)
+        unlimited_missile_data["Model"] = 1581025172
+        unlimited_missile_data["AnimSet"] = 435828657
 
         result = {}
         assets_to_change = [
