@@ -67,6 +67,7 @@ class PrimePresetDescriber(GamePresetDescriber):
                 },
                 {
                     "Deterministic I. Drone RNG": configuration.deterministic_idrone,
+                    "Deterministic Maze RNG": configuration.deterministic_maze,
                 },
                 {
                     cutscene_removal: cutscene_removal is not None,
