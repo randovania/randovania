@@ -12003,7 +12003,7 @@
                     "pickup_index": 85,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
+                        "Tile Group (POWERBOMB)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -12139,44 +12139,6 @@
                         }
                     }
                 },
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3600.0,
-                        "y": -12300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "extra": {
-                        "actor_name": "breakabletilegroup_010",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Power Bomb Tank)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (POWERBOMB)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
                 "Tunnel to Gravity Suit Room Access (Upper)": {
                     "node_type": "dock",
                     "heal": false,
@@ -12277,9 +12239,26 @@
                         ]
                     },
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "template",
-                            "data": "Ballspark"
+                        "Pickup (Power Bomb Tank)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    }
+                                ]
+                            }
                         },
                         "Tunnel to Gravity Suit Room Access (Lower)": {
                             "type": "and",
