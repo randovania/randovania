@@ -1,9 +1,10 @@
 import logging
 import os
 from typing import Optional, Union
-from randovania import VERSION
+
 from open_dread_rando.version import version as open_dread_rando_version
 
+from randovania import VERSION
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
@@ -13,9 +14,9 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import ConditionalResources
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.games.dread.exporter.hint_namer import DreadHintNamer
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
@@ -220,7 +221,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             for logbook_node in self.game.world_list.all_nodes
             if isinstance(logbook_node, LogbookNode)
         ]
-    
+
     def _static_text_changes(self) -> dict[str, str]:
         full_hash = f"{self.description.shareable_word_hash} ({self.description.shareable_hash})"
         text = {}
@@ -232,14 +233,13 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         }
         for difficulty in difficulty_labels:
             text[difficulty] = full_hash
-        
+
         text["GUI_COMPANY_TITLE_SCREEN"] = "|".join([
             f"Randovania {VERSION} - open-dread-rando {open_dread_rando_version}",
             full_hash
         ])
 
         return text
-
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
@@ -261,7 +261,6 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         )
 
         return {
-            "debug_export_modified_files": True,
             "starting_location": starting_location,
             "starting_items": starting_items,
             "starting_text": starting_text,

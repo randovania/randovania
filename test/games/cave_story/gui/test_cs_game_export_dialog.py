@@ -91,6 +91,6 @@ def test_get_game_export_params(skip_qtbot, tmp_path):
 
     # Assert
     assert result == CSGameExportParams(
-        spoiler_output=tmp_path.joinpath("output.rdvgame"),
+        spoiler_output=tmp_path.joinpath("output", "spoiler.rdvgame"),
         output_path=tmp_path.joinpath("output"),
     )

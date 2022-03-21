@@ -131,6 +131,13 @@ def spoiler_path_for(save_spoiler: bool, output_file: Path) -> Optional[Path]:
         return None
 
 
+def spoiler_path_for_directory(save_spoiler: bool, output_dir: Path) -> Optional[Path]:
+    if save_spoiler:
+        return output_dir.joinpath(f"spoiler.{LayoutDescription.file_extension()}")
+    else:
+        return None
+
+
 def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWidgets.QLineEdit, Callable[[], bool]]):
     def accept_validation():
         accept_button.setEnabled(not any(f.has_error for f in fields.keys()))
@@ -149,6 +156,13 @@ def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWi
         field.textChanged.connect(field.field_validation)
 
     accept_validation()
+
+
+def path_in_edit(line: QtWidgets.QLineEdit) -> Optional[Path]:
+    if line.text():
+        return Path(line.text())
+    else:
+        return None
 
 
 def update_validation(widget: QtWidgets.QLineEdit):
