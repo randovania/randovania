@@ -151,6 +151,9 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
 @pytest.mark.parametrize("mod_manager", [False, True])
 def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manager):
     # Setup
+    mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.get_path_to_ryujinx")
+    mocker.patch("platform.system", return_value="Windows")
+
     mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.get_windows_drives", return_value=[
         ("D", "Removable", tmp_path.joinpath("drive"))
     ])
@@ -194,6 +197,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
 
 def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker):
     # Setup
+    mocker.patch("platform.system", return_value="Windows")
     ryujinx_path = tmp_path.joinpath("ryujinx_mod")
     mocker.patch("randovania.games.dread.gui.dialog.game_export_dialog.get_path_to_ryujinx", return_value=ryujinx_path)
 
