@@ -10,6 +10,11 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
+class RoomRandoMode(BitPackEnum, Enum):
+    NONE = "None"
+    ONE_WAY = "One-way"
+
+
 class LayoutCutsceneMode(BitPackEnum, Enum):
     ORIGINAL = "original"
     COMPETITIVE = "competitive"
@@ -30,8 +35,14 @@ class PrimeConfiguration(BaseConfiguration):
     progressive_damage_reduction: bool
     allow_underwater_movement_without_gravity: bool
     small_samus: bool
+    large_samus: bool
     shuffle_item_pos: bool
     items_every_room: bool
+    random_boss_sizes: bool
+    no_doors: bool
+    superheated_probability: int = dataclasses.field(metadata={"min": 0, "max": 1000}) # div 1000 to get coefficient, div 10 to get %
+    submerged_probability: int = dataclasses.field(metadata={"min": 0, "max": 1000})   # div 1000 to get coefficient, div 10 to get %
+    room_rando: RoomRandoMode
     spring_ball: bool
     deterministic_idrone: bool
     deterministic_maze: bool
@@ -59,5 +70,11 @@ class PrimeConfiguration(BaseConfiguration):
 
         if not self.qol_game_breaking:
             result.append("Missing Game Breaking Fixes")
+        
+        if self.room_rando != RoomRandoMode.NONE:
+            result.append("Room randomizer")
+        
+        if self.large_samus:
+            result.append("Large Samus")
 
         return result

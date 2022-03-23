@@ -57,10 +57,18 @@ class PrimePresetDescriber(GamePresetDescriber):
                 },
                 {
                     "Small Samus": configuration.small_samus,
+                    "Large Samus": configuration.large_samus,
                 },
                 {
                     "Shuffle Item Position": configuration.shuffle_item_pos,
                     "Items Every Room": configuration.items_every_room,
+                },
+                {
+                    "Random Boss Sizes": configuration.random_boss_sizes,
+                    "No Doors": configuration.no_doors,
+                    "Superheated Probability": configuration.superheated_probability,
+                    "Submerged Probability": configuration.submerged_probability,
+                    "Room Rando": configuration.room_rando,
                 },
                 {
                     "Spring Ball": configuration.spring_ball,

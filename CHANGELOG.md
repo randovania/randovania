@@ -32,7 +32,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Echoes Combat Visor placed in a Prime player's world now uses the new Combat Visor model.
 - Fixed: Deterministic Incinerator Drone RNG setting staying on even when checkbox was unchecked.
+- Added: **April Fool's Day Special:** New game modification category "Chaos Options" in "Other" tab. Chaos options are patcher-side only, and thus are not accounted for by the seed generator logic.
+    - Enable Large Samus
+    - Random Boss Sizes
+    - Remove Doors
+    - Random Superheated Rooms
+    - Random Submerged Rooms
+    - One-way Room Rando
 - Added: Deterministic Maze RNG option for fairer racing
+- Changed: Nerfed "Items in Every Room" (Extra items more likely to be missiles)
 
 #### Patcher Changes
 

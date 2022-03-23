@@ -4,9 +4,10 @@ from typing import Dict
 
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 25
+CURRENT_VERSION = 26
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -576,6 +577,18 @@ def _migrate_v24(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v25(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["random_boss_sizes"] = False
+        preset["configuration"]["no_doors"] = False
+        preset["configuration"]["superheated_probability"] = 0
+        preset["configuration"]["submerged_probability"] = 0
+        preset["configuration"]["room_rando"] = "None"
+        preset["configuration"]["large_samus"] = False
+
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
     2: _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -601,6 +614,7 @@ _MIGRATIONS = {
     22: _migrate_v22,
     23: _migrate_v23,
     24: _migrate_v24,
+    25: _migrate_v25,
 }
 
 
