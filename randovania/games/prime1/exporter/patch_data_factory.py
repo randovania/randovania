@@ -1,7 +1,10 @@
+from email.policy import default
 from pydoc import doc
 import typing
 from random import Random
 from typing import List, Union
+
+from construct import max_
 
 import randovania
 from randovania.exporter import pickup_exporter, item_names
@@ -82,6 +85,7 @@ _DOCKS_TO_SKIP = [
     ("Frigate Orpheon", "Reactor Core Entrance", 0),
     ("Frigate Orpheon", "Reactor Core Entrance", 1),
     ("Chozo Ruins", "Main Plaza", 4),
+    ("Chozo Ruins", "Plaza Access", 0),
     ("Chozo Ruins", "Main Plaza", 5),
     ("Chozo Ruins", "Piston Tunnel", 0),
     ("Chozo Ruins", "Piston Tunnel", 1),
@@ -330,17 +334,20 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     )]
                     world_data[world.name]["transports"][source_name] = target
 
-        if self.configuration.room_rando == RoomRandoMode.ONE_WAY:
+        if self.configuration.room_rando != RoomRandoMode.NONE:
             for world in db.world_list.worlds:
                 if world.name == "End of Game":
                     continue
-                
+
                 area_dock_nums = dict()
                 attached_areas = dict()
                 size_indices = dict()
-                unused_docks = list()
+                candidates = list()
+                default_connections_node_name = dict()
+                dock_num_by_area_node = dict()
 
                 for area in world.areas:
+                    world_data[world.name]["rooms"][area.name]["doors"] = dict()
                     area_dock_nums[area.name] = list()
                     attached_areas[area.name] = list()
                     for node in area.nodes:
@@ -351,71 +358,141 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             continue
                         area_dock_nums[area.name].append(index)
                         attached_areas[area.name].append(node.default_connection.area_name)
-                        unused_docks.append((area.name, index))
+                        dock_num_by_area_node[(area.name, node.name)] = index
+                        default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
+
+                        candidates.append((area.name, index))
                     size_indices[area.name] = area.extra["size_index"]
 
-                self.rng.shuffle(unused_docks)
+                default_connections = dict()
+                for (src_name, src_dock) in default_connections_node_name:
+                    (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
+                    
+                    try:
+                        dst_dock = dock_num_by_area_node[(dst_name, dst_node_name)]
+                    except KeyError:
+                        continue
 
-                for area in world.areas:
-                    world_data[world.name]["rooms"][area.name]["doors"] = dict()
-                    for dock_num in area_dock_nums[area.name]:
+                    default_connections[(src_name, src_dock)] = (dst_name, dst_dock)
 
-                        def are_rooms_compatible(src, dest):
-                            if src is None or dest is None:
-                                return False
+                self.rng.shuffle(candidates)
 
-                            # both rooms must have patchable docks
-                            if len(area_dock_nums[src]) == 0 or len(area_dock_nums[dest]) == 0:
-                                return False
+                def are_rooms_compatible(src_name, src_dock, dst_name, dst_dock):
+                    if src_name is None or dst_name is None:
+                        return False
 
-                            # destinations cannot be in the same room
-                            if src == dest:
-                                return False
-                            
-                            # rooms cannot be neighbors
-                            if src in attached_areas[dest]:
-                                return False
+                    # both rooms must have patchable docks
+                    if len(area_dock_nums[src_name]) == 0 or len(area_dock_nums[dst_name]) == 0:
+                        return False
 
-                            # The two rooms must not crash if drawn at the same time (size_index > 1.0)
-                            if size_indices[src] + size_indices[dest] >= 1.0:
-                                return False
+                    # destinations cannot be in the same room
+                    if src_name == dst_name:
+                        return False
 
-                            return True
+                    # rooms cannot be neighbors, unless docks are specified, then allow vanilla connections
+                    if src_name in attached_areas[dst_name]:
+                        if src_dock is None or dst_dock is None or (world.name, src_name, src_dock) in _DOCKS_TO_SKIP or default_connections[(src_name, src_dock)] != (dst_name, dst_dock):
+                            return False
 
-                        # First try each of the unused docks
-                        dest_name = None
-                        dest_dock = None
-                        for (name, dock) in unused_docks:
-                            if are_rooms_compatible(area.name, name):
-                                dest_name = name
-                                dest_dock = dock
-                                break
+                    # The two rooms must not crash if drawn at the same time (size_index > 1.0)
+                    if size_indices[src_name] + size_indices[dst_name] >= 1.0:
+                        return False
 
-                        # If that wasn't successful, pick random destinations until it works out
-                        while dest_name is None or dest_dock is None or not are_rooms_compatible(area.name, dest_name):
-                            dest_name = self.rng.choice(world.areas).name
+                    return True
 
-                            if len(area_dock_nums[dest_name]) == 0:
-                                dest_dock = None
-                                continue
-                            
-                            dest_dock = self.rng.choice(area_dock_nums[dest_name])
+                if self.configuration.room_rando == RoomRandoMode.ONE_WAY:
+                    for area in world.areas:
+                        for dock_num in area_dock_nums[area.name]:
+                            # First try each of the unused docks
+                            dst_name = None
+                            dst_dock = None
+                            for (name, dock) in candidates:
+                                if are_rooms_compatible(area.name, None, name, None):
+                                    dst_name = name
+                                    dst_dock = dock
+                                    break
 
-                        # Don't use this dock as a destination again unless there are no other options
-                        try:
-                            unused_docks.remove((dest_name, dest_dock))
-                        except ValueError:
-                            # print("re-used %s:%d" % (dest_name, dest_dock))
-                            pass
+                            # If that wasn't successful, pick random destinations until it works out
+                            while dst_name is None or dst_dock is None or not are_rooms_compatible(area.name, None, dst_name, None):
+                                dst_name = self.rng.choice(world.areas).name
 
-                        world_data[world.name]["rooms"][area.name]["doors"][str(dock_num)] = {
+                                if len(area_dock_nums[dst_name]) == 0:
+                                    dst_dock = None
+                                    continue
+
+                                dst_dock = self.rng.choice(area_dock_nums[dst_name])
+
+                            # Don't use this dock as a destination again unless there are no other options
+                            try:
+                                candidates.remove((dst_name, dst_dock))
+                            except ValueError:
+                                # print("re-used %s:%d" % (dst_name, dst_dock))
+                                pass
+
+                            world_data[world.name]["rooms"][area.name]["doors"][str(dock_num)] = {
+                                "destination": {
+                                    "roomName": dst_name,
+                                    "dockNum": dst_dock,
+                                }
+                            }
+                elif self.configuration.room_rando == RoomRandoMode.TWO_WAY:
+                    assert len(candidates) % 2 == 0
+
+                    def next_candidate(max_index):
+                        for (src_name, src_dock) in candidates:
+                            if size_indices[src_name] > max_index:
+                                return (src_name, src_dock)
+                        return (None, None)
+
+                    def pick_random_dst(src_name, src_dock):
+                        for (dst_name, dst_dock) in candidates:
+                            if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock):
+                                return (dst_name, dst_dock)
+                        return (None, None)
+
+                    # Randomly pick room sources, starting with the largest room first, then randomly pick a compatible destination
+                    max_index = 1.01
+                    shuffled = dict()
+                    while len(candidates) != 0:
+                        if max_index < -0.00001:
+                            assert "Failed to find pairings for %s" % str(candidates)
+
+                        (src_name, src_dock) = next_candidate(max_index)
+
+                        if src_name is None:
+                            # lower the room size criteria and try again
+                            max_index -= 0.01
+                            continue
+
+                        (dst_name, dst_dock) = pick_random_dst(src_name, src_dock)
+                        if dst_name is None:
+                            # This room have no valid destinations in the pool, randomly unpair two rooms and try again
+                            (src_name, src_dock) = self.rng.choice(list(shuffled.keys()))
+                            (dst_name, dst_dock) = shuffled.pop((src_name, src_dock))
+                            candidates.append((src_name, src_dock))
+                            candidates.append((dst_name, dst_dock))    
+                            continue
+
+                        candidates.remove((src_name, src_dock))
+                        candidates.remove((dst_name, dst_dock))
+                        shuffled[(src_name, src_dock)] = (dst_name, dst_dock)
+
+                        world_data[world.name]["rooms"][src_name]["doors"][str(src_dock)] = {
                             "destination": {
-                                "roomName": dest_name,
-                                "dockNum": dest_dock,
+                                "roomName": dst_name,
+                                "dockNum": dst_dock,
                             }
                         }
+                        world_data[world.name]["rooms"][dst_name]["doors"][str(dst_dock)] = {
+                                "destination": {
+                                    "roomName": src_name,
+                                    "dockNum": src_dock,
+                                }
+                            }
 
-        starting_memo = None
+                        # print("%s:%d --> %s:%d" % (src_name, src_dock, dst_name, dst_dock))
+
+            starting_memo = None
         extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
                                                               self.patches.starting_items)
         if extra_starting:

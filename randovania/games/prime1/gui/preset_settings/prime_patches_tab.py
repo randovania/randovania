@@ -46,6 +46,7 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
         signal_handling.on_combo(self.cutscene_combo, self._on_cutscene_changed)
         self.room_rando_combo.setItemData(0, RoomRandoMode.NONE)
         self.room_rando_combo.setItemData(1, RoomRandoMode.ONE_WAY)
+        self.room_rando_combo.setItemData(2, RoomRandoMode.TWO_WAY)
         signal_handling.on_combo(self.room_rando_combo, self._on_room_rando_changed)
         for f in _FIELDS:
             self._add_persist_option(getattr(self, f"{f}_check"), f)
