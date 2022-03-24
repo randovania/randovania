@@ -96,6 +96,8 @@ _DOCKS_TO_SKIP = [
     ("Phendrana Drifts", "West Tower", 1),
     ("Phendrana Drifts", "Phendrana's Edge", 3),
     ("Phendrana Drifts", "Security Cave", 0),
+    ("Tallon Overworld", "Artifact Temple", 0), # this room is too god damn big, treat temple lobby as the dock to artifact temple
+    ("Tallon Overworld", "Temple Lobby", 0),
     ("Tallon Overworld", "Reactor Core", 0),
     ("Tallon Overworld", "Reactor Access", 0),
     ("Tallon Overworld", "Reactor Access", 1),
