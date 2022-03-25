@@ -53,77 +53,6 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "wavebuster": "Wavebuster"
 }
 
-_DOCKS_TO_SKIP = [
-    ("Frigate Orpheon", "Air Lock", 1),
-    ("Frigate Orpheon", "Air Lock", 2),
-    ("Frigate Orpheon", "Deck Alpha Mech Shaft", 0),
-    ("Frigate Orpheon", "Deck Alpha Mech Shaft", 1),
-    ("Frigate Orpheon", "Connection Elevator to Deck Alpha", 0),
-    ("Frigate Orpheon", "Connection Elevator to Deck Alpha", 1),
-    ("Frigate Orpheon", "Biotech Research Area 2", 0),
-    ("Frigate Orpheon", "Deck Gamma Monitor Hall", 0),
-    ("Frigate Orpheon", "Connection Elevator to Deck Beta", 1),
-    ("Frigate Orpheon", "Biotech Research Area 1", 2),
-    ("Frigate Orpheon", "Biotech Research Area 1", 3),
-    ("Frigate Orpheon", "Cargo Freight Lift to Deck Gamma", 1),
-    ("Frigate Orpheon", "Cargo Freight Lift to Deck Gamma", 2),
-    ("Frigate Orpheon", "Cargo Freight Lift to Deck Gamma", 3),
-    ("Frigate Orpheon", "Subventilation Shaft Section A", 0),
-    ("Frigate Orpheon", "Subventilation Shaft Section B", 0),
-    ("Frigate Orpheon", "Subventilation Shaft Section B", 1),
-    ("Frigate Orpheon", "Main Ventilation Shaft Section A", 0),
-    ("Frigate Orpheon", "Main Ventilation Shaft Section B", 0),
-    ("Frigate Orpheon", "Main Ventilation Shaft Section C", 1),
-    ("Frigate Orpheon", "Main Ventilation Shaft Section D", 0),
-    ("Frigate Orpheon", "Main Ventilation Shaft Section E", 1),
-    ("Frigate Orpheon", "Main Ventilation Shaft Section F", 1),
-    ("Frigate Orpheon", "Reactor Core", 0),
-    ("Frigate Orpheon", "Reactor Core Entrance", 0),
-    ("Frigate Orpheon", "Reactor Core Entrance", 1),
-    ("Chozo Ruins", "Main Plaza", 4),
-    ("Chozo Ruins", "Plaza Access", 0),
-    ("Chozo Ruins", "Main Plaza", 5),
-    ("Chozo Ruins", "Piston Tunnel", 0),
-    ("Chozo Ruins", "Piston Tunnel", 1),
-    ("Chozo Ruins", "Training Chamber", 1),
-    ("Chozo Ruins", "Energy Core", 0),
-    ("Chozo Ruins", "Burn Dome Access", 1),
-    ("Chozo Ruins", "Furnace", 2),
-    ("Chozo Ruins", "Crossway Access West", 1),
-    ("Chozo Ruins", "Sunchamber", 0),
-    ("Chozo Ruins", "Sunchamber", 1),
-    ("Chozo Ruins", "Sunchamber Access", 0),
-    ("Chozo Ruins", "Sun Tower Access", 0),
-    ("Phendrana Drifts", "Quarantine Cave", 2),
-    ("Phendrana Drifts", "Quarantine Monitor", 0),
-    ("Phendrana Drifts", "West Tower", 0),
-    ("Phendrana Drifts", "West Tower", 1),
-    ("Phendrana Drifts", "Phendrana's Edge", 3),
-    ("Phendrana Drifts", "Security Cave", 0),
-    ("Tallon Overworld", "Artifact Temple", 0), # this room is too god damn big, treat temple lobby as the dock to artifact temple
-    ("Tallon Overworld", "Temple Lobby", 0),
-    ("Tallon Overworld", "Reactor Core", 0),
-    ("Tallon Overworld", "Reactor Access", 0),
-    ("Tallon Overworld", "Reactor Access", 1),
-    ("Tallon Overworld", "Cargo Freight Lift to Deck Gamma", 0),
-    ("Tallon Overworld", "Life Grove Tunnel", 1),
-    ("Tallon Overworld", "Life Grove", 0),
-    ("Magmoor Caverns", "Warrior Shrine", 1),
-    ("Magmoor Caverns", "Fiery Shores", 2),
-    ("Impact Crater", "Phazon Infusion Chamber", 0),
-    ("Impact Crater", "Subchamber One", 0),
-    ("Impact Crater", "Subchamber One", 1),
-    ("Impact Crater", "Subchamber Two", 0),
-    ("Impact Crater", "Subchamber Two", 1),
-    ("Impact Crater", "Subchamber Three", 0),
-    ("Impact Crater", "Subchamber Three", 1),
-    ("Impact Crater", "Subchamber Four", 0),
-    ("Impact Crater", "Subchamber Four", 1),
-    ("Impact Crater", "Subchamber Five", 0),
-    ("Impact Crater", "Subchamber Five", 1),
-    ("Impact Crater", "Metroid Prime Lair", 0),
-]
-
 _MODEL_MAPPING = {
     (RandovaniaGame.METROID_PRIME_ECHOES, "CombatVisor INCOMPLETE"): "Combat Visor",
     (RandovaniaGame.METROID_PRIME_ECHOES, "ChargeBeam INCOMPLETE"): "Charge Beam",
@@ -345,6 +274,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 candidates = list()
                 default_connections_node_name = dict()
                 dock_num_by_area_node = dict()
+                is_nonstandard = dict()
 
                 for area in world.areas:
                     world_data[world.name]["rooms"][area.name]["doors"] = dict()
@@ -354,7 +284,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         if not isinstance(node, DockNode):
                             continue
                         index = node.extra["dock_index"]
-                        if (world.name, area.name, index) in _DOCKS_TO_SKIP:
+                        is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
+                        if node.extra["nonstandard"]:
+                            # This dock is like a morph tunnel or 1-way door etc. that cannot be elegantly patched
                             continue
                         area_dock_nums[area.name].append(index)
                         attached_areas[area.name].append(node.default_connection.area_name)
@@ -379,7 +311,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                 used_room_pairings = list()
 
-                def are_rooms_compatible(src_name, src_dock, dst_name, dst_dock):
+                def are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, mode: RoomRandoMode):
                     if src_name is None or dst_name is None:
                         return False
 
@@ -390,12 +322,22 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     # destinations cannot be in the same room
                     if src_name == dst_name:
                         return False
-
-                    # rooms cannot be neighbors, unless docks are specified, then allow vanilla connections
-                    if src_name in attached_areas[dst_name]:
-                        if src_dock is None or dst_dock is None or (world.name, src_name, src_dock) in _DOCKS_TO_SKIP or default_connections[(src_name, src_dock)] != (dst_name, dst_dock):
-                            return False
                     
+                    # src/dst must not be exempt
+                    if src_dock is not None and is_nonstandard[(src_name, src_dock)]:
+                            return False
+                    if dst_dock is not None and is_nonstandard[(dst_name, dst_dock)]:
+                            return False
+
+                    # rooms cannot be neighbors
+                    if src_name in attached_areas[dst_name]:
+                        if mode == RoomRandoMode.ONE_WAY:
+                            return False
+                        
+                        # Unless it's a vanilla 2-way connection
+                        if default_connections[(src_name, src_dock)] != (dst_name, dst_dock):
+                            return False
+
                     # rooms can only connect to another room up to once
                     if {src_name, dst_name} in used_room_pairings:
                         return False
@@ -413,13 +355,13 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             dst_name = None
                             dst_dock = None
                             for (name, dock) in candidates:
-                                if are_rooms_compatible(area.name, None, name, None):
+                                if are_rooms_compatible(area.name, None, name, None, self.configuration.room_rando):
                                     dst_name = name
                                     dst_dock = dock
                                     break
 
                             # If that wasn't successful, pick random destinations until it works out
-                            while dst_name is None or dst_dock is None or not are_rooms_compatible(area.name, None, dst_name, None):
+                            while dst_name is None or dst_dock is None or not are_rooms_compatible(area.name, dock_num, dst_name, dst_dock, self.configuration.room_rando):
                                 dst_name = self.rng.choice(world.areas).name
 
                                 if len(area_dock_nums[dst_name]) == 0:
@@ -454,7 +396,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                     def pick_random_dst(src_name, src_dock):
                         for (dst_name, dst_dock) in candidates:
-                            if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock):
+                            if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, self.configuration.room_rando):
                                 return (dst_name, dst_dock)
                         return (None, None)
 
