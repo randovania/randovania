@@ -4,7 +4,6 @@ from typing import Dict
 
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import migration_lib
 
 CURRENT_VERSION = 26

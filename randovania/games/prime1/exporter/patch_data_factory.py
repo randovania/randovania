@@ -1,10 +1,6 @@
-from email.policy import default
-from pydoc import doc
 import typing
 from random import Random
 from typing import List, Union
-
-from construct import max_
 
 import randovania
 from randovania.exporter import pickup_exporter, item_names
@@ -467,7 +463,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     shuffled = dict()
                     while len(candidates) != 0:
                         if max_index < -0.00001:
-                            assert "Failed to find pairings for %s" % str(candidates)
+                            raise Exception("Failed to find pairings for %s" % str(candidates))
 
                         (src_name, src_dock) = next_candidate(max_index)
 
