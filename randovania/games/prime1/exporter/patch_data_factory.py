@@ -94,6 +94,10 @@ _DOCKS_TO_SKIP = [
     ("Chozo Ruins", "Burn Dome Access", 1),
     ("Chozo Ruins", "Furnace", 2),
     ("Chozo Ruins", "Crossway Access West", 1),
+    ("Chozo Ruins", "Sunchamber", 0),
+    ("Chozo Ruins", "Sunchamber", 1),
+    ("Chozo Ruins", "Sunchamber Access", 0),
+    ("Chozo Ruins", "Sun Tower Access", 0),
     ("Phendrana Drifts", "Quarantine Cave", 2),
     ("Phendrana Drifts", "Quarantine Monitor", 0),
     ("Phendrana Drifts", "West Tower", 0),
@@ -377,6 +381,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                 self.rng.shuffle(candidates)
 
+                used_room_pairings = list()
+
                 def are_rooms_compatible(src_name, src_dock, dst_name, dst_dock):
                     if src_name is None or dst_name is None:
                         return False
@@ -393,6 +399,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     if src_name in attached_areas[dst_name]:
                         if src_dock is None or dst_dock is None or (world.name, src_name, src_dock) in _DOCKS_TO_SKIP or default_connections[(src_name, src_dock)] != (dst_name, dst_dock):
                             return False
+                    
+                    # rooms can only connect to another room up to once
+                    if {src_name, dst_name} in used_room_pairings:
+                        return False
 
                     # The two rooms must not crash if drawn at the same time (size_index > 1.0)
                     if size_indices[src_name] + size_indices[dst_name] >= 1.0:
@@ -428,6 +438,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             except ValueError:
                                 # print("re-used %s:%d" % (dst_name, dst_dock))
                                 pass
+                            
+                            used_room_pairings.append({area.name, dst_name})
 
                             world_data[world.name]["rooms"][area.name]["doors"][str(dock_num)] = {
                                 "destination": {
@@ -476,6 +488,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         candidates.remove((src_name, src_dock))
                         candidates.remove((dst_name, dst_dock))
                         shuffled[(src_name, src_dock)] = (dst_name, dst_dock)
+                        used_room_pairings.append({src_name, dst_name})
 
                         world_data[world.name]["rooms"][src_name]["doors"][str(src_dock)] = {
                             "destination": {
