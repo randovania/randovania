@@ -84,18 +84,15 @@ def _test_preset(rdvgame_file, expected_results_file, mocker):
 
     assert data == expected_data
 
-def test_create_patch_data(test_files_dir, mocker):
-    # Simple multiworld
-    rdvgame = test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame")
-    expected_results = test_files_dir.joinpath("randomprime_expected_data.json")
-    _test_preset(rdvgame, expected_results, mocker)
-
-    # Complicated solo seed
-    rdvgame = test_files_dir.joinpath("log_files", "prime1_crazy_seed.rdvgame")
-    expected_results = test_files_dir.joinpath("randomprime_expected_data_crazy.json")
-    _test_preset(rdvgame, expected_results, mocker)
-
-    # Same as above but 1-way doors
-    rdvgame = test_files_dir.joinpath("log_files", "prime1_crazy_seed_one_way_door.rdvgame")
-    expected_results = test_files_dir.joinpath("randomprime_expected_data_one_way_door.json")
+@pytest.mark.parametrize(
+    ("rdvgame_filename", "expected_results_filename"),
+    [
+        ("prime1_and_2_multi.rdvgame", "randomprime_expected_data.json"), # simple multi
+        ("prime1_crazy_seed.rdvgame", "randomprime_expected_data_crazy.json"), # chaos features
+        ("prime1_crazy_seed_one_way_door.rdvgame", "randomprime_expected_data_one_way_door.json"), # same as above but 1-way doors
+    ]
+)
+def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, mocker):
+    rdvgame = test_files_dir.joinpath("log_files", rdvgame_filename)
+    expected_results = test_files_dir.joinpath(expected_results_filename)
     _test_preset(rdvgame, expected_results, mocker)
