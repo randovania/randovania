@@ -313,37 +313,48 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                 def are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, mode: RoomRandoMode):
                     if src_name is None or dst_name is None:
+                        # print("none name")
                         return False
 
                     # both rooms must have patchable docks
                     if len(area_dock_nums[src_name]) == 0 or len(area_dock_nums[dst_name]) == 0:
+                        # print("unpatchable room(s)")
                         return False
 
                     # destinations cannot be in the same room
                     if src_name == dst_name:
+                        # print("same room")
                         return False
                     
                     # src/dst must not be exempt
                     if src_dock is not None and is_nonstandard[(src_name, src_dock)]:
+                            # print("src exempt")
                             return False
                     if dst_dock is not None and is_nonstandard[(dst_name, dst_dock)]:
+                            # print("dst exempt")
                             return False
 
                     # rooms cannot be neighbors
                     if src_name in attached_areas[dst_name]:
                         if mode == RoomRandoMode.ONE_WAY:
+                            # print("neighbor")
                             return False
                         
                         # Unless it's a vanilla 2-way connection
                         if default_connections[(src_name, src_dock)] != (dst_name, dst_dock):
+                            # print("two-way non-neighbor")
                             return False
 
                     # rooms can only connect to another room up to once
                     if {src_name, dst_name} in used_room_pairings:
-                        return False
+                        # Except for one-way in impact crater, this edge case works fine and is desireable
+                        if mode == RoomRandoMode.TWO_WAY or world.name != "Impact Crater":
+                            # print("double connection")
+                            return False
 
                     # The two rooms must not crash if drawn at the same time (size_index > 1.0)
                     if size_indices[src_name] + size_indices[dst_name] >= 1.0:
+                        # print("too big")
                         return False
 
                     return True
@@ -361,11 +372,17 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                     break
 
                             # If that wasn't successful, pick random destinations until it works out
+                            deadman_count = 1000
                             while dst_name is None or dst_dock is None or not are_rooms_compatible(area.name, dock_num, dst_name, dst_dock, self.configuration.room_rando):
+
+                                deadman_count -= 1
+                                if deadman_count == 0:
+                                    raise Exception("Failed to find suitible destination for %s:%s" % (area.name, dock_num))
+
                                 dst_name = self.rng.choice(world.areas).name
+                                dst_dock = None
 
                                 if len(area_dock_nums[dst_name]) == 0:
-                                    dst_dock = None
                                     continue
 
                                 dst_dock = self.rng.choice(area_dock_nums[dst_name])
@@ -376,7 +393,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             except ValueError:
                                 # print("re-used %s:%d" % (dst_name, dst_dock))
                                 pass
-                            
+
                             used_room_pairings.append({area.name, dst_name})
 
                             world_data[world.name]["rooms"][area.name]["doors"][str(dock_num)] = {
