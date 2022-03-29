@@ -438,6 +438,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             (dst_name, dst_dock) = shuffled.pop((src_name, src_dock))
                             candidates.append((src_name, src_dock))
                             candidates.append((dst_name, dst_dock))    
+                            used_room_pairings.remove({src_name, dst_name})
                             continue
 
                         candidates.remove((src_name, src_dock))
@@ -460,7 +461,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                         # print("%s:%d --> %s:%d" % (src_name, src_dock, dst_name, dst_dock))
 
-            starting_memo = None
+        starting_memo = None
         extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
                                                               self.patches.starting_items)
         if extra_starting:
