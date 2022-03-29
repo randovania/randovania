@@ -56,11 +56,9 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         **shiny_stuff,
     }
 
-
-def test_create_patch_data(test_files_dir, mocker):
+def _test_preset(rdvgame_file, expected_results_file, mocker):
     # Setup
-    file = test_files_dir.joinpath("log_files", "prime1_and_2_multi.rdvgame")
-    description = LayoutDescription.from_file(file)
+    description = LayoutDescription.from_file(rdvgame_file)
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
     cosmetic_patches = PrimeCosmeticPatches(use_hud_color=True, hud_color=(255, 0, 0),
                                             suit_color_rotations=(0, 40, 350, 12))
@@ -73,10 +71,11 @@ def test_create_patch_data(test_files_dir, mocker):
     data = PrimePatchDataFactory(description, players_config, cosmetic_patches).create_data()
 
     # Expected Result
-    with test_files_dir.joinpath("randomprime_expected_data.json").open("r") as file:
+    with expected_results_file.open("r") as file:
         expected_data = json.load(file)
 
-    # with test_files_dir.joinpath("randomprime_expected_data.json").open("w") as file:
+    # Uncomment to easily view diff of failed test
+    # with expected_results_file.open("w") as file:
     #     file.write(json.dumps(data, indent=4, separators=(',', ': ')))
 
     # Ignore the part of the main menu message which has the randovania version in it
@@ -84,3 +83,16 @@ def test_create_patch_data(test_files_dir, mocker):
     expected_data["gameConfig"]["mainMenuMessage"] = expected_data["gameConfig"]["mainMenuMessage"].split("\n")[1]
 
     assert data == expected_data
+
+@pytest.mark.parametrize(
+    ("rdvgame_filename", "expected_results_filename"),
+    [
+        ("prime1_and_2_multi.rdvgame", "randomprime_expected_data.json"), # simple multi
+        ("prime1_crazy_seed.rdvgame", "randomprime_expected_data_crazy.json"), # chaos features
+        ("prime1_crazy_seed_one_way_door.rdvgame", "randomprime_expected_data_one_way_door.json"), # same as above but 1-way doors
+    ]
+)
+def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, mocker):
+    rdvgame = test_files_dir.joinpath("log_files", rdvgame_filename)
+    expected_results = test_files_dir.joinpath(expected_results_filename)
+    _test_preset(rdvgame, expected_results, mocker)
