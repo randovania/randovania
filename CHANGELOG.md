@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Standard tracker layouts for Prime, Echoes and Corruption now include a few more items.
 - Changed: Auto tracker game icons for Echoes beams now use the HUD icons instead of the pickup models.
 - Fixed: Randovania no longer hangs on start if there's a loop in the hierarchy of presets.
+- Fixed: Generation no longer fails when one player has no pickups assigned during logic.
 
 ### Cave Story
 
