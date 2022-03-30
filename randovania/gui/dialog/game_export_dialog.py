@@ -155,5 +155,13 @@ def output_file_validator(output_file: Path) -> bool:
     return output_file.is_dir() or not output_file.parent.is_dir()
 
 
-def is_directory_validator(line: QtWidgets.QLineEdit):
+def is_directory_validator(line: QtWidgets.QLineEdit) -> bool:
     return not line.text() or not Path(line.text()).is_dir()
+
+
+def is_file_validator(file: Optional[Path]) -> bool:
+    """Returns False when the given path is not None and is a file, True otherwise"""
+    if file is None:
+        return True
+    else:
+        return not file.is_file()
