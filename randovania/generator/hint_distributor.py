@@ -202,7 +202,7 @@ class HintDistributor(ABC):
             index: sum(1 for indices in scan_asset_initial_pickups.values() if index in indices)
             for index in ordered_possible_indices
         }
-        max_seen = max(num_logbooks.values())
+        max_seen = max(num_logbooks.values()) if num_logbooks else 0
         pickup_indices_weight: dict[PickupIndex, int] = {
             index: max_seen - num_logbook
             for index, num_logbook in num_logbooks.items()
