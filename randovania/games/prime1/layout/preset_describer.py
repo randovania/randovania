@@ -1,4 +1,5 @@
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, LayoutCutsceneMode
+from attr import attr
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, LayoutCutsceneMode, RoomRandoMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
@@ -12,12 +13,28 @@ _PRIME1_CUTSCENE_MODE_DESCRIPTION = {
     LayoutCutsceneMode.ORIGINAL: None,
 }
 
+_PRIME1_ROOM_RANDO_MODE_DESCRIPTION = {
+    RoomRandoMode.NONE: None,
+    RoomRandoMode.ONE_WAY: "One-way Room Rando",
+    RoomRandoMode.TWO_WAY: "Two-way Room Rando",
+}
 
 class PrimePresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, PrimeConfiguration)
         template_strings = super().format_params(configuration)
         cutscene_removal = _PRIME1_CUTSCENE_MODE_DESCRIPTION[configuration.qol_cutscenes]
+
+        room_rando = _PRIME1_ROOM_RANDO_MODE_DESCRIPTION[configuration.room_rando]
+
+        def describe_probability(probability, attribute):
+            if probability == 0:
+                return None
+            
+            return "%.1f%% chance of %s" % (probability/10, attribute)
+        
+        superheated_probability = describe_probability(configuration.superheated_probability, "superheated")
+        submerged_probability = describe_probability(configuration.submerged_probability, "submerged")
 
         extra_message_tree = {
             "Difficulty": [
@@ -66,9 +83,13 @@ class PrimePresetDescriber(GamePresetDescriber):
                 {
                     "Random Boss Sizes": configuration.random_boss_sizes,
                     "No Doors": configuration.no_doors,
-                    "Superheated Probability": configuration.superheated_probability,
-                    "Submerged Probability": configuration.submerged_probability,
-                    "Room Rando": configuration.room_rando,
+                },
+                {
+                    room_rando: room_rando is not None,
+                },
+                {
+                    superheated_probability: superheated_probability is not None,
+                    submerged_probability: submerged_probability is not None,
                 },
                 {
                     "Spring Ball": configuration.spring_ball,
