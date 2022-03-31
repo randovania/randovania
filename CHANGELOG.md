@@ -46,7 +46,7 @@ Room Rando:
 
 ### Metroid Prime 2: Echoes
 
-- Nothing.
+- Changed: Optimized how long it takes to export a game that uses Prime 1 models.
 
 #### Patcher Changes
 
