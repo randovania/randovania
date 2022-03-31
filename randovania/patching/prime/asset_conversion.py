@@ -2,8 +2,8 @@ import copy
 import json
 import logging
 import os
-import time
 import shutil
+import time
 from pathlib import Path
 from typing import NamedTuple, List
 
@@ -132,30 +132,31 @@ prime1_assets = {
 }
 
 
-def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomizer_data: dict, status_update: ProgressUpdateCallable):
+def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomizer_data: dict,
+                           status_update: ProgressUpdateCallable):
     next_id = 0xFFFF0000
 
-    def id_generator(asset_type):
+    def id_generator(_):
         nonlocal next_id
-        result = next_id
-        while asset_provider.asset_id_exists(result):
-            result += 1
+        new_id = next_id
+        while asset_provider.asset_id_exists(new_id):
+            new_id += 1
 
-        next_id = result + 1
-        return result
+        next_id = new_id + 1
+        return new_id
 
     updaters = status_update_lib.split_progress_update(status_update, 2)
 
     # Restoring from cache causes game crashes when loading a room with a Prime model. Skipping until resolved
     if get_asset_cache_version(assets_path) >= ECHOES_MODELS_VERSION and False:
-        with open(assets_path.joinpath("meta.json"), "r")as data_additions_file:
+        with open(assets_path.joinpath("meta.json"), "r") as data_additions_file:
             randomizer_data_additions = json.load(data_additions_file)["data"]
 
         converted_assets = {}
         # Read assets from cache if available
         for i, item in enumerate(randomizer_data_additions):
             item_name = item["Name"].replace('prime1_', '')
-            updaters[0](f"Restoring Prime 1 {item_name}", i/len(randomizer_data_additions))
+            updaters[0](f"Restoring Prime 1 {item_name}", i / len(randomizer_data_additions))
             for asset in item["Assets"]:
                 asset_type = asset["Type"]
                 asset_id = asset["AssetID"]
@@ -229,7 +230,7 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
                 for dep in converted_dependencies[asset.ancs] | converted_dependencies[asset.cmdl]
             ]
             randomizer_data_additions.append({
-                "Index": len(randomizer_data["ModelData"]), #Adjust this one later
+                "Index": len(randomizer_data["ModelData"]),  # Adjust this one later
                 "Name": f"prime1_{name}",
                 "Model": asset.cmdl,
                 "ScanModel": 0xFFFFFFFF,
@@ -248,12 +249,12 @@ def convert_prime1_pickups(echoes_files_path: Path, assets_path: Path, randomize
                 "Assets": dependencies
             })
         meta_dict["data"] = randomizer_data_additions
-        with open(assets_path.joinpath("meta.json"), "w")as data_additions_file:
+        with open(assets_path.joinpath("meta.json"), "w") as data_additions_file:
             json.dump(meta_dict, data_additions_file, indent=4)
         end = time.time()
         # logging.debug(f"Time took: {end - start}")
 
-# Write to paks now
+    # Write to paks now
 
     pak_updaters = status_update_lib.split_progress_update(updaters[1], 5)
     for pak_i in range(1, 6):
