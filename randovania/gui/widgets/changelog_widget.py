@@ -7,7 +7,8 @@ from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 class ChangeLogWidget(QtWidgets.QTabWidget):
     def __init__(self, all_change_logs: dict[str, str]):
         super().__init__()
-        self.setTabBar(VerticalTabBar())
+        # VerticalTabBar doesn't work as expected in Qt 6, so it's disabled for now
+        # self.setTabBar(VerticalTabBar())
         self.setTabPosition(QtWidgets.QTabWidget.West)
 
         for version_name, version_text in all_change_logs.items():
