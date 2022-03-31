@@ -7,31 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.2.0] - Unreleased
 
-<<<<<<< Updated upstream
 - **Major** - Added: Prime and Echoes multiworlds can now use the proper model for foreign items if the player supplies a copy of the other game
-- Added: New pixel icons for the auto tracker.
-- Added: An experimental option to force first progression to be local.
-- Changed: Update to Qt 6.
-- Changed: The import preset menu in game sessions now has the presets of a game sorted by name, with the default presets on top.
-=======
-- Added: Prime and Echoes multiworlds can now use the proper model for foreign items if the player supplies a copy of the other game.
 - Added: You can now import a game layout/spoiler file in multiworld sessions.
 - Added: The game details window now displays the Randovania version the game was generated with. 
 - Added: Experimental option to force first progression to be local.
 - Added: New pixel icons for the auto tracker.
->>>>>>> Stashed changes
 - Changed: Standard tracker layouts for Prime, Echoes and Corruption now include a few more items.
 - Changed: Auto tracker game icons for Echoes beams now use the HUD icons instead of the pickup models.
 - Changed: A popup shows up while waiting for the game session list.
 - Changed: Update to Qt 6.
 - Changed: The import preset menu in game sessions now has the presets of a game sorted by name, with the default presets on top.
 - Fixed: Randovania no longer hangs on start if there's a loop in the hierarchy of presets.
-<<<<<<< Updated upstream
 - Fixed: Generation no longer fails when one player has no pickups assigned during logic.
-=======
 - Fixed: The error message when the client is incompatible is now properly displayed.
 - Fixed: Player inventory is now properly sent to the server in multiworld sessions.
->>>>>>> Stashed changes
 
 ### Cave Story
 
