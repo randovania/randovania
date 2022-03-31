@@ -41,7 +41,7 @@ def test_on_output_file_button_exists(skip_qtbot, tmp_path, mocker, has_output_d
 
     # Assert
     mock_prompt.assert_called_once_with(window, expected_default_name + ".iso",
-                                        [".iso"])
+                                        ["iso"])
     assert window.output_file_edit.text() == str(tmp_path.joinpath("foo", "game.iso"))
     assert tmp_path.joinpath("foo").is_dir()
 
@@ -62,7 +62,7 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     skip_qtbot.mouseClick(window.output_file_button, QtCore.Qt.LeftButton)
 
     # Assert
-    mock_prompt.assert_called_once_with(window, "Echoes Randomizer - MyHash.iso", [".iso"])
+    mock_prompt.assert_called_once_with(window, "Echoes Randomizer - MyHash.iso", ["iso"])
     assert window.output_file_edit.text() == ""
 
 
