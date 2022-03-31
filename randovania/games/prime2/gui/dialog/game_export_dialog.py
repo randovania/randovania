@@ -12,7 +12,7 @@ from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParam
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
-    add_field_validation, output_file_validator, spoiler_path_for, is_file_validator
+    add_field_validation, output_file_validator, spoiler_path_for, is_file_validator, update_validation
 )
 from randovania.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.interface_common import game_workdir
@@ -187,7 +187,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
 
     # Output File
     def _on_output_file_button(self):
-        output_file = prompt_for_output_file(self, [".iso"], f"{self.default_output_name}.iso", self.output_file_edit)
+        output_file = prompt_for_output_file(self, ["iso"], f"{self.default_output_name}.iso", self.output_file_edit)
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
@@ -203,6 +203,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         self.prime_file_edit.setEnabled(use_prime_models)
         self.prime_file_label.setEnabled(use_prime_models)
         self.prime_file_button.setEnabled(use_prime_models)
+        update_validation(self.prime_file_edit)
 
     @property
     def _contents_file_path(self):

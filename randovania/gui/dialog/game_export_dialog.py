@@ -151,6 +151,11 @@ def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWi
     accept_validation()
 
 
+def update_validation(widget: QtWidgets.QLineEdit):
+    if hasattr(widget, "field_validation"):
+        widget.field_validation()
+
+
 def output_file_validator(output_file: Path) -> bool:
     return output_file.is_dir() or not output_file.parent.is_dir()
 
