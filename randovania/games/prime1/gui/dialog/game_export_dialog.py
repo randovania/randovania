@@ -12,7 +12,7 @@ from randovania.games.prime2.gui.dialog.game_export_dialog import (
 )
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
-    spoiler_path_for, add_field_validation, output_file_validator, is_file_validator,
+    spoiler_path_for, add_field_validation, output_file_validator, is_file_validator, update_validation,
 )
 from randovania.gui.generated.prime_game_export_dialog_ui import Ui_PrimeGameExportDialog
 from randovania.gui.lib.multi_format_output_mixin import MultiFormatOutputMixin
@@ -168,6 +168,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             self.echoes_file_edit.setEnabled(use_echoes_models)
         self.echoes_file_label.setEnabled(use_echoes_models)
         self.echoes_file_button.setEnabled(use_echoes_models)
+        update_validation(self.echoes_file_edit)
 
     def _on_echoes_file_button(self):
         if self._prompt_input_file_echoes:
