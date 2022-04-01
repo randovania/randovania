@@ -4,6 +4,7 @@ from typing import Set
 from randovania.game_description.requirements import RequirementList, RequirementSet
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import Node
+from randovania.game_description.world.resource_node import ResourceNode
 
 _DEBUG_LEVEL = 0
 count = 0
@@ -51,8 +52,8 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
     if _DEBUG_LEVEL > 0:
         world_list = state.world_list
 
-        if hasattr(state.node, "resource"):
-            resource = state.node.resource()
+        if isinstance(state.node, ResourceNode):
+            resource = state.node.resource(state.node_context())
             if isinstance(resource, PickupIndex):
                 resource = state.patches.pickup_assignment.get(resource)
                 if resource is not None:

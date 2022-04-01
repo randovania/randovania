@@ -58,7 +58,7 @@ class Requirement:
     def __lt__(self, other: "Requirement"):
         return str(self) < str(other)
 
-    def iterate_resource_requirements(self, database: ResourceDatabase):
+    def iterate_resource_requirements(self, database: ResourceDatabase) -> Iterator["ResourceRequirement"]:
         raise NotImplementedError()
 
 

@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
-from PySide2 import QtGui
+from PySide6 import QtGui
 
 from randovania.gui.lib import theme
 

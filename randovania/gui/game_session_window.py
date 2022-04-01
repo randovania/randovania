@@ -7,9 +7,9 @@ import random
 from pathlib import Path
 from typing import List, Optional
 
-from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import Qt, QTimer
-from PySide2.QtWidgets import QMessageBox
+from PySide6 import QtWidgets, QtGui
+from PySide6.QtCore import Qt, QTimer
+from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
@@ -34,7 +34,6 @@ from randovania.layout import preset_describer
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
-from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
@@ -52,13 +51,13 @@ class PlayerWidget:
     name: QtWidgets.QLabel
     connection_state: Optional[QtWidgets.QLabel]
     tool: QtWidgets.QToolButton
-    kick: QtWidgets.QAction
-    promote: QtWidgets.QAction
-    open_tracker: QtWidgets.QAction
-    abandon: QtWidgets.QAction
-    move_up: QtWidgets.QAction
-    move_down: QtWidgets.QAction
-    switch_observer_action: QtWidgets.QAction
+    kick: QtGui.QAction
+    promote: QtGui.QAction
+    open_tracker: QtGui.QAction
+    abandon: QtGui.QAction
+    move_up: QtGui.QAction
+    move_down: QtGui.QAction
+    switch_observer_action: QtGui.QAction
     player: Optional[PlayerSessionEntry] = None
 
     @property
@@ -129,13 +128,13 @@ class PlayerWidget:
 class RowWidget:
     name: QtWidgets.QLabel
     tool: QtWidgets.QToolButton
-    view_summary: QtWidgets.QAction
-    customize: QtWidgets.QAction
+    view_summary: QtGui.QAction
+    customize: QtGui.QAction
     import_menu: QtWidgets.QMenu
-    import_actions: List[QtWidgets.QAction]
+    import_actions: List[QtGui.QAction]
     export_menu: QtWidgets.QMenu
-    export_actions: List[QtWidgets.QAction]
-    delete: QtWidgets.QAction
+    export_actions: List[QtGui.QAction]
+    delete: QtGui.QAction
 
     @property
     def widgets(self):
@@ -191,9 +190,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         # Advanced Options
         self.advanced_options_menu = QtWidgets.QMenu(self.advanced_options_tool)
-        self.rename_session_action = QtWidgets.QAction("Change title", self.advanced_options_menu)
-        self.change_password_action = QtWidgets.QAction("Change password", self.advanced_options_menu)
-        self.duplicate_session_action = QtWidgets.QAction("Duplicate session", self.advanced_options_menu)
+        self.rename_session_action = QtGui.QAction("Change title", self.advanced_options_menu)
+        self.change_password_action = QtGui.QAction("Change password", self.advanced_options_menu)
+        self.duplicate_session_action = QtGui.QAction("Duplicate session", self.advanced_options_menu)
 
         self.advanced_options_menu.addAction(self.rename_session_action)
         self.advanced_options_menu.addAction(self.change_password_action)
@@ -202,20 +201,20 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         # Save ISO Button
         self.save_iso_menu = QtWidgets.QMenu(self.save_iso_button)
-        self.copy_permalink_action = QtWidgets.QAction("Copy Permalink", self.save_iso_menu)
+        self.copy_permalink_action = QtGui.QAction("Copy Permalink", self.save_iso_menu)
 
         self.save_iso_menu.addAction(self.copy_permalink_action)
         self.save_iso_button.setMenu(self.save_iso_menu)
 
         # Background process Button
         self.background_process_menu = QtWidgets.QMenu(self.background_process_button)
-        self.generate_game_with_spoiler_action = QtWidgets.QAction("Generate game", self.background_process_menu)
-        self.generate_game_with_spoiler_no_retry_action = QtWidgets.QAction("Generate game (no retries)",
-                                                                            self.background_process_menu)
-        self.generate_game_without_spoiler_action = QtWidgets.QAction("Generate without spoiler",
-                                                                      self.background_process_menu)
-        self.import_permalink_action = QtWidgets.QAction("Import permalink", self.background_process_menu)
-        self.import_layout_action = QtWidgets.QAction("Import game/spoiler", self.background_process_menu)
+        self.generate_game_with_spoiler_action = QtGui.QAction("Generate game", self.background_process_menu)
+        self.generate_game_with_spoiler_no_retry_action = QtGui.QAction("Generate game (no retries)",
+                                                                        self.background_process_menu)
+        self.generate_game_without_spoiler_action = QtGui.QAction("Generate without spoiler",
+                                                                  self.background_process_menu)
+        self.import_permalink_action = QtGui.QAction("Import permalink", self.background_process_menu)
+        self.import_layout_action = QtGui.QAction("Import game/spoiler", self.background_process_menu)
 
         self.background_process_menu.addAction(self.generate_game_with_spoiler_action)
         self.background_process_menu.addAction(self.generate_game_with_spoiler_no_retry_action)
@@ -231,9 +230,9 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         # Session status
         self.session_status_menu = QtWidgets.QMenu(self.session_status_tool)
-        self.start_session_action = QtWidgets.QAction("Start session", self.session_status_menu)
-        self.finish_session_action = QtWidgets.QAction("Finish session", self.session_status_menu)
-        self.reset_session_action = QtWidgets.QAction("Reset session", self.session_status_menu)
+        self.start_session_action = QtGui.QAction("Start session", self.session_status_menu)
+        self.finish_session_action = QtGui.QAction("Finish session", self.session_status_menu)
+        self.reset_session_action = QtGui.QAction("Reset session", self.session_status_menu)
 
         self.session_status_menu.addAction(self.start_session_action)
         self.session_status_menu.addAction(self.finish_session_action)
@@ -372,13 +371,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         row = RowWidget(
             name=preset_name,
             tool=tool_button,
-            view_summary=QtWidgets.QAction(tool_button_menu),
-            customize=QtWidgets.QAction(tool_button_menu),
+            view_summary=QtGui.QAction(tool_button_menu),
+            customize=QtGui.QAction(tool_button_menu),
             import_menu=import_menu,
             import_actions=[],
             export_menu=export_menu,
             export_actions=[],
-            delete=QtWidgets.QAction(tool_button_menu),
+            delete=QtGui.QAction(tool_button_menu),
         )
         self.rows.append(row)
 
@@ -397,13 +396,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         row.export_menu.setTitle("Export preset")
         tool_button_menu.addMenu(row.export_menu)
 
-        save_copy = QtWidgets.QAction(tool_button_menu)
+        save_copy = QtGui.QAction(tool_button_menu)
         save_copy.setText("Save copy of preset")
         save_copy.triggered.connect(functools.partial(self._row_save_preset_to_manager, row))
         row.export_actions.append(save_copy)
         export_menu.addAction(save_copy)
 
-        save_to_file = QtWidgets.QAction(tool_button_menu)
+        save_to_file = QtGui.QAction(tool_button_menu)
         save_to_file.setText("Save to file")
         save_to_file.triggered.connect(functools.partial(self._row_save_preset_to_file, row))
         row.export_actions.append(save_to_file)
@@ -421,13 +420,23 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self.team_players.pop().delete_widgets()
 
     def _create_actions_for_import_menu(self, row: RowWidget):
+        def _add_single(preset: VersionedPreset, parent: QtWidgets.QMenu):
+            action = QtGui.QAction(parent)
+            action.setText(preset.name)
+            action.triggered.connect(functools.partial(self._row_import_preset, row, preset))
+            row.import_actions.append(action)
+            parent.addAction(action)
+
         def _add(game: RandovaniaGame, parent: QtWidgets.QMenu):
-            for included_preset in self._preset_manager.presets_for_game(game):
-                action = QtWidgets.QAction(parent)
-                action.setText(included_preset.name)
-                action.triggered.connect(functools.partial(self._row_import_preset, row, included_preset))
-                row.import_actions.append(action)
-                parent.addAction(action)
+            for preset in self._preset_manager.included_presets.values():
+                if preset.game == game:
+                    _add_single(preset, parent)
+
+            parent.addSeparator()
+
+            for preset in sorted(self._preset_manager.custom_presets.values(), key=lambda it: it.name):
+                if preset.game == game:
+                    _add_single(preset, parent)
 
         if len(self._game_session.allowed_games) > 1:
             for g in self._game_session.allowed_games:
@@ -438,11 +447,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         else:
             _add(self._game_session.allowed_games[0], row.import_menu)
 
-        action = QtWidgets.QAction(row.import_menu)
-        action.setText("Import from file")
-        action.triggered.connect(functools.partial(self._row_import_preset_from_file_prompt, row))
-        row.import_actions.append(action)
-        row.import_menu.addAction(action)
+        from_file_action = QtGui.QAction(row.import_menu)
+        from_file_action.setText("Import from file")
+        from_file_action.triggered.connect(functools.partial(self._row_import_preset_from_file_prompt, row))
+        row.import_actions.append(from_file_action)
+        row.import_menu.addAction(from_file_action)
 
     def refresh_row_import_preset_actions(self):
         for row in self.rows:
@@ -499,7 +508,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     @asyncSlot()
     @handle_network_errors
-    async def _row_import_preset(self, row: RowWidget, preset: Preset):
+    async def _row_import_preset(self, row: RowWidget, preset: VersionedPreset):
         row_index = self.rows.index(row)
         await self._admin_global_action(SessionAdminGlobalAction.CHANGE_ROW, (row_index, preset.as_json))
 
@@ -591,13 +600,13 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             name=player_label,
             connection_state=connection_state,
             tool=tool_button,
-            kick=QtWidgets.QAction(tool_button_menu),
-            promote=QtWidgets.QAction(tool_button_menu),
-            open_tracker=QtWidgets.QAction(tool_button_menu),
-            abandon=QtWidgets.QAction(tool_button_menu),
-            move_up=QtWidgets.QAction(tool_button_menu),
-            move_down=QtWidgets.QAction(tool_button_menu),
-            switch_observer_action=QtWidgets.QAction(tool_button_menu),
+            kick=QtGui.QAction(tool_button_menu),
+            promote=QtGui.QAction(tool_button_menu),
+            open_tracker=QtGui.QAction(tool_button_menu),
+            abandon=QtGui.QAction(tool_button_menu),
+            move_up=QtGui.QAction(tool_button_menu),
+            move_down=QtGui.QAction(tool_button_menu),
+            switch_observer_action=QtGui.QAction(tool_button_menu),
         )
 
         def player_action(action: SessionAdminUserAction, arg):
@@ -1030,7 +1039,6 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         return True
 
-
     @asyncSlot()
     @handle_network_errors
     async def import_permalink(self):
@@ -1148,7 +1156,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         patch_data = await self._admin_player_action(membership, SessionAdminUserAction.CREATE_PATCHER_FILE,
                                                      options.options_for_game(game).cosmetic_patches.as_json)
 
-        dialog = game.gui.export_dialog(options, patch_data, self._game_session.game_details.word_hash, False)
+        other_worlds = [p.game for p in self._game_session.presets]
+        dialog = game.gui.export_dialog(options, patch_data, self._game_session.game_details.word_hash, False, other_worlds)
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.Accepted:

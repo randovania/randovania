@@ -10,15 +10,18 @@ from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import PickupNode, TeleporterNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
-from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, RoomRandoMode
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
+from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -50,13 +53,8 @@ _STARTING_ITEM_NAME_TO_INDEX = {
     "wavebuster": "Wavebuster"
 }
 
-# "Power Suit": "PowerSuit",
-# "Combat Visor": "Combat",
-# "Unknown Item 1": "Unknown1",
-# "Health Refill": "HealthRefill",
-# "Unknown Item 2": "Unknown2",
-
 _MODEL_MAPPING = {
+    (RandovaniaGame.METROID_PRIME_ECHOES, "CombatVisor INCOMPLETE"): "Combat Visor",
     (RandovaniaGame.METROID_PRIME_ECHOES, "ChargeBeam INCOMPLETE"): "Charge Beam",
     (RandovaniaGame.METROID_PRIME_ECHOES, "SuperMissile"): "Super Missile",
     (RandovaniaGame.METROID_PRIME_ECHOES, "ScanVisor INCOMPLETE"): "Scan Visor",
@@ -98,14 +96,10 @@ _LOCATIONS_GROUPED_TOGETHER = [
     ({52, 53}, None),  # Research Lab Aether
 ]
 
-
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
                                      rng: Random) -> dict:
-    if detail.model.game == RandovaniaGame.METROID_PRIME:
-        model_name = detail.model.name
-    else:
-        model_name = _MODEL_MAPPING.get((detail.model.game, detail.model.name), "Nothing")
+    model = detail.model.as_json
 
     scan_text = detail.scan_text
     hud_text = detail.hud_text[0]
@@ -119,16 +113,16 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
         count = quantity
         break
 
-    if (model_name == "Missile" and not detail.other_player
+    if (model["name"] == "Missile" and not detail.other_player
             and "Missile Expansion" in hud_text
             and rng.randint(0, _EASTER_EGG_SHINY_MISSILE) == 0):
-        model_name = "Shiny Missile"
+        model["name"] = "Shiny Missile"
         hud_text = hud_text.replace("Missile Expansion", "Shiny Missile Expansion")
         scan_text = scan_text.replace("Missile Expansion", "Shiny Missile Expansion")
 
     result = {
         "type": pickup_type,
-        "model": model_name,
+        "model": model,
         "scanText": scan_text,
         "hudmemoText": hud_text,
         "currIncrease": count,
@@ -235,7 +229,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "transports": {},
                 "rooms": {}
             }
+
             for area in world.areas:
+                world_data[world.name]["rooms"][area.name] = {"pickups":[]}
+                
                 pickup_indices = sorted(node.pickup_index for node in area.nodes if isinstance(node, PickupNode))
                 if pickup_indices:
                     world_data[world.name]["rooms"][area.name] = {
@@ -246,6 +243,12 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             for index in pickup_indices
                         ],
                     }
+
+                if self.configuration.superheated_probability != 0:
+                    world_data[world.name]["rooms"][area.name]["superheated"] = self.rng.random() < self.configuration.superheated_probability/1000.0
+
+                if self.configuration.submerged_probability != 0:
+                    world_data[world.name]["rooms"][area.name]["submerge"] = self.rng.random() < self.configuration.submerged_probability/1000.0
 
                 for node in area.nodes:
                     if not isinstance(node, TeleporterNode) or not node.editable:
@@ -259,6 +262,204 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         identifier.area_location.area_name,
                     )]
                     world_data[world.name]["transports"][source_name] = target
+
+        if self.configuration.room_rando != RoomRandoMode.NONE:
+            for world in db.world_list.worlds:
+                if world.name == "End of Game":
+                    continue
+
+                area_dock_nums = dict()
+                attached_areas = dict()
+                size_indices = dict()
+                candidates = list()
+                default_connections_node_name = dict()
+                dock_num_by_area_node = dict()
+                is_nonstandard = dict()
+
+                for area in world.areas:
+                    world_data[world.name]["rooms"][area.name]["doors"] = dict()
+                    area_dock_nums[area.name] = list()
+                    attached_areas[area.name] = list()
+                    for node in area.nodes:
+                        if not isinstance(node, DockNode):
+                            continue
+                        index = node.extra["dock_index"]
+                        is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
+                        if node.extra["nonstandard"]:
+                            # This dock is like a morph tunnel or 1-way door etc. that cannot be elegantly patched
+                            continue
+                        area_dock_nums[area.name].append(index)
+                        attached_areas[area.name].append(node.default_connection.area_name)
+                        dock_num_by_area_node[(area.name, node.name)] = index
+                        default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
+
+                        candidates.append((area.name, index))
+                    size_indices[area.name] = area.extra["size_index"]
+
+                default_connections = dict()
+                for (src_name, src_dock) in default_connections_node_name:
+                    (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
+                    
+                    try:
+                        dst_dock = dock_num_by_area_node[(dst_name, dst_node_name)]
+                    except KeyError:
+                        continue
+
+                    default_connections[(src_name, src_dock)] = (dst_name, dst_dock)
+
+                self.rng.shuffle(candidates)
+
+                used_room_pairings = list()
+
+                def are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, mode: RoomRandoMode):
+                    if src_name is None or dst_name is None:
+                        # print("none name")
+                        return False
+
+                    # both rooms must have patchable docks
+                    if len(area_dock_nums[src_name]) == 0 or len(area_dock_nums[dst_name]) == 0:
+                        # print("unpatchable room(s)")
+                        return False
+
+                    # destinations cannot be in the same room
+                    if src_name == dst_name:
+                        # print("same room")
+                        return False
+                    
+                    # src/dst must not be exempt
+                    if src_dock is not None and is_nonstandard[(src_name, src_dock)]:
+                            # print("src exempt")
+                            return False
+                    if dst_dock is not None and is_nonstandard[(dst_name, dst_dock)]:
+                            # print("dst exempt")
+                            return False
+
+                    # rooms cannot be neighbors
+                    if src_name in attached_areas[dst_name]:
+                        if mode == RoomRandoMode.ONE_WAY:
+                            # print("neighbor")
+                            return False
+                        
+                        # Unless it's a vanilla 2-way connection
+                        if default_connections[(src_name, src_dock)] != (dst_name, dst_dock):
+                            # print("two-way non-neighbor")
+                            return False
+
+                    # rooms can only connect to another room up to once
+                    if {src_name, dst_name} in used_room_pairings:
+                        # Except for one-way in impact crater, this edge case works fine and is desireable
+                        if mode == RoomRandoMode.TWO_WAY or world.name != "Impact Crater":
+                            # print("double connection")
+                            return False
+
+                    # The two rooms must not crash if drawn at the same time (size_index > 1.0)
+                    if size_indices[src_name] + size_indices[dst_name] >= 1.0:
+                        # print("too big")
+                        return False
+
+                    return True
+
+                if self.configuration.room_rando == RoomRandoMode.ONE_WAY:
+                    for area in world.areas:
+                        for dock_num in area_dock_nums[area.name]:
+                            # First try each of the unused docks
+                            dst_name = None
+                            dst_dock = None
+                            for (name, dock) in candidates:
+                                if are_rooms_compatible(area.name, None, name, None, self.configuration.room_rando):
+                                    dst_name = name
+                                    dst_dock = dock
+                                    break
+
+                            # If that wasn't successful, pick random destinations until it works out
+                            deadman_count = 1000
+                            while dst_name is None or dst_dock is None or not are_rooms_compatible(area.name, dock_num, dst_name, dst_dock, self.configuration.room_rando):
+
+                                deadman_count -= 1
+                                if deadman_count == 0:
+                                    raise Exception("Failed to find suitible destination for %s:%s" % (area.name, dock_num))
+
+                                dst_name = self.rng.choice(world.areas).name
+                                dst_dock = None
+
+                                if len(area_dock_nums[dst_name]) == 0:
+                                    continue
+
+                                dst_dock = self.rng.choice(area_dock_nums[dst_name])
+
+                            # Don't use this dock as a destination again unless there are no other options
+                            try:
+                                candidates.remove((dst_name, dst_dock))
+                            except ValueError:
+                                # print("re-used %s:%d" % (dst_name, dst_dock))
+                                pass
+
+                            used_room_pairings.append({area.name, dst_name})
+
+                            world_data[world.name]["rooms"][area.name]["doors"][str(dock_num)] = {
+                                "destination": {
+                                    "roomName": dst_name,
+                                    "dockNum": dst_dock,
+                                }
+                            }
+                elif self.configuration.room_rando == RoomRandoMode.TWO_WAY:
+                    assert len(candidates) % 2 == 0
+
+                    def next_candidate(max_index):
+                        for (src_name, src_dock) in candidates:
+                            if size_indices[src_name] > max_index:
+                                return (src_name, src_dock)
+                        return (None, None)
+
+                    def pick_random_dst(src_name, src_dock):
+                        for (dst_name, dst_dock) in candidates:
+                            if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, self.configuration.room_rando):
+                                return (dst_name, dst_dock)
+                        return (None, None)
+
+                    # Randomly pick room sources, starting with the largest room first, then randomly pick a compatible destination
+                    max_index = 1.01
+                    shuffled = dict()
+                    while len(candidates) != 0:
+                        if max_index < -0.00001:
+                            raise Exception("Failed to find pairings for %s" % str(candidates))
+
+                        (src_name, src_dock) = next_candidate(max_index)
+
+                        if src_name is None:
+                            # lower the room size criteria and try again
+                            max_index -= 0.01
+                            continue
+
+                        (dst_name, dst_dock) = pick_random_dst(src_name, src_dock)
+                        if dst_name is None:
+                            # This room have no valid destinations in the pool, randomly unpair two rooms and try again
+                            (src_name, src_dock) = self.rng.choice(list(shuffled.keys()))
+                            (dst_name, dst_dock) = shuffled.pop((src_name, src_dock))
+                            candidates.append((src_name, src_dock))
+                            candidates.append((dst_name, dst_dock))    
+                            used_room_pairings.remove({src_name, dst_name})
+                            continue
+
+                        candidates.remove((src_name, src_dock))
+                        candidates.remove((dst_name, dst_dock))
+                        shuffled[(src_name, src_dock)] = (dst_name, dst_dock)
+                        used_room_pairings.append({src_name, dst_name})
+
+                        world_data[world.name]["rooms"][src_name]["doors"][str(src_dock)] = {
+                            "destination": {
+                                "roomName": dst_name,
+                                "dockNum": dst_dock,
+                            }
+                        }
+                        world_data[world.name]["rooms"][dst_name]["doors"][str(dst_dock)] = {
+                                "destination": {
+                                    "roomName": src_name,
+                                    "dockNum": src_dock,
+                                }
+                            }
+
+                        # print("%s:%d --> %s:%d" % (src_name, src_dock, dst_name, dst_dock))
 
         starting_memo = None
         extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
@@ -302,6 +503,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             ctwk_config["playerSize"] = 0.3
             ctwk_config["morphBallSize"] = 0.3
             ctwk_config["easyLavaEscape"] = True
+        
+        if self.configuration.large_samus:
+            ctwk_config["playerSize"] = 1.75
 
         if self.cosmetic_patches.use_hud_color:
             ctwk_config["hudColor"] = [
@@ -323,7 +527,54 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             for name, index in _STARTING_ITEM_NAME_TO_INDEX.items()
         }
 
+        if self.configuration.deterministic_idrone:
+            idrone_config = {
+                "eyeWaitInitialRandomTime": 0.0,
+                "eyeWaitRandomTime": 0.0,
+                "eyeStayUpRandomTime": 0.0,
+                "resetContraptionRandomTime": 0.0,
+                # ~~~ Justification for Divide by 2 ~~~
+                # These Timer RNG values are normally re-rolled inbetween each of the 4 phases,
+                # turning the zoid fight duration probability into a bell curve. With /2 we manipulate
+                # the (now linear) probability characteristic to more often generate "average zoid fights"
+                # while erring on the side of faster.
+                "eyeWaitInitialMinimumTime": 8.0 + self.rng.random() * 5.0 / 2.0,
+                "eyeWaitMinimumTime": 15.0 + self.rng.random() * 10.0 / 2.0,
+                "eyeStayUpMinimumTime": 8.0 + self.rng.random() * 3.0 / 2.0,
+                "resetContraptionMinimumTime": 3.0 + self.rng.random() * 3.0 / 2.0,
+            }
+        else:
+            idrone_config = None
+        
+        if self.configuration.deterministic_maze:
+            maze_seeds = [self.rng.choice(VANILLA_MAZE_SEEDS)]
+        else:
+            maze_seeds = None
+
         seed = self.description.get_seed_for_player(self.players_config.player_index)
+
+        boss_sizes = None
+        if self.configuration.random_boss_sizes:
+            def get_random_size(min, max):
+                if self.rng.choice([True, False]):
+                    return self.rng.uniform(min, 0.8)
+                else:
+                    return self.rng.uniform(1.2, max)
+
+            boss_sizes = {
+                "parasiteQueen": get_random_size(0.1, 3.0),
+                "incineratorDrone": get_random_size(0.2, 3.5),
+                "adultSheegoth": get_random_size(0.2, 1.5),
+                "thardus": get_random_size(0.05, 2.5),
+                "elitePirate1": get_random_size(0.05, 2.3),
+                "elitePirate2": get_random_size(0.05, 1.3),
+                "elitePirate3": get_random_size(0.05, 2.0),
+                "phazonElite": get_random_size(0.05, 2.0),
+                "omegaPirate": get_random_size(0.05, 2.0),
+                "Ridley": get_random_size(0.2, 1.8),
+                "exo": get_random_size(0.05, 2.0),
+                "essence": get_random_size(0.5, 2.25),
+            }
 
         return {
             "seed": seed,
@@ -333,7 +584,6 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "qolCosmetic": self.cosmetic_patches.qol_cosmetic,
                 "qolPickupScans": self.configuration.qol_pickup_scans,
                 "qolCutscenes": self.configuration.qol_cutscenes.value,
-
                 "mapDefaultState": map_default_state,
                 "artifactHintBehavior": None,
                 "automaticCrashScreen": True,
@@ -343,27 +593,16 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "suitColors": suit_colors,
             },
             "gameConfig": {
+                "bossSizes": boss_sizes,
+                "noDoors": self.configuration.no_doors,
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,
                 "shufflePickupPosAllRooms": self.configuration.items_every_room,
                 "startingRoom": starting_room,
                 "startingMemo": starting_memo,
                 "warpToStart": self.configuration.warp_to_start,
                 "springBall": self.configuration.spring_ball,
-                "incineratorDroneConfig": {
-                    "eyeWaitInitialRandomTime": 0.0,
-                    "eyeWaitRandomTime": 0.0,
-                    "eyeStayUpRandomTime": 0.0,
-                    "resetContraptionRandomTime": 0.0,
-                    # ~~~ Justification for Divide by 2 ~~~
-                    # These Timer RNG values are normally re-rolled inbetween each of the 4 phases,
-                    # turning the zoid fight duration probability into a bell curve. With /2 we manipulate
-                    # the (now linear) probability characteristic to more often generate "average zoid fights"
-                    # while erring on the side of faster.
-                    "eyeWaitInitialMinimumTime": 8.0 + self.rng.random() * 5.0 / 2.0,
-                    "eyeWaitMinimumTime": 15.0 + self.rng.random() * 10.0 / 2.0,
-                    "eyeStayUpMinimumTime": 8.0 + self.rng.random() * 3.0 / 2.0,
-                    "resetContraptionMinimumTime": 3.0 + self.rng.random() * 3.0 / 2.0,
-                },
+                "incineratorDroneConfig": idrone_config,
+                "mazeSeeds": maze_seeds,
                 "nonvariaHeatDamage": self.configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
                 "heatDamagePerSec": self.configuration.heat_damage,

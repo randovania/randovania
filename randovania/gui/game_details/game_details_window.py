@@ -3,9 +3,7 @@ import dataclasses
 import typing
 from typing import Dict, Optional
 
-from PySide2 import QtCore, QtWidgets, QtGui
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QApplication, QDialog, QAction, QMenu
+from PySide6 import QtCore, QtWidgets, QtGui
 from qasync import asyncSlot
 
 from randovania.game_description import default_database
@@ -61,23 +59,23 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         self._game_details_tabs = []
 
         # Ui
-        self._tool_button_menu = QMenu(self.tool_button)
+        self._tool_button_menu = QtWidgets.QMenu(self.tool_button)
         self.tool_button.setMenu(self._tool_button_menu)
 
-        self._action_open_tracker = QAction(self)
+        self._action_open_tracker = QtGui.QAction(self)
         self._action_open_tracker.setText("Open map tracker")
         self._action_open_tracker.setEnabled(self._window_manager is not None)
         self._tool_button_menu.addAction(self._action_open_tracker)
 
-        self._action_copy_permalink = QAction(self)
+        self._action_copy_permalink = QtGui.QAction(self)
         self._action_copy_permalink.setText("Copy Permalink")
         self._tool_button_menu.addAction(self._action_copy_permalink)
 
-        self._action_export_preset = QAction(self)
+        self._action_export_preset = QtGui.QAction(self)
         self._action_export_preset.setText("Export current player's preset")
         self._tool_button_menu.addAction(self._action_export_preset)
 
-        self._action_view_trick_usages = QAction(self)
+        self._action_view_trick_usages = QtGui.QAction(self)
         self._action_view_trick_usages.setText("View current player's expected trick usage")
         self._tool_button_menu.addAction(self._action_view_trick_usages)
 
@@ -112,7 +110,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     # Operations
     def _copy_permalink(self):
-        QApplication.clipboard().setText(self.layout_description.permalink.as_base64_str)
+        QtWidgets.QApplication.clipboard().setText(self.layout_description.permalink.as_base64_str)
 
     def _export_log(self):
         all_games = self.layout_description.all_games
@@ -192,8 +190,8 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
         message_box = ScrollLabelDialog(dialog_text, "Commands for patcher", self)
         message_box.resize(750, 200)
-        message_box.label.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        QApplication.clipboard().setText(commands)
+        message_box.label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
+        QtWidgets.QApplication.clipboard().setText(commands)
         await async_dialog.execute_dialog(message_box)
 
     @property
@@ -220,9 +218,9 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
         patch_data = data_factory.create_data()
 
-        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler)
+        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler, [game])
         result = await async_dialog.execute_dialog(dialog)
-        if result != QDialog.Accepted:
+        if result != QtWidgets.QDialog.Accepted:
             return
 
         dialog.save_options()

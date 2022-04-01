@@ -12,7 +12,7 @@ import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
 
 if typing.TYPE_CHECKING:
-    from PySide2 import QtWidgets
+    from PySide6 import QtWidgets
 
     from randovania.exporter.game_exporter import GameExporter
     from randovania.exporter.patch_data_factory import BasePatchDataFactory
@@ -143,6 +143,9 @@ class GameData:
 
     exporter: Callable[[], GameExporter]
     """Capable of exporting everything needed to play the randomized game."""
+
+    defaults_available_in_game_sessions: bool = False
+    """If this game is allowed by default in online game sessions."""
 
     permalink_reference_preset: Optional[str] = None
     """(Optional) Name of the preset used as reference to encode permalinks of this game.

@@ -5,7 +5,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 8
+CURRENT_VERSION = 9
 
 
 def _migrate_v1(data: dict) -> dict:
@@ -339,6 +339,40 @@ def _migrate_v7(data: dict) -> dict:
     return data
 
 
+def _migrate_v8(data: dict) -> dict:
+    lock_type_mapping = {
+        1: "front-blast-back-free-unlock",
+        2: "front-blast-back-blast",
+        3: "front-blast-back-impossible",
+    }
+    if data["game"] == "dread":
+        lock_type_mapping[3] = "front-blast-back-if-matching"
+
+    for dock_type in data["dock_weakness_database"]["types"].values():
+        for dock_weakness in dock_type["items"].values():
+            lock_type = dock_weakness.pop("lock_type")
+            if lock_type == 0:
+                dock_weakness["lock"] = None
+            else:
+                dock_weakness["lock"] = {
+                    "lock_type": lock_type_mapping[lock_type],
+                    "requirement": dock_weakness["requirement"],
+                }
+                # Trivial
+                dock_weakness["requirement"] = {"type": "and", "data": {"comment": None, "items": []}}
+
+    for world in data["worlds"]:
+        for area in world["areas"].values():
+            for node in area["nodes"].values():
+                if node["node_type"] == "dock":
+                    node["default_connection"] = node.pop("destination")
+                    node["default_dock_weakness"] = node.pop("dock_weakness")
+                    node["override_default_open_requirement"] = None
+                    node["override_default_lock_requirement"] = None
+
+    return data
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -347,6 +381,7 @@ _MIGRATIONS = {
     5: _migrate_v5,
     6: _migrate_v6,
     7: _migrate_v7,
+    8: _migrate_v8,
 }
 
 

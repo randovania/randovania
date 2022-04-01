@@ -6,7 +6,8 @@ from typing import Dict, Set, Iterator, Tuple, FrozenSet
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements, \
     RequirementAnd, Requirement
-from randovania.game_description.world.node import ResourceNode, Node
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.resolver import debug
 from randovania.resolver.logic import Logic
 from randovania.resolver.state import State
@@ -50,6 +51,7 @@ class ResolverReach:
 
         checked_nodes: Dict[Node, int] = {}
         database = initial_state.resource_database
+        context = initial_state.node_context()
 
         # Keys: nodes to check
         # Value: how much energy was available when visiting that node
@@ -74,9 +76,9 @@ class ResolverReach:
             if node != initial_state.node:
                 reach_nodes[node] = energy
 
-            requirement_to_leave = node.requirement_to_leave(initial_state.patches, initial_state.resources)
+            requirement_to_leave = node.requirement_to_leave(context)
 
-            for target_node, requirement in logic.game.world_list.potential_nodes_from(node, initial_state.patches):
+            for target_node, requirement in logic.game.world_list.potential_nodes_from(node, context):
                 if target_node is None:
                     continue
 
@@ -144,7 +146,7 @@ class ResolverReach:
 
         # print(" > satisfiable actions, with {} interesting resources".format(len(interesting_resources)))
         for action, energy in self.possible_actions(state):
-            for resource, amount in action.resource_gain_on_collect(state.context_for(action)):
+            for resource, amount in action.resource_gain_on_collect(state.node_context()):
                 if resource in interesting_resources:
                     yield action, energy
                     break
@@ -155,5 +157,5 @@ class ResolverReach:
             if not node.is_resource_node:
                 continue
             node = typing.cast(ResourceNode, node)
-            if node.can_collect(state.context_for(node)):
+            if node.can_collect(state.node_context()):
                 yield node

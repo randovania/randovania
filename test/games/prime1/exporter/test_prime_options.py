@@ -8,6 +8,7 @@ def test_round_trip(tmp_path):
         input_path=tmp_path.joinpath("input.iso"),
         output_directory=tmp_path.joinpath("output"),
         output_format="ciso",
+        use_external_models={RandovaniaGame.METROID_PRIME_ECHOES}
     )
 
     # Run

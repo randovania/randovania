@@ -1,7 +1,7 @@
 import dataclasses
 import functools
 
-from PySide2.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget
 
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches, MusicMode
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog

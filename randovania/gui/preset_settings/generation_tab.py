@@ -1,7 +1,7 @@
 import dataclasses
 from typing import Iterable, Optional
 
-from PySide2.QtWidgets import *
+from PySide6.QtWidgets import *
 
 from randovania.game_description.game_description import GameDescription
 from randovania.games.game import RandovaniaGame
@@ -30,6 +30,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         # Item Placement
         signal_handling.on_checked(self.multi_pickup_placement_check, self._persist_multi_pickup_placement)
         signal_handling.on_checked(self.check_major_minor, self._persist_major_minor)
+        signal_handling.on_checked(self.local_first_progression_check, self._persist_local_first_progression)
 
         # Logic Settings
         self.dangerous_combo.setItemData(0, LayoutLogicalResourceAction.RANDOMLY)
@@ -60,6 +61,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         layout = preset.configuration
 
         self.multi_pickup_placement_check.setChecked(layout.multi_pickup_placement)
+        self.local_first_progression_check.setChecked(layout.first_progression_must_be_local)
         self.check_major_minor.setChecked(
             layout.available_locations.randomization_mode == RandomizationMode.MAJOR_MINOR_SPLIT)
 
@@ -92,6 +94,10 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         mode = RandomizationMode.MAJOR_MINOR_SPLIT if value else RandomizationMode.FULL
         with self._editor as editor:
             editor.available_locations = dataclasses.replace(editor.available_locations, randomization_mode=mode)
+
+    def _persist_local_first_progression(self, value: bool):
+        with self._editor as editor:
+            editor.set_configuration_field("first_progression_must_be_local", value)
 
     def _on_dangerous_changed(self, value: LayoutLogicalResourceAction):
         with self._editor as editor:

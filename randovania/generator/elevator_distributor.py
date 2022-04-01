@@ -5,7 +5,7 @@ from typing import List, Dict, Optional, Tuple
 
 from randovania.game_description.game_patches import ElevatorConnection
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node import TeleporterNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 

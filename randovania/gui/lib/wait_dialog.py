@@ -1,7 +1,7 @@
 import asyncio
 from typing import Optional
 
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 
 from randovania.gui.lib import common_qt_lib
 

@@ -23,13 +23,20 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import (
-    DockWeakness, DockType, DockWeaknessDatabase, DockLockType
+    DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
 )
 from randovania.game_description.world.node import (
-    GenericNode, DockNode, TeleporterNode, PickupNode, EventNode, Node,
-    ConfigurableNode, LogbookNode, LoreType, NodeLocation, PlayerShipNode
+    GenericNode, Node,
+    NodeLocation
 )
+from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
@@ -126,7 +133,7 @@ def read_requirement_template(data: Dict, resource_database: ResourceDatabase) -
     return RequirementTemplate(data["data"])
 
 
-def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Requirement:
+def read_requirement(data: dict, resource_database: ResourceDatabase) -> Requirement:
     req_type = data["type"]
     if req_type == "resource":
         return read_resource_requirement(data, resource_database)
@@ -142,6 +149,13 @@ def read_requirement(data: Dict, resource_database: ResourceDatabase) -> Require
 
     else:
         raise ValueError(f"Unknown requirement type: {req_type}")
+
+
+def read_optional_requirement(data: Optional[dict], resource_database: ResourceDatabase) -> Optional[Requirement]:
+    if data is None:
+        return None
+    else:
+        return read_requirement(data, resource_database)
 
 
 # Resource Gain
@@ -161,13 +175,24 @@ def read_resource_gain_tuple(data: List[Dict], database: "ResourceDatabase") -> 
     )
 
 
+def read_dock_lock(data: Optional[dict], resource_database: ResourceDatabase) -> Optional[DockLock]:
+    if data is None:
+        return None
+    return DockLock(
+        lock_type=DockLockType(data["lock_type"]),
+        requirement=read_requirement(data["requirement"], resource_database),
+    )
+
+
 # Dock Weakness
 
 def read_dock_weakness(name: str, item: dict, resource_database: ResourceDatabase) -> DockWeakness:
-    return DockWeakness(name,
-                        DockLockType(item["lock_type"]),
-                        frozen_lib.wrap(item["extra"]),
-                        read_requirement(item["requirement"], resource_database))
+    return DockWeakness(
+        name,
+        frozen_lib.wrap(item["extra"]),
+        read_requirement(item["requirement"], resource_database),
+        read_dock_lock(item["lock"], resource_database),
+    )
 
 
 def read_dock_type(name: str, data: dict) -> DockType:
@@ -262,12 +287,19 @@ class WorldReader:
             elif node_type == "dock":
                 return DockNode(
                     **generic_args,
-                    default_connection=NodeIdentifier.from_json(data["destination"]),
                     dock_type=self.dock_weakness_database.find_type(data["dock_type"]),
+                    default_connection=NodeIdentifier.from_json(data["default_connection"]),
                     default_dock_weakness=self.dock_weakness_database.get_by_weakness(
                         data["dock_type"],
-                        data["dock_weakness"],
-                    ))
+                        data["default_dock_weakness"],
+                    ),
+                    override_default_open_requirement=read_optional_requirement(
+                        data["override_default_open_requirement"], self.resource_database
+                    ),
+                    override_default_lock_requirement=read_optional_requirement(
+                        data["override_default_lock_requirement"], self.resource_database
+                    ),
+                )
 
             elif node_type == "pickup":
                 return PickupNode(
@@ -293,7 +325,6 @@ class WorldReader:
             elif node_type == "configurable_node":
                 return ConfigurableNode(
                     **generic_args,
-                    self_identifier=NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
                 )
 
             elif node_type == "logbook":

@@ -5,14 +5,12 @@ import logging
 import math
 import typing
 from pathlib import Path
-from random import Random
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
 
 import matplotlib.pyplot as plt
 import networkx
-from PySide2 import QtWidgets
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QTreeWidgetItem, QCheckBox, QLabel, QGridLayout, QWidget, QMessageBox
+from PySide6 import QtWidgets, QtGui, QtCore
+from PySide6.QtCore import Qt
 from matplotlib.axes import Axes
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
@@ -25,7 +23,11 @@ from randovania.game_description.resources.resource_info import add_resource_gai
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node, ResourceNode, ConfigurableNode, TeleporterNode, DockNode
+from randovania.game_description.world.node import Node
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
@@ -92,7 +94,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
         self.line, *_ = self.ax.plot([])
 
 
-class TrackerWindow(QMainWindow, Ui_TrackerWindow):
+class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     # Tracker state
     _collected_pickups: Dict[PickupEntry, int]
     _actions: List[Node]
@@ -108,10 +110,10 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
     _starting_nodes: Set[ResourceNode]
 
     # UI tools
-    _world_name_to_item: Dict[str, QTreeWidgetItem]
-    _area_name_to_item: Dict[tuple[str, str], QTreeWidgetItem]
-    _node_to_item: Dict[Node, QTreeWidgetItem]
-    _widget_for_pickup: Dict[PickupEntry, Union[QCheckBox, QtWidgets.QComboBox]]
+    _world_name_to_item: Dict[str, QtWidgets.QTreeWidgetItem]
+    _area_name_to_item: Dict[tuple[str, str], QtWidgets.QTreeWidgetItem]
+    _node_to_item: Dict[Node, QtWidgets.QTreeWidgetItem]
+    _widget_for_pickup: Dict[PickupEntry, Union[QtWidgets.QCheckBox, QtWidgets.QComboBox]]
     _during_setup = False
 
     @classmethod
@@ -284,9 +286,11 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self._refresh_for_new_action()
 
     def _confirm_reset(self):
-        reply = QMessageBox.question(self, "Reset Tracker?", "Do you want to reset the tracker progression?",
-                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-        if reply == QMessageBox.Yes:
+        buttons = QtWidgets.QMessageBox.StandardButton
+
+        reply = QtWidgets.QMessageBox.question(self, "Reset Tracker?", "Do you want to reset the tracker progression?",
+                                               buttons.Yes | buttons.No, buttons.No)
+        if reply == buttons.Yes:
             self.reset()
 
     @property
@@ -324,14 +328,14 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self.actions_list.takeItem(len(self._actions))
         self._refresh_for_new_action()
 
-    def _on_tree_node_double_clicked(self, item: QTreeWidgetItem, _):
+    def _on_tree_node_double_clicked(self, item: QtWidgets.QTreeWidgetItem, _):
         node: Optional[Node] = getattr(item, "node", None)
 
         if not item.isDisabled() and node is not None and node != self._actions[-1]:
             self._add_new_action(node)
 
     def _on_show_path_to_here(self):
-        target: QTreeWidgetItem = self.possible_locations_tree.currentItem()
+        target: QtWidgets.QTreeWidgetItem = self.possible_locations_tree.currentItem()
         if target is None:
             return
         node: Optional[Node] = getattr(target, "node", None)
@@ -401,36 +405,18 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         for area in world.areas:
             g.add_node(area)
 
+        context = state.node_context()
         for area in world.areas:
             nearby_areas = set()
             for node in area.nodes:
                 if node not in nodes_in_reach:
                     continue
 
-                if isinstance(node, DockNode):
-                    try:
-                        target_node = world_list.resolve_dock_node(node, state.patches)
-                        if target_node is None:
-                            continue
-                        forward_weakness = state.patches.dock_weakness.get(world_list.identifier_for_node(node),
-                                                                           node.default_dock_weakness)
-                        requirement = forward_weakness.requirement
-                        # TODO: only add requirement if the blast shield has not been destroyed yet
-
-                        if isinstance(target_node, DockNode):
-                            # TODO: Target node is expected to be a dock. Should this error?
-                            back_weakness = state.patches.dock_weakness.get(
-                                world_list.identifier_for_node(target_node),
-                                target_node.default_dock_weakness)
-                            if back_weakness.lock_type == DockLockType.FRONT_BLAST_BACK_BLAST:
-                                requirement = RequirementAnd([requirement, back_weakness.requirement])
-
-                        if requirement.satisfied(state.resources, state.energy, state.resource_database):
-                            nearby_areas.add(world_list.nodes_to_area(target_node))
-
-                    except IndexError as e:
-                        logging.error(f"For {node.name} in {area.name}, received {e}")
-                        continue
+                for other_node, requirement in node.connections_from(context):
+                    if requirement.satisfied(state.resources, state.energy, state.resource_database):
+                        other_area = world_list.nodes_to_area(other_node)
+                        if other_area in world.areas:
+                            nearby_areas.add(other_area)
 
             for other_area in nearby_areas:
                 g.add_edge(area, other_area)
@@ -495,8 +481,8 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                     node_item.setHidden(not is_visible)
                     if node.is_resource_node:
                         resource_node = typing.cast(ResourceNode, node)
-                        node_item.setDisabled(not resource_node.can_collect(state.context_for(resource_node)))
-                        node_item.setCheckState(0, Qt.Checked if is_collected else Qt.Unchecked)
+                        node_item.setDisabled(not resource_node.can_collect(state.node_context()))
+                        node_item.setCheckState(0, QtCore.Qt.Checked if is_collected else QtCore.Qt.Unchecked)
 
                     area_is_visible = area_is_visible or is_visible
                 self._area_name_to_item[(world.name, area.name)].setHidden(not area_is_visible)
@@ -545,27 +531,27 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         """
         Creates the possible_locations_tree with all worlds, areas and nodes.
         """
-        self.action_show_path_to_here = QtWidgets.QAction("Show path to here")
+        self.action_show_path_to_here = QtGui.QAction("Show path to here")
         self.action_show_path_to_here.triggered.connect(self._on_show_path_to_here)
         self.possible_locations_tree.itemDoubleClicked.connect(self._on_tree_node_double_clicked)
         self.possible_locations_tree.insertAction(None, self.action_show_path_to_here)
 
         # TODO: Dark World names
         for world in self.game_description.world_list.worlds:
-            world_item = QTreeWidgetItem(self.possible_locations_tree)
+            world_item = QtWidgets.QTreeWidgetItem(self.possible_locations_tree)
             world_item.setText(0, world.name)
             world_item.setExpanded(True)
             self._world_name_to_item[world.name] = world_item
 
             for area in world.areas:
-                area_item = QTreeWidgetItem(world_item)
+                area_item = QtWidgets.QTreeWidgetItem(world_item)
                 area_item.area = area
                 area_item.setText(0, area.name)
                 area_item.setHidden(True)
                 self._area_name_to_item[(world.name, area.name)] = area_item
 
                 for node in area.nodes:
-                    node_item = QTreeWidgetItem(area_item)
+                    node_item = QtWidgets.QTreeWidgetItem(area_item)
                     node_item.setText(0, node.name)
                     node_item.node = node
                     if node.is_resource_node:
@@ -698,10 +684,16 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
             self._initial_state.node = world_list.resolve_teleporter_connection(area_location)
 
+        def is_resource_node_present(node: Node, state: State):
+            if node.is_resource_node:
+                assert isinstance(node, ResourceNode)
+                return node.resource(state.node_context()) in self._initial_state.resources
+            return False
+
         self._starting_nodes = {
             node
             for node in world_list.all_nodes
-            if node.is_resource_node and node.resource() in self._initial_state.resources
+            if is_resource_node_present(node, self._initial_state)
         }
 
     def _change_item_quantity(self, pickup: PickupEntry, use_quantity_as_bool: bool, quantity: int):
@@ -719,7 +711,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         self._during_setup = True
         for pickup, quantity in new_quantity.items():
             widget = self._widget_for_pickup[pickup]
-            if isinstance(widget, QCheckBox):
+            if isinstance(widget, QtWidgets.QCheckBox):
                 widget.setChecked(quantity > 0)
             else:
                 widget.setValue(quantity)
@@ -727,12 +719,12 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def _create_widgets_with_quantity(self,
                                       pickup: PickupEntry,
-                                      parent_widget: QWidget,
-                                      parent_layout: QGridLayout,
+                                      parent_widget: QtWidgets.QWidget,
+                                      parent_layout: QtWidgets.QGridLayout,
                                       row: int,
                                       quantity: int,
                                       ):
-        label = QLabel(parent_widget)
+        label = QtWidgets.QLabel(parent_widget)
         label.setText(pickup.name)
         parent_layout.addWidget(label, row, 0)
 
@@ -745,7 +737,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
 
     def setup_pickups_box(self, item_pool: List[PickupEntry]):
 
-        parent_widgets: Dict[str, Tuple[QWidget, QGridLayout]] = {
+        parent_widgets: Dict[str, Tuple[QtWidgets.QWidget, QtWidgets.QGridLayout]] = {
             "expansion": (self.expansions_box, self.expansions_layout),
             "energy_tank": (self.expansions_box, self.expansions_layout),
             "translator": (self.translators_box, self.translators_layout),
@@ -798,7 +790,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
         for parent_widget, l in without_quantity_by_parent.items():
             num_rows = math.ceil(len(l) / k_column_count)
             for parent_layout, pickup in l:
-                check_box = QCheckBox(parent_widget)
+                check_box = QtWidgets.QCheckBox(parent_widget)
                 check_box.setText(pickup.name)
                 check_box.stateChanged.connect(functools.partial(self._change_item_quantity, pickup, True))
                 self._widget_for_pickup[pickup] = check_box
@@ -858,7 +850,7 @@ class TrackerWindow(QMainWindow, Ui_TrackerWindow):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.context_for(node)),
+            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.node_context()),
                                                    state.resources)
 
         return state

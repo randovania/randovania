@@ -1,4 +1,4 @@
-from PySide2 import QtCore
+from PySide6 import QtCore
 
 from randovania.games.super_metroid.gui.dialog.super_cosmetic_patches_dialog import SuperCosmeticPatchesDialog
 from randovania.games.super_metroid.layout.super_metroid_cosmetic_patches import SuperMetroidCosmeticPatches

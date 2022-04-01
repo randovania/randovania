@@ -8,7 +8,7 @@ from randovania.game_description.resources import resource_info
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import CurrentResources, ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.node import ResourceNode
+from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
 from randovania.resolver.state import State
@@ -144,7 +144,8 @@ def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
     that satisfies on unreachable nodes"""
     state = reach.state
     possible_sets = list(reach.unreachable_nodes_with_requirements().values())
-    uncollected_resources = [node.resource() for node in uncollected_resource_nodes]
+    context = reach.node_context()
+    uncollected_resources = [node.resource(context) for node in uncollected_resource_nodes]
 
     all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
 

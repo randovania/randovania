@@ -17,8 +17,8 @@ class CSGameExportDialog(GameExportDialog, Ui_CSGameExportDialog):
     def _game(self):
         return RandovaniaGame.CAVE_STORY
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
-        super().__init__(options, patch_data, word_hash, spoiler)
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
+        super().__init__(options, patch_data, word_hash, spoiler, games)
 
         per_game = options.options_for_game(self._game)
         assert isinstance(per_game, CSPerGameOptions)

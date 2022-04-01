@@ -12,7 +12,7 @@ def login_prompt_fixture(skip_qtbot):
 async def test_on_login_as_guest_button(prompt, mocker):
     # Setup
     prompt.network_client.login_as_guest = AsyncMock()
-    mock_dialog = mocker.patch("PySide2.QtWidgets.QInputDialog").return_value
+    mock_dialog = mocker.patch("PySide6.QtWidgets.QInputDialog").return_value
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock,
                                        return_value=mock_dialog.Accepted)
 

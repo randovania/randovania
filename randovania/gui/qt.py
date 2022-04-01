@@ -1,5 +1,4 @@
 import asyncio
-import functools
 import locale
 import logging.handlers
 import os
@@ -9,7 +8,7 @@ import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
-from PySide2 import QtCore, QtWidgets
+from PySide6 import QtCore, QtWidgets
 
 import randovania
 from randovania.games.game import RandovaniaGame
@@ -39,6 +38,8 @@ def catch_exceptions_async(loop, context):
     if 'future' in context:
         future: asyncio.Future = context['future']
         logger.exception(context["message"], exc_info=future.exception())
+    elif 'exception' in context:
+        logger.exception(context["message"], exc_info=context['exception'])
     else:
         logger.critical(str(context))
 
@@ -233,7 +234,7 @@ def start_logger(data_dir: Path, is_preview: bool):
 
 
 def create_loop(app: QtWidgets.QApplication) -> asyncio.AbstractEventLoop:
-    os.environ['QT_API'] = "PySide2"
+    os.environ['QT_API'] = "PySide6"
     import qasync
     loop: asyncio.AbstractEventLoop = qasync.QEventLoop(app)
     asyncio.set_event_loop(loop)

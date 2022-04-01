@@ -1,10 +1,11 @@
 from pathlib import Path
 from typing import Optional, TypeVar, Type, Callable
 
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QMessageBox
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QMessageBox
 
 from randovania.exporter.game_exporter import GameExportParams
+from randovania.games.game import RandovaniaGame
 from randovania.gui.lib import common_qt_lib
 from randovania.interface_common.options import Options
 from randovania.layout.layout_description import LayoutDescription
@@ -21,14 +22,16 @@ class GameExportDialog(QtWidgets.QDialog):
     _patch_data: dict
     _word_hash: str
     _has_spoiler: bool
+    _games: list[RandovaniaGame]
 
-    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool):
+    def __init__(self, options: Options, patch_data: dict, word_hash: str, spoiler: bool, games: list[RandovaniaGame]):
         super().__init__()
         common_qt_lib.set_default_window_icon(self)
         self._options = options
         self._patch_data = patch_data
         self._word_hash = word_hash
         self._has_spoiler = spoiler
+        self._games = games
 
         if (func := _try_get_field(self, "setupUi", None)) is not None:
             func(self)
@@ -148,9 +151,22 @@ def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWi
     accept_validation()
 
 
+def update_validation(widget: QtWidgets.QLineEdit):
+    if hasattr(widget, "field_validation"):
+        widget.field_validation()
+
+
 def output_file_validator(output_file: Path) -> bool:
     return output_file.is_dir() or not output_file.parent.is_dir()
 
 
-def is_directory_validator(line: QtWidgets.QLineEdit):
+def is_directory_validator(line: QtWidgets.QLineEdit) -> bool:
     return not line.text() or not Path(line.text()).is_dir()
+
+
+def is_file_validator(file: Optional[Path]) -> bool:
+    """Returns False when the given path is not None and is a file, True otherwise"""
+    if file is None:
+        return True
+    else:
+        return not file.is_file()

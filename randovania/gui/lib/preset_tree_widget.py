@@ -1,14 +1,13 @@
 import dataclasses
 import uuid
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 
-from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import Qt
+from PySide6 import QtWidgets, QtGui
+from PySide6.QtCore import Qt
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.window_manager import WindowManager
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
-from randovania.lib import enum_lib
 
 
 class PresetTreeWidget(QtWidgets.QTreeWidget):
@@ -58,7 +57,7 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
     def update_items(self):
         self.clear()
 
-        tree_item = {}
+        tree_item: dict[Any, QtWidgets.QTreeWidgetItem] = {}
         for game in RandovaniaGame.sorted_all_games():
             if not game.data.development_state.can_view(self.show_experimental):
                 continue
@@ -94,8 +93,19 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
         # Set parents after, so don't have issues with order
         for preset in sorted(self.window_manager.preset_manager.custom_presets.values(), key=lambda it: it.name):
             if preset.base_preset_uuid in self.preset_to_item:
-                tree_item[preset.game].removeChild(self.preset_to_item[preset.uuid])
-                self.preset_to_item[preset.base_preset_uuid].addChild(self.preset_to_item[preset.uuid])
+                root_item = tree_item[preset.game]
+                self_item = self.preset_to_item[preset.uuid]
+                target_parent = parent_item = self.preset_to_item[preset.base_preset_uuid]
+
+                while parent_item != root_item:
+                    if parent_item == self_item:
+                        # LOOP DETECTED!
+                        target_parent = root_item
+                        break
+                    parent_item = parent_item.parent()
+
+                root_item.removeChild(self_item)
+                target_parent.addChild(self_item)
 
     def select_preset(self, preset: VersionedPreset):
         if preset.uuid in self.preset_to_item:

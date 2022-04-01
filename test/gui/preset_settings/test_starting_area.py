@@ -2,8 +2,8 @@ import dataclasses
 import uuid
 
 import pytest
-from PySide2 import QtCore
-from PySide2.QtCore import Qt
+from PySide6 import QtCore
+from PySide6.QtCore import Qt
 
 from randovania.game_description import default_database
 from randovania.game_description.world.area_identifier import AreaIdentifier

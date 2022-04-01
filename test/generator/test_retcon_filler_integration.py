@@ -28,7 +28,8 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
         exclusion = frozenset([PickupIndex(3)])
     else:
         exclusion = frozenset()
-    configuration = FillerConfiguration(major_mode, 0, 0, exclusion, False, LayoutLogicalResourceAction.RANDOMLY)
+    configuration = FillerConfiguration(major_mode, 0, 0, exclusion, False, LayoutLogicalResourceAction.RANDOMLY,
+                                        False)
 
     # Run
     indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(world_list,

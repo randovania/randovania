@@ -1,5 +1,5 @@
-from PySide2 import QtWidgets, QtGui
-from PySide2.QtCore import Qt
+from PySide6 import QtWidgets, QtGui
+from PySide6.QtCore import Qt
 
 _current_dark_theme = None
 

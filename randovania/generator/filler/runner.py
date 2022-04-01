@@ -97,6 +97,7 @@ async def run_filler(rng: Random,
                 indices_to_exclude=pool.configuration.available_locations.excluded_indices,
                 multi_pickup_placement=pool.configuration.multi_pickup_placement,
                 logical_resource_action=pool.configuration.logical_resource_action,
+                first_progression_must_be_local=pool.configuration.first_progression_must_be_local,
             ),
         ))
 

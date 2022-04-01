@@ -1,7 +1,7 @@
 import datetime
 
 import pytest
-from PySide2 import QtWidgets
+from PySide6 import QtWidgets
 from mock import MagicMock, AsyncMock, ANY
 
 from randovania.game_connection.game_connection import GameConnection
@@ -91,11 +91,12 @@ async def test_on_game_session_actions_update(window: GameSessionWindow, default
     game_session = MagicMock()
     game_session.presets = [default_echoes_preset]
     window._game_session = game_session
+    timestamp = datetime.datetime(year=2020, month=1, day=5)
 
     # Run
     await window.on_game_session_actions_update(
         GameSessionActions((
-            GameSessionAction("A", 0, "B", "Bombs", PickupIndex(0), datetime.datetime(year=2020, month=1, day=5)),
+            GameSessionAction("A", 0, "B", "Bombs", PickupIndex(0), timestamp),
         ))
     )
 
@@ -108,7 +109,7 @@ async def test_on_game_session_actions_update(window: GameSessionWindow, default
         'B',
         'Bombs',
         'Temple Grounds/Hive Chamber A/Pickup (Missile)',
-        'Sun Jan  5 00:00:00 2020'
+        timestamp.strftime("%c")
     ]
 
 
@@ -433,10 +434,11 @@ async def test_save_iso(window, mocker, echoes_game_description):
                                        return_value=QtWidgets.QDialog.Accepted)
 
     preset = MagicMock()
+    # preset.game = RandovaniaGame.METROID_PRIME_ECHOES
     window._game_session = MagicMock()
     window._game_session.players[window.network_client.current_user.id].is_observer = False
     window._game_session.players[window.network_client.current_user.id].row = 0
-    window._game_session.presets = {0: preset}
+    window._game_session.presets = [preset]
     window.network_client.session_admin_player = AsyncMock()
 
     patch_data = window.network_client.session_admin_player.return_value
@@ -453,6 +455,7 @@ async def test_save_iso(window, mocker, echoes_game_description):
         patch_data,
         window._game_session.game_details.word_hash,
         False,
+        [game],
     )
     mock_execute_dialog.assert_awaited_once_with(game.gui.export_dialog.return_value)
     game.exporter.export_game.assert_called_once_with(
@@ -465,7 +468,7 @@ async def test_save_iso(window, mocker, echoes_game_description):
 @pytest.mark.parametrize("is_member", [False, True])
 async def test_on_close_event(window: GameSessionWindow, mocker, is_member):
     # Setup
-    super_close_event = mocker.patch("PySide2.QtWidgets.QMainWindow.closeEvent")
+    super_close_event = mocker.patch("PySide6.QtWidgets.QMainWindow.closeEvent")
     event = MagicMock()
     window._game_session = MagicMock()
     window._game_session.players = [window.network_client.current_user.id] if is_member else []

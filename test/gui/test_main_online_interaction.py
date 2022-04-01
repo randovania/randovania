@@ -1,8 +1,8 @@
 import asyncio
 
 import pytest
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QDialog
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QDialog
 from mock import AsyncMock, MagicMock, patch
 
 from randovania.gui.main_online_interaction import OnlineInteractions
@@ -80,7 +80,7 @@ async def test_host_game_session(mock_execute_dialog: AsyncMock,
 
 async def test_ensure_logged_in(default_online_interactions, mocker):
     # Setup
-    mock_message_box = mocker.patch("PySide2.QtWidgets.QMessageBox")
+    mock_message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
 
     async def true(): return True
 

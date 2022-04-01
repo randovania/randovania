@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.2.0] - Unreleased
+## [4.3.0] - Unreleased
 
 - Nothing.
 
@@ -45,7 +45,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing.
 
-## [4.1.2] - Unreleased
+## [4.2.1] - Unreleased
+
+- Nothing.
+
+## [4.2.0] - Unreleased
+
+- Added: Experimental option to force first progression to be local.
+- Added: New pixel icons for the auto tracker.
+- Changed: Standard tracker layouts for Prime, Echoes and Corruption now include a few more items.
+- Changed: Auto tracker game icons for Echoes beams now use the HUD icons instead of the pickup models.
+- Changed: Update to Qt 6.
+- Changed: The import preset menu in game sessions now has the presets of a game sorted by name, with the default presets on top.
+- Fixed: Randovania no longer hangs on start if there's a loop in the hierarchy of presets.
+- Fixed: Generation no longer fails when one player has no pickups assigned during logic.
+
+### Cave Story
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime
+ 
+- **Major** - Added: In multiworld, pickups from an Echoes player now uses the correct model from Echoes.
+- **Major** - Added: **April Fool's Day Special!** New game modification category "Chaos Options" in "Other" tab. Chaos options are patcher-side only, and thus are not accounted for by the seed generator logic.
+    - Enable Large Samus
+    - Random Boss Sizes
+    - Remove Doors
+    - Random Superheated Rooms
+    - Random Submerged Rooms
+    - One-way Room Rando
+- Added: Deterministic Maze RNG option for fairer racing
+- Fixed: Echoes Combat Visor placed in a Prime player's world now uses the new Combat Visor model.
+- Fixed: Deterministic Incinerator Drone RNG setting staying on even when checkbox was unchecked.
+
+#### Patcher Changes
+
+- Fixed: Soft-lock in Artifact Temple with Major Cutscene skips (players could leave during ghost cutscene and abort the layer change)
+- Fixed: Items Anywhere could delete Artifact hints in rare cases
+- Changed: Updated [Quality of Life documentation](https://github.com/toasterparty/randomprime/blob/randovania/doc/quality_of_life.md)
+- Changed: Nerfed "Items in Every Room" (Extra items more likely to be missiles)
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime 2: Echoes
+
+- **Major** - Added: In multiworld, pickups from a Prime player now uses the correct model from Prime.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
 
 - Nothing.
 

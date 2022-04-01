@@ -1,8 +1,8 @@
 import datetime
 from typing import List
 
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit
 from qasync import asyncSlot
 
 from randovania.gui.generated.game_session_browser_dialog_ui import Ui_GameSessionBrowserDialog

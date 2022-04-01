@@ -4,7 +4,7 @@ import functools
 import json
 import shutil
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from mp2hudcolor import mp2hudcolor_c
 
@@ -21,7 +21,10 @@ class EchoesGameExportParams(GameExportParams):
     input_path: Optional[Path]
     output_path: Path
     contents_files_path: Path
+    asset_cache_path: Path
     backup_files_path: Path
+    prime_path: Optional[Path]
+    use_prime_models: bool
 
 
 class EchoesGameExporter(GameExporter):
@@ -83,9 +86,10 @@ class EchoesGameExporter(GameExporter):
         )
         randomizer_data = copy.deepcopy(decode_randomizer_data())
 
-        if patch_data.pop("convert_other_game_assets", False):
+        if export_params.use_prime_models:
             from randovania.patching.prime import asset_conversion
-            asset_conversion.convert_prime1_pickups(contents_files_path, randomizer_data, updaters[1])
+            assets_path = export_params.asset_cache_path
+            asset_conversion.convert_prime1_pickups(contents_files_path, assets_path, randomizer_data, updaters[1])
 
         adjust_model_name(patch_data, randomizer_data)
         claris_randomizer.apply_patcher_file(
@@ -111,6 +115,35 @@ class EchoesGameExporter(GameExporter):
             game_files_path=contents_files_path,
             progress_update=updaters[3],
         )
+
+
+def extract_and_backup_iso(input_path: Path, contents_files_path: Path, backup_files_path: Path,
+                           progress_update: status_update_lib.ProgressUpdateCallable):
+    if input_path is not None:
+        unpack_updaters = status_update_lib.split_progress_update(progress_update, 2)
+        shutil.rmtree(contents_files_path, ignore_errors=True)
+        shutil.rmtree(backup_files_path, ignore_errors=True)
+        iso_packager.unpack_iso(
+            iso=input_path,
+            game_files_path=contents_files_path,
+            progress_update=unpack_updaters[0],
+        )
+        claris_randomizer.create_pak_backups(
+            contents_files_path,
+            backup_files_path,
+            unpack_updaters[1]
+        )
+    else:
+        try:
+            claris_randomizer.restore_pak_backups(
+                contents_files_path,
+                backup_files_path,
+                progress_update
+            )
+        except FileNotFoundError:
+            raise RuntimeError(
+                "Your internal copy is missing files.\nPlease press 'Delete internal copy' and select "
+                "a clean game ISO.")
 
 
 @functools.lru_cache()
