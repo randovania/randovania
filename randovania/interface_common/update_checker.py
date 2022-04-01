@@ -32,6 +32,33 @@ def get_version_for_release(release: dict) -> VersionDescription:
     return VersionDescription(release["tag_name"], release["body"], release["html_url"])
 
 
+MAJOR_ENTRY = "- **Major** "
+
+
+def _get_major_entries(log: str) -> str:
+    result = []
+    last_added_header = None
+    current_found_header = None
+
+    def finish_entry():
+        pass
+
+    for s in log.split("\n"):
+        if s.startswith(MAJOR_ENTRY):
+            if current_found_header != last_added_header:
+                result.append(current_found_header)
+                last_added_header = current_found_header
+
+            result.append(s.replace(MAJOR_ENTRY, "", 1))
+
+        elif s.startswith("#"):
+            finish_entry()
+            if s.startswith("### "):
+                current_found_header = s
+
+    return "\n".join(result)
+
+
 def versions_to_display_for_releases(current_version: StrictVersion,
                                      last_changelog_version: StrictVersion,
                                      releases: List[dict],
@@ -55,10 +82,11 @@ def versions_to_display_for_releases(current_version: StrictVersion,
             all_change_logs[version.tag_name] = log
 
             if strict_version > last_changelog_version:
-                if "*Major*" in log:
-                    first_non_major = re.search(r"\n\s*-\s+[^*]+\n", log)
-                    if first_non_major is not None:
-                        log = log[:first_non_major.start()] + "\n\n---\nFor more details, check the Change Log tab."
+                if MAJOR_ENTRY in log:
+                    log = "## {} - Major Changes\n---\n\n{}\n\n---\nFor more details, check the Change Log tab.".format(
+                        version.tag_name,
+                        _get_major_entries(log),
+                    )
                 new_change_logs.append(log)
 
     return all_change_logs, new_change_logs, version_to_display
