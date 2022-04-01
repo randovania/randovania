@@ -245,10 +245,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     }
 
                 if self.configuration.superheated_probability != 0:
-                    world_data[world.name]["rooms"][area.name]["superheated"] = self.rng.random() <= self.configuration.superheated_probability/1000.0
+                    world_data[world.name]["rooms"][area.name]["superheated"] = self.rng.random() < self.configuration.superheated_probability/1000.0
 
                 if self.configuration.submerged_probability != 0:
-                    world_data[world.name]["rooms"][area.name]["submerge"] = self.rng.random() <= self.configuration.submerged_probability/1000.0
+                    world_data[world.name]["rooms"][area.name]["submerge"] = self.rng.random() < self.configuration.submerged_probability/1000.0
 
                 for node in area.nodes:
                     if not isinstance(node, TeleporterNode) or not node.editable:
