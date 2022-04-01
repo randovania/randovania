@@ -51,7 +51,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.2.0] - Unreleased
 
-- **Major** - Added: Prime and Echoes multiworlds can now use the proper model for foreign items if the player supplies a copy of the other game
 - Added: Experimental option to force first progression to be local.
 - Added: New pixel icons for the auto tracker.
 - Changed: Standard tracker layouts for Prime, Echoes and Corruption now include a few more items.
@@ -74,8 +73,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing.
 
 ### Metroid Prime
-
-- Added: **April Fool's Day Special:** New game modification category "Chaos Options" in "Other" tab. Chaos options are patcher-side only, and thus are not accounted for by the seed generator logic.
+ 
+- **Major** - Added: In multiworld, pickups from an Echoes player now uses the correct model from Echoes.
+- **Major** - Added: **April Fool's Day Special!** New game modification category "Chaos Options" in "Other" tab. Chaos options are patcher-side only, and thus are not accounted for by the seed generator logic.
     - Enable Large Samus
     - Random Boss Sizes
     - Remove Doors
@@ -99,7 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
-- Nothing.
+- **Major** - Added: In multiworld, pickups from a Prime player now uses the correct model from Prime.
 
 #### Patcher Changes
 

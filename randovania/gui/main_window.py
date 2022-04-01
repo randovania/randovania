@@ -350,6 +350,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
                 QtWidgets.QMessageBox.Ok,
             )
             message_box.label.setTextFormat(QtCore.Qt.TextFormat.MarkdownText)
+            message_box.scroll_area.setMinimumSize(500, 300)
             await async_dialog.execute_dialog(message_box)
 
             with self._options as options:
