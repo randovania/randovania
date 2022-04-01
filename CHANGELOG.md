@@ -45,11 +45,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing.
 
-## [4.2.1] - Unreleased
+## [4.2.2] - Unreleased
 
 - Nothing.
 
-## [4.2.0] - Unreleased
+## [4.2.1] - 2022-04-01
+
+- Fixed: Popup for new changes fixed.
+
+## [4.2.0] - 2022-04-01
 
 - Added: Experimental option to force first progression to be local.
 - Added: New pixel icons for the auto tracker.
