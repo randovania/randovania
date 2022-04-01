@@ -7,11 +7,12 @@ from PySide6.QtWidgets import QLineEdit, QPushButton
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.game_exporter import EchoesGameExportParams
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
-    add_field_validation, output_file_validator, spoiler_path_for
+    add_field_validation, output_file_validator, spoiler_path_for, is_file_validator, update_validation
 )
 from randovania.gui.generated.echoes_game_export_dialog_ui import Ui_EchoesGameExportDialog
 from randovania.interface_common import game_workdir
@@ -48,8 +49,11 @@ def check_extracted_game(input_file_edit: QLineEdit, input_file_button: QPushBut
     return prompt_input_file
 
 
-def echoes_input_validator(input_file: Path, prompt_input_file: bool, input_file_edit: QLineEdit) -> bool:
-    return not input_file.is_file() if prompt_input_file else input_file_edit.text() != _VALID_GAME_TEXT
+def echoes_input_validator(input_file: Optional[Path], prompt_input_file: bool, input_file_edit: QLineEdit) -> bool:
+    if prompt_input_file:
+        return is_file_validator(input_file)
+    else:
+        return input_file_edit.text() != _VALID_GAME_TEXT
 
 
 class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
@@ -84,7 +88,9 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
             self.prime_models_check.setChecked(self._use_prime_models)
             self._on_prime_models_check()
             self.prime_models_check.clicked.connect(self._on_prime_models_check)
+
             prime_options = options.options_for_game(RandovaniaGame.METROID_PRIME)
+            assert isinstance(prime_options, PrimePerGameOptions)
             if prime_options.input_path is not None:
                 self.prime_file_edit.setText(str(prime_options.input_path))
 
@@ -108,7 +114,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
                 self.input_file_edit: lambda: echoes_input_validator(self.input_file, self._prompt_input_file,
                                                                      self.input_file_edit),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-                self.prime_file_edit: lambda: self._use_prime_models and not self.prime_file.is_file(),
+                self.prime_file_edit: lambda: self._use_prime_models and is_file_validator(self.prime_file),
             }
         )
 
@@ -158,7 +164,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         return Path(self.output_file_edit.text())
 
     @property
-    def prime_file(self) -> Path:
+    def prime_file(self) -> Optional[Path]:
         return Path(self.prime_file_edit.text()) if self.prime_file_edit.text() else None
 
     @property
@@ -181,7 +187,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
 
     # Output File
     def _on_output_file_button(self):
-        output_file = prompt_for_output_file(self, [".iso"], f"{self.default_output_name}.iso", self.output_file_edit)
+        output_file = prompt_for_output_file(self, ["iso"], f"{self.default_output_name}.iso", self.output_file_edit)
         if output_file is not None:
             self.output_file_edit.setText(str(output_file))
 
@@ -197,6 +203,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         self.prime_file_edit.setEnabled(use_prime_models)
         self.prime_file_label.setEnabled(use_prime_models)
         self.prime_file_button.setEnabled(use_prime_models)
+        update_validation(self.prime_file_edit)
 
     @property
     def _contents_file_path(self):
