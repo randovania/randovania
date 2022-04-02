@@ -26,6 +26,10 @@ out/Randovania-x86_64.AppImage"
 
 Add both the `.AppImage` and the `.AppImage.zsync` files to the GitHub release. The latter is used for automatic updates, and its name MUST continue to match the update string defined in the build script (`zsync_prod_string`), or else updates **WILL break**.
 
+Users may use functions inbuilt in their DE to update the application. For example, on KDE, I can right-click the application and choose "Actions" > "Update".
+
+Users whose DEs do not have functionality for this feature may use [AppImageUpdate](https://github.com/AppImage/AppImageUpdate).
+
 ## Licensing
 
 The build artifacts produced by this code contain code from other projects. Namely:
