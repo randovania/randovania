@@ -36,6 +36,7 @@ async def export_game(
 
         has_spoiler = layout_for_spoiler is not None and layout_for_spoiler.has_spoiler
         if export_params.spoiler_output is not None and has_spoiler:
+            export_params.spoiler_output.parent.mkdir(parents=True, exist_ok=True)
             layout_for_spoiler.save_to_file(export_params.spoiler_output)
 
         progress_update(f"Finished!", 1)

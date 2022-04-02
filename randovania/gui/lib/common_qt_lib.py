@@ -20,7 +20,7 @@ def lock_application(value: bool):
     QtWidgets.QApplication.instance().main_window.setEnabled(value)
 
 
-def _prompt_user_for_file(window: QtWidgets.QMainWindow,
+def _prompt_user_for_file(window: QtWidgets.QWidget,
                           caption: str,
                           filter: str,
                           dir: Optional[str] = None,
@@ -43,7 +43,7 @@ def _prompt_user_for_file(window: QtWidgets.QMainWindow,
     return Path(open_result[0])
 
 
-def _prompt_user_for_directory(window: QtWidgets.QMainWindow,
+def _prompt_user_for_directory(window: QtWidgets.QWidget,
                                caption: str,
                                dir: Optional[str] = None,
                                new_file: bool = False) -> Optional[Path]:
@@ -68,7 +68,7 @@ def _prompt_user_for_directory(window: QtWidgets.QMainWindow,
         return Path(open_result)
 
 
-def prompt_user_for_vanilla_input_file(window: QtWidgets.QMainWindow, extensions: typing.List[str],
+def prompt_user_for_vanilla_input_file(window: QtWidgets.QWidget, extensions: typing.List[str],
                                        existing_file: Optional[Path] = None) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a vanilla game file
@@ -88,7 +88,7 @@ def prompt_user_for_vanilla_input_file(window: QtWidgets.QMainWindow, extensions
     )
 
 
-def prompt_user_for_output_file(window: QtWidgets.QMainWindow,
+def prompt_user_for_output_file(window: QtWidgets.QWidget,
                                 default_name: str,
                                 extensions: typing.List[str]) -> Optional[Path]:
     """
@@ -112,7 +112,7 @@ def prompt_user_for_output_file(window: QtWidgets.QMainWindow,
     )
 
 
-def prompt_user_for_output_game_log(window: QtWidgets.QMainWindow, default_name: str) -> Optional[Path]:
+def prompt_user_for_output_game_log(window: QtWidgets.QWidget, default_name: str) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania seed log
     :param window:
@@ -126,7 +126,7 @@ def prompt_user_for_output_game_log(window: QtWidgets.QMainWindow, default_name:
                                  new_file=True)
 
 
-def prompt_user_for_input_game_log(window: QtWidgets.QMainWindow) -> Optional[Path]:
+def prompt_user_for_input_game_log(window: QtWidgets.QWidget) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania seed log
     :param window:
@@ -138,7 +138,7 @@ def prompt_user_for_input_game_log(window: QtWidgets.QMainWindow) -> Optional[Pa
                                  new_file=False)
 
 
-def prompt_user_for_database_file(window: QtWidgets.QMainWindow) -> Optional[Path]:
+def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania database file
     :param window:
@@ -147,7 +147,7 @@ def prompt_user_for_database_file(window: QtWidgets.QMainWindow) -> Optional[Pat
     return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
 
 
-def prompt_user_for_preset_file(window: QtWidgets.QMainWindow, new_file: bool) -> Optional[Path]:
+def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania preset file
     :param window:
@@ -180,7 +180,7 @@ def set_combo_with_value(combo: QtWidgets.QComboBox, value):
     combo.setCurrentIndex(combo.findData(value))
 
 
-def set_error_border_stylesheet(edit: QtWidgets.QTextEdit, has_error: bool):
+def set_error_border_stylesheet(edit: QtWidgets.QWidget, has_error: bool):
     edit.has_error = has_error
     if has_error:
         edit.setStyleSheet(":enabled { border: 1px solid red; }"

@@ -1,4 +1,4 @@
-from randovania.games.dread.exporter.game_exporter import DreadModFormat
+from randovania.games.dread.exporter.game_exporter import DreadModPlatform
 from randovania.games.dread.exporter.options import DreadPerGameOptions
 from randovania.games.game import RandovaniaGame
 
@@ -7,9 +7,9 @@ def test_round_trip(tmp_path):
     reference = DreadPerGameOptions(
         cosmetic_patches=RandovaniaGame.METROID_DREAD.data.layout.cosmetic_patches.default(),
         input_directory=tmp_path.joinpath("input"),
-        output_directory=tmp_path.joinpath("output"),
-        output_format=DreadModFormat.ATMOSPHERE,
-        output_to_ryujinx=False,
+        target_platform=DreadModPlatform.ATMOSPHERE,
+        reduce_mod_size=True,
+        output_preference="{}",
     )
 
     # Run
