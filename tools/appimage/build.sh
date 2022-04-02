@@ -42,13 +42,13 @@ workdir="work"
 outdir="out"
 
 # These arguments tell Mono to build a static binary
-mono_mkbundle_args="-v --simple --static --no-machine-config --no-config --deps"
+mono_mkbundle_args="-v --simple --static --machine-config /etc/mono/4.5/machine.config --no-config --deps"
 # We include liblzo2 because it's unlikely to be available on the host at the
 # path Mono expects
-mono_mkbundle_args="$mono_mkbundle_args --library $(ldconfig -p | grep 'liblzo2.so' | head -n 1 | awk '{print $4}')"
+mono_mkbundle_args="$mono_mkbundle_args --library $(ldconfig -p | grep 'liblzo2.so' | head -n 1 | awk '{print $4}' | xargs readlink -f)"
 # We include libmono-native.so explicitly as some distro configs are set up
 # such that mkbundle --static will not automatically pull it in
-mono_mkbundle_args="$mono_mkbundle_args --library $(ldconfig -p | grep 'libmono-native.so' | head -n 1 | awk '{print $4}')"
+mono_mkbundle_args="$mono_mkbundle_args --library $(ldconfig -p | grep 'libmono-native.so' | head -n 1 | awk '{print $4}' | xargs readlink -f)"
 # Include Host libraries
 mono_mkbundle_args="$mono_mkbundle_args -L /usr/lib/mono/4.5"
 # The location of Randovania within the AppImage
