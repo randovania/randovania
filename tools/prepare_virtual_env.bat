@@ -16,7 +16,7 @@ python -c "import sys; assert sys.maxsize > 2**32, '64-bit python required'"
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 python -m pip install --upgrade -r requirements-setuptools.txt
-python -m pip install -e ".[gui]" -c requirements.txt
+python -m pip install pyqt-distutils -e ".[gui]" -c requirements.txt
 
 echo Setup finished successfully.
 pause
