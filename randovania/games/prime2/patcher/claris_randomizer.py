@@ -36,7 +36,11 @@ def _get_randomizer_folder() -> Path:
 
 
 def _get_randomizer_path() -> Path:
-    return _get_randomizer_folder().joinpath("Randomizer.exe")
+    nativepath = _get_randomizer_folder().joinpath("randomizer")
+    if nativepath.is_file():
+        return nativepath
+    else:
+        return _get_randomizer_folder().joinpath("Randomizer.exe")
 
 
 def _get_custom_data_path() -> Path:
@@ -45,7 +49,11 @@ def _get_custom_data_path() -> Path:
 
 
 def _get_menu_mod_path() -> Path:
-    return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
+    nativepath = get_data_path().joinpath("ClarisEchoesMenu", "echoes-menu")
+    if nativepath.is_file():
+        return nativepath
+    else:
+        return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
 
 
 def _run_with_args(args: List[Union[str, Path]],
@@ -66,7 +74,7 @@ def _run_with_args(args: List[Union[str, Path]],
             status_update(line)
             finished_updates = line == finish_string
 
-    csharp_subprocess.process_command(new_args, input_data, read_callback)
+    csharp_subprocess.process_command(new_args, input_data, read_callback, add_mono_if_needed=str(new_args[0]).endswith('.exe'))
 
     if not finished_updates:
         raise ExportFailure(
