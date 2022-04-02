@@ -23,6 +23,11 @@ python_appimage="https://github.com/niess/python-appimage/releases/download/pyth
 appimagetool_appimage="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
 # The URL to nuget, which is used to fetch Mono libraries as needed
 nuget_url="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
+# The string to feed to gh-releases-zsync, which is used for automatic AppImage
+# update delivery.
+# TODO: Add two of these and pick one based on whether this is a devel or
+#       stable release
+zsync_prod_string="gh-releases-zsync|randovania|randovania|latest|Randovania*$(uname -m).AppImage.zsync"
 
 #
 # Extra vars
@@ -171,9 +176,11 @@ build-thin-image() {
 }
 build-compile-image() {
 	# Build the squashfs-root into an AppImage
-	./appimagetool/AppRun squashfs-root ../"$outdir"/"Randovania-$randovania_git_ref-amd64.AppImage"
+	# This also automatically creates a .zsync file that we will want to bundle
+	# with the GitHub release.
+	./appimagetool/AppRun squashfs-root -u "$zsync_prod_string" ../"$outdir"/"Randovania-$(uname -m).AppImage"
+	mv *.zsync ../"$outdir"/
 }
-
 
 main() {
 	# Set debugging mode from here on
