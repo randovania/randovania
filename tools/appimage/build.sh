@@ -171,8 +171,7 @@ build-thin-image() {
 		squashfs-root/opt/randovania/pylintrc \
 		squashfs-root/opt/randovania/requirements* \
 		squashfs-root/opt/randovania/setup.cfg \
-		squashfs-root/opt/randovania/venv/lib/python3.9/site-packages/PySide2/Qt/lib/libQt5WebEngineCore.so.5 \
-		squashfs-root/opt/randovania/venv/lib/python3.9/site-packages/PySide2/Qt/translations/qtwebengine_locales
+		squashfs-root/opt/python3.9/lib/python3.9/site-packages/PySide6/Qt/lib/libQt5WebEngineCore.so.6
 }
 build-compile-image() {
 	# Build the squashfs-root into an AppImage
