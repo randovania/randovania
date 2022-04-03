@@ -59,7 +59,9 @@ construct==2.10.68
 coverage==6.3.2
     # via pytest-cov
 cryptography==36.0.2
-    # via randovania (setup.py)
+    # via
+    #   pyopenssl
+    #   randovania (setup.py)
 cycler==0.11.0
     # via matplotlib
 cython==0.29.28
@@ -181,6 +183,8 @@ py-randomprime==1.1.8
     # via randovania (setup.py)
 pycparser==2.21
     # via cffi
+pyftpdlib==1.5.6
+    # via pytest-localftpserver
 pyinstaller==4.10
     # via -r tools/requirements/requirements.in
 pyinstaller-hooks-contrib==2022.3
@@ -189,6 +193,8 @@ pyinstaller-hooks-contrib==2022.3
     #   pyinstaller
 pyjwt==2.3.0
     # via flask-discord
+pyopenssl==22.0.0
+    # via pytest-localftpserver
 pyparsing==3.0.7
     # via
     #   matplotlib
@@ -207,12 +213,15 @@ pytest==7.1.1
     # via
     #   pytest-asyncio
     #   pytest-cov
+    #   pytest-localftpserver
     #   pytest-mock
     #   pytest-qt
     #   randovania (setup.py)
 pytest-asyncio==0.18.3
     # via randovania (setup.py)
 pytest-cov==3.0.0
+    # via randovania (setup.py)
+pytest-localftpserver==1.1.3
     # via randovania (setup.py)
 pytest-mock==3.7.0
     # via randovania (setup.py)

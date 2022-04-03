@@ -1,18 +1,22 @@
+import functools
 import json
 import logging
 import os
 import platform
 import string
 from pathlib import Path
-from typing import Optional, Iterator
+from typing import Optional, Iterator, Callable
+
+from PySide6 import QtGui, QtWidgets
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
 from randovania.games.dread.exporter.options import DreadPerGameOptions
+from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_directory, prompt_for_input_directory,
-    is_directory_validator, path_in_edit, spoiler_path_for_directory
+    is_directory_validator, path_in_edit, spoiler_path_for_directory, update_validation
 )
 from randovania.gui.generated.dread_game_export_dialog_ui import Ui_DreadGameExportDialog
 from randovania.gui.lib import common_qt_lib
@@ -63,6 +67,14 @@ def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
         yield drive, drive_types[type_index], path
 
 
+def add_validation(edit: QtWidgets.QLineEdit, validation: Callable[[], bool]):
+    def field_validation():
+        common_qt_lib.set_error_border_stylesheet(edit, not validation())
+
+    edit.field_validation = field_validation
+    edit.textChanged.connect(field_validation)
+
+
 class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
     @property
     def _game(self):
@@ -106,6 +118,24 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.tab_sd_card.is_valid = lambda: self.sd_combo.currentData() is not None
 
         # Output to FTP
+        self.ftp_anonymous_check.clicked.connect(self.ftp_on_anonymous_check)
+        add_validation(self.ftp_username_edit,
+                       lambda: self.ftp_anonymous_check.isChecked() or self.ftp_username_edit.text())
+        add_validation(self.ftp_ip_edit, lambda: self.ftp_ip_edit.text())
+        self.ftp_port_edit.setValidator(QtGui.QIntValidator(1, 65535, self))
+
+        self.tab_ftp.serialize_options = lambda: {
+            "anonymous": self.ftp_anonymous_check.isChecked(),
+            "username": self.ftp_username_edit.text(),
+            "password": self.ftp_password_edit.text(),
+            "ip": self.ftp_ip_edit.text(),
+            "port": self.ftp_port_edit.text(),
+        }
+        self.tab_ftp.restore_options = self.ftp_restore_options
+        self.tab_ftp.is_valid = self.ftp_is_valid
+        self.ftp_on_anonymous_check()
+        update_validation(self.ftp_username_edit)
+        update_validation(self.ftp_ip_edit)
 
         # Output to Ryujinx
         self.update_ryujinx_ui()
@@ -182,7 +212,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         )
         self.output_tab_widget.setTabVisible(
             self.output_tab_widget.indexOf(self.tab_ftp),
-            target_platform == DreadModPlatform.ATMOSPHERE and False
+            target_platform == DreadModPlatform.ATMOSPHERE
         )
         self.output_tab_widget.setTabVisible(
             self.output_tab_widget.indexOf(self.tab_ryujinx),
@@ -274,6 +304,40 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
                 mod_path=get_path_to_ryujinx(),
             ))
 
+    # FTP
+    def ftp_on_anonymous_check(self):
+        self.ftp_username_edit.setEnabled(not self.ftp_anonymous_check.isChecked())
+        self.ftp_password_edit.setEnabled(not self.ftp_anonymous_check.isChecked())
+        update_validation(self.ftp_username_edit)
+
+    def ftp_restore_options(self, options: dict):
+        self.ftp_anonymous_check.setChecked(options["anonymous"])
+        self.ftp_username_edit.setText(options["username"])
+        self.ftp_password_edit.setText(options["password"])
+        self.ftp_ip_edit.setText(options["ip"])
+        self.ftp_port_edit.setText(str(options["port"]))
+        self.ftp_on_anonymous_check()
+
+    def ftp_is_valid(self):
+        return not self.ftp_username_edit.has_error and not self.ftp_ip_edit.has_error
+
+    def _get_ftp_internal_path(self):
+        return self._options.internal_copies_path.joinpath("dread", "contents")
+
+    def get_ftp_uploader(self):
+        if self.ftp_anonymous_check.isChecked():
+            auth = None
+        else:
+            auth = (self.ftp_username_edit.text(), self.ftp_password_edit.text())
+
+        return FtpUploader(
+            auth=auth,
+            ip=self.ftp_ip_edit.text(),
+            port=int(self.ftp_port_edit.text()),
+            local_path=self._get_ftp_internal_path(),
+            remote_path=f"/mods/Metroid Dread/Randovania {self._word_hash}",
+        )
+
     # Custom Path
     def _validate_custom_path(self):
         common_qt_lib.set_error_border_stylesheet(self.custom_path_edit, is_directory_validator(self.custom_path_edit))
@@ -308,7 +372,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             post_export = None
 
         elif output_tab is self.tab_ftp:
-            output_path = self._options.internal_copies_path.joinpath("dread", "contents")
+            output_path = self._get_ftp_internal_path()
             post_export = self.get_ftp_uploader()
 
         elif output_tab is self.tab_sd_card:
