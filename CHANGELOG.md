@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.3.0] - Unreleased
 
-- Nothing.
+- Fixed: Maximum values for certain preset fields, such as Energy Tank capacity and Superheated Room Probability, can now properly be used.
 
 ### Cave Story
 

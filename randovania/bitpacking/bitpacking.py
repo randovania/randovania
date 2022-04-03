@@ -104,8 +104,8 @@ class BitPackFloat(BitPackValue):
             if same:
                 return
 
-        value_range = (metadata["max"] - metadata["min"]) * (10 ** metadata["precision"])
-        yield int((self.value - metadata["min"]) * (10 ** metadata["precision"])), int(value_range) + 1
+        value_range = (metadata["max"] - metadata["min"]) * (10 ** metadata["precision"]) + 1
+        yield int((self.value - metadata["min"]) * (10 ** metadata["precision"])), int(value_range)
 
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> float:
@@ -114,8 +114,8 @@ class BitPackFloat(BitPackValue):
             if same:
                 return metadata["if_different"]
 
-        value_range = (metadata["max"] - metadata["min"]) * (10 ** metadata["precision"])
-        decoded = decoder.decode_single(int(value_range) + 1)
+        value_range = (metadata["max"] - metadata["min"]) * (10 ** metadata["precision"]) + 1
+        decoded = decoder.decode_single(int(value_range))
         return float((decoded / (10 ** metadata["precision"])) + metadata["min"])
 
 
@@ -132,7 +132,7 @@ class BitPackInt(BitPackValue):
             if same:
                 return
 
-        value_range = metadata["max"] - metadata["min"]
+        value_range = (metadata["max"] - metadata["min"]) + 1
         yield self.value - metadata["min"], value_range
 
     @classmethod
@@ -142,7 +142,7 @@ class BitPackInt(BitPackValue):
             if same:
                 return metadata["if_different"]
 
-        value_range = (metadata["max"] - metadata["min"])
+        value_range = (metadata["max"] - metadata["min"]) + 1
         decoded = decoder.decode_single(value_range)
         return decoded + metadata["min"]
 
