@@ -149,6 +149,5 @@ class DockNode(Node):
             return
 
         yield self._open_dock_connection(context, target_identifier)
-        lock_connection = self._lock_connection(context)
-        if lock_connection is not None:
+        if (lock_connection := self._lock_connection(context)) is not None:
             yield lock_connection

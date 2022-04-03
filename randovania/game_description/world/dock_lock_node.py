@@ -50,19 +50,7 @@ class DockLockNode(ResourceNode):
         return False
 
     def is_collected(self, context: NodeContext) -> bool:
-        dock = self._get_dock(context)
-
-        front_weak = dock.get_front_weakness(context)
-        if front_weak.lock is not None:
-            if not context.has_resource(self.dock_identifier):
-                return False
-
-        dock_target = dock.get_target_identifier(context)
-        if front_weak.can_unlock_from_back(dock.get_back_weakness(context)):
-            if not context.has_resource(dock_target):
-                return False
-
-        return True
+        return not self.can_collect(context)
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         dock = self._get_dock(context)
