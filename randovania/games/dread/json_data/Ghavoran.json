@@ -7544,8 +7544,25 @@
                     "major_location": false,
                     "connections": {
                         "Door to Save Station East": {
-                            "type": "template",
-                            "data": "Ballspark"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "GhavoranPulseRadarEnky",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Tile Group (WEIGHT) 3": {
                             "type": "resource",
