@@ -17,5 +17,14 @@ class DataclassPostInitTypeCheck:
             resolved_type, optional = _handle_optional(f.type)
             if optional and v is None:
                 continue
+
             if not isinstance(v, resolved_type):
                 raise ValueError(f"Unexpected type for field {f.name} ({v}): Got {type(v)}, expected {f.type}.")
+
+            if "min" in f.metadata:
+                if v < f.metadata["min"]:
+                    raise ValueError(f"Field {f.name} has value {v}, which is less than minimum {f.metadata['min']}")
+
+            if "max" in f.metadata:
+                if v > f.metadata["max"]:
+                    raise ValueError(f"Field {f.name} has value {v}, which is more than maximum {f.metadata['max']}")
