@@ -23,11 +23,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- Fixed: Room Rando crashes in Chozo, Magmoor and Phendrana.
+- Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
+- Fixed: Reduced Ridley's max size
 
 #### Patcher Changes
 
-- Nothing.
+Room Rando:
+    - Fixed: Intermittent crashing when rolling through doors in morph ball
+    - Fixed: Central Dynamo reposition soft-lock
 
 #### Logic Database
 
@@ -46,14 +50,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing.
 
 ## [4.2.2] - Unreleased
-
-### Metroid Prime
-- Room Rando:
-    - Fixed: Intermittent crashing in Chozo, Magmoor and Phendrana.
-    - Fixed: Intermittent crashing when rolling through doors in morph ball
-    - Fixed: Central Dynamo reposition soft-lock
-- Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
-- Fixed: Reduced Ridley's max size
 
 ## [4.2.1] - 2022-04-01
 
