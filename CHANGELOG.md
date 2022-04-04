@@ -47,7 +47,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.2.2] - Unreleased
 
-- Nothing.
+### Metroid Prime
+- Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
+- Room Rando:
+    - Fixed intermittent crashing in Chozo, Magmoor and Phendrana.
+    - Fixed intermittent crashing when rolling through doors in morph ball
 
 ## [4.2.1] - 2022-04-01
 
