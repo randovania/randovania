@@ -284,13 +284,13 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         if not isinstance(node, DockNode):
                             continue
                         index = node.extra["dock_index"]
+                        dock_num_by_area_node[(area.name, node.name)] = index
                         is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                         if node.extra["nonstandard"]:
                             # This dock is like a morph tunnel or 1-way door etc. that cannot be elegantly patched
                             continue
                         area_dock_nums[area.name].append(index)
                         attached_areas[area.name].append(node.default_connection.area_name)
-                        dock_num_by_area_node[(area.name, node.name)] = index
                         default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
 
                         candidates.append((area.name, index))
@@ -299,7 +299,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 default_connections = dict()
                 for (src_name, src_dock) in default_connections_node_name:
                     (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
-                    
+
                     try:
                         dst_dock = dock_num_by_area_node[(dst_name, dst_node_name)]
                     except KeyError:
