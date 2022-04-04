@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Room Rando:
     - Fixed: Intermittent crashing in Chozo, Magmoor and Phendrana.
     - Fixed: Intermittent crashing when rolling through doors in morph ball
+    - Fixed: Central Dynamo reposition soft-lock
 - Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
 - Fixed: Reduced Ridley's max size
 
