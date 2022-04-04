@@ -8,9 +8,19 @@
                 "max_capacity": 1,
                 "extra": {}
             },
+            "Explosive": {
+                "long_name": "Explosive",
+                "max_capacity": 1,
+                "extra": {}
+            },
             "Ammo": {
                 "long_name": "Missile",
                 "max_capacity": 500,
+                "extra": {}
+            },
+            "BlueKey": {
+                "long_name": "Blue Key",
+                "max_capacity": 1,
                 "extra": {}
             },
             "Health": {
@@ -22,6 +32,14 @@
         "events": {
             "Boss": {
                 "long_name": "First Boss Killed",
+                "extra": {}
+            },
+            "KeySwitch1": {
+                "long_name": "Key Switch 1",
+                "extra": {}
+            },
+            "KeySwitch2": {
+                "long_name": "Key Switch 2",
                 "extra": {}
             }
         },
@@ -70,12 +88,38 @@
         "description": "Nothing is checked."
     },
     "victory_condition": {
-        "type": "resource",
+        "type": "and",
         "data": {
-            "type": "events",
-            "name": "Boss",
-            "amount": 1,
-            "negate": false
+            "comment": null,
+            "items": [
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "events",
+                        "name": "Boss",
+                        "amount": 1,
+                        "negate": false
+                    }
+                },
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "events",
+                        "name": "KeySwitch1",
+                        "amount": 1,
+                        "negate": false
+                    }
+                },
+                {
+                    "type": "resource",
+                    "data": {
+                        "type": "events",
+                        "name": "KeySwitch2",
+                        "amount": 1,
+                        "negate": false
+                    }
+                }
+            ]
         }
     },
     "dock_weakness_database": {
@@ -94,6 +138,78 @@
                             }
                         },
                         "lock": null
+                    },
+                    "Explosive Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-if-matching",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Explosive",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Back-Only Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "or",
+                                "data": {
+                                    "comment": null,
+                                    "items": []
+                                }
+                            }
+                        }
+                    },
+                    "Blue Key Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-impossible",
+                            "requirement": {
+                                "type": "resource",
+                                "data": {
+                                    "type": "items",
+                                    "name": "BlueKey",
+                                    "amount": 1,
+                                    "negate": false
+                                }
+                            }
+                        }
                     }
                 }
             },

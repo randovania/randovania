@@ -12,7 +12,7 @@ from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import CurrentResources
+    from randovania.game_description.resources.resource_info import CurrentResources, ResourceInfo
     from randovania.game_description.world.node_provider import NodeProvider
 
 
@@ -28,6 +28,9 @@ class NodeContext:
     current_resources: CurrentResources
     database: ResourceDatabase
     node_provider: NodeProvider
+
+    def has_resource(self, resource: ResourceInfo) -> bool:
+        return self.current_resources.get(resource, 0) > 0
 
 
 @dataclasses.dataclass(frozen=True)

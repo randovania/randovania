@@ -1,6 +1,7 @@
 import re
 from typing import Iterator, Optional
 
+from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
@@ -196,10 +197,13 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
 
 
 def find_database_errors(game: GameDescription) -> list[str]:
+    copy = game.make_mutable_copy()
+    derived_nodes.create_derived_nodes(copy)
+
     result = []
 
-    for world in game.world_list.worlds:
-        result.extend(find_world_errors(game, world))
-    result.extend(find_invalid_strongly_connected_components(game))
+    for world in copy.world_list.worlds:
+        result.extend(find_world_errors(copy, world))
+    result.extend(find_invalid_strongly_connected_components(copy))
 
     return result
