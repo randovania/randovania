@@ -37,7 +37,7 @@ class DreadGameExporter(GameExporter):
         """
         Checks if export_game can be aborted
         """
-        return False
+        return True
 
     def export_game(self, patch_data: dict, export_params: GameExportParams,
                     progress_update: status_update_lib.ProgressUpdateCallable):

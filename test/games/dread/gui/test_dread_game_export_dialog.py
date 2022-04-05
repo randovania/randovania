@@ -7,6 +7,7 @@ from PySide6 import QtCore
 
 from randovania.games.dread.exporter.game_exporter import DreadGameExportParams, DreadModPlatform
 from randovania.games.dread.exporter.options import DreadPerGameOptions
+from randovania.games.dread.gui.dialog.ftp_uploader import FtpUploader
 from randovania.games.dread.gui.dialog.game_export_dialog import DreadGameExportDialog, serialize_path
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
 from randovania.games.game import RandovaniaGame
@@ -225,6 +226,49 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker):
         target_platform=DreadModPlatform.RYUJINX,
         use_exlaunch=False,
         post_export=None,
+    )
+
+
+def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
+    # Setup
+    options = MagicMock()
+    options.internal_copies_path = tmp_path.joinpath("internal")
+
+    options.options_for_game.return_value = DreadPerGameOptions(
+        cosmetic_patches=DreadCosmeticPatches.default(),
+        input_directory=tmp_path.joinpath("input"),
+        target_platform=DreadModPlatform.ATMOSPHERE,
+        reduce_mod_size=True,
+        output_preference=json.dumps({
+            "tab": "ftp",
+            "tab_options": {
+                "anonymous": False,
+                "username": "admin",
+                "password": "1234",
+                "ip": "192.168.1.2",
+                "port": 5000,
+            }
+        })
+    )
+    window = DreadGameExportDialog(options, {}, "MyHash", True, [])
+
+    # Run
+    result = window.get_game_export_params()
+
+    # Assert
+    assert result == DreadGameExportParams(
+        spoiler_output=tmp_path.joinpath("internal", "dread", "contents", "spoiler.rdvgame"),
+        input_path=tmp_path.joinpath("input"),
+        output_path=tmp_path.joinpath("internal", "dread", "contents"),
+        target_platform=DreadModPlatform.ATMOSPHERE,
+        use_exlaunch=True,
+        post_export=FtpUploader(
+            auth=("admin", "1234"),
+            ip="192.168.1.2",
+            port=5000,
+            local_path=tmp_path.joinpath("internal", "dread", "contents"),
+            remote_path="/mods/Metroid Dread/Randovania MyHash",
+        ),
     )
 
 
