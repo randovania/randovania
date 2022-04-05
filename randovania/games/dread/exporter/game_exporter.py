@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import shutil
 from enum import Enum
 from pathlib import Path
 from typing import Optional, Callable
@@ -19,6 +20,7 @@ class DreadGameExportParams(GameExportParams):
     output_path: Path
     target_platform: DreadModPlatform
     use_exlaunch: bool
+    clean_output_path: bool
     post_export: Optional[Callable[[status_update_lib.ProgressUpdateCallable], None]]
 
 
@@ -54,6 +56,11 @@ class DreadGameExporter(GameExporter):
             patcher_update = status_update_lib.OffsetProgressUpdate(progress_update, 0, 0.75)
         else:
             patcher_update = progress_update
+
+        if export_params.clean_output_path:
+            progress_update(f"Deleting {export_params.output_path}", -1)
+            shutil.rmtree(export_params.output_path, ignore_errors=True)
+            progress_update(f"Finished deleting {export_params.output_path}", -1)
 
         import open_dread_rando
         open_dread_rando.patch_with_status_update(

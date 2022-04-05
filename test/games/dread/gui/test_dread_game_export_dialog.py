@@ -192,6 +192,7 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
         output_path=output_path,
         target_platform=DreadModPlatform.ATMOSPHERE,
         use_exlaunch=False,
+        clean_output_path=False,
         post_export=None,
     )
 
@@ -225,6 +226,7 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker):
         output_path=ryujinx_path,
         target_platform=DreadModPlatform.RYUJINX,
         use_exlaunch=False,
+        clean_output_path=False,
         post_export=None,
     )
 
@@ -262,6 +264,7 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
         output_path=tmp_path.joinpath("internal", "dread", "contents"),
         target_platform=DreadModPlatform.ATMOSPHERE,
         use_exlaunch=True,
+        clean_output_path=True,
         post_export=FtpUploader(
             auth=("admin", "1234"),
             ip="192.168.1.2",
@@ -297,5 +300,6 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
         output_path=tmp_path.joinpath("output"),
         target_platform=DreadModPlatform.RYUJINX,
         use_exlaunch=False,
+        clean_output_path=False,
         post_export=None,
     )
