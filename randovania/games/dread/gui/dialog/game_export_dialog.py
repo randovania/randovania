@@ -362,6 +362,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.accept_button.setEnabled(tab.is_valid() and not self.input_file_edit.has_error)
 
     def get_game_export_params(self) -> GameExportParams:
+        clean_output_path = False
         output_tab = self.output_tab_widget.currentWidget()
         if output_tab is self.tab_custom_path:
             output_path = path_in_edit(self.custom_path_edit)
@@ -374,6 +375,7 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         elif output_tab is self.tab_ftp:
             output_path = self._get_ftp_internal_path()
             post_export = self.get_ftp_uploader()
+            clean_output_path = True
 
         elif output_tab is self.tab_sd_card:
             output_path = self.get_sd_card_output_path()
@@ -388,5 +390,6 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             output_path=output_path,
             target_platform=self.target_platform,
             use_exlaunch=self.exlaunch_check.isChecked() and self.target_platform == DreadModPlatform.ATMOSPHERE,
+            clean_output_path=clean_output_path,
             post_export=post_export,
         )
