@@ -565,9 +565,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
             boss_sizes = {
                 "parasiteQueen": get_random_size(0.1, 3.0),
-                "incineratorDrone": get_random_size(0.2, 3.5),
+                "incineratorDrone": get_random_size(0.2, 3.0),
                 "adultSheegoth": get_random_size(0.2, 1.5),
-                "thardus": get_random_size(0.05, 2.5),
+                "thardus": get_random_size(0.05, 2.0),
                 "elitePirate1": get_random_size(0.05, 2.3),
                 "elitePirate2": get_random_size(0.05, 1.3),
                 "elitePirate3": get_random_size(0.05, 2.0),
