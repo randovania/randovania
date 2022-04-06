@@ -16,5 +16,8 @@ class ResourceNode(Node):
     def can_collect(self, context: NodeContext) -> bool:
         raise NotImplementedError
 
+    def is_collected(self, context: NodeContext) -> bool:
+        raise NotImplementedError
+
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         raise NotImplementedError

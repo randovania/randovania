@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import default_database
+from randovania.game_description import default_database, derived_nodes
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.generator.filler import player_state
@@ -27,7 +27,8 @@ def _default_filler_config() -> FillerConfiguration:
 
 @pytest.fixture(name="state_for_blank")
 def _state_for_blank(preset_manager, default_filler_config) -> player_state.PlayerState:
-    game = default_database.game_description_for(RandovaniaGame.BLANK)
+    game = default_database.game_description_for(RandovaniaGame.BLANK).make_mutable_copy()
+    derived_nodes.create_derived_nodes(game)
 
     return player_state.PlayerState(
         index=0,
@@ -45,20 +46,19 @@ def _state_for_blank(preset_manager, default_filler_config) -> player_state.Play
 def test_current_state_report(state_for_blank):
     result = state_for_blank.current_state_report()
     assert result == (
-        "At Intro/Starting Area/Pickup (Missile Expansion) after 0 actions and 0 pickups, "
-        "with 2 collected locations, 3 safe nodes.\n\n"
+        "At Intro/Back-Only Lock Room/Event - Key Switch 1 after 0 actions and 0 pickups, "
+        "with 3 collected locations, 14 safe nodes.\n\n"
         "Pickups still available: \n\n"
-        "Resources to progress: Missile, Weapon\n\n"
+        "Resources to progress: Blue Key, Missile, Weapon\n\n"
         "Paths to be opened:\n"
+        "* Intro/Blue Key Room/Lock - Door to Starting Area (Exit): Blue Key\n"
         "* Intro/Starting Area/Door to Boss Arena: Missile and Weapon\n"
         "\n"
         "Accessible teleporters:\n"
         "None\n"
         "\n"
         "Reachable nodes:\n"
-        "Intro/Starting Area/Spawn Point\n"
-        "Intro/Starting Area/Pickup (Weapon)\n"
-        "Intro/Starting Area/Pickup (Missile Expansion)"
+        "18 nodes total"
     )
 
 

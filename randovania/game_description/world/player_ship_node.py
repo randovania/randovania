@@ -38,8 +38,12 @@ class PlayerShipNode(ResourceNode):
         if current_resources.get(self.item_to_summon, 0) == 0 and current_resources.get(self.resource(context), 0) == 0:
             return False
 
-        return any(
-            current_resources.get(node.resource(context), 0) == 0
+        return not self.is_collected(context)
+
+    def is_collected(self, context: NodeContext) -> bool:
+        current_resources = context.current_resources
+        return all(
+            context.has_resource(node.resource(context))
             for node in _all_ship_nodes(context)
             if node.is_unlocked.satisfied(current_resources, 0, context.database)
         )

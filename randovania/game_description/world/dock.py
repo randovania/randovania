@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from enum import unique, Enum
 from typing import Iterator, Optional
@@ -66,6 +68,17 @@ class DockWeakness:
     @property
     def long_name(self):
         return self.name
+
+    def can_unlock_from_back(self: DockWeakness, back_weak: Optional[DockWeakness]) -> bool:
+        if back_weak is not None and back_weak.lock is not None:
+            opens_from_back = {DockLockType.FRONT_BLAST_BACK_FREE_UNLOCK,
+                               DockLockType.FRONT_BLAST_BACK_BLAST}
+            if self == back_weak:
+                opens_from_back.add(DockLockType.FRONT_BLAST_BACK_IF_MATCHING)
+
+            return back_weak.lock.lock_type in opens_from_back
+
+        return False
 
 
 @dataclass(frozen=True)

@@ -8,6 +8,14 @@ Starting Area
       Missile and Weapon
   > Pickup (Missile Expansion)
       Trivial
+  > Door to Explosive Depot
+      Trivial
+  > Door to Back-Only Lock Room
+      Trivial
+  > Door to Blue Key Room (Exit)
+      Trivial
+  > Door to Blue Key Room (Entrance)
+      Trivial
 
 > Pickup (Weapon); Heals? False
   * Pickup 0; Major Location? True
@@ -15,7 +23,7 @@ Starting Area
       Trivial
 
 > Door to Boss Arena; Heals? False
-  * Normal Door to Boss Arena/Door to Starting Area
+  * Explosive Door to Boss Arena/Door to Starting Area
   > Spawn Point
       Trivial
 
@@ -24,8 +32,29 @@ Starting Area
   > Spawn Point
       Trivial
 
+> Door to Explosive Depot; Heals? False
+  * Normal Door to Explosive Depot/Door to Starting Area
+  > Spawn Point
+      Trivial
+
+> Door to Back-Only Lock Room; Heals? False
+  * Normal Door to Back-Only Lock Room/Door to Starting Area
+  > Spawn Point
+      Trivial
+
+> Door to Blue Key Room (Exit); Heals? False
+  * Normal Door to Blue Key Room/Door to Starting Area (Exit)
+  > Spawn Point
+      Trivial
+
+> Door to Blue Key Room (Entrance); Heals? False
+  * Normal Door to Blue Key Room/Door to Starting Area (Entrance)
+  > Spawn Point
+      Trivial
+
 ----------------
 Boss Arena
+Extra - map_name: Square
 > Door to Starting Area; Heals? False
   * Normal Door to Starting Area/Door to Boss Arena
   > Event - Boss
@@ -38,5 +67,62 @@ Boss Arena
 > Event - Boss; Heals? False
   * Event First Boss Killed
   > Door to Starting Area
+      Trivial
+
+----------------
+Explosive Depot
+Extra - map_name: Square
+> Door to Starting Area; Heals? False
+  * Normal Door to Starting Area/Door to Explosive Depot
+  > Pickup (Explosive)
+      Trivial
+
+> Pickup (Explosive); Heals? False
+  * Pickup 2; Major Location? True
+  > Door to Starting Area
+      Trivial
+
+----------------
+Back-Only Lock Room
+Extra - map_name: Square
+> Door to Starting Area; Heals? False
+  * Back-Only Door to Starting Area/Door to Back-Only Lock Room
+  > Event - Key Switch 1
+      Trivial
+
+> Event - Key Switch 1; Heals? False
+  * Event Key Switch 1
+  > Door to Starting Area
+      Trivial
+
+----------------
+Blue Key Room
+Extra - map_name: Square
+> Door to Starting Area (Exit); Heals? False
+  * Blue Key Door to Starting Area/Door to Blue Key Room (Exit)
+  > Spawn Point
+      Trivial
+
+> Door to Starting Area (Entrance); Heals? False
+  * Normal Door to Starting Area/Door to Blue Key Room (Entrance)
+  > Spawn Point
+      Trivial
+
+> Event - Key Switch 2; Heals? False
+  * Event Key Switch 2
+  > Spawn Point
+      Trivial
+
+> Pickup (Blue Key); Heals? False
+  * Pickup 4; Major Location? True
+  > Spawn Point
+      Trivial
+
+> Spawn Point; Heals? False; Spawn Point
+  > Door to Starting Area (Exit)
+      Trivial
+  > Event - Key Switch 2
+      Trivial
+  > Pickup (Blue Key)
       Trivial
 

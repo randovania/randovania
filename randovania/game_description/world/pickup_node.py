@@ -26,7 +26,10 @@ class PickupNode(ResourceNode):
         return self.pickup_index
 
     def can_collect(self, context: NodeContext) -> bool:
-        return context.current_resources.get(self.pickup_index, 0) == 0
+        return not self.is_collected(context)
+
+    def is_collected(self, context: NodeContext) -> bool:
+        return context.has_resource(self.pickup_index)
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         yield self.pickup_index, 1

@@ -41,7 +41,7 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
         World("World", [
             Area("Area", 0, True, [logbook_node, pickup_node], {}, {}),
             Area("Other Area", 0, True,
-                 [PickupNode(f"Pickup {i}", True, None, "", {}, 1, PickupIndex(i), True)
+                 [PickupNode(f"Pickup {i}", True, None, "", {}, 2 + i, PickupIndex(i), True)
                   for i in range(pickup_index.index)],
                  {}, {}),
         ], {}),
