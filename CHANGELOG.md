@@ -25,8 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
-- Fixed: Reduced Ridley's max size
-- Fixed: Reduced Thardus' max size
+- Fixed: Adjusted min/max boss sizes to prevent softlocks
 
 #### Patcher Changes
 

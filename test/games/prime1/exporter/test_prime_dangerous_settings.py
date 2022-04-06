@@ -8,8 +8,6 @@ def test_dangerous_settings(test_files_dir, rdvgame_filename="prime1_crazy_seed.
     layout_description = LayoutDescription.from_file(rdvgame)    
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
     preset = layout_description.get_preset(players_config.player_index)
-    
-    print(preset.dangerous_settings())
 
     assert preset.dangerous_settings() == [
         'One-way anywhere elevators',
