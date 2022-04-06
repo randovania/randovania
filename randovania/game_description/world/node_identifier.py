@@ -56,3 +56,7 @@ class NodeIdentifier:
     @property
     def long_name(self):
         return repr(self)
+
+    @property
+    def short_name(self):
+        return self.long_name
