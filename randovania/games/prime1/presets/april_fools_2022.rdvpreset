@@ -1,0 +1,224 @@
+{
+    "schema_version": 26,
+    "name": "April Fools 2022",
+    "uuid": "798dd544-d607-4304-981d-388468192159",
+    "description": "Having debuted with the reveal of 'Chaos Options' on April 1st 2022, this preset features logicless room rando with random superheated rooms, random submerged rooms and random boss sizes. Because of the logicless nature of Chaos Options, this preset may generate seeds which are not able to be completed.<br><br>To help compensate for the lack of logic, hypermode difficulty is enabled and many duplicate items have been placed into the pool.",
+    "base_preset_uuid": null,
+    "game": "prime1",
+    "configuration": {
+        "trick_level": {
+            "minimal_logic": false,
+            "specific_levels": {
+                "BJ": "hypermode",
+                "BSJ": "hypermode",
+                "BoostlessSpiner": "hypermode",
+                "CBJ": "hypermode",
+                "ClipThruObjects": "hypermode",
+                "Combat": "hypermode",
+                "DBoosting": "hypermode",
+                "Dash": "hypermode",
+                "HeatRun": "hypermode",
+                "IS": "hypermode",
+                "InvisibleObjects": "hypermode",
+                "Knowledge": "hypermode",
+                "LJump": "hypermode",
+                "Movement": "hypermode",
+                "OoB": "hypermode",
+                "RJump": "hypermode",
+                "SJump": "hypermode",
+                "StandEnemies": "hypermode",
+                "Standable": "hypermode",
+                "UnderwaterMovement": "hypermode",
+                "WallBoost": "hypermode"
+            }
+        },
+        "starting_location": [
+            {
+                "world_name": "Tallon Overworld",
+                "area_name": "Landing Site"
+            }
+        ],
+        "available_locations": {
+            "randomization_mode": "full",
+            "excluded_indices": []
+        },
+        "major_items_configuration": {
+            "items_state": {
+                "Charge Beam": {
+                    "num_shuffled_pickups": 3
+                },
+                "Power Beam": {
+                    "num_shuffled_pickups": 3
+                },
+                "Wave Beam": {
+                    "num_included_in_starting_items": 1
+                },
+                "Ice Beam": {
+                    "num_included_in_starting_items": 1
+                },
+                "Plasma Beam": {
+                    "num_shuffled_pickups": 2,
+                    "priority": 0.5
+                },
+                "Missile Launcher": {
+                    "num_included_in_starting_items": 1,
+                    "included_ammo": [
+                        5
+                    ]
+                },
+                "Grapple Beam": {
+                    "num_shuffled_pickups": 1
+                },
+                "Combat Visor": {
+                    "num_included_in_starting_items": 1
+                },
+                "Scan Visor": {
+                    "num_included_in_starting_items": 1
+                },
+                "Thermal Visor": {
+                    "num_shuffled_pickups": 1
+                },
+                "X-Ray Visor": {
+                    "num_shuffled_pickups": 2
+                },
+                "Space Jump Boots": {
+                    "num_shuffled_pickups": 3,
+                    "priority": 0.25
+                },
+                "Energy Tank": {
+                    "num_shuffled_pickups": 13,
+                    "num_included_in_starting_items": 1
+                },
+                "Morph Ball": {
+                    "num_included_in_starting_items": 1
+                },
+                "Morph Ball Bomb": {
+                    "num_shuffled_pickups": 3
+                },
+                "Boost Ball": {
+                    "num_shuffled_pickups": 2,
+                    "priority": 0.5
+                },
+                "Spider Ball": {
+                    "num_shuffled_pickups": 2,
+                    "priority": 0.5
+                },
+                "Power Bomb": {
+                    "num_shuffled_pickups": 1,
+                    "included_ammo": [
+                        4
+                    ]
+                },
+                "Power Suit": {
+                    "num_included_in_starting_items": 1
+                },
+                "Varia Suit": {},
+                "Gravity Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Phazon Suit": {
+                    "num_shuffled_pickups": 1
+                },
+                "Super Missile": {
+                    "num_shuffled_pickups": 1
+                },
+                "Wavebuster": {
+                    "num_shuffled_pickups": 1
+                },
+                "Ice Spreader": {
+                    "num_shuffled_pickups": 1
+                },
+                "Flamethrower": {
+                    "num_shuffled_pickups": 1
+                }
+            },
+            "default_items": {},
+            "minimum_random_starting_items": 0,
+            "maximum_random_starting_items": 0
+        },
+        "ammo_configuration": {
+            "items_state": {
+                "Missile Expansion": {
+                    "ammo_count": [
+                        5
+                    ],
+                    "pickup_count": 52,
+                    "requires_major_item": false
+                },
+                "Power Bomb Expansion": {
+                    "ammo_count": [
+                        1
+                    ],
+                    "pickup_count": 0,
+                    "requires_major_item": false
+                }
+            }
+        },
+        "damage_strictness": 1.0,
+        "pickup_model_style": "all-visible",
+        "pickup_model_data_source": "etm",
+        "multi_pickup_placement": true,
+        "logical_resource_action": "randomly",
+        "first_progression_must_be_local": false,
+        "elevators": {
+            "mode": "one-way-elevator",
+            "excluded_teleporters": [
+                {
+                    "world_name": "Frigate Orpheon",
+                    "area_name": "Exterior Docking Hangar",
+                    "node_name": "Teleport to Landing Site"
+                },
+                {
+                    "world_name": "Impact Crater",
+                    "area_name": "Crater Entry Point",
+                    "node_name": "Teleport to Artifact Temple"
+                },
+                {
+                    "world_name": "Impact Crater",
+                    "area_name": "Metroid Prime Lair",
+                    "node_name": "Teleporter to Credits"
+                },
+                {
+                    "world_name": "Tallon Overworld",
+                    "area_name": "Artifact Temple",
+                    "node_name": "Teleport to Impact Crater - Crater Impact Point"
+                }
+            ],
+            "excluded_targets": [],
+            "skip_final_bosses": false,
+            "allow_unvisited_room_names": true
+        },
+        "hints": {
+            "artifacts": "precise"
+        },
+        "energy_per_tank": 100,
+        "artifact_target": 3,
+        "artifact_minimum_progression": 6,
+        "heat_damage": 10.0,
+        "warp_to_start": true,
+        "heat_protection_only_varia": true,
+        "progressive_damage_reduction": true,
+        "allow_underwater_movement_without_gravity": true,
+        "small_samus": false,
+        "large_samus": false,
+        "shuffle_item_pos": false,
+        "items_every_room": true,
+        "random_boss_sizes": true,
+        "no_doors": false,
+        "superheated_probability": 50,
+        "submerged_probability": 50,
+        "room_rando": "Two-way",
+        "spring_ball": true,
+        "deterministic_idrone": true,
+        "deterministic_maze": true,
+        "main_plaza_door": true,
+        "backwards_frigate": true,
+        "backwards_labs": true,
+        "backwards_upper_mines": true,
+        "backwards_lower_mines": false,
+        "phazon_elite_without_dynamo": true,
+        "qol_game_breaking": true,
+        "qol_pickup_scans": true,
+        "qol_cutscenes": "competitive"
+    }
+}
