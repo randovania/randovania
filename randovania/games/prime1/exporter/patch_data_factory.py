@@ -284,13 +284,13 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         if not isinstance(node, DockNode):
                             continue
                         index = node.extra["dock_index"]
+                        dock_num_by_area_node[(area.name, node.name)] = index
                         is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                         if node.extra["nonstandard"]:
                             # This dock is like a morph tunnel or 1-way door etc. that cannot be elegantly patched
                             continue
                         area_dock_nums[area.name].append(index)
                         attached_areas[area.name].append(node.default_connection.area_name)
-                        dock_num_by_area_node[(area.name, node.name)] = index
                         default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
 
                         candidates.append((area.name, index))
@@ -299,7 +299,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 default_connections = dict()
                 for (src_name, src_dock) in default_connections_node_name:
                     (dst_name, dst_node_name) = default_connections_node_name[(src_name, src_dock)]
-                    
+
                     try:
                         dst_dock = dock_num_by_area_node[(dst_name, dst_node_name)]
                     except KeyError:
@@ -555,23 +555,25 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
         boss_sizes = None
         if self.configuration.random_boss_sizes:
-            def get_random_size(min, max):
+            def get_random_size(minimum, maximum):
                 if self.rng.choice([True, False]):
-                    return self.rng.uniform(min, 0.8)
+                    temp = [self.rng.uniform(minimum, 1.0), self.rng.uniform(minimum, 1.0)]
+                    return min(temp)
                 else:
-                    return self.rng.uniform(1.2, max)
+                    temp = [self.rng.uniform(1.0, maximum), self.rng.uniform(1.0, maximum)]
+                    return max(temp)
 
             boss_sizes = {
                 "parasiteQueen": get_random_size(0.1, 3.0),
-                "incineratorDrone": get_random_size(0.2, 3.5),
+                "incineratorDrone": get_random_size(0.2, 3.0),
                 "adultSheegoth": get_random_size(0.2, 1.5),
-                "thardus": get_random_size(0.05, 2.5),
+                "thardus": get_random_size(0.05, 2.0),
                 "elitePirate1": get_random_size(0.05, 2.3),
                 "elitePirate2": get_random_size(0.05, 1.3),
                 "elitePirate3": get_random_size(0.05, 2.0),
-                "phazonElite": get_random_size(0.05, 2.0),
+                "phazonElite": get_random_size(0.1, 2.0),
                 "omegaPirate": get_random_size(0.05, 2.0),
-                "Ridley": get_random_size(0.2, 1.8),
+                "Ridley": get_random_size(0.2, 1.5),
                 "exo": get_random_size(0.05, 2.0),
                 "essence": get_random_size(0.5, 2.25),
             }

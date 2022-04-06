@@ -24,11 +24,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
+- Fixed: Adjusted min/max boss sizes to prevent softlocks
 
 #### Patcher Changes
 
-- Nothing.
+Room Rando:
+    - Fixed: Crash when opening the map near certain rooms
+    - Fixed: Crashes regarding specific rooms in Chozo, Magmoor and Phendrana.
+    - Fixed: Crash when rolling through some doors in morph ball
+    - Fixed: Central Dynamo reposition soft-lock
+    - Changed: The door immediately behind the player is unlocked when teleporting to a new room. This gives the player one chance to backtrack before commiting to the warp.
+
+- Fixed: Specifying custom heat-damage-per-second now properly affects non-vanilla superheated rooms
+- Changed: Omega Pirate's armor and actor now scales appropriately
 
 #### Logic Database
 
@@ -47,8 +56,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nothing.
 
 ## [4.2.2] - Unreleased
-
-- Nothing.
 
 ## [4.2.1] - 2022-04-01
 

@@ -44,7 +44,7 @@ class PrimePresetDescriber(GamePresetDescriber):
             "Gameplay": [
                 {f"Elevators: {configuration.elevators.description()}": not configuration.elevators.is_vanilla},
                 {
-                    "Underwater movement without Gravity allowed":
+                    "Dangerous Gravity Suit Logic":
                         configuration.allow_underwater_movement_without_gravity,
                 },
             ],

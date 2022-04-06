@@ -66,15 +66,24 @@ class PrimeConfiguration(BaseConfiguration):
         result = super().dangerous_settings()
 
         if self.shuffle_item_pos:
-            result.append("Shuffled item position")
+            result.append("Shuffled Item Position")
 
         if not self.qol_game_breaking:
             result.append("Missing Game Breaking Fixes")
         
         if self.room_rando != RoomRandoMode.NONE:
-            result.append("Room randomizer")
-        
+            result.append("Room Randomizer")
+
         if self.large_samus:
             result.append("Large Samus")
+
+        if self.superheated_probability > 0:
+            result.append("Extra Superheated Rooms")
+
+        if self.submerged_probability > 0:
+            result.append("Submerged Rooms")
+        
+        if self.allow_underwater_movement_without_gravity:
+            result.append("Dangerous Gravity Suit Logic")
 
         return result
