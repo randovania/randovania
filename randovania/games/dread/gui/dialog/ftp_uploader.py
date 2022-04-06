@@ -1,5 +1,6 @@
 import dataclasses
 import ftplib
+import logging
 from ftplib import FTP
 from pathlib import Path
 from typing import Optional, Callable
@@ -58,17 +59,21 @@ class FtpUploader:
                 ensure_path += f"/{part}"
                 try:
                     ftp.mkd(ensure_path)
-                except ftplib.error_perm:
-                    pass
+                except ftplib.error_perm as e:
+                    logging.warning("Unable to create %s: %s", ensure_path, str(e))
 
             # Upload files
             for i, file in enumerate(all_files):
                 path = self.remote_path + "/" + file.relative_to(self.local_path).as_posix()
-                if file.is_dir():
-                    ftp.mkd(path)
+                try:
+                    if file.is_dir():
+                        ftp.mkd(path)
 
-                elif file.is_file():
-                    with file.open("rb") as b:
-                        ftp.storbinary(f"STOR {path}", b)
+                    elif file.is_file():
+                        with file.open("rb") as b:
+                            ftp.storbinary(f"STOR {path}", b)
+
+                except ftplib.Error as e:
+                    raise RuntimeError(f"Unable to create {path}") from e
 
                 progress_update(f"Uploaded {path}", (i + 1) / len(all_files))
