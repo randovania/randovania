@@ -1,11 +1,32 @@
 import dataclasses
 import ftplib
-import logging
+from contextlib import contextmanager
 from ftplib import FTP
 from pathlib import Path
 from typing import Optional, Callable
 
 from randovania.lib import status_update_lib
+
+
+@contextmanager
+def ftp_cd(ftp: FTP, pathname: Optional[str] = None):
+    """ftp server change folder with statement"""
+    original_path = ftp.pwd()
+    try:
+        if pathname is not None:
+            ftp.cwd(pathname)
+        yield
+    finally:
+        ftp.cwd(original_path)
+
+
+def ftp_is_dir(ftp: FTP, path_name: str) -> bool:
+    """check is directory or not"""
+    try:
+        with ftp_cd(ftp, path_name):
+            return True
+    except ftplib.error_perm:
+        return False
 
 
 def delete_path(ftp: FTP, path: str, progress_update: Callable[[str], None]):
@@ -40,6 +61,10 @@ class FtpUploader:
     local_path: Path
     remote_path: str
 
+    def __post_init__(self):
+        if not self.remote_path.startswith("/"):
+            raise ValueError("remote_path must start with /")
+
     def __call__(self, progress_update: status_update_lib.ProgressUpdateCallable):
         all_files = list(self.local_path.rglob("*"))
 
@@ -55,12 +80,13 @@ class FtpUploader:
 
             # Create remote path
             ensure_path = ""
-            for part in self.remote_path.split("/"):
+            for part in self.remote_path[1:].split("/"):
                 ensure_path += f"/{part}"
-                try:
-                    ftp.mkd(ensure_path)
-                except ftplib.error_perm as e:
-                    logging.warning("Unable to create %s: %s", ensure_path, str(e))
+                if not ftp_is_dir(ftp, ensure_path):
+                    try:
+                        ftp.mkd(ensure_path)
+                    except ftplib.Error as e:
+                        raise RuntimeError(f"Unable to create {ensure_path}") from e
 
             # Upload files
             for i, file in enumerate(all_files):
