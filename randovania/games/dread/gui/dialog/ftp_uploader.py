@@ -55,7 +55,9 @@ class FtpUploader:
 
             # Create remote path
             ensure_path = ""
-            for part in self.remote_path.split("/"):
+            path_parts = self.remote_path.split("/")
+            path_parts.pop(0)
+            for part in path_parts:
                 ensure_path += f"/{part}"
                 try:
                     ftp.mkd(ensure_path)
