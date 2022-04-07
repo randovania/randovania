@@ -24,7 +24,7 @@ def test_upload(ftpserver, tmp_path):
         ip="localhost",
         port=ftpserver.server_port,
         local_path=tmp_path.joinpath("local"),
-        remote_path="remote",
+        remote_path="/remote",
     )
 
     # Run
@@ -40,7 +40,7 @@ def test_upload(ftpserver, tmp_path):
         server_home.joinpath("remote", "bar"),
     ]
     progress_update.assert_has_calls([
-        call('Uploaded remote/a.txt', ANY),
-        call('Uploaded remote/b.txt', ANY),
-        call('Uploaded remote/bar', ANY),
+        call('Uploaded /remote/a.txt', ANY),
+        call('Uploaded /remote/b.txt', ANY),
+        call('Uploaded /remote/bar', ANY),
     ], any_order=True)
