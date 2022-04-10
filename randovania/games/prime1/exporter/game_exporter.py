@@ -2,8 +2,8 @@ import copy
 import dataclasses
 import json
 import os
-import shutil
 from pathlib import Path
+from textwrap import wrap
 
 import py_randomprime
 
@@ -11,6 +11,7 @@ from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
 from randovania.patching.patchers.gamecube import iso_packager
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
@@ -67,6 +68,45 @@ class PrimeGameExporter(GameExporter):
         """
         return False
 
+    def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
+
+        def make_one_map(filepath, world):
+            room_connections = list()
+            for room_name in world["rooms"].keys():
+                room = world["rooms"][room_name]
+                if "doors" not in room.keys():
+                    continue
+                for dock_num in room["doors"]:
+                    if "destination" not in room["doors"][dock_num].keys():
+                        continue
+
+                    dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
+                    room_name = '\n'.join(wrap(room_name, 18))
+                    dst_room_name = '\n'.join(wrap(dst_room_name, 18))
+                    room_connections.append((room_name, dst_room_name))
+
+            import networkx
+            from matplotlib import pyplot
+            import numpy
+
+            # model this world's connections as a graph
+            graph = networkx.DiGraph()
+            graph.add_edges_from(room_connections)
+
+            # render the graph to png
+            pos = networkx.spring_layout(graph, k=1.2/numpy.sqrt(len(graph.nodes())), iterations=100, seed=0)
+            pyplot.figure(3, figsize=(22, 22))
+            networkx.draw(graph, pos=pos, node_size=800)
+            networkx.draw_networkx_labels(graph, pos=pos, font_weight='bold', font_size=4)
+            pyplot.savefig(filepath, bbox_inches='tight', dpi=220)
+
+            # reset for next graph
+            pyplot.clf()
+
+        for world_name in level_data.keys():
+            filepath = directory.with_name(f"{base_filename} {world_name}.png")
+            make_one_map(filepath, level_data[world_name])
+
     def export_game(self, patch_data: dict, export_params: GameExportParams,
                     progress_update: status_update_lib.ProgressUpdateCallable) -> None:
         assert isinstance(export_params, PrimeGameExportParams)
@@ -81,6 +121,7 @@ class PrimeGameExporter(GameExporter):
 
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
+        room_rando_mode = new_config.pop("roomRandoMode")
         new_config["inputIso"] = os.fspath(input_file)
         new_config["outputIso"] = os.fspath(output_file)
         new_config["gameConfig"]["updateHintStateReplacement"] = list(
@@ -114,6 +155,8 @@ class PrimeGameExporter(GameExporter):
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:
             output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
+            if room_rando_mode != RoomRandoMode.NONE:
+                self.make_room_rando_maps(output_file, f"{output_file.stem}", new_config["levelData"])
 
         os.environ["RUST_BACKTRACE"] = "1"
 
