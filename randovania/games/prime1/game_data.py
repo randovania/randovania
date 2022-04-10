@@ -60,6 +60,9 @@ game_data: game.GameData = game.GameData(
         {
             "path": "moderate_challenge.rdvpreset"
         },
+        {
+            "path": "april_fools_2022.rdvpreset"
+        },
     ],
 
     faq=[
