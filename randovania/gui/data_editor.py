@@ -587,7 +587,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
         self.generic_index += 1
-        new_node = GenericNode(node_name, False, location, "", {}, self.generic_index)
+        new_node = GenericNode(node_name, False, location, "", ("default",), {}, self.generic_index)
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 

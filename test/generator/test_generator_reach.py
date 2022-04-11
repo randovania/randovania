@@ -168,10 +168,10 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     scan_visor = echoes_resource_database.get_item("DarkVisor")
 
     translator_identif = NodeIdentifier.create("Test World", "Test Area A", "Translator Gate")
-    node_a = GenericNode("Node A", True, None, "", {}, 0)
-    node_b = GenericNode("Node B", True, None, "", {}, 1)
-    node_c = GenericNode("Node C", True, None, "", {}, 2)
-    translator_node = ConfigurableNode("Translator Gate", True, None, "", {}, 3)
+    node_a = GenericNode("Node A", True, None, "", ("default",), {}, 0)
+    node_b = GenericNode("Node B", True, None, "", ("default",), {}, 1)
+    node_c = GenericNode("Node C", True, None, "", ("default",), {}, 2)
+    translator_node = ConfigurableNode("Translator Gate", True, None, "", ("default",), {}, 3)
 
     world_list = WorldList([
         World("Test World", [
@@ -197,7 +197,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         ], {})
     ])
     game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], {}, (None, None)),
-                           echoes_resource_database, Requirement.impossible(),
+                           echoes_resource_database, ("default",), Requirement.impossible(),
                            None, {}, None, world_list)
 
     patches = game.create_game_patches()

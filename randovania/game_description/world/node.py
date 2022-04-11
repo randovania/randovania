@@ -39,6 +39,7 @@ class Node:
     heal: bool
     location: Optional[NodeLocation]
     description: str
+    layers: tuple[str, ...]
     extra: dict[str, typing.Any]
     index: int
 
@@ -49,6 +50,9 @@ class Node:
         return hash((self.index, self.name))
 
     def __post_init__(self):
+        if not self.layers:
+            raise ValueError("Expected at least one layer")
+
         if not isinstance(self.extra, frozendict):
             if not isinstance(self.extra, dict):
                 raise ValueError(f"Expected dict for extra, got {type(self.extra)}")

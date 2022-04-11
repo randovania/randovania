@@ -30,6 +30,7 @@ sample_data = {
         },
         "damage_reductions": [],
     },
+    "layers": ["default"],
     "starting_location": {
         "world_name": "Temple Grounds",
         "area_name": "Landing Site"

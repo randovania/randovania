@@ -230,13 +230,13 @@ def write_node(node: Node) -> dict:
     :return:
     """
 
-    extra = frozen_lib.unwrap(node.extra)
     data = {}
     common_fields = {
         "heal": node.heal,
         "coordinates": {"x": node.location.x, "y": node.location.y, "z": node.location.z} if node.location else None,
         "description": node.description,
-        "extra": extra,
+        "layers": frozen_lib.unwrap(node.layers),
+        "extra": frozen_lib.unwrap(node.extra),
     }
 
     if isinstance(node, GenericNode):
@@ -415,6 +415,7 @@ def write_game_description(game: GameDescription) -> dict:
         "schema_version": game_migration.CURRENT_VERSION,
         "game": game.game.value,
         "resource_database": write_resource_database(game.resource_database),
+        "layers": frozen_lib.unwrap(game.layers),
 
         "starting_location": game.starting_location.as_json,
         "initial_states": write_initial_states(game.initial_states),

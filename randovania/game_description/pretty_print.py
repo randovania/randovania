@@ -134,6 +134,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
         if area.default_node == node.name:
             message += "; Spawn Point"
         print_function(message)
+        print_function(f"  * Layers: {', '.join(node.layers)}")
 
         description_line = pretty_print_node_type(node, game.world_list)
         if description_line:

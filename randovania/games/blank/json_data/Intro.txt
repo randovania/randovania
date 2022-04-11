@@ -2,6 +2,7 @@
 Starting Area
 (Valid Starting Location)
 > Spawn Point; Heals? False; Spawn Point
+  * Layers: default
   > Pickup (Weapon)
       Trivial
   > Door to Boss Arena
@@ -18,36 +19,43 @@ Starting Area
       Trivial
 
 > Pickup (Weapon); Heals? False
+  * Layers: default
   * Pickup 0; Major Location? True
   > Spawn Point
       Trivial
 
 > Door to Boss Arena; Heals? False
+  * Layers: default
   * Explosive Door to Boss Arena/Door to Starting Area
   > Spawn Point
       Trivial
 
 > Pickup (Missile Expansion); Heals? False
+  * Layers: default
   * Pickup 1; Major Location? False
   > Spawn Point
       Trivial
 
 > Door to Explosive Depot; Heals? False
+  * Layers: default
   * Normal Door to Explosive Depot/Door to Starting Area
   > Spawn Point
       Trivial
 
 > Door to Back-Only Lock Room; Heals? False
+  * Layers: default
   * Normal Door to Back-Only Lock Room/Door to Starting Area
   > Spawn Point
       Trivial
 
 > Door to Blue Key Room (Exit); Heals? False
+  * Layers: default
   * Normal Door to Blue Key Room/Door to Starting Area (Exit)
   > Spawn Point
       Trivial
 
 > Door to Blue Key Room (Entrance); Heals? False
+  * Layers: default
   * Normal Door to Blue Key Room/Door to Starting Area (Entrance)
   > Spawn Point
       Trivial
@@ -56,6 +64,7 @@ Starting Area
 Boss Arena
 Extra - map_name: Square
 > Door to Starting Area; Heals? False
+  * Layers: default
   * Normal Door to Starting Area/Door to Boss Arena
   > Event - Boss
       All of the following:
@@ -65,6 +74,7 @@ Extra - map_name: Square
               Missile ≥ 2 and Combat (Beginner)
 
 > Event - Boss; Heals? False
+  * Layers: default
   * Event First Boss Killed
   > Door to Starting Area
       Trivial
@@ -73,11 +83,13 @@ Extra - map_name: Square
 Explosive Depot
 Extra - map_name: Square
 > Door to Starting Area; Heals? False
+  * Layers: default
   * Normal Door to Starting Area/Door to Explosive Depot
   > Pickup (Explosive)
       Trivial
 
 > Pickup (Explosive); Heals? False
+  * Layers: default
   * Pickup 2; Major Location? True
   > Door to Starting Area
       Trivial
@@ -86,11 +98,13 @@ Extra - map_name: Square
 Back-Only Lock Room
 Extra - map_name: Square
 > Door to Starting Area; Heals? False
+  * Layers: default
   * Back-Only Door to Starting Area/Door to Back-Only Lock Room
   > Event - Key Switch 1
       Trivial
 
 > Event - Key Switch 1; Heals? False
+  * Layers: default
   * Event Key Switch 1
   > Door to Starting Area
       Trivial
@@ -99,26 +113,31 @@ Extra - map_name: Square
 Blue Key Room
 Extra - map_name: Square
 > Door to Starting Area (Exit); Heals? False
+  * Layers: default
   * Blue Key Door to Starting Area/Door to Blue Key Room (Exit)
   > Spawn Point
       Trivial
 
 > Door to Starting Area (Entrance); Heals? False
+  * Layers: default
   * Normal Door to Starting Area/Door to Blue Key Room (Entrance)
   > Spawn Point
       Trivial
 
 > Event - Key Switch 2; Heals? False
+  * Layers: default
   * Event Key Switch 2
   > Spawn Point
       Trivial
 
 > Pickup (Blue Key); Heals? False
+  * Layers: default
   * Pickup 4; Major Location? True
   > Spawn Point
       Trivial
 
 > Spawn Point; Heals? False; Spawn Point
+  * Layers: default
   > Door to Starting Area (Exit)
       Trivial
   > Event - Key Switch 2

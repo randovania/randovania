@@ -56,10 +56,13 @@ def replace_with_event_pickups(game: GameDescription):
             if not isinstance(event_node, EventNode):
                 continue
 
-            if len(area.connections[event_node]) != 1:
+            valid_options = [next_node for next_node in area.connections[event_node].keys()
+                             if next_node.layers == event_node.layers]
+
+            if len(valid_options) != 1:
                 continue
 
-            next_node = list(area.connections[event_node].keys())[0]
+            next_node = valid_options[0]
             if not isinstance(next_node, PickupNode):
                 continue
 
@@ -74,6 +77,7 @@ def replace_with_event_pickups(game: GameDescription):
                 event_node.heal or next_node.heal,
                 next_node.location,
                 f"{event_node.description}\n{next_node.description}",
+                event_node.layers,
                 {
                     "event": event_node.extra,
                     "pickup": next_node.extra,
