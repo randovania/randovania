@@ -330,16 +330,17 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                                     self.location_z_spin.value())
         description = self.description_edit.toMarkdown()
         extra = json.loads(self.extra_edit.toPlainText())
+        layers = ("default",)
         index = self.node.index
 
         if node_type == GenericNode:
-            return GenericNode(name, heal, location, description, extra, index)
+            return GenericNode(name, heal, location, description, layers, extra, index)
 
         elif node_type == DockNode:
             connection_node: Node = self.dock_connection_node_combo.currentData()
 
             return DockNode(
-                name, heal, location, description, extra, index,
+                name, heal, location, description, layers, extra, index,
                 self.dock_type_combo.currentData(),
                 self.game.world_list.identifier_for_node(connection_node),
                 self.dock_weakness_combo.currentData(),
@@ -348,7 +349,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == PickupNode:
             return PickupNode(
-                name, heal, location, description, extra, index,
+                name, heal, location, description, layers, extra, index,
                 PickupIndex(self.pickup_index_spin.value()),
                 self.major_location_check.isChecked(),
             )
@@ -358,7 +359,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             dest_area: Area = self.teleporter_destination_area_combo.currentData()
 
             return TeleporterNode(
-                name, heal, location, description, extra, index,
+                name, heal, location, description, layers, extra, index,
                 AreaIdentifier(
                     world_name=dest_world.name,
                     area_name=dest_area.name,
@@ -372,14 +373,13 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             if event is None:
                 raise ValueError("There are no events in the database, unable to create EventNode.")
             return EventNode(
-                name, heal, location, description, extra, index,
+                name, heal, location, description, layers, extra, index,
                 event,
             )
 
         elif node_type == ConfigurableNode:
-            identifier = self.game.world_list.identifier_for_node(self.node)
             return ConfigurableNode(
-                name, heal, location, description, extra, index,
+                name, heal, location, description, layers, extra, index,
             )
 
         elif node_type == LogbookNode:
@@ -397,7 +397,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
                 hint_index = None
 
             return LogbookNode(
-                name, heal, location, description, extra, index,
+                name, heal, location, description, layers, extra, index,
                 int(self.logbook_string_asset_id_edit.text(), 0),
                 self._get_scan_visor(),
                 lore_type,
@@ -407,7 +407,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif node_type == PlayerShipNode:
             return PlayerShipNode(
-                name, heal, location, description, extra, index,
+                name, heal, location, description, layers, extra, index,
                 self._unlocked_by_requirement,
                 self._get_command_visor()
             )

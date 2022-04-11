@@ -15,6 +15,7 @@ def _pickup_node():
         name="Pickup (Ultra Beam)",
         heal=False,
         location=None,
+        layers=("default",),
         description="",
         extra={},
         index=0

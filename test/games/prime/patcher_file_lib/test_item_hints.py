@@ -34,14 +34,14 @@ def _players_configuration() -> PlayersConfiguration:
 
 
 def _create_world_list(asset_id: int, pickup_index: PickupIndex):
-    logbook_node = LogbookNode("Logbook A", True, None, "", {}, 0, asset_id, None, None, None, None)
-    pickup_node = PickupNode("Pickup Node", True, None, "", {}, 1, pickup_index, True)
+    logbook_node = LogbookNode("Logbook A", True, None, "", ("default",), {}, 0, asset_id, None, None, None, None)
+    pickup_node = PickupNode("Pickup Node", True, None, "", ("default",), {}, 1, pickup_index, True)
 
     world_list = WorldList([
         World("World", [
             Area("Area", 0, True, [logbook_node, pickup_node], {}, {}),
             Area("Other Area", 0, True,
-                 [PickupNode(f"Pickup {i}", True, None, "", {}, 2 + i, PickupIndex(i), True)
+                 [PickupNode(f"Pickup {i}", True, None, "", ("default",), {}, 2 + i, PickupIndex(i), True)
                   for i in range(pickup_index.index)],
                  {}, {}),
         ], {}),

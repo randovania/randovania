@@ -25,6 +25,7 @@ def test_invalid_node_type():
             "coordinates": None,
             "description": "",
             "extra": {},
+            "layers": ["default"],
             "node_type": "something that doesn't exist"
         })
 
@@ -42,10 +43,11 @@ def test_area_with_invalid_connections():
             "nodes": {
                 "A": {
                     "heal": True, "coordinates": None, "node_type": "generic",
-                    "connections": {}, "extra": {}, "description": "",
+                    "connections": {}, "extra": {}, "layers": ["default"], "description": "",
                 },
                 "Broken": {
-                    "heal": True, "coordinates": None, "node_type": "generic", "extra": {}, "description": "",
+                    "heal": True, "coordinates": None, "node_type": "generic",
+                    "layers": ["default"], "extra": {}, "description": "",
                     "connections": {
                         "A": {
                             "type": "resource",
