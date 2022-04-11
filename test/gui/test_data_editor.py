@@ -5,6 +5,8 @@ from PySide6 import QtWidgets
 from mock import AsyncMock, patch, ANY, MagicMock
 
 from randovania.game_description import data_reader, pretty_print
+from randovania.games import default_data
+from randovania.games.game import RandovaniaGame
 from randovania.gui.data_editor import DataEditorWindow
 
 
@@ -119,3 +121,27 @@ def test_save_database_integrity_failure(tmp_path, echoes_game_data, skip_qtbot,
         QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No,
         QtWidgets.QMessageBox.No
     )
+
+
+def test_on_filters_changed_view_mode(tmp_path, mocker, skip_qtbot):
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+    game_data = default_data.read_json_then_binary(RandovaniaGame.BLANK)[1]
+
+    window = DataEditorWindow(game_data, db_path, True, False)
+    skip_qtbot.addWidget(window)
+
+    # Disable the layer
+    found = False
+    for (trick, trick_check), trick_combo in window.layers_editor.tricks.items():
+        if trick.long_name == "Combat":
+            trick_check.setChecked(True)
+            trick_combo.setCurrentIndex(1)
+            found = True
+
+    assert found
+    window.layers_editor.layer_checks[1].setChecked(False)
+
+    window.focus_on_world_by_name("Intro")
+    window.focus_on_area_by_name("Boss Arena")
+
+    assert window.current_area.node_with_name("Pickup (Free Loot)") is None

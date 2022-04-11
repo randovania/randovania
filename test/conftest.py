@@ -45,6 +45,16 @@ def default_preset() -> Preset:
 
 
 @pytest.fixture(scope="session")
+def blank_game_data() -> dict:
+    return default_data.read_json_then_binary(RandovaniaGame.BLANK)[1]
+
+
+@pytest.fixture(scope="session")
+def blank_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.BLANK)
+
+
+@pytest.fixture(scope="session")
 def customized_preset(default_preset) -> Preset:
     return Preset(
         name="{} Custom".format(default_preset.name),

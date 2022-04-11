@@ -392,6 +392,13 @@
                                     }
                                 ]
                             }
+                        },
+                        "Pickup (Free Loot)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -409,6 +416,31 @@
                     ],
                     "extra": {},
                     "event_name": "Boss",
+                    "connections": {
+                        "Door to Starting Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Pickup (Free Loot)": {
+                    "node_type": "pickup",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 24.17,
+                        "y": 51.22,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "extra_pickups"
+                    ],
+                    "extra": {},
+                    "pickup_index": 5,
+                    "major_location": false,
                     "connections": {
                         "Door to Starting Area": {
                             "type": "and",
