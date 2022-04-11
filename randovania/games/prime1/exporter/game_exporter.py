@@ -86,9 +86,19 @@ class PrimeGameExporter(GameExporter):
                     room_connections.append((room_name, dst_room_name))
 
             import networkx
-            from matplotlib import pyplot
             import numpy
+            import logging
 
+            for name in ["matplotlib", "matplotlib.font", "matplotlib.pyplot"]:
+                logger = logging.getLogger(name)
+                logger.setLevel(logging.CRITICAL)
+                logger.disabled = True
+            
+            import matplotlib
+            from matplotlib import pyplot
+
+            matplotlib._log.disabled = True
+            
             # model this world's connections as a graph
             graph = networkx.DiGraph()
             graph.add_edges_from(room_connections)
