@@ -36,6 +36,7 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                              player_index: int, num_players: int, rng_required: bool = True) -> PlayerPool:
     game = default_database.game_description_for(configuration.game).make_mutable_copy()
     derived_nodes.create_derived_nodes(game)
+    derived_nodes.remove_inactive_layers(game, configuration.active_layers())
 
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
