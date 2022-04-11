@@ -130,7 +130,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ matrix.executable }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Randovania ${{ matrix.name }}
           if-no-files-found: error
