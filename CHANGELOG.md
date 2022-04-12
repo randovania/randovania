@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added: April Fools Preset
+- Added: Flaahgra is now included in "Random Boss Sizes" option
 - Added: Map images are now generated and written in the same folder as output ISO when generating room rando seeds and exporting them with spoilers enabled.
 - Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
 - Fixed: Adjusted min/max boss sizes to prevent softlocks
@@ -40,7 +41,8 @@ Room Rando:
     - Changed: The door immediately behind the player is unlocked when teleporting to a new room. This gives the player one chance to backtrack before commiting to the warp.
 
 - Fixed: Specifying custom heat-damage-per-second now properly affects non-vanilla superheated rooms
-- Changed: Omega Pirate's armor and actor now scales appropriately
+- Changed: When creating a new save file, the default selection is now "Normal" to help prevent accidentally starting the game on Hard mode
+- Changed: Omega Pirate's armor and actor now scale appropriately
 
 #### Logic Database
 
