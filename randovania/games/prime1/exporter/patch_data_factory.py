@@ -711,7 +711,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             "tweaks": ctwk_config,
             "levelData": world_data,
             "hasSpoiler": self.description.has_spoiler,
-            "roomRandoMode": self.configuration.room_rando,
+            "roomRandoMode": self.configuration.room_rando.value,
 
             # TODO
             # "externAssetsDir": path_to_converted_assets,

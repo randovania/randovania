@@ -179,7 +179,7 @@ class PrimeGameExporter(GameExporter):
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:
             output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
-            if room_rando_mode != RoomRandoMode.NONE:
+            if room_rando_mode != RoomRandoMode.NONE.value:
                 self.make_room_rando_maps(output_file, f"{output_file.stem}", new_config["levelData"])
 
         os.environ["RUST_BACKTRACE"] = "1"
