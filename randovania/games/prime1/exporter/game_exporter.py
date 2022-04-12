@@ -69,21 +69,9 @@ class PrimeGameExporter(GameExporter):
         return False
 
     def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
-
-        def make_one_map(filepath, world):
-            room_connections = list()
-            for room_name in world["rooms"].keys():
-                room = world["rooms"][room_name]
-                if "doors" not in room.keys():
-                    continue
-                for dock_num in room["doors"]:
-                    if "destination" not in room["doors"][dock_num].keys():
-                        continue
-
-                    dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
-                    room_name = '\n'.join(wrap(room_name, 18))
-                    dst_room_name = '\n'.join(wrap(dst_room_name, 18))
-                    room_connections.append((room_name, dst_room_name))
+        def make_one_map(filepath, level_data, world_name):
+            from randovania.game_description import default_database
+            from randovania.game_description.world.dock_node import DockNode
 
             import networkx
             import numpy
@@ -95,9 +83,35 @@ class PrimeGameExporter(GameExporter):
                 logger.disabled = True
             
             import matplotlib
+            matplotlib._log.disabled = True
             from matplotlib import pyplot
 
-            matplotlib._log.disabled = True
+            def wrap_text(text):
+                return '\n'.join(wrap(text, 18))
+
+            # make list of all edges between rooms
+            room_connections = list()
+            for room_name in level_data[world_name]["rooms"].keys():
+                room = level_data[world_name]["rooms"][room_name]
+                if "doors" not in room.keys():
+                    continue
+                for dock_num in room["doors"]:
+                    if "destination" not in room["doors"][dock_num].keys():
+                        continue
+
+                    dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
+                    room_connections.append((wrap_text(room_name), wrap_text(dst_room_name)))
+
+            # add edges which were not shuffled
+            world = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list.world_with_name(world_name)
+            for area in world.areas:
+                for node in area.nodes:
+                    if not isinstance(node, DockNode):
+                        continue
+                    if node.extra["nonstandard"]:
+                        src_name = area.name
+                        dst_name = node.default_connection.area_identifier.area_name
+                        room_connections.append((wrap_text(src_name), wrap_text(dst_name)))
             
             # model this world's connections as a graph
             graph = networkx.DiGraph()
@@ -115,7 +129,7 @@ class PrimeGameExporter(GameExporter):
 
         for world_name in level_data.keys():
             filepath = directory.with_name(f"{base_filename} {world_name}.png")
-            make_one_map(filepath, level_data[world_name])
+            make_one_map(filepath, level_data, world_name)
 
     def export_game(self, patch_data: dict, export_params: GameExportParams,
                     progress_update: status_update_lib.ProgressUpdateCallable) -> None:
