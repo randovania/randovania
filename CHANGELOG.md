@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Destroying door locks is now properly tracked. In Echoes, this means removing a door lock from the back allows for logical access to where you were.
 - Fixed: Maximum values for certain preset fields, such as Energy Tank capacity and Superheated Room Probability, can now properly be used.
+- Fixed: A race condition with Randovania connected to Nintendont, where Randovania could incorrectly assume the game was idle if memory was read while it was executing the last sent task.
 
 ### Cave Story
 
@@ -50,7 +51,7 @@ Room Rando:
 
 ### Metroid Prime 2: Echoes
 
-- Nothing.
+- Changed: Optimized how long it takes to export a game that uses Prime 1 models.
 
 #### Patcher Changes
 

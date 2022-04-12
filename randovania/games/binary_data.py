@@ -17,6 +17,7 @@ _EXPECTED_FIELDS = [
     "schema_version",
     "game",
     "resource_database",
+    "layers",
     "starting_location",
     "initial_states",
     "minimal_logic",
@@ -156,6 +157,7 @@ NodeBaseFields = {
     "heal": Flag,
     "coordinates": OptionalValue(ConstructNodeCoordinates),
     "description": String,
+    "layers": PrefixedArray(VarInt, String),
     "extra": JsonEncodedValue,
     "connections": ConstructDict(ConstructRequirement),
 }
@@ -273,6 +275,7 @@ ConstructGame = Struct(
         schema_version=Const(game_migration.CURRENT_VERSION, VarInt),
         game=ConstructGameEnum,
         resource_database=ConstructResourceDatabase,
+        layers=PrefixedArray(VarInt, String),
 
         starting_location=ConstructAreaIdentifier,
         initial_states=ConstructDict(PrefixedArray(VarInt, ConstructResourceGain)),

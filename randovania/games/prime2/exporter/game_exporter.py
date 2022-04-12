@@ -89,7 +89,10 @@ class EchoesGameExporter(GameExporter):
         if export_params.use_prime_models:
             from randovania.patching.prime import asset_conversion
             assets_path = export_params.asset_cache_path
-            asset_conversion.convert_prime1_pickups(contents_files_path, assets_path, randomizer_data, updaters[1])
+            asset_conversion.convert_prime1_pickups(
+                export_params.prime_path, contents_files_path, assets_path,
+                patch_data, randomizer_data, updaters[1],
+            )
 
         adjust_model_name(patch_data, randomizer_data)
         claris_randomizer.apply_patcher_file(

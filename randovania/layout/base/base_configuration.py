@@ -54,6 +54,9 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
             "game": cls.game_enum(),
         }
 
+    def active_layers(self) -> set[str]:
+        return {"default"}
+
     def dangerous_settings(self) -> List[str]:
         result = []
 

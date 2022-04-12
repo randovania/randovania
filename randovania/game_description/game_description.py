@@ -55,6 +55,7 @@ class GameDescription:
     dock_weakness_database: DockWeaknessDatabase
 
     resource_database: ResourceDatabase
+    layers: tuple[str, ...]
     victory_condition: Requirement
     starting_location: AreaIdentifier
     initial_states: Dict[str, ResourceGainTuple]
@@ -67,6 +68,7 @@ class GameDescription:
         new_game = GameDescription(
             game=self.game,
             resource_database=self.resource_database,
+            layers=self.layers,
             dock_weakness_database=self.dock_weakness_database,
             world_list=copy.deepcopy(self.world_list, memodict),
             victory_condition=self.victory_condition,
@@ -82,6 +84,7 @@ class GameDescription:
                  dock_weakness_database: DockWeaknessDatabase,
 
                  resource_database: ResourceDatabase,
+                 layers: tuple[str, ...],
                  victory_condition: Requirement,
                  starting_location: AreaIdentifier,
                  initial_states: Dict[str, ResourceGainTuple],
@@ -92,6 +95,7 @@ class GameDescription:
         self.dock_weakness_database = dock_weakness_database
 
         self.resource_database = resource_database
+        self.layers = layers
         self.victory_condition = victory_condition
         self.starting_location = starting_location
         self.initial_states = initial_states

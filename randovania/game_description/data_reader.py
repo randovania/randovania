@@ -276,6 +276,7 @@ class WorldReader:
                 "heal": data["heal"],
                 "location": location,
                 "description": data["description"],
+                "layers": tuple(data["layers"]),
                 "extra": frozen_lib.wrap(data["extra"]),
                 "index": self.generic_index,
             }
@@ -468,6 +469,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     resource_database = read_resource_database(game, data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
+    layers = frozen_lib.wrap(data["layers"])
     world_reader = WorldReader(resource_database, dock_weakness_database)
     world_list = world_reader.read_world_list(data["worlds"])
 
@@ -479,6 +481,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     return world_reader, GameDescription(
         game=game,
         resource_database=resource_database,
+        layers=layers,
         dock_weakness_database=dock_weakness_database,
         world_list=world_list,
         victory_condition=victory_condition,

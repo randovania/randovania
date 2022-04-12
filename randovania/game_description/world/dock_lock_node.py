@@ -23,6 +23,7 @@ class DockLockNode(ResourceNode):
             heal=False,
             location=None,
             description="",
+            layers=dock.layers,
             extra={},
             index=index,
             dock_identifier=dock_identifier,

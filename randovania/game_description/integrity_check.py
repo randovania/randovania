@@ -18,6 +18,7 @@ from randovania.game_description.world.world import World
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_re = re.compile(r"(.+?) (to|from) (.+?)( \(.*\))?$")
 dock_node_suffix_re = re.compile(r"(.+?)( \([^()]+?\))$")
+layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 
 
 def base_dock_name_raw(dock_type: DockType, weakness: DockWeakness, connection: AreaIdentifier) -> str:
@@ -61,6 +62,9 @@ def dock_has_correct_name(area: Area, node: DockNode) -> tuple[bool, Optional[st
 def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
     world_list = game.world_list
     area = world_list.nodes_to_area(node)
+
+    if invalid_layers := set(node.layers) - set(game.layers):
+        yield f"'{node.name}' has unknown layers {invalid_layers}"
 
     if isinstance(node, EventNode):
         if not node.name.startswith("Event -"):
@@ -201,6 +205,10 @@ def find_database_errors(game: GameDescription) -> list[str]:
     derived_nodes.create_derived_nodes(copy)
 
     result = []
+
+    for layer in copy.layers:
+        if layer_name_re.match(layer) is None:
+            result.append(f"Layer '{layer}' doesn't match {layer_name_re.pattern}")
 
     for world in copy.world_list.worlds:
         result.extend(find_world_errors(copy, world))

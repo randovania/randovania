@@ -3,11 +3,13 @@ Final Cave
 Extra - map_name: Priso1
 Extra - in_dark_aether: False
 > Door to Plantation; Heals? False
+  * Layers: default
   * Door to Plantation/Door to Final Cave
   > Door to Balcony (Pre-Bosses)
       Has Weapon
 
 > Door to Balcony (Pre-Bosses); Heals? False
+  * Layers: default
   * Door to Balcony (Pre-Bosses)/Door to Final Cave
   > Door to Plantation
       Has Weapon
@@ -17,11 +19,13 @@ Last Cave (Hidden)
 Extra - map_name: Priso2
 Extra - in_dark_aether: False
 > Door to Plantation; Heals? False
+  * Layers: default
   * Door to Plantation/Door to Last Cave (Hidden)
   > Before Red Demon
       Booster 2.0 and Has Weapon
 
 > Event - Red Demon; Heals? False
+  * Layers: default
   * Event Defeated Red Demon
   > Door to Plantation
       Booster 2.0
@@ -31,6 +35,7 @@ Extra - in_dark_aether: False
       Booster 2.0
 
 > Pickup (Red Demon Boss); Heals? False
+  * Layers: default
   * Pickup 29; Major Location? False
   * Extra - event: 0300
   > Door to Plantation
@@ -39,11 +44,13 @@ Extra - in_dark_aether: False
       Booster 2.0
 
 > Door to Balcony (Pre-Bosses); Heals? False
+  * Layers: default
   * Door to Balcony (Pre-Bosses)/Door to Last Cave (Hidden)
   > Before Red Demon
       Booster 2.0 and Has Weapon
 
 > Before Red Demon; Heals? False
+  * Layers: default
   > Door to Plantation
       After Defeated Red Demon
   > Event - Red Demon
@@ -61,19 +68,23 @@ Extra - map_name: Blcny1
 Extra - in_dark_aether: False
 Extra - starting_script: <TRA0062:0091:0007:0074
 > Exit to Throne Room; Heals? False
+  * Layers: default
   * Exit to Throne Room/Entrance from Balcony (Pre-Bosses)
 
 > Door to Final Cave; Heals? False
+  * Layers: default
   * Door to Final Cave/Door to Balcony (Pre-Bosses)
   > Door to Prefab Building
       Trivial
 
 > Door to Last Cave (Hidden); Heals? False
+  * Layers: default
   * Door to Last Cave (Hidden)/Door to Balcony (Pre-Bosses)
   > Door to Prefab Building
       Trivial
 
 > Door to Prefab Building; Heals? False; Spawn Point
+  * Layers: default
   * Door to Prefab Building/Door to Balcony (Pre-Bosses)
   > Exit to Throne Room
       After Lowered Barrier
@@ -102,6 +113,7 @@ Extra - starting_script: <TRA0062:0091:0007:0074
                                   Enabled 100%
 
 > Event - Lowered Barrier; Heals? False
+  * Layers: default
   * Event Lowered Barrier
   > Door to Prefab Building
       Trivial
@@ -113,11 +125,13 @@ Extra - map_name: Prefa1
 Extra - in_dark_aether: False
 Extra - starting_script: <TRA0066:0094:0011:0008
 > Door to Balcony (Pre-Bosses); Heals? False
+  * Layers: default
   * Door to Balcony (Pre-Bosses)/Door to Prefab Building
   > Save Point/Bed
       Trivial
 
 > Save Point/Bed; Heals? True; Spawn Point
+  * Layers: default
   > Door to Balcony (Pre-Bosses)
       Trivial
 
@@ -126,11 +140,13 @@ Throne Room
 Extra - map_name: Ring1
 Extra - in_dark_aether: False
 > Event - Misery; Heals? False
+  * Layers: default
   * Event Defeated Misery
   > H/V Trigger to The King's Table
       Trivial
 
 > Entrance from Balcony (Pre-Bosses); Heals? False
+  * Layers: default
   * Entrance to Balcony (Pre-Bosses)/Exit to Throne Room
   > Event - Misery
       Any of the following:
@@ -139,9 +155,11 @@ Extra - in_dark_aether: False
           Missiles ≥ 31 and Missile Launcher and Kill Bosses with Missiles (Expert)
 
 > Exit to Balcony (Post-Bosses); Heals? False
+  * Layers: default
   * Exit to Balcony (Post-Bosses)/Entrance from Throne Room
 
 > H/V Trigger to The King's Table; Heals? False
+  * Layers: default
   * H/V Trigger to The King's Table/H/V Trigger to Throne Room
   > Exit to Balcony (Post-Bosses)
       After Defeated Undead Core
@@ -151,11 +169,13 @@ The King's Table
 Extra - map_name: Ring2
 Extra - in_dark_aether: False
 > Event - Doctor; Heals? False
+  * Layers: default
   * Event Defeated Doctor
   > H/V Trigger to Black Space
       Trivial
 
 > H/V Trigger to Throne Room; Heals? False
+  * Layers: default
   * H/V Trigger to Throne Room/H/V Trigger to The King's Table
   > Event - Doctor
       Any of the following:
@@ -164,6 +184,7 @@ Extra - in_dark_aether: False
           Missiles ≥ 16 and Super Missile Launcher and Kill Bosses with Missiles (Advanced)
 
 > H/V Trigger to Black Space; Heals? False
+  * Layers: default
   * H/V Trigger to Black Space/H/V Trigger to The King's Table
   > H/V Trigger to Throne Room
       After Defeated Undead Core
@@ -173,11 +194,13 @@ Black Space
 Extra - map_name: Ring3
 Extra - in_dark_aether: False
 > Event - Undead Core; Heals? False
+  * Layers: default
   * Event Defeated Undead Core
   > H/V Trigger to The King's Table
       Trivial
 
 > H/V Trigger to The King's Table; Heals? False
+  * Layers: default
   * H/V Trigger to The King's Table/H/V Trigger to Black Space
   > Event - Undead Core
       Any of the following:
@@ -190,10 +213,12 @@ Balcony (Post-Bosses)
 Extra - map_name: Blcny2
 Extra - in_dark_aether: False
 > Event - Normal Ending; Heals? False
+  * Layers: default
   * Event Normal Ending
   * Extra - different_strongly_connected_component: True
 
 > Entrance from Throne Room; Heals? False
+  * Layers: default
   * Entrance to Throne Room/Exit to Balcony (Post-Bosses)
   > Event - Normal Ending
       After Defeated Undead Core and Enabled Normal Ending
@@ -203,9 +228,11 @@ Extra - in_dark_aether: False
           Enabled All Bosses or Enabled Best Ending or Enabled Entrance Randomizer or Enabled 100%
 
 > Exit to Prefab House; Heals? False
+  * Layers: default
   * Exit to Prefab House/Entrance from Balcony (Post-Bosses)
 
 > Entrance from Prefab House; Heals? False
+  * Layers: default
   * Entrance to Prefab House/Exit to Balcony (Post-Bosses)
   > Entrance from Throne Room
       Trivial
@@ -215,6 +242,7 @@ Prefab House
 Extra - map_name: Prefa2
 Extra - in_dark_aether: False
 > Entrance from Balcony (Post-Bosses); Heals? False
+  * Layers: default
   * Entrance to Balcony (Post-Bosses)/Exit to Prefab House
   > Exit to Balcony (Post-Bosses)
       Trivial
@@ -224,12 +252,15 @@ Extra - in_dark_aether: False
       Trivial
 
 > Exit to Balcony (Post-Bosses); Heals? False
+  * Layers: default
   * Exit to Balcony (Post-Bosses)/Entrance from Prefab House
 
 > Exit to Sacred Grounds - B1; Heals? False
+  * Layers: default
   * Exit to Sacred Grounds - B1/Entrance from Prefab House
 
 > Save Point; Heals? False; Spawn Point
+  * Layers: default
   > Entrance from Balcony (Post-Bosses)
       Trivial
 
@@ -238,11 +269,13 @@ Sacred Grounds - B1
 Extra - map_name: Hell1
 Extra - in_dark_aether: False
 > Entrance from Prefab House; Heals? False
+  * Layers: default
   * Entrance to Prefab House/Exit to Sacred Grounds - B1
   > Pickup (Hell B1 Spot)
       Booster 2.0
 
 > Door to Sacred Grounds - B2; Heals? False
+  * Layers: default
   * Door to Sacred Grounds - B2/Door to Sacred Grounds - B1
   > Pickup (Hell B1 Spot)
       Booster 2.0
@@ -250,12 +283,14 @@ Extra - in_dark_aether: False
       After Used Ma Pignon
 
 > Pickup (Hell B1 Spot); Heals? False
+  * Layers: default
   * Pickup 30; Major Location? False
   * Extra - event: 0401
   > Door to Sacred Grounds - B2
       Booster 2.0
 
 > Event - Curly; Heals? False; Spawn Point
+  * Layers: default
   * Event Picked up Curly (Hell)
   > Door to Sacred Grounds - B2
       Trivial
@@ -265,11 +300,13 @@ Sacred Grounds - B2
 Extra - map_name: Hell2
 Extra - in_dark_aether: False
 > Door to Sacred Grounds - B1; Heals? False
+  * Layers: default
   * Door to Sacred Grounds - B1/Door to Sacred Grounds - B2
   > H/V Trigger to Sacred Grounds - B3
       Has Weapon
 
 > H/V Trigger to Sacred Grounds - B3; Heals? False
+  * Layers: default
   * H/V Trigger to Sacred Grounds - B3/H/V Trigger to Sacred Grounds - B2
   > Door to Sacred Grounds - B1
       Has Weapon
@@ -279,6 +316,7 @@ Sacred Grounds - B3
 Extra - map_name: Hell3
 Extra - in_dark_aether: False
 > H/V Trigger to Sacred Grounds - B2; Heals? False
+  * Layers: default
   * H/V Trigger to Sacred Grounds - B2/H/V Trigger to Sacred Grounds - B3
   > Pickup (Hell B3 Chest)
       All of the following:
@@ -294,6 +332,7 @@ Extra - in_dark_aether: False
               Damage Boosting (Beginner) and Normal Damage ≥ 10
 
 > Pickup (Hell B3 Chest); Heals? False
+  * Layers: default
   * Pickup 31; Major Location? False
   * Extra - event: 0400
   > H/V Trigger to Sacred Grounds - B2
@@ -308,9 +347,11 @@ Extra - in_dark_aether: False
           Missiles ≥ 41 and Missile Launcher and Kill Bosses with Missiles (Advanced)
 
 > Exit to Passage?; Heals? False
+  * Layers: default
   * Exit to Passage?/Entrance from Sacred Grounds - B3
 
 > Event - Heavy Press; Heals? False
+  * Layers: default
   * Event Defeated Heavy Press
   > Exit to Passage?
       Trivial
@@ -320,11 +361,13 @@ Corridor
 Extra - map_name: Ostep
 Extra - in_dark_aether: False
 > Door to Passage?; Heals? False
+  * Layers: default
   * Door to Passage?/Door to Corridor
   > Exit to Seal Chamber
       Trivial
 
 > Exit to Seal Chamber; Heals? False
+  * Layers: default
   * Exit to Seal Chamber/Entrance from Corridor
   > Door to Passage?
       Trivial
@@ -334,6 +377,7 @@ Seal Chamber
 Extra - map_name: Ballo1
 Extra - in_dark_aether: False
 > Entrance from Corridor; Heals? False
+  * Layers: default
   * Entrance to Corridor/Exit to Seal Chamber
   > Event - Best Ending
       All of the following:
@@ -347,6 +391,7 @@ Extra - in_dark_aether: False
           Enabled All Bosses or Enabled Best Ending or Enabled 100%
 
 > Event - Best Ending; Heals? False
+  * Layers: default
   * Event Best Ending
   * Extra - different_strongly_connected_component: True
   > Entrance from Corridor

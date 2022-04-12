@@ -25,10 +25,10 @@ def test_connections_from_dock_blast_shield(empty_patches):
     node_1_identifier = NodeIdentifier.create("W", "Area 1", "Node 1")
     node_2_identifier = NodeIdentifier.create("W", "Area 2", "Node 2")
 
-    node_1 = DockNode("Node 1", False, None, "", {}, 0, dock_type,
+    node_1 = DockNode("Node 1", False, None, "", ("default",), {}, 0, dock_type,
                       node_2_identifier, weak_1, None, None)
     node_1_lock = DockLockNode.create_from_dock(node_1, node_1_identifier, 1)
-    node_2 = DockNode("Node 2", False, None, "", {}, 2, dock_type,
+    node_2 = DockNode("Node 2", False, None, "", ("default",), {}, 2, dock_type,
                       node_1_identifier, weak_2, None, None)
     node_2_lock = DockLockNode.create_from_dock(node_2, node_2_identifier, 3)
 
