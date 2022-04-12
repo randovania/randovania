@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.3.0] - Unreleased
 
 - Added: Destroying door locks is now properly tracked. In Echoes, this means removing a door lock from the back allows for logical access to where you were.
+- Added: In Data Visualizer, it's now possible to set tricks to a certain level and simplify all visible connections based on that.
 - Fixed: Maximum values for certain preset fields, such as Energy Tank capacity and Superheated Room Probability, can now properly be used.
 - Fixed: A race condition with Randovania connected to Nintendont, where Randovania could incorrectly assume the game was idle if memory was read while it was executing the last sent task.
 
