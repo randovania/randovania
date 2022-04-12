@@ -634,6 +634,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "Ridley": get_random_size(0.2, 1.5),
                 "exo": get_random_size(0.05, 2.0),
                 "essence": get_random_size(0.5, 2.25),
+                "flaahgra": get_random_size(0.15, 3.3),
             }
 
         return {
