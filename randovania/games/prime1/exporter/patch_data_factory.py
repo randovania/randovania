@@ -286,13 +286,12 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         index = node.extra["dock_index"]
                         dock_num_by_area_node[(area.name, node.name)] = index
                         is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
+                        default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
                         if node.extra["nonstandard"]:
                             # This dock is like a morph tunnel or 1-way door etc. that cannot be elegantly patched
                             continue
                         area_dock_nums[area.name].append(index)
                         attached_areas[area.name].append(node.default_connection.area_name)
-                        default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
-
                         candidates.append((area.name, index))
                     size_indices[area.name] = area.extra["size_index"]
 
@@ -460,6 +459,65 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             }
 
                         # print("%s:%d --> %s:%d" % (src_name, src_dock, dst_name, dst_dock))
+
+                        # If we just finished placing all rooms, check if there are unconnected components
+                        # and if so, re-roll some rooms
+                        if len(candidates) == 0:
+                            import networkx
+
+                            # Model as networkx graph object
+                            room_connections = list()
+                            for room_name in world_data[world.name]["rooms"].keys():
+                                room = world_data[world.name]["rooms"][room_name]
+                                if "doors" not in room.keys():
+                                    continue
+                                for dock_num in room["doors"]:
+                                    if "destination" not in room["doors"][dock_num].keys():
+                                        continue
+
+                                    dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
+                                    room_connections.append((room_name, dst_room_name))
+
+                            # Handle unrandomized connections
+                            for (src_name, src_dock) in is_nonstandard:
+                                if is_nonstandard[(src_name, src_dock)]:
+                                    (dst_name, dst_dock) = default_connections[(src_name, src_dock)]
+                                    room_connections.append((src_name, dst_name))
+
+                            # model this world's connections as a graph
+                            graph = networkx.DiGraph()
+                            graph.add_edges_from(room_connections)
+
+                            if not networkx.is_weakly_connected(graph):
+                                # Split graph into strongly connected components
+                                weakly_connected_components = sorted(networkx.weakly_connected_components(graph), key=len, reverse=True)
+
+                                def component_number(name):
+                                    i = 0
+                                    for component in weakly_connected_components:
+                                        if name in list(component):
+                                            return i
+                                        i += 1
+
+                                def remove_pair(src_name, src_dock):
+                                    (dst_name, dst_dock) = shuffled.pop((src_name, src_dock))
+                                    candidates.append((src_name, src_dock))
+                                    candidates.append((dst_name, dst_dock))
+                                    used_room_pairings.remove({src_name, dst_name})        
+
+                                # randomply pick two room pairs which are not members of the same strongly connected component
+                                first = True
+                                (src_name_a, src_dock_a) = self.rng.choice(list(shuffled.keys()))
+                                while first or component_number(src_name_a) == component_number(src_name_b):
+                                    (src_name_b, src_dock_b) = self.rng.choice(list(shuffled.keys()))
+                                    first = False
+
+                                # put back into pool for re-randomization (cross fingers that they connect the two strong components)
+                                remove_pair(src_name_a, src_dock_a)
+                                remove_pair(src_name_b, src_dock_b)
+
+                                # do something different this time
+                                self.rng.shuffle(candidates)
 
         starting_memo = None
         extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
