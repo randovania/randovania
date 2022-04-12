@@ -1,7 +1,7 @@
 from random import Random
 from typing import Tuple
 
-from randovania.game_description import default_database
+from randovania.game_description import default_database, derived_nodes
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import add_resources_into_another
@@ -58,9 +58,10 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> Tuple[int, int]:
     :param layout:
     :return:
     """
-    game_description = default_database.game_description_for(layout.game)
-    num_pickup_nodes = game_description.world_list.num_pickup_nodes
+    game_description = default_database.game_description_for(layout.game).make_mutable_copy()
+    derived_nodes.remove_inactive_layers(game_description, layout.active_layers())
 
+    num_pickup_nodes = game_description.world_list.num_pickup_nodes
     pool_pickups, pool_assignment, _ = calculate_pool_results(layout, game_description.resource_database, rng_required=False)
     min_starting_items = layout.major_items_configuration.minimum_random_starting_items
 
