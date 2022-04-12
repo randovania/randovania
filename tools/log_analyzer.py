@@ -301,9 +301,14 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
 
     ## Average standardized deviances for all locations
     accumulated_stddev = 0
+    stddev_count = 0
     for stddev in stddev_by_location.items():
-        accumulated_stddev += stddev[1]
-    accumulated_stddev /= len(stddev_by_location)*2 # div by 2 because +1 deviance at one location always implies +1 everywhere else 
+        try:
+            accumulated_stddev += stddev[1]
+            stddev_count += 1
+        except:
+            pass
+    accumulated_stddev /= stddev_count*2 # div by 2 because +1 deviance at one location always implies +1 everywhere else 
 
     ## Accumulate deviances for all locations
 

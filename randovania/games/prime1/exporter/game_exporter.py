@@ -2,8 +2,8 @@ import copy
 import dataclasses
 import json
 import os
-import shutil
 from pathlib import Path
+from textwrap import wrap
 
 import py_randomprime
 
@@ -11,6 +11,7 @@ from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
 from randovania.patching.patchers.gamecube import iso_packager
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
@@ -67,6 +68,69 @@ class PrimeGameExporter(GameExporter):
         """
         return False
 
+    def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
+        def make_one_map(filepath, level_data, world_name):
+            from randovania.game_description import default_database
+            from randovania.game_description.world.dock_node import DockNode
+
+            import networkx
+            import numpy
+            import logging
+
+            for name in ["matplotlib", "matplotlib.font", "matplotlib.pyplot"]:
+                logger = logging.getLogger(name)
+                logger.setLevel(logging.CRITICAL)
+                logger.disabled = True
+            
+            import matplotlib
+            matplotlib._log.disabled = True
+            from matplotlib import pyplot
+
+            def wrap_text(text):
+                return '\n'.join(wrap(text, 18))
+
+            # make list of all edges between rooms
+            room_connections = list()
+            for room_name in level_data[world_name]["rooms"].keys():
+                room = level_data[world_name]["rooms"][room_name]
+                if "doors" not in room.keys():
+                    continue
+                for dock_num in room["doors"]:
+                    if "destination" not in room["doors"][dock_num].keys():
+                        continue
+
+                    dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
+                    room_connections.append((wrap_text(room_name), wrap_text(dst_room_name)))
+
+            # add edges which were not shuffled
+            world = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list.world_with_name(world_name)
+            for area in world.areas:
+                for node in area.nodes:
+                    if not isinstance(node, DockNode):
+                        continue
+                    if node.extra["nonstandard"]:
+                        src_name = area.name
+                        dst_name = node.default_connection.area_identifier.area_name
+                        room_connections.append((wrap_text(src_name), wrap_text(dst_name)))
+            
+            # model this world's connections as a graph
+            graph = networkx.DiGraph()
+            graph.add_edges_from(room_connections)
+
+            # render the graph to png
+            pos = networkx.spring_layout(graph, k=1.2/numpy.sqrt(len(graph.nodes())), iterations=100, seed=0)
+            pyplot.figure(3, figsize=(22, 22))
+            networkx.draw(graph, pos=pos, node_size=800)
+            networkx.draw_networkx_labels(graph, pos=pos, font_weight='bold', font_size=4)
+            pyplot.savefig(filepath, bbox_inches='tight', dpi=220)
+
+            # reset for next graph
+            pyplot.clf()
+
+        for world_name in level_data.keys():
+            filepath = directory.with_name(f"{base_filename} {world_name}.png")
+            make_one_map(filepath, level_data, world_name)
+
     def export_game(self, patch_data: dict, export_params: GameExportParams,
                     progress_update: status_update_lib.ProgressUpdateCallable) -> None:
         assert isinstance(export_params, PrimeGameExportParams)
@@ -81,6 +145,7 @@ class PrimeGameExporter(GameExporter):
 
         new_config = copy.copy(patch_data)
         has_spoiler = new_config.pop("hasSpoiler")
+        room_rando_mode = new_config.pop("roomRandoMode")
         new_config["inputIso"] = os.fspath(input_file)
         new_config["outputIso"] = os.fspath(output_file)
         new_config["gameConfig"]["updateHintStateReplacement"] = list(
@@ -114,6 +179,8 @@ class PrimeGameExporter(GameExporter):
         patch_as_str = json.dumps(new_config, indent=4, separators=(',', ': '))
         if has_spoiler:
             output_file.with_name(f"{output_file.stem}-patcher.json").write_text(patch_as_str)
+            if room_rando_mode != RoomRandoMode.NONE.value:
+                self.make_room_rando_maps(output_file, f"{output_file.stem}", new_config["levelData"])
 
         os.environ["RUST_BACKTRACE"] = "1"
 
