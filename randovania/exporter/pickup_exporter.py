@@ -13,6 +13,7 @@ from randovania.game_description.resources.resource_info import ResourceGainTupl
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
 from randovania.exporter import item_names
 
@@ -246,6 +247,7 @@ def export_all_indices(patches: GamePatches,
                        data_source: PickupModelDataSource,
                        exporter: PickupExporter,
                        visual_etm: PickupEntry,
+                       layout: BaseConfiguration,
                        ) -> List[ExportedPickupDetails]:
     """
     Creates the patcher data for all pickups in the game
@@ -264,11 +266,22 @@ def export_all_indices(patches: GamePatches,
     pickup_list = list(pickup_assignment.values())
     rng.shuffle(pickup_list)
 
-    indices = sorted(
-        node.pickup_index
-        for node in world_list.all_nodes
-        if isinstance(node, PickupNode)
-    )
+    indices = list()
+    for node in world_list.all_nodes:
+        if not isinstance(node, PickupNode):
+            continue                    
+
+        # skip if this layer isn't part of this preset
+        active_layer = False
+        for layer in layout.active_layers():
+            if layer in node.layers:
+                active_layer = True
+                break
+        if not active_layer:
+            continue
+
+        indices.append(node.pickup_index)
+    indices = sorted(indices)
 
     pickups = [
         exporter.export(index,

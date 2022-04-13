@@ -59,7 +59,7 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> Tuple[int, int]:
     :return:
     """
     game_description = default_database.game_description_for(layout.game)
-    num_pickup_nodes = game_description.world_list.num_pickup_nodes
+    num_pickup_nodes = game_description.world_list.num_pickup_nodes_using_layout(layout)
 
     pool_pickups, pool_assignment, _ = calculate_pool_results(layout, game_description.resource_database, rng_required=False)
     min_starting_items = layout.major_items_configuration.minimum_random_starting_items

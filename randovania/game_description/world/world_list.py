@@ -90,6 +90,24 @@ class WorldList(NodeProvider):
     def num_pickup_nodes(self) -> int:
         return sum(1 for node in self.all_nodes if isinstance(node, PickupNode))
 
+    def num_pickup_nodes_using_layout(self, layout) -> int:
+        from randovania.layout.base.base_configuration import BaseConfiguration
+        assert isinstance(layout, BaseConfiguration)
+        sum = 0
+        for node in self.all_nodes:
+            if not isinstance(node, PickupNode):
+                continue
+            
+            active_layer = False
+            for layer in node.layers:
+                if layer in layout.active_layers():
+                    active_layer = True
+                    break
+            
+            if active_layer:
+                sum += 1
+        return sum
+
     @property
     def all_worlds_areas_nodes(self) -> Iterable[Tuple[World, Area, Node]]:
         for world in self.worlds:

@@ -216,6 +216,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(),
                                                             self.players_config),
             visual_etm=pickup_creator.create_visual_etm(),
+            layout=self.configuration,
         )
         modal_hud_override = _create_locations_with_modal_hud_memo(pickup_list)
 
@@ -233,8 +234,26 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             for area in world.areas:
                 world_data[world.name]["rooms"][area.name] = {"pickups":[]}
                 
-                pickup_indices = sorted(node.pickup_index for node in area.nodes if isinstance(node, PickupNode))
-                if pickup_indices:
+                pickup_indices = list()
+
+                for node in area.nodes:
+                    if not isinstance(node, PickupNode):
+                        continue                    
+
+                    # skip if this layer isn't part of this preset
+                    active_layer = False
+                    for layer in self.configuration.active_layers():
+                        if layer in node.layers:
+                            active_layer = True
+                            break
+                    if not active_layer:
+                        continue
+
+                    pickup_indices.append(node.pickup_index)
+                
+                pickup_indices = sorted(pickup_indices)
+
+                if len(pickup_indices) != 0:
                     world_data[world.name]["rooms"][area.name] = {
                         "pickups": [
                             prime1_pickup_details_to_patcher(pickup_list[index.index],

@@ -116,6 +116,7 @@ class SuperMetroidPatchDataFactory(BasePatchDataFactory):
             exporter=pickup_exporter.create_pickup_exporter(db, pickup_exporter.GenericAcquiredMemo(),
                                                             self.players_config),
             visual_etm=pickup_creator.create_visual_etm(),
+            layout=self.configuration,
         )
 
         gameplay_patch_list = [field.name for field in dataclasses.fields(self.configuration.patches)]

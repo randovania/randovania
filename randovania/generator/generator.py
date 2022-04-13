@@ -26,10 +26,11 @@ from randovania.resolver.exceptions import GenerationFailure, InvalidConfigurati
 def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription,
                              configuration: BaseConfiguration) -> None:
     min_starting_items = configuration.major_items_configuration.minimum_random_starting_items
-    if len(item_pool) > game.world_list.num_pickup_nodes + min_starting_items:
+    num_pickup_nodes = game.world_list.num_pickup_nodes_using_layout(configuration)
+    if len(item_pool) > num_pickup_nodes + min_starting_items:
         raise InvalidConfiguration(
             "Item pool has {} items, which is more than {} (game) + {} (minimum starting items)".format(
-                len(item_pool), game.world_list.num_pickup_nodes, min_starting_items))
+                len(item_pool), num_pickup_nodes, min_starting_items))
 
 
 async def create_player_pool(rng: Random, configuration: BaseConfiguration,
