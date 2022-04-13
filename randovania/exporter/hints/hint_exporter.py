@@ -3,10 +3,10 @@ from random import Random
 from randovania.exporter.hints import pickup_hint
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.hints.temple_key_hint import create_temple_key_hint
-from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintType
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout import filtered_database
 
 
 class HintExporter:
@@ -47,7 +47,7 @@ class HintExporter:
             pickup_target = patches.pickup_assignment.get(hint.target)
             phint = pickup_hint.create_pickup_hint(
                 patches.pickup_assignment,
-                default_database.game_description_for(configuration.game).world_list,
+                filtered_database.game_description_for_layout(configuration).world_list,
                 hint.precision.item,
                 pickup_target,
                 players_config,

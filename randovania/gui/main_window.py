@@ -17,7 +17,7 @@ from qasync import asyncSlot
 import randovania
 from randovania import VERSION, get_readme
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.games.game import RandovaniaGame, DevelopmentState
+from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.main_window_ui import Ui_MainWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, theme
 from randovania.gui.lib.common_qt_lib import open_directory_in_explorer

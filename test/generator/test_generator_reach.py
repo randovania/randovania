@@ -5,7 +5,7 @@ from typing import Tuple, List
 
 import pytest
 
-from randovania.game_description import default_database, derived_nodes
+from randovania.game_description import derived_nodes, default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement, ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -225,7 +225,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
     derived_nodes.create_derived_nodes(game)
     derived_nodes.remove_inactive_layers(game, default_echoes_configuration.active_layers())
 
-    mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
+    mocker.patch("randovania.layout.default_database.game_description_for", return_value=game)
     generator = game.game.generator
 
     specific_levels = {
