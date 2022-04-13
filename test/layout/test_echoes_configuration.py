@@ -72,8 +72,8 @@ def make_dummy(cls: Type[T]) -> T:
          },
     ],
     name="layout_config_with_data")
-def _layout_config_with_data(request, default_layout_configuration):
-    data = default_layout_configuration.as_json
+def _layout_config_with_data(request, default_echoes_configuration):
+    data = default_echoes_configuration.as_json
     for key, value in request.param.items():
         if key != "encoded":
             assert key in data

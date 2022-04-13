@@ -38,7 +38,7 @@ def get_locations_for_major_pickups_and_keys(
                     player_name = players_config.player_names[player_index]
 
                 results[target.pickup].append(
-                    OwnedPickupLocation(player_name, PickupLocation(patches.game_enum, pickup_index))
+                    OwnedPickupLocation(player_name, PickupLocation(patches.configuration.game, pickup_index))
                 )
 
     return results

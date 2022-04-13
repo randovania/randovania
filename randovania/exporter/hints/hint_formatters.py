@@ -49,7 +49,7 @@ class TemplatedFormatter(LocationFormatter):
 
 class RelativeFormatter(LocationFormatter):
     def __init__(self, patches: GamePatches, distance_painter: Callable[[str, bool], str]):
-        self.world_list = default_database.game_description_for(patches.game_enum).world_list
+        self.world_list = default_database.game_description_for(patches.configuration.game).world_list
         self.patches = patches
         self.distance_painter = distance_painter
 

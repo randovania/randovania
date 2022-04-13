@@ -18,6 +18,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
@@ -46,7 +47,7 @@ from randovania.network_common.pickup_serializer import BitPackPickupEntry
             "target": 50}]},
     ],
     name="patches_with_data")
-def _patches_with_data(request, echoes_game_description, echoes_item_database):
+def _patches_with_data(request, echoes_game_description, echoes_game_patches, echoes_item_database):
     game = echoes_game_description
     db = game.resource_database
 
@@ -82,7 +83,7 @@ def _patches_with_data(request, echoes_game_description, echoes_item_database):
         "locations": {},
         "hints": {}
     }
-    patches = dataclasses.replace(game.create_game_patches(), player_index=0)
+    patches = dataclasses.replace(echoes_game_patches, player_index=0)
 
     locations = collections.defaultdict(dict)
     for world, area, node in game.world_list.all_worlds_areas_nodes:
@@ -151,14 +152,16 @@ def test_encode(patches_with_data):
     assert encoded == expected
 
 
-def test_decode(patches_with_data, default_layout_configuration):
+def test_decode(patches_with_data, default_echoes_configuration):
     encoded, expected = patches_with_data
 
-    game = data_reader.decode_data(default_layout_configuration.game_data)
-    pool = pool_creator.calculate_pool_results(default_layout_configuration, game.resource_database)
+    data = default_data.read_json_then_binary(default_echoes_configuration.game)[1]
+
+    game = data_reader.decode_data(data)
+    pool = pool_creator.calculate_pool_results(default_echoes_configuration, game.resource_database)
 
     # Run
-    decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_layout_configuration)
+    decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration)
 
     # Assert
     assert decoded.elevator_connection == expected.elevator_connection

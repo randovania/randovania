@@ -10,8 +10,8 @@ from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.generator.hint_distributor import EchoesHintDistributor
 from randovania.generator.filler import runner
@@ -19,7 +19,8 @@ from randovania.generator.generator import create_player_pool
 
 
 async def test_run_filler(echoes_game_description,
-                          default_layout_configuration,
+                          echoes_game_patches,
+                          default_echoes_configuration,
                           mocker,
                           ):
     # Setup
@@ -30,12 +31,11 @@ async def test_run_filler(echoes_game_description,
                         for node in echoes_game_description.world_list.all_nodes if isinstance(node, LogbookNode)]
 
     player_pools = [
-        await create_player_pool(rng, default_layout_configuration, 0, 1),
+        await create_player_pool(rng, default_echoes_configuration, 0, 1),
     ]
     initial_pickup_count = len(player_pools[0].pickups)
 
-    patches = echoes_game_description.create_game_patches()
-    patches = patches.assign_hint(
+    patches = echoes_game_patches.assign_hint(
         hint_identifiers[0],
         Hint(HintType.LOCATION, None, PickupIndex(0))
     )
@@ -64,17 +64,16 @@ async def test_run_filler(echoes_game_description,
     assert initial_pickup_count == len(remaining_items) + len(result_patches.pickup_assignment.values())
 
 
-def test_fill_unassigned_hints_empty_assignment(echoes_game_description):
+def test_fill_unassigned_hints_empty_assignment(echoes_game_description, echoes_game_patches):
     # Setup
     rng = Random(5000)
-    base_patches = echoes_game_description.create_game_patches()
     expected_logbooks = sum(1 for node in echoes_game_description.world_list.all_nodes
                             if isinstance(node, LogbookNode))
     hint_distributor = echoes_game_description.game.generator.hint_distributor
 
     # Run
     result = hint_distributor.fill_unassigned_hints(
-        base_patches,
+        echoes_game_patches,
         echoes_game_description.world_list,
         rng, {},
     )

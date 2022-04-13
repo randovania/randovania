@@ -3,16 +3,17 @@ from typing import Iterator, Optional
 
 from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
-from randovania.game_description.world.node import Node, NodeContext
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
@@ -158,7 +159,18 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         graph.add_node(node)
 
     context = NodeContext(
-        patches=game.create_game_patches(),
+        patches=GamePatches(
+            player_index=0,
+            configuration=None,
+            pickup_assignment={},
+            elevator_connection={},
+            dock_connection={},
+            dock_weakness={},
+            configurable_nodes={},
+            starting_items={},
+            starting_location=game.starting_location,
+            hints={},
+        ),
         current_resources={},
         database=game.resource_database,
         node_provider=game.world_list,
