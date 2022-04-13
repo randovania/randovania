@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY
 from randovania.game_description.item.item_category import USELESS_ITEM_CATEGORY

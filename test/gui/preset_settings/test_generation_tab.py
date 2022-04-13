@@ -6,7 +6,7 @@ import pytest
 from PySide6 import QtCore
 from PySide6.QtWidgets import *
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.games.cave_story.gui.preset_settings.cs_generation_tab import PresetCSGeneration
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.gui.preset_settings.prime_generation_tab import PresetPrimeGeneration

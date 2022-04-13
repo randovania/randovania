@@ -4,7 +4,8 @@ from typing import Optional, Callable, List, Dict
 
 import tenacity
 
-from randovania.game_description import default_database, derived_nodes
+from randovania.game_description import derived_nodes
+from randovania.layout import default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -34,9 +35,8 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 
 async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                              player_index: int, num_players: int, rng_required: bool = True) -> PlayerPool:
-    game = default_database.game_description_for(configuration.game).make_mutable_copy()
+    game = default_database.game_description_for_layout(configuration).make_mutable_copy()
     derived_nodes.create_derived_nodes(game)
-    derived_nodes.remove_inactive_layers(game, configuration.active_layers())
 
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)

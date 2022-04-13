@@ -58,7 +58,7 @@ LONG_NAMES = {
 
 
 def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifier, LayoutTranslatorRequirement]:
-    from randovania.game_description import default_database
+    from randovania.layout import default_database
     game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     return {
         game.world_list.identifier_for_node(node): LayoutTranslatorRequirement.from_item_short_name(

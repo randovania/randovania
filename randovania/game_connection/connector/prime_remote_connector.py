@@ -9,7 +9,7 @@ from randovania.game_connection.connector.remote_connector import RemoteConnecto
 from randovania.game_connection.executor.memory_operation import (
     MemoryOperationException, MemoryOperation, MemoryOperationExecutor
 )
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry

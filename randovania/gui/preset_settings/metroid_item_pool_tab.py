@@ -2,7 +2,7 @@ import dataclasses
 
 from PySide6 import QtWidgets
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool

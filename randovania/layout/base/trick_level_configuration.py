@@ -5,7 +5,7 @@ from typing import Dict, Iterator, Tuple, List
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.games.game import RandovaniaGame

@@ -10,7 +10,7 @@ from qasync import asyncSlot
 from randovania import get_data_path
 from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name

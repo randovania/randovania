@@ -5,7 +5,7 @@ import pytest
 from PySide6 import QtCore
 from PySide6.QtCore import Qt
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.cave_story.gui.preset_settings.cs_starting_area_tab import PresetCSStartingArea
 from randovania.games.game import RandovaniaGame

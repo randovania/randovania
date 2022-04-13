@@ -4,7 +4,7 @@ from typing import Tuple, Iterator, FrozenSet, List
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.pickup_node import PickupNode

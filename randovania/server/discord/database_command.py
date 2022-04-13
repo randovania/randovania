@@ -10,11 +10,11 @@ import discord
 import graphviz
 from PIL import ImageDraw
 from discord import Embed
-from discord.ext import commands
 from discord_slash import SlashContext, SlashCommandOptionType, ComponentContext, ButtonStyle, SlashCommand
 from discord_slash.utils import manage_commands, manage_components
 
-from randovania.game_description import default_database, pretty_print
+from randovania.game_description import pretty_print
+from randovania.layout import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import NodeLocation, Node

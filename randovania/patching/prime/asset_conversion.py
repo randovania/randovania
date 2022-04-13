@@ -17,7 +17,7 @@ from retro_data_structures.formats import PAK, format_for
 from retro_data_structures.game_check import Game
 
 from randovania import get_data_path
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import Options

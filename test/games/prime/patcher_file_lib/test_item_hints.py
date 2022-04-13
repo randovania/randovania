@@ -5,9 +5,8 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.exporter.hints.hint_exporter import HintExporter
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
     Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair,
     RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple,
@@ -74,7 +73,7 @@ def test_create_hints_nothing(empty_patches, players_config, mocker):
     pickup_index = PickupIndex(0)
 
     logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
-    gd = mocker.patch("randovania.game_description.default_database.game_description_for").return_value
+    gd = mocker.patch("randovania.layout.default_database.game_description_for").return_value
     gd.world_list = world_list
 
     patches = dataclasses.replace(
@@ -245,7 +244,7 @@ def test_create_hints_item_location(empty_patches, blank_pickup, item, location,
     asset_id = 1000
     pickup_index = PickupIndex(50)
     logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
-    gd = mocker.patch("randovania.game_description.default_database.game_description_for").return_value
+    gd = mocker.patch("randovania.layout.default_database.game_description_for").return_value
     gd.world_list = world_list
 
     players_config = PlayersConfiguration(
@@ -300,7 +299,7 @@ def test_create_hints_guardians(empty_patches, pickup_index_and_guardian, blank_
     pickup_index, guardian = pickup_index_and_guardian
 
     logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
-    gd = mocker.patch("randovania.game_description.default_database.game_description_for").return_value
+    gd = mocker.patch("randovania.layout.default_database.game_description_for").return_value
     gd.world_list = world_list
 
     patches = dataclasses.replace(
@@ -340,7 +339,7 @@ def test_create_hints_light_suit_location(empty_patches, players_config, blank_p
     pickup_index = PickupIndex(50)
 
     logbook_node, _, world_list = _create_world_list(asset_id, pickup_index)
-    gd = mocker.patch("randovania.game_description.default_database.game_description_for").return_value
+    gd = mocker.patch("randovania.layout.default_database.game_description_for").return_value
     gd.world_list = world_list
 
     patches = dataclasses.replace(

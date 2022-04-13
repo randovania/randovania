@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, call, ANY
 import pytest
 from PySide6.QtCore import QPoint
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.data_editor_canvas import DataEditorCanvas
 

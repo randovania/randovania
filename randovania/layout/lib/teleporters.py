@@ -5,7 +5,7 @@ from typing import Dict, List
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode

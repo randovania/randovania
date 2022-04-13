@@ -18,7 +18,7 @@ import socketio.exceptions
 from randovania.bitpacking import bitpacking
 from randovania.game_connection.connection_base import GameConnectionStatus, Inventory
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.network_client.game_session import (GameSessionListEntry, GameSessionEntry, User, GameSessionActions,
                                                     GameSessionAction, GameSessionPickups, GameSessionAuditLog,

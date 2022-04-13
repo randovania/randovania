@@ -3,7 +3,8 @@ from unittest.mock import patch, MagicMock
 import pytest
 
 import randovania
-from randovania.game_description import pretty_print, default_database
+from randovania.game_description import pretty_print
+from randovania.layout import default_database
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, RequirementTemplate
 from randovania.games.game import RandovaniaGame
 

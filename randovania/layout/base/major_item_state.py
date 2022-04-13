@@ -6,7 +6,7 @@ from typing import Tuple, Iterator, Optional
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.lib import enum_lib
 

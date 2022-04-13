@@ -3,7 +3,7 @@ from typing import Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.item.ammo import Ammo
 
 

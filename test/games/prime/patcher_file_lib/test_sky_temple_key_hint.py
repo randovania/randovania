@@ -4,7 +4,7 @@ from typing import List
 import pytest
 
 import randovania.games.prime2.exporter.hints
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame

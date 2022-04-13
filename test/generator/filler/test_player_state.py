@@ -3,9 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import default_database, derived_nodes
+from randovania.game_description import derived_nodes
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.generator.filler import player_state
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout.base.available_locations import RandomizationMode

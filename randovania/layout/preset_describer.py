@@ -1,7 +1,7 @@
 import collections
 from typing import List, Iterable, Tuple, Dict, Sequence
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.ammo_configuration import AmmoConfiguration

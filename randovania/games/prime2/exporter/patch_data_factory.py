@@ -9,7 +9,7 @@ from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import NodeConfigurationAssignment, PickupTarget
-from randovania.game_description.default_database import default_prime2_memo_data
+from randovania.layout.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.requirements import Requirement, RequirementAnd, ResourceRequirement

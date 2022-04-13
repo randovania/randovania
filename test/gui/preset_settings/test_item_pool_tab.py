@@ -1,7 +1,7 @@
 import dataclasses
 import uuid
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
 from randovania.interface_common.preset_editor import PresetEditor
