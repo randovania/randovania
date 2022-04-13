@@ -86,6 +86,7 @@ class OldGeneratorReach(GeneratorReach):
                          ) -> "GeneratorReach":
 
         reach = cls(game, initial_state, graph_module.RandovaniaGraph.new())
+        game.world_list.ensure_has_node_cache()
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
 

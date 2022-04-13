@@ -7,6 +7,7 @@ import pytest
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import (
     Hint, HintType, HintLocationPrecision, HintItemPrecision, PrecisionPair,
     RelativeDataItem, RelativeDataArea, HintRelativeAreaName, HintDarkTemple,
@@ -56,10 +57,12 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
     return logbook_node, pickup_node, world_list
 
 
+
+
 @pytest.fixture(name="echoes_hint_exporter")
-def _echoes_hint_exporter(echoes_game_description) -> HintExporter:
+def _echoes_hint_exporter(echoes_game_patches) -> HintExporter:
     namer = EchoesHintNamer(
-        {0: echoes_game_description.create_game_patches()},
+        {0: echoes_game_patches},
         PlayersConfiguration(0, {0: "You"})
     )
     return HintExporter(namer, random.Random(0), ["A Joke"])
@@ -135,7 +138,7 @@ def test_create_hints_item_joke(empty_patches, players_config):
                    "&push;&main-color=#FF3333;Temple Grounds&pop;."),
 ])
 def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoes_game_description, blank_pickup,
-                                            indices, expected_message):
+                                            indices, expected_message, preset_manager):
     # Setup
     db = echoes_game_description.resource_database
     keys = [
@@ -150,7 +153,7 @@ def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoe
 
     patches = dataclasses.replace(
         empty_patches,
-        game_enum=db.game_enum,
+        configuration=preset_manager.default_preset_for_game(db.game_enum).get_preset().configuration,
         pickup_assignment={
             pickup_index: PickupTarget(key, 0)
             for pickup_index, key in keys
@@ -168,7 +171,7 @@ def test_create_hints_item_dark_temple_keys(empty_patches, players_config, echoe
     assert result == expected_message
 
 
-def test_create_hints_item_dark_temple_keys_cross_game(empty_patches, blank_pickup):
+def test_create_hints_item_dark_temple_keys_cross_game(empty_patches, blank_pickup, preset_manager):
     # Setup
     echoes_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     players_config = PlayersConfiguration(
@@ -186,14 +189,14 @@ def test_create_hints_item_dark_temple_keys_cross_game(empty_patches, blank_pick
 
     echoes_patches = dataclasses.replace(
         empty_patches,
-        game_enum=echoes_game.game,
+        configuration=preset_manager.default_preset_for_game(echoes_game.game).get_preset().configuration,
         pickup_assignment={
             PickupIndex(14): PickupTarget(keys[0], 0),
             PickupIndex(80): PickupTarget(keys[2], 0),
         })
     prime_patches = dataclasses.replace(
         empty_patches,
-        game_enum=RandovaniaGame.METROID_PRIME,
+        configuration=preset_manager.default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset().configuration,
         pickup_assignment={
             PickupIndex(23): PickupTarget(keys[1], 0),
         })
@@ -375,10 +378,10 @@ def test_create_hints_light_suit_location(empty_patches, players_config, blank_p
     (0, "up to"),
     (None, "exactly"),
 ])
-def test_create_message_for_hint_relative_item(echoes_game_description, blank_pickup, players_config,
+def test_create_message_for_hint_relative_item(echoes_game_patches, blank_pickup, players_config,
                                                distance_precise, distance_text,
                                                reference_precision, reference_name):
-    patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
+    patches = echoes_game_patches.assign_pickup_assignment({
         PickupIndex(5): PickupTarget(blank_pickup, 0),
         PickupIndex(15): PickupTarget(dataclasses.replace(blank_pickup, name="Reference Pickup"), 0),
     })
@@ -409,10 +412,10 @@ def test_create_message_for_hint_relative_item(echoes_game_description, blank_pi
     (2, "up to"),
     (None, "exactly"),
 ])
-def test_create_message_for_hint_relative_area(echoes_game_description, blank_pickup, players_config,
+def test_create_message_for_hint_relative_area(echoes_game_patches, blank_pickup, players_config,
                                                echoes_hint_exporter,
                                                offset, distance_text):
-    patches = echoes_game_description.create_game_patches().assign_pickup_assignment({
+    patches = echoes_game_patches.assign_pickup_assignment({
         PickupIndex(5): PickupTarget(blank_pickup, 0),
     })
 

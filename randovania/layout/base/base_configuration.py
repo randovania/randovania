@@ -4,7 +4,6 @@ from typing import List
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
@@ -43,10 +42,6 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     @property
     def game(self):
         return self.game_enum()
-
-    @property
-    def game_data(self) -> dict:
-        return default_data.read_json_then_binary(self.game)[1]
 
     @classmethod
     def json_extra_arguments(cls):

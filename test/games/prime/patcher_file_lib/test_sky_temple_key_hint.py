@@ -44,7 +44,8 @@ def make_useless_stk_hint(key_number: int) -> List[str]:
 
 @pytest.mark.parametrize("multiworld", [False, True])
 @pytest.mark.parametrize("hide_area", [False, True])
-def test_create_hints_all_placed(hide_area: bool, multiworld: bool, empty_patches):
+def test_create_hints_all_placed(hide_area: bool, multiworld: bool, empty_patches, default_echoes_configuration,
+                                 default_prime_configuration):
     # Setup
     echoes_game = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
@@ -54,14 +55,14 @@ def test_create_hints_all_placed(hide_area: bool, multiworld: bool, empty_patche
          PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game.resource_database), 0))
         for key in range(5 if multiworld else 9)
     ])
-    patches = dataclasses.replace(patches, game_enum=RandovaniaGame.METROID_PRIME_ECHOES)
+    patches = dataclasses.replace(patches, configuration=default_echoes_configuration)
 
     other_patches = empty_patches.assign_new_pickups([
         (PickupIndex(17 + key),
          PickupTarget(pickup_creator.create_sky_temple_key(key, echoes_game.resource_database), 0))
         for key in range(5, 9)
     ])
-    other_patches = dataclasses.replace(other_patches, game_enum=RandovaniaGame.METROID_PRIME)
+    other_patches = dataclasses.replace(other_patches, configuration=default_prime_configuration)
     assets = [0xD97685FE, 0x32413EFD, 0xDD8355C3, 0x3F5F4EBA, 0xD09D2584,
               0x3BAA9E87, 0xD468F5B9, 0x2563AE34, 0xCAA1C50A]
 
@@ -106,16 +107,15 @@ def test_create_hints_all_placed(hide_area: bool, multiworld: bool, empty_patche
 
 @pytest.mark.parametrize("multiworld", [False, True])
 @pytest.mark.parametrize("hide_area", [False, True])
-def test_create_hints_all_starting(hide_area: bool, multiworld: bool,
-                                   empty_patches, echoes_game_description):
+def test_create_hints_all_starting(hide_area: bool, multiworld: bool, empty_patches, echoes_game_description,
+                                   default_echoes_configuration):
     # Setup
     players_config = PlayersConfiguration(0, {0: "you", 1: "them"} if multiworld else {0: "you"})
-    area_namer = {0: None, 1: None} if multiworld else {0: None}
     patches = empty_patches.assign_extra_initial_items({
         echoes_game_description.resource_database.get_item(echoes_items.SKY_TEMPLE_KEY_ITEMS[key]): 1
         for key in range(9)
     })
-    patches = dataclasses.replace(patches, game_enum=echoes_game_description.game)
+    patches = dataclasses.replace(patches, configuration=default_echoes_configuration)
     namer = EchoesHintNamer({0: patches}, players_config)
 
     expected = [

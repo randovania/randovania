@@ -3,7 +3,6 @@ import copy
 import dataclasses
 from typing import Iterator, FrozenSet, Dict, Optional, List
 
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import SatisfiableRequirements, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
@@ -109,15 +108,13 @@ class GameDescription:
         self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database)
         self._dangerous_resources = None
 
-    def create_game_patches(self) -> GamePatches:
-        elevator_connection: Dict[NodeIdentifier, AreaIdentifier] = {
+    def get_default_elevator_connection(self) -> dict[NodeIdentifier, AreaIdentifier]:
+        return {
             self.world_list.identifier_for_node(node): node.default_connection
 
             for node in self.world_list.all_nodes
             if isinstance(node, TeleporterNode) and node.editable
         }
-
-        return GamePatches(None, self.game, {}, elevator_connection, {}, {}, {}, {}, self.starting_location, {})
 
     @property
     def dangerous_resources(self) -> FrozenSet[ResourceInfo]:

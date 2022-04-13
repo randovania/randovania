@@ -14,11 +14,11 @@ from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
-def test_calculate_pool_item_count(default_layout_configuration):
+def test_calculate_pool_item_count(default_echoes_configuration):
     layout_configuration = dataclasses.replace(
-        default_layout_configuration,
+        default_echoes_configuration,
         major_items_configuration=dataclasses.replace(
-            default_layout_configuration.major_items_configuration,
+            default_echoes_configuration.major_items_configuration,
             minimum_random_starting_items=2,
         ),
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
@@ -47,7 +47,7 @@ def test_cs_item_pool_creator(default_cs_configuration: CSConfiguration, puppies
         LayoutTrickLevel.HYPERMODE)
     default_cs_configuration = dataclasses.replace(default_cs_configuration, trick_level=tricks)
 
-    base_patches = GamePatches(0, game_description.game, {}, {}, {}, {}, {}, {}, starting_area, {})
+    base_patches = GamePatches(0, default_cs_configuration, {}, {}, {}, {}, {}, {}, starting_area, {})
     rng = Random()
 
     result = pool_creator.calculate_pool_results(
