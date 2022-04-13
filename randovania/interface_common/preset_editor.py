@@ -84,47 +84,6 @@ class PresetEditor:
     def configuration(self) -> BaseConfiguration:
         return self._configuration
 
-    # Access to fields inside PatcherConfiguration
-    @property
-    def include_menu_mod(self) -> bool:
-        return self.configuration.menu_mod
-
-    @include_menu_mod.setter
-    def include_menu_mod(self, value: bool):
-        self.set_configuration_field("menu_mod", value)
-
-    @property
-    def warp_to_start(self) -> bool:
-        return self.configuration.warp_to_start
-
-    @warp_to_start.setter
-    def warp_to_start(self, value: bool):
-        self.set_configuration_field("warp_to_start", value)
-
-    @property
-    def pickup_model_style(self):
-        return self.configuration.pickup_model_style
-
-    @pickup_model_style.setter
-    def pickup_model_style(self, value):
-        self.set_configuration_field("pickup_model_style", value)
-
-    @property
-    def pickup_model_data_source(self):
-        return self.configuration.pickup_model_data_source
-
-    @pickup_model_data_source.setter
-    def pickup_model_data_source(self, value):
-        self.set_configuration_field("pickup_model_data_source", value)
-
-    @property
-    def layout_configuration_sky_temple_keys(self) -> LayoutSkyTempleKeyMode:
-        return self.configuration.sky_temple_keys
-
-    @layout_configuration_sky_temple_keys.setter
-    def layout_configuration_sky_temple_keys(self, value: LayoutSkyTempleKeyMode):
-        self.set_configuration_field("sky_temple_keys", value)
-
     @property
     def layout_configuration_damage_strictness(self) -> LayoutDamageStrictness:
         return self.configuration.damage_strictness
