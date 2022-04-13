@@ -73,7 +73,10 @@ def replace_with_event_pickups(game: GameDescription):
 
         for event_node, next_node in nodes_to_replace:
             combined_node = EventPickupNode(
-                "EventPickup - {} + {}".format(event_node.event.long_name, next_node.name),
+                dataclasses.replace(
+                    event_node.identifier,
+                    node_name="EventPickup - {} + {}".format(event_node.event.long_name, next_node.name),
+                ),
                 event_node.heal or next_node.heal,
                 next_node.location,
                 f"{event_node.description}\n{next_node.description}",
@@ -82,7 +85,6 @@ def replace_with_event_pickups(game: GameDescription):
                     "event": event_node.extra,
                     "pickup": next_node.extra,
                 },
-                event_node.index,
                 event_node, next_node)
 
             # If the default node index is beyond one of the removed nodes, then fix it

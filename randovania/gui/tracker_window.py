@@ -216,13 +216,15 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 for pickup_name, quantity in previous_state["collected_pickups"].items()
             }
             previous_actions = [
-                self.game_description.world_list.all_nodes[index]
-                for index in previous_state["actions"]
+                self.game_description.world_list.node_by_identifier(
+                    NodeIdentifier.from_string(identifier)
+                )
+                for identifier in previous_state["actions"]
             ]
             if needs_starting_location:
                 starting_location = AreaIdentifier.from_json(previous_state["starting_location"])
 
-            elevators: Dict[NodeIdentifier, Optional[AreaIdentifier]] = {
+            teleporters: Dict[NodeIdentifier, Optional[AreaIdentifier]] = {
                 NodeIdentifier.from_json(item["teleporter"]): (
                     AreaIdentifier.from_json(item["data"])
                     if item["data"] is not None else None
@@ -236,12 +238,12 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                                                              else None)
                     for identifier, item in previous_state["configurable_nodes"].items()
                 }
-        except KeyError:
+        except (KeyError, AttributeError):
             return False
 
         self.setup_starting_location(starting_location)
 
-        for teleporter, area_location in elevators.items():
+        for teleporter, area_location in teleporters.items():
             combo = self._elevator_id_to_combo[teleporter]
             if area_location is None:
                 combo.setCurrentIndex(0)
@@ -503,7 +505,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             json.dump(
                 {
                     "actions": [
-                        node.index
+                        node.identifier.as_string
                         for node in self._actions
                     ],
                     "collected_pickups": {

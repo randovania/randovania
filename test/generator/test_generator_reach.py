@@ -1,4 +1,5 @@
 import dataclasses
+import functools
 from random import Random
 from typing import Tuple, List
 
@@ -167,12 +168,13 @@ def test_database_collectable(preset_manager, game_enum, ignore_events, ignore_p
 def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database):
     # Setup
     scan_visor = echoes_resource_database.get_item("DarkVisor")
+    nc = functools.partial(NodeIdentifier.create, "Test World", "Test Area A")
 
-    translator_identif = NodeIdentifier.create("Test World", "Test Area A", "Translator Gate")
-    node_a = GenericNode("Node A", True, None, "", ("default",), {}, 0)
-    node_b = GenericNode("Node B", True, None, "", ("default",), {}, 1)
-    node_c = GenericNode("Node C", True, None, "", ("default",), {}, 2)
-    translator_node = ConfigurableNode("Translator Gate", True, None, "", ("default",), {}, 3)
+    node_a = GenericNode(nc("Node A"), True, None, "", ("default",), {})
+    node_b = GenericNode(nc("Node B"), True, None, "", ("default",), {})
+    node_c = GenericNode(nc("Node C"), True, None, "", ("default",), {})
+    translator_node = ConfigurableNode(translator_identif := nc("Translator Gate"),
+                                       True, None, "", ("default",), {})
 
     world_list = WorldList([
         World("Test World", [
@@ -242,7 +244,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
             game.world_list.node_by_identifier(ni(*name.split("/")))
             for name in names
         ]
-        result.sort(key=lambda it: it.index)
+        result.sort(key=lambda it: it.get_index())
         return result
 
     layout_configuration = dataclasses.replace(

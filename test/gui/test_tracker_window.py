@@ -126,8 +126,7 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
 
     state: dict = {
         "actions": [
-            0,
-            4
+            "Temple Grounds/Landing Site/Save Station"
         ],
         "collected_pickups": {
             'Amber Translator': 0,

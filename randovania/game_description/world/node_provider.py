@@ -16,7 +16,7 @@ class NodeProvider:
     # Identifier for
 
     def identifier_for_node(self, node: Node) -> NodeIdentifier:
-        raise NotImplementedError()
+        return node.identifier
 
     def identifier_for_area(self, area: Area) -> AreaIdentifier:
         world = self.world_with_area(area)
