@@ -124,7 +124,6 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
         world_reader, self.original_game_description = data_reader.decode_data_with_world_reader(data)
-        self.generic_index = world_reader.generic_index
         self.resource_database = self.original_game_description.resource_database
 
         self.update_game(self.original_game_description)
@@ -620,9 +619,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _create_new_node_no_location(self):
         return self._create_new_node(None)
 
+    def _create_identifier(self, node_name: str):
+        return NodeIdentifier.create(self.current_world.name, self.current_area.name, node_name)
+
     def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
-        self.generic_index += 1
-        new_node = GenericNode(node_name, False, location, "", ("default",), {}, self.generic_index)
+        new_node = GenericNode(self._create_identifier(node_name), False, location, "", ("default",), {})
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 
@@ -647,20 +648,25 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             source_name = source_name_base
             target_name = target_name_base
 
-        self.generic_index += 1
+        new_node_this_area_identifier = NodeIdentifier(self.world_list.identifier_for_area(current_area), source_name)
+        new_node_other_area_identifier = NodeIdentifier(self.world_list.identifier_for_area(target_area), target_name)
+
         new_node_this_area = DockNode(
-            source_name, False, location, "", {}, self.generic_index,
-            NodeIdentifier(self.world_list.identifier_for_area(target_area), target_name),
-            dock_weakness[0],
-            dock_weakness[1],
+            identifier=new_node_this_area_identifier,
+            heal=False, location=location, description="", layers=("default",), extra={},
+            dock_type=dock_weakness[0],
+            default_connection=new_node_other_area_identifier,
+            default_dock_weakness=dock_weakness[1],
+            override_default_open_requirement=None, override_default_lock_requirement=None,
         )
 
-        self.generic_index += 1
         new_node_other_area = DockNode(
-            target_name, False, location, "", {}, self.generic_index,
-            NodeIdentifier(self.world_list.identifier_for_area(current_area), source_name),
-            dock_weakness[0],
-            dock_weakness[1],
+            identifier=new_node_other_area_identifier,
+            heal=False, location=location, description="", layers=("default",), extra={},
+            dock_type=dock_weakness[0],
+            default_connection=new_node_this_area_identifier,
+            default_dock_weakness=dock_weakness[1],
+            override_default_open_requirement=None, override_default_lock_requirement=None,
         )
 
         self.editor.add_node(current_area, new_node_this_area)

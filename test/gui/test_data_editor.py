@@ -5,6 +5,8 @@ from PySide6 import QtWidgets
 from mock import AsyncMock, patch, ANY, MagicMock
 
 from randovania.game_description import data_reader, pretty_print
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node import NodeLocation
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.gui.data_editor import DataEditorWindow
@@ -145,3 +147,29 @@ def test_on_filters_changed_view_mode(tmp_path, mocker, skip_qtbot):
     window.focus_on_area_by_name("Boss Arena")
 
     assert window.current_area.node_with_name("Pickup (Free Loot)") is None
+
+
+def test_create_new_dock(skip_qtbot, tmp_path, blank_game_data):
+    db_path = Path(tmp_path.joinpath("test-game", "game"))
+    game_data = default_data.read_json_then_binary(RandovaniaGame.BLANK)[1]
+
+    window = DataEditorWindow(game_data, db_path, True, True)
+    window.set_warning_dialogs_disabled(True)
+    skip_qtbot.addWidget(window)
+
+    window.focus_on_area_by_name("Back-Only Lock Room")
+    current_area = window.current_area
+    target_area = window.game_description.world_list.area_by_area_location(AreaIdentifier("Intro", "Explosive Depot"))
+
+    assert current_area.node_with_name("Dock to Explosive Depot") is None
+    assert target_area.node_with_name("Dock to Back-Only Lock Room") is None
+
+    # Run
+    window._create_new_dock(NodeLocation(0, 0, 0), target_area)
+
+    # Assert
+    new_node = current_area.node_with_name("Dock to Explosive Depot")
+    assert new_node is not None
+    assert window.current_node is new_node
+
+    assert target_area.node_with_name("Dock to Back-Only Lock Room") is not None

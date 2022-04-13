@@ -16,17 +16,16 @@ class DockLockNode(ResourceNode):
     dock_identifier: NodeIdentifier
 
     @classmethod
-    def create_from_dock(cls, dock: DockNode, dock_identifier: NodeIdentifier, index: int) -> DockLockNode:
-        lock_identifier = dock.get_lock_node_identifier_from_identifier(dock_identifier)
+    def create_from_dock(cls, dock: DockNode) -> DockLockNode:
+        lock_identifier = dock.get_lock_node_identifier_from_identifier(dock.identifier)
         return DockLockNode(
-            name=lock_identifier.node_name,
+            identifier=lock_identifier,
             heal=False,
             location=None,
             description="",
             layers=dock.layers,
             extra={},
-            index=index,
-            dock_identifier=dock_identifier,
+            dock_identifier=dock.identifier,
         )
 
     def __repr__(self):

@@ -58,10 +58,10 @@ class Editor:
         if old_node.name != new_node.name and area.node_with_name(new_node.name) is not None:
             raise ValueError(f"A node named {new_node.name} already exists.")
 
-        old_identifier = self.game.world_list.identifier_for_node(old_node)
+        old_identifier = old_node.identifier
         self.replace_references_to_node_identifier(
             old_identifier,
-            dataclasses.replace(old_identifier, node_name=new_node.name)
+            old_identifier.renamed(new_node.name),
         )
 
         area.nodes[area.nodes.index(old_node)] = new_node
@@ -82,7 +82,7 @@ class Editor:
         self.game.world_list.invalidate_node_cache()
 
     def rename_node(self, area: Area, node: Node, new_name: str):
-        self.replace_node(area, node, dataclasses.replace(node, name=new_name))
+        self.replace_node(area, node, dataclasses.replace(node, identifier=node.identifier.renamed(new_name)))
 
     def rename_area(self, current_area: Area, new_name: str):
         current_world = self.game.world_list.world_with_area(current_area)
@@ -113,7 +113,9 @@ class Editor:
                         if node.default_connection == old_identifier:
                             new_node = dataclasses.replace(
                                 node,
-                                name=node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                identifier=node.identifier.renamed(
+                                    node.name.replace(old_identifier.area_name, new_identifier.area_name)
+                                ),
                                 default_connection=new_identifier,
                             )
 
@@ -121,7 +123,9 @@ class Editor:
                         if node.default_connection.area_identifier == old_identifier:
                             new_node = dataclasses.replace(
                                 node,
-                                name=node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                identifier=node.identifier.renamed(
+                                    node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                ),
                                 default_connection=dataclasses.replace(
                                     node.default_connection,
                                     area_identifier=new_identifier,
@@ -145,7 +149,9 @@ class Editor:
                         if node.default_connection == old_identifier:
                             new_node = dataclasses.replace(
                                 node,
-                                name=node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                identifier=node.identifier.renamed(
+                                    node.name.replace(old_identifier.area_name, new_identifier.area_name),
+                                ),
                                 default_connection=new_identifier,
                             )
 

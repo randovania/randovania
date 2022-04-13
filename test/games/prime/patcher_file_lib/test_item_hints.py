@@ -15,6 +15,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
@@ -34,14 +35,19 @@ def _players_configuration() -> PlayersConfiguration:
 
 
 def _create_world_list(asset_id: int, pickup_index: PickupIndex):
-    logbook_node = LogbookNode("Logbook A", True, None, "", ("default",), {}, 0, asset_id, None, None, None, None)
-    pickup_node = PickupNode("Pickup Node", True, None, "", ("default",), {}, 1, pickup_index, True)
+    nc = NodeIdentifier.create
+
+    logbook_node = LogbookNode(nc("World", "Area", "Logbook A"),
+                               True, None, "", ("default",), {}, asset_id, None, None, None, None)
+    pickup_node = PickupNode(nc("World", "Area", "Pickup Node"),
+                             True, None, "", ("default",), {}, pickup_index, True)
 
     world_list = WorldList([
         World("World", [
             Area("Area", 0, True, [logbook_node, pickup_node], {}, {}),
             Area("Other Area", 0, True,
-                 [PickupNode(f"Pickup {i}", True, None, "", ("default",), {}, 2 + i, PickupIndex(i), True)
+                 [PickupNode(nc("World", "Other Area", f"Pickup {i}"),
+                             True, None, "", ("default",), {}, PickupIndex(i), True)
                   for i in range(pickup_index.index)],
                  {}, {}),
         ], {}),

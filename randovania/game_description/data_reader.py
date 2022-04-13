@@ -233,7 +233,6 @@ def location_from_json(location: Dict[str, float]) -> NodeLocation:
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
-    generic_index: int = -1
     current_world_name: str
     current_area_name: str
 
@@ -264,21 +263,18 @@ class WorldReader:
             return None
 
     def read_node(self, name: str, data: Dict) -> Node:
-        self.generic_index += 1
-
         try:
             location = None
             if data["coordinates"] is not None:
                 location = location_from_json(data["coordinates"])
 
             generic_args = {
-                "name": name,
+                "identifier": NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
                 "heal": data["heal"],
                 "location": location,
                 "description": data["description"],
                 "layers": tuple(data["layers"]),
                 "extra": frozen_lib.wrap(data["extra"]),
-                "index": self.generic_index,
             }
             node_type: int = data["node_type"]
 
