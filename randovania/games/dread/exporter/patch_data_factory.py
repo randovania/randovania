@@ -328,6 +328,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             ],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
+            "shareable_hash": self.description.shareable_hash,
             "cosmetic_patches": self._cosmetic_patch_data(),
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
             "game_patches": {
