@@ -245,6 +245,15 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             full_hash
         ])
 
+        # Warning message for continuing a non-rando game file
+        text["GUI_WARNING_NOT_RANDO_GAME_1"] = "|".join([
+            r"{c1}Warning!{c0}",
+            "You have continued a game that was not started with the current Randovania patches enabled."
+        ])
+        text["GUI_WARNING_NOT_RANDO_GAME_2"] = "|".join([
+            "You must start a New Game when using Randovania. Some parts of this file may not work correctly."
+        ])
+
         return text
     
     def _cosmetic_patch_data(self) -> dict:
