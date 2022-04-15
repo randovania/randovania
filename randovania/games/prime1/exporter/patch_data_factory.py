@@ -275,6 +275,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 default_connections_node_name = dict()
                 dock_num_by_area_node = dict()
                 is_nonstandard = dict()
+                disabled_doors = set()
 
                 for area in world.areas:
                     world_data[world.name]["rooms"][area.name]["doors"] = dict()
@@ -287,6 +288,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         dock_num_by_area_node[(area.name, node.name)] = index
                         is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                         default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
+
+                        if node.default_dock_weakness.long_name == "Permanently Locked":
+                            disabled_doors.add((room_name, index))
+
                         if node.extra["nonstandard"]:
                             # This dock is like a morph tunnel or 1-way door etc. that cannot be elegantly patched
                             continue
@@ -475,11 +480,16 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                     if "destination" not in room["doors"][dock_num].keys():
                                         continue
 
+                                    if (room_name, dock_num) in disabled_doors:
+                                        continue
+
                                     dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
                                     room_connections.append((room_name, dst_room_name))
 
                             # Handle unrandomized connections
                             for (src_name, src_dock) in is_nonstandard:
+                                if (src_name, src_dock) in disabled_doors:
+                                    continue
                                 if is_nonstandard[(src_name, src_dock)]:
                                     (dst_name, dst_dock) = default_connections[(src_name, src_dock)]
                                     room_connections.append((src_name, dst_name))
