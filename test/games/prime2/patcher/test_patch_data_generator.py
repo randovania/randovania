@@ -22,10 +22,10 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout import default_database
+from randovania.game_description import default_database
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle
-from randovania.layout.default_database import default_prime2_memo_data
+from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 

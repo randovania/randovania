@@ -6,6 +6,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 from randovania.layout.layout_description import LayoutDescription
@@ -33,7 +34,7 @@ class BasePatchDataFactory:
         self.patches = description.all_patches[players_config.player_index]
         self.configuration = description.get_preset(players_config.player_index).configuration
         self.rng = Random(description.get_seed_for_player(players_config.player_index))
-        self.game = default_database.game_description_for_layout(self.configuration)
+        self.game = filtered_database.game_description_for_layout(self.configuration)
 
     def game_enum(self) -> RandovaniaGame:
         raise NotImplementedError()

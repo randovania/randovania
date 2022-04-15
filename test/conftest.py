@@ -6,7 +6,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.layout import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory
@@ -21,6 +20,7 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.interface_common.preset_manager import PresetManager
+from randovania.game_description import default_database
 from randovania.layout.preset import Preset
 
 
@@ -112,6 +112,13 @@ def default_prime_configuration() -> PrimeConfiguration:
     return preset.configuration
 
 
+@pytest.fixture()
+def prime_game_patches(empty_patches, default_prime_configuration, prime_game_description) -> GamePatches:
+    return dataclasses.replace(empty_patches, configuration=default_prime_configuration,
+                               starting_location=prime_game_description.starting_location,
+                               elevator_connection=prime_game_description.get_default_elevator_connection())
+
+
 @pytest.fixture(scope="session")
 def default_cs_preset() -> Preset:
     return PresetManager(None).default_preset_for_game(RandovaniaGame.CAVE_STORY).get_preset()
@@ -144,8 +151,13 @@ def echoes_game_data() -> dict:
 
 
 @pytest.fixture(scope="session")
-def echoes_game_description(echoes_game_data) -> GameDescription:
+def echoes_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES)
+
+
+@pytest.fixture(scope="session")
+def prime_game_description() -> GameDescription:
+    return default_database.game_description_for(RandovaniaGame.METROID_PRIME)
 
 
 @pytest.fixture(scope="session")
@@ -226,7 +238,6 @@ def dataclass_test_lib() -> DataclassTestLib:
 def empty_patches(preset_manager) -> GamePatches:
     configuration = preset_manager.default_preset_for_game(RandovaniaGame.BLANK).get_preset().configuration
     return GamePatches(0, configuration, {}, {}, {}, {}, {}, {}, None, {})
-
 
 
 def pytest_addoption(parser):

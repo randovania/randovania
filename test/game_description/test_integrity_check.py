@@ -1,7 +1,6 @@
 import pytest
 
-from randovania.game_description import integrity_check, data_reader
-from randovania.layout import default_database
+from randovania.game_description import integrity_check, data_reader, default_database
 from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 

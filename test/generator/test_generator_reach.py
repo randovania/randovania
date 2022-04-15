@@ -5,8 +5,7 @@ from typing import Tuple, List
 
 import pytest
 
-from randovania.game_description import derived_nodes
-from randovania.layout import default_database
+from randovania.game_description import derived_nodes, default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement, ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex

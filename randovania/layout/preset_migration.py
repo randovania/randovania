@@ -2,7 +2,7 @@ import math
 import uuid
 from typing import Dict
 
-from randovania.game_description import migration_data
+from randovania.game_description import migration_data, default_database
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
@@ -206,7 +206,6 @@ def _migrate_v7(preset: dict) -> dict:
 
 
 def _migrate_v8(preset: dict) -> dict:
-    from randovania.layout import default_database
     game = default_database.game_description_for(RandovaniaGame(preset["game"]))
 
     # FIXME: area location is now something different, this code broke
@@ -407,8 +406,6 @@ def _migrate_v13(preset: dict) -> dict:
 
 
 def _migrate_v14(preset: dict) -> dict:
-    from randovania.layout import default_database
-
     game = RandovaniaGame(preset["game"])
     db = default_database.game_description_for(game)
 

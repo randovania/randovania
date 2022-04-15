@@ -3,8 +3,7 @@ import re
 import typing
 from typing import Dict, List, DefaultDict
 
-from randovania.game_description import data_reader, data_writer
-from randovania.layout import default_database
+from randovania.game_description import data_reader, data_writer, default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
