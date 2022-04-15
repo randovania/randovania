@@ -500,6 +500,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             if not networkx.is_strongly_connected(graph):
                                 # Split graph into strongly connected components
                                 strongly_connected_components = sorted(networkx.strongly_connected_components(graph), key=len, reverse=True)
+                                assert len(strongly_connected_components) != 0
 
                                 def component_number(name):
                                     i = 0
@@ -515,11 +516,17 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                     used_room_pairings.remove({src_name, dst_name})        
 
                                 # randomply pick two room pairs which are not members of the same strongly connected component
-                                first = True
-                                (src_name_a, src_dock_a) = self.rng.choice(list(shuffled.keys()))
-                                while first or component_number(src_name_a) == component_number(src_name_b):
-                                    (src_name_b, src_dock_b) = self.rng.choice(list(shuffled.keys()))
-                                    first = False
+                                keys = list(shuffled.keys())
+                                self.rng.shuffle(keys)
+                                (src_name_a, src_dock_a) = keys[-1]
+                                a_component_num = component_number(src_name_a)
+                                for (name, dock) in keys:
+                                    assert (name, dock) != (src_name_a, src_dock_a)
+                                    if component_number(name) == a_component_num:
+                                        continue
+                                    src_name_b = name
+                                    src_dock_b = dock
+                                    break
 
                                 # put back into pool for re-randomization (cross fingers that they connect the two strong components)
                                 remove_pair(src_name_a, src_dock_a)
