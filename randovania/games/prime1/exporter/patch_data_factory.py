@@ -293,7 +293,6 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             disabled_doors.add((room_name, index))
 
                         if node.extra["nonstandard"]:
-                            # This dock is like a morph tunnel or 1-way door etc. that cannot be elegantly patched
                             continue
                         area_dock_nums[area.name].append(index)
                         attached_areas[area.name].append(node.default_connection.area_name)
@@ -498,13 +497,13 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             graph = networkx.DiGraph()
                             graph.add_edges_from(room_connections)
 
-                            if not networkx.is_weakly_connected(graph):
+                            if not networkx.is_strongly_connected(graph):
                                 # Split graph into strongly connected components
-                                weakly_connected_components = sorted(networkx.weakly_connected_components(graph), key=len, reverse=True)
+                                strongly_connected_components = sorted(networkx.strongly_connected_components(graph), key=len, reverse=True)
 
                                 def component_number(name):
                                     i = 0
-                                    for component in weakly_connected_components:
+                                    for component in strongly_connected_components:
                                         if name in list(component):
                                             return i
                                         i += 1
