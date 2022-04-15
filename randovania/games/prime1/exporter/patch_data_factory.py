@@ -351,7 +351,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     # rooms can only connect to another room up to once
                     if {src_name, dst_name} in used_room_pairings:
                         # Except for one-way in impact crater, this edge case works fine and is desireable
-                        if mode == RoomRandoMode.TWO_WAY or world.name != "Impact Crater":
+                        if not (mode == RoomRandoMode.ONE_WAY and world.name == "Impact Crater"):
                             # print("double connection")
                             return False
 
@@ -406,7 +406,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 }
                             }
                 elif self.configuration.room_rando == RoomRandoMode.TWO_WAY:
-                    assert len(candidates) % 2 == 0
+                    # List containing:
+                    #   - set of len=2, each containing
+                    #       - tuple of len=2 for (room_name, dock)
+                    shuffled = list()
 
                     def next_candidate(max_index):
                         for (src_name, src_dock) in candidates:
@@ -420,10 +423,29 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 return (dst_name, dst_dock)
                         return (None, None)
 
+                    def remove_pair(shuffled_pair: set):
+                        shuffled.remove(shuffled_pair)
+
+                        shuffled_pair = sorted(list(shuffled_pair))
+                        assert len(shuffled_pair) == 2
+                        a = shuffled_pair[0]
+                        b = shuffled_pair[1]
+
+                        candidates.append(a)
+                        candidates.append(b)
+
+                        (a_name, a_dock) = a
+                        (b_name, b_dock) = b
+                        used_room_pairings.remove({a_name, b_name})
+
+                        del world_data[world.name]["rooms"][a_name]["doors"][str(a_dock)]["destination"]
+                        del world_data[world.name]["rooms"][b_name]["doors"][str(b_dock)]["destination"]
+
                     # Randomly pick room sources, starting with the largest room first, then randomly pick a compatible destination
                     max_index = 1.01
-                    shuffled = dict()
                     while len(candidates) != 0:
+                        assert len(candidates) % 2 == 0
+
                         if max_index < -0.00001:
                             raise Exception("Failed to find pairings for %s" % str(candidates))
 
@@ -437,16 +459,14 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         (dst_name, dst_dock) = pick_random_dst(src_name, src_dock)
                         if dst_name is None:
                             # This room have no valid destinations in the pool, randomly unpair two rooms and try again
-                            (src_name, src_dock) = self.rng.choice(list(shuffled.keys()))
-                            (dst_name, dst_dock) = shuffled.pop((src_name, src_dock))
-                            candidates.append((src_name, src_dock))
-                            candidates.append((dst_name, dst_dock))    
-                            used_room_pairings.remove({src_name, dst_name})
+                            remove_pair(self.rng.choice(shuffled))
                             continue
+
+                        assert {(src_name, src_dock), (dst_name, dst_dock)} not in shuffled
 
                         candidates.remove((src_name, src_dock))
                         candidates.remove((dst_name, dst_dock))
-                        shuffled[(src_name, src_dock)] = (dst_name, dst_dock)
+                        shuffled.append({(src_name, src_dock), (dst_name, dst_dock)})
                         used_room_pairings.append({src_name, dst_name})
 
                         world_data[world.name]["rooms"][src_name]["doors"][str(src_dock)] = {
@@ -462,7 +482,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 }
                             }
 
-                        # print("%s:%d --> %s:%d" % (src_name, src_dock, dst_name, dst_dock))
+                        # print("%s:%d <--> %s:%d" % (src_name, src_dock, dst_name, dst_dock))
 
                         # If we just finished placing all rooms, check if there are unconnected components
                         # and if so, re-roll some rooms
@@ -483,6 +503,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                         continue
 
                                     dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
+
+                                    assert {room_name, dst_room_name} in used_room_pairings
+                                    
                                     room_connections.append((room_name, dst_room_name))
 
                             # Handle unrandomized connections
@@ -500,37 +523,48 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             if not networkx.is_strongly_connected(graph):
                                 # Split graph into strongly connected components
                                 strongly_connected_components = sorted(networkx.strongly_connected_components(graph), key=len, reverse=True)
-                                assert len(strongly_connected_components) != 0
+                                assert len(strongly_connected_components) > 1
 
                                 def component_number(name):
                                     i = 0
                                     for component in strongly_connected_components:
                                         if name in list(component):
                                             return i
-                                        i += 1
+                                        i += 1    
 
-                                def remove_pair(src_name, src_dock):
-                                    (dst_name, dst_dock) = shuffled.pop((src_name, src_dock))
-                                    candidates.append((src_name, src_dock))
-                                    candidates.append((dst_name, dst_dock))
-                                    used_room_pairings.remove({src_name, dst_name})        
+                                # randomply pick two room pairs which are not members of the same strongly connected component and
+                                # put back into pool for re-randomization (cross fingers that they connect the two strong components)
+                                assert len(shuffled) > 2
 
-                                # randomply pick two room pairs which are not members of the same strongly connected component
-                                keys = list(shuffled.keys())
-                                self.rng.shuffle(keys)
-                                (src_name_a, src_dock_a) = keys[-1]
+                                # pick one randomly
+                                self.rng.shuffle(shuffled)
+                                a = shuffled[-1]
+                                a = sorted(list(a))
+                                (src_name_a, src_dock_a) = a[0]
+                                (dst_name_a, dst_dock_a) = a[1]
                                 a_component_num = component_number(src_name_a)
-                                for (name, dock) in keys:
-                                    assert (name, dock) != (src_name_a, src_dock_a)
-                                    if component_number(name) == a_component_num:
+
+                                # pick a second which is not part of the same component
+                                (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (None, None, None, None)
+                                for b in shuffled:
+                                    b = sorted(list(b))
+                                    (src_name, src_dock) = b[0]
+                                    (dst_name, dst_dock) = b[1]
+                                    if component_number(src_name) == a_component_num:
                                         continue
-                                    src_name_b = name
-                                    src_dock_b = dock
+                                    (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (src_name, src_dock, dst_name, dst_dock)
                                     break
 
-                                # put back into pool for re-randomization (cross fingers that they connect the two strong components)
-                                remove_pair(src_name_a, src_dock_a)
-                                remove_pair(src_name_b, src_dock_b)
+                                # If we could not find two rooms that were part of two different components, still remove a random room pairing
+                                # (this can happen if rooms exempt from randomization are causing fractured connectivity)
+                                if src_name_b is None:
+                                    b = sorted(list(shuffled[0]))
+                                    (src_name_b, src_dock_b) = b[0]
+                                    (dst_name_b, dst_dock_b) = b[1]
+
+                                # put back into pool
+                                remove_pair({(src_name_a, src_dock_a), (dst_name_a, dst_dock_a)})
+                                remove_pair({(src_name_b, src_dock_b), (dst_name_b, dst_dock_b)})
 
                                 # do something different this time
                                 self.rng.shuffle(candidates)
