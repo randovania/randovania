@@ -185,7 +185,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         return {
             "screenBrightness": cosmetic_patches.user_preferences.screen_brightness,
             "screenOffsetX": cosmetic_patches.user_preferences.screen_x_offset,
-            "screenOffsety": cosmetic_patches.user_preferences.screen_y_offset,
+            "screenOffsetY": cosmetic_patches.user_preferences.screen_y_offset,
             "screenStretch": cosmetic_patches.user_preferences.screen_stretch,
             "soundMode": cosmetic_patches.user_preferences.sound_mode,
             "sfxVolume": cosmetic_patches.user_preferences.sfx_volume,
