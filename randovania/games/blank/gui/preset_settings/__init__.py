@@ -11,9 +11,11 @@ def preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.trick_level_tab import PresetTrickLevel
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
     from randovania.gui.preset_settings.item_pool_tab import PresetItemPool
+    from randovania.games.blank.gui.preset_settings.blank_patches_tab import PresetBlankPatches
 
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         PresetLocationPool(editor, game_description),
         PresetItemPool(editor),
+        PresetBlankPatches(editor),
     ]

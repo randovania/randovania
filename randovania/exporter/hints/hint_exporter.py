@@ -42,19 +42,19 @@ class HintExporter:
         else:
             assert hint.hint_type == HintType.LOCATION
 
-            player_game = all_patches[players_config.player_index].game_enum
+            configuration = all_patches[players_config.player_index].configuration
 
             pickup_target = patches.pickup_assignment.get(hint.target)
             phint = pickup_hint.create_pickup_hint(
                 patches.pickup_assignment,
-                default_database.game_description_for(player_game).world_list,
+                default_database.game_description_for(configuration.game).world_list,
                 hint.precision.item,
                 pickup_target,
                 players_config,
                 hint.precision.include_owner,
             )
             return self.namer.format_location_hint(
-                player_game,
+                configuration.game,
                 phint,
                 hint,
                 with_color,

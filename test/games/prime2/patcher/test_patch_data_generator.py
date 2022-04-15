@@ -1,4 +1,3 @@
-import copy
 import dataclasses
 import json
 from unittest.mock import MagicMock
@@ -29,12 +28,36 @@ from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
+import dataclasses
+import json
+from unittest.mock import MagicMock
 
+import pytest
+from frozendict import frozendict
 
-@pytest.fixture(name="default_echoes_configuration")
-def _default_echoes_configuration(default_echoes_preset) -> EchoesConfiguration:
-    assert isinstance(default_echoes_preset.configuration, EchoesConfiguration)
-    return default_echoes_preset.configuration
+import randovania
+from randovania.exporter import pickup_exporter
+from randovania.game_description import default_database
+from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.default_database import default_prime2_memo_data
+from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
+from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_type import ResourceType
+from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.games.game import RandovaniaGame
+from randovania.games.prime2.exporter import patch_data_factory
+from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
+from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
+from randovania.generator.item_pool import pickup_creator, pool_creator
+from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout.base.major_item_state import MajorItemState
+from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.layout_description import LayoutDescription
+from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
 def test_create_starting_popup_empty(default_echoes_configuration, echoes_resource_database):
@@ -159,9 +182,7 @@ def test_create_elevators_field_no_elevator(empty_patches, echoes_game_descripti
 def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
                                                      echoes_game_description, empty_patches):
     # Setup
-    patches = echoes_game_description.create_game_patches()
-
-    elevator_connection = copy.copy(patches.elevator_connection)
+    elevator_connection = echoes_game_description.get_default_elevator_connection()
 
     def add(world: str, area: str, node: str, target_world: str, target_area: str):
         elevator_connection[NodeIdentifier.create(world, area, node)] = AreaIdentifier(target_world, target_area)
@@ -175,7 +196,7 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
         add("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
             "Great Temple", "Sanctum")
 
-    patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
+    patches = dataclasses.replace(empty_patches, elevator_connection=elevator_connection)
 
     # Run
     result = patch_data_factory._create_elevators_field(patches, echoes_game_description)
@@ -470,10 +491,10 @@ def test_pickup_data_for_pb_expansion_unlocked(echoes_item_database, echoes_reso
 
 @pytest.mark.parametrize("disable_hud_popup", [False, True])
 def test_create_pickup_all_from_pool(echoes_resource_database,
-                                     default_layout_configuration,
+                                     default_echoes_configuration,
                                      disable_hud_popup: bool
                                      ):
-    item_pool = pool_creator.calculate_pool_results(default_layout_configuration,
+    item_pool = pool_creator.calculate_pool_results(default_echoes_configuration,
                                                     echoes_resource_database)
     index = PickupIndex(0)
     if disable_hud_popup:

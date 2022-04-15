@@ -55,7 +55,7 @@ def test_replace_node(game_editor):
     door = landing_site.node_with_name("Door to Service Access")
     req = landing_site.connections[source][door]
 
-    new_node = dataclasses.replace(door, name="FooBar")
+    new_node = dataclasses.replace(door, identifier=door.identifier.renamed("FooBar"))
 
     # Run
     game_editor.replace_node(landing_site, door, new_node)

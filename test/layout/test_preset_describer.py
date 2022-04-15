@@ -4,10 +4,10 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 
 
-def test_echoes_format_params(default_layout_configuration):
+def test_echoes_format_params(default_echoes_configuration):
     # Setup
     layout_configuration = dataclasses.replace(
-        default_layout_configuration,
+        default_echoes_configuration,
         sky_temple_keys=LayoutSkyTempleKeyMode.ALL_BOSSES,
     )
 

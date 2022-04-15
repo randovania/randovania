@@ -49,9 +49,6 @@ class DockNode(Node):
     override_default_open_requirement: typing.Optional[Requirement]
     override_default_lock_requirement: typing.Optional[Requirement]
 
-    def __hash__(self):
-        return hash((self.index, self.name, self.default_connection))
-
     def __repr__(self):
         return "DockNode({!r} -> {})".format(self.name, self.default_connection)
 
