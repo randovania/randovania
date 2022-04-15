@@ -232,17 +232,66 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
             for area in world.areas:
                 world_data[world.name]["rooms"][area.name] = {"pickups":[]}
-                
-                pickup_indices = sorted(node.pickup_index for node in area.nodes if isinstance(node, PickupNode))
-                if pickup_indices:
-                    world_data[world.name]["rooms"][area.name] = {
-                        "pickups": [
-                            prime1_pickup_details_to_patcher(pickup_list[index.index],
-                                                             index.index in modal_hud_override,
-                                                             self.rng)
-                            for index in pickup_indices
-                        ],
-                    }
+
+                def node_len(a: PickupNode):
+                    return a.pickup_index
+
+                pickup_nodes = sorted((node for node in area.nodes if isinstance(node, PickupNode)), key=node_len)
+                for node in pickup_nodes:
+                    pickup_index = node.pickup_index.index
+                    pickup = prime1_pickup_details_to_patcher(pickup_list[pickup_index],
+                                                              pickup_index in modal_hud_override,
+                                                              self.rng)
+                    if "requires_position" in node.extra.keys() and node.extra["requires_position"]:
+                        assert self.configuration.items_every_room
+                        aabb = area.extra["aabb"]
+
+                        # return a random float between (min, max) biased towards target (up to 1 re-roll to get closer)
+                        def random_factor(rng: Random, min: float, max: float, target: float):
+                            a = rng.uniform(min, max)
+                            b = rng.uniform(min, max)
+                            a_diff = abs(a - target)
+                            b_diff = abs(b - target)
+                            if a_diff > b_diff:
+                                return a
+                            return b
+
+                        # return a quasi-random point within the provided aabb, but bias towards being closer to in-bounds
+                        def pick_random_point_in_aabb(rng: Random, aabb: list, room_name: str):
+                            offset_xy = 0.0
+                            offset_max_z = 0.0
+
+                            ROOMS_THAT_NEED_HELP = [
+                                "Landing Site",
+                                "Alcove",
+                                "Frigate Crash Site",
+                                "Sunchamber",
+                                "Triclops Pit",
+                                "Elite Quarters",
+                                "Quarantine Cave",
+                                "Burn Done",
+                                "Reserach Lab Hydra",
+                                "Reserach Lab Aether",
+                            ]
+
+                            if room_name in ROOMS_THAT_NEED_HELP:
+                                offset_xy = 0.1
+                                offset_max_z = -0.3
+
+                            x_factor = random_factor(rng, 0.15 + offset_xy, 0.85 - offset_xy, 0.5)
+                            y_factor = random_factor(rng, 0.15 + offset_xy, 0.85 - offset_xy, 0.5)
+                            z_factor = random_factor(rng, 0.1, 0.8 + offset_max_z, 0.35)
+
+                            return [
+                                aabb[0] + (aabb[3]-aabb[0])*x_factor,
+                                aabb[1] + (aabb[4]-aabb[1])*y_factor,
+                                aabb[2] + (aabb[5]-aabb[2])*z_factor,
+                            ]
+
+                        pickup["position"] = pick_random_point_in_aabb(self.rng, aabb, area.name)
+                        pickup["jumboScan"] = True # Scan this item through walls
+
+                    world_data[world.name]["rooms"][area.name]["pickups"].append(pickup)
 
                 if self.configuration.superheated_probability != 0:
                     world_data[world.name]["rooms"][area.name]["superheated"] = self.rng.random() < self.configuration.superheated_probability/1000.0
@@ -707,7 +756,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "bossSizes": boss_sizes,
                 "noDoors": self.configuration.no_doors,
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,
-                "shufflePickupPosAllRooms": self.configuration.items_every_room,
+                "shufflePickupPosAllRooms": False, # functionality is handled in randovania as of v4.3
                 "startingRoom": starting_room,
                 "startingMemo": starting_memo,
                 "warpToStart": self.configuration.warp_to_start,
