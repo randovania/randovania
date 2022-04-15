@@ -1,7 +1,7 @@
 from typing import Dict
 
 from randovania.exporter.hints.hint_namer import HintNamer
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintDarkTemple
 from randovania.games.game import RandovaniaGame

@@ -7,7 +7,6 @@ from PySide6 import QtCore, QtWidgets, QtGui
 from qasync import asyncSlot
 
 import randovania
-from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
@@ -24,7 +23,7 @@ from randovania.gui.lib.window_manager import WindowManager
 from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout import preset_describer
+from randovania.layout import preset_describer, default_database
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 

@@ -1,6 +1,6 @@
 from PySide6 import QtWidgets
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame

@@ -3,9 +3,8 @@ from random import Random
 
 from PySide6 import QtWidgets
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.games.cave_story.exporter.patch_data_factory import get_hints
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
@@ -31,7 +30,7 @@ class CSHintDetailsTab(GameDetailsTab):
         self.tree_widget.setColumnCount(3)
         self.tree_widget.setHeaderLabels(["Hint", "Pickup", "In-Game Text"])
 
-        game = default_database.game_description_for(self.game_enum)
+        game = default_database.game_description_for_layout(configuration)
         world_list = game.world_list
         patches = all_patches[players.player_index]
 

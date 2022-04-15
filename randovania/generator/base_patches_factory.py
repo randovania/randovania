@@ -3,7 +3,7 @@ import dataclasses
 from random import Random
 from typing import Tuple
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.assignment import NodeConfigurationAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -109,7 +109,7 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
             if rng is None:
                 raise MissingRng("Elevator")
 
-            world_list = default_database.game_description_for(configuration.game).world_list
+            world_list = default_database.game_description_for_layout(configuration).world_list
             elevator_db = elevator_distributor.create_elevator_database(
                 world_list, elevators.editable_teleporters)
 

@@ -6,7 +6,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.item.item_category import ItemCategory

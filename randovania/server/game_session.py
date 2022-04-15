@@ -11,7 +11,7 @@ import flask_socketio
 import peewee
 
 from randovania.bitpacking import bitpacking
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry

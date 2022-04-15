@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, Iterator, Tuple
 
 from randovania.bitpacking import bitpacking
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.item.ammo import Ammo
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_state import AmmoState

@@ -4,7 +4,7 @@ from randovania.exporter.hints.hint_formatters import TemplatedFormatter, Relati
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.exporter.hints.relative_item_formatter import RelativeItemFormatter
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintLocationPrecision, Hint
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo

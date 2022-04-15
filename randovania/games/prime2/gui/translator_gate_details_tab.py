@@ -2,7 +2,7 @@ import collections
 
 from PySide6 import QtWidgets
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
@@ -31,7 +31,7 @@ class TranslatorGateDetailsTab(GameDetailsTab):
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Gate", "Requirement"])
 
-        game = default_database.game_description_for(self.game_enum)
+        game = default_database.game_description_for_layout(configuration)
         world_list = game.world_list
         patches = all_patches[players.player_index]
 

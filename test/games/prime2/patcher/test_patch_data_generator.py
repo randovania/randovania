@@ -7,9 +7,7 @@ from frozendict import frozendict
 
 import randovania
 from randovania.exporter import pickup_exporter
-from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
@@ -24,38 +22,10 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout import default_database
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle
-from randovania.layout.layout_description import LayoutDescription
-from randovania.layout.lib.teleporters import TeleporterShuffleMode
-import dataclasses
-import json
-from unittest.mock import MagicMock
-
-import pytest
-from frozendict import frozendict
-
-import randovania
-from randovania.exporter import pickup_exporter
-from randovania.game_description import default_database
-from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.default_database import default_prime2_memo_data
-from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
-from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_type import ResourceType
-from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.exporter import patch_data_factory
-from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
-from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeticPatches
-from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
-from randovania.generator.item_pool import pickup_creator, pool_creator
-from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.layout.base.major_item_state import MajorItemState
-from randovania.layout.base.pickup_model import PickupModelStyle
+from randovania.layout.default_database import default_prime2_memo_data
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 

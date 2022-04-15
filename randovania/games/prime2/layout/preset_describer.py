@@ -1,4 +1,4 @@
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.item.major_item import MajorItem
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.base.base_configuration import BaseConfiguration

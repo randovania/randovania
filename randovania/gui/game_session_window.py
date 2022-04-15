@@ -13,7 +13,6 @@ from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
-from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
@@ -30,7 +29,7 @@ from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout import preset_describer
+from randovania.layout import preset_describer, default_database
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink

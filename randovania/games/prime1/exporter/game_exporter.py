@@ -13,7 +13,6 @@ from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
-from randovania.patching.patchers.gamecube import iso_packager
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
 from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 
@@ -70,7 +69,7 @@ class PrimeGameExporter(GameExporter):
 
     def make_room_rando_maps(self, directory: Path, base_filename: str, level_data: dict):
         def make_one_map(filepath, level_data, world_name):
-            from randovania.game_description import default_database
+            from randovania.layout import default_database
             from randovania.game_description.world.dock_node import DockNode
 
             import networkx
@@ -94,7 +93,8 @@ class PrimeGameExporter(GameExporter):
 
             # add edges which were not shuffled
             disabled_doors = set()
-            world = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list.world_with_name(world_name)
+            world_list = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list
+            world = world_list.world_with_name(world_name)
             for area in world.areas:
                 for node in area.nodes:
                     if not isinstance(node, DockNode):

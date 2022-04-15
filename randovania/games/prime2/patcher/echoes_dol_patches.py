@@ -6,7 +6,7 @@ from typing import List
 from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *
 from randovania.dol_patching.dol_file import DolFile
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.beam_configuration import BeamConfiguration
 from randovania.games.prime2.layout.echoes_user_preferences import EchoesUserPreferences
@@ -356,7 +356,7 @@ class EchoesDolVersion(BasePrimeDolVersion):
 
 
 def apply_fixes(version: EchoesDolVersion, dol_file: DolFile):
-    resource_database = default_database.game_description_for(RandovaniaGame.METROID_PRIME_ECHOES).resource_database
+    resource_database = default_database.resource_database_for(RandovaniaGame.METROID_PRIME_ECHOES)
 
     dol_file.symbols["CMapWorldInfo::IsAnythingSet"] = version.anything_set_address
 

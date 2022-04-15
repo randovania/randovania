@@ -206,7 +206,7 @@ def _migrate_v7(preset: dict) -> dict:
 
 
 def _migrate_v8(preset: dict) -> dict:
-    from randovania.game_description import default_database
+    from randovania.layout import default_database
     game = default_database.game_description_for(RandovaniaGame(preset["game"]))
 
     # FIXME: area location is now something different, this code broke
@@ -407,7 +407,7 @@ def _migrate_v13(preset: dict) -> dict:
 
 
 def _migrate_v14(preset: dict) -> dict:
-    from randovania.game_description import default_database
+    from randovania.layout import default_database
 
     game = RandovaniaGame(preset["game"])
     db = default_database.game_description_for(game)

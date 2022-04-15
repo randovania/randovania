@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.generator.bootstrap import PrimeBootstrap

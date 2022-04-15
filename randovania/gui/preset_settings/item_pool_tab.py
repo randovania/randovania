@@ -5,7 +5,7 @@ from typing import Dict, Tuple, List
 
 from PySide6 import QtWidgets, QtCore
 
-from randovania.game_description import default_database
+from randovania.layout import default_database
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.item.item_database import ItemDatabase
