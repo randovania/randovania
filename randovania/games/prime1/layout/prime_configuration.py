@@ -87,3 +87,9 @@ class PrimeConfiguration(BaseConfiguration):
             result.append("Dangerous Gravity Suit Logic")
 
         return result
+
+    def active_layers(self) -> set[str]:
+        layers = {"default"}
+        if self.items_every_room:
+            layers.add("items_every_room")
+        return layers
