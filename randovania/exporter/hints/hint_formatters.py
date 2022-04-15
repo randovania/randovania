@@ -3,12 +3,13 @@ from typing import Callable
 from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.pickup_hint import PickupHint
-from randovania.game_description import node_search, default_database
+from randovania.game_description import node_search
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint, HintLocationPrecision, RelativeDataArea, HintRelativeAreaName
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
 from randovania.games.game import RandovaniaGame
+from randovania.layout import filtered_database
 
 
 class LocationFormatter:
@@ -49,7 +50,7 @@ class TemplatedFormatter(LocationFormatter):
 
 class RelativeFormatter(LocationFormatter):
     def __init__(self, patches: GamePatches, distance_painter: Callable[[str, bool], str]):
-        self.world_list = default_database.game_description_for(patches.configuration.game).world_list
+        self.world_list = filtered_database.game_description_for_layout(patches.configuration).world_list
         self.patches = patches
         self.distance_painter = distance_painter
 

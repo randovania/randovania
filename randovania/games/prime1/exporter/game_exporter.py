@@ -13,7 +13,6 @@ from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
-from randovania.patching.patchers.gamecube import iso_packager
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
 from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 
