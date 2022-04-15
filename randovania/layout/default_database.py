@@ -8,8 +8,6 @@ from randovania.game_description.item import item_database
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
-from randovania.layout.base.base_configuration import BaseConfiguration
-
 
 def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
     return game_description_for(game).resource_database
@@ -23,7 +21,11 @@ def game_description_for(game: RandovaniaGame) -> GameDescription:
     return result
 
 
-def game_description_for_layout(configuration: BaseConfiguration) -> GameDescription:
+def game_description_for_layout(configuration) -> GameDescription:
+    from randovania.layout.base.base_configuration import BaseConfiguration
+    assert isinstance(configuration, BaseConfiguration)
+    configuration: BaseConfiguration = configuration
+
     game = game_description_for(configuration.game).make_mutable_copy()
     derived_nodes.remove_inactive_layers(game, configuration.active_layers())
 
