@@ -99,13 +99,14 @@ class PrimeGameExporter(GameExporter):
                 for node in area.nodes:
                     if not isinstance(node, DockNode):
                         continue
-                    
+
+                    src_name = area.name                    
                     src_dock_num = node.extra["dock_index"]
-                    if node.default_dock_weakness.long_name == "Permanently Locked":
+
+                    if node.default_dock_weakness.name == "Permanently Locked":
                         disabled_doors.add((src_name, src_dock_num))
 
                     if node.extra["nonstandard"]:
-                        src_name = area.name
                         dst_name = node.default_connection.area_identifier.area_name
                         room_connections.append((wrap_text(src_name), wrap_text(dst_name)))
 

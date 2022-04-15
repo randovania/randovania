@@ -289,8 +289,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                         default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
 
-                        if node.default_dock_weakness.long_name == "Permanently Locked":
-                            disabled_doors.add((room_name, index))
+                        if node.default_dock_weakness.name == "Permanently Locked":
+                            disabled_doors.add((area.name, index))
 
                         if node.extra["nonstandard"]:
                             continue
@@ -361,7 +361,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         return False
 
                     return True
-
+                
                 if self.configuration.room_rando == RoomRandoMode.ONE_WAY:
                     for area in world.areas:
                         for dock_num in area_dock_nums[area.name]:
@@ -479,7 +479,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                     if "destination" not in room["doors"][dock_num].keys():
                                         continue
 
-                                    if (room_name, dock_num) in disabled_doors:
+                                    if (room_name, int(dock_num)) in disabled_doors:
                                         continue
 
                                     dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
