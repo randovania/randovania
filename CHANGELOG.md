@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Data Visualizer, it's now possible to set tricks to a certain level and simplify all visible connections based on that.
 - Fixed: Maximum values for certain preset fields, such as Energy Tank capacity and Superheated Room Probability, can now properly be used.
 - Fixed: A race condition with Randovania connected to Nintendont, where Randovania could incorrectly assume the game was idle if memory was read while it was executing the last sent task.
+- Changed: Increased max item shuffled count to 999
 
 ### Cave Story
 
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Adjusted min/max boss sizes to prevent softlocks
 - Fixed: Default setting for screen Y offset now works
 - Changed: Two-way room rando now ensures that all rooms are part of the same network
+- Changed: Items in every room is now handled Randovania-side, which means it uses proper hudmem/scan text, and (non-progression) multiworld items may appear.
 
 #### Patcher Changes
 
