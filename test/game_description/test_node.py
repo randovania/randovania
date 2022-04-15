@@ -6,6 +6,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
 from randovania.game_description.world.logbook_node import LoreType, LogbookNode
 from randovania.game_description.world.node import NodeContext
+from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
 @pytest.fixture(
@@ -16,7 +17,8 @@ def _logbook_node(request):
     scan_visor = ItemResourceInfo("Scan", "S", 1, None)
     translator = ItemResourceInfo("Translator", "T", 1, None)
 
-    node = LogbookNode("Logbook", False, None, "", ("default",), {}, 0,
+    node = LogbookNode(NodeIdentifier.create("W", "A", "Logbook"),
+                       False, None, "", ("default",), {},
                        1000, scan_visor, LoreType.REQUIRES_ITEM,
                        translator if has_translator else None, None)
 

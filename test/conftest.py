@@ -14,8 +14,10 @@ from randovania.game_description.item.item_database import ItemDatabase
 from randovania.game_description.resources.pickup_entry import PickupEntry, PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.games import default_data
+from randovania.games.blank.layout import BlankConfiguration
 from randovania.games.cave_story.layout.cs_configuration import CSConfiguration
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.exporter.game_exporter import decode_randomizer_data
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.interface_common.preset_manager import PresetManager
@@ -50,8 +52,22 @@ def blank_game_data() -> dict:
 
 
 @pytest.fixture(scope="session")
+def default_blank_configuration() -> BlankConfiguration:
+    preset = PresetManager(None).default_preset_for_game(RandovaniaGame.BLANK).get_preset()
+    assert isinstance(preset.configuration, BlankConfiguration)
+    return preset.configuration
+
+
+@pytest.fixture(scope="session")
 def blank_game_description() -> GameDescription:
     return default_database.game_description_for(RandovaniaGame.BLANK)
+
+
+@pytest.fixture()
+def blank_game_patches(empty_patches, default_blank_configuration, blank_game_description) -> GamePatches:
+    return dataclasses.replace(empty_patches, configuration=default_blank_configuration,
+                               starting_location=blank_game_description.starting_location,
+                               elevator_connection=blank_game_description.get_default_elevator_connection())
 
 
 @pytest.fixture(scope="session")
@@ -77,14 +93,28 @@ def default_echoes_preset() -> Preset:
 
 
 @pytest.fixture(scope="session")
-def default_cs_preset() -> Preset:
-    return PresetManager(None).default_preset_for_game(RandovaniaGame.CAVE_STORY).get_preset()
+def default_echoes_configuration(default_echoes_preset) -> EchoesConfiguration:
+    assert isinstance(default_echoes_preset.configuration, EchoesConfiguration)
+    return default_echoes_preset.configuration
+
+
+@pytest.fixture()
+def echoes_game_patches(empty_patches, default_echoes_configuration, echoes_game_description) -> GamePatches:
+    return dataclasses.replace(empty_patches, configuration=default_echoes_configuration,
+                               starting_location=echoes_game_description.starting_location,
+                               elevator_connection=echoes_game_description.get_default_elevator_connection())
 
 
 @pytest.fixture(scope="session")
-def default_layout_configuration(default_echoes_preset) -> EchoesConfiguration:
-    assert isinstance(default_echoes_preset.configuration, EchoesConfiguration)
-    return default_echoes_preset.configuration
+def default_prime_configuration() -> PrimeConfiguration:
+    preset = PresetManager(None).default_preset_for_game(RandovaniaGame.METROID_PRIME).get_preset()
+    assert isinstance(preset.configuration, PrimeConfiguration)
+    return preset.configuration
+
+
+@pytest.fixture(scope="session")
+def default_cs_preset() -> Preset:
+    return PresetManager(None).default_preset_for_game(RandovaniaGame.CAVE_STORY).get_preset()
 
 
 @pytest.fixture(scope="session")
@@ -193,8 +223,10 @@ def dataclass_test_lib() -> DataclassTestLib:
 
 
 @pytest.fixture()
-def empty_patches() -> GamePatches:
-    return GamePatches(0, RandovaniaGame.BLANK, {}, {}, {}, {}, {}, {}, None, {})
+def empty_patches(preset_manager) -> GamePatches:
+    configuration = preset_manager.default_preset_for_game(RandovaniaGame.BLANK).get_preset().configuration
+    return GamePatches(0, configuration, {}, {}, {}, {}, {}, {}, None, {})
+
 
 
 def pytest_addoption(parser):

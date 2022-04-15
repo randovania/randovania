@@ -35,8 +35,8 @@ class BasePatchesFactory:
                             ) -> GamePatches:
         """
         """
-        patches = dataclasses.replace(game.create_game_patches(),
-                                      player_index=player_index)
+        patches = GamePatches(player_index, configuration, {}, game.get_default_elevator_connection(),
+                              {}, {}, {}, {}, game.starting_location, {})
 
         # Elevators
         try:
@@ -61,7 +61,7 @@ class BasePatchesFactory:
         except MissingRng as e:
             if rng_required:
                 raise e
-        
+
         return patches
 
     def add_elevator_connections_to_patches(self,

@@ -1,4 +1,5 @@
 import dataclasses
+import functools
 from random import Random
 from typing import Tuple, List
 
@@ -164,19 +165,20 @@ def test_database_collectable(preset_manager, game_enum, ignore_events, ignore_p
 
 
 @pytest.mark.parametrize("has_translator", [False, True])
-def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database):
+def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource_database, echoes_game_patches):
     # Setup
     scan_visor = echoes_resource_database.get_item("DarkVisor")
+    nc = functools.partial(NodeIdentifier.create, "Test World", "Test Area A")
 
-    translator_identif = NodeIdentifier.create("Test World", "Test Area A", "Translator Gate")
-    node_a = GenericNode("Node A", True, None, "", ("default",), {}, 0)
-    node_b = GenericNode("Node B", True, None, "", ("default",), {}, 1)
-    node_c = GenericNode("Node C", True, None, "", ("default",), {}, 2)
-    translator_node = ConfigurableNode("Translator Gate", True, None, "", ("default",), {}, 3)
+    node_a = GenericNode(nc("Node A"), True, None, "", ("default",), {})
+    node_b = GenericNode(nc("Node B"), True, None, "", ("default",), {})
+    node_c = GenericNode(nc("Node C"), True, None, "", ("default",), {})
+    translator_node = ConfigurableNode(translator_identif := nc("Translator Gate"),
+                                       True, None, "", ("default",), {})
 
     world_list = WorldList([
         World("Test World", [
-            Area("Test Area A", 0, True, [node_a, node_b, node_c, translator_node],
+            Area("Test Area A", None, True, [node_a, node_b, node_c, translator_node],
                  {
                      node_a: {
                          node_b: Requirement.trivial(),
@@ -201,8 +203,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                            echoes_resource_database, ("default",), Requirement.impossible(),
                            None, {}, None, world_list)
 
-    patches = game.create_game_patches()
-    patches = patches.assign_node_configuration({
+    patches = echoes_game_patches.assign_node_configuration({
         translator_identif: ResourceRequirement(scan_visor, 1, False)
     })
     initial_state = State({scan_visor: 1 if has_translator else 0}, (), 99,
@@ -218,11 +219,11 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         assert set(reach.safe_nodes) == {node_a, node_b}
 
 
-def test_reach_size_from_start_echoes(small_echoes_game_description, default_layout_configuration, mocker):
+def test_reach_size_from_start_echoes(small_echoes_game_description, default_echoes_configuration, mocker):
     # Setup
     game: GameDescription = small_echoes_game_description.make_mutable_copy()
     derived_nodes.create_derived_nodes(game)
-    derived_nodes.remove_inactive_layers(game, default_layout_configuration.active_layers())
+    derived_nodes.remove_inactive_layers(game, default_echoes_configuration.active_layers())
 
     mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
     generator = game.game.generator
@@ -242,14 +243,14 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
             game.world_list.node_by_identifier(ni(*name.split("/")))
             for name in names
         ]
-        result.sort(key=lambda it: it.index)
+        result.sort(key=lambda it: it.get_index())
         return result
 
     layout_configuration = dataclasses.replace(
-        default_layout_configuration,
+        default_echoes_configuration,
         trick_level=TrickLevelConfiguration(minimal_logic=False,
                                             specific_levels=specific_levels,
-                                            game=default_layout_configuration.game),
+                                            game=default_echoes_configuration.game),
         starting_location=StartingLocationList.with_elements(
             [game.starting_location],
             game=RandovaniaGame.METROID_PRIME_ECHOES,
@@ -259,7 +260,7 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_lay
         layout_configuration, Random(15000),
         game,
         False, player_index=0)
-    state = generator.bootstrap.calculate_starting_state(game, patches, default_layout_configuration)
+    state = generator.bootstrap.calculate_starting_state(game, patches, default_echoes_configuration)
     state.resources[item("Combat Visor")] = 1
     state.resources[item("Amber Translator")] = 1
     state.resources[item("Scan Visor")] = 1

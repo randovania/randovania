@@ -1,3 +1,4 @@
+import dataclasses
 from unittest.mock import MagicMock
 
 import pytest
@@ -36,12 +37,15 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     }
 
 
-def test_logic_bootstrap(preset_manager, game_enum):
-    game = default_database.game_description_for(game_enum)
+def test_logic_bootstrap(preset_manager, game_enum, empty_patches):
+    configuration = preset_manager.default_preset_for_game(game_enum).get_preset().configuration
+    game = default_database.game_description_for(configuration.game)
+
     new_game, state = game_enum.generator.bootstrap.logic_bootstrap(
-        preset_manager.default_preset_for_game(game_enum).get_preset().configuration,
+        configuration,
         game.make_mutable_copy(),
-        game.create_game_patches())
+        dataclasses.replace(empty_patches, configuration=configuration, starting_location=game.starting_location),
+    )
 
 
 @pytest.mark.parametrize(["expected", "suits"], [

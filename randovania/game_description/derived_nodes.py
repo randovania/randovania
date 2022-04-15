@@ -14,20 +14,12 @@ def create_derived_nodes(game: GameDescription):
         raise ValueError("game is not mutable")
 
     all_nodes = list(game.world_list.all_worlds_areas_nodes)
-    last_index = max(n.index for _, _, n in all_nodes) + 1
-
     editor = Editor(game)
-
-    identifier_by_node = {
-        node: game.world_list.identifier_for_node(node)
-        for world, area, node in all_nodes
-    }
 
     for world, area, node in all_nodes:
         if isinstance(node, DockNode):
-            lock_node = DockLockNode.create_from_dock(node, identifier_by_node[node], index=last_index)
+            lock_node = DockLockNode.create_from_dock(node)
             # print(f"In {world.name}/{area.name}, create '{lock_node.name}' from '{node.name}'")
-            last_index += 1
             editor.add_node(area, lock_node)
 
 
