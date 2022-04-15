@@ -31,15 +31,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Map images are now generated and written in the same folder as output ISO when generating room rando seeds and exporting them with spoilers enabled.
 - Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
 - Fixed: Adjusted min/max boss sizes to prevent softlocks
+- Fixed: Default setting for screen Y offset now works
 - Changed: Two-way room rando now ensures that all rooms are part of the same network
 
 #### Patcher Changes
 
 Room Rando:
+    - Added: Include Square Frigate doors and morph ball tunnels during randomization
     - Fixed: Crash when opening the map near certain rooms
-    - Fixed: Crashes regarding specific rooms in Chozo, Magmoor and Phendrana.
+    - Fixed: Crashes due to two large rooms being connected.
     - Fixed: Crash when rolling through some doors in morph ball
     - Fixed: Central Dynamo reposition soft-lock
+    - Fixed: Inability to scan vertical doors
     - Changed: The door immediately behind the player is unlocked when teleporting to a new room. This gives the player one chance to backtrack before commiting to the warp.
 
 - Fixed: Specifying custom heat-damage-per-second now properly affects non-vanilla superheated rooms

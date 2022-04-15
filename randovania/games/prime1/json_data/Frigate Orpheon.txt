@@ -46,13 +46,13 @@ Extra - aabb: [17.005129, 41.283752, 4.934543, 27.486038, 74.98412, 11.304357]
   * Layers: default
   * Normal Door to Exterior Docking Hangar/Door to Air Lock
   * Extra - dock_index: 1
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Deck Alpha Access Hall
       Scan Visor
 
-> Door to Deck Alpha Mech Shaft; Heals? False
+> Door from Deck Alpha Mech Shaft; Heals? False
   * Layers: default
-  * Normal Door to Deck Alpha Mech Shaft/Door to Air Lock
+  * Permanently Locked to Deck Alpha Mech Shaft/Door to Air Lock
   * Extra - dock_index: 2
   * Extra - nonstandard: True
   > Door to Exterior Docking Hangar
@@ -86,9 +86,9 @@ Deck Alpha Mech Shaft
 Extra - asset_id: 3365346969
 Extra - size_index: 0.1
 Extra - aabb: [-9.7115135, 42.53347, 4.7486186, 19.53093, 61.254944, 12.1577]
-> Door to Connection Elevator to Deck Alpha; Heals? False; Spawn Point
+> Door from Connection Elevator to Deck Alpha; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Connection Elevator to Deck Alpha/Door to Deck Alpha Mech Shaft
+  * Permanently Locked to Connection Elevator to Deck Alpha/Door to Deck Alpha Mech Shaft
   * Extra - dock_index: 0
   * Extra - nonstandard: True
   > Door to Air Lock
@@ -96,7 +96,7 @@ Extra - aabb: [-9.7115135, 42.53347, 4.7486186, 19.53093, 61.254944, 12.1577]
 
 > Door to Air Lock; Heals? False
   * Layers: default
-  * Normal Door to Air Lock/Door to Deck Alpha Mech Shaft
+  * Normal Door to Air Lock/Door from Deck Alpha Mech Shaft
   * Extra - dock_index: 1
   * Extra - nonstandard: True
 
@@ -128,17 +128,17 @@ Connection Elevator to Deck Alpha
 Extra - asset_id: 2921253053
 Extra - size_index: 0.3
 Extra - aabb: [-13.167816, 43.15779, -54.167496, 59.605236, 72.76269, 12.799316]
-> Door to Biotech Research Area 2; Heals? False; Spawn Point
+> Door from Biotech Research Area 2; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Biotech Research Area 2/Door to Connection Elevator to Deck Alpha
+  * Permanently Locked to Biotech Research Area 2/Door to Connection Elevator to Deck Alpha
   * Extra - dock_index: 0
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Deck Alpha Mech Shaft
       Scan Visor
 
 > Door to Deck Alpha Mech Shaft; Heals? False
   * Layers: default
-  * Normal Door to Deck Alpha Mech Shaft/Door to Connection Elevator to Deck Alpha
+  * Normal Door to Deck Alpha Mech Shaft/Door from Connection Elevator to Deck Alpha
   * Extra - dock_index: 1
   * Extra - nonstandard: True
 
@@ -174,11 +174,11 @@ Biotech Research Area 2
 Extra - asset_id: 3319675910
 Extra - size_index: 0.6
 Extra - aabb: [55.20597, -9.071922, -53.394554, 171.21388, 106.936295, 133.1554]
-> Door to Main Ventilation Shaft Section F; Heals? False; Spawn Point
+> Door from Main Ventilation Shaft Section F; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section F/Door to Biotech Research Area 2
+  * Permanently Locked to Main Ventilation Shaft Section F/Door to Biotech Research Area 2
   * Extra - dock_index: 0
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Connection Elevator to Deck Alpha
       Any of the following:
           Space Jump Boots or Use Grapple Beam
@@ -186,7 +186,7 @@ Extra - aabb: [55.20597, -9.071922, -53.394554, 171.21388, 106.936295, 133.1554]
 
 > Door to Connection Elevator to Deck Alpha; Heals? False
   * Layers: default
-  * Normal Door to Connection Elevator to Deck Alpha/Door to Biotech Research Area 2
+  * Normal Door to Connection Elevator to Deck Alpha/Door from Biotech Research Area 2
   * Extra - dock_index: 1
   * Extra - nonstandard: False
 
@@ -194,7 +194,7 @@ Extra - aabb: [55.20597, -9.071922, -53.394554, 171.21388, 106.936295, 133.1554]
 Map Facility
 (Valid Starting Location)
 Extra - asset_id: 3454403824
-Extra - size_index: 0.1
+Extra - size_index: 0.3
 Extra - aabb: [-39.477062, -135.51378, -1.1146281, 12.107888, -105.39661, 11.8321]
 > Door to Deck Alpha Umbilical Hall; Heals? False; Spawn Point
   * Layers: default
@@ -231,15 +231,15 @@ Extra - size_index: 0.1
 Extra - aabb: [167.86838, -13.107231, -60.691372, 197.11232, 53.009132, -37.95221]
 > Door to Biotech Research Area 2; Heals? False
   * Layers: default
-  * Normal Door to Biotech Research Area 2/Door to Main Ventilation Shaft Section F
+  * Normal Door to Biotech Research Area 2/Door from Main Ventilation Shaft Section F
   * Extra - dock_index: 0
   * Extra - nonstandard: False
 
-> Door to Main Ventilation Shaft Section E; Heals? False; Spawn Point
+> Door from Main Ventilation Shaft Section E; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section E/Door to Main Ventilation Shaft Section F
+  * Permanently Locked to Main Ventilation Shaft Section E/Door to Main Ventilation Shaft Section F
   * Extra - dock_index: 1
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Biotech Research Area 2
       Trivial
 
@@ -261,7 +261,7 @@ Extra - aabb: [76.80737, -264.21964, -109.16401, 106.86839, -218.51312, -36.9621
   * Layers: default
   * Normal Door to Deck Beta Conduit Hall/Door to Connection Elevator to Deck Beta
   * Extra - dock_index: 1
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Map Facility
       Trivial
 
@@ -273,15 +273,15 @@ Extra - size_index: 0.1
 Extra - aabb: [178.48003, -37.63453, -61.629242, 250.6361, -13.107206, -51.47195]
 > Door to Main Ventilation Shaft Section F; Heals? False
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section F/Door to Main Ventilation Shaft Section E
+  * Normal Door to Main Ventilation Shaft Section F/Door from Main Ventilation Shaft Section E
   * Extra - dock_index: 0
   * Extra - nonstandard: False
 
-> Door to Main Ventilation Shaft Section D; Heals? False; Spawn Point
+> Door from Main Ventilation Shaft Section D; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section D/Door to Main Ventilation Shaft Section E
+  * Permanently Locked to Main Ventilation Shaft Section D/Door to Main Ventilation Shaft Section E
   * Extra - dock_index: 1
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Main Ventilation Shaft Section F
       Trivial
 
@@ -313,17 +313,17 @@ Main Ventilation Shaft Section D
 Extra - asset_id: 1040562396
 Extra - size_index: 0.1
 Extra - aabb: [223.858, -102.50653, -80.26732, 273.65005, -37.63449, -50.72226]
-> Door to Main Ventilation Shaft Section C; Heals? False; Spawn Point
+> Door from Main Ventilation Shaft Section C; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section C/Door to Main Ventilation Shaft Section D
+  * Permanently Locked to Main Ventilation Shaft Section C/Door to Main Ventilation Shaft Section D
   * Extra - dock_index: 0
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Main Ventilation Shaft Section E
       Trivial
 
 > Door to Main Ventilation Shaft Section E; Heals? False
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section E/Door to Main Ventilation Shaft Section D
+  * Normal Door to Main Ventilation Shaft Section E/Door from Main Ventilation Shaft Section D
   * Extra - dock_index: 1
   * Extra - nonstandard: False
 
@@ -353,11 +353,11 @@ Extra - aabb: [32.791523, -224.20995, -46.73259, 101.80783, -161.28946, 24.33096
   > Door to Subventilation Shaft Section A
       After Parasite Queen
 
-> Door to Connection Elevator to Deck Beta (2); Heals? False
+> Door from Connection Elevator to Deck Beta (2); Heals? False
   * Layers: default
-  * Normal Door to Connection Elevator to Deck Beta (2)/Door to Biotech Research Area 1
+  * Permanently Locked to Connection Elevator to Deck Beta (2)/Door to Biotech Research Area 1
   * Extra - dock_index: 2
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Deck Beta Security Hall
       Any of the following:
           After Parasite Queen
@@ -376,7 +376,7 @@ Extra - aabb: [32.791523, -224.20995, -46.73259, 101.80783, -161.28946, 24.33096
 
 > Door to Subventilation Shaft Section A; Heals? False
   * Layers: default
-  * Normal Door to Subventilation Shaft Section A/Door to Biotech Research Area 1
+  * Normal Door to Subventilation Shaft Section A/Door from Biotech Research Area 1
   * Extra - dock_index: 3
   * Extra - nonstandard: True
   > Door to Deck Beta Security Hall
@@ -392,15 +392,15 @@ Extra - size_index: 0.1
 Extra - aabb: [273.65, -145.08824, -116.60791, 336.6398, -88.19056, -20.26212]
 > Door to Main Ventilation Shaft Section D; Heals? False
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section D/Door to Main Ventilation Shaft Section C
+  * Normal Door to Main Ventilation Shaft Section D/Door from Main Ventilation Shaft Section C
   * Extra - dock_index: 0
   * Extra - nonstandard: False
 
-> Door to Main Ventilation Shaft Section B; Heals? False; Spawn Point
+> Door from Main Ventilation Shaft Section B; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section B/Door to Main Ventilation Shaft Section C
+  * Permanently Locked to Main Ventilation Shaft Section B/Door to Main Ventilation Shaft Section C
   * Extra - dock_index: 1
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Main Ventilation Shaft Section D
       Trivial
 
@@ -433,13 +433,13 @@ Extra - asset_id: 1859330843
 Extra - size_index: 0.3
 > Door to Biotech Research Area 1; Heals? False
   * Layers: default
-  * Normal Door to Biotech Research Area 1/Door to Connection Elevator to Deck Beta (2)
+  * Normal Door to Biotech Research Area 1/Door from Connection Elevator to Deck Beta (2)
   * Extra - dock_index: 0
   * Extra - nonstandard: False
 
-> Door to Deck Gamma Monitor Hall; Heals? False; Spawn Point
+> Door from Deck Gamma Monitor Hall; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Deck Gamma Monitor Hall/Door to Connection Elevator to Deck Beta (2)
+  * Permanently Locked to Deck Gamma Monitor Hall/Door to Connection Elevator to Deck Beta (2)
   * Extra - dock_index: 1
   * Extra - nonstandard: False
   > Door to Biotech Research Area 1
@@ -451,9 +451,9 @@ Subventilation Shaft Section A
 Extra - asset_id: 154468580
 Extra - size_index: 0.1
 Extra - aabb: [93.63032, -287.56635, -52.560314, 170.73416, -172.93942, -25.948427]
-> Door to Biotech Research Area 1; Heals? False; Spawn Point
+> Door from Biotech Research Area 1; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Biotech Research Area 1/Door to Subventilation Shaft Section A
+  * Permanently Locked to Biotech Research Area 1/Door to Subventilation Shaft Section A
   * Extra - dock_index: 0
   * Extra - nonstandard: True
   > Door to Subventilation Shaft Section B
@@ -461,7 +461,7 @@ Extra - aabb: [93.63032, -287.56635, -52.560314, 170.73416, -172.93942, -25.9484
 
 > Door to Subventilation Shaft Section B; Heals? False
   * Layers: default
-  * Normal Door to Subventilation Shaft Section B/Door to Subventilation Shaft Section A
+  * Normal Door to Subventilation Shaft Section B/Door from Subventilation Shaft Section A
   * Extra - dock_index: 1
   * Extra - nonstandard: False
 
@@ -471,11 +471,11 @@ Main Ventilation Shaft Section B
 Extra - asset_id: 1291117148
 Extra - size_index: 0.1
 Extra - aabb: [240.68193, -151.91791, -103.88626, 295.20752, -129.99814, -6.9333344]
-> Door to Main Ventilation Shaft Section A; Heals? False; Spawn Point
+> Door from Main Ventilation Shaft Section A; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section A/Door to Main Ventilation Shaft Section B
+  * Permanently Locked to Main Ventilation Shaft Section A/Door to Main Ventilation Shaft Section B
   * Extra - dock_index: 0
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Main Ventilation Shaft Section C
       All of the following:
           Shoot Any Beam
@@ -483,7 +483,7 @@ Extra - aabb: [240.68193, -151.91791, -103.88626, 295.20752, -129.99814, -6.9333
 
 > Door to Main Ventilation Shaft Section C; Heals? False
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section C/Door to Main Ventilation Shaft Section B
+  * Normal Door to Main Ventilation Shaft Section C/Door from Main Ventilation Shaft Section B
   * Extra - dock_index: 1
   * Extra - nonstandard: False
 
@@ -491,7 +491,7 @@ Extra - aabb: [240.68193, -151.91791, -103.88626, 295.20752, -129.99814, -6.9333
 Biohazard Containment
 (Valid Starting Location)
 Extra - asset_id: 3513460432
-Extra - size_index: 0.6
+Extra - size_index: 0.8
 Extra - aabb: [92.32477, -138.41971, -37.702404, 132.39034, -81.78292, -3.7646732]
 > Door to Deck Beta Transit Hall; Heals? False; Spawn Point
   * Layers: default
@@ -515,17 +515,17 @@ Deck Gamma Monitor Hall
 Extra - asset_id: 3865556485
 Extra - size_index: 0.1
 Extra - aabb: [98.23192, -316.5242, -99.70372, 140.88274, -264.2196, -80.83344]
-> Door to Reactor Core; Heals? False; Spawn Point
+> Door from Reactor Core; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Reactor Core/Door to Deck Gamma Monitor Hall
+  * Permanently Locked to Reactor Core/Door to Deck Gamma Monitor Hall
   * Extra - dock_index: 0
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Connection Elevator to Deck Beta (2)
       Trivial
 
 > Door to Connection Elevator to Deck Beta (2); Heals? False
   * Layers: default
-  * Normal Door to Connection Elevator to Deck Beta (2)/Door to Deck Gamma Monitor Hall
+  * Normal Door to Connection Elevator to Deck Beta (2)/Door from Deck Gamma Monitor Hall
   * Extra - dock_index: 1
   * Extra - nonstandard: False
 
@@ -537,15 +537,15 @@ Extra - size_index: 0.3
 Extra - aabb: [109.60294, -266.02185, -80.34119, 178.36012, -171.03748, -43.28549]
 > Door to Cargo Freight Lift to Deck Gamma; Heals? False
   * Layers: default
-  * Normal Door to Cargo Freight Lift to Deck Gamma/Door to Subventilation Shaft Section B
+  * Normal Door to Cargo Freight Lift to Deck Gamma/Door from Subventilation Shaft Section B
   * Extra - dock_index: 0
   * Extra - nonstandard: True
 
-> Door to Subventilation Shaft Section A; Heals? False; Spawn Point
+> Door from Subventilation Shaft Section A; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Subventilation Shaft Section A/Door to Subventilation Shaft Section B
+  * Permanently Locked to Subventilation Shaft Section A/Door to Subventilation Shaft Section B
   * Extra - dock_index: 1
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Cargo Freight Lift to Deck Gamma
       Trivial
 
@@ -555,9 +555,9 @@ Main Ventilation Shaft Section A
 Extra - asset_id: 1972129564
 Extra - size_index: 0.3
 Extra - aabb: [193.10922, -210.75241, -80.38012, 240.682, -137.61028, -62.754517]
-> Door to Cargo Freight Lift to Deck Gamma; Heals? False; Spawn Point
+> Door from Cargo Freight Lift to Deck Gamma; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Cargo Freight Lift to Deck Gamma/Door to Main Ventilation Shaft Section A
+  * Permanently Locked to Cargo Freight Lift to Deck Gamma/Door to Main Ventilation Shaft Section A
   * Extra - dock_index: 0
   * Extra - nonstandard: True
   > Door to Main Ventilation Shaft Section B
@@ -565,7 +565,7 @@ Extra - aabb: [193.10922, -210.75241, -80.38012, 240.682, -137.61028, -62.754517
 
 > Door to Main Ventilation Shaft Section B; Heals? False
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section B/Door to Main Ventilation Shaft Section A
+  * Normal Door to Main Ventilation Shaft Section B/Door from Main Ventilation Shaft Section A
   * Extra - dock_index: 1
   * Extra - nonstandard: False
 
@@ -597,11 +597,11 @@ Reactor Core
 Extra - asset_id: 2269457857
 Extra - size_index: 0.6
 Extra - aabb: [139.20834, -377.1841, -156.8139, 225.37779, -271.66705, -19.186909]
-> Door to Reactor Core Entrance; Heals? False; Spawn Point
+> Door from Reactor Core Entrance; Heals? False; Spawn Point
   * Layers: default
-  * Normal Door to Reactor Core Entrance/Door to Reactor Core
+  * Permanently Locked to Reactor Core Entrance/Door to Reactor Core
   * Extra - dock_index: 0
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Event - Parasite Queen
       Any of the following:
           Shoot Any Beam
@@ -613,7 +613,7 @@ Extra - aabb: [139.20834, -377.1841, -156.8139, 225.37779, -271.66705, -19.18690
 
 > Door to Deck Gamma Monitor Hall; Heals? False
   * Layers: default
-  * Normal Door to Deck Gamma Monitor Hall/Door to Reactor Core
+  * Normal Door to Deck Gamma Monitor Hall/Door from Reactor Core
   * Extra - dock_index: 1
   * Extra - nonstandard: False
 
@@ -637,9 +637,9 @@ Extra - aabb: [177.21198, -243.26288, -93.86903, 196.48601, -110.13571, -0.60844
   > Door to Reactor Core Entrance
       Morph Ball and Scan Visor
 
-> Door to Subventilation Shaft Section B; Heals? False
+> Door from Subventilation Shaft Section B; Heals? False
   * Layers: default
-  * Normal Door to Subventilation Shaft Section B/Door to Cargo Freight Lift to Deck Gamma
+  * Permanently Locked to Subventilation Shaft Section B/Door to Cargo Freight Lift to Deck Gamma
   * Extra - dock_index: 1
   * Extra - nonstandard: True
   > Door to Main Ventilation Shaft Section A
@@ -647,7 +647,7 @@ Extra - aabb: [177.21198, -243.26288, -93.86903, 196.48601, -110.13571, -0.60844
 
 > Door to Main Ventilation Shaft Section A; Heals? False
   * Layers: default
-  * Normal Door to Main Ventilation Shaft Section A/Door to Cargo Freight Lift to Deck Gamma
+  * Normal Door to Main Ventilation Shaft Section A/Door from Cargo Freight Lift to Deck Gamma
   * Extra - dock_index: 2
   * Extra - nonstandard: True
 
@@ -655,7 +655,7 @@ Extra - aabb: [177.21198, -243.26288, -93.86903, 196.48601, -110.13571, -0.60844
   * Layers: default
   * Normal Door to Reactor Core Entrance/Door to Cargo Freight Lift to Deck Gamma
   * Extra - dock_index: 3
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
 
 ----------------
 Reactor Core Entrance
@@ -667,7 +667,7 @@ Extra - aabb: [169.7645, -271.66705, -89.60429, 216.26378, -243.26312, -64.27898
   * Layers: default
   * Normal Door to Cargo Freight Lift to Deck Gamma/Door to Reactor Core Entrance
   * Extra - dock_index: 0
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
   > Door to Reactor Core
       Morph Ball and Scan Visor
   > Save Station
@@ -675,9 +675,9 @@ Extra - aabb: [169.7645, -271.66705, -89.60429, 216.26378, -243.26312, -64.27898
 
 > Door to Reactor Core; Heals? False
   * Layers: default
-  * Normal Door to Reactor Core/Door to Reactor Core Entrance
+  * Normal Door to Reactor Core/Door from Reactor Core Entrance
   * Extra - dock_index: 1
-  * Extra - nonstandard: True
+  * Extra - nonstandard: False
 
 > Save Station; Heals? True; Spawn Point
   * Layers: default
