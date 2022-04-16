@@ -9,8 +9,8 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
-from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check, \
-    derived_nodes
+from randovania.game_description import data_reader, data_writer, pretty_print, integrity_check, \
+    derived_nodes, default_database
 from randovania.game_description.editor import Editor
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
