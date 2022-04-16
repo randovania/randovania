@@ -47,6 +47,7 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         self.vanilla_check.toggled.connect(self._on_select)
         self.starting_check.toggled.connect(self._on_select)
         self.shuffled_spinbox.valueChanged.connect(self._on_select)
+        self.shuffled_spinbox.setMaximum(999)
         self.provided_ammo_spinbox.valueChanged.connect(self._on_select)
         self.priority_combo.currentIndexChanged.connect(self._on_select)
 

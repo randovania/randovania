@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
 - Fixed: Adjusted min/max boss sizes to prevent softlocks
 - Fixed: Default setting for screen Y offset now works
+- Changed: The "Items in Every Room" Chaos Option now uses items from the Randovania pool (shows n/293 items when enabled). This means multiworld items can now appear at extra locations, and item text is now consistent with the rest of item placement.
 - Changed: Two-way room rando now ensures that all rooms are part of the same network
 
 #### Patcher Changes
