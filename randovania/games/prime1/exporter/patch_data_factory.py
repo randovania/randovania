@@ -723,7 +723,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             boss_sizes = {
                 "parasiteQueen": get_random_size(0.1, 3.0),
                 "incineratorDrone": get_random_size(0.2, 3.0),
-                "adultSheegoth": get_random_size(0.2, 1.5),
+                "adultSheegoth": get_random_size(0.1, 1.5),
                 "thardus": get_random_size(0.05, 2.0),
                 "elitePirate1": get_random_size(0.05, 2.3),
                 "elitePirate2": get_random_size(0.05, 1.3),
@@ -731,9 +731,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "phazonElite": get_random_size(0.1, 2.0),
                 "omegaPirate": get_random_size(0.05, 2.0),
                 "Ridley": get_random_size(0.2, 1.5),
-                "exo": get_random_size(0.05, 2.0),
-                "essence": get_random_size(0.5, 2.25),
+                "exo": get_random_size(0.15, 2.0),
+                "essence": get_random_size(0.05, 2.25),
                 "flaahgra": get_random_size(0.15, 3.3),
+                "platedBeetle": get_random_size(0.05, 6.0),
+                "cloakedDrone": get_random_size(0.05, 6.0), # only scales width (lmao)
             }
 
         return {

@@ -46,8 +46,9 @@ Room Rando:
     - Changed: The door immediately behind the player is unlocked when teleporting to a new room. This gives the player one chance to backtrack before commiting to the warp.
 
 - Fixed: Specifying custom heat-damage-per-second now properly affects non-vanilla superheated rooms
+- Added: Random boss sizes now affects Flaahgra, Plated Beetle and Cloaked Drone
+- Changed: Random boss sizes now affects bosses in cutscenes, additionally Omega Pirate's armor plates now scale properly
 - Changed: When creating a new save file, the default selection is now "Normal" to help prevent accidentally starting the game on Hard mode
-- Changed: Omega Pirate's armor and actor now scale appropriately
 
 #### Logic Database
 
