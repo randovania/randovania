@@ -242,7 +242,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     pickup = prime1_pickup_details_to_patcher(pickup_list[pickup_index],
                                                               pickup_index in modal_hud_override,
                                                               self.rng)
-                    if "position_required" in node.extra.keys() and node.extra["position_required"]:
+
+                    if node.extra.get("position_required"):
                         assert self.configuration.items_every_room
                         aabb = area.extra["aabb"]
 
