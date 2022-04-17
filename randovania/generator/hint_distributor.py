@@ -20,7 +20,6 @@ from randovania.game_description.world.world_list import WorldList
 from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
-from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib import random_lib
 from randovania.resolver import debug
 
@@ -37,7 +36,6 @@ HintTargetPrecision = tuple[PickupIndex, PrecisionPair]
 @dataclasses.dataclass(frozen=True)
 class PreFillParams:
     rng: Random
-    configuration: BaseConfiguration
     game: GameDescription
     is_multiworld: bool
 

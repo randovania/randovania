@@ -81,7 +81,6 @@ async def test_add_default_hints_to_patches(echoes_game_description, empty_patch
         empty_patches,
         prefill=PreFillParams(
             rng=rng,
-            configuration=layout_configuration,
             game=echoes_game_description,
             is_multiworld=is_multiworld,
         ),
