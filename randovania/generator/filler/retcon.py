@@ -19,7 +19,7 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator import reach_lib
 from randovania.generator.filler.action import Action, action_name
 from randovania.generator.filler.filler_library import (
-    UnableToGenerate, should_have_hint, UncollectedState,
+    UnableToGenerate, UncollectedState,
     find_node_with_resource
 )
 from randovania.generator.filler.filler_logging import debug_print_collect_event
@@ -233,6 +233,14 @@ def retcon_playthrough_filler(rng: Random,
     return all_patches, tuple(actions_log)
 
 
+def debug_print_weighted_locations(all_locations_weighted: WeightedLocations):
+    print("==> Weighted Locations")
+    for (owner, index), weight in all_locations_weighted.items():
+        print("[Player {}] {} - {}".format(
+            owner.index, owner.game.world_list.node_name(owner.game.world_list.node_from_pickup_index(index)), weight,
+        ))
+
+
 def _assign_pickup_somewhere(action: PickupEntry,
                              current_player: PlayerState,
                              player_states: list[PlayerState],
@@ -254,6 +262,9 @@ def _assign_pickup_somewhere(action: PickupEntry,
     if locations_weighted and (current_player.num_random_starting_items_placed
                                >= current_player.configuration.minimum_random_starting_items):
 
+        if debug.debug_level() > 1:
+            debug_print_weighted_locations(all_locations_weighted)
+
         index_owner_state, pickup_index = select_element_with_weight(locations_weighted, rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
         all_locations_weighted.pop((index_owner_state, pickup_index))
@@ -261,6 +272,8 @@ def _assign_pickup_somewhere(action: PickupEntry,
         # Place a hint for the new item
         hint_location = _calculate_hint_location_for_action(
             action,
+            index_owner_state,
+            all_locations_weighted,
             UncollectedState.from_reach(index_owner_state.reach),
             pickup_index,
             rng,
@@ -323,6 +336,8 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
 
 
 def _calculate_hint_location_for_action(action: PickupEntry,
+                                        index_owner_state: PlayerState,
+                                        all_locations_weighted: WeightedLocations,
                                         current_uncollected: UncollectedState,
                                         pickup_index: PickupIndex,
                                         rng: Random,
@@ -332,7 +347,7 @@ def _calculate_hint_location_for_action(action: PickupEntry,
     Calculates where a hint for the given action should be placed.
     :return: A LogbookAsset to use, or None if no hint should be placed.
     """
-    if should_have_hint(action.item_category):
+    if index_owner_state.should_have_hint(action, current_uncollected, all_locations_weighted):
         potential_hint_locations = [
             identifier
             for identifier in current_uncollected.logbooks

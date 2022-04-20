@@ -584,7 +584,10 @@ def _migrate_v25(preset: dict) -> dict:
 
     return preset
 
+
 def _migrate_v26(preset: dict) -> dict:
+    preset["configuration"]["minimum_available_locations_for_hint_placement"] = 0
+    preset["configuration"]["minimum_location_weight_for_hint_placement"] = 0.0
     if preset["game"] == "dread":
         preset["configuration"]["immediate_energy_parts"] = True
     return preset
