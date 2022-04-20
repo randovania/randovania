@@ -54,6 +54,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         super().__init__(*args, **kwargs)
         self.memo_data = DreadAcquiredMemo.with_expansion_text()
 
+        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank:g}."
+        if self.configuration.immediate_energy_parts:
+            self.memo_data["Energy Part"] = f"Energy Fragment acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank/4:g}."
+
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
 
@@ -292,6 +296,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
             "cosmetic_patches": self._cosmetic_patch_data(),
+            "immediate_energy_parts": self.configuration.immediate_energy_parts,
         }
 
 

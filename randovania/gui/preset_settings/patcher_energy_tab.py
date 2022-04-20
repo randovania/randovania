@@ -54,6 +54,12 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         else:
             self.progressive_damage_reduction_check.setVisible(False)
             self.heated_damage_box.setVisible(False)
+        
+        if self.game_enum == RandovaniaGame.METROID_DREAD:
+            signal_handling.on_checked(self.immediate_energy_parts_check, self._persist_immediate_energy_parts)
+        else:
+            self.immediate_energy_parts_label.setVisible(False)
+            self.immediate_energy_parts_check.setVisible(False)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -78,6 +84,9 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
             self.heated_damage_varia_check.setChecked(config.heat_protection_only_varia)
             self.heated_damage_spin.setValue(config.heat_damage)
+        
+        elif self.game_enum == RandovaniaGame.METROID_DREAD:
+            self.immediate_energy_parts_check.setChecked(config.immediate_energy_parts)
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
@@ -110,3 +119,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def _persist_dangerous_tank(self, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field("dangerous_energy_tank", checked)
+    
+    def _persist_immediate_energy_parts(self, checked: bool):
+        with self._editor as editor:
+            editor.set_configuration_field("immediate_energy_parts", checked)
