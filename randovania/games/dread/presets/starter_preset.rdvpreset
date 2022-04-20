@@ -1,5 +1,5 @@
 {
-    "schema_version": 17,
+    "schema_version": 27,
     "name": "Starter Preset",
     "uuid": "407e97ed-decb-4889-8ab7-943f86ae48a4",
     "description": "Basic preset.",
@@ -63,7 +63,7 @@
                     "num_shuffled_pickups": 1
                 },
                 "Pulse Radar": {
-                    "num_shuffled_pickups": 1
+                    "num_included_in_starting_items": 1
                 },
                 "Power Suit": {
                     "num_included_in_starting_items": 1
@@ -150,6 +150,7 @@
         "pickup_model_data_source": "etm",
         "multi_pickup_placement": false,
         "logical_resource_action": "randomly",
+        "first_progression_must_be_local": false,
         "elevators": {
             "mode": "vanilla",
             "excluded_teleporters": [],
@@ -158,6 +159,6 @@
             "allow_unvisited_room_names": true
         },
         "energy_per_tank": 100,
-        "disable_adam_convos": true
+        "immediate_energy_parts": true
     }
 }

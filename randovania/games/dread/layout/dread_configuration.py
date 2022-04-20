@@ -9,6 +9,7 @@ from randovania.layout.lib.teleporters import TeleporterConfiguration
 class DreadConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
+    immediate_energy_parts: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

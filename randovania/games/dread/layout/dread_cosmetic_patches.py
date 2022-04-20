@@ -6,8 +6,10 @@ from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
 
 @dataclasses.dataclass(frozen=True)
 class DreadCosmeticPatches(BaseCosmeticPatches):
-    disable_hud_popup: bool = True
-    open_map: bool = True
+    show_boss_lifebar: bool = False
+    show_enemy_life: bool = False
+    show_enemy_damage: bool = False
+    show_player_damage: bool = False
 
     @classmethod
     def default(cls) -> "DreadCosmeticPatches":

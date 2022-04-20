@@ -6,7 +6,7 @@ from randovania.game_description import migration_data, default_database
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 26
+CURRENT_VERSION = 27
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -584,6 +584,11 @@ def _migrate_v25(preset: dict) -> dict:
 
     return preset
 
+def _migrate_v26(preset: dict) -> dict:
+    if preset["game"] == "dread":
+        preset["configuration"]["immediate_energy_parts"] = True
+    return preset
+
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -611,6 +616,7 @@ _MIGRATIONS = {
     23: _migrate_v23,
     24: _migrate_v24,
     25: _migrate_v25,
+    26: _migrate_v26,
 }
 
 
