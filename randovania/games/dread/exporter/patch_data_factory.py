@@ -240,6 +240,19 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ])
 
         return text
+    
+    def _cosmetic_patch_data(self) -> dict:
+        c = self.cosmetic_patches
+        return {
+            "config": {
+                "AIManager": {
+                    "bShowBossLifebar": c.show_boss_lifebar,
+                    "bShowEnemyLife": c.show_enemy_life,
+                    "bShowEnemyDamage": c.show_enemy_damage,
+                    "bShowPlayerDamage": c.show_player_damage
+                }
+            }
+        }
 
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
@@ -278,6 +291,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             ],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
+            "cosmetic_patches": self._cosmetic_patch_data(),
         }
 
 
