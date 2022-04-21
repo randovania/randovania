@@ -113,9 +113,10 @@ _ignore_pickups_for_game = {
         game, _ignore_events_for_game.get(game, set()), _ignore_pickups_for_game.get(game, set()),
         id=game.value,
     )
-    for game in [RandovaniaGame.METROID_DREAD]
+    for game in RandovaniaGame
 ])
-def test_database_collectable(preset_manager, game_enum, ignore_events, ignore_pickups):
+def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
+                              ignore_events: set[str], ignore_pickups: set[int]):
     game, initial_state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset())
     all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.all_nodes))
