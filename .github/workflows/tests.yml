@@ -103,7 +103,7 @@ jobs:
         if: ${{ !matrix.executable && matrix.os == 'ubuntu-latest' }}
       
       - name: run pytest
-        run: python -m pytest --cov randovania --cov-report=xml
+        run: python -m pytest --cov randovania --cov-report=xml --durations=100
         if: ${{ !matrix.executable }}
 
       - name: create executable
@@ -118,7 +118,7 @@ jobs:
         if: matrix.executable
 
       - name: executable test
-        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool
+        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --durations=100
         if: matrix.executable
       
       - name: codecov
