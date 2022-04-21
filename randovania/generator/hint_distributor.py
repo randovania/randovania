@@ -11,13 +11,13 @@ from randovania.game_description.hint import (
     Hint, HintType, PrecisionPair, HintLocationPrecision, HintItemPrecision,
     HintRelativeAreaName, RelativeDataArea, RelativeDataItem
 )
+from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
-from randovania.generator.filler.filler_library import should_have_hint
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -153,6 +153,9 @@ class HintDistributor(ABC):
         """
         raise NotImplementedError()
 
+    def interesting_pickup_to_hint(self, pickup: PickupEntry) -> bool:
+        return pickup.item_category.is_major
+
     def fill_unassigned_hints(self, patches: GamePatches,
                               world_list: WorldList,
                               rng: Random,
@@ -177,7 +180,7 @@ class HintDistributor(ABC):
         possible_indices = set(patches.pickup_assignment.keys())
         possible_indices -= {hint.target for hint in patches.hints.values() if hint.target is not None}
         possible_indices -= {index for index in possible_indices
-                             if not should_have_hint(patches.pickup_assignment[index].pickup.item_category)}
+                             if not self.interesting_pickup_to_hint(patches.pickup_assignment[index].pickup)}
 
         debug.debug_print("fill_unassigned_hints had {} decent indices for {} hint locations".format(
             len(possible_indices), len(potential_hint_locations)))

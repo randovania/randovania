@@ -21,6 +21,8 @@ def _default_filler_config() -> FillerConfiguration:
         multi_pickup_placement=False,
         logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
         first_progression_must_be_local=False,
+        minimum_available_locations_for_hint_placement=0,
+        minimum_location_weight_for_hint_placement=0,
     )
 
 
