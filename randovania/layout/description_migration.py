@@ -257,6 +257,8 @@ def _migrate_v10(json_dict: dict) -> dict:
 def _migrate_v11(json_dict: dict) -> dict:
     for game in json_dict["game_modifications"]:
         game["dock_weakness"] = {}
+        if game["game"] == "dread" and json_dict["info"][0]["configuration"]["extra_pickups_for_bosses"]:
+            game["locations"]["Cataris"]["Kraid Arena/Pickup (Kraid)"] = "Energy Transfer Module"
 
     return json_dict
 
