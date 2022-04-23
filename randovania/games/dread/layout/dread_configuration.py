@@ -17,3 +17,9 @@ class DreadConfiguration(BaseConfiguration):
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
+
+    def active_layers(self) -> set[str]:
+        result = super().active_layers()
+        if self.extra_pickups_for_bosses:
+            result.add("extra_pickup_drops")
+        return result

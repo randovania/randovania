@@ -199,11 +199,13 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     "map_icon": map_icon,
                 })
             else:
-                details.update({
-                    "pickup_actordef": pickup_node.extra["actor_def"],
-                    "pickup_string_key": pickup_node.extra["string_key"],
-                    "pickup_lua_callback": self._callback_ref_for(pickup_node),
-                })
+                details["pickup_lua_callback"] = self._callback_ref_for(pickup_node)
+                if pickup_type != "cutscene":
+                    details.update({
+                        "pickup_actordef": pickup_node.extra["actor_def"],
+                        "pickup_string_key": pickup_node.extra["string_key"],
+                    })
+
             return details
         except KeyError as e:
             logging.warning(e)
