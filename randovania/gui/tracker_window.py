@@ -374,30 +374,35 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     def update_locations_tree_for_reachable_nodes(self):
         state = self.state_for_current_configuration()
+        context = state.node_context()
         nodes_in_reach = self.current_nodes_in_reach(state)
 
         if self.map_tab_widget.currentWidget() == self.tab_graph_map:
             self.update_matplot_widget(nodes_in_reach)
 
-        all_nodes = self.game_description.world_list.all_nodes
         for world in self.game_description.world_list.worlds:
             for area in world.areas:
                 area_is_visible = False
                 for node in area.nodes:
-                    is_collected = node in self._collected_nodes
-                    is_visible = node in nodes_in_reach and not (self._hide_collected_resources
-                                                                 and is_collected)
-
-                    if self._show_only_resource_nodes:
-                        is_visible = is_visible and node.is_resource_node and not isinstance(node, ConfigurableNode)
+                    is_visible = node in nodes_in_reach
 
                     node_item = self._node_to_item[node]
-                    node_item.setHidden(not is_visible)
                     if node.is_resource_node:
                         resource_node = typing.cast(ResourceNode, node)
-                        node_item.setDisabled(not resource_node.can_collect(state.node_context()))
+
+                        if self._show_only_resource_nodes:
+                            is_visible = is_visible and not isinstance(node, ConfigurableNode)
+
+                        is_collected = resource_node.is_collected(context)
+                        is_visible = is_visible and not (self._hide_collected_resources and is_collected)
+
+                        node_item.setDisabled(not resource_node.can_collect(context))
                         node_item.setCheckState(0, QtCore.Qt.Checked if is_collected else QtCore.Qt.Unchecked)
 
+                    elif self._show_only_resource_nodes:
+                        is_visible = False
+
+                    node_item.setHidden(not is_visible)
                     area_is_visible = area_is_visible or is_visible
                 self._area_name_to_item[(world.name, area.name)].setHidden(not area_is_visible)
 
