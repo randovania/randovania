@@ -108,11 +108,11 @@ jobs:
         if: ${{ !matrix.executable && matrix.os == 'ubuntu-latest' }}
       
       - name: run pytest (no resolver)
-        run: python -m pytest --cov randovania --cov-report=xml --skip-resolver-tests --durations=100
+        run: python -m pytest --cov randovania --cov-report=xml --skip-resolver-tests -n auto --durations=100
         if: ${{ !matrix.executable && matrix.name != 'Resolver' }}
 
       - name: run pytest (resolver)
-        run: python -m pytest --cov randovania --cov-report=xml --durations=100 test/resolver/test_resolver.py
+        run: python -m pytest --cov randovania --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py
         if: ${{ matrix.name == 'Resolver' }}
 
       - name: create executable
