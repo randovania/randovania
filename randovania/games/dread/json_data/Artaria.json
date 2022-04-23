@@ -9275,7 +9275,7 @@
                         "area_name": "Navigation Station North",
                         "node_name": "Door to David Jaffe Room"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9370,12 +9370,10 @@
                     },
                     "connections": {
                         "Door to Navigation Station North": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AccessClosedDavidJaffe",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Thermal Door Tutorial": {
@@ -18193,39 +18191,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Unlock David Jaffe Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": "Temporary requirement until dock works properly",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Charge Beam"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Power Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         }
                     }
                 },
@@ -18390,30 +18355,6 @@
                             }
                         },
                         "Door to Arbitrary Enky Room (Thermal)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Unlock David Jaffe Room": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 12850.0,
-                        "y": 3200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "AccessClosedDavidJaffe",
-                    "connections": {
-                        "Door to David Jaffe Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,

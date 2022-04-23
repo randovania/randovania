@@ -9,6 +9,7 @@ from randovania.game_description.resources.resource_info import convert_resource
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
+from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.node import Node, NodeContext
@@ -156,6 +157,8 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
     graph = networkx.DiGraph()
 
     for node in game.world_list.all_nodes:
+        if isinstance(node, DockLockNode):
+            continue
         graph.add_node(node)
 
     context = NodeContext(
@@ -177,7 +180,13 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
     )
 
     for node in game.world_list.all_nodes:
+        if node not in graph:
+            continue
+
         for other, req in game.world_list.potential_nodes_from(node, context):
+            if other not in graph:
+                continue
+
             if req != Requirement.impossible():
                 graph.add_edge(node, other)
 
