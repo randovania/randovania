@@ -1,4 +1,3 @@
-import functools
 import json
 import logging
 import os
@@ -165,12 +164,17 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
         if per_game.output_preference is not None:
             output_preference = json.loads(per_game.output_preference)
-            tab = self._output_tab_by_name.get(output_preference["tab"])
-            index = self.output_tab_widget.indexOf(tab)
-            if self.output_tab_widget.isTabVisible(index):
-                self.output_tab_widget.setCurrentIndex(index)
+            tab_options = output_preference["tab_options"]
+
+            for tab_name, the_tab in self._output_tab_by_name.items():
+                if tab_name == output_preference.get("selected_tab"):
+                    index = self.output_tab_widget.indexOf(the_tab)
+                    if self.output_tab_widget.isTabVisible(index):
+                        self.output_tab_widget.setCurrentIndex(index)
+
                 try:
-                    tab.restore_options(output_preference["tab_options"])
+                    if tab_name in tab_options:
+                        the_tab.restore_options(tab_options[tab_name])
                 except Exception:
                     logging.exception("Unable to restore preferences for output")
 
@@ -185,13 +189,18 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             if self._has_spoiler:
                 options.auto_save_spoiler = self.auto_save_spoiler
 
-            tab = self.output_tab_widget.currentWidget()
+            per_game = options.options_for_game(self._game)
+
+            selected_tab = self.output_tab_widget.currentWidget()
             output_preference = json.dumps({
-                "tab": next(tab_name for tab_name, the_tab in self._output_tab_by_name.items() if tab == the_tab),
-                "tab_options": tab.serialize_options()
+                "selected_tab": next(tab_name for tab_name, the_tab in self._output_tab_by_name.items()
+                                     if selected_tab == the_tab),
+                "tab_options": {
+                    tab_name: the_tab.serialize_options()
+                    for tab_name, the_tab in self._output_tab_by_name.items()
+                }
             })
 
-            per_game = options.options_for_game(self._game)
             options.set_options_for_game(self._game, DreadPerGameOptions(
                 cosmetic_patches=per_game.cosmetic_patches,
                 input_directory=self.input_file,

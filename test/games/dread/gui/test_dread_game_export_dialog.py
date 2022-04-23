@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 from unittest.mock import MagicMock, call
 
 import pytest
@@ -31,9 +30,11 @@ def test_on_custom_path_button_exists(skip_qtbot, tmp_path, mocker, has_custom_p
     options.options_for_game.return_value = DreadPerGameOptions(
         cosmetic_patches=DreadCosmeticPatches.default(),
         output_preference=json.dumps({
-            "tab": "custom",
+            "selected_tab": "custom",
             "tab_options": {
-                "path": serialize_path(output_directory),
+                "custom": {
+                    "path": serialize_path(output_directory),
+                }
             }
         })
     )
@@ -58,9 +59,11 @@ def test_on_output_file_button_cancel(skip_qtbot, tmpdir, mocker):
     options.options_for_game.return_value = DreadPerGameOptions(
         cosmetic_patches=DreadCosmeticPatches.default(),
         output_preference=json.dumps({
-            "tab": "custom",
+            "selected_tab": "custom",
             "tab_options": {
-                "path": None,
+                "custom": {
+                    "path": None,
+                },
             }
         })
     )
@@ -167,11 +170,13 @@ def test_get_game_export_params_sd_card(skip_qtbot, tmp_path, mocker, mod_manage
         target_platform=DreadModPlatform.ATMOSPHERE,
         reduce_mod_size=False,
         output_preference=json.dumps({
-            "tab": "sd",
+            "selected_tab": "sd",
             "tab_options": {
-                "drive": str(drive),
-                "non_removable": False,
-                "mod_manager": mod_manager,
+                "sd": {
+                    "drive": str(drive),
+                    "non_removable": False,
+                    "mod_manager": mod_manager,
+                }
             }
         }),
     )
@@ -210,7 +215,7 @@ def test_get_game_export_params_ryujinx(skip_qtbot, tmp_path, mocker):
         target_platform=DreadModPlatform.RYUJINX,
         reduce_mod_size=False,
         output_preference=json.dumps({
-            "tab": "ryujinx",
+            "selected_tab": "ryujinx",
             "tab_options": {}
         }),
     )
@@ -242,13 +247,15 @@ def test_get_game_export_params_ftp(skip_qtbot, tmp_path):
         target_platform=DreadModPlatform.ATMOSPHERE,
         reduce_mod_size=True,
         output_preference=json.dumps({
-            "tab": "ftp",
+            "selected_tab": "ftp",
             "tab_options": {
-                "anonymous": False,
-                "username": "admin",
-                "password": "1234",
-                "ip": "192.168.1.2",
-                "port": 5000,
+                "ftp": {
+                    "anonymous": False,
+                    "username": "admin",
+                    "password": "1234",
+                    "ip": "192.168.1.2",
+                    "port": 5000,
+                }
             }
         })
     )
@@ -282,9 +289,11 @@ def test_get_game_export_params_custom(skip_qtbot, tmp_path):
         cosmetic_patches=DreadCosmeticPatches.default(),
         input_directory=tmp_path.joinpath("input"),
         output_preference=json.dumps({
-            "tab": "custom",
+            "selected_tab": "custom",
             "tab_options": {
-                "path": serialize_path(tmp_path.joinpath("output")),
+                "custom": {
+                    "path": serialize_path(tmp_path.joinpath("output")),
+                },
             }
         })
     )
