@@ -1,20 +1,13 @@
 import collections
 import functools
 import json
-import logging
 import math
 import typing
 from pathlib import Path
 from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
 
-import matplotlib.pyplot as plt
-import networkx
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
-from matplotlib.axes import Axes
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
-from matplotlib.figure import Figure
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, Requirement
@@ -22,13 +15,11 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node
 from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout import translator_configuration
@@ -75,23 +66,6 @@ def _load_previous_state(persistence_path: Path,
             return json.load(previous_state_file)
     except (FileNotFoundError, json.JSONDecodeError):
         return None
-
-
-class MatplotlibWidget(QtWidgets.QWidget):
-    ax: Axes
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        fig = Figure(figsize=(7, 5), dpi=65, facecolor=(1, 1, 1), edgecolor=(0, 0, 0))
-        self.canvas = FigureCanvas(fig)
-        self.toolbar = NavigationToolbar(self.canvas, self)
-        lay = QtWidgets.QVBoxLayout(self)
-        lay.addWidget(self.toolbar)
-        lay.addWidget(self.canvas)
-
-        self.ax = fig.add_subplot(111)
-        self.line, *_ = self.ax.plot([])
 
 
 class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
@@ -181,9 +155,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.map_canvas.SelectAreaRequest.connect(self.focus_on_area)
 
         # Graph Map
-        self.matplot_widget = MatplotlibWidget(self.tab_graph_map)
+        from randovania.gui.widgets.tracker_map import MatplotlibWidget
+        self.matplot_widget = MatplotlibWidget(self.tab_graph_map, self.game_description.world_list)
         self.tab_graph_map_layout.addWidget(self.matplot_widget)
-        self._world_to_node_positions = {}
         self.map_tab_widget.currentChanged.connect(self._on_tab_changed)
 
         for world in self.game_description.world_list.worlds:
@@ -374,74 +348,12 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     # Graph Map
 
-    def _positions_for_world(self, world: World):
-        g = networkx.DiGraph()
-        world_list = self.game_description.world_list
-        state = self.state_for_current_configuration()
-
-        for area in world.areas:
-            g.add_node(area)
-
-        for area in world.areas:
-            nearby_areas = set()
-            for node in area.nodes:
-                if isinstance(node, DockNode):
-                    try:
-                        target_node = world_list.resolve_dock_node(node, state.patches)
-                        if target_node is not None:
-                            nearby_areas.add(world_list.nodes_to_area(target_node))
-                    except IndexError as e:
-                        logging.error(f"For {node.name} in {area.name}, received {e}")
-                        continue
-            for other_area in nearby_areas:
-                g.add_edge(area, other_area)
-
-        return networkx.drawing.spring_layout(g)
-
     def update_matplot_widget(self, nodes_in_reach: Set[Node]):
-        g = networkx.DiGraph()
-        world_list = self.game_description.world_list
-        state = self.state_for_current_configuration()
-
-        world: World = self.graph_map_world_combo.currentData()
-        for area in world.areas:
-            g.add_node(area)
-
-        context = state.node_context()
-        for area in world.areas:
-            nearby_areas = set()
-            for node in area.nodes:
-                if node not in nodes_in_reach:
-                    continue
-
-                for other_node, requirement in node.connections_from(context):
-                    if requirement.satisfied(state.resources, state.energy, state.resource_database):
-                        other_area = world_list.nodes_to_area(other_node)
-                        if other_area in world.areas:
-                            nearby_areas.add(other_area)
-
-            for other_area in nearby_areas:
-                g.add_edge(area, other_area)
-
-        self.matplot_widget.ax.clear()
-
-        cf = self.matplot_widget.ax.get_figure()
-        cf.set_facecolor("w")
-
-        if world.name not in self._world_to_node_positions:
-            self._world_to_node_positions[world.name] = self._positions_for_world(world)
-        pos = self._world_to_node_positions[world.name]
-
-        networkx.draw_networkx_nodes(g, pos, ax=self.matplot_widget.ax)
-        networkx.draw_networkx_edges(g, pos, arrows=True, ax=self.matplot_widget.ax)
-        networkx.draw_networkx_labels(g, pos, ax=self.matplot_widget.ax,
-                                      labels={area: area.name for area in world.areas},
-                                      verticalalignment='top')
-
-        self.matplot_widget.ax.set_axis_off()
-
-        plt.draw_if_interactive()
-        self.matplot_widget.canvas.draw()
+        self.matplot_widget.update_for(
+            self.graph_map_world_combo.currentData(),
+            self.state_for_current_configuration(),
+            nodes_in_reach,
+        )
 
     def on_graph_map_world_combo(self):
         nodes_in_reach = self.current_nodes_in_reach(self.state_for_current_configuration())
