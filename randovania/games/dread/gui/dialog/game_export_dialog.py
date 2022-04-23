@@ -66,10 +66,12 @@ def get_windows_drives() -> Iterator[tuple[str, str, Path]]:
         yield drive, drive_types[type_index], path
 
 
-def add_validation(edit: QtWidgets.QLineEdit, validation: Callable[[], bool]):
+def add_validation(edit: QtWidgets.QLineEdit, validation: Callable[[], bool], post_validation: Callable[[], None]):
     def field_validation():
         common_qt_lib.set_error_border_stylesheet(edit, not validation())
+        post_validation()
 
+    common_qt_lib.set_error_border_stylesheet(edit, False)
     edit.field_validation = field_validation
     edit.textChanged.connect(field_validation)
 
@@ -117,10 +119,16 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.tab_sd_card.is_valid = lambda: self.sd_combo.currentData() is not None
 
         # Output to FTP
+        self.tab_ftp.is_valid = self.ftp_is_valid
+        self.ftp_test_button.setVisible(False)
         self.ftp_anonymous_check.clicked.connect(self.ftp_on_anonymous_check)
         add_validation(self.ftp_username_edit,
-                       lambda: self.ftp_anonymous_check.isChecked() or self.ftp_username_edit.text())
-        add_validation(self.ftp_ip_edit, lambda: self.ftp_ip_edit.text())
+                       lambda: self.ftp_anonymous_check.isChecked() or self.ftp_username_edit.text(),
+                       self.update_accept_validation)
+        add_validation(self.ftp_password_edit,
+                       lambda: self.ftp_anonymous_check.isChecked() or self.ftp_password_edit.text(),
+                       self.update_accept_validation)
+        add_validation(self.ftp_ip_edit, lambda: self.ftp_ip_edit.text(), self.update_accept_validation)
         self.ftp_port_edit.setValidator(QtGui.QIntValidator(1, 65535, self))
 
         self.tab_ftp.serialize_options = lambda: {
@@ -131,10 +139,9 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
             "port": self.ftp_port_edit.text(),
         }
         self.tab_ftp.restore_options = self.ftp_restore_options
-        self.tab_ftp.is_valid = self.ftp_is_valid
-        self.ftp_on_anonymous_check()
         update_validation(self.ftp_username_edit)
         update_validation(self.ftp_ip_edit)
+        self.ftp_on_anonymous_check()
 
         # Output to Ryujinx
         self.update_ryujinx_ui()
@@ -318,6 +325,8 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.ftp_username_edit.setEnabled(not self.ftp_anonymous_check.isChecked())
         self.ftp_password_edit.setEnabled(not self.ftp_anonymous_check.isChecked())
         update_validation(self.ftp_username_edit)
+        update_validation(self.ftp_password_edit)
+        self.update_accept_validation()
 
     def ftp_restore_options(self, options: dict):
         self.ftp_anonymous_check.setChecked(options["anonymous"])
@@ -328,7 +337,8 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
         self.ftp_on_anonymous_check()
 
     def ftp_is_valid(self):
-        return not self.ftp_username_edit.has_error and not self.ftp_ip_edit.has_error
+        return not any(x.has_error for x in [self.ftp_username_edit, self.ftp_password_edit,
+                                             self.ftp_ip_edit])
 
     def _get_ftp_internal_path(self):
         return self._options.internal_copies_path.joinpath("dread", "contents")
@@ -368,7 +378,9 @@ class DreadGameExportDialog(GameExportDialog, Ui_DreadGameExportDialog):
 
     def update_accept_validation(self):
         tab = self.output_tab_widget.currentWidget()
-        self.accept_button.setEnabled(tab.is_valid() and not self.input_file_edit.has_error)
+        self.accept_button.setEnabled(hasattr(tab, "is_valid")
+                                      and tab.is_valid()
+                                      and not self.input_file_edit.has_error)
 
     def get_game_export_params(self) -> GameExportParams:
         clean_output_path = False
