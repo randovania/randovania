@@ -14,10 +14,84 @@
    <string>Game Patching</string>
   </property>
   <layout class="QGridLayout" name="root_layout">
-   <item row="11" column="0">
-    <widget class="QPushButton" name="accept_button">
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="input_file_label">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
      <property name="text">
-      <string>Accept</string>
+      <string>Input Path (Unmodified Dread extracted RomFS)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="description_label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to create the randomized game, an extracted RomFS of Metroid Dread for the Nintendo Switch is necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLineEdit" name="input_file_edit">
+     <property name="placeholderText">
+      <string>Path to vanilla extracted RomFS</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="input_file_button">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Select File</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="target_platform_layout">
+     <item>
+      <widget class="QLabel" name="target_platform_label">
+       <property name="text">
+        <string>Target Platform</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="atmosphere_radio">
+       <property name="text">
+        <string>Atmosphère (Modded Switch)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="ryujinx_radio">
+       <property name="toolTip">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania only supports Ryujinx.&lt;/p&gt;&lt;p&gt;Use other emulators at your own risk, but do not report any issues.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="text">
+        <string>Ryujinx</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="0" colspan="3">
+    <widget class="QCheckBox" name="exlaunch_check">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option reduces the size of the output folder from 1.4GB to 17MB, but certain features such as map icons won't work.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Reduce mod file size (?)</string>
      </property>
     </widget>
    </item>
@@ -78,21 +152,17 @@
       <attribute name="title">
        <string>Upload via FTP</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="ftp_username_edit">
-         <property name="placeholderText">
-          <string>Username</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="ftp_ip_edit"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="ftp_ip_label">
+      <layout class="QGridLayout" name="tab_ftp_layout">
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="ftp_description_label">
          <property name="text">
-          <string>Switch IP</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Upload the exported mod directly to your Switch, via FTP, to a path compatible with &lt;a href=&quot;https://github.com/nadrino/SimpleModManager/blob/master/README.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;SimpleModManager&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;In order to provide a FTP server in your Switch, run either &lt;a href=&quot;https://github.com/mtheall/ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ftpd&lt;/span&gt;&lt;/a&gt; or &lt;a href=&quot;https://github.com/jakibaki/sys-ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;sys-ftpd&lt;/span&gt;&lt;/a&gt; as homebrew.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -102,6 +172,30 @@
           <string>Anonymous</string>
          </property>
         </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="ftp_username_edit">
+         <property name="placeholderText">
+          <string>Username</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" colspan="2">
+        <widget class="QLineEdit" name="ftp_password_edit">
+         <property name="placeholderText">
+          <string>Password</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="ftp_ip_label">
+         <property name="text">
+          <string>Switch IP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="ftp_ip_edit"/>
        </item>
        <item row="2" column="2">
         <widget class="QLineEdit" name="ftp_port_edit">
@@ -113,30 +207,10 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="2" colspan="2">
-        <widget class="QLineEdit" name="ftp_password_edit">
-         <property name="placeholderText">
-          <string>Password</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="3">
         <widget class="QPushButton" name="ftp_test_button">
          <property name="text">
           <string>Test connection</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="4">
-        <widget class="QLabel" name="ftp_description_label">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Upload the exported mod directly to your Switch, via FTP, to a path compatible with &lt;a href=&quot;https://github.com/nadrino/SimpleModManager/blob/master/README.md&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;SimpleModManager&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;p&gt;In order to provide a FTP server in your Switch, run either &lt;a href=&quot;https://github.com/mtheall/ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;ftpd&lt;/span&gt;&lt;/a&gt; or &lt;a href=&quot;https://github.com/jakibaki/sys-ftpd&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;sys-ftpd&lt;/span&gt;&lt;/a&gt; as homebrew.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -198,49 +272,6 @@
      </widget>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QLabel" name="input_file_label">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Input Path (Unmodified Dread extracted RomFS)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="3">
-    <widget class="QCheckBox" name="exlaunch_check">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This option reduces the size of the output folder from 1.4GB to 17MB, but certain features such as map icons won't work.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Reduce mod file size (?)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="input_file_button">
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Select File</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QLineEdit" name="input_file_edit">
-     <property name="placeholderText">
-      <string>Path to vanilla extracted RomFS</string>
-     </property>
-    </widget>
-   </item>
    <item row="10" column="0">
     <widget class="QCheckBox" name="auto_save_spoiler_check">
      <property name="text">
@@ -248,41 +279,10 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="3">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="target_platform_label">
-       <property name="text">
-        <string>Target Platform</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="atmosphere_radio">
-       <property name="text">
-        <string>Atmosphère (Modded Switch)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="ryujinx_radio">
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Randovania only supports Ryujinx.&lt;/p&gt;&lt;p&gt;Use other emulators at your own risk, but do not report any issues.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="text">
-        <string>Ryujinx</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="description_label">
+   <item row="11" column="0">
+    <widget class="QPushButton" name="accept_button">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;In order to create the randomized game, an extracted RomFS of Metroid Dread for the Nintendo Switch is necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
+      <string>Accept</string>
      </property>
     </widget>
    </item>
