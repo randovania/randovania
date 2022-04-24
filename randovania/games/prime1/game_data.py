@@ -1,4 +1,5 @@
 from randovania.games import game
+from randovania.games.prime1.hint_distributor import PrimeHintDistributor
 from randovania.games.prime1.layout.preset_describer import (
     PrimePresetDescriber,
 )
@@ -28,13 +29,12 @@ def _generator() -> game.GameGenerator:
     from randovania.games.prime1.generator.item_pool.pool_creator import prime1_specific_pool
     from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
     from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
-    from randovania.generator.hint_distributor import AllJokesHintDistributor
 
     return game.GameGenerator(
         item_pool_creator=prime1_specific_pool,
         bootstrap=PrimeBootstrap(),
         base_patches_factory=PrimeTrilogyBasePatchesFactory(),
-        hint_distributor=AllJokesHintDistributor(),
+        hint_distributor=PrimeHintDistributor(),
     )
 
 
