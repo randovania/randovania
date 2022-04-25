@@ -34,6 +34,10 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     multi_pickup_placement: bool
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
+    minimum_available_locations_for_hint_placement: int = dataclasses.field(metadata={"min": 0, "max": 99})
+    minimum_location_weight_for_hint_placement: float = dataclasses.field(metadata={
+        "min": 0, "max": 5.0, "precision": 0.1,
+    })
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

@@ -267,12 +267,16 @@ except ImportError:
         pytest.skip()
 
 
-def pytest_configure(config):
+def pytest_configure(config: pytest.Config):
+    markers = []
+
     if config.option.skip_generation_tests:
-        setattr(config.option, 'markexpr', 'not skip_generation_tests')
+        markers.append('not skip_generation_tests')
 
     if config.option.skip_resolver_tests:
-        setattr(config.option, 'markexpr', 'not skip_resolver_tests')
+        markers.append('not skip_resolver_tests')
 
     if config.option.skip_gui_tests:
-        setattr(config.option, 'markexpr', 'not skip_gui_tests')
+        markers.append('not skip_gui_tests')
+
+    config.option.markexpr = " and ".join(markers)

@@ -204,6 +204,13 @@ class CSMusic(BitPackDataclass, JsonDataclass):
     def default(cls) -> "CSMusic":
         return cls(MusicRandoType.DEFAULT, CSSong.defaults())
 
+    def update_song_status(self, new_status: dict[str, bool]) -> "CSMusic":
+        song_status = {
+            key: new_status.get(key, value)
+            for key, value in self.song_status.items()
+        }
+        return dataclasses.replace(self, song_status=song_status)
+
 
 @dataclasses.dataclass(frozen=True)
 class CSCosmeticPatches(BaseCosmeticPatches):

@@ -5645,9 +5645,9 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -10500.0,
-                        "y": 1280.0,
-                        "z": 0.0
+                        "x": -10491.43897996357,
+                        "y": 1100.6115014311736,
+                        "z": 0
                     },
                     "description": "",
                     "layers": [
@@ -6005,22 +6005,39 @@
                             }
                         },
                         "Event - Destroy Post Chain Reaction Debris (Above)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Pseudo",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Diffusion or Wave"
+                                                }
+                                            ]
                                         }
                                     },
                                     {
-                                        "type": "template",
-                                        "data": "Shoot Diffusion or Wave"
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -6499,8 +6516,25 @@
                             }
                         },
                         "Event - Destroy Post Chain Reaction Debris (Below)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s010_cave:default:ev_chainreaction_deviceheat",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         },
                         "Teleporter to Cataris - Teleport to Artaria (Red)": {
                             "type": "and",
@@ -6560,9 +6594,9 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": -10500.0,
-                        "y": 1360.0,
-                        "z": 0.0
+                        "x": -10512.256049960968,
+                        "y": 1256.7395264116572,
+                        "z": 0
                     },
                     "description": "",
                     "layers": [
@@ -9241,7 +9275,7 @@
                         "area_name": "Navigation Station North",
                         "node_name": "Door to David Jaffe Room"
                     },
-                    "default_dock_weakness": "Access Open",
+                    "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -9336,12 +9370,10 @@
                     },
                     "connections": {
                         "Door to Navigation Station North": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "events",
-                                "name": "AccessClosedDavidJaffe",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Door to Thermal Door Tutorial": {
@@ -18159,39 +18191,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Event - Unlock David Jaffe Room": {
-                            "type": "or",
-                            "data": {
-                                "comment": "Temporary requirement until dock works properly",
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Charge Beam"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "template",
-                                                    "data": "Lay Power Bomb"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Knowledge",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
                         }
                     }
                 },
@@ -18356,30 +18355,6 @@
                             }
                         },
                         "Door to Arbitrary Enky Room (Thermal)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Event - Unlock David Jaffe Room": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 12850.0,
-                        "y": 3200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "event_name": "AccessClosedDavidJaffe",
-                    "connections": {
-                        "Door to David Jaffe Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
