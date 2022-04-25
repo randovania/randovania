@@ -27,8 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- Added: Option to specify hint for Phazon Suit in Impact Crater (default=Show only area name)
 - Added: April Fools Preset
-- Added: Flaahgra is now included in "Random Boss Sizes" option
 - Added: Map images are now generated and written in the same folder as output ISO when generating room rando seeds and exporting them with spoilers enabled.
 - Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
 - Fixed: Adjusted min/max boss sizes to prevent softlocks
@@ -38,19 +38,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Patcher Changes
 
-Room Rando:
-    - Added: Include Square Frigate doors and morph ball tunnels during randomization
-    - Fixed: Crash when opening the map near certain rooms
-    - Fixed: Crashes due to two large rooms being connected.
-    - Fixed: Crash when rolling through some doors in morph ball
-    - Fixed: Central Dynamo reposition soft-lock
-    - Fixed: Inability to scan vertical doors
-    - Changed: The door immediately behind the player is unlocked when teleporting to a new room. This gives the player one chance to backtrack before commiting to the warp.
-
 - Fixed: Specifying custom heat-damage-per-second now properly affects non-vanilla superheated rooms
 - Added: Random boss sizes now affects Flaahgra, Plated Beetle and Cloaked Drone
 - Changed: Random boss sizes now affects bosses in cutscenes, additionally Omega Pirate's armor plates now scale properly
 - Changed: When creating a new save file, the default selection is now "Normal" to help prevent accidentally starting the game on Hard mode
+- Changed: Artifacts which do have no need to be collected are removed from the logbook
+
+##### Room Rando
+- Added: Include Square Frigate doors and morph ball tunnels during randomization
+- Fixed: Crash when opening the map near certain rooms
+- Fixed: Crashes due to two large rooms being connected.
+- Fixed: Crash when rolling through some doors in morph ball
+- Fixed: Central Dynamo reposition soft-lock
+- Fixed: Inability to scan vertical doors
+- Changed: The door immediately behind the player is unlocked when teleporting to a new room. This gives the player one chance to backtrack before commiting to the warp.
 
 #### Logic Database
 
