@@ -21,7 +21,7 @@ from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
-from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode
+from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, RoomRandoMode
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
@@ -624,13 +624,14 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 # do something different this time
                                 self.rng.shuffle(candidates)
 
+        if self.configuration.hints.phazon_suit != PhazonSuitHintMode.DISABLED:
         phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
 
         hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
             self.description.all_patches,
             self.players_config,
             namer,
-            True,
+                self.configuration.hints.phazon_suit == PhazonSuitHintMode.HIDE_AREA,
             [phazon_suit_resource_info],
             True,
         )
