@@ -50,6 +50,7 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
         base_patches,
         PreFillParams(
             rng,
+            configuration,
             game,
             num_players > 1,
         ),
