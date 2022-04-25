@@ -12,6 +12,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock, PickupModel, \
     ConditionalResources, ResourceConversion
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
@@ -127,7 +128,8 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
 
     world_list = MagicMock()
     world_list.all_nodes = [
-        PickupNode(f"Name {i}", False, None, "", {}, i, PickupIndex(i), False)
+        PickupNode(NodeIdentifier.create("World", "Area", f"Name {i}"),
+                   False, None, "", ("default",), {}, PickupIndex(i), False)
         for i in range(5)
     ]
 
@@ -246,7 +248,8 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
 
     world_list = MagicMock()
     world_list.all_nodes = [
-        PickupNode(f"Name {i}", False, None, "", {}, i, PickupIndex(i), False)
+        PickupNode(NodeIdentifier.create("W", "A", f"Name {i}"),
+                   False, None, "", ("default",), {}, PickupIndex(i), False)
         for i in range(5)
     ]
 

@@ -1,3 +1,4 @@
+import copy
 import dataclasses
 
 from PySide6.QtGui import QPixmap
@@ -7,6 +8,7 @@ from randovania.games.cave_story.layout.cs_cosmetic_patches import CSCosmeticPat
     SongGame
 from randovania.gui.dialog.base_cosmetic_patches_dialog import BaseCosmeticPatchesDialog
 from randovania.gui.generated.cs_cosmetic_patches_dialog_ui import Ui_CSCosmeticPatchesDialog
+from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_combo_with_value
 
 
@@ -31,9 +33,9 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
         self.mychar_left_button.clicked.connect(self._mychar_left)
         self.mychar_right_button.clicked.connect(self._mychar_right)
 
-        self.song_cs_check.stateChanged.connect(self._cs_songs)
-        self.song_beta_check.stateChanged.connect(self._beta_songs)
-        self.song_kero_check.stateChanged.connect(self._kero_songs)
+        signal_handling.on_checked(self.song_cs_check, self._cs_songs)
+        signal_handling.on_checked(self.song_beta_check, self._beta_songs)
+        signal_handling.on_checked(self.song_kero_check, self._kero_songs)
 
     def on_new_cosmetic_patches(self, patches: CSCosmeticPatches):
         set_combo_with_value(self.music_type_combo, patches.music_rando.randomization_type)
@@ -72,14 +74,14 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
 
         return persist
 
-    def _cs_songs(self):
-        self._set_songs(SongGame.CS, self.song_cs_check.isChecked())
+    def _cs_songs(self, value: bool):
+        self._set_songs(SongGame.CS, value)
 
-    def _beta_songs(self):
-        self._set_songs(SongGame.BETA, self.song_beta_check.isChecked())
+    def _beta_songs(self, value: bool):
+        self._set_songs(SongGame.BETA, value)
 
-    def _kero_songs(self):
-        self._set_songs(SongGame.KERO, self.song_kero_check.isChecked())
+    def _kero_songs(self, value: bool):
+        self._set_songs(SongGame.KERO, value)
 
     def _set_songs(self, game: SongGame, enabled: bool):
         new_status: dict[str, bool] = {}
@@ -87,7 +89,11 @@ class CSCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_CSCosmeticPatchesDia
             song = CSSong.from_name(name)
             if song.source_game == game:
                 new_status[name] = enabled
-        self._cosmetic_patches.music_rando.song_status.update(new_status)
+
+        self._cosmetic_patches = dataclasses.replace(
+            self._cosmetic_patches,
+            music_rando=self._cosmetic_patches.music_rando.update_song_status(new_status)
+        )
 
     def _read_songs(self, status: dict[str, bool]):
         self.song_cs_check.setChecked(False)

@@ -18,6 +18,8 @@ def test_copy_worlds(echoes_game_description):
 def test_invalid_node_type():
     # Setup
     reader = WorldReader(None, None)
+    reader.current_world_name = "World"
+    reader.current_area_name = "Area"
 
     with pytest.raises(Exception) as e:
         reader.read_node("Broken Node", {
@@ -25,6 +27,7 @@ def test_invalid_node_type():
             "coordinates": None,
             "description": "",
             "extra": {},
+            "layers": ["default"],
             "node_type": "something that doesn't exist"
         })
 
@@ -35,6 +38,7 @@ def test_area_with_invalid_connections():
     # Setup
     db = ResourceDatabase(RandovaniaGame.METROID_PRIME_ECHOES, [], [], [], [], [], [], {}, {}, 0, 0, 0)
     reader = WorldReader(db, None)
+    reader.current_world_name = "World"
 
     with pytest.raises(MissingResource) as e:
         reader.read_area("Broken Area", {
@@ -42,10 +46,11 @@ def test_area_with_invalid_connections():
             "nodes": {
                 "A": {
                     "heal": True, "coordinates": None, "node_type": "generic",
-                    "connections": {}, "extra": {}, "description": "",
+                    "connections": {}, "extra": {}, "layers": ["default"], "description": "",
                 },
                 "Broken": {
-                    "heal": True, "coordinates": None, "node_type": "generic", "extra": {}, "description": "",
+                    "heal": True, "coordinates": None, "node_type": "generic",
+                    "layers": ["default"], "extra": {}, "description": "",
                     "connections": {
                         "A": {
                             "type": "resource",

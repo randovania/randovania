@@ -1,6 +1,7 @@
 import pytest
 
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.gui.preset_settings.location_pool_row_widget import LocationPoolRowWidget
 from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
@@ -12,12 +13,12 @@ def _pickup_node():
     return PickupNode(
         pickup_index=PickupIndex(1),
         major_location=True,
-        name="Pickup (Ultra Beam)",
+        identifier=NodeIdentifier.create("W", "A", "Pickup (Ultra Beam)"),
         heal=False,
         location=None,
+        layers=("default",),
         description="",
         extra={},
-        index=0
     )
 
 

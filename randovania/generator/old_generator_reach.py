@@ -31,12 +31,12 @@ class GraphPath(NamedTuple):
         if self.previous_node is None:
             return False
         else:
-            return digraph.has_edge(self.previous_node.index, self.node.index)
+            return digraph.has_edge(self.previous_node.get_index(), self.node.get_index())
 
     def add_to_graph(self, digraph: graph_module.BaseGraph):
-        digraph.add_node(self.node.index)
+        digraph.add_node(self.node.get_index())
         if self.previous_node is not None:
-            digraph.add_edge(self.previous_node.index, self.node.index, requirement=self.requirement)
+            digraph.add_edge(self.previous_node.get_index(), self.node.get_index(), requirement=self.requirement)
 
 
 class OldGeneratorReach(GeneratorReach):
@@ -86,6 +86,7 @@ class OldGeneratorReach(GeneratorReach):
                          ) -> "GeneratorReach":
 
         reach = cls(game, initial_state, graph_module.RandovaniaGraph.new())
+        game.world_list.ensure_has_node_cache()
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
 
@@ -123,10 +124,12 @@ class OldGeneratorReach(GeneratorReach):
                     # print("* Queue path to", self.game.world_list.node_name(target_node))
                     paths_to_check.append(GraphPath(path.node, target_node, requirement))
                 else:
-                    # print("* Unreachable", self.game.world_list.node_name(target_node), requirement)
+                    # print("* Unreachable", self.game.world_list.node_name(target_node), ", missing:",
+                    #       requirement.as_str)
                     self._unreachable_paths[path.node, target_node] = requirement
             # print("> done")
 
+        # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
         self._safe_nodes = None
 
     def _can_advance(self,
@@ -140,7 +143,7 @@ class OldGeneratorReach(GeneratorReach):
         # We can't advance past a resource node if we haven't collected it
         if node.is_resource_node:
             assert isinstance(node, ResourceNode)
-            return self._state.has_resource(node.resource(self.node_context()))
+            return node.is_collected(self.node_context())
         else:
             return True
 
@@ -149,7 +152,7 @@ class OldGeneratorReach(GeneratorReach):
             return
 
         for component in self._digraph.strongly_connected_components():
-            if self._state.node.index in component:
+            if self._state.node.get_index() in component:
                 assert self._safe_nodes is None
                 self._safe_nodes = component
 
@@ -167,11 +170,11 @@ class OldGeneratorReach(GeneratorReach):
             else:
                 return 1
 
-        self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra({self.state.node.index},
+        self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra({self.state.node.get_index()},
                                                                                            weight=weight)
 
     def is_reachable_node(self, node: Node) -> bool:
-        index = node.index
+        index = node.get_index()
 
         cached_value = self._node_reachable_cache.get(index)
         if cached_value is not None:
@@ -218,7 +221,7 @@ class OldGeneratorReach(GeneratorReach):
     @property
     def nodes(self) -> Iterator[Node]:
         for node in self.all_nodes:
-            if node.index in self._digraph:
+            if node.get_index() in self._digraph:
                 yield node
 
     @property
@@ -233,7 +236,7 @@ class OldGeneratorReach(GeneratorReach):
             return is_safe
 
         self._calculate_safe_nodes()
-        self._is_node_safe_cache[node] = node.index in self._safe_nodes
+        self._is_node_safe_cache[node] = node.get_index() in self._safe_nodes
         return self._is_node_safe_cache[node]
 
     def advance_to(self, new_state: State,

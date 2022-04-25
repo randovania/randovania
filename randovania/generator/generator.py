@@ -4,7 +4,7 @@ from typing import Optional, Callable, List, Dict
 
 import tenacity
 
-from randovania.game_description import default_database
+from randovania.game_description import derived_nodes
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -14,6 +14,7 @@ from randovania.generator.filler.filler_library import filter_unassigned_pickup_
 from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
 from randovania.generator.hint_distributor import PreFillParams
 from randovania.generator.item_pool import pool_creator
+from randovania.layout import filtered_database
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -34,7 +35,9 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 
 async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                              player_index: int, num_players: int, rng_required: bool = True) -> PlayerPool:
-    game = default_database.game_description_for(configuration.game).make_mutable_copy()
+    game = filtered_database.game_description_for_layout(configuration).make_mutable_copy()
+    derived_nodes.create_derived_nodes(game)
+
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
 
@@ -42,7 +45,7 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                                                                            num_players > 1,
                                                                            player_index=player_index,
                                                                            rng_required=rng_required)
-    
+
     base_patches = await game_generator.hint_distributor.assign_pre_filler_hints(
         base_patches,
         PreFillParams(

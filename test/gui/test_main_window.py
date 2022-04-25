@@ -20,7 +20,8 @@ def create_window(options: Union[Options, MagicMock],
 
 
 @pytest.fixture(name="default_main_window")
-def _default_main_window(skip_qtbot, preset_manager) -> MainWindow:
+def _default_main_window(skip_qtbot, preset_manager, mocker) -> MainWindow:
+    mocker.patch("randovania.gui.lib.theme.set_dark_theme")
     return create_window(Options(MagicMock()), preset_manager)
 
 

@@ -23,7 +23,10 @@ class EventNode(ResourceNode):
         return self.event
 
     def can_collect(self, context: NodeContext) -> bool:
-        return context.current_resources.get(self.event, 0) == 0
+        return not self.is_collected(context)
+
+    def is_collected(self, context: NodeContext) -> bool:
+        return context.has_resource(self.event)
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         yield self.event, 1

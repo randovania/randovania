@@ -2,11 +2,11 @@ import math
 import uuid
 from typing import Dict
 
-from randovania.game_description import migration_data
+from randovania.game_description import migration_data, default_database
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 24
+CURRENT_VERSION = 27
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -206,7 +206,6 @@ def _migrate_v7(preset: dict) -> dict:
 
 
 def _migrate_v8(preset: dict) -> dict:
-    from randovania.game_description import default_database
     game = default_database.game_description_for(RandovaniaGame(preset["game"]))
 
     # FIXME: area location is now something different, this code broke
@@ -407,8 +406,6 @@ def _migrate_v13(preset: dict) -> dict:
 
 
 def _migrate_v14(preset: dict) -> dict:
-    from randovania.game_description import default_database
-
     game = RandovaniaGame(preset["game"])
     db = default_database.game_description_for(game)
 
@@ -569,6 +566,33 @@ def _migrate_v23(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v24(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["deterministic_maze"] = True
+
+    return preset
+
+
+def _migrate_v25(preset: dict) -> dict:
+    if preset["game"] == "prime1":
+        preset["configuration"]["random_boss_sizes"] = False
+        preset["configuration"]["no_doors"] = False
+        preset["configuration"]["superheated_probability"] = 0
+        preset["configuration"]["submerged_probability"] = 0
+        preset["configuration"]["room_rando"] = "None"
+        preset["configuration"]["large_samus"] = False
+
+    return preset
+
+
+def _migrate_v26(preset: dict) -> dict:
+    preset["configuration"]["minimum_available_locations_for_hint_placement"] = 0
+    preset["configuration"]["minimum_location_weight_for_hint_placement"] = 0.0
+    if preset["game"] == "dread":
+        preset["configuration"]["immediate_energy_parts"] = True
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
     2: _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -593,6 +617,9 @@ _MIGRATIONS = {
     21: _migrate_v21,
     22: _migrate_v22,
     23: _migrate_v23,
+    24: _migrate_v24,
+    25: _migrate_v25,
+    26: _migrate_v26,
 }
 
 

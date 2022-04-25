@@ -23,9 +23,18 @@ def test_change_music_rando(skip_qtbot):
     dialog = CSCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
 
-    skip_qtbot.mouseClick(dialog.song_beta_check, QtCore.Qt.LeftButton)
+    assert dialog.song_beta_check.isChecked()
+    assert dialog.song_kero_check.isChecked()
+
+    # Using mouseClick isn't working for unknown reasons
+    # skip_qtbot.mouseClick(dialog.song_beta_check, QtCore.Qt.LeftButton)
+    dialog.song_beta_check.setChecked(False)
+
     skip_qtbot.mouseClick(dialog.song_kero_check, QtCore.Qt.LeftButton)
     dialog.music_type_combo.setCurrentIndex(0)
+
+    assert not dialog.song_beta_check.isChecked()
+    assert not dialog.song_kero_check.isChecked()
 
     expected = CSCosmeticPatches()
     assert dialog.cosmetic_patches == expected

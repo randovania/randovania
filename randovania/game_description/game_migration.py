@@ -5,7 +5,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 9
+CURRENT_VERSION = 10
 
 
 def _migrate_v1(data: dict) -> dict:
@@ -373,6 +373,17 @@ def _migrate_v8(data: dict) -> dict:
     return data
 
 
+def _migrate_v9(data: dict) -> dict:
+    data["layers"] = ["default"]
+
+    for world in data["worlds"]:
+        for area in world["areas"].values():
+            for node in area["nodes"].values():
+                node["layers"] = ["default"]
+
+    return data
+
+
 _MIGRATIONS = {
     1: _migrate_v1,
     2: _migrate_v2,
@@ -382,6 +393,7 @@ _MIGRATIONS = {
     6: _migrate_v6,
     7: _migrate_v7,
     8: _migrate_v8,
+    9: _migrate_v9,
 }
 
 

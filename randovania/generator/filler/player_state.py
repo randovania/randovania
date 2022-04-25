@@ -72,6 +72,7 @@ class PlayerState:
 
     def update_for_new_state(self):
         debug.debug_print(f"\n>>> Updating state of {self}")
+
         self._advance_pickup_index_seen_count()
         self._advance_scan_asset_seen_count()
         self._advance_event_seen_count()
@@ -217,6 +218,26 @@ class PlayerState:
             }
 
         return locations_weighted
+
+    def should_have_hint(self, pickup: PickupEntry, current_uncollected: UncollectedState,
+                         all_locations_weighted: WeightedLocations) -> bool:
+
+        if not pickup.item_category.is_major:
+            return False
+
+        config = self.configuration
+        valid_locations = [
+            index
+            for (owner, index), weight in all_locations_weighted.items()
+            if (owner == self
+                and weight >= config.minimum_location_weight_for_hint_placement
+                and index in current_uncollected.indices)
+        ]
+        can_hint = len(valid_locations) >= config.minimum_available_locations_for_hint_placement
+        if not can_hint:
+            debug.debug_print(f"+ Only {len(valid_locations)} qualifying open locations, hint refused.")
+
+        return can_hint
 
 
 def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) -> Iterator[PickupIndex]:

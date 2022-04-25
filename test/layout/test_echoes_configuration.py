@@ -51,29 +51,29 @@ def make_dummy(cls: Type[T]) -> T:
 
 @pytest.fixture(
     params=[
-        {"encoded": b'@,c\xf8\xb8`%\x81\xff',
+        {"encoded": b'@\x00\x0b\x18\xfe.\x18\t`\x7f\xc0',
          "sky_temple_keys": LayoutSkyTempleKeyMode.NINE.value,
          },
-        {"encoded": b'@\x00c\xf8\xb8`%\x81\xff',
+        {"encoded": b'@\x00\x00\x18\xfe.\x18\t`\x7f\xc0',
          "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_BOSSES.value,
          },
-        {"encoded": b'@\x11\x17\xf8\xb8`%\x81\xff',
+        {"encoded": b'@\x00\x04E\xfe.\x18\t`\x7f\xc0',
          "sky_temple_keys": LayoutSkyTempleKeyMode.TWO.value,
          "energy_per_tank": 280,
          },
-        {"encoded": b'@\x04c\xfa/`%\x81\xff',
+        {"encoded": b'@\x00\x01\x18\xfe\x8b\xd8\t`\x7f\xc0',
          "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
          "varia_suit_damage": 18.0,
          },
-        {"encoded": b'\x10\x04c\xf8\xb8`%\x81\xff',
+        {"encoded": b'\x10\x00\x01\x18\xfe.\x18\t`\x7f\xc0',
          "pickup_model_style": PickupModelStyle.HIDE_MODEL.value,
          "sky_temple_keys": LayoutSkyTempleKeyMode.ALL_GUARDIANS.value,
          "damage_strictness": LayoutDamageStrictness.STRICT.value,
          },
     ],
     name="layout_config_with_data")
-def _layout_config_with_data(request, default_layout_configuration):
-    data = default_layout_configuration.as_json
+def _layout_config_with_data(request, default_echoes_configuration):
+    data = default_echoes_configuration.as_json
     for key, value in request.param.items():
         if key != "encoded":
             assert key in data

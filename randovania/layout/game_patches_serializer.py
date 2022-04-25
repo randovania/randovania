@@ -3,7 +3,7 @@ import re
 import typing
 from typing import Dict, List, DefaultDict
 
-from randovania.game_description import default_database, data_reader, data_writer
+from randovania.game_description import data_reader, data_writer, default_database
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
@@ -64,12 +64,12 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
     :param patches:
     :return:
     """
-    game = default_database.game_description_for(patches.game_enum)
+    game = default_database.game_description_for(patches.configuration.game)
     world_list = game.world_list
 
     result = {
         # This field helps schema migrations, if nothing else
-        "game": patches.game_enum.value,
+        "game": patches.configuration.game.value,
         "starting_location": patches.starting_location.as_string,
         "starting_items": {
             resource_info.long_name: quantity
@@ -196,7 +196,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
 
     return GamePatches(
         player_index=player_index,
-        game_enum=game.game,
+        configuration=configuration,
         pickup_assignment=pickup_assignment,  # PickupAssignment
         elevator_connection=elevator_connection,  # ElevatorConnection
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]

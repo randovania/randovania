@@ -91,11 +91,12 @@ async def test_on_game_session_actions_update(window: GameSessionWindow, default
     game_session = MagicMock()
     game_session.presets = [default_echoes_preset]
     window._game_session = game_session
+    timestamp = datetime.datetime(year=2020, month=1, day=5)
 
     # Run
     await window.on_game_session_actions_update(
         GameSessionActions((
-            GameSessionAction("A", 0, "B", "Bombs", PickupIndex(0), datetime.datetime(year=2020, month=1, day=5)),
+            GameSessionAction("A", 0, "B", "Bombs", PickupIndex(0), timestamp),
         ))
     )
 
@@ -108,7 +109,7 @@ async def test_on_game_session_actions_update(window: GameSessionWindow, default
         'B',
         'Bombs',
         'Temple Grounds/Hive Chamber A/Pickup (Missile)',
-        'Sun Jan  5 00:00:00 2020'
+        timestamp.strftime("%c")
     ]
 
 

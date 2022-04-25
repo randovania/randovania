@@ -3,7 +3,6 @@ import dataclasses
 from random import Random
 from typing import Tuple
 
-from randovania.game_description import default_database
 from randovania.game_description.assignment import NodeConfigurationAssignment
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -13,6 +12,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator import elevator_distributor
+from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
@@ -35,8 +35,8 @@ class BasePatchesFactory:
                             ) -> GamePatches:
         """
         """
-        patches = dataclasses.replace(game.create_game_patches(),
-                                      player_index=player_index)
+        patches = GamePatches(player_index, configuration, {}, game.get_default_elevator_connection(),
+                              {}, {}, {}, {}, game.starting_location, {})
 
         # Elevators
         try:
@@ -61,7 +61,7 @@ class BasePatchesFactory:
         except MissingRng as e:
             if rng_required:
                 raise e
-        
+
         return patches
 
     def add_elevator_connections_to_patches(self,
@@ -109,7 +109,7 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
             if rng is None:
                 raise MissingRng("Elevator")
 
-            world_list = default_database.game_description_for(configuration.game).world_list
+            world_list = filtered_database.game_description_for_layout(configuration).world_list
             elevator_db = elevator_distributor.create_elevator_database(
                 world_list, elevators.editable_teleporters)
 

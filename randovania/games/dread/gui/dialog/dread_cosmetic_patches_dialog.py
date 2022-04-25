@@ -21,12 +21,16 @@ class DreadCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_DreadCosmeticPatc
     def connect_signals(self):
         super().connect_signals()
 
-        self.disable_hud_popup.connect(self._persist_option_then_notify("disable_hud_popup"))
-        self.open_map.connect(self._persist_option_then_notify("open_map"))
+        self.show_boss_life.stateChanged.connect(self._persist_option_then_notify("show_boss_lifebar"))
+        self.show_enemy_life.stateChanged.connect(self._persist_option_then_notify("show_enemy_life"))
+        self.show_enemy_damage.stateChanged.connect(self._persist_option_then_notify("show_enemy_damage"))
+        self.show_player_damage.stateChanged.connect(self._persist_option_then_notify("show_player_damage"))
 
     def on_new_cosmetic_patches(self, patches: DreadCosmeticPatches):
-        self.disable_hud_popup.setChecked(patches.disable_hud_popup)
-        self.open_map.setChecked(patches.open_map)
+        self.show_boss_life.setChecked(patches.show_boss_lifebar)
+        self.show_enemy_life.setChecked(patches.show_enemy_life)
+        self.show_enemy_damage.setChecked(patches.show_enemy_damage)
+        self.show_player_damage.setChecked(patches.show_player_damage)
 
     def _persist_option_then_notify(self, attribute_name: str):
         def persist(value: int):

@@ -10,6 +10,11 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.lib.teleporters import TeleporterConfiguration
 
 
+class RoomRandoMode(BitPackEnum, Enum):
+    NONE = "None"
+    ONE_WAY = "One-way"
+    TWO_WAY = "Two-way"
+
 class LayoutCutsceneMode(BitPackEnum, Enum):
     ORIGINAL = "original"
     COMPETITIVE = "competitive"
@@ -30,10 +35,17 @@ class PrimeConfiguration(BaseConfiguration):
     progressive_damage_reduction: bool
     allow_underwater_movement_without_gravity: bool
     small_samus: bool
+    large_samus: bool
     shuffle_item_pos: bool
     items_every_room: bool
+    random_boss_sizes: bool
+    no_doors: bool
+    superheated_probability: int = dataclasses.field(metadata={"min": 0, "max": 1000}) # div 1000 to get coefficient, div 10 to get %
+    submerged_probability: int = dataclasses.field(metadata={"min": 0, "max": 1000})   # div 1000 to get coefficient, div 10 to get %
+    room_rando: RoomRandoMode
     spring_ball: bool
     deterministic_idrone: bool
+    deterministic_maze: bool
 
     main_plaza_door: bool
     backwards_frigate: bool
@@ -54,9 +66,30 @@ class PrimeConfiguration(BaseConfiguration):
         result = super().dangerous_settings()
 
         if self.shuffle_item_pos:
-            result.append("Shuffled item position")
+            result.append("Shuffled Item Position")
 
         if not self.qol_game_breaking:
             result.append("Missing Game Breaking Fixes")
+        
+        if self.room_rando != RoomRandoMode.NONE:
+            result.append("Room Randomizer")
+
+        if self.large_samus:
+            result.append("Large Samus")
+
+        if self.superheated_probability > 0:
+            result.append("Extra Superheated Rooms")
+
+        if self.submerged_probability > 0:
+            result.append("Submerged Rooms")
+        
+        if self.allow_underwater_movement_without_gravity:
+            result.append("Dangerous Gravity Suit Logic")
 
         return result
+
+    def active_layers(self) -> set[str]:
+        layers = {"default"}
+        if self.items_every_room:
+            layers.add("items_every_room")
+        return layers

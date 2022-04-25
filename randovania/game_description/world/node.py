@@ -8,11 +8,12 @@ from frozendict import frozendict
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import Requirement
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import CurrentResources
+    from randovania.game_description.resources.resource_info import CurrentResources, ResourceInfo
     from randovania.game_description.world.node_provider import NodeProvider
 
 
@@ -29,23 +30,40 @@ class NodeContext:
     database: ResourceDatabase
     node_provider: NodeProvider
 
+    def has_resource(self, resource: ResourceInfo) -> bool:
+        return self.current_resources.get(resource, 0) > 0
+
 
 @dataclasses.dataclass(frozen=True)
 class Node:
-    name: str
+    identifier: NodeIdentifier
     heal: bool
     location: Optional[NodeLocation]
     description: str
+    layers: tuple[str, ...]
     extra: dict[str, typing.Any]
-    index: int
 
-    def __lt__(self, other):
-        return self.name < other.name
+    def __lt__(self, other: "Node"):
+        return self.identifier < other.identifier
 
     def __hash__(self):
-        return hash((self.index, self.name))
+        return hash(self.identifier)
+
+    @property
+    def name(self):
+        return self.identifier.node_name
+
+    def get_index(self):
+        """
+        Gets a unique index for this node. Used by GeneratorReach
+        :return:
+        """
+        return object.__getattribute__(self, "index")
 
     def __post_init__(self):
+        if not self.layers:
+            raise ValueError("Expected at least one layer")
+
         if not isinstance(self.extra, frozendict):
             if not isinstance(self.extra, dict):
                 raise ValueError(f"Expected dict for extra, got {type(self.extra)}")

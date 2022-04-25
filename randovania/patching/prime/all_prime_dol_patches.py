@@ -69,17 +69,13 @@ def remote_execution_patch_start() -> List[BaseInstruction]:
         stmw(GeneralRegister(32 - _registers_to_save), _remote_execution_stack_size - 4 - _registers_to_save * 4, r1),
         or_(r31, r3, r3),
 
-        # return if displayed
+        # return if no pending op
         lbz(r4, 0x2, r31),
         cmpwi(r4, 0x0),
         bne((len(return_code) + 1) * 4, relative=True),
 
         # clean return if flag is not set
         *return_code,
-
-        # set displayed
-        li(r6, 0x0),
-        stb(r6, 0x2, r31),
     ]
 
     num_bytes_to_invalidate = _remote_execution_max_byte_count - assembler.byte_count(intro)
@@ -105,6 +101,11 @@ def remote_execution_patch_start() -> List[BaseInstruction]:
 
 def remote_execution_patch_end() -> List[BaseInstruction]:
     return [
+        # set no pending op
+        li(r6, 0x0),
+        stb(r6, 0x2, r31),
+
+        # restore value of top registers
         lmw(GeneralRegister(32 - _registers_to_save), _remote_execution_stack_size - 4 - _registers_to_save * 4, r1),
         lwz(r0, _remote_execution_stack_size, r1),
         mtspr(LR, r0),

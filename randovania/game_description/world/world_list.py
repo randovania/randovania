@@ -1,22 +1,19 @@
 import copy
-import logging
 from typing import List, Dict, Iterator, Tuple, Iterable, Optional
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements import Requirement, RequirementAnd
+from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockLockType
-from randovania.game_description.world.node import Node, NodeContext
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node_provider import NodeProvider
-from randovania.game_description.world.player_ship_node import PlayerShipNode
-from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.node_provider import NodeProvider
+from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 
 
@@ -40,6 +37,10 @@ class WorldList(NodeProvider):
     def _refresh_node_cache(self):
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
         self._nodes = tuple(self._iterate_over_nodes())
+
+        for i, node in enumerate(self._nodes):
+            object.__setattr__(node, "index", i)
+
         self._pickup_index_to_node = {
             node.pickup_index: node
             for node in self._nodes
@@ -68,11 +69,6 @@ class WorldList(NodeProvider):
             if area in world.areas:
                 return world
         raise KeyError("Unknown area: {}".format(area))
-
-    def identifier_for_node(self, node: Node) -> NodeIdentifier:
-        world = self.nodes_to_world(node)
-        area = self.nodes_to_area(node)
-        return NodeIdentifier.create(world.name, area.name, node.name)
 
     @property
     def all_areas(self) -> Iterator[Area]:

@@ -131,6 +131,13 @@ def spoiler_path_for(save_spoiler: bool, output_file: Path) -> Optional[Path]:
         return None
 
 
+def spoiler_path_for_directory(save_spoiler: bool, output_dir: Path) -> Optional[Path]:
+    if save_spoiler:
+        return output_dir.joinpath(f"spoiler.{LayoutDescription.file_extension()}")
+    else:
+        return None
+
+
 def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWidgets.QLineEdit, Callable[[], bool]]):
     def accept_validation():
         accept_button.setEnabled(not any(f.has_error for f in fields.keys()))
@@ -151,9 +158,29 @@ def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWi
     accept_validation()
 
 
+def path_in_edit(line: QtWidgets.QLineEdit) -> Optional[Path]:
+    if line.text():
+        return Path(line.text())
+    else:
+        return None
+
+
+def update_validation(widget: QtWidgets.QLineEdit):
+    if hasattr(widget, "field_validation"):
+        widget.field_validation()
+
+
 def output_file_validator(output_file: Path) -> bool:
     return output_file.is_dir() or not output_file.parent.is_dir()
 
 
-def is_directory_validator(line: QtWidgets.QLineEdit):
+def is_directory_validator(line: QtWidgets.QLineEdit) -> bool:
     return not line.text() or not Path(line.text()).is_dir()
+
+
+def is_file_validator(file: Optional[Path]) -> bool:
+    """Returns False when the given path is not None and is a file, True otherwise"""
+    if file is None:
+        return True
+    else:
+        return not file.is_file()

@@ -1,22 +1,26 @@
 import re
 from typing import Iterator, Optional
 
+from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
-from randovania.game_description.world.node import Node, NodeContext
-from randovania.game_description.world.teleporter_node import TeleporterNode
+from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 
 pickup_node_re = re.compile(r"^Pickup (\d+ )?\(.*\)$")
 dock_node_re = re.compile(r"(.+?) (to|from) (.+?)( \(.*\))?$")
 dock_node_suffix_re = re.compile(r"(.+?)( \([^()]+?\))$")
+layer_name_re = re.compile(r"[a-zA-Z0-9 _-]+")
 
 
 def base_dock_name_raw(dock_type: DockType, weakness: DockWeakness, connection: AreaIdentifier) -> str:
@@ -60,6 +64,9 @@ def dock_has_correct_name(area: Area, node: DockNode) -> tuple[bool, Optional[st
 def find_node_errors(game: GameDescription, node: Node) -> Iterator[str]:
     world_list = game.world_list
     area = world_list.nodes_to_area(node)
+
+    if invalid_layers := set(node.layers) - set(game.layers):
+        yield f"'{node.name}' has unknown layers {invalid_layers}"
 
     if isinstance(node, EventNode):
         if not node.name.startswith("Event -"):
@@ -150,17 +157,36 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
     graph = networkx.DiGraph()
 
     for node in game.world_list.all_nodes:
+        if isinstance(node, DockLockNode):
+            continue
         graph.add_node(node)
 
     context = NodeContext(
-        patches=game.create_game_patches(),
+        patches=GamePatches(
+            player_index=0,
+            configuration=None,
+            pickup_assignment={},
+            elevator_connection={},
+            dock_connection={},
+            dock_weakness={},
+            configurable_nodes={},
+            starting_items={},
+            starting_location=game.starting_location,
+            hints={},
+        ),
         current_resources={},
         database=game.resource_database,
         node_provider=game.world_list,
     )
 
     for node in game.world_list.all_nodes:
+        if node not in graph:
+            continue
+
         for other, req in game.world_list.potential_nodes_from(node, context):
+            if other not in graph:
+                continue
+
             if req != Requirement.impossible():
                 graph.add_edge(node, other)
 
@@ -196,10 +222,17 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
 
 
 def find_database_errors(game: GameDescription) -> list[str]:
+    copy = game.make_mutable_copy()
+    derived_nodes.create_derived_nodes(copy)
+
     result = []
 
-    for world in game.world_list.worlds:
-        result.extend(find_world_errors(game, world))
-    result.extend(find_invalid_strongly_connected_components(game))
+    for layer in copy.layers:
+        if layer_name_re.match(layer) is None:
+            result.append(f"Layer '{layer}' doesn't match {layer_name_re.pattern}")
+
+    for world in copy.world_list.worlds:
+        result.extend(find_world_errors(copy, world))
+    result.extend(find_invalid_strongly_connected_components(copy))
 
     return result

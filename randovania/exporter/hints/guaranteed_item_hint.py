@@ -24,7 +24,7 @@ def find_locations_that_gives_items(
 
             for resource, quantity in resources.items():
                 if quantity > 0 and resource in result:
-                    result[resource].append((other_player, PickupLocation(patches.game_enum, pickup_index)))
+                    result[resource].append((other_player, PickupLocation(patches.configuration.game, pickup_index)))
 
     return result
 

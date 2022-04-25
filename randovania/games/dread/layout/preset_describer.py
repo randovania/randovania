@@ -18,6 +18,11 @@ class DreadPresetDescriber(GamePresetDescriber):
             template_strings["Difficulty"].append(f"Energy Tank: {configuration.energy_per_tank} energy")
 
         extra_message_tree = {
+            "Difficulty": [
+                {
+                    "Immediate Energy Fragments": configuration.immediate_energy_parts,
+                }
+            ],
             "Item Pool": [
                 {
                     "Progressive Beam": has_shuffled_item(major_items, "Progressive Beam"),

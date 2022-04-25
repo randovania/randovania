@@ -1,6 +1,6 @@
 import pytest
 
-from randovania.game_description import default_database, integrity_check, data_reader
+from randovania.game_description import integrity_check, data_reader, default_database
 from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
@@ -15,7 +15,7 @@ _acceptable_database_errors = {
         g, not g.data.development_state.is_stable) else [])
     for g in iterate_enum(RandovaniaGame)
 ])
-def test_find_database_errors(game_enum):
+def test_find_database_errors(game_enum: RandovaniaGame):
     # Setup
     game = default_database.game_description_for(game_enum)
 

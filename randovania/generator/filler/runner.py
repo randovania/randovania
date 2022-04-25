@@ -73,31 +73,34 @@ async def run_filler(rng: Random,
     player_expansions: dict[int, list[PickupEntry]] = {}
 
     for index, pool in enumerate(player_pools):
+        config = pool.configuration
+
         status_update(f"Creating state for player {index + 1}")
-        if pool.configuration.multi_pickup_placement and False:
+        if config.multi_pickup_placement and False:
             major_items, player_expansions[index] = list(pool.pickups), []
         else:
             major_items, player_expansions[index] = _split_expansions(pool.pickups)
         rng.shuffle(major_items)
         rng.shuffle(player_expansions[index])
 
-        new_game, state = pool.game_generator.bootstrap.logic_bootstrap(pool.configuration, pool.game,
+        new_game, state = pool.game_generator.bootstrap.logic_bootstrap(config, pool.game,
                                                                         pool.patches)
-
-        major_configuration = pool.configuration.major_items_configuration
+        major_configuration = config.major_items_configuration
         player_states.append(PlayerState(
             index=index,
             game=new_game,
             initial_state=state,
             pickups_left=major_items,
             configuration=FillerConfiguration(
-                randomization_mode=pool.configuration.available_locations.randomization_mode,
+                randomization_mode=config.available_locations.randomization_mode,
                 minimum_random_starting_items=major_configuration.minimum_random_starting_items,
                 maximum_random_starting_items=major_configuration.maximum_random_starting_items,
-                indices_to_exclude=pool.configuration.available_locations.excluded_indices,
-                multi_pickup_placement=pool.configuration.multi_pickup_placement,
-                logical_resource_action=pool.configuration.logical_resource_action,
-                first_progression_must_be_local=pool.configuration.first_progression_must_be_local,
+                indices_to_exclude=config.available_locations.excluded_indices,
+                multi_pickup_placement=config.multi_pickup_placement,
+                logical_resource_action=config.logical_resource_action,
+                first_progression_must_be_local=config.first_progression_must_be_local,
+                minimum_available_locations_for_hint_placement=config.minimum_available_locations_for_hint_placement,
+                minimum_location_weight_for_hint_placement=config.minimum_location_weight_for_hint_placement,
             ),
         ))
 

@@ -73,7 +73,7 @@ class LogbookNode(ResourceNode):
         :return:
         """
         current_resources = context.current_resources
-        if current_resources.get(self.resource(context), 0) != 0:
+        if self.is_collected(context):
             return False
 
         if self.scan_visor is not None:
@@ -84,6 +84,9 @@ class LogbookNode(ResourceNode):
             return current_resources.get(self.required_translator, 0) > 0
 
         return True
+
+    def is_collected(self, context: NodeContext) -> bool:
+        return context.has_resource(self.resource(context))
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
         yield self.resource(context), 1

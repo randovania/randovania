@@ -233,7 +233,6 @@ def location_from_json(location: Dict[str, float]) -> NodeLocation:
 class WorldReader:
     resource_database: ResourceDatabase
     dock_weakness_database: DockWeaknessDatabase
-    generic_index: int = -1
     current_world_name: str
     current_area_name: str
 
@@ -264,20 +263,18 @@ class WorldReader:
             return None
 
     def read_node(self, name: str, data: Dict) -> Node:
-        self.generic_index += 1
-
         try:
             location = None
             if data["coordinates"] is not None:
                 location = location_from_json(data["coordinates"])
 
             generic_args = {
-                "name": name,
+                "identifier": NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
                 "heal": data["heal"],
                 "location": location,
                 "description": data["description"],
+                "layers": tuple(data["layers"]),
                 "extra": frozen_lib.wrap(data["extra"]),
-                "index": self.generic_index,
             }
             node_type: int = data["node_type"]
 
@@ -468,6 +465,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     resource_database = read_resource_database(game, data["resource_database"])
     dock_weakness_database = read_dock_weakness_database(data["dock_weakness_database"], resource_database)
 
+    layers = frozen_lib.wrap(data["layers"])
     world_reader = WorldReader(resource_database, dock_weakness_database)
     world_list = world_reader.read_world_list(data["worlds"])
 
@@ -479,6 +477,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     return world_reader, GameDescription(
         game=game,
         resource_database=resource_database,
+        layers=layers,
         dock_weakness_database=dock_weakness_database,
         world_list=world_list,
         victory_condition=victory_condition,

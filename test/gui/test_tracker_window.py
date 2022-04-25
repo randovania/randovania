@@ -16,45 +16,45 @@ from randovania.layout.versioned_preset import VersionedPreset
                         {"elevators": TeleporterShuffleMode.ONE_WAY_ANYTHING,
                          "translator_configuration": True}],
                 name="layout_config")
-def _layout_config(request, default_layout_configuration):
+def _layout_config(request, default_echoes_configuration):
     if "translator_configuration" in request.param:
-        translator_requirement = copy.copy(default_layout_configuration.translator_configuration.translator_requirement)
+        translator_requirement = copy.copy(default_echoes_configuration.translator_configuration.translator_requirement)
         for gate in translator_requirement.keys():
             translator_requirement[gate] = LayoutTranslatorRequirement.RANDOM
             break
 
-        new_gate = dataclasses.replace(default_layout_configuration.translator_configuration,
+        new_gate = dataclasses.replace(default_echoes_configuration.translator_configuration,
                                        translator_requirement=translator_requirement)
         request.param["translator_configuration"] = new_gate
-    return dataclasses.replace(default_layout_configuration, **request.param)
+    return dataclasses.replace(default_echoes_configuration, **request.param)
 
 
-def test_load_previous_state_no_previous_layout(tmp_path: Path, default_layout_configuration):
+def test_load_previous_state_no_previous_layout(tmp_path: Path, default_echoes_configuration):
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_layout_configuration)
+    result = tracker_window._load_previous_state(tmp_path, default_echoes_configuration)
 
     # Assert
     assert result is None
 
 
-def test_load_previous_state_previous_layout_not_json(tmp_path: Path, default_layout_configuration):
+def test_load_previous_state_previous_layout_not_json(tmp_path: Path, default_echoes_configuration):
     # Setup
     tmp_path.joinpath("preset.rdvpreset").write_text("this is not a json")
 
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_layout_configuration)
+    result = tracker_window._load_previous_state(tmp_path, default_echoes_configuration)
 
     # Assert
     assert result is None
 
 
-def test_load_previous_state_previous_layout_not_layout(tmp_path: Path, default_layout_configuration):
+def test_load_previous_state_previous_layout_not_layout(tmp_path: Path, default_echoes_configuration):
     # Setup
     tmp_path.joinpath("preset.rdvpreset").write_text(json.dumps({"trick_level": "foo"}))
     tmp_path.joinpath("state.json").write_text("[]")
 
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_layout_configuration)
+    result = tracker_window._load_previous_state(tmp_path, default_echoes_configuration)
 
     # Assert
     assert result is None
@@ -126,8 +126,7 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
 
     state: dict = {
         "actions": [
-            0,
-            4
+            "Temple Grounds/Landing Site/Save Station"
         ],
         "collected_pickups": {
             'Amber Translator': 0,

@@ -6,7 +6,7 @@ from typing import Dict, Optional
 from PySide6 import QtCore, QtWidgets, QtGui
 from qasync import asyncSlot
 
-from randovania.game_description import default_database
+import randovania
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
@@ -24,6 +24,7 @@ from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import preset_describer
+from randovania.game_description import default_database
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 
@@ -218,7 +219,8 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         data_factory = game.patch_data_factory(layout, self.players_configuration, cosmetic_patches)
         patch_data = data_factory.create_data()
 
-        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler, [game])
+        dialog = game.gui.export_dialog(options, patch_data, layout.shareable_word_hash, has_spoiler,
+                                        list(layout.all_games))
         result = await async_dialog.execute_dialog(dialog)
         if result != QtWidgets.QDialog.Accepted:
             return
@@ -254,7 +256,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
             for i in range(description.player_count)
         }
 
-        self.export_iso_button.setEnabled(description.player_count == 1)
+        self.export_iso_button.setEnabled(description.player_count == 1 or not randovania.is_frozen())
         if description.player_count > 1:
             self.export_iso_button.setToolTip("Multiworld games can only be exported from a game session")
         else:

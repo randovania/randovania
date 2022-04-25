@@ -15,12 +15,12 @@ def test_random_welding_colors(skip_qtbot):
     assert dialog.cosmetic_patches == CorruptionCosmeticPatches(random_welding_colors=True)
 
 
-def test_open_map(skip_qtbot):
+def test_player_suit(skip_qtbot):
     cosmetic_patches = CorruptionCosmeticPatches(player_suit=CorruptionSuit.CORRUPTED_25)
 
     dialog = CorruptionCosmeticPatchesDialog(None, cosmetic_patches)
     skip_qtbot.addWidget(dialog)
 
-    skip_qtbot.keyClicks(dialog.suit_combo, "PED")
+    dialog.suit_combo.setCurrentIndex(dialog.suit_combo.findData(CorruptionSuit.PED))
 
     assert dialog.cosmetic_patches == CorruptionCosmeticPatches(player_suit=CorruptionSuit.PED)

@@ -45,6 +45,11 @@ jobs:
             executable: true
             name: 'Windows Executable'
 
+          - os: 'windows-latest'
+            python: '3.9'
+            executable: false
+            name: 'Resolver'
+
     runs-on: ${{ matrix.os }}
 
     name: ${{ matrix.name }}
@@ -74,7 +79,7 @@ jobs:
           echo "::set-output name=dir::$(pip cache dir)"
 
       - name: Set up cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -95,16 +100,20 @@ jobs:
         run: python -m pip install -r requirements-xvfb.txt
         if: matrix.os == 'ubuntu-latest'
 
-      - name: build py
+      - name: build whell
         run: python setup.py bdist_wheel
 
-      - name: build py
+      - name: build sdist
         run: python setup.py sdist
         if: ${{ !matrix.executable && matrix.os == 'ubuntu-latest' }}
       
-      - name: run pytest
-        run: python -m pytest --cov randovania --cov-report=xml
-        if: ${{ !matrix.executable }}
+      - name: run pytest (no resolver)
+        run: python -m pytest --cov randovania --cov-report=xml --skip-resolver-tests -n auto --durations=100
+        if: ${{ !matrix.executable && matrix.name != 'Resolver' }}
+
+      - name: run pytest (resolver)
+        run: python -m pytest --cov randovania --cov-report=xml --durations=100 -n auto test/resolver/test_resolver.py
+        if: ${{ matrix.name == 'Resolver' }}
 
       - name: create executable
         run: python -u tools/create_release.py
@@ -118,11 +127,11 @@ jobs:
         if: matrix.executable
 
       - name: executable test
-        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool
+        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100
         if: matrix.executable
       
       - name: codecov
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@v3
         if: ${{ !matrix.executable }}
         with:
           fail_ci_if_error: true
@@ -130,7 +139,7 @@ jobs:
 
       - name: Upload artifacts
         if: ${{ matrix.executable }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Randovania ${{ matrix.name }}
           if-no-files-found: error
@@ -179,7 +188,7 @@ jobs:
           echo "::set-output name=dir::$(pip cache dir)"
 
       - name: Set up cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-lint.txt') }}
@@ -219,7 +228,7 @@ jobs:
           echo "::set-output name=dir::$(pip cache dir)"
 
       - name: Set up cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}

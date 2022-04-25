@@ -1,14 +1,15 @@
 import asyncio
 from typing import Optional, Tuple, Callable, FrozenSet
 
-from randovania.game_description import default_database
+from randovania.game_description import derived_nodes
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import RequirementSet, RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
-from randovania.game_description.world.node import Node
-from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.node import Node
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.resource_node import ResourceNode
+from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug, event_pickup
 from randovania.resolver.event_pickup import EventPickupNode
@@ -175,7 +176,8 @@ async def resolve(configuration: BaseConfiguration,
     if status_update is None:
         status_update = _quiet_print
 
-    game = default_database.game_description_for(configuration.game).make_mutable_copy()
+    game = filtered_database.game_description_for_layout(configuration).make_mutable_copy()
+    derived_nodes.create_derived_nodes(game)
     bootstrap = game.game.generator.bootstrap
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)

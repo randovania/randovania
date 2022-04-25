@@ -1,4 +1,5 @@
 import collections
+import dataclasses
 
 from PySide6 import QtWidgets, QtCore
 from mock import MagicMock, AsyncMock, call, ANY
@@ -27,6 +28,7 @@ async def test_export_iso(skip_qtbot, mocker):
     window._player_names = {}
     game = window.layout_description.get_preset.return_value.game
     game.exporter.is_busy = False
+    window.layout_description.all_games = [game]
     patch_data = game.patch_data_factory.return_value.create_data.return_value
 
     players_config = PlayersConfiguration(
@@ -116,7 +118,7 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
     assert pickup_details_tab.pickup_spoiler_show_all_button.text() == "Hide All"
 
 
-async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game_description):
+async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game_description, empty_patches):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
     mock_clipboard: MagicMock = mocker.patch("PySide6.QtWidgets.QApplication.clipboard")
 
@@ -130,7 +132,7 @@ async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game
     target = MagicMock()
     target.pickup.name = "Boost Ball"
 
-    patches = corruption_game_description.create_game_patches()
+    patches = dataclasses.replace(empty_patches, starting_location=corruption_game_description.starting_location)
     for i in range(100):
         patches.pickup_assignment[PickupIndex(i)] = target
 

@@ -3,9 +3,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import default_database
+from randovania.game_description import derived_nodes
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.games.game import RandovaniaGame
 from randovania.generator.filler import player_state
 from randovania.generator.filler.filler_configuration import FillerConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
@@ -22,20 +21,24 @@ def _default_filler_config() -> FillerConfiguration:
         multi_pickup_placement=False,
         logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
         first_progression_must_be_local=False,
+        minimum_available_locations_for_hint_placement=0,
+        minimum_location_weight_for_hint_placement=0,
     )
 
 
 @pytest.fixture(name="state_for_blank")
-def _state_for_blank(preset_manager, default_filler_config) -> player_state.PlayerState:
-    game = default_database.game_description_for(RandovaniaGame.BLANK)
+def _state_for_blank(default_filler_config, blank_game_description, default_blank_configuration,
+                     blank_game_patches) -> player_state.PlayerState:
+    game = blank_game_description.make_mutable_copy()
+    derived_nodes.create_derived_nodes(game)
 
     return player_state.PlayerState(
         index=0,
         game=game,
         initial_state=game.game.generator.bootstrap.calculate_starting_state(
             game,
-            game.create_game_patches(),
-            preset_manager.default_preset_for_game(game.game).get_preset().configuration,
+            blank_game_patches,
+            default_blank_configuration,
         ),
         pickups_left=[],
         configuration=default_filler_config,
@@ -45,20 +48,19 @@ def _state_for_blank(preset_manager, default_filler_config) -> player_state.Play
 def test_current_state_report(state_for_blank):
     result = state_for_blank.current_state_report()
     assert result == (
-        "At Intro/Starting Area/Pickup (Missile Expansion) after 0 actions and 0 pickups, "
-        "with 2 collected locations, 3 safe nodes.\n\n"
+        "At Intro/Back-Only Lock Room/Event - Key Switch 1 after 0 actions and 0 pickups, "
+        "with 3 collected locations, 14 safe nodes.\n\n"
         "Pickups still available: \n\n"
-        "Resources to progress: Missile, Weapon\n\n"
+        "Resources to progress: Blue Key, Missile, Weapon\n\n"
         "Paths to be opened:\n"
+        "* Intro/Blue Key Room/Lock - Door to Starting Area (Exit): Blue Key\n"
         "* Intro/Starting Area/Door to Boss Arena: Missile and Weapon\n"
         "\n"
         "Accessible teleporters:\n"
         "None\n"
         "\n"
         "Reachable nodes:\n"
-        "Intro/Starting Area/Spawn Point\n"
-        "Intro/Starting Area/Pickup (Weapon)\n"
-        "Intro/Starting Area/Pickup (Missile Expansion)"
+        "18 nodes total"
     )
 
 

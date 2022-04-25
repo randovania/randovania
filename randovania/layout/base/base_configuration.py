@@ -4,7 +4,6 @@ from typing import List
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
-from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
@@ -35,6 +34,10 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     multi_pickup_placement: bool
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
+    minimum_available_locations_for_hint_placement: int = dataclasses.field(metadata={"min": 0, "max": 99})
+    minimum_location_weight_for_hint_placement: float = dataclasses.field(metadata={
+        "min": 0, "max": 5.0, "precision": 0.1,
+    })
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
@@ -44,15 +47,14 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     def game(self):
         return self.game_enum()
 
-    @property
-    def game_data(self) -> dict:
-        return default_data.read_json_then_binary(self.game)[1]
-
     @classmethod
     def json_extra_arguments(cls):
         return {
             "game": cls.game_enum(),
         }
+
+    def active_layers(self) -> set[str]:
+        return {"default"}
 
     def dangerous_settings(self) -> List[str]:
         result = []

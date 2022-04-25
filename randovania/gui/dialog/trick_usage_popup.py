@@ -4,7 +4,6 @@ from typing import Iterator, Dict
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QWidget
 
-from randovania.game_description import default_database
 from randovania.game_description.requirements import RequirementSet, ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
@@ -15,6 +14,7 @@ from randovania.game_description.world.dock_node import DockNode
 from randovania.gui.generated.trick_usage_popup_ui import Ui_TrickUsagePopup
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.window_manager import WindowManager
+from randovania.layout import filtered_database
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.preset import Preset
 
@@ -69,7 +69,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         set_default_window_icon(self)
 
         self._window_manager = window_manager
-        self._game_description = default_database.game_description_for(preset.game)
+        self._game_description = filtered_database.game_description_for_layout(preset.configuration)
         database = self._game_description.resource_database
 
         trick_level = preset.configuration.trick_level

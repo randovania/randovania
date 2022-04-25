@@ -1,3 +1,4 @@
+import typing
 from typing import Tuple
 from unittest.mock import MagicMock
 
@@ -8,9 +9,13 @@ from randovania.game_description.requirements import ResourceRequirement, Requir
     RequirementAnd, RequirementOr, Requirement, MAX_DAMAGE, RequirementTemplate
 from randovania.game_description.resources import search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
+from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 
 
@@ -19,9 +24,9 @@ def _database() -> ResourceDatabase:
     return ResourceDatabase(
         game_enum=RandovaniaGame.METROID_PRIME_ECHOES,
         item=[
-            ItemResourceInfo("A", "A", 1, None),
-            ItemResourceInfo("B", "B", 1, None),
-            ItemResourceInfo("C", "C", 1, None),
+            ItemResourceInfo("A", "A", 1),
+            ItemResourceInfo("B", "B", 1),
+            ItemResourceInfo("C", "C", 1),
         ],
         event=[],
         trick=[],
@@ -33,14 +38,18 @@ def _database() -> ResourceDatabase:
         ],
         requirement_template={},
         damage_reductions={},
-        energy_tank_item_index=0,
-        item_percentage_index=0,
-        multiworld_magic_item_index=0
+        energy_tank_item_index="",
+        item_percentage_index=None,
+        multiworld_magic_item_index=None,
     )
 
 
+def _make_resource(name: str):
+    return SimpleResourceInfo(name, name, ResourceType.MISC)
+
+
 def _make_req(name: str):
-    req = SimpleResourceInfo(name, name, "")
+    req = _make_resource(name)
     id_req = ResourceRequirement(req, 1, False)
     return req, id_req
 
@@ -142,11 +151,13 @@ def test_expand_alternatives(a: RequirementSet, b: RequirementSet, expected: Req
 ])
 def test_list_dangerous_resources(input_data, output_data):
     # setup
-    req_list = RequirementList(
-        (ResourceRequirement(SimpleResourceInfo(str(item[0]), str(item[0]), ""), 1, item[1])
-         for item in input_data))
+    req_list = RequirementList((
+        ResourceRequirement(_make_resource(str(item[0])), 1, item[1])
+        for item in input_data
+    ))
+
     expected_result = {
-        SimpleResourceInfo(str(item), str(item), "")
+        _make_resource(str(item))
         for item in output_data
     }
 
@@ -510,8 +521,7 @@ def test_requirement_list_constructor(echoes_resource_database):
 
 
 def test_requirement_set_constructor(echoes_resource_database):
-    def item(name):
-        return search.find_resource_info_with_long_name(echoes_resource_database.item, name)
+    item = echoes_resource_database.get_item_by_name
 
     req_set = RequirementSet([
         RequirementList([
@@ -548,3 +558,80 @@ def test_requirement_set_constructor(echoes_resource_database):
             ("Space Jump Boots", 1),
         ],
     ]
+
+
+def test_node_identifier_as_requirement():
+    nic = NodeIdentifier.create
+    req = ResourceRequirement.simple(nic("W", "A", "N"))
+    db = typing.cast(ResourceDatabase, None)
+
+    assert not req.satisfied({}, 0, db)
+    assert req.satisfied({nic("W", "A", "N"): 1}, 0, db)
+
+
+def test_set_as_str_impossible():
+    assert RequirementSet.impossible().as_str == "Impossible"
+
+
+def test_set_as_str_trivial():
+    assert RequirementSet.trivial().as_str == "Trivial"
+
+
+def test_set_as_str_things(echoes_resource_database):
+    item = echoes_resource_database.get_item_by_name
+
+    req_set = RequirementSet([
+        RequirementList([
+            ResourceRequirement(item("Screw Attack"), 1, False),
+            ResourceRequirement(item("Space Jump Boots"), 1, False),
+        ]),
+        RequirementList([
+            ResourceRequirement(item("Power Bomb"), 1, False),
+        ]),
+    ])
+
+    assert req_set.as_str == "(Power Bomb ≥ 1) or (Screw Attack ≥ 1, Space Jump Boots ≥ 1)"
+
+
+def test_set_hash(echoes_resource_database):
+    req_set_a = RequirementSet([
+        RequirementList([
+            ResourceRequirement(echoes_resource_database.get_item_by_name("Power Bomb"), 1, False),
+        ]),
+    ])
+    req_set_b = RequirementSet([
+        RequirementList([
+            ResourceRequirement(echoes_resource_database.get_item_by_name("Power Bomb"), 1, False),
+        ]),
+    ])
+
+    assert req_set_a == req_set_b
+    assert req_set_a is not req_set_b
+
+    hash_a = hash(req_set_a)
+    hash_b = hash(req_set_b)
+    assert hash_a == hash_b
+
+    assert hash_a == req_set_a._cached_hash
+
+
+def test_sort_resource_requirement():
+    resources = [
+        NodeIdentifier.create("World", "Area", "Node"),
+        PickupIndex(10),
+        _make_resource("Resource"),
+        TrickResourceInfo("Trick", "Trick", "Long Description"),
+        ItemResourceInfo("Item", "Item", 1),
+    ]
+
+    # Assert resources has an entry for every type of ResourceInfo
+    assert {type(it) for it in resources} == set(ResourceInfo.__args__)
+    assert len(resources) == len(ResourceInfo.__args__)
+
+    requirements = [
+        ResourceRequirement.simple(it)
+        for it in resources
+    ]
+
+    result = sorted(requirements)
+    assert result == list(reversed(requirements))

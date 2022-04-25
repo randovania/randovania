@@ -29,6 +29,7 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
         scroll.setWidget(label)
         scroll.setMinimumSize(400, 200)
         grid.addWidget(scroll, *position)
+        self.scroll_area = scroll
 
         old_label.setText('')
 

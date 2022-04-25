@@ -12,6 +12,10 @@ class PickupIndex:
     def long_name(self) -> str:
         return "PickupIndex {}".format(self._index)
 
+    @property
+    def short_name(self):
+        return self.long_name
+
     def __init__(self, index: int):
         self._index = index
 

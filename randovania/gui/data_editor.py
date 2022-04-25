@@ -9,22 +9,26 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QMainWindow, QRadioButton, QGridLayout, QDialog, QFileDialog, QInputDialog, QMessageBox
 from qasync import asyncSlot
 
-from randovania.game_description import data_reader, data_writer, pretty_print, default_database, integrity_check
+from randovania.game_description import data_reader, data_writer, pretty_print, integrity_check, \
+    derived_nodes, default_database
 from randovania.game_description.editor import Editor
+from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node, GenericNode, NodeLocation
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.node import Node, GenericNode, NodeLocation
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
+from randovania.game_description.world.world_list import WorldList
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.connections_editor import ConnectionsEditor
 from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
+from randovania.gui.docks.connection_layer_widget import ConnectionLayerWidget
 from randovania.gui.docks.resource_database_editor import ResourceDatabaseEditor
 from randovania.gui.generated.data_editor_ui import Ui_DataEditorWindow
 from randovania.gui.lib import async_dialog
@@ -36,6 +40,10 @@ SHOW_WORLD_MIN_MAX_SPINNER = False
 
 
 class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
+    game_description: GameDescription
+    editor: Editor
+    world_list: WorldList
+
     edit_mode: bool
     selected_node_button: QRadioButton = None
     radio_button_to_node: Dict[QRadioButton, Node]
@@ -115,33 +123,55 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.nodes_scroll_layout.setAlignment(Qt.AlignTop)
         self.alternatives_grid_layout = QGridLayout(self.other_node_alternatives_contents)
 
-        world_reader, self.game_description = data_reader.decode_data_with_world_reader(data)
-        self.editor = Editor(self.game_description)
-        self.generic_index = world_reader.generic_index
-        self.resource_database = self.game_description.resource_database
-        self.world_list = self.game_description.world_list
+        world_reader, self.original_game_description = data_reader.decode_data_with_world_reader(data)
+        self.resource_database = self.original_game_description.resource_database
 
-        self.area_view_canvas.select_game(self.game_description.game)
+        self.update_game(self.original_game_description)
 
-        self.resource_editor = ResourceDatabaseEditor(self, self.game_description.resource_database)
+        self.resource_editor = ResourceDatabaseEditor(self, self.resource_database)
         self.resource_editor.setFeatures(self.resource_editor.features() & ~QtWidgets.QDockWidget.DockWidgetClosable)
         self.tabifyDockWidget(self.points_of_interest_dock, self.resource_editor)
+
+        self.layers_editor = ConnectionLayerWidget(self, self.original_game_description)
+        self.layers_editor.setFeatures(self.layers_editor.features() & ~QtWidgets.QDockWidget.DockWidgetClosable)
+        self.tabifyDockWidget(self.points_of_interest_dock, self.layers_editor)
+
         self.points_of_interest_dock.raise_()
 
         self.resource_editor.ResourceChanged.connect(self._on_resource_changed)
+        self.layers_editor.FiltersUpdated.connect(self._on_filters_changed)
 
         if self.game_description.game in {RandovaniaGame.METROID_PRIME, RandovaniaGame.METROID_PRIME_ECHOES,
                                           RandovaniaGame.METROID_PRIME_CORRUPTION}:
             self.area_view_dock.hide()
 
+        self.update_edit_mode()
+        self._on_filters_changed()
+
+    def set_warning_dialogs_disabled(self, value: bool):
+        self._warning_dialogs_disabled = value
+
+    def update_game(self, game: GameDescription):
+        current_world = self.current_world
+        current_area = self.current_area
+        current_node = self.current_node
+
+        self.game_description = game
+        self.editor = Editor(self.game_description)
+        self.world_list = self.game_description.world_list
+        self.area_view_canvas.select_game(self.game_description.game)
+
+        self.world_selector_box.clear()
         for world in sorted(self.world_list.worlds, key=lambda x: x.name):
             name = "{0.name} ({0.dark_name})".format(world) if world.dark_name else world.name
             self.world_selector_box.addItem(name, userData=world)
 
-        self.update_edit_mode()
-
-    def set_warning_dialogs_disabled(self, value: bool):
-        self._warning_dialogs_disabled = value
+        if current_world:
+            self.focus_on_world_by_name(current_world.name)
+        if current_area:
+            self.focus_on_area_by_name(current_area.name)
+        if current_node:
+            self.focus_on_node(current_node)
 
     @classmethod
     def open_internal_data(cls, game: RandovaniaGame, edit_mode: bool) -> "DataEditorWindow":
@@ -155,10 +185,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self._check_for_edit_dialog():
             event.ignore()
         else:
-            data = data_writer.write_game_description(self.game_description)
-            if data != self._last_data:
-                if not self.prompt_unsaved_changes_warning():
-                    return event.ignore()
+            if self.edit_mode:
+                data = data_writer.write_game_description(self.game_description)
+                if data != self._last_data:
+                    if not self.prompt_unsaved_changes_warning():
+                        return event.ignore()
             super().closeEvent(event)
 
     def prompt_unsaved_changes_warning(self) -> bool:
@@ -175,6 +206,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def on_select_world(self):
         self.area_selector_box.clear()
         world = self.current_world
+        if world is None:
+            return
+
         for area in sorted(world.areas, key=lambda x: x.name):
             if area.name.startswith("!!"):
                 continue
@@ -585,9 +619,11 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _create_new_node_no_location(self):
         return self._create_new_node(None)
 
+    def _create_identifier(self, node_name: str):
+        return NodeIdentifier.create(self.current_world.name, self.current_area.name, node_name)
+
     def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
-        self.generic_index += 1
-        new_node = GenericNode(node_name, False, location, "", {}, self.generic_index)
+        new_node = GenericNode(self._create_identifier(node_name), False, location, "", ("default",), {})
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 
@@ -612,20 +648,25 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             source_name = source_name_base
             target_name = target_name_base
 
-        self.generic_index += 1
+        new_node_this_area_identifier = NodeIdentifier(self.world_list.identifier_for_area(current_area), source_name)
+        new_node_other_area_identifier = NodeIdentifier(self.world_list.identifier_for_area(target_area), target_name)
+
         new_node_this_area = DockNode(
-            source_name, False, location, "", {}, self.generic_index,
-            NodeIdentifier(self.world_list.identifier_for_area(target_area), target_name),
-            dock_weakness[0],
-            dock_weakness[1],
+            identifier=new_node_this_area_identifier,
+            heal=False, location=location, description="", layers=("default",), extra={},
+            dock_type=dock_weakness[0],
+            default_connection=new_node_other_area_identifier,
+            default_dock_weakness=dock_weakness[1],
+            override_default_open_requirement=None, override_default_lock_requirement=None,
         )
 
-        self.generic_index += 1
         new_node_other_area = DockNode(
-            target_name, False, location, "", {}, self.generic_index,
-            NodeIdentifier(self.world_list.identifier_for_area(current_area), source_name),
-            dock_weakness[0],
-            dock_weakness[1],
+            identifier=new_node_other_area_identifier,
+            heal=False, location=location, description="", layers=("default",), extra={},
+            dock_type=dock_weakness[0],
+            default_connection=new_node_this_area_identifier,
+            default_dock_weakness=dock_weakness[1],
+            override_default_open_requirement=None, override_default_lock_requirement=None,
         )
 
         self.editor.add_node(current_area, new_node_this_area)
@@ -683,6 +724,19 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
                     if node.event.short_name == resource.short_name:
                         self.replace_node_with(area, node, dataclasses.replace(node, event=resource))
 
+    def _on_filters_changed(self):
+        if self.edit_mode:
+            game = self.original_game_description
+        else:
+            game = self.original_game_description.make_mutable_copy()
+            derived_nodes.remove_inactive_layers(game, self.layers_editor.selected_layers())
+
+            resources = self.layers_editor.selected_tricks()
+            if resources:
+                game.patch_requirements(resources, 1.0)
+
+        self.update_game(game)
+
     def update_edit_mode(self):
         self.rename_area_button.setVisible(self.edit_mode)
         self.delete_node_button.setVisible(self.edit_mode)
@@ -694,6 +748,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         self.node_edit_button.setVisible(self.edit_mode)
         self.resource_editor.set_allow_edits(self.edit_mode)
         self.area_view_canvas.set_edit_mode(self.edit_mode)
+        self.layers_editor.set_edit_mode(self.edit_mode)
 
     @property
     def current_world(self) -> World:
