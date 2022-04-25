@@ -51,6 +51,7 @@ Room Rando:
 - Added: Random boss sizes now affects Flaahgra, Plated Beetle and Cloaked Drone
 - Changed: Random boss sizes now affects bosses in cutscenes, additionally Omega Pirate's armor plates now scale properly
 - Changed: When creating a new save file, the default selection is now "Normal" to help prevent accidentally starting the game on Hard mode
+- Changed: Artifacts which do have no need to be collected are removed from the logbook
 
 #### Logic Database
 
