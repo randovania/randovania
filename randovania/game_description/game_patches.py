@@ -78,9 +78,3 @@ class GamePatches:
         current = copy.copy(self.hints)
         current[identifier] = hint
         return dataclasses.replace(self, hints=current)
-
-    def get_pickup_index_from_name(self, name: str) -> PickupIndex:
-        for pickup_index in self.pickup_assignment:
-            if self.pickup_assignment[pickup_index].pickup.name == name:
-                return pickup_index
-        raise Exception("Failed to find pickup " + name)

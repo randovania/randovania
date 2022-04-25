@@ -8,6 +8,7 @@ from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler, pic
 from randovania.layout import filtered_database
 from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
 from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import HintType, PrecisionPair
@@ -623,31 +624,18 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 # do something different this time
                                 self.rng.shuffle(candidates)
 
-        configuration = self.description.all_patches[self.players_config.player_index].configuration
-        pickup_target_index = self.patches.get_pickup_index_from_name("Phazon Suit")
-        pickup_target = self.patches.pickup_assignment.get(pickup_target_index)
+        phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
 
-        hint = Hint(
-            HintType.LOCATION,
-            PrecisionPair(HintLocationPrecision.DETAILED, HintItemPrecision.DETAILED, False),
-            pickup_target_index,
-        )
-
-        phint = pickup_hint.create_pickup_hint(
-            self.patches.pickup_assignment,
-            filtered_database.game_description_for_layout(configuration).world_list,
-            HintItemPrecision.DETAILED,
-            pickup_target,
+        hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+            self.description.all_patches,
             self.players_config,
-            True
-        )
-
-        phazon_hint_text = namer.format_location_hint(
-            RandovaniaGame.METROID_PRIME,
-            phint,
-            hint,
+            namer,
+            True,
+            [phazon_suit_resource_info],
             True,
         )
+
+        phazon_hint_text = hint_texts[phazon_suit_resource_info]
 
         world_data["Impact Crater"]["rooms"]["Crater Entry Point"]["extraScans"] = [
             {
