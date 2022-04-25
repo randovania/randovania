@@ -4,9 +4,7 @@ from typing import List, Union
 
 import randovania
 from randovania.exporter import pickup_exporter, item_names
-from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler, pickup_hint
-from randovania.layout import filtered_database
-from randovania.game_description.hint import Hint, HintType, HintLocationPrecision, HintItemPrecision
+from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler
 from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
@@ -625,34 +623,34 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 self.rng.shuffle(candidates)
 
         if self.configuration.hints.phazon_suit != PhazonSuitHintMode.DISABLED:
-        phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
+            phazon_suit_resource_info = self.game.resource_database.get_item_by_name("Phazon Suit")
 
-        hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
-            self.description.all_patches,
-            self.players_config,
-            namer,
-                self.configuration.hints.phazon_suit == PhazonSuitHintMode.HIDE_AREA,
-            [phazon_suit_resource_info],
-            True,
-        )
+            hint_texts: dict[ItemResourceInfo, str] = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config,
+                namer,
+                    self.configuration.hints.phazon_suit == PhazonSuitHintMode.HIDE_AREA,
+                [phazon_suit_resource_info],
+                True,
+            )
 
-        phazon_hint_text = hint_texts[phazon_suit_resource_info]
+            phazon_hint_text = hint_texts[phazon_suit_resource_info]
 
-        world_data["Impact Crater"]["rooms"]["Crater Entry Point"]["extraScans"] = [
-            {
-                "position": [
-                    -19.4009,
-                    41.001,
-                    2.805
-                ],
-                "combatVisible": True,
-                "text": phazon_hint_text,
-                "rotation": 45.0,
-                "isRed": True,
-                "logbookTitle": "Phazon Suit",
-                "logbookCategory": 5 # Artifacts
-            }
-        ]
+            world_data["Impact Crater"]["rooms"]["Crater Entry Point"]["extraScans"] = [
+                {
+                    "position": [
+                        -19.4009,
+                        41.001,
+                        2.805
+                    ],
+                    "combatVisible": True,
+                    "text": phazon_hint_text,
+                    "rotation": 45.0,
+                    "isRed": True,
+                    "logbookTitle": "Phazon Suit",
+                    "logbookCategory": 5 # Artifacts
+                }
+            ]
 
         starting_memo = None
         extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
