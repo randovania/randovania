@@ -4,12 +4,10 @@ from typing import List, Union
 
 import randovania
 from randovania.exporter import pickup_exporter, item_names
-from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler
+from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.hint import HintType, PrecisionPair
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import CurrentResources
 from randovania.game_description.world.area_identifier import AreaIdentifier
