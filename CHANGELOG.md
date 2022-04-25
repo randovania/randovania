@@ -29,7 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added: Option to specify hint for Phazon Suit in Impact Crater (default=Show only area name)
 - Added: April Fools Preset
-- Added: Flaahgra is now included in "Random Boss Sizes" option
 - Added: Map images are now generated and written in the same folder as output ISO when generating room rando seeds and exporting them with spoilers enabled.
 - Fixed: Random Superheated, Random Submerged and Dangerous Gravity Suit logic now trigger dialog warning in Multiword sessions
 - Fixed: Adjusted min/max boss sizes to prevent softlocks
