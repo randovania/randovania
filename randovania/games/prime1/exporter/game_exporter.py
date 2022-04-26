@@ -162,10 +162,7 @@ class PrimeGameExporter(GameExporter):
         new_config["gameConfig"]["updateHintStateReplacement"] = list(
             assembler.assemble_instructions(
                 symbols["UpdateHintState__13CStateManagerFf"],
-                [
-                    *all_prime_dol_patches.remote_execution_patch_start(),
-                    *all_prime_dol_patches.remote_execution_patch_end(),
-                ],
+                all_prime_dol_patches.remote_execution_patch(),
                 symbols=symbols)
         )
         new_config["preferences"]["cacheDir"] = cache_dir
