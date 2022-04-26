@@ -135,9 +135,9 @@ class PrimeRemoteConnector(RemoteConnector):
             return set(), []
 
     async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
-                                          remote_pickups: Tuple[Tuple[str, PickupEntry], ...],
+                                          remote_pickups: tuple[tuple[str, PickupEntry], ...],
                                           in_cooldown: bool,
-                                          ) -> Tuple[List[RemotePatch], bool]:
+                                          ) -> tuple[list[DolRemotePatch], bool]:
         """
         Determines if any of the remote_pickups needs to be written to executor.
         :param executor:
