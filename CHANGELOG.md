@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: Crash when rolling through some doors in morph ball
 - Fixed: Central Dynamo reposition soft-lock
 - Fixed: Inability to scan vertical doors
+- Fixed: Incompatability with "No Doors" + "Room Rando"
 - Changed: The door immediately behind the player is unlocked when teleporting to a new room. This gives the player one chance to backtrack before commiting to the warp.
 
 #### Logic Database
