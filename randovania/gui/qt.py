@@ -125,7 +125,7 @@ async def show_game_session(app: QtWidgets.QApplication, options, session_id: in
 
     sessions = [
         session
-        for session in await network_client.get_game_session_list()
+        for session in await network_client.get_game_session_list(False)
         if session.id == session_id
     ]
     if not sessions:

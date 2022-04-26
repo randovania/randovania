@@ -46,7 +46,8 @@ def test_game_session_defaults_to_now(clean_database):
     assert (datetime.datetime.now(datetime.timezone.utc) - session.creation_datetime) < datetime.timedelta(seconds=5)
 
 
-def test_list_game_sessions(clean_database):
+@pytest.mark.parametrize("limit", [None, 2, 3])
+def test_list_game_sessions(clean_database, limit):
     # Setup
     utc = datetime.timezone.utc
     someone = database.User.create(name="Someone")
@@ -54,18 +55,26 @@ def test_list_game_sessions(clean_database):
                                 creation_date=datetime.datetime(2020, 10, 2, 10, 20, tzinfo=utc))
     database.GameSession.create(name="Other", num_teams=2, creator=someone,
                                 creation_date=datetime.datetime(2020, 1, 20, 5, 2, tzinfo=utc))
+    database.GameSession.create(name="Third", num_teams=2, creator=someone,
+                                creation_date=datetime.datetime(2021, 1, 20, 5, 2, tzinfo=utc))
     state = GameSessionState.SETUP.value
 
     # Run
-    result = game_session.list_game_sessions(MagicMock())
+    result = game_session.list_game_sessions(MagicMock(), limit)
 
     # Assert
-    assert result == [
-        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone',
-         'creation_date': '2020-10-02T10:20:00+00:00'},
+    expected = [
+        {'has_password': False, 'id': 3, 'state': state, 'name': 'Third', 'num_players': 0, 'creator': 'Someone',
+         'creation_date': '2021-01-20T05:02:00+00:00'},
         {'has_password': False, 'id': 2, 'state': state, 'name': 'Other', 'num_players': 0, 'creator': 'Someone',
          'creation_date': '2020-01-20T05:02:00+00:00'},
+        {'has_password': False, 'id': 1, 'state': state, 'name': 'Debug', 'num_players': 0, 'creator': 'Someone',
+         'creation_date': '2020-10-02T10:20:00+00:00'},
     ]
+    if limit == 2:
+        expected = expected[:2]
+
+    assert result == expected
 
 
 def test_create_game_session(clean_database, preset_manager):
