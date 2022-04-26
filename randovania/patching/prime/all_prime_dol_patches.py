@@ -56,11 +56,12 @@ class BasePrimeDolVersion(DolVersion):
 
 _registers_to_save = 2
 _remote_execution_stack_size = 0x30 + (_registers_to_save * 4)
-_remote_execution_max_byte_count = 296
+_remote_execution_max_byte_count = 420  # Prime 1 0-00 is 444, Echoes NTSC is 464
 
 
 def remote_execution_patch_start() -> List[BaseInstruction]:
-    return_code = remote_execution_patch_end()
+    return_code = remote_execution_cleanup_and_return()
+
     intro = [
         # setup stack
         stwu(r1, -(_remote_execution_stack_size - 4), r1),
@@ -99,12 +100,16 @@ def remote_execution_patch_start() -> List[BaseInstruction]:
     ]
 
 
-def remote_execution_patch_end() -> List[BaseInstruction]:
+def remote_execution_clear_pending_op() -> List[BaseInstruction]:
     return [
         # set no pending op
         li(r6, 0x0),
         stb(r6, 0x2, r31),
+    ]
 
+
+def remote_execution_cleanup_and_return() -> List[BaseInstruction]:
+    return [
         # restore value of top registers
         lmw(GeneralRegister(32 - _registers_to_save), _remote_execution_stack_size - 4 - _registers_to_save * 4, r1),
         lwz(r0, _remote_execution_stack_size, r1),
@@ -195,12 +200,16 @@ def adjust_item_amount_patch(
     ]
 
 
-def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
-    patch = [
+def remote_execution_patch():
+    return [
         *remote_execution_patch_start(),
-        *remote_execution_patch_end(),
+        *remote_execution_clear_pending_op(),
+        *remote_execution_cleanup_and_return(),
     ]
-    dol_file.write_instructions(patch_addresses.update_hint_state, patch)
+
+
+def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, dol_file: DolFile):
+    dol_file.write_instructions(patch_addresses.update_hint_state, remote_execution_patch())
 
 
 def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
@@ -215,7 +224,8 @@ def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
 
     body_address = update_hint_state + remote_start_byte_count
     body_instructions = list(instructions)
-    body_instructions.extend(remote_execution_patch_end())
+    body_instructions.extend(remote_execution_clear_pending_op())
+    body_instructions.extend(remote_execution_cleanup_and_return())
     body_bytes = bytes(assembler.assemble_instructions(body_address, body_instructions))
 
     if len(body_bytes) > _remote_execution_max_byte_count - remote_start_byte_count:

@@ -13,6 +13,8 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher.echoes_dol_patches import EchoesDolVersion
+from randovania.generator.item_pool import pickup_creator
+from randovania.layout.base.major_item_state import MajorItemState
 
 
 @pytest.fixture(name="version")
@@ -305,3 +307,32 @@ async def test_fetch_game_status(connector: EchoesRemoteConnector, version: Echo
     else:
         assert actual_world is None
     assert actual_has_op == has_pending_op
+
+
+async def test_receive_required_missile_launcher(connector: EchoesRemoteConnector,
+                                                 echoes_item_database, echoes_resource_database):
+    pickup = pickup_creator.create_major_item(
+        echoes_item_database.major_items["Missile Launcher"],
+        MajorItemState(included_ammo=(5,)),
+        True,
+        echoes_resource_database,
+        echoes_item_database.ammo["Missile Expansion"],
+        True,
+    )
+
+    executor = AsyncMock()
+    permanent_pickups = (("Received Missile Launcher from Someone Else", pickup),)
+
+    inventory = {
+        echoes_resource_database.multiworld_magic_item: InventoryItem(0, 0),
+    }
+
+    # Run
+    patches, has_message = await connector.find_missing_remote_pickups(
+        executor, inventory, permanent_pickups, False,
+    )
+    assert has_message
+    assert len(patches) == 5
+    await connector.execute_remote_patches(executor, patches)
+
+    # Assert
