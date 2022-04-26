@@ -114,7 +114,7 @@ class ServerApp:
             except BaseNetworkError as error:
                 return error.as_json
 
-            except Exception:
+            except (Exception, TypeError):
                 logger().exception(f"Unhandled exception while processing request for message {message}. Args: {args}")
                 return ServerError().as_json
 

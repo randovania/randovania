@@ -53,17 +53,17 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
         self.on_server_connection_state_updated(self.network_client.connection_state)
 
     @handle_network_errors
-    async def refresh(self):
+    async def refresh(self, *, ignore_limit: bool = False):
         self.refresh_button.setEnabled(False)
         try:
-            self.sessions = await self.network_client.get_game_session_list()
+            self.sessions = await self.network_client.get_game_session_list(ignore_limit)
             self.update_list()
         finally:
             self.refresh_button.setEnabled(True)
 
     @asyncSlot()
     async def _refresh_slot(self):
-        await self.refresh()
+        await self.refresh(ignore_limit=True)
 
     def on_selection_changed(self):
         self.button_box.button(QDialogButtonBox.Ok).setEnabled(len(self.table_widget.selectedItems()) > 0)

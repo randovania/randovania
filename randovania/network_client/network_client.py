@@ -416,10 +416,10 @@ class NetworkClient:
         await self._emit_with_result("game_session_collect_locations",
                                      (self._current_game_session_meta.id, locations))
 
-    async def get_game_session_list(self) -> List[GameSessionListEntry]:
+    async def get_game_session_list(self, ignore_limit: bool) -> List[GameSessionListEntry]:
         return [
             GameSessionListEntry.from_json(item)
-            for item in await self._emit_with_result("list_game_sessions")
+            for item in await self._emit_with_result("list_game_sessions", (None if ignore_limit else 100,))
         ]
 
     async def create_new_session(self, session_name: str) -> GameSessionEntry:

@@ -40,10 +40,10 @@ def _describe_session(session: GameSession, membership: Optional[GameSessionMemb
         return f"Session {session.id} ({session.name})"
 
 
-def list_game_sessions(sio: ServerApp):
+def list_game_sessions(sio: ServerApp, limit: Optional[int]):
     return [
         session.create_list_entry()
-        for session in GameSession.select()
+        for session in GameSession.select().order_by(GameSession.id.desc()).limit(limit)
     ]
 
 

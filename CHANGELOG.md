@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: In Data Visualizer, it's now possible to set tricks to a certain level and simplify all visible connections based on that.
 - Fixed: Maximum values for certain preset fields, such as Energy Tank capacity and Superheated Room Probability, can now properly be used.
 - Fixed: A race condition with Randovania connected to Nintendont, where Randovania could incorrectly assume the game was idle if memory was read while it was executing the last sent task.
-- Fixed: The map tracker now properly handles when multiple nodes gives the same resource/event. 
+- Fixed: The map tracker now properly handles when multiple nodes gives the same resource/event.
+- Changed: Online game list by default only shows 100 sessions, for performance reasons. Press "Refresh" to get all.
 
 ### Cave Story
 
