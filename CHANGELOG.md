@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Patcher Changes
 
 - Fixed: Specifying custom heat-damage-per-second now properly affects non-vanilla superheated rooms
+- Fixed: Some akward cutscene timing when playing skipped cutscenes in realtime
 - Added: Random boss sizes now affects Flaahgra, Plated Beetle and Cloaked Drone
 - Changed: Random boss sizes now affects bosses in cutscenes, additionally Omega Pirate's armor plates now scale properly
 - Changed: When creating a new save file, the default selection is now "Normal" to help prevent accidentally starting the game on Hard mode
