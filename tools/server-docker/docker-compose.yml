@@ -39,11 +39,11 @@ services:
 
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sqlite_web_staging.rule=Host(`${DOMAIN}`) && PathPrefix(`/sqlite-web/${PATH_PREFIX}`)"
-      - "traefik.http.routers.sqlite_web_staging.entrypoints=websecure"
-      - "traefik.http.routers.sqlite_web_staging.tls.certresolver=myresolver"
-      - "traefik.http.routers.sqlite_web_staging.middlewares=dashboard-auth@file"
-      - "traefik.http.services.sqlite_web_staging.loadbalancer.server.port=8080"
+      - "traefik.http.routers.${PATH_PREFIX}_sqlite_web.rule=Host(`${DOMAIN}`) && PathPrefix(`/sqlite-web/${PATH_PREFIX}`)"
+      - "traefik.http.routers.${PATH_PREFIX}_sqlite_web.entrypoints=websecure"
+      - "traefik.http.routers.${PATH_PREFIX}_sqlite_web.tls.certresolver=myresolver"
+      - "traefik.http.routers.${PATH_PREFIX}_sqlite_web.middlewares=dashboard-auth@file"
+      - "traefik.http.services.${PATH_PREFIX}_sqlite_web.loadbalancer.server.port=8080"
 
     networks:
       - web
