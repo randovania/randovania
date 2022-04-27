@@ -524,7 +524,7 @@ Extra - polygon: [[8500.0, 1800.0], [4400.0, 1800.0], [4400.0, -1300.0], [8500.0
 Extra - asset_id: collision_camera_010
 > Door to EMMI Zone Tower East (doorpowerpower_016); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone Exit East
+  * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone Exit East (Power)
   * Extra - actor_name: doorpowerpower_016
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -546,7 +546,7 @@ Extra - asset_id: collision_camera_010
 
 > Door to EMMI Zone Tower East (doorclosedcharge_001); Heals? False
   * Layers: default
-  * Charge Beam Door to EMMI Zone Tower East/Door from EMMI Zone Exit East
+  * Charge Beam Door to EMMI Zone Tower East/Door to EMMI Zone Exit East (Charge)
   * Extra - actor_name: doorclosedcharge_001
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -744,7 +744,7 @@ Extra - asset_id: collision_camera_014
 
 > Door to Energy Recharge Station (doorclosedcharge_002); Heals? False
   * Layers: default
-  * Charge Beam Door to Energy Recharge Station/Door from Moving Magnet Walls (Tall)
+  * Charge Beam Door to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Charge)
   * Extra - actor_name: doorclosedcharge_002
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -764,7 +764,7 @@ Extra - asset_id: collision_camera_014
 
 > Door to Energy Recharge Station (doorpresenceframe_000); Heals? False
   * Layers: default
-  * Access Open to Energy Recharge Station/Door to Moving Magnet Walls (Tall)
+  * Access Open to Energy Recharge Station/Door to Moving Magnet Walls (Tall) (Cloak)
   * Extra - actor_name: doorpresenceframe_000
   * Extra - actor_def: actordef:actors/props/doorpresenceframe/charclasses/doorpresenceframe.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1281,7 +1281,7 @@ Extra - asset_id: collision_camera_018
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door from Moving Magnet Walls (Tall)
+  > Door to Moving Magnet Walls (Tall) (Charge)
       Trivial
   > Life Recharge
       Trivial
@@ -1298,9 +1298,9 @@ Extra - asset_id: collision_camera_018
   > Tile Group (POWERBEAM)
       Trivial
 
-> Door from Moving Magnet Walls (Tall); Heals? False
+> Door to Moving Magnet Walls (Tall) (Charge); Heals? False
   * Layers: default
-  * Access Closed to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (doorclosedcharge_002)
+  * Access Locked to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (doorclosedcharge_002)
   * Extra - actor_name: doorclosedcharge_002
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -1312,7 +1312,7 @@ Extra - asset_id: collision_camera_018
   > Tile Group (POWERBEAM)
       Spider Magnet or Infinite Bomb Jump (Beginner) or Use Spin Boost
 
-> Door to Moving Magnet Walls (Tall); Heals? False
+> Door to Moving Magnet Walls (Tall) (Cloak); Heals? False
   * Layers: default
   * Sensor Lock Door to Moving Magnet Walls (Tall)/Door to Energy Recharge Station (doorpresenceframe_000)
   * Extra - actor_name: doorpresenceframe_000
@@ -1342,13 +1342,13 @@ Extra - asset_id: collision_camera_018
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Thermal Device Room North
       Trivial
-  > Door from Moving Magnet Walls (Tall)
+  > Door to Moving Magnet Walls (Tall) (Charge)
       Trivial
 
 > Dock to Thermal Device Room North; Heals? False
   * Layers: default
   * Open Passage to Thermal Device Room North/Dock to Energy Recharge Station
-  > Door to Moving Magnet Walls (Tall)
+  > Door to Moving Magnet Walls (Tall) (Cloak)
       Trivial
 
 ----------------
@@ -2678,7 +2678,7 @@ Extra - polygon: [[4500.0, 4150.0], [2400.0, 4150.0], [2400.0, -1300.0], [4500.0
 Extra - asset_id: collision_camera_032
 > Door to EMMI Zone East Tower Access (doorpowerpower_015); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (doorpowerpower_015)
+  * Power Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Middle)
   * Extra - actor_name: doorpowerpower_015
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2688,7 +2688,7 @@ Extra - asset_id: collision_camera_032
   > Tunnel to EMMI Zone Exit East
       Trivial
 
-> Door to EMMI Zone Exit East; Heals? False
+> Door to EMMI Zone Exit East (Power); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Exit East/Door to EMMI Zone Tower East (doorpowerpower_016)
   * Extra - actor_name: doorpowerpower_016
@@ -2736,7 +2736,7 @@ Extra - asset_id: collision_camera_032
 
 > Door to EMMI Zone East Tower Access (doorpowerpower_000); Heals? False
   * Layers: default
-  * Power Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (doorpowerpower_000)
+  * Power Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Top)
   * Extra - actor_name: doorpowerpower_000
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2748,19 +2748,19 @@ Extra - asset_id: collision_camera_032
 
 > Door to EMMI Zone East Tower Access (doorclosedcharge); Heals? False
   * Layers: default
-  * Charge Beam Door to EMMI Zone East Tower Access/Door from EMMI Zone Tower East
+  * Charge Beam Door to EMMI Zone East Tower Access/Door to EMMI Zone Tower East (Bottom)
   * Extra - actor_name: doorclosedcharge
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Exit East
+  > Door to EMMI Zone Exit East (Power)
       Trivial
 
-> Door from EMMI Zone Exit East; Heals? False
+> Door to EMMI Zone Exit East (Charge); Heals? False
   * Layers: default
-  * Access Closed to EMMI Zone Exit East/Door to EMMI Zone Tower East (doorclosedcharge_001)
+  * Access Locked to EMMI Zone Exit East/Door to EMMI Zone Tower East (doorclosedcharge_001)
   * Extra - actor_name: doorclosedcharge_001
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2777,7 +2777,7 @@ Extra - asset_id: collision_camera_032
   * Morph Ball Tunnel to EMMI Zone Hidden Missile Room/Tunnel to EMMI Zone Tower East
   > Dock to Hall Thermal Device Room
       Trivial
-  > Door from EMMI Zone Exit East
+  > Door to EMMI Zone Exit East (Charge)
       Trivial
 
 > Tunnel to EMMI Zone Exit East; Heals? False
@@ -2785,7 +2785,7 @@ Extra - asset_id: collision_camera_032
   * Morph Ball Tunnel to EMMI Zone Exit East/Tunnel to EMMI Zone Tower East
   > Door to EMMI Zone East Tower Access (doorpowerpower_015)
       Trivial
-  > Door to EMMI Zone Exit East
+  > Door to EMMI Zone Exit East (Power)
       Can Slide
   > Tunnel to EMMI Zone East Tower Access (1)
       Trivial
@@ -2799,7 +2799,7 @@ Extra - asset_id: collision_camera_032
 > Tunnel to EMMI Zone East Tower Access (2); Heals? False
   * Layers: default
   * Cataris EMMI Tunnel to EMMI Zone East Tower Access/Tunnel to EMMI Zone Tower East (2)
-  > Door from EMMI Zone Exit East
+  > Door to EMMI Zone Exit East (Charge)
       Trivial
 
 ----------------
@@ -3752,7 +3752,7 @@ EMMI Zone East Tower Access
 Extra - total_boundings: {'x1': -700.0, 'x2': 2500.0, 'y1': -1300.0, 'y2': 2000.0}
 Extra - polygon: [[2500.0, 2000.0], [-700.0, 2000.0], [-700.0, -1300.0], [2500.0, -1300.0]]
 Extra - asset_id: collision_camera_046
-> Door to EMMI Zone Tower East (doorpowerpower_015); Heals? False
+> Door to EMMI Zone Tower East (Middle); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (doorpowerpower_015)
   * Extra - actor_name: doorpowerpower_015
@@ -3763,7 +3763,7 @@ Extra - asset_id: collision_camera_046
   * Extra - right_shield_def: None
   > Door to Green EMMI Introduction (doorchargecharge_005)
       Trivial
-  > Door from EMMI Zone Tower East
+  > Door to EMMI Zone Tower East (Bottom)
       Trivial
   > Tunnel to EMMI Zone Tower East (1)
       Trivial
@@ -3783,10 +3783,10 @@ Extra - asset_id: collision_camera_046
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Tower East (doorpowerpower_015)
+  > Door to EMMI Zone Tower East (Middle)
       Trivial
 
-> Door to EMMI Zone Tower East (doorpowerpower_000); Heals? False
+> Door to EMMI Zone Tower East (Top); Heals? False
   * Layers: default
   * Power Beam Door to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (doorpowerpower_000)
   * Extra - actor_name: doorpowerpower_000
@@ -3798,16 +3798,16 @@ Extra - asset_id: collision_camera_046
   > Door to Green EMMI Introduction (doorshutter_001)
       Can Slide
 
-> Door from EMMI Zone Tower East; Heals? False
+> Door to EMMI Zone Tower East (Bottom); Heals? False
   * Layers: default
-  * Access Closed to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (doorclosedcharge)
+  * Access Locked to EMMI Zone Tower East/Door to EMMI Zone East Tower Access (doorclosedcharge)
   * Extra - actor_name: doorclosedcharge
   * Extra - actor_def: actordef:actors/props/doorclosedcharge/charclasses/doorclosedcharge.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Tower East (doorpowerpower_015)
+  > Door to EMMI Zone Tower East (Middle)
       Trivial
 
 > Door to Green EMMI Introduction (doorshutter_001); Heals? False
@@ -3819,7 +3819,7 @@ Extra - asset_id: collision_camera_046
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to EMMI Zone Tower East (doorpowerpower_000)
+  > Door to EMMI Zone Tower East (Top)
       Can Slide
   > Tunnel to Green EMMI Introduction (Upper)
       Trivial
@@ -3829,13 +3829,13 @@ Extra - asset_id: collision_camera_046
 > Tunnel to EMMI Zone Tower East (1); Heals? False
   * Layers: default
   * Morph Ball Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone East Tower Access (1)
-  > Door to EMMI Zone Tower East (doorpowerpower_015)
+  > Door to EMMI Zone Tower East (Middle)
       Trivial
 
 > Tunnel to Green EMMI Introduction (Bottom); Heals? False
   * Layers: default
   * Cataris EMMI Tunnel to Green EMMI Introduction/Tunnel to EMMI Zone East Tower Access (Bottom)
-  > Door to EMMI Zone Tower East (doorpowerpower_015)
+  > Door to EMMI Zone Tower East (Middle)
       Trivial
 
 > Tunnel to Green EMMI Introduction (Upper); Heals? False
@@ -3847,7 +3847,7 @@ Extra - asset_id: collision_camera_046
 > Tunnel to EMMI Zone Tower East (2); Heals? False
   * Layers: default
   * Cataris EMMI Tunnel to EMMI Zone Tower East/Tunnel to EMMI Zone East Tower Access (2)
-  > Door to EMMI Zone Tower East (doorpowerpower_015)
+  > Door to EMMI Zone Tower East (Middle)
       Morph Ball and After Cataris - Central Unit
   > Door to Green EMMI Introduction (doorshutter_001)
       Morph Ball and After Cataris - Central Unit
