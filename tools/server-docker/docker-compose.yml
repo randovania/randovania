@@ -23,6 +23,31 @@ services:
       - web
     restart: always
 
+  sqlite-web:
+    image: "coleifer/sqlite-web"
+    restart: always
+    volumes:
+      - "${DATA_PATH}:/data"
+    command:
+      - sqlite_web
+      - "-H"
+      - "0.0.0.0"
+      - "-u"
+      - "/sqlite-web/${PATH_PREFIX}"
+      - "-x"
+      - data.db
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sqlite_web_staging.rule=Host(`${DOMAIN}`) && PathPrefix(`/sqlite-web/${PATH_PREFIX}`)"
+      - "traefik.http.routers.sqlite_web_staging.entrypoints=websecure"
+      - "traefik.http.routers.sqlite_web_staging.tls.certresolver=myresolver"
+      - "traefik.http.routers.sqlite_web_staging.middlewares=dashboard-auth@file"
+      - "traefik.http.services.sqlite_web_staging.loadbalancer.server.port=8080"
+
+    networks:
+      - web
+
   bot:
     image: "randovania/server:${VERSION}"
     volumes:
