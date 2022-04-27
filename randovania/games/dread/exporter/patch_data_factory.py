@@ -297,6 +297,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "text_patches": self._static_text_changes(),
             "cosmetic_patches": self._cosmetic_patch_data(),
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
+            "game_patches": {
+                "consistent_raven_beak_damage_table": True,
+                "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
+            }
         }
 
 
