@@ -98,7 +98,7 @@ def create_app():
 
     @app.route("/")
     def index():
-        return "ok"
+        return randovania.VERSION
 
     server_version = randovania.VERSION
     expected_headers = connection_headers()

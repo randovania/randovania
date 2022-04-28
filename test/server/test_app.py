@@ -3,6 +3,7 @@ import contextlib
 import pytest
 from flask_socketio import ConnectionRefusedError
 
+import randovania
 from randovania.server import app
 
 
@@ -33,7 +34,7 @@ def test_create_app(mocker, tmpdir):
     assert tmpdir.join("database.db").exists()
 
     with result.test_client() as test_client:
-        assert test_client.get("/").data.decode("utf-8") == "ok"
+        assert test_client.get("/").data.decode("utf-8") == randovania.VERSION
 
     assert result.config['SECRET_KEY'] == "key"
     assert result.config["DISCORD_CLIENT_ID"] == 1234
