@@ -57,15 +57,32 @@ async def show_main_window(app: QtWidgets.QApplication, options, is_preview: boo
     from randovania.gui.lib.qt_network_client import QtNetworkClient
     network_client: QtNetworkClient = app.network_client
 
+    async def attempt_login():
+        from randovania.network_client.network_client import UnableToConnect
+        from randovania.gui.lib import async_dialog
+
+        try:
+            from randovania.gui import main_online_interaction
+            if not await main_online_interaction.ensure_logged_in(None, network_client):
+                await async_dialog.warning(None, "Login required",
+                                           "Logging in is required to use dev builds.")
+                return False
+
+        except UnableToConnect as e:
+            s = e.reason.replace('\n', '<br />')
+            await async_dialog.warning(
+                None, "Connection Error",
+                f"<b>Unable to connect to the server:</b><br /><br />{s}<br /><br />"
+                f"Logging in is required to use dev builds.")
+            return False
+
+        return True
+
     if randovania.is_frozen() and randovania.is_dev_version():
         try:
             logger.info("Disabling quit on last window closed")
             app.setQuitOnLastWindowClosed(False)
-            from randovania.gui import main_online_interaction
-            if not await main_online_interaction.ensure_logged_in(None, network_client):
-                from randovania.gui.lib import async_dialog
-                await async_dialog.warning(None, "Login required",
-                                           "Logging in is required to use dev builds.")
+            if not await attempt_login():
                 app.quit()
                 return
         finally:

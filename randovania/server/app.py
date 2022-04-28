@@ -43,10 +43,15 @@ def check_client_headers(expected_headers: Dict[str, str], environ: Dict[str, st
             wrong_headers[name] = value
 
     if wrong_headers:
-        raise ConnectionRefusedError("\n".join(
-            f"Expected '{expected_headers[name]}' for '{name}', got '{value}'"
+        message = "\n".join(
+            f"Expected '{expected_headers[name]}' for '{name}', got '{value}'."
             for name, value in wrong_headers.items()
-        ))
+        )
+        raise ConnectionRefusedError(
+            "Incompatible client:\n{}\n\nServer is version {}, please confirm you're updated.".format(
+                message, randovania.VERSION,
+            )
+        )
 
 
 def create_app():
