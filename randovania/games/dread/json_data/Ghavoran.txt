@@ -72,7 +72,7 @@ Extra - asset_id: collision_camera_001
   > Door to Robot Fight Arena
       Trivial
   > Grapple Block Alcove
-      After Ghavoran - Burenia Transport Grapple Block and Can Slide
+      After Ghavoran - Burenia Transport Grapple Box and Can Slide
 
 > Door to Super Missile Room; Heals? False
   * Layers: default
@@ -87,7 +87,7 @@ Extra - asset_id: collision_camera_001
       Trivial
   > Grapple Block Alcove
       All of the following:
-          Morph Ball and After Ghavoran - Burenia Transport Grapple Block
+          Morph Ball and After Ghavoran - Burenia Transport Grapple Box
           Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
 
 > Pickup (Missile Tank); Heals? False
@@ -113,7 +113,7 @@ Extra - asset_id: collision_camera_001
           Gravity Suit or Space Jump or Speed Booster
   > Grapple Block Alcove
       All of the following:
-          Morph Ball and Before Ghavoran - Burenia Transport Grapple Block
+          Morph Ball and Before Ghavoran - Burenia Transport Grapple Box
           Any of the following:
               Spider Magnet or Space Jump
               Flash Shift and Use Spin Boost
@@ -149,17 +149,17 @@ Extra - asset_id: collision_camera_001
 > Grapple Block Alcove; Heals? False
   * Layers: default
   > Door to Spider Magnet Elevator
-      Morph Ball and After Ghavoran - Burenia Transport Grapple Block
+      Morph Ball and After Ghavoran - Burenia Transport Grapple Box
   > Door to Super Missile Room
-      After Ghavoran - Burenia Transport Grapple Block and Can Slide
+      After Ghavoran - Burenia Transport Grapple Box and Can Slide
   > Door to Transport to Burenia
-      Before Ghavoran - Burenia Transport Grapple Block and Can Slide
-  > Event - Burenia Transport Grapple Block
+      Before Ghavoran - Burenia Transport Grapple Box and Can Slide
+  > Event - Burenia Transport Grapple Box
       Grapple Beam
 
-> Event - Burenia Transport Grapple Block; Heals? False
+> Event - Burenia Transport Grapple Box; Heals? False
   * Layers: default
-  * Event Ghavoran - Burenia Transport Grapple Block
+  * Event Ghavoran - Burenia Transport Grapple Box
   > Grapple Block Alcove
       Trivial
 
@@ -2016,7 +2016,7 @@ Extra - asset_id: collision_camera_025_B
   * Extra - right_shield_def: None
   > Door to Teleport to Burenia (Missile)
       All of the following:
-          Morph Ball and Before Ghavoran - Ferenia Transport Grapple Block
+          Morph Ball and Before Ghavoran - Ferenia Transport Grapple Box
           Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
   > Door to Teleport to Burenia (Power Beam)
       Infinite Bomb Jump (Intermediate) or Use Spin Boost
@@ -2031,19 +2031,19 @@ Extra - asset_id: collision_camera_025_B
   * Extra - right_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldmissile_001
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   > Door from Chozo Warrior Arena
-      Morph Ball and Before Ghavoran - Ferenia Transport Grapple Block
+      Morph Ball and Before Ghavoran - Ferenia Transport Grapple Box
   > Total Recharge
       Trivial
   > Tile Group (SCREWATTACK)
       Morph Ball
   > Dock to Transport to Ferenia
-      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - Ferenia Transport Grapple Block
-  > Event - Ferenia Transport Grapple Block
+      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - Ferenia Transport Grapple Box
+  > Event - Ferenia Transport Grapple Box (Front)
       Grapple Beam and After Ghavoran - Ferenia Transport Enky Left
   > Event - Ferenia Transport Enky Left
       Destroy Enky
   > Event - Ferenia Transport Enky Right
-      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Grapple Block and Destroy Enky
+      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Grapple Box and Destroy Enky
 
 > Door to Teleport to Burenia (Power Beam); Heals? False
   * Layers: default
@@ -2119,17 +2119,17 @@ Extra - asset_id: collision_camera_025_B
   * Layers: default
   * Open Passage to Transport to Ferenia/Dock to Total Recharge Station North
   > Door to Teleport to Burenia (Missile)
-      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - Ferenia Transport Grapple Block
-  > Event - Ferenia Transport Grapple Block
-      After Ghavoran - Ferenia Transport Enky Right and Break/Move Grapple Block from Behind
+      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - Ferenia Transport Grapple Box
   > Event - Ferenia Transport Enky Left
-      After Ghavoran - Ferenia Transport Enky Left and After Ghavoran - Ferenia Transport Grapple Block and Destroy Enky
+      After Ghavoran - Ferenia Transport Enky Right and After Ghavoran - Ferenia Transport Grapple Box and Destroy Enky
   > Event - Ferenia Transport Enky Right
       Destroy Enky
+  > Event - Ferenia Transport Grapple Box (Back)
+      After Ghavoran - Ferenia Transport Enky Right and Break/Move Grapple Block from Behind
 
-> Event - Ferenia Transport Grapple Block; Heals? False
+> Event - Ferenia Transport Grapple Box (Front); Heals? False
   * Layers: default
-  * Event Ghavoran - Ferenia Transport Grapple Block
+  * Event Ghavoran - Ferenia Transport Grapple Box
   > Door to Teleport to Burenia (Missile)
       Trivial
 
@@ -2156,6 +2156,12 @@ Extra - asset_id: collision_camera_025_B
 > Event - Ferenia Transport Enky Right; Heals? False
   * Layers: default
   * Event Ghavoran - Ferenia Transport Enky Right
+  > Dock to Transport to Ferenia
+      Trivial
+
+> Event - Ferenia Transport Grapple Box (Back); Heals? False
+  * Layers: default
+  * Event Ghavoran - Ferenia Transport Grapple Box
   > Dock to Transport to Ferenia
       Trivial
 
