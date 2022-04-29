@@ -1916,6 +1916,80 @@
                         }
                     ]
                 }
+            },
+            "Perform Water Bomb Jump": {
+                "type": "and",
+                "data": {
+                    "comment": "Gain a little extra height in water without Gravity Suit by using a bomb",
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Bomb",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "WBJ",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Perform Water Cross Jump": {
+                "type": "and",
+                "data": {
+                    "comment": "Gain a little extra height in water without Gravity Suit by using a Cross Bomb",
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Lay Cross Comb"
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": true
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "WBJ",
+                                "amount": 2,
+                                "negate": false
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
