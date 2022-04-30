@@ -1171,7 +1171,7 @@
                 "asset_id": "collision_camera_003"
             },
             "nodes": {
-                "Door from Proto EMMI Introduction": {
+                "Door to Proto EMMI Introduction (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1197,7 +1197,7 @@
                         "area_name": "Proto EMMI Introduction",
                         "node_name": "Door to Melee Tutorial Room (Lower)"
                     },
-                    "default_dock_weakness": "Access Closed",
+                    "default_dock_weakness": "Access Locked",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1353,6 +1353,15 @@
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -1398,7 +1407,7 @@
                         }
                     }
                 },
-                "Door to Proto EMMI Introduction": {
+                "Door to Proto EMMI Introduction (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -1456,7 +1465,7 @@
                     "pickup_index": 31,
                     "major_location": false,
                     "connections": {
-                        "Door to Proto EMMI Introduction": {
+                        "Door to Proto EMMI Introduction (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1613,7 +1622,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door from Proto EMMI Introduction": {
+                        "Door to Proto EMMI Introduction (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1707,7 +1716,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Door from Proto EMMI Introduction": {
+                        "Door to Proto EMMI Introduction (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1776,17 +1785,8 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Wave",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
                                         "type": "template",
-                                        "data": "Shoot Diffusion Beam"
+                                        "data": "Shoot Diffusion or Wave"
                                     },
                                     {
                                         "type": "resource",
@@ -1826,8 +1826,13 @@
                             }
                         },
                         "Tile Group (BOMB)": {
-                            "type": "template",
-                            "data": "Can Slide"
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
+                            }
                         },
                         "Tunnel to Melee Tutorial West": {
                             "type": "and",
@@ -7972,7 +7977,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Melee Tutorial Room",
-                        "node_name": "Door from Proto EMMI Introduction"
+                        "node_name": "Door to Proto EMMI Introduction (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -8011,7 +8016,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Melee Tutorial Room",
-                        "node_name": "Door to Proto EMMI Introduction"
+                        "node_name": "Door to Proto EMMI Introduction (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
