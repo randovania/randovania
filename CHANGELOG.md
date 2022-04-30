@@ -62,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime 2: Echoes
 
+- Added: Preset descriptions now list custom beam ammo configuration.
 - Changed: Optimized how long it takes to export a game that uses Prime 1 models.
 
 #### Patcher Changes
