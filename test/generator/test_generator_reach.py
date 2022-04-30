@@ -30,6 +30,7 @@ from randovania.generator.old_generator_reach import OldGeneratorReach
 from randovania.generator.reach_lib import (
     advance_reach_with_possible_unsafe_resources
 )
+from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
@@ -39,11 +40,10 @@ from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 
 def run_bootstrap(preset: Preset):
-    game = default_database.game_description_for(preset.game).make_mutable_copy()
+    game = filtered_database.game_description_for_layout(preset.configuration).get_mutable()
     generator = game.game.generator
 
     derived_nodes.create_derived_nodes(game)
-    derived_nodes.remove_inactive_layers(game, preset.configuration.active_layers())
     game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database,
                                                                          preset.configuration)
     permalink = GeneratorParameters(
@@ -222,9 +222,11 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
 
 def test_reach_size_from_start_echoes(small_echoes_game_description, default_echoes_configuration, mocker):
     # Setup
-    game: GameDescription = small_echoes_game_description.make_mutable_copy()
+    game = derived_nodes.remove_inactive_layers(
+        small_echoes_game_description,
+        default_echoes_configuration.active_layers()
+    ).get_mutable()
     derived_nodes.create_derived_nodes(game)
-    derived_nodes.remove_inactive_layers(game, default_echoes_configuration.active_layers())
 
     mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
     generator = game.game.generator

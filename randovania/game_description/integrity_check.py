@@ -222,7 +222,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
 
 
 def find_database_errors(game: GameDescription) -> list[str]:
-    copy = game.make_mutable_copy()
+    copy = game.get_mutable()
     derived_nodes.create_derived_nodes(copy)
 
     result = []

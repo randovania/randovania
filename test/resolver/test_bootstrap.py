@@ -43,7 +43,7 @@ def test_logic_bootstrap(preset_manager, game_enum, empty_patches):
 
     new_game, state = game_enum.generator.bootstrap.logic_bootstrap(
         configuration,
-        game.make_mutable_copy(),
+        game.get_mutable(),
         dataclasses.replace(empty_patches, configuration=configuration, starting_location=game.starting_location),
     )
 

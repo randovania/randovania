@@ -124,10 +124,13 @@ class GameDescription:
                 _calculate_dangerous_resources_in_db(self.dock_weakness_database, self.resource_database))
         return self._dangerous_resources
 
-    def make_mutable_copy(self) -> "GameDescription":
-        result = copy.deepcopy(self)
-        result.mutable = True
-        return result
+    def get_mutable(self) -> "GameDescription":
+        if self.mutable:
+            return self
+        else:
+            result = copy.deepcopy(self)
+            result.mutable = True
+            return result
 
 
 def _resources_for_damage(resource: SimpleResourceInfo, database: ResourceDatabase) -> Iterator[ResourceInfo]:
