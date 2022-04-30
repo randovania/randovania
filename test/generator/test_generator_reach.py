@@ -40,7 +40,7 @@ from randovania.resolver.state import State, add_pickup_to_state, StateGameData
 
 
 def run_bootstrap(preset: Preset):
-    game = filtered_database.game_description_for_layout(preset.configuration)
+    game = filtered_database.game_description_for_layout(preset.configuration).get_mutable()
     generator = game.game.generator
 
     derived_nodes.create_derived_nodes(game)
