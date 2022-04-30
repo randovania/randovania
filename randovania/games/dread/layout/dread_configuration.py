@@ -10,6 +10,9 @@ class DreadConfiguration(BaseConfiguration):
     elevators: TeleporterConfiguration
     energy_per_tank: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
     immediate_energy_parts: bool
+    hanubia_shortcut_no_grapple: bool
+    hanubia_easier_path_to_itorash: bool
+    extra_pickups_for_bosses: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

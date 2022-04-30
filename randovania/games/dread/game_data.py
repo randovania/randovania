@@ -36,14 +36,14 @@ def _exporter():
 
 def _generator() -> game.GameGenerator:
     from randovania.games.dread.generator.base_patches_factory import DreadBasePatchesFactory
+    from randovania.games.dread.generator.bootstrap import DreadBootstrap
     from randovania.games.dread.generator.pool_creator import pool_creator
-    from randovania.resolver.bootstrap import MetroidBootstrap
     from randovania.games.dread.generator.hint_distributor import DreadHintDistributor
 
     return game.GameGenerator(
         item_pool_creator=pool_creator,
         base_patches_factory=DreadBasePatchesFactory(),
-        bootstrap=MetroidBootstrap(),
+        bootstrap=DreadBootstrap(),
         hint_distributor=DreadHintDistributor(),
     )
 

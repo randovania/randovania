@@ -42,6 +42,11 @@ class Bootstrap:
 
         return static_resources
 
+    def event_resources_for_configuration(self, configuration: BaseConfiguration,
+                                          resource_database: ResourceDatabase,
+                                          ) -> CurrentResources:
+        return {}
+
     def _add_minimal_logic_initial_resources(self, resources: CurrentResources,
                                              game: GameDescription,
                                              major_items: MajorItemsConfiguration,
@@ -178,6 +183,7 @@ class Bootstrap:
 
         static_resources = self.trick_resources_for_configuration(configuration.trick_level,
                                                                   game.resource_database)
+        static_resources.update(self.event_resources_for_configuration(configuration, game.resource_database))
         static_resources.update(self.version_resources_for_game(configuration, game.resource_database))
         static_resources.update(self.misc_resources_for_configuration(configuration, game.resource_database))
 
