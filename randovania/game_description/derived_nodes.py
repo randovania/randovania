@@ -23,13 +23,16 @@ def create_derived_nodes(game: GameDescription):
             editor.add_node(area, lock_node)
 
 
-def remove_inactive_layers(game: GameDescription, active_layers: set[str]):
+def remove_inactive_layers(game: GameDescription, active_layers: set[str]) -> GameDescription:
     if unknown_layers := active_layers - set(game.layers):
         raise ValueError(f"Unknown layers: {unknown_layers}")
 
+    game = game.get_mutable()
     editor = Editor(game)
 
     all_nodes = list(game.world_list.all_worlds_areas_nodes)
     for world, area, node in all_nodes:
         if set(node.layers).isdisjoint(active_layers):
             editor.remove_node(area, node)
+
+    return game

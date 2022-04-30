@@ -35,7 +35,7 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 
 async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                              player_index: int, num_players: int, rng_required: bool = True) -> PlayerPool:
-    game = filtered_database.game_description_for_layout(configuration).make_mutable_copy()
+    game = filtered_database.game_description_for_layout(configuration).get_mutable()
     derived_nodes.create_derived_nodes(game)
 
     game_generator = game.game.generator

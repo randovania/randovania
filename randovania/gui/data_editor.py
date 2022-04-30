@@ -728,8 +728,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         if self.edit_mode:
             game = self.original_game_description
         else:
-            game = self.original_game_description.make_mutable_copy()
-            derived_nodes.remove_inactive_layers(game, self.layers_editor.selected_layers())
+            game = derived_nodes.remove_inactive_layers(
+                self.original_game_description,
+                self.layers_editor.selected_layers(),
+            )
 
             resources = self.layers_editor.selected_tricks()
             if resources:
