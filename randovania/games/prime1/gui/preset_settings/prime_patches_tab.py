@@ -30,8 +30,8 @@ _FIELDS = [
     "deterministic_maze",
 ]
 
-class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
 
+class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
     def __init__(self, editor: PresetEditor):
         super().__init__(editor)
         self.setupUi(self)
@@ -53,7 +53,7 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
 
         signal_handling.on_checked(self.small_samus_check, self._on_small_samus_changed)
         signal_handling.on_checked(self.large_samus_check, self._on_large_samus_changed)
-    
+
         self.superheated_slider.valueChanged.connect(self._on_slider_changed)
         self.submerged_slider.valueChanged.connect(self._on_slider_changed)
 
@@ -114,6 +114,6 @@ class PresetPrimePatches(PresetTab, Ui_PresetPrimePatches):
             )
 
     def _on_slider_changed(self):
-        self.superheated_slider_label.setText(f"{self.superheated_slider.value()/10.0:.1f}%")
-        self.submerged_slider_label.setText(f"{self.submerged_slider.value()/10.0:.1f}%")
+        self.superheated_slider_label.setText(f"{self.superheated_slider.value() / 10.0:.1f}%")
+        self.submerged_slider_label.setText(f"{self.submerged_slider.value() / 10.0:.1f}%")
         self._update_editor()
