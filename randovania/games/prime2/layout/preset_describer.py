@@ -1,11 +1,93 @@
 from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
+from randovania.games.prime2.layout.beam_configuration import BeamConfiguration, BeamAmmoConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration, LayoutSkyTempleKeyMode
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.preset_describer import (
     GamePresetDescriber,
     fill_template_strings_from_tree, has_shuffled_item, message_for_required_mains, handle_progressive_expected_counts,
 )
+
+
+def create_beam_configuration_description(beams: BeamConfiguration) -> list[dict[str, bool]]:
+    beam_names = ["Power", "Dark", "Light", "Annihilator"]
+    default_config = BeamConfiguration(
+        power=BeamAmmoConfiguration(0, -1, -1, 0, 0, 5, 0),
+        dark=BeamAmmoConfiguration(1, 45, -1, 1, 5, 5, 30),
+        light=BeamAmmoConfiguration(2, 46, -1, 1, 5, 5, 30),
+        annihilator=BeamAmmoConfiguration(3, 46, 45, 1, 5, 5, 30),
+    )
+    id_to_name = {
+        -1: "Nothing",
+        43: "Power Bomb",
+        44: "Missile",
+        45: "Dark Ammo",
+        46: "Light Ammo",
+    }
+
+    result = []
+
+    def format_ammo_cost(b: BeamAmmoConfiguration) -> list[str]:
+        if b.ammo_a == b.ammo_b == -1:
+            return [""]
+
+        return [
+            f"{b.uncharged_cost} (Uncharged)",
+            f"{b.charged_cost} (Charged)",
+            f"{b.combo_ammo_cost} (Combo)",
+        ]
+
+    def format_different_ammo_cost(actual: BeamAmmoConfiguration, default: BeamAmmoConfiguration):
+        a1 = format_ammo_cost(actual)
+        d1 = format_ammo_cost(default)
+
+        return "/".join(
+            a
+            for a, d in zip(a1, d1)
+            if a != d
+        )
+
+    def format_ammo_name(b: BeamAmmoConfiguration) -> str:
+        if b.ammo_a == b.ammo_b == -1:
+            return "no ammo"
+
+        names = [id_to_name[b.ammo_a], id_to_name[b.ammo_b]]
+        if "Nothing" in names:
+            names.remove("Nothing")
+
+        if all(" Ammo" in n for n in names) and len(names) > 1:
+            names[0] = names[0].replace(" Ammo", "")
+
+        return " and ".join(names)
+
+    def format_missile_cost(b: BeamAmmoConfiguration) -> str:
+        return "{missiles} missiles for combo".format(
+            missiles=b.combo_missile_cost,
+        )
+
+    for name, default_beam, actual_beam in zip(beam_names, default_config.all_beams, beams.all_beams):
+        different = []
+
+        ammo_cost = format_different_ammo_cost(actual_beam, default_beam)
+        ammo_name = format_ammo_name(actual_beam)
+        if ammo_name != format_ammo_name(default_beam) or ammo_cost:
+            if ammo_name != "no ammo" and ammo_cost:
+                different.append(f"{ammo_cost} {ammo_name}")
+            else:
+                different.append(ammo_name)
+
+        missile_cost = format_missile_cost(actual_beam)
+        if missile_cost != format_missile_cost(default_beam):
+            different.append(missile_cost)
+
+        if different:
+            description = "{beam} Beam uses {different}".format(
+                beam=name,
+                different=", ".join(different)
+            )
+            result.append({description: True})
+
+    return result
 
 
 class EchoesPresetDescriber(GamePresetDescriber):
@@ -55,6 +137,7 @@ class EchoesPresetDescriber(GamePresetDescriber):
                 {"Warp to start": configuration.warp_to_start,
                  "Menu Mod": configuration.menu_mod,
                  "Final bosses removed": configuration.elevators.skip_final_bosses},
+                *create_beam_configuration_description(configuration.beam_configuration),
             ]
         }
         fill_template_strings_from_tree(template_strings, extra_message_tree)
