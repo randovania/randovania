@@ -1,57 +1,81 @@
-version: "3.3"
+version: "3.8"
 
 networks:
-  web:
+  traefik-public:
     external: true
+
+secrets:
+  configuration:
+    external: true
+    name: "randovania_${SERVER_ENVIRONMENT}_configuration"
+
+volumes:
+  server_db:
 
 services:
   randovania:
     image: "randovania/server:${VERSION}"
     volumes:
-      - "${DATA_PATH}:/data"
+      - "server_db:/data"
 
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.${PATH_PREFIX}.rule=Host(`${DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)"
-      - "traefik.http.routers.${PATH_PREFIX}.entrypoints=websecure"
-      - "traefik.http.routers.${PATH_PREFIX}.tls.certresolver=myresolver"
-      - "traefik.http.routers.${PATH_PREFIX}.middlewares=${PATH_PREFIX}_stripprefix"
-      - "traefik.http.middlewares.${PATH_PREFIX}_stripprefix.stripprefix.prefixes=/${PATH_PREFIX}"
-      - "traefik.http.services.${PATH_PREFIX}.loadbalancer.server.port=5000"
+    secrets:
+      - configuration
+
+    command: --configuration "/run/secrets/configuration" server flask
+
+    deploy:
+      placement:
+        constraints:
+          - node.labels.randovania-allow-${SERVER_ENVIRONMENT} == true
+
+      labels:
+        - traefik.enable=true
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.rule=Host(`${DOMAIN}`) && PathPrefix(`/${PATH_PREFIX}`)
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.entrypoints=websecure
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.tls.certresolver=le
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}.middlewares=rdv_${SERVER_ENVIRONMENT}_stripprefix
+        - traefik.http.middlewares.rdv_${SERVER_ENVIRONMENT}_stripprefix.stripprefix.prefixes=/${PATH_PREFIX}
+        - traefik.http.services.rdv_${SERVER_ENVIRONMENT}.loadbalancer.server.port=5000
 
     networks:
-      - web
-    restart: always
+      - traefik-public
 
   sqlite-web:
     image: "coleifer/sqlite-web"
-    restart: always
     volumes:
-      - "${DATA_PATH}:/data"
+      - "server_db:/data"
+
     command:
       - sqlite_web
       - "-H"
       - "0.0.0.0"
       - "-u"
-      - "/sqlite-web/${PATH_PREFIX}"
+      - "/sqlite-web/${SERVER_ENVIRONMENT}"
       - "-x"
       - data.db
 
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.${PATH_PREFIX}_sqlite_web.rule=Host(`${DOMAIN}`) && PathPrefix(`/sqlite-web/${PATH_PREFIX}`)"
-      - "traefik.http.routers.${PATH_PREFIX}_sqlite_web.entrypoints=websecure"
-      - "traefik.http.routers.${PATH_PREFIX}_sqlite_web.tls.certresolver=myresolver"
-      - "traefik.http.routers.${PATH_PREFIX}_sqlite_web.middlewares=dashboard-auth@file"
-      - "traefik.http.services.${PATH_PREFIX}_sqlite_web.loadbalancer.server.port=8080"
+    deploy:
+      placement:
+        constraints:
+          - node.labels.randovania-allow-${SERVER_ENVIRONMENT} == true
+
+      labels:
+        - traefik.enable=true
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.rule=Host(`${DOMAIN}`) && PathPrefix(`/sqlite-web/${SERVER_ENVIRONMENT}`)
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.entrypoints=websecure
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.tls.certresolver=le
+        - traefik.http.routers.rdv_${SERVER_ENVIRONMENT}_sqlite_web.middlewares=admin-auth
+        - traefik.http.services.rdv_${SERVER_ENVIRONMENT}_sqlite_web.loadbalancer.server.port=8080
 
     networks:
-      - web
+      - traefik-public
 
   bot:
     image: "randovania/server:${VERSION}"
-    volumes:
-      - "${DATA_PATH}:/data"
 
-    command: --configuration /data/configuration.json server bot
-    restart: always
+    secrets:
+      - configuration
+
+    command: --configuration "/run/secrets/configuration" server bot
