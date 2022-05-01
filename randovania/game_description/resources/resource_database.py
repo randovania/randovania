@@ -55,6 +55,9 @@ class ResourceDatabase:
     def get_item(self, short_name: str) -> ItemResourceInfo:
         return self.get_by_type_and_index(ResourceType.ITEM, short_name)
 
+    def get_event(self, short_name: str) -> SimpleResourceInfo:
+        return self.get_by_type_and_index(ResourceType.EVENT, short_name)
+
     def get_item_by_name(self, name: str) -> ItemResourceInfo:
         return search.find_resource_info_with_long_name(self.item, name)
 
