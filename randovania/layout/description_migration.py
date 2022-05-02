@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 11
+CURRENT_VERSION = 12
 
 
 def _migrate_v1(json_dict: dict) -> dict:
@@ -254,6 +254,13 @@ def _migrate_v10(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v11(json_dict: dict) -> dict:
+    for game in json_dict["game_modifications"]:
+        game["dock_weakness"] = {}
+
+    return json_dict
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v2.2.0-6-gbfd37022
     2: _migrate_v2,  # v2.4.2-16-g735569fd
@@ -265,6 +272,7 @@ _MIGRATIONS = {
     8: _migrate_v8,
     9: _migrate_v9,
     10: _migrate_v10,
+    11: _migrate_v11,
 }
 
 
