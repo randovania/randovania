@@ -79,6 +79,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
             "Sanctuary Fortress/Aerie/Elevator to Sanctuary Fortress - Aerie Transport Station": "Sanctuary Fortress/Aerie Transport Station",
             "Sanctuary Fortress/Aerie Transport Station/Elevator to Sanctuary Fortress - Aerie": "Sanctuary Fortress/Aerie",
         },
+        "dock_weakness": {},
         "configurable_nodes": {},
         "locations": {},
         "hints": {}

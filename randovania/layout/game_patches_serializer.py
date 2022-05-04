@@ -12,6 +12,7 @@ from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock import DockWeakness
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
@@ -67,6 +68,11 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
     game = default_database.game_description_for(patches.configuration.game)
     world_list = game.world_list
 
+    dock_weakness_to_type = {}
+    for dock_type, weaknesses in game.dock_weakness_database.weaknesses.items():
+        for weakness in weaknesses.values():
+            dock_weakness_to_type[weakness] = dock_type
+
     result = {
         # This field helps schema migrations, if nothing else
         "game": patches.configuration.game.value,
@@ -78,6 +84,13 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         "teleporters": {
             teleporter.as_string: connection.as_string
             for teleporter, connection in patches.elevator_connection.items()
+        },
+        "dock_weakness": {
+            dock.as_string: {
+                "type": dock_weakness_to_type[weakness].short_name,
+                "name": weakness.name,
+            }
+            for dock, weakness in patches.dock_weakness.items()
         },
         "configurable_nodes": {
             identifier.as_string: data_writer.write_requirement(requirement)
@@ -127,6 +140,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     :return:
     """
     world_list = game.world_list
+    weakness_db = game.dock_weakness_database
 
     if game_modifications["game"] != game.game.value:
         raise ValueError(f"Expected '{game.game.value}', got '{game_modifications['game']}'")
@@ -146,6 +160,15 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     elevator_connection: ElevatorConnection = {
         NodeIdentifier.from_string(source_name): AreaIdentifier.from_string(target_name)
         for source_name, target_name in game_modifications["teleporters"].items()
+    }
+
+    # Dock Weakness
+    dock_weakness: dict[NodeIdentifier, DockWeakness] = {
+        NodeIdentifier.from_string(source_name): weakness_db.get_by_weakness(
+            weakness_data["type"],
+            weakness_data["name"],
+        )
+        for source_name, weakness_data in game_modifications["dock_weakness"].items()
     }
 
     # Configurable Nodes
@@ -200,7 +223,7 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
         pickup_assignment=pickup_assignment,  # PickupAssignment
         elevator_connection=elevator_connection,  # ElevatorConnection
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
-        dock_weakness={},  # Dict[Tuple[int, int], DockWeakness]
+        dock_weakness=dock_weakness,
         configurable_nodes=configurable_nodes,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaIdentifier
