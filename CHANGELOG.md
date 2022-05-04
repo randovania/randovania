@@ -47,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.3.1] - Unreleased
 
-- Nothing yet.
+- Added: Phazon Suit hints are now included in the preset description.
 
 ## [4.3.0] - 2022-05-01
 
