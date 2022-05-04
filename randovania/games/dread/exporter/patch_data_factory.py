@@ -199,11 +199,13 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     "map_icon": map_icon,
                 })
             else:
-                details.update({
-                    "pickup_actordef": pickup_node.extra["actor_def"],
-                    "pickup_string_key": pickup_node.extra["string_key"],
-                    "pickup_lua_callback": self._callback_ref_for(pickup_node),
-                })
+                details["pickup_lua_callback"] = self._callback_ref_for(pickup_node)
+                if pickup_type != "cutscene":
+                    details.update({
+                        "pickup_actordef": pickup_node.extra["actor_def"],
+                        "pickup_string_key": pickup_node.extra["string_key"],
+                    })
+
             return details
         except KeyError as e:
             logging.warning(e)
@@ -258,6 +260,28 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             }
         }
 
+    def _door_patches(self):
+        wl = self.game.world_list
+
+        result = []
+        used_actors = {}
+
+        for identifier, weakness in self.patches.dock_weakness.items():
+            if "type" not in weakness.extra:
+                raise ValueError(f"Unable to change door {identifier} into {weakness.name}: incompatible door weakness")
+
+            result.append({
+                "actor": (actor := self._teleporter_ref_for(wl.node_by_identifier(identifier))),
+                "door_type": (door_type := weakness.extra["type"]),
+            })
+            actor_idef = str(actor)
+            if used_actors.get(actor_idef, door_type) != door_type:
+                raise ValueError(f"Door for {identifier} ({actor}) previously "
+                                 f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}.")
+            used_actors[actor_idef] = door_type
+
+        return result
+
     def create_data(self) -> dict:
         starting_location = self._start_point_ref_for(self._node_for(self.patches.starting_location))
         starting_items = self._calculate_starting_inventory(self.patches.starting_items)
@@ -300,7 +324,9 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "game_patches": {
                 "consistent_raven_beak_damage_table": True,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
-            }
+                "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
+            },
+            "door_patches": self._door_patches(),
         }
 
 

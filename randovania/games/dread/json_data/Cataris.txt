@@ -4963,6 +4963,8 @@ Extra - asset_id: collision_camera_063
   * Event Kraid
   > Right Ledge
       Trivial
+  > Pickup (Kraid)
+      Trivial
 
 > Before Kraid Fight; Heals? False
   * Layers: default
@@ -4981,6 +4983,14 @@ Extra - asset_id: collision_camera_063
                   All of the following:
                       # Shoot Beam required to farm for Missiles
                       Missiles and Shoot Beam
+
+> Pickup (Kraid); Heals? False
+  * Layers: extra_pickup_drops
+  * Pickup 148; Major Location? True
+  * Extra - pickup_type: cutscene
+  * Extra - callback_function: OnKraidDeath_CUSTOM
+  > Right Ledge
+      Trivial
 
 ----------------
 West Teleport Access

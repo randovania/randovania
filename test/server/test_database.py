@@ -27,9 +27,9 @@ def test_GameSession_create_session_entry(clean_database, has_description, test_
         s.layout_description = description
         s.save()
         game_details = {
-            'seed_hash': 'KXNCJDTT',
+            'seed_hash': '5IENQWDS',
             'spoiler': True,
-            'word_hash': 'Bladepod Slot Attack',
+            'word_hash': 'Biostorage Cavern Watch',
         }
 
     # Run
