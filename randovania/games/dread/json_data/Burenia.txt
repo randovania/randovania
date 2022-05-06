@@ -1713,8 +1713,8 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Door to Early Gravity Speedboost Room 1 (Lower)
+      Speed Booster and After Burenia - Early Gravity Energy Part
   > Top of Enky Shaft
       After Burenia - Ghavoran Teleport Enky
   > Event - Destroy all Enkys
@@ -1729,8 +1729,8 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Door to Early Gravity Speedboost Room 1 (Upper)
+      Speed Booster and After Burenia - Early Gravity Energy Part
 
 > Door to Main Hub Tower Middle (Charge); Heals? False
   * Layers: default
@@ -1809,18 +1809,6 @@ Extra - asset_id: collision_camera_015
       Trivial
   > Top of Enky Shaft
       Can Slide
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Early Gravity Speedboost Room 1 (Upper)
-      Trivial
-  > Door to Early Gravity Speedboost Room 1 (Lower)
-      Trivial
 
 > Top of Enky Shaft; Heals? False
   * Layers: default
@@ -2004,6 +1992,8 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_def: None
   > Pickup (Energy Part)
       Trivial
+  > Event - Early Gravity Energy Part
+      Trivial
 
 > Door to Teleport to Ghavoran (Lower); Heals? False
   * Layers: default
@@ -2033,18 +2023,6 @@ Extra - asset_id: collision_camera_018
   > Tile Group (POWERBEAM) 1
       Trivial
 
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_013
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Dock to Early Gravity Speedboost Room 2 (Lower)
-      Trivial
-
 > Tile Group (POWERBEAM) 1; Heals? False
   * Layers: default
   * Configurable Node
@@ -2054,7 +2032,7 @@ Extra - asset_id: collision_camera_018
   * Extra - tile_types: ('POWERBEAM',)
   > Pickup (Missile+ Tank)
       Trivial
-  > Tile Group (SPEEDBOOST)
+  > Dock to Early Gravity Speedboost Room 2 (Lower)
       Trivial
   > Tunnel to Gravity Suit Tower
       Morph Ball
@@ -2103,8 +2081,8 @@ Extra - asset_id: collision_camera_018
 > Dock to Early Gravity Speedboost Room 2 (Lower); Heals? False
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 2/Dock to Early Gravity Speedboost Room 1 (Lower)
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Tile Group (POWERBEAM) 1
+      Speed Booster
 
 > Tunnel to Gravity Suit Tower; Heals? False
   * Layers: default
@@ -2112,23 +2090,21 @@ Extra - asset_id: collision_camera_018
   > Tile Group (POWERBEAM) 1
       Morph Ball
 
+> Event - Early Gravity Energy Part; Heals? False
+  * Layers: default
+  * Event Burenia - Early Gravity Energy Part
+  * Event added to account for door rando as it would otherwise be impossible to
+use the speed blocks just outside
+
+
+  > Door to Teleport to Ghavoran (Upper)
+      Trivial
+
 ----------------
 Early Gravity Speedboost Room 2
 Extra - total_boundings: {'x1': -700.0, 'x2': 2100.0, 'y1': -8300.0, 'y2': -6000.0}
 Extra - polygon: [[2100.0, -6000.0], [-700.0, -6000.0], [-700.0, -8300.0], [2100.0, -8300.0]]
 Extra - asset_id: collision_camera_019
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_012
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Dock to Early Gravity Speedboost Room 1 (Lower)
-      Trivial
-  > Slope Top
-      Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
-
 > Dock to Early Gravity Speedboost Room 1 (Upper); Heals? False
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 1/Dock to Early Gravity Speedboost Room 2 (Upper)
@@ -2140,8 +2116,8 @@ Extra - asset_id: collision_camera_019
 > Dock to Early Gravity Speedboost Room 1 (Lower); Heals? False
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 1/Dock to Early Gravity Speedboost Room 2 (Lower)
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Slope Top
+      Speed Booster or Walljump (Beginner) or Lay Cross Comb or Simple IBJ or Use Spin Boost
 
 > Water Pit; Heals? False
   * Layers: default
@@ -2156,14 +2132,14 @@ Extra - asset_id: collision_camera_019
 
 > Slope Top; Heals? False
   * Layers: default
-  > Tile Group (SPEEDBOOST)
-      Trivial
   > Dock to Early Gravity Speedboost Room 1 (Upper)
       Any of the following:
           Space Jump
           All of the following:
               Spider Magnet or Walljump (Beginner)
               Flash Shift or Grapple Beam or Use Spin Boost
+  > Dock to Early Gravity Speedboost Room 1 (Lower)
+      Speed Booster
   > Water Pit
       Trivial
 

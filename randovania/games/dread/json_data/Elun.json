@@ -2361,11 +2361,20 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (POWERBEAM)": {
+                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
                                     {
                                         "type": "template",
                                         "data": "Can Slide"
@@ -2373,7 +2382,7 @@
                                 ]
                             }
                         },
-                        "Tile Group (SPEEDBOOST)": {
+                        "Tile Group (POWERBEAM)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2423,7 +2432,7 @@
                     "pickup_index": 117,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
+                        "Tile Group (POWERBEAM)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2454,30 +2463,8 @@
                     },
                     "connections": {
                         "Door to Gyroscope Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Ballspark"
                         },
                         "Tunnel to Bottom Morph Launcher": {
                             "type": "and",
@@ -2494,43 +2481,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 5813.398692810458,
-                        "y": -1692.5925925925926,
-                        "z": 0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_004",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Missile Tank)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (POWERBEAM)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
