@@ -48,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.3.1] - Unreleased
 
 - Added: Phazon Suit hints are now included in the preset description.
+- Fixed: Exporting Prime 1 games that have no Phazon Suit no longer fails if it's configured to have a hint.
 
 ## [4.3.0] - 2022-05-01
 
