@@ -44,6 +44,7 @@ class DreadPresetDescriber(GamePresetDescriber):
                 ),
                 {
                     "Open Hanubia Shortcut": configuration.hanubia_shortcut_no_grapple,
+                    "Easier Path to Itorash in Hanubia": configuration.hanubia_easier_path_to_itorash
                 }
             ]
         }
