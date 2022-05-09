@@ -325,6 +325,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "consistent_raven_beak_damage_table": True,
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
+                "default_x_released": self.configuration.x_starts_released,
             },
             "door_patches": self._door_patches(),
         }

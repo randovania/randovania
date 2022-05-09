@@ -11,7 +11,8 @@ from randovania.layout.preset import Preset
 _FIELDS = [
     "hanubia_shortcut_no_grapple",
     "extra_pickups_for_bosses",
-    "hanubia_easier_path_to_itorash"
+    "hanubia_easier_path_to_itorash",
+    "x_starts_released",
 ]
 
 
