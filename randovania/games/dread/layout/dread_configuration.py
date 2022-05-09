@@ -13,6 +13,7 @@ class DreadConfiguration(BaseConfiguration):
     hanubia_shortcut_no_grapple: bool
     hanubia_easier_path_to_itorash: bool
     extra_pickups_for_bosses: bool
+    x_starts_released: bool
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:
