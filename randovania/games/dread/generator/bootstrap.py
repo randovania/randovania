@@ -19,4 +19,7 @@ class DreadBootstrap(MetroidBootstrap):
         if configuration.hanubia_easier_path_to_itorash:
             result[resource_database.get_event("s080_shipyard:default:grapplepulloff1x2_001")] = 1
 
+        if configuration.x_starts_released:
+            result[resource_database.get_event("ElunReleaseX")] = 1
+
         return result
