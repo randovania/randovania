@@ -14,7 +14,7 @@ from randovania.network_client.game_session import GameSessionEntry, User, GameS
     GameSessionAuditLog
 from randovania.network_client.network_client import NetworkClient, ConnectionState, UnableToConnect
 from randovania.network_common.error import (InvalidAction, NotAuthorizedForAction, ServerError, RequestTimeout,
-                                             NotLoggedIn, UserNotAuthorized)
+                                             NotLoggedIn, UserNotAuthorized, UnsupportedClient)
 
 
 class QtNetworkClient(QWidget, NetworkClient):
@@ -151,6 +151,13 @@ def handle_network_errors(fn):
                 "You're not authorized to use this build.\nPlease check #dev-builds for more details.",
             )
 
+        except UnsupportedClient as e:
+            s = e.detail.replace('\n', '<br />')
+            await async_dialog.warning(
+                self, "Unsupported client",
+                s,
+            )
+
         except UnableToConnect as e:
             s = e.reason.replace('\n', '<br />')
             await async_dialog.warning(self, "Connection Error",
@@ -160,5 +167,7 @@ def handle_network_errors(fn):
             await async_dialog.warning(self, "Connection Error",
                                        f"<b>Timeout while communicating with the server:</b><br /><br />{e}"
                                        f"<br />Further attempts will wait for longer.")
+
+        return None
 
     return wrapper

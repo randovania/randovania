@@ -60,6 +60,7 @@ class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
             self.update_list()
         finally:
             self.refresh_button.setEnabled(True)
+        return True
 
     @asyncSlot()
     async def _refresh_slot(self):
