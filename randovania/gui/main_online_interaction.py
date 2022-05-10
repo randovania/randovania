@@ -89,13 +89,16 @@ class OnlineInteractions(QtWidgets.QWidget):
         browser = GameSessionBrowserDialog(network_client)
 
         try:
-            await wait_dialog.cancellable_wait(
+            result = await wait_dialog.cancellable_wait(
                 self,
                 asyncio.ensure_future(browser.refresh()),
                 "Communicating",
                 "Requesting the session list...",
             )
         except asyncio.CancelledError:
+            return
+
+        if not result:
             return
 
         if await async_dialog.execute_dialog(browser) == browser.Accepted:

@@ -1,9 +1,5 @@
-import contextlib
-
-import pytest
-from flask_socketio import ConnectionRefusedError
-
 import randovania
+import randovania.server.client_check
 from randovania.server import app
 
 
@@ -44,71 +40,3 @@ def test_create_app(mocker, tmpdir):
 
     encrpyted_value = b'gAAAAABfSh6fY4FOiqfGWMHXdE9A4uNVEu5wfn8BAsgP8EZ0-f-lqbYDqYzdiblhT5xhk-wMmG8sOLgKNN-dUaiV7n6JCydn7Q=='
     assert result.sio.fernet_encrypt.decrypt(encrpyted_value) == b'banana'
-
-
-@pytest.mark.parametrize(["mode", "client_version", "server_version", "expected"], [
-    (app.ClientVersionCheck.STRICT, "1.0", "1.0", True),
-    (app.ClientVersionCheck.STRICT, "1.0", "1.0.1", False),
-    (app.ClientVersionCheck.STRICT, "1.0", "1.1", False),
-    (app.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0", "1.0", True),
-    (app.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0", "1.0.1", True),
-    (app.ClientVersionCheck.MATCH_MAJOR_MINOR, "1.0", "1.1", False),
-    (app.ClientVersionCheck.IGNORE, "1.0", "1.0", True),
-    (app.ClientVersionCheck.IGNORE, "1.0", "1.0.1", True),
-    (app.ClientVersionCheck.IGNORE, "1.0", "1.1", True),
-])
-def test_check_client_version(mode, client_version, server_version, expected):
-    if expected:
-        expectation = contextlib.nullcontext()
-    else:
-        expectation = pytest.raises(ConnectionRefusedError)
-
-    with expectation:
-        app.check_client_version(mode, client_version, server_version)
-
-
-@pytest.fixture(name="expected_headers")
-def _expected_headers():
-    return {
-        "X-Randovania-API-Version": "2",
-        "X-Randovania-Preset-Version": "13",
-        "X-Randovania-Permalink-Version": "4",
-        "X-Randovania-Description-Version": "2",
-    }
-
-
-def test_check_client_headers_valid(expected_headers):
-    app.check_client_headers(
-        expected_headers,
-        {
-            "HTTP_X_RANDOVANIA_API_VERSION": "2",
-            "HTTP_X_RANDOVANIA_PRESET_VERSION": "13",
-            "HTTP_X_RANDOVANIA_PERMALINK_VERSION": "4",
-            "HTTP_X_RANDOVANIA_DESCRIPTION_VERSION": "2",
-        }
-    )
-
-
-def test_check_client_headers_missing(expected_headers):
-    with pytest.raises(ConnectionRefusedError):
-        app.check_client_headers(
-            expected_headers,
-            {
-                "HTTP_X_RANDOVANIA_API_VERSION": "2",
-                "HTTP_X_RANDOVANIA_PRESET_VERSION": "13",
-                "HTTP_X_RANDOVANIA_PERMALINK_VERSION": "4",
-            }
-        )
-
-
-def test_check_client_headers_wrong_value(expected_headers):
-    with pytest.raises(ConnectionRefusedError):
-        app.check_client_headers(
-            expected_headers,
-            {
-                "HTTP_X_RANDOVANIA_API_VERSION": "2",
-                "HTTP_X_RANDOVANIA_PRESET_VERSION": "10",
-                "HTTP_X_RANDOVANIA_PERMALINK_VERSION": "7",
-                "HTTP_X_RANDOVANIA_DESCRIPTION_VERSION": "2",
-            }
-        )

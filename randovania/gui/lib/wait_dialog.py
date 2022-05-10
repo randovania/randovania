@@ -19,6 +19,6 @@ async def cancellable_wait(parent: Optional[QtWidgets.QWidget], task: asyncio.Ta
     message_box.rejected.connect(task.cancel)
     message_box.show()
     try:
-        await task
+        return await task
     finally:
         message_box.close()

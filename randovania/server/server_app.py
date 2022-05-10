@@ -6,12 +6,15 @@ import flask_discord
 import flask_socketio
 import peewee
 import requests
-import socketio
+import socketio.exceptions
 from cryptography.fernet import Fernet
 from flask_discord import DiscordOAuth2Session
 from prometheus_flask_exporter import PrometheusMetrics
 
-from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession
+from randovania.network_common import connection_headers
+from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession, \
+    UnsupportedClient
+from randovania.server import client_check
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 
@@ -49,6 +52,7 @@ class ServerApp:
     fernet_encrypt: Fernet
     guest_encrypt: Optional[Fernet] = None
     enforce_role: Optional[EnforceDiscordRole] = None
+    expected_headers: dict[str, str]
 
     def __init__(self, app: flask.Flask):
         self.app = app
@@ -60,6 +64,9 @@ class ServerApp:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
         if app.config["ENFORCE_ROLE"] is not None:
             self.enforce_role = EnforceDiscordRole(app.config["ENFORCE_ROLE"])
+
+        self.expected_headers = connection_headers()
+        self.expected_headers.pop("X-Randovania-Version")
 
     def get_server(self) -> socketio.Server:
         return self.sio.server
@@ -104,9 +111,14 @@ class ServerApp:
         flask_socketio.leave_room(f"game-session-{current_game_session}")
         flask_socketio.leave_room(f"game-session-{current_game_session}-{user.id}")
 
-    def on(self, message: str, handler, namespace=None):
+    def on(self, message: str, handler, namespace=None, *, with_header_check: bool = False):
         @functools.wraps(handler)
         def _handler(*args):
+            if with_header_check:
+                error_msg = self.check_client_headers()
+                if error_msg is not None:
+                    return UnsupportedClient(error_msg).as_json
+
             try:
                 return {
                     "result": handler(self, *args),
@@ -148,3 +160,10 @@ class ServerApp:
             return f"{environ['REMOTE_ADDR']} ({forwarded_for})"
         except KeyError as e:
             return f"<unknown sid {e}>"
+
+    def check_client_headers(self):
+        environ = self.get_server().get_environ(self._request_sid)
+        return client_check.check_client_headers(
+            self.expected_headers,
+            environ,
+        )
