@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Patcher Changes
 
-- Nothing.
+- Fixed: Prime 1 models no longer causes lag spikes when loading a room with them.
 
 #### Logic Database
 
