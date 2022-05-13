@@ -39,11 +39,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Patcher Changes
 
-- Fixed: Prime 1 models no longer causes lag spikes when loading a room with them.
+- Nothing.
 
 #### Logic Database
 
 - Nothing.
+
+## [4.3.2] - Unreleased
+
+### Metroid Prime
+
+- Fixed: Lightshow during Chapel IS after Chapel item has been obtained and room has been reloaded
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Significantly reduced lag spikes when loading a room containing Prime1 models.
 
 ## [4.3.1] - Unreleased
 
