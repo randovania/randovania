@@ -101,6 +101,26 @@ class UserNotAuthorized(BaseNetworkError):
         return 8
 
 
+class UnsupportedClient(BaseNetworkError):
+    def __init__(self, message: str):
+        self.message = message
+
+    @classmethod
+    def code(cls):
+        return 9
+
+    @property
+    def detail(self):
+        return self.message
+
+    @classmethod
+    def from_detail(cls, detail) -> "UnsupportedClient":
+        return cls(detail)
+
+    def __str__(self):
+        return f"Unsupported client: {self.message}"
+
+
 def decode_error(data: dict) -> Optional[BaseNetworkError]:
     if "error" not in data:
         return None

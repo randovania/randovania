@@ -19,9 +19,8 @@ def _default_online_interactions(skip_qtbot, preset_manager) -> OnlineInteractio
     return OnlineInteractions(parent, preset_manager, MagicMock(), main_window, Options(MagicMock()))
 
 
-@patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
-                                       skip_qtbot, default_online_interactions, mocker):
+@pytest.mark.parametrize("refresh_success", [False, True])
+async def test_browse_for_game_session(skip_qtbot, default_online_interactions, mocker, refresh_success):
     # Setup
     mock_game_session_browser: MagicMock = mocker.patch(
         "randovania.gui.main_online_interaction.GameSessionBrowserDialog", autospec=True)
@@ -30,8 +29,12 @@ async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
     mock_create_and_update.return_value = MagicMock()
     mock_get_game_connection = mocker.patch("randovania.gui.lib.common_qt_lib.get_game_connection", autospec=True)
     default_online_interactions._ensure_logged_in = AsyncMock(return_value=True)
+    message_box = mocker.patch("PySide6.QtWidgets.QMessageBox")
+
+    mock_execute_dialog: AsyncMock = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog",
+                                                  new_callable=AsyncMock)
     mock_execute_dialog.return_value = mock_game_session_browser.return_value.Accepted
-    mock_game_session_browser.return_value.refresh = AsyncMock()
+    mock_game_session_browser.return_value.refresh = AsyncMock(return_value=refresh_success)
 
     # Run
     await default_online_interactions._browse_for_game_session()
@@ -39,15 +42,20 @@ async def test_browse_for_game_session(mock_execute_dialog: AsyncMock,
     # Assert
     mock_game_session_browser.assert_called_once_with(default_online_interactions.network_client)
     mock_game_session_browser.return_value.refresh.assert_awaited_once_with()
-    mock_execute_dialog.assert_awaited_once_with(mock_game_session_browser.return_value)
-    mock_create_and_update.assert_awaited_once_with(
-        default_online_interactions.network_client,
-        mock_get_game_connection.return_value,
-        default_online_interactions.preset_manager,
-        default_online_interactions.window_manager,
-        default_online_interactions.options,
-    )
-    mock_create_and_update.return_value.show.assert_called_once_with()
+    message_box.assert_called_once()
+    if refresh_success:
+        mock_execute_dialog.assert_awaited_once_with(mock_game_session_browser.return_value)
+        mock_create_and_update.assert_awaited_once_with(
+            default_online_interactions.network_client,
+            mock_get_game_connection.return_value,
+            default_online_interactions.preset_manager,
+            default_online_interactions.window_manager,
+            default_online_interactions.options,
+        )
+        mock_create_and_update.return_value.show.assert_called_once_with()
+    else:
+        mock_execute_dialog.assert_not_awaited()
+        mock_create_and_update.assert_not_awaited()
 
 
 @patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)

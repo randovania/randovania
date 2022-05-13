@@ -45,9 +45,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing.
 
-## [4.3.1] - Unreleased
+## [4.3.2] - 2022-05-13
 
-- Nothing yet.
+### Metroid Prime
+
+- Fixed: Lightshow during Chapel IS after Chapel item has been obtained and room has been reloaded
+
+### Metroid Prime 2: Echoes
+
+- Fixed: Significantly reduced lag spikes when loading a room containing Prime1 models.
+
+## [4.3.1] - 2022-05-08
+
+- Added: Phazon Suit hints are now included in the preset description.
+- Fixed: Exporting Prime 1 games that have no Phazon Suit no longer fails if it's configured to have a hint.
 
 ## [4.3.0] - 2022-05-01
 

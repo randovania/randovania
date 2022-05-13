@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, call
 import flask
 import pytest
 
+import randovania.server.client_check
 from randovania.network_common.error import NotLoggedIn, ServerError, InvalidSession
 from randovania.server import database
 from randovania.server.server_app import ServerApp, EnforceDiscordRole
@@ -201,4 +202,3 @@ def test_verify_user(mocker, valid):
     assert mock_session.return_value.headers == {
         "Authorization": "Bot da_token",
     }
-

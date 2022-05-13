@@ -3,10 +3,11 @@ import copy
 import json
 import logging
 import os
+import pprint
 import shutil
 import time
 from pathlib import Path
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Iterator
 
 import nod
 from retro_data_structures.asset_provider import AssetProvider, InvalidAssetId, UnknownAssetId
@@ -225,6 +226,24 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
         updaters[2](f"Wrote new {pak_path.name}", pak_i / 6)
 
 
+def merge_dependencies(dependencies: dict[int, set[Dependency]], asset_ids: Iterator[int]) -> Iterator[Dependency]:
+    seen = set()
+
+    def _recurse(asset_id: int):
+        for dep in dependencies[asset_id]:
+            # TODO: don't generate broken deps plz
+            if dep.id == 0:
+                continue
+
+            if dep not in seen:
+                seen.add(dep)
+                yield from _recurse(dep.id)
+                yield dep
+
+    for it in asset_ids:
+        yield from _recurse(it)
+
+
 def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: dict,
                            status_update: ProgressUpdateCallable):
     asset_provider = prime_asset_provider(input_iso)
@@ -290,8 +309,9 @@ def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: 
     for name, asset in result.items():
         dependencies = [
             {"AssetID": dep.id, "Type": dep.type.upper()}
-            for dep in converted_dependencies[asset.ancs] | converted_dependencies[asset.cmdl]
+            for dep in merge_dependencies(converted_dependencies, [asset.ancs, asset.cmdl])
         ]
+        pprint.pprint(dependencies)
         randomizer_data_additions.append({
             "Index": len(randomizer_data["ModelData"]),  # Adjust this one later
             "Name": f"prime1_{name}",
