@@ -20,7 +20,7 @@ class DreadPresetDescriber(GamePresetDescriber):
         extra_message_tree = {
             "Difficulty": [
                 {
-                    "Immediate Energy Fragments": configuration.immediate_energy_parts,
+                    "Immediate Energy Part": configuration.immediate_energy_parts,
                 }
             ],
             "Item Pool": [
