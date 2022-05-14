@@ -56,7 +56,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
         self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank:g}."
         if self.configuration.immediate_energy_parts:
-            self.memo_data["Energy Part"] = f"Energy Fragment acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank/4:g}."
+            self.memo_data["Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank/4:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
