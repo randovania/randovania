@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.4.0] - 2022-06-01
 
+- Changed: Reduced the lag you get the first time you open the Games tab.
 - Removed: The server and discord bot are entirely removed from the distributed executables.
 
 ### Cave Story
