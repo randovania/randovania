@@ -9,12 +9,14 @@ from randovania.cli import development
 
 
 def create_subparsers(root_parser):
-    from randovania.cli import layout, server, gui, database
+    from randovania.cli import layout, gui, database
     layout.create_subparsers(root_parser)
     database.create_subparsers(root_parser)
     development.create_subparsers(root_parser)
-    server.create_subparsers(root_parser)
     gui.create_subparsers(root_parser)
+    if not randovania.is_frozen():
+        from randovania.cli import server
+        server.create_subparsers(root_parser)
 
 
 def _print_version(args):
