@@ -60,7 +60,17 @@ game_data: game.GameData = game.GameData(
         }
     ],
 
-    faq=[],
+    faq=[
+        (
+            "Why does this missile door doesn't open after I shoot a missile at it?",
+            "Shoot another missile at the door. In the process of making certain missile doors possible to open from "
+            "both sides, this issue shows up."
+        ),
+        (
+            "Using an Energy Recharge Station heals me to 299, but my energy maximum is 249. Which one is correct?",
+            "The 299 is a display error. You can always see the correct value in the inventory screen."
+        )
+    ],
 
     layout=game.GameLayout(
         configuration=DreadConfiguration,
