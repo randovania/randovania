@@ -21,6 +21,7 @@ def _gui() -> game.GameGui:
         export_dialog=gui.DreadGameExportDialog,
         progressive_item_gui_tuples=progressive_items.tuples(),
         spoiler_visualizer=(gui.DreadHintDetailsTab,),
+        help_widget=lambda: gui.DreadHelpWidget(),
     )
 
 
