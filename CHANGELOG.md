@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Cave Story
 
-- Nothing.
+- Fixed: Hint Locations tab in Help no longer has an empty column named "2".
 
 #### Patcher Changes
 

@@ -1,7 +1,9 @@
+import collections
+
 from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description import default_database
-from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.games.game import RandovaniaGame
 from randovania.generator.item_pool import pickup_creator
 
@@ -107,39 +109,47 @@ def update_hint_locations(game: RandovaniaGame,
                           hint_tree_widget: QtWidgets.QTreeWidget):
     game_description = default_database.game_description_for(game)
 
-    number_for_hint_type = {
-        hint_type: i + 1
-        for i, hint_type in enumerate(LoreType)
-    }
     used_hint_types = set()
 
     hint_tree_widget.clear()
     hint_tree_widget.setSortingEnabled(False)
 
-    # TODO: This ignores the Dark World names. But there's currently no logbook nodes in Dark World.
+    hint_type_tree = collections.defaultdict(dict)
+
+    # First figure out which areas uses what hints.
+    # This lets us use detect which hint types are used
     for world in game_description.world_list.worlds:
-
-        world_item = QtWidgets.QTreeWidgetItem(hint_tree_widget)
-        world_item.setText(0, world.name)
-        world_item.setExpanded(True)
-
         for area in world.areas:
             hint_types = {}
 
             for node in area.nodes:
                 if isinstance(node, LogbookNode):
+                    used_hint_types.add(node.lore_type)
                     if node.required_translator is not None:
                         hint_types[node.lore_type] = node.required_translator.short_name
                     else:
                         hint_types[node.lore_type] = "✓"
 
             if hint_types:
-                area_item = QtWidgets.QTreeWidgetItem(world_item)
-                area_item.setText(0, area.name)
+                hint_type_tree[world.correct_name(area.in_dark_aether)][area.name] = hint_types
 
-                for hint_type, text in hint_types.items():
-                    area_item.setText(number_for_hint_type[hint_type], text)
-                    used_hint_types.add(hint_type)
+    number_for_hint_type = {
+        hint_type: i + 1
+        for i, hint_type in enumerate(sorted(used_hint_types, key=lambda it: it.long_name))
+    }
+
+    for world_name, area_hints in hint_type_tree.items():
+        world_item = QtWidgets.QTreeWidgetItem(hint_tree_widget)
+        world_item.setText(0, world_name)
+        world_item.setExpanded(True)
+
+        for area_name, hint_types in area_hints.items():
+            area_item = QtWidgets.QTreeWidgetItem(world_item)
+            area_item.setText(0, area_name)
+
+            for hint_type, text in hint_types.items():
+                area_item.setText(number_for_hint_type[hint_type], text)
+                used_hint_types.add(hint_type)
 
     hint_tree_widget.resizeColumnToContents(0)
     hint_tree_widget.setSortingEnabled(True)
