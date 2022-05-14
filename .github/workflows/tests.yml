@@ -127,7 +127,7 @@ jobs:
         if: matrix.executable
 
       - name: executable test
-        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100
+        run: dist/randovania/randovania --pytest --skip-gui-tests --skip-echo-tool --skip-resolver-tests --durations=100 --ignore=test/server
         if: matrix.executable
       
       - name: codecov
