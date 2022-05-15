@@ -245,6 +245,15 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             full_hash
         ])
 
+        # Warning message for continuing a non-rando game file
+        text["GUI_WARNING_NOT_RANDO_GAME_1"] = "|".join([
+            r"{c2}Error!{c0}",
+            "This save slot was created using a different Randomizer mod.",
+        ])
+        text["GUI_WARNING_NOT_RANDO_GAME_2"] = "|".join([
+            "You must start a New Game from a blank save slot. Returning to title screen.",
+        ])
+
         return text
     
     def _cosmetic_patch_data(self) -> dict:
@@ -302,6 +311,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         )
 
         return {
+            "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
             "starting_items": starting_items,
             "starting_text": starting_text,
