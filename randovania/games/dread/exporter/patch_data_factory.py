@@ -2,9 +2,6 @@ import logging
 import os
 from typing import Optional, Union
 
-from open_dread_rando.version import version as open_dread_rando_version
-
-from randovania import VERSION
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
@@ -241,7 +238,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             text[difficulty] = full_hash
 
         text["GUI_COMPANY_TITLE_SCREEN"] = "|".join([
-            f"Randovania {VERSION} - open-dread-rando {open_dread_rando_version}",
+            "<versions>",
             full_hash
         ])
 
