@@ -1,6 +1,5 @@
 import json
-
-import pytest
+from unittest.mock import PropertyMock
 
 from randovania.games.dread.exporter.patch_data_factory import DreadPatchDataFactory
 from randovania.games.dread.layout.dread_cosmetic_patches import DreadCosmeticPatches
@@ -14,6 +13,10 @@ def test_create_patch_data(test_files_dir, mocker):
     description = LayoutDescription.from_file(file)
     players_config = PlayersConfiguration(0, {0: "Dread"})
     cosmetic_patches = DreadCosmeticPatches()
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_word_hash",
+                 new_callable=PropertyMock, return_value="Words Hash")
+    mocker.patch("randovania.layout.layout_description.LayoutDescription.shareable_hash",
+                 new_callable=PropertyMock, return_value="$$$$$")
 
     # Run
     data = DreadPatchDataFactory(description, players_config, cosmetic_patches).create_data()
