@@ -2,9 +2,6 @@ import logging
 import os
 from typing import Optional, Union
 
-from open_dread_rando.version import version as open_dread_rando_version
-
-from randovania import VERSION
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints.hint_exporter import HintExporter
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
@@ -241,8 +238,17 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             text[difficulty] = full_hash
 
         text["GUI_COMPANY_TITLE_SCREEN"] = "|".join([
-            f"Randovania {VERSION} - open-dread-rando {open_dread_rando_version}",
+            "<versions>",
             full_hash
+        ])
+
+        # Warning message for continuing a non-rando game file
+        text["GUI_WARNING_NOT_RANDO_GAME_1"] = "|".join([
+            r"{c2}Error!{c0}",
+            "This save slot was created using a different Randomizer mod.",
+        ])
+        text["GUI_WARNING_NOT_RANDO_GAME_2"] = "|".join([
+            "You must start a New Game from a blank save slot. Returning to title screen.",
         ])
 
         return text
@@ -302,6 +308,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         )
 
         return {
+            "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
             "starting_items": starting_items,
             "starting_text": starting_text,
