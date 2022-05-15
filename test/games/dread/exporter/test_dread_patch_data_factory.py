@@ -8,7 +8,6 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 from randovania.layout.layout_description import LayoutDescription
 
 
-@pytest.mark.xfail
 def test_create_patch_data(test_files_dir, mocker):
     # Setup
     file = test_files_dir.joinpath("log_files", "dread_1.rdvgame")
