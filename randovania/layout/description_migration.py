@@ -6,7 +6,7 @@ from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 12
+CURRENT_VERSION = 13
 
 
 def _migrate_v1(json_dict: dict) -> dict:
@@ -263,6 +263,16 @@ def _migrate_v11(json_dict: dict) -> dict:
     return json_dict
 
 
+def _migrate_v12(json_dict: dict) -> dict:
+    for game in json_dict["game_modifications"]:
+        if game["game"] == "dread":
+            game["locations"].pop("Itorash")
+            game["starting_items"].pop("Power Beam")
+            game["starting_items"].pop("Power Suit")
+
+    return json_dict
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v2.2.0-6-gbfd37022
     2: _migrate_v2,  # v2.4.2-16-g735569fd
@@ -275,6 +285,7 @@ _MIGRATIONS = {
     9: _migrate_v9,
     10: _migrate_v10,
     11: _migrate_v11,
+    12: _migrate_v12,
 }
 
 

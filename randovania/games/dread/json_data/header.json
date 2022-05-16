@@ -566,10 +566,6 @@
                 "long_name": "Hanubia - block_pbtube_2",
                 "extra": {}
             },
-            "s080_shipyard:default:block_hyperbeam_000": {
-                "long_name": "Hanubia - block_hyperbeam_000",
-                "extra": {}
-            },
             "s090_skybase:default:block_pbcolumn_000": {
                 "long_name": "Itorash - block_pbcolumn_000",
                 "extra": {}
@@ -1053,56 +1049,10 @@
         },
         "requirement_template": {
             "Shoot Beam": {
-                "type": "or",
+                "type": "and",
                 "data": {
                     "comment": null,
-                    "items": [
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Power",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wide",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Plasma",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Hyper",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    ]
+                    "items": []
                 }
             },
             "Shoot Wide Beam": {
