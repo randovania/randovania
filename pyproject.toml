@@ -57,7 +57,14 @@ runtime-evaluated-base-classes = [
 files = [
     "randovania/game_description/resources/",
     "randovania/games/prime2/exporter/patch_data_factory.py",
-    "test/game_description/resources/test_search.py",
+    "randovania/lib/",
+    "test/game_description/resources/",
+    "test/lib/",
 ]
 follow_imports = "silent"
 disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "test.*"
+disallow_untyped_defs = false
+check_untyped_defs = true

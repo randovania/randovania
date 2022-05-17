@@ -28,7 +28,7 @@ def read_path(path: Path, *, raise_on_duplicate_keys: bool = False) -> dict | li
                          if raise_on_duplicate_keys else None)
 
 
-def write_path(path: Path, data: Any):
+def write_path(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(data, indent=4, separators=(',', ': '))

@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, call
 from randovania.lib.status_update_lib import DynamicSplitProgressUpdate
 
 
-def test_dynamic_split_progress_single():
+def test_dynamic_split_progress_single() -> None:
     # Setup
     raw_updater = MagicMock()
 
@@ -22,7 +22,7 @@ def test_dynamic_split_progress_single():
     ])
 
 
-def test_dynamic_split_progress_two():
+def test_dynamic_split_progress_two() -> None:
     # Setup
     raw_updater = MagicMock()
 
@@ -44,7 +44,7 @@ def test_dynamic_split_progress_two():
     ])
 
 
-def test_dynamic_split_progress_weighted():
+def test_dynamic_split_progress_weighted() -> None:
     # Setup
     raw_updater = MagicMock()
 

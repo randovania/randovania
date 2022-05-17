@@ -73,6 +73,7 @@ class DreadGameExporter(GameExporter):
 
         json_lib.write_path(export_params.output_path.joinpath("patcher.json"), patch_data)
 
+        patcher_update: status_update_lib.ProgressUpdateCallable
         if export_params.post_export is not None:
             patcher_update = status_update_lib.OffsetProgressUpdate(progress_update, 0, 0.75)
         else:

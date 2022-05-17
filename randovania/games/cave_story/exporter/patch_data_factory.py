@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from random import Random
 from typing import TYPE_CHECKING
 
@@ -344,7 +345,7 @@ class CSPatchDataFactory(PatchDataFactory):
             "other_tsc": {
                 "Head": head
             },
-            "mychar": self.cosmetic_patches.mychar.mychar_bmp(mychar_rng),
+            "mychar": os.fspath(self.cosmetic_patches.mychar.mychar_bmp(mychar_rng)),
             "hash": get_ingame_hash(self.description.shareable_hash_bytes)
         }
 

@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import typing
+
 from frozendict import frozendict
 
 
-def unwrap(extra):
+def unwrap(extra: typing.Any) -> typing.Any:
     if isinstance(extra, tuple):
         return [unwrap(value) for value in extra]
 
@@ -14,7 +16,7 @@ def unwrap(extra):
         return extra
 
 
-def wrap(extra):
+def wrap(extra: typing.Any) -> typing.Any:
     if isinstance(extra, list):
         return tuple(wrap(value) for value in extra)
 

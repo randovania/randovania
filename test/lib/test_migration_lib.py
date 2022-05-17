@@ -5,7 +5,7 @@ import pytest
 from randovania.lib import migration_lib
 
 
-def test_migrate_to_version_missing_migration():
+def test_migrate_to_version_missing_migration() -> None:
     data = {
         "schema_version": 1,
     }
@@ -16,7 +16,7 @@ def test_migrate_to_version_missing_migration():
         migration_lib.apply_migrations(data, [None], version_name="something")
 
 
-def test_migrate_to_version_data_too_new():
+def test_migrate_to_version_data_too_new() -> None:
     data = {
         "schema_version": 3,
     }

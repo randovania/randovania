@@ -24,4 +24,5 @@ class DelayedTextLabel(QtWidgets.QLabel):
         if self._already_shown:
             return super().text()
         else:
+            assert self._delayed_text is not None
             return self._delayed_text
