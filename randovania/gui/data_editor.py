@@ -14,7 +14,7 @@ from randovania.game_description import data_reader, data_writer, pretty_print, 
 from randovania.game_description.editor import Editor
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement
-from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock_node import DockNode
@@ -736,7 +736,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             resources = self.layers_editor.selected_tricks()
             if resources:
                 game = game.get_mutable()
-                game.patch_requirements(resources, 1.0)
+                game.patch_requirements(ResourceCollection.from_resource_gain(resources.items()), 1.0)
 
         self.update_game(game)
 

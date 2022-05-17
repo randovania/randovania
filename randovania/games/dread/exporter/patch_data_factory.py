@@ -9,7 +9,7 @@ from randovania.exporter.pickup_exporter import ExportedPickupDetails
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ConditionalResources
-from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.game_description.world.node import Node
@@ -51,16 +51,18 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         super().__init__(*args, **kwargs)
         self.memo_data = DreadAcquiredMemo.with_expansion_text()
 
-        self.memo_data["Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank:g}."
+        self.memo_data[
+            "Energy Tank"] = f"Energy Tank acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank:g}."
         if self.configuration.immediate_energy_parts:
-            self.memo_data["Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank/4:g}."
+            self.memo_data[
+                "Energy Part"] = f"Energy Part acquired.\nEnergy capacity increased by {self.configuration.energy_per_tank / 4:g}."
 
     def game_enum(self) -> RandovaniaGame:
         return RandovaniaGame.METROID_DREAD
 
-    def _calculate_starting_inventory(self, resources: CurrentResources):
+    def _calculate_starting_inventory(self, resources: ResourceCollection):
         result = {}
-        for resource, quantity in resources.items():
+        for resource, quantity in resources.as_resource_gain():
             try:
                 result[_get_item_id_for_item(resource)] = quantity
             except KeyError:
@@ -68,7 +70,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 continue
         return result
 
-    def _starting_inventory_text(self, resources: CurrentResources):
+    def _starting_inventory_text(self, resources: ResourceCollection):
         result = [r"{c1}Random starting items:{c0}"]
         items = item_names.additional_starting_items(self.configuration, self.game.resource_database, resources)
         if not items:
@@ -252,7 +254,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         ])
 
         return text
-    
+
     def _cosmetic_patch_data(self) -> dict:
         c = self.cosmetic_patches
         return {

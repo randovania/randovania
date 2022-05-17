@@ -1,12 +1,10 @@
-import copy
 import itertools
 from typing import FrozenSet, List, Tuple, Set
 
 from randovania.game_description import game_description
 from randovania.game_description.requirements import RequirementList, ResourceRequirement, RequirementSet
-from randovania.game_description.resources import resource_info
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import CurrentResources, ResourceInfo
+from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator.generator_reach import GeneratorReach
@@ -17,7 +15,7 @@ PickupCombination = Tuple[PickupEntry, ...]
 PickupCombinations = Tuple[PickupCombination, ...]
 
 
-def _resources_in_pickup(pickup: PickupEntry, current_resources: CurrentResources) -> FrozenSet[ResourceInfo]:
+def _resources_in_pickup(pickup: PickupEntry, current_resources: ResourceCollection) -> FrozenSet[ResourceInfo]:
     resource_gain = pickup.resource_gain(current_resources, force_lock=True)
     return frozenset(resource for resource, _ in resource_gain)
 
@@ -103,12 +101,12 @@ def _requirement_lists_without_satisfied_resources(state: State,
     return result
 
 
-def pickups_to_solve_list(pickup_pool: List[PickupEntry],
+def pickups_to_solve_list(pickup_pool: list[PickupEntry],
                           requirement_list: RequirementList,
                           state: State):
     pickups = []
 
-    resources = copy.copy(state.resources)
+    resources = state.resources.duplicate()
     pickups_for_this = list(pickup_pool)
 
     for individual in sorted(requirement_list.values()):
@@ -119,13 +117,12 @@ def pickups_to_solve_list(pickup_pool: List[PickupEntry],
 
         # Create another copy of the list so we can remove elements while iterating
         for pickup in list(pickups_for_this):
-            new_resources = resource_info.convert_resource_gain_to_current_resources(
-                pickup.resource_gain(resources))
-            pickup_progression = resource_info.convert_resource_gain_to_current_resources(pickup.progression)
-            if new_resources.get(individual.resource, 0) + pickup_progression.get(individual.resource, 0) > 0:
+            new_resources = ResourceCollection.from_resource_gain(pickup.resource_gain(resources))
+            pickup_progression = ResourceCollection.from_resource_gain(pickup.progression)
+            if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)
-                resource_info.add_resources_into_another(resources, new_resources)
+                resources.add_resource_gain(new_resources.as_resource_gain())
 
             if individual.satisfied(resources, state.energy, state.resource_database):
                 break

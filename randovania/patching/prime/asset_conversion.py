@@ -175,17 +175,17 @@ def convert_prime1_pickups(prime1_iso: Path, echoes_files_path: Path, assets_pat
         )
 
         additions = []
-        for i, resource in enumerate(new_pak.resources):
+        for i, resource in enumerate(new_pak._resources):
             new_deps = extra_assets_for_mrea.get(resource["asset"]["id"])
             if new_deps is not None:
                 additions.append((i - 1, new_deps))
 
         for i, new_deps in reversed(additions):
-            new_pak.resources[i:i] = new_deps
+            new_pak._resources[i:i] = new_deps
 
         # And add all resources at the end of every pak anyway
         for resource in pak_resources.values():
-            new_pak.resources.append(resource)
+            new_pak._resources.append(resource)
 
         PAK.build_file(new_pak, pak_path, target_game=Game.ECHOES)
         updaters[2](f"Wrote new {pak_path.name}", pak_i / 6)

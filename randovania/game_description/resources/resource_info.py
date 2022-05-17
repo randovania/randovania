@@ -11,7 +11,6 @@ ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo,
 ResourceQuantity = Tuple[ResourceInfo, int]
 ResourceGainTuple = Tuple[ResourceQuantity, ...]
 ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
-CurrentResources = dict[ResourceInfo, int]
 
 
 class ResourceCollection:
@@ -81,32 +80,3 @@ class ResourceCollection:
         result._resources.update(self._resources)
         result.add_self_as_requirement_to_resources = self.add_self_as_requirement_to_resources
         return result
-
-
-def add_resource_gain_to_current_resources(resource_gain: ResourceGain,
-                                           resources: CurrentResources) -> CurrentResources:
-    """
-    Adds all resources from the given gain to the given CurrentResources
-    :param resource_gain:
-    :param resources:
-    :return: resources
-    """
-    for resource, quantity in resource_gain:
-        resources[resource] = resources.get(resource, 0) + quantity
-    return resources
-
-
-def add_resources_into_another(target: CurrentResources, source: CurrentResources) -> None:
-    resource_gain = typing.cast(ResourceGain, source.items())
-    add_resource_gain_to_current_resources(resource_gain, target)
-
-
-def convert_resource_gain_to_current_resources(resource_gain: ResourceGain) -> CurrentResources:
-    """
-    Creates a CurrentResources with all resources of the given ResourceGain
-    :param resource_gain:
-    :return:
-    """
-    result = {}
-    add_resource_gain_to_current_resources(resource_gain, result)
-    return result

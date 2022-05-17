@@ -16,8 +16,7 @@ class PickupNode(ResourceNode):
         return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        # FIXME: using non-resource as key in CurrentResources
-        if context.current_resources.get("add_self_as_requirement_to_resources") == 1:
+        if context.current_resources.add_self_as_requirement_to_resources:
             return ResourceRequirement(self.pickup_index, 1, False)
         else:
             return Requirement.trivial()
