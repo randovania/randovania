@@ -1,47 +1,49 @@
-from enum import unique, Enum
+from __future__ import annotations
+
+import enum
 
 
-@unique
-class ResourceType(str, Enum):
-    ITEM = "items"
-    EVENT = "events"
-    TRICK = "tricks"
-    DAMAGE = "damage"
-    VERSION = "versions"
-    MISC = "misc"
-    PICKUP_INDEX = "pickup_index"
-    LOGBOOK_INDEX = "logbook_index"
-    NODE_IDENTIFIER = "node_identifier"
+@enum.unique
+class ResourceType(int, enum.Enum):
+    ITEM = 0
+    EVENT = enum.auto()
+    TRICK = enum.auto()
+    DAMAGE = enum.auto()
+    VERSION = enum.auto()
+    MISC = enum.auto()
+    PICKUP_INDEX = enum.auto()
+    LOGBOOK_INDEX = enum.auto()
+    NODE_IDENTIFIER = enum.auto()
 
     @classmethod
-    def indices(cls) -> dict["ResourceType", int]:
+    def names(cls) -> dict[ResourceType, str]:
         return {
-            ResourceType.ITEM: 0,
-            ResourceType.EVENT: 1,
-            ResourceType.TRICK: 2,
-            ResourceType.DAMAGE: 3,
-            ResourceType.VERSION: 4,
-            ResourceType.MISC: 5,
-            ResourceType.PICKUP_INDEX: 7,
-            ResourceType.LOGBOOK_INDEX: 9,
-            ResourceType.NODE_IDENTIFIER: 10
+            ResourceType.ITEM: "items",
+            ResourceType.EVENT: "events",
+            ResourceType.TRICK: "tricks",
+            ResourceType.DAMAGE: "damage",
+            ResourceType.VERSION: "versions",
+            ResourceType.MISC: "misc",
+            ResourceType.PICKUP_INDEX: "pickup_index",
+            ResourceType.LOGBOOK_INDEX: "logbook_index",
+            ResourceType.NODE_IDENTIFIER: "node_identifier",
         }
 
     @classmethod
-    def from_index(cls, index: int) -> "ResourceType":
-        return cls({v: k for k, v in cls.indices().items()}[index])
+    def from_index(cls, index: int) -> ResourceType:
+        return cls(index)
 
     @property
     def type_index(self) -> int:
-        return self.indices()[self]
+        return self.value
 
     @classmethod
-    def from_str(cls, name: str) -> "ResourceType":
-        return cls(name)
+    def from_str(cls, name: str) -> ResourceType:
+        return _NAME_TO_TYPE[name]
 
     @property
     def as_string(self):
-        return self.value
+        return self.names()[self]
 
     @property
     def negated_prefix(self) -> str:
@@ -63,3 +65,9 @@ class ResourceType(str, Enum):
 
     def __lt__(self, other):
         return self.type_index < other.type_index
+
+
+_NAME_TO_TYPE = {
+    name: resource_type
+    for resource_type, name in ResourceType.names().items()
+}

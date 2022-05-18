@@ -67,4 +67,4 @@ def test_area_with_invalid_connections():
         })
 
     assert str(e.value) == ("In area Broken Area, connection from Broken to A got error: "
-                            "items Resource with short_name 'Dark' not found in 0 resources")
+                            "ITEM Resource with short_name 'Dark' not found in 0 resources")
