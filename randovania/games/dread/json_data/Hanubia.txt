@@ -314,14 +314,6 @@ Extra - asset_id: collision_camera_004
   > Inside breakable tube
       Trivial
 
-> Event - Breakable (block_hyperbeam_000); Heals? False
-  * Layers: default
-  * Event Hanubia - block_hyperbeam_000
-  * Extra - actor_name: block_hyperbeam_000
-  * Extra - actor_def: actordef:actors/props/block_hyperbeam/charclasses/block_hyperbeam.bmsad
-  > Next to Hyper Block
-      Trivial
-
 > Dock to Escape Room 3; Heals? False
   * Layers: default
   * Open Passage to Escape Room 3/Dock to Entrance Tall Room
@@ -343,10 +335,8 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   > Door to Total Recharge Station North
       Before Escape Sequence
-  > Event - Breakable (block_hyperbeam_000)
-      Hyper Beam
   > Dock to Ship Room
-      After Hanubia - block_hyperbeam_000
+      After Escape Sequence
   > Tile Group (SCREWATTACK)
       Trivial
   > Tile Group (SPEEDBOOST)
@@ -367,7 +357,7 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   * Open Passage to Ship Room/Dock to Entrance Tall Room
   > Next to Hyper Block
-      After Hanubia - block_hyperbeam_000
+      After Escape Sequence
 
 > Ammo Recharge; Heals? False
   * Layers: default
@@ -1394,6 +1384,8 @@ Extra - asset_id: collision_camera_020
   * Event Escape Sequence
   * Extra - start_point_actor_name: SP_Checkpoint_Escape
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Raven Beak X Checkpoint
+      Trivial
   > Tile Group (POWERBOMB)
       Space Jump or Speed Booster or Simple IBJ
 

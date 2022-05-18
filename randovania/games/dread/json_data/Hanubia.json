@@ -1187,33 +1187,6 @@
                         }
                     }
                 },
-                "Event - Breakable (block_hyperbeam_000)": {
-                    "node_type": "event",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -6400.0,
-                        "y": 2000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "block_hyperbeam_000",
-                        "actor_def": "actordef:actors/props/block_hyperbeam/charclasses/block_hyperbeam.bmsad"
-                    },
-                    "event_name": "s080_shipyard:default:block_hyperbeam_000",
-                    "connections": {
-                        "Next to Hyper Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Dock to Escape Room 3": {
                     "node_type": "dock",
                     "heal": false,
@@ -1365,20 +1338,11 @@
                                 "negate": true
                             }
                         },
-                        "Event - Breakable (block_hyperbeam_000)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Hyper",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
                         "Dock to Ship Room": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s080_shipyard:default:block_hyperbeam_000",
+                                "name": "Escape",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -1503,7 +1467,7 @@
                             "type": "resource",
                             "data": {
                                 "type": "events",
-                                "name": "s080_shipyard:default:block_hyperbeam_000",
+                                "name": "Escape",
                                 "amount": 1,
                                 "negate": false
                             }
@@ -5653,9 +5617,9 @@
                     "node_type": "event",
                     "heal": false,
                     "coordinates": {
-                        "x": 13500.0,
-                        "y": -8500.0,
-                        "z": 0.0
+                        "x": 13700.103071531643,
+                        "y": -8278.62296433725,
+                        "z": 0
                     },
                     "description": "",
                     "layers": [
@@ -5667,6 +5631,13 @@
                     },
                     "event_name": "Escape",
                     "connections": {
+                        "Raven Beak X Checkpoint": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
                         "Tile Group (POWERBOMB)": {
                             "type": "or",
                             "data": {
