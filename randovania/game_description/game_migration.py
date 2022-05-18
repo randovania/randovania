@@ -398,4 +398,5 @@ _MIGRATIONS = {
 
 
 def migrate_to_current(data: dict):
-    return migration_lib.migrate_to_version(data, CURRENT_VERSION, _MIGRATIONS)
+    return migration_lib.migrate_to_version(data, CURRENT_VERSION, _MIGRATIONS,
+                                            copy_before_migrating=True)
