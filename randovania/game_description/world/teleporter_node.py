@@ -6,7 +6,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import Node, NodeContext
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class TeleporterNode(Node):
     default_connection: AreaIdentifier
     keep_name_when_vanilla: bool

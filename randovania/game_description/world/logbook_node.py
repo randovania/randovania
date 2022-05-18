@@ -33,7 +33,7 @@ _LORE_TYPE_LONG_NAME = {
 }
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class LogbookNode(ResourceNode):
     string_asset_id: int
     scan_visor: ItemResourceInfo

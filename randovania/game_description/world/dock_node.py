@@ -51,11 +51,11 @@ class DockNode(Node):
     lock_node_identifier: NodeIdentifier = dataclasses.field(init=False, hash=False, compare=False)
 
     def __post_init__(self):
+        super().__post_init__()
         object.__setattr__(self, "lock_node_identifier", dataclasses.replace(
             self.identifier,
             node_name=f"Lock - {self.name}",
         ))
-        return super().__post_init__()
 
     def __repr__(self):
         return "DockNode({!r} -> {})".format(self.name, self.default_connection)

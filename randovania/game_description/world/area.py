@@ -10,7 +10,7 @@ from randovania.game_description.world.node import Node
 from randovania.game_description.world.pickup_node import PickupNode
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class Area:
     name: str
     default_node: Optional[str]

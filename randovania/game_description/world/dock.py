@@ -33,7 +33,7 @@ class DockLockType(Enum):
     FRONT_BLAST_BACK_IF_MATCHING = "front-blast-back-if-matching"
 
 
-@dataclass(frozen=True, order=True)
+@dataclass(frozen=True, order=True, slots=True)
 class DockLock:
     """
     Represents the dock has a lock that must be destroyed before it can be used.
@@ -46,7 +46,7 @@ class DockLock:
         return self.lock_type.name
 
 
-@dataclass(frozen=True, order=True)
+@dataclass(frozen=True, order=True, slots=True)
 class DockWeakness:
     """
     Represents one specific type of dock with an specific requirement. Can be things like `Door locked by Plasma Beam`,
@@ -81,7 +81,7 @@ class DockWeakness:
         return False
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class DockType:
     """Represents a kind of dock for the game. Can be things like Door, Tunnel, Portal."""
     short_name: str
@@ -89,7 +89,7 @@ class DockType:
     extra: frozendict
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class DockWeaknessDatabase:
     dock_types: list[DockType]
     weaknesses: dict[DockType, dict[str, DockWeakness]]

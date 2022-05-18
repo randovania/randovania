@@ -4,7 +4,7 @@ from randovania.game_description.resources.resource_info import ResourceInfo, Re
 from randovania.game_description.world.node import NodeContext, Node
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class ResourceNode(Node):
     @property
     def is_resource_node(self) -> bool:

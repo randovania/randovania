@@ -10,7 +10,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import Node
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class World:
     name: str
     areas: list[Area]

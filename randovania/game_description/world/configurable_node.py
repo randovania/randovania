@@ -4,7 +4,7 @@ from randovania.game_description.requirements import Requirement
 from randovania.game_description.world.node import Node, NodeContext
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class ConfigurableNode(Node):
     def __repr__(self):
         return "ConfigurableNode({!r})".format(self.name)
