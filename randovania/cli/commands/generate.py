@@ -22,15 +22,26 @@ def common_generate_logic(args, permalink):
     if args.no_retry:
         extra_args["attempts"] = 0
 
-    before = time.perf_counter()
-    layout_description = asyncio.run(
-        generator.generate_and_validate_description(generator_params=permalink.parameters,
-                                                    status_update=status_update,
-                                                    validate_after_generation=args.validate,
-                                                    timeout=None, **extra_args))
-    after = time.perf_counter()
-    print("Took {} seconds. Hash: {}".format(after - before, layout_description.shareable_hash))
+    shareable_hashes = []
+    total_times = []
+
+    layout_description = None
+    for _ in range(args.repeat):
+        before = time.perf_counter()
+        layout_description = asyncio.run(
+            generator.generate_and_validate_description(generator_params=permalink.parameters,
+                                                        status_update=status_update,
+                                                        validate_after_generation=args.validate,
+                                                        timeout=None, **extra_args))
+        after = time.perf_counter()
+        total_times.append(after - before)
+        shareable_hashes.append(layout_description.shareable_hash)
+        print("Took {:.3f} seconds. Hash: {}".format(total_times[-1], shareable_hashes[-1]))
+
+    assert layout_description is not None
     layout_description.save_to_file(args.output_file)
+    if args.repeat > 1:
+        cli_lib.print_report_multiple_times(total_times)
 
 
 def generate_from_permalink_logic(args):
@@ -51,6 +62,7 @@ def generate_from_preset_logic(args):
 def common_generate_arguments(parser: ArgumentParser):
     cli_lib.add_debug_argument(parser)
     cli_lib.add_validate_argument(parser)
+    parser.add_argument("--repeat", default=1, type=int, help="Generate multiple times. Used for benchmarking.")
     parser.add_argument("--no-retry", default=False, action="store_true", help="Disable retries in the generation.")
     parser.add_argument("--status-update", default=False, action="store_true", help="Print the status updates.")
     parser.add_argument(
