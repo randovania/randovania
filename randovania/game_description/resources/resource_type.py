@@ -34,6 +34,18 @@ class ResourceType(str, Enum):
         return cls({v: k for k, v in cls.indices().items()}[index])
 
     @property
+    def type_index(self) -> int:
+        return self.indices()[self]
+
+    @classmethod
+    def from_str(cls, name: str) -> "ResourceType":
+        return cls(name)
+
+    @property
+    def as_string(self):
+        return self.value
+
+    @property
     def negated_prefix(self) -> str:
         if self is ResourceType.EVENT:
             return "Before "
@@ -51,9 +63,5 @@ class ResourceType(str, Enum):
         else:
             return ""
 
-    @property
-    def index(self) -> int:
-        return self.indices()[self]
-
     def __lt__(self, other):
-        return self.index < other.index
+        return self.type_index < other.type_index
