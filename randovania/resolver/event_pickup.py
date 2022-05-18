@@ -100,3 +100,5 @@ def replace_with_event_pickups(game: GameDescription):
                     connections[combined_node] = connections.pop(event_node)
 
             area.connections[combined_node] = area.connections.pop(next_node)
+
+    game.world_list.invalidate_node_cache()
