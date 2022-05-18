@@ -9,7 +9,6 @@ class ResourceType(str, Enum):
     DAMAGE = "damage"
     VERSION = "versions"
     MISC = "misc"
-    _INDEXED = "_indexed"
     PICKUP_INDEX = "pickup_index"
     LOGBOOK_INDEX = "logbook_index"
     NODE_IDENTIFIER = "node_identifier"
@@ -23,7 +22,6 @@ class ResourceType(str, Enum):
             ResourceType.DAMAGE: 3,
             ResourceType.VERSION: 4,
             ResourceType.MISC: 5,
-            ResourceType._INDEXED: 6,
             ResourceType.PICKUP_INDEX: 7,
             ResourceType.LOGBOOK_INDEX: 9,
             ResourceType.NODE_IDENTIFIER: 10
