@@ -1,4 +1,3 @@
-import copy
 import json
 from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashable, Any
@@ -458,7 +457,7 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
 
 
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
-    data = game_migration.migrate_to_current(copy.deepcopy(data))
+    data = game_migration.migrate_to_current(data)
 
     game = RandovaniaGame(data["game"])
 

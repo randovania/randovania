@@ -112,7 +112,7 @@ async def _inner_advance_depth(state: State,
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources,
                                            logic.game.world_list.all_nodes):
 
-            potential_state = state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy)
+            potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
             # If we can go back to where we were, it's a simple safe node
@@ -134,7 +134,7 @@ async def _inner_advance_depth(state: State,
     has_action = False
     for action, energy in reach.satisfiable_actions(state, logic.game.victory_condition):
         new_result = await _inner_advance_depth(
-            state=state.act_on_node(action, path=reach.path_to_node[action], new_energy=energy),
+            state=state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy),
             logic=logic,
             status_update=status_update,
         )
