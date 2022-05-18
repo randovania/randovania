@@ -17,7 +17,7 @@ class DockLockNode(ResourceNode):
 
     @classmethod
     def create_from_dock(cls, dock: DockNode) -> DockLockNode:
-        lock_identifier = dock.get_lock_node_identifier_from_identifier(dock.identifier)
+        lock_identifier = dock.lock_node_identifier
         return DockLockNode(
             identifier=lock_identifier,
             heal=False,
