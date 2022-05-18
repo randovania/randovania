@@ -32,7 +32,7 @@ def write_resource_requirement(requirement: ResourceRequirement) -> dict:
     return {
         "type": "resource",
         "data": {
-            "type": requirement.resource.resource_type.value,
+            "type": requirement.resource.resource_type.as_string,
             "name": requirement.resource.short_name,
             "amount": requirement.amount,
             "negate": requirement.negate,
@@ -92,7 +92,7 @@ def write_resource_gain(resource_gain: ResourceGain) -> list:
 
     return [
         {
-            "resource_type": resource.resource_type.value,
+            "resource_type": resource.resource_type.as_string,
             "resource_name": resource.short_name,
             "amount": gain,
         }
