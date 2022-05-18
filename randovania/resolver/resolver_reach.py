@@ -16,7 +16,7 @@ from randovania.resolver.state import State
 class ResolverReach:
     _node_indices: Tuple[int, ...]
     _energy_at_node: Dict[int, int]
-    _path_to_node: Dict[int, Tuple[Node, ...]]
+    _path_to_node: dict[int, list[int]]
     _satisfiable_requirements: SatisfiableRequirements
     _logic: Logic
 
@@ -30,8 +30,12 @@ class ResolverReach:
     def satisfiable_requirements(self) -> SatisfiableRequirements:
         return self._satisfiable_requirements
 
-    def path_to_node(self, node: Node) -> Tuple[Node, ...]:
-        return self._path_to_node[node.get_index()]
+    def path_to_node(self, node: Node) -> tuple[Node, ...]:
+        all_nodes = self._logic.game.world_list.all_nodes
+        return tuple(
+            all_nodes[part]
+            for part in self._path_to_node[node.get_index()]
+        )
 
     @property
     def satisfiable_as_requirement_set(self) -> RequirementSet:
@@ -39,7 +43,7 @@ class ResolverReach:
 
     def __init__(self,
                  nodes: Dict[int, int],
-                 path_to_node: Dict[int, Tuple[Node, ...]],
+                 path_to_node: dict[int, list[int]],
                  requirements: SatisfiableRequirements,
                  logic: Logic):
         self._node_indices = tuple(nodes.keys())
@@ -67,8 +71,9 @@ class ResolverReach:
         reach_nodes: Dict[int, int] = {}
         requirements_by_node: Dict[int, Set[RequirementList]] = defaultdict(set)
 
-        path_to_node: Dict[int, Tuple[Node, ...]] = {}
-        path_to_node[initial_state.node.get_index()] = tuple()
+        path_to_node: dict[int, list[int]] = {
+            initial_state.node.get_index(): [],
+        }
 
         while nodes_to_check:
             node_index = next(iter(nodes_to_check))
@@ -107,7 +112,8 @@ class ResolverReach:
 
                 if satisfied:
                     nodes_to_check[target_node_index] = energy - requirement.damage(initial_state.resources, database)
-                    path_to_node[target_node_index] = path_to_node[node_index] + (node_index,)
+                    path_to_node[target_node_index] = list(path_to_node[node_index])
+                    path_to_node[target_node_index].append(node_index)
 
                 elif target_node:
                     # If we can't go to this node, store the reason in order to build the satisfiable requirements.
