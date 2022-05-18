@@ -242,7 +242,7 @@ async def test_session_self_update(client: NetworkClient):
     client._current_game_session_meta = MagicMock()
     client._current_game_session_meta.id = 1234
 
-    inventory: Inventory = {ItemResourceInfo("None", "None", 1, frozendict({"item_id": 0})): InventoryItem(1, 1)}
+    inventory: Inventory = {ItemResourceInfo(33, "None", "None", 1): InventoryItem(1, 1)}
 
     await client.session_self_update(inventory, GameConnectionStatus.InGame, MemoryExecutorChoice.DOLPHIN)
 
