@@ -111,7 +111,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
 
     # Operations
     def _copy_permalink(self):
-        QtWidgets.QApplication.clipboard().setText(self.layout_description.permalink.as_base64_str)
+        common_qt_lib.set_clipboard(self.layout_description.permalink.as_base64_str)
 
     def _export_log(self):
         all_games = self.layout_description.all_games
@@ -192,7 +192,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         message_box = ScrollLabelDialog(dialog_text, "Commands for patcher", self)
         message_box.resize(750, 200)
         message_box.label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
-        QtWidgets.QApplication.clipboard().setText(commands)
+        common_qt_lib.set_clipboard(commands)
         await async_dialog.execute_dialog(message_box)
 
     @property
