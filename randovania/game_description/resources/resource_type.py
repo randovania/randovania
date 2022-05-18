@@ -12,7 +12,6 @@ class ResourceType(int, enum.Enum):
     VERSION = enum.auto()
     MISC = enum.auto()
     PICKUP_INDEX = enum.auto()
-    LOGBOOK_INDEX = enum.auto()
     NODE_IDENTIFIER = enum.auto()
 
     @classmethod
@@ -25,7 +24,6 @@ class ResourceType(int, enum.Enum):
             ResourceType.VERSION: "versions",
             ResourceType.MISC: "misc",
             ResourceType.PICKUP_INDEX: "pickup_index",
-            ResourceType.LOGBOOK_INDEX: "logbook_index",
             ResourceType.NODE_IDENTIFIER: "node_identifier",
         }
 
