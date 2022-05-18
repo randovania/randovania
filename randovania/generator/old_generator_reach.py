@@ -46,9 +46,9 @@ class OldGeneratorReach(GeneratorReach):
     _reachable_paths: Optional[Dict[int, List[Node]]]
     _reachable_costs: Optional[Dict[int, int]]
     _node_reachable_cache: Dict[int, bool]
-    _unreachable_paths: Dict[Tuple[Node, Node], RequirementSet]
+    _unreachable_paths: Dict[Tuple[int, int], RequirementSet]
     _safe_nodes: Optional[Set[int]]
-    _is_node_safe_cache: Dict[Node, bool]
+    _is_node_safe_cache: Dict[int, bool]
 
     def __deepcopy__(self, memodict):
         reach = OldGeneratorReach(
@@ -126,7 +126,7 @@ class OldGeneratorReach(GeneratorReach):
                 else:
                     # print("* Unreachable", self.game.world_list.node_name(target_node), ", missing:",
                     #       requirement.as_str)
-                    self._unreachable_paths[path.node, target_node] = requirement
+                    self._unreachable_paths[path.node.get_index(), target_node.get_index()] = requirement
             # print("> done")
 
         # print("!! _expand_graph finished. Has {} edges".format(sum(1 for _ in self._digraph.edges_data())))
@@ -231,13 +231,14 @@ class OldGeneratorReach(GeneratorReach):
                 yield node
 
     def is_safe_node(self, node: Node) -> bool:
-        is_safe = self._is_node_safe_cache.get(node)
+        node_index = node.get_index()
+        is_safe = self._is_node_safe_cache.get(node_index)
         if is_safe is not None:
             return is_safe
 
         self._calculate_safe_nodes()
-        self._is_node_safe_cache[node] = node.get_index() in self._safe_nodes
-        return self._is_node_safe_cache[node]
+        self._is_node_safe_cache[node_index] = node_index in self._safe_nodes
+        return self._is_node_safe_cache[node_index]
 
     def advance_to(self, new_state: State,
                    is_safe: bool = False,
@@ -250,15 +251,16 @@ class OldGeneratorReach(GeneratorReach):
                           if not flag]:
                 del self._node_reachable_cache[index]
 
-            for node in [node for node, flag in self._is_node_safe_cache.items()
+            for node_index in [node_index for node_index, flag in self._is_node_safe_cache.items()
                          if not flag]:
-                del self._is_node_safe_cache[node]
+                del self._is_node_safe_cache[node_index]
         else:
             self._node_reachable_cache = {}
             self._is_node_safe_cache = {}
 
         self._state = new_state
 
+        all_nodes = self.all_nodes
         paths_to_check: List[GraphPath] = []
 
         edges_to_remove = []
@@ -266,8 +268,8 @@ class OldGeneratorReach(GeneratorReach):
         # TODO: check if expensive. We filter by only nodes that depends on a new resource
         for edge, requirement in self._unreachable_paths.items():
             if requirement.satisfied(self._state.resources, self._state.energy, self._state.resource_database):
-                from_node, to_node = edge
-                paths_to_check.append(GraphPath(from_node, to_node, requirement))
+                from_index, to_index = edge
+                paths_to_check.append(GraphPath(all_nodes[from_index], all_nodes[to_index], requirement))
                 edges_to_remove.append(edge)
 
         for edge in edges_to_remove:
@@ -298,7 +300,8 @@ class OldGeneratorReach(GeneratorReach):
 
     def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
         results = {}
-        for (_, node), requirement in self._unreachable_paths.items():
+        for (_, node_index), requirement in self._unreachable_paths.items():
+            node = self.all_nodes[node_index]
             if self.is_reachable_node(node):
                 continue
             requirements = requirement.patch_requirements(self.state.resources, self.state.resource_database)
