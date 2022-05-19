@@ -1661,8 +1661,6 @@ Extra - asset_id: collision_camera_024
           Any of the following:
               Space Jump or Speed Booster or Simple IBJ
               Flash Shift and Walljump (Beginner) and Use Spin Boost
-  > Tile Group (SPEEDBOOST) 2
-      Speed Booster
 
 > Door to Above Golzuna; Heals? False
   * Layers: default
@@ -1675,6 +1673,10 @@ Extra - asset_id: collision_camera_024
   * Extra - right_shield_def: None
   > Door to Save Station East
       Trivial
+  > Pickup (Energy Part)
+      All of the following:
+          # Temporary until door rando support
+          Spin Boost and Ballspark
 
 > Door to Energy Recharge Station; Heals? False
   * Layers: default
@@ -1687,6 +1689,10 @@ Extra - asset_id: collision_camera_024
   * Extra - right_shield_def: None
   > Door to Save Station East
       Trivial
+  > Pickup (Energy Part)
+      All of the following:
+          Ballspark
+          Space Jump or Simple IBJ
 
 > Door to Above Pulse Radar; Heals? False
   * Layers: default
@@ -1717,8 +1723,8 @@ Extra - asset_id: collision_camera_024
   * Pickup 112; Major Location? True
   * Extra - actor_name: item_energyfragment
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Tile Group (SPEEDBOOST) 1
-      Morph Ball
+  > Door to Energy Recharge Station
+      Trivial
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -1758,32 +1764,6 @@ Extra - asset_id: collision_camera_024
   > Tile Group (POWERBEAM) 2
       Morph Ball
   > Tunnel to Above Pulse Radar
-      Morph Ball
-
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_038
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Energy Part)
-      All of the following:
-          Morph Ball
-          Space Jump or Simple IBJ
-  > Tile Group (SPEEDBOOST) 2
-      Can Slide
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_036
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Above Golzuna
-      Flash Shift or Use Spin Boost
-  > Tile Group (SPEEDBOOST) 1
       Morph Ball
 
 > Tile Group (WEIGHT) 2; Heals? False
@@ -2401,18 +2381,6 @@ blast shields
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Door to Flipper Room
       Trivial
-  > Tile Group (SPEEDBOOST)
-      Trivial
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_021
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Missile Tank)
-      Trivial
 
 > Center Platform; Heals? False
   * Layers: default
@@ -2420,8 +2388,10 @@ blast shields
       Trivial
   > Door to Transport to Elun
       Trivial
-  > Tile Group (SPEEDBOOST)
-      Speed Booster
+  > Pickup (Missile Tank)
+      All of the following:
+          # Temporary until door rando support
+          Grapple Beam and Speed Booster
 
 ----------------
 Spin Boost Room
