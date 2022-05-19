@@ -129,7 +129,6 @@ async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game
     window.player_index_combo.addItem("Current", 0)
     skip_qtbot.addWidget(window)
 
-    collections.namedtuple("MockPickup", ["name"])
     target = MagicMock()
     target.pickup.name = "Boost Ball"
 
