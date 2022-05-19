@@ -259,7 +259,15 @@ try:
     def skip_qtbot(request, qtbot):
         if request.config.option.skip_gui_tests:
             pytest.skip()
+
         return qtbot
+
+    @pytest.fixture()
+    def event_loop(qapp):
+        import qasync
+        loop = qasync.QEventLoop(qapp)
+        yield loop
+        loop.stop()
 
 except ImportError:
     @pytest.fixture()
