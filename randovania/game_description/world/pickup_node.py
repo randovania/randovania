@@ -7,7 +7,7 @@ from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.resource_node import ResourceNode
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class PickupNode(ResourceNode):
     pickup_index: PickupIndex
     major_location: bool

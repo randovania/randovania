@@ -34,7 +34,7 @@ class NodeContext:
         return self.current_resources.get(resource, 0) > 0
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class Node:
     identifier: NodeIdentifier
     heal: bool
@@ -42,6 +42,7 @@ class Node:
     description: str
     layers: tuple[str, ...]
     extra: dict[str, typing.Any]
+    index: int = dataclasses.field(init=False, hash=False, compare=False)
 
     def __lt__(self, other: "Node"):
         return self.identifier < other.identifier
@@ -58,7 +59,7 @@ class Node:
         Gets a unique index for this node. Used by GeneratorReach
         :return:
         """
-        return object.__getattribute__(self, "index")
+        return self.index
 
     def __post_init__(self):
         if not self.layers:
@@ -85,6 +86,6 @@ class Node:
         yield from []
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class GenericNode(Node):
     pass

@@ -4,7 +4,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 
 
-@dataclasses.dataclass(frozen=True, order=True)
+@dataclasses.dataclass(frozen=True, order=True, slots=True)
 class NodeIdentifier:
     area_identifier: AreaIdentifier
     node_name: str

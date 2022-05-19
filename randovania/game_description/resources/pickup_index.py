@@ -2,6 +2,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 
 
 class PickupIndex:
+    __slots__ = ("_index",)
     _index: int
 
     @property
