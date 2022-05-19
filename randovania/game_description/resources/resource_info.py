@@ -11,7 +11,7 @@ ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo,
                      PickupIndex, NodeIdentifier]
 ResourceQuantity = Tuple[ResourceInfo, int]
 ResourceGainTuple = Tuple[ResourceQuantity, ...]
-ResourceGain = Iterator[ResourceQuantity]
+ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
 CurrentResources = dict[ResourceInfo, int]
 
 
