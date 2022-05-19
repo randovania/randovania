@@ -193,7 +193,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
     def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory,
                                       ) -> tuple[str, ResourceCollection]:
-        inventory_resources = ResourceCollection()
+        inventory_resources = ResourceCollection.with_database(self.game.resource_database)
         inventory_resources.add_resource_gain([
             (item, inv_item.capacity)
             for item, inv_item in inventory.items()
@@ -204,7 +204,7 @@ class PrimeRemoteConnector(RemoteConnector):
         else:
             item_name = pickup.name
 
-        resources_to_give = ResourceCollection()
+        resources_to_give = ResourceCollection.with_database(self.game.resource_database)
 
         if pickup.respects_lock and not pickup.unlocks_resource and (
                 pickup.resource_lock is not None and inventory_resources[pickup.resource_lock.locked_by] == 0):

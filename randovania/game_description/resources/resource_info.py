@@ -1,10 +1,16 @@
-from typing import Union, Tuple, Iterator
+from __future__ import annotations
+
+import typing
+from typing import Union, Tuple, Iterator, Optional
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.node_identifier import NodeIdentifier
+
+if typing.TYPE_CHECKING:
+    from randovania.game_description.resources.resource_database import ResourceDatabase
 
 ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo,
                      PickupIndex, NodeIdentifier]
@@ -20,6 +26,10 @@ class ResourceCollection:
     def __init__(self):
         self._resources = {}
 
+    @classmethod
+    def with_database(cls, database: ResourceDatabase) -> ResourceCollection:
+        return cls()
+
     def __getitem__(self, item: ResourceInfo):
         return self._resources.get(item, 0)
 
@@ -32,7 +42,7 @@ class ResourceCollection:
 
     def __eq__(self, other):
         return isinstance(other, ResourceCollection) and (
-            self._comparison_tuple == other._comparison_tuple
+                self._comparison_tuple == other._comparison_tuple
         )
 
     @property

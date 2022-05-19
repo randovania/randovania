@@ -32,7 +32,7 @@ from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
 def test_create_starting_popup_empty(default_echoes_configuration, echoes_resource_database):
-    starting_items = ResourceCollection()
+    starting_items = ResourceCollection.with_database(echoes_resource_database)
 
     # Run
     result = patch_data_factory._create_starting_popup(default_echoes_configuration,

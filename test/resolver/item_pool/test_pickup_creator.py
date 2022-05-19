@@ -251,7 +251,7 @@ def test_missile_expansion_before_launcher(include_before, echoes_item_database,
     def to_dict(col: ResourceCollection):
         return dict(col.as_resource_gain())
 
-    collection = ResourceCollection()
+    collection = ResourceCollection.with_database(echoes_resource_database)
 
     if include_before:
         # Ammo Expansion

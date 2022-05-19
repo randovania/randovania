@@ -170,11 +170,11 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             dock_connection={},
             dock_weakness={},
             configurable_nodes={},
-            starting_items=ResourceCollection(),
+            starting_items=ResourceCollection.with_database(game.resource_database),
             starting_location=game.starting_location,
             hints={},
         ),
-        current_resources=ResourceCollection(),
+        current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.world_list,
     )

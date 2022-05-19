@@ -18,7 +18,7 @@ def add_artifacts(resource_database: ResourceDatabase,
     :return:
     """
     item_pool: List[PickupEntry] = []
-    initial_resources = ResourceCollection()
+    initial_resources = ResourceCollection.with_database(resource_database)
 
     artifacts_to_place = mode.value
 

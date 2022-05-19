@@ -18,4 +18,4 @@ def add_dark_temple_keys(resource_database: ResourceDatabase,
         for i in range(3):
             item_pool.append(pickup_creator.create_dark_temple_key(i, temple_index, resource_database))
 
-    return PoolResults(item_pool, {}, ResourceCollection())
+    return PoolResults(item_pool, {}, ResourceCollection.with_database(resource_database))

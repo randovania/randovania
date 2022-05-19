@@ -31,7 +31,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     :param resource_database:
     :return:
     """
-    base_results = PoolResults([], {}, ResourceCollection())
+    base_results = PoolResults([], {}, ResourceCollection.with_database(resource_database))
 
     # Adding major items to the pool
     _extend_pool_results(base_results, add_major_items(resource_database,

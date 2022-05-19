@@ -81,7 +81,7 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     mock_req_lists: MagicMock = mocker.patch(
         "randovania.generator.filler.pickup_list._requirement_lists_without_satisfied_resources")
 
-    collection = ResourceCollection()
+    collection = ResourceCollection.with_database(echoes_game_description.resource_database)
     pickups_left = []
     reach = MagicMock()
     reach.state.resources = collection

@@ -37,7 +37,8 @@ class BasePatchesFactory:
         """
         """
         patches = GamePatches(player_index, configuration, {}, game.get_default_elevator_connection(),
-                              {}, {}, {}, ResourceCollection(), game.starting_location, {})
+                              {}, {}, {}, ResourceCollection.with_database(game.resource_database),
+                              game.starting_location, {})
 
         # Elevators
         try:

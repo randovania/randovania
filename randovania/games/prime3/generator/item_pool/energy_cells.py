@@ -17,4 +17,4 @@ def add_energy_cells(resource_database: ResourceDatabase,
     for i in range(9):
         item_pool.append(pickup_creator.create_energy_cell(i, resource_database))
 
-    return PoolResults(item_pool, {}, ResourceCollection())
+    return PoolResults(item_pool, {}, ResourceCollection.with_database(resource_database))

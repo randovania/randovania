@@ -30,6 +30,7 @@ class ResourceDatabase:
     item_percentage_index: Optional[str]
     multiworld_magic_item_index: Optional[str]
     base_damage_reduction: Callable[["ResourceDatabase", ResourceCollection], float] = default_base_damage_reduction
+    resource_count: Optional[int] = dataclasses.field(default=None, init=False)
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
         if resource_type == ResourceType.ITEM:

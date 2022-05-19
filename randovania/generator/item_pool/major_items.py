@@ -36,7 +36,7 @@ def add_major_items(resource_database: ResourceDatabase,
 
     item_pool: List[PickupEntry] = []
     new_assignment: Dict[PickupIndex, PickupEntry] = {}
-    initial_resources = ResourceCollection()
+    initial_resources = ResourceCollection.with_database(resource_database)
 
     for item, state in major_items_configuration.items_state.items():
         if len(item.ammo_index) != len(state.included_ammo):

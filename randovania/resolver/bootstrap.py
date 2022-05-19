@@ -181,7 +181,7 @@ class Bootstrap:
                                                       game,
                                                       configuration.major_items_configuration)
 
-        static_resources = ResourceCollection()
+        static_resources = ResourceCollection.with_database(game.resource_database)
         static_resources.add_resource_gain(
             self.trick_resources_for_configuration(configuration.trick_level, game.resource_database)
         )

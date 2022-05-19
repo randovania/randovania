@@ -243,7 +243,7 @@ def test_create_base_patches(mocker):
     game_patches_mock.assert_called_once_with(
         0, layout_configuration, {},
         game.get_default_elevator_connection.return_value,
-        {}, {}, {}, ResourceCollection(),
+        {}, {}, {}, ResourceCollection.with_database(game.resource_database),
         game.starting_location, {},
     )
 

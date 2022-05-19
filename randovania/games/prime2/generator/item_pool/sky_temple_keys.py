@@ -22,7 +22,7 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
 
     item_pool: List[PickupEntry] = []
     new_assignment: Dict[PickupIndex, PickupEntry] = {}
-    initial_resources = ResourceCollection()
+    initial_resources = ResourceCollection.with_database(resource_database)
 
     if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
         locations_to_place = _GUARDIAN_INDICES[:]
