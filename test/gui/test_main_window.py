@@ -22,7 +22,9 @@ def create_window(options: Union[Options, MagicMock],
 @pytest.fixture(name="default_main_window")
 def _default_main_window(skip_qtbot, preset_manager, mocker) -> MainWindow:
     mocker.patch("randovania.gui.lib.theme.set_dark_theme")
-    return create_window(Options(MagicMock()), preset_manager)
+    window = create_window(Options(MagicMock()), preset_manager)
+    skip_qtbot.addWidget(window)
+    return window
 
 
 def test_drop_random_event(default_main_window: MainWindow,
@@ -112,11 +114,17 @@ async def test_generate_seed_from_permalink(default_main_window, mocker):
     mock_generate_layout: MagicMock = mocker.patch("randovania.interface_common.simplified_patcher.generate_layout",
                                                    autospec=True)
     default_main_window.open_game_details = MagicMock()
+    mock_open_for_background_task = mocker.patch(
+        "randovania.gui.dialog.background_process_dialog.BackgroundProcessDialog.open_for_background_task",
+        new_callable=AsyncMock,
+        side_effect=lambda a, b: a(MagicMock())
+    )
 
     # Run
     await default_main_window.generate_seed_from_permalink(permalink)
 
     # Assert
+    mock_open_for_background_task.assert_awaited_once()
     mock_generate_layout.assert_called_once_with(progress_update=ANY,
                                                  parameters=permalink.parameters,
                                                  options=default_main_window._options)

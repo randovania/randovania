@@ -24,6 +24,7 @@ async def test_export_iso(skip_qtbot, mocker):
     window_manager = MagicMock()
 
     window = GameDetailsWindow(window_manager, options)
+    skip_qtbot.addWidget(window)
     window.layout_description = MagicMock()
     window._player_names = {}
     game = window.layout_description.get_preset.return_value.game

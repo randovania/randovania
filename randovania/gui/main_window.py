@@ -67,6 +67,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
     _data_visualizer: Optional[QtWidgets.QWidget] = None
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
+    generate_seed_tab = None
     GameDetailsSignal = Signal(LayoutDescription)
 
     InitPostShowSignal = Signal()
@@ -174,7 +175,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.main_tab_widget.setCurrentIndex(0)
 
     def closeEvent(self, event):
-        self.generate_seed_tab.stop_background_process()
+        if self.generate_seed_tab is not None:
+            self.generate_seed_tab.stop_background_process()
         super().closeEvent(event)
 
     def dragEnterEvent(self, event: QtGui.QDragEnterEvent):
