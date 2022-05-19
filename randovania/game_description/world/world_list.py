@@ -178,13 +178,13 @@ class WorldList(NodeProvider):
         """
         for world in self.worlds:
             for area in world.areas:
-                for node in area.nodes:
-                    if isinstance(node, DockNode):
-                        requirement = node.default_dock_weakness.requirement
-                        object.__setattr__(node.default_dock_weakness, "requirement",
-                                           requirement.patch_requirements(static_resources,
-                                                                          damage_multiplier,
-                                                                          database).simplify())
+                # for node in area.nodes:
+                #     if isinstance(node, DockNode):
+                #         requirement = node.default_dock_weakness.requirement
+                #         object.__setattr__(node.default_dock_weakness, "requirement",
+                #                            requirement.patch_requirements(static_resources,
+                #                                                           damage_multiplier,
+                #                                                           database).simplify())
                 for connections in area.connections.values():
                     for target, value in connections.items():
                         connections[target] = value.patch_requirements(
