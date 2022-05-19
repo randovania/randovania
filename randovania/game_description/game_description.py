@@ -128,7 +128,20 @@ class GameDescription:
         if self.mutable:
             return self
         else:
-            result = copy.deepcopy(self)
+            result = GameDescription(
+                game=self.game,
+                resource_database=self.resource_database,
+                layers=self.layers,
+                dock_weakness_database=self.dock_weakness_database,
+                world_list=WorldList([
+                    world.duplicate()
+                    for world in self.world_list.worlds
+                ]),
+                victory_condition=self.victory_condition,
+                starting_location=self.starting_location,
+                initial_states=copy.copy(self.initial_states),
+                minimal_logic=self.minimal_logic,
+            )
             result.mutable = True
             return result
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+import copy
 import dataclasses
 import typing
 from typing import List, Dict, Optional, Iterator, Tuple
@@ -68,3 +70,13 @@ class Area:
     @property
     def map_name(self) -> str:
         return self.extra.get("map_name", self.name)
+
+    def duplicate(self) -> Area:
+        return dataclasses.replace(
+            self,
+            nodes=list(self.nodes),
+            connections={
+                node: copy.copy(connection)
+                for node, connection in self.connections.items()
+            },
+        )
