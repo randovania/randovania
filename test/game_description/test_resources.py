@@ -14,15 +14,12 @@ from randovania.game_description.resources.resource_type import ResourceType
     ({"a": 5}, {"a": 6}, {"a": 11}),
 ])
 def test_add_resources_into_another(a, b, result):
-    ac = ResourceCollection()
-    ac._resources = a
-
-    bc = ResourceCollection()
-    bc._resources = b
+    ac = ResourceCollection.from_dict(a)
+    bc = ResourceCollection.from_dict(b)
 
     ac.add_resource_gain(bc.as_resource_gain())
 
-    assert ac._resources == result
+    assert dict(ac.as_resource_gain()) == result
 
 
 def test_pickup_index_equality():
@@ -68,7 +65,7 @@ def test_convert_resource_gain_to_current_resources(resource_gain, expected):
     result = ResourceCollection.from_resource_gain(resource_gain)
 
     # Assert
-    assert result._resources == expected
+    assert dict(result.as_resource_gain()) == expected
 
 
 def test_resource_type_from_index():

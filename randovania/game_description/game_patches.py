@@ -44,7 +44,7 @@ class GamePatches:
         if not isinstance(self.starting_items, ResourceCollection):
             raise TypeError("starting_items must be a ResourceCollection")
 
-        for resource in self.starting_items._resources.keys():
+        for resource, _ in self.starting_items.as_resource_gain():
             if resource.resource_type != ResourceType.ITEM:
                 raise ValueError(f"starting_items must have only Items, not {resource}")
 

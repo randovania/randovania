@@ -248,23 +248,26 @@ def test_missile_expansion_before_launcher(include_before, echoes_item_database,
         True, echoes_resource_database, ammo, True
     )
 
+    def to_dict(col: ResourceCollection):
+        return dict(col.as_resource_gain())
+
     collection = ResourceCollection()
 
     if include_before:
         # Ammo Expansion
         collection.add_resource_gain(expansion.resource_gain(collection, force_lock=True))
-        assert collection._resources == {percent: 1, temporary: 5}
+        assert to_dict(collection) == {percent: 1, temporary: 5}
 
     # Add Launcher
     collection.add_resource_gain(launcher.resource_gain(collection, force_lock=True))
     if include_before:
-        assert collection._resources == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}
+        assert to_dict(collection) == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}
     else:
-        assert collection._resources == {percent: 1, temporary: 0, missile_launcher: 1, missile: 5}
+        assert to_dict(collection) == {percent: 1, temporary: 0, missile_launcher: 1, missile: 5}
 
     # Ammo Expansion
     collection.add_resource_gain(expansion.resource_gain(collection, force_lock=True))
     if include_before:
-        assert collection._resources == {percent: 3, temporary: 0, missile_launcher: 1, missile: 15}
+        assert to_dict(collection) == {percent: 3, temporary: 0, missile_launcher: 1, missile: 15}
     else:
-        assert collection._resources == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}
+        assert to_dict(collection) == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}

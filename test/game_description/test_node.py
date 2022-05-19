@@ -77,4 +77,4 @@ def test_logbook_node_resource_gain_on_collect(logbook_node,
     gain = node.resource_gain_on_collect(context)
 
     # Assert
-    assert ResourceCollection.from_resource_gain(gain)._resources == {node.resource(context): 1}
+    assert dict(gain) == {node.resource(context): 1}

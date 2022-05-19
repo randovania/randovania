@@ -129,7 +129,7 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     for pickup in pool_results.assignment.values():
         add_pickup_to_state(initial_state, pickup)
     for trick in game.resource_database.trick:
-        initial_state.resources._resources[trick] = LayoutTrickLevel.maximum().as_number
+        initial_state.resources.set_resource(trick, LayoutTrickLevel.maximum().as_number)
 
     expected_events = sorted([event for event in game.resource_database.event if event.short_name not in ignore_events],
                              key=lambda it: it.short_name)

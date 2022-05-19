@@ -196,8 +196,7 @@ class Bootstrap:
         )
 
         for resource, quantity in static_resources.as_resource_gain():
-            # TODO: let's avoid leaking the internal resources dict
-            starting_state.resources._resources[resource] = quantity
+            starting_state.resources.set_resource(resource, quantity)
 
         game.patch_requirements(starting_state.resources, configuration.damage_strictness.value)
 
