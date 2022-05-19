@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import typing
 from typing import Iterator, Optional
@@ -8,14 +10,11 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import Node
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class World:
     name: str
     areas: list[Area]
     extra: dict[str, typing.Any]
-
-    def __post_init__(self):
-        object.__setattr__(self, "__cached_area_by_asset_id", {})
 
     def __repr__(self):
         return "World[{}]".format(self.name)
@@ -64,3 +63,12 @@ class World:
         if in_dark_world and self.dark_name is not None:
             return self.dark_name
         return self.name
+
+    def duplicate(self) -> World:
+        return dataclasses.replace(
+            self,
+            areas=[
+                area.duplicate()
+                for area in self.areas
+            ],
+        )

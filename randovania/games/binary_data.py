@@ -87,8 +87,7 @@ ConstructDamageReductions = Struct(
     ))
 )
 
-ConstructResourceType = construct.Enum(Byte, items=0, events=1, tricks=2, damage=3, versions=4, misc=5, pickup_index=7,
-                                       gate_index=8, logbook_index=9, ship_node=10)
+ConstructResourceType = construct.Enum(Byte, items=0, events=1, tricks=2, damage=3, versions=4, misc=5)
 
 ConstructResourceRequirement = Struct(
     type=ConstructResourceType,

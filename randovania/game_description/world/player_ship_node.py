@@ -17,7 +17,7 @@ def _all_ship_nodes(context: NodeContext) -> typing.Iterator[PlayerShipNode]:
             yield node
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class PlayerShipNode(ResourceNode):
     is_unlocked: Requirement
     item_to_summon: ItemResourceInfo

@@ -443,7 +443,13 @@ def test_requirement_template_nested(database):
 
 
 def _json_req(amount: int, name: str = "Damage", resource_type: ResourceType = ResourceType.DAMAGE):
-    return {"type": "resource", "data": {"type": resource_type.value, "name": name, "amount": amount, "negate": False}}
+    return {"type": "resource",
+            "data": {
+                "type": resource_type.as_string,
+                "name": name,
+                "amount": amount,
+                "negate": False,
+            }}
 
 
 def _arr_req(req_type: str, items: list):

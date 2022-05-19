@@ -1,18 +1,9 @@
-import copy
-
 import pytest
 
 from randovania.game_description.data_reader import WorldReader
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.search import MissingResource
 from randovania.games.game import RandovaniaGame
-
-
-def test_copy_worlds(echoes_game_description):
-    game_copy = copy.deepcopy(echoes_game_description)
-
-    assert echoes_game_description.world_list.worlds == game_copy.world_list.worlds
-    assert echoes_game_description.world_list.worlds is not game_copy.world_list.worlds
 
 
 def test_invalid_node_type():
@@ -67,4 +58,4 @@ def test_area_with_invalid_connections():
         })
 
     assert str(e.value) == ("In area Broken Area, connection from Broken to A got error: "
-                            "items Resource with short_name 'Dark' not found in 0 resources")
+                            "ITEM Resource with short_name 'Dark' not found in 0 resources")

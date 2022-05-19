@@ -9,7 +9,9 @@ from randovania.gui.auto_tracker_window import AutoTrackerWindow
 def auto_tracker_window(skip_qtbot):
     connection = MagicMock()
     connection.pretty_current_status = "Pretty"
-    return AutoTrackerWindow(connection, MagicMock())
+    window = AutoTrackerWindow(connection, MagicMock())
+    skip_qtbot.addWidget(window)
+    return window
 
 
 def test_update_tracker_from_hook(window, echoes_resource_database):
@@ -36,6 +38,7 @@ async def test_on_timer_update(current_status: GameConnectionStatus, correct_gam
     game_connection.pretty_current_status = "Pretty Status"
 
     window = AutoTrackerWindow(game_connection, MagicMock())
+    skip_qtbot.addWidget(window)
     window._update_timer = MagicMock()
     window._update_tracker_from_hook = MagicMock()
 

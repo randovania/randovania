@@ -3,15 +3,17 @@ from typing import Optional
 
 import pytest
 from mock import MagicMock, ANY, AsyncMock
+from mock.mock import call
 
 import randovania.cli.commands.generate
 from randovania.games.game import RandovaniaGame
 from randovania.layout.generator_parameters import GeneratorParameters
 
 
+@pytest.mark.parametrize("repeat", [1, 2])
 @pytest.mark.parametrize("preset_name", [None, "Starter Preset"])
 @pytest.mark.parametrize("no_retry", [False, True])
-def test_generate_logic(no_retry: bool, preset_name: Optional[str], mocker, preset_manager):
+def test_generate_logic(no_retry: bool, preset_name: Optional[str], repeat: int, mocker, preset_manager):
     # Setup
     mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)
@@ -21,6 +23,7 @@ def test_generate_logic(no_retry: bool, preset_name: Optional[str], mocker, pres
     args = MagicMock()
     args.output_file = Path("asdfasdf/qwerqwerqwer/zxcvzxcv.json")
     args.no_retry = no_retry
+    args.repeat = repeat
 
     if preset_name is None:
         # Permalink
@@ -54,13 +57,15 @@ def test_generate_logic(no_retry: bool, preset_name: Optional[str], mocker, pres
     else:
         mock_from_str.assert_not_called()
 
-    mock_generate.assert_awaited_once_with(
-        generator_params=generator_params,
-        status_update=ANY,
-        validate_after_generation=args.validate,
-        timeout=None,
-        **extra_args,
-    )
+    mock_generate.assert_has_awaits([
+        call(
+            generator_params=generator_params,
+            status_update=ANY,
+            validate_after_generation=args.validate,
+            timeout=None,
+            **extra_args,
+        )
+    ] * repeat)
 
     save_file_mock: MagicMock = mock_generate.return_value.save_to_file
     save_file_mock.assert_called_once_with(args.output_file)

@@ -16,7 +16,9 @@ def _echoes_powerup_offset(item_index: int) -> int:
 
 @pytest.fixture(name="executor")
 def debug_executor_window(skip_qtbot):
-    return DebugExecutorWindow()
+    window = DebugExecutorWindow()
+    skip_qtbot.addWidget(window.window)
+    return window
 
 
 async def test_display_message(executor: DebugExecutorWindow):

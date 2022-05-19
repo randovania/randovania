@@ -1,3 +1,4 @@
+import asyncio
 import dataclasses
 import json
 import uuid
@@ -253,13 +254,34 @@ def pytest_addoption(parser):
 
 try:
     import pytestqt
+    import qasync
+    import asyncio.events
+
+    class EventLoopWithRunningFlag(qasync.QEventLoop):
+        def _before_run_forever(self):
+            super()._before_run_forever()
+            asyncio.events._set_running_loop(self)
+
+        def _after_run_forever(self):
+            asyncio.events._set_running_loop(None)
+            super()._after_run_forever()
 
 
     @pytest.fixture()
     def skip_qtbot(request, qtbot):
         if request.config.option.skip_gui_tests:
             pytest.skip()
+
         return qtbot
+
+    @pytest.fixture()
+    def event_loop(qapp, request: pytest.FixtureRequest):
+        if "skip_qtbot" in request.fixturenames:
+            loop = EventLoopWithRunningFlag(qapp, set_running_loop=False)
+        else:
+            loop = asyncio.get_event_loop_policy().new_event_loop()
+        yield loop
+        loop.close()
 
 except ImportError:
     @pytest.fixture()

@@ -1,7 +1,7 @@
 import sys, struct 
 
 REQUIRED_VERSION_MAJOR = 3
-REQUIRED_VERSION_MINOR = 9
+REQUIRED_VERSION_MINOR = 10
 REQUIRED_WORD_SIZE_BITS = 64
 
 def version_str(major, minor, bits):

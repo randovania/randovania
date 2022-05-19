@@ -24,6 +24,7 @@ async def test_export_iso(skip_qtbot, mocker):
     window_manager = MagicMock()
 
     window = GameDetailsWindow(window_manager, options)
+    skip_qtbot.addWidget(window)
     window.layout_description = MagicMock()
     window._player_names = {}
     game = window.layout_description.get_preset.return_value.game
@@ -120,7 +121,7 @@ def test_update_layout_description_actual_seed(skip_qtbot, test_files_dir):
 
 async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game_description, empty_patches):
     mock_execute_dialog = mocker.patch("randovania.gui.lib.async_dialog.execute_dialog", new_callable=AsyncMock)
-    mock_clipboard: MagicMock = mocker.patch("PySide6.QtWidgets.QApplication.clipboard")
+    mock_clipboard: MagicMock = mocker.patch("randovania.gui.lib.common_qt_lib.set_clipboard")
 
     options = MagicMock()
     options.options_for_game.return_value.cosmetic_patches = CorruptionCosmeticPatches()
@@ -128,7 +129,6 @@ async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game
     window.player_index_combo.addItem("Current", 0)
     skip_qtbot.addWidget(window)
 
-    collections.namedtuple("MockPickup", ["name"])
     target = MagicMock()
     target.pickup.name = "Boost Ball"
 
@@ -144,4 +144,4 @@ async def test_show_dialog_for_prime3_layout(skip_qtbot, mocker, corruption_game
 
     # Assert
     mock_execute_dialog.assert_awaited_once()
-    mock_clipboard.return_value.setText.assert_called_once()
+    mock_clipboard.assert_called_once()

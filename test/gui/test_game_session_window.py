@@ -20,12 +20,13 @@ from randovania.network_common.session_state import GameSessionState
 
 
 @pytest.fixture(name="window")
-def _window(skip_qtbot):
+async def _window(skip_qtbot):
     game_connection = MagicMock(spec=GameConnection)
     game_connection.executor = AsyncMock()
     game_connection.lock_identifier = None
     game_connection.pretty_current_status = "Pretty Status"
     window = GameSessionWindow(MagicMock(), game_connection, MagicMock(), MagicMock(), MagicMock())
+    skip_qtbot.addWidget(window)
     window.connect_to_events()
     return window
 
@@ -75,6 +76,7 @@ async def test_on_game_session_meta_update(preset_manager, skip_qtbot):
     window = await GameSessionWindow.create_and_update(network_client, game_connection, preset_manager,
                                                        MagicMock(), MagicMock())
     window.update_multiworld_client_status = AsyncMock()
+    skip_qtbot.addWidget(window)
 
     # Run
     await window.on_game_session_meta_update(second_session)

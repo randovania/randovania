@@ -1,4 +1,3 @@
-import copy
 import json
 from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashable, Any
@@ -102,7 +101,7 @@ def read_resource_requirement(data: Dict, resource_database: ResourceDatabase
     data = data["data"]
     return ResourceRequirement.with_data(
         resource_database,
-        ResourceType(data["type"]), data["name"],
+        ResourceType.from_str(data["type"]), data["name"],
         data["amount"], data["negate"])
 
 
@@ -161,7 +160,7 @@ def read_optional_requirement(data: Optional[dict], resource_database: ResourceD
 # Resource Gain
 
 def read_single_resource_gain(item: Dict, database: "ResourceDatabase") -> Tuple[ResourceInfo, int]:
-    resource = database.get_by_type_and_index(ResourceType(item["resource_type"]),
+    resource = database.get_by_type_and_index(ResourceType.from_str(item["resource_type"]),
                                               item["resource_name"])
     amount = item["amount"]
 
@@ -458,7 +457,7 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
 
 
 def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
-    data = game_migration.migrate_to_current(copy.deepcopy(data))
+    data = game_migration.migrate_to_current(data)
 
     game = RandovaniaGame(data["game"])
 

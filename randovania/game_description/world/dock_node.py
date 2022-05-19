@@ -48,20 +48,17 @@ class DockNode(Node):
     default_dock_weakness: DockWeakness
     override_default_open_requirement: typing.Optional[Requirement]
     override_default_lock_requirement: typing.Optional[Requirement]
+    lock_node_identifier: NodeIdentifier = dataclasses.field(init=False, hash=False, compare=False)
+
+    def __post_init__(self):
+        super().__post_init__()
+        object.__setattr__(self, "lock_node_identifier", dataclasses.replace(
+            self.identifier,
+            node_name=f"Lock - {self.name}",
+        ))
 
     def __repr__(self):
         return "DockNode({!r} -> {})".format(self.name, self.default_connection)
-
-    def get_lock_node_identifier_from_identifier(self, self_identifier: NodeIdentifier):
-        return dataclasses.replace(
-            self_identifier,
-            node_name=f"Lock - {self.name}",
-        )
-
-    def get_lock_node_identifier(self, context: NodeContext) -> NodeIdentifier:
-        return self.get_lock_node_identifier_from_identifier(
-            context.node_provider.identifier_for_node(self),
-        )
 
     def get_front_weakness(self, context: NodeContext) -> DockWeakness:
         self_identifier = context.node_provider.identifier_for_node(self)
@@ -129,7 +126,7 @@ class DockNode(Node):
         if forward_lock is None and back_lock is None:
             return None
 
-        lock_node = context.node_provider.node_by_identifier(self.get_lock_node_identifier(context))
+        lock_node = context.node_provider.node_by_identifier(self.lock_node_identifier)
         return lock_node, requirement
 
     def get_target_identifier(self, context: NodeContext) -> typing.Optional[NodeIdentifier]:

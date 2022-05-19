@@ -11,13 +11,13 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class DockLockNode(ResourceNode):
     dock_identifier: NodeIdentifier
 
     @classmethod
     def create_from_dock(cls, dock: DockNode) -> DockLockNode:
-        lock_identifier = dock.get_lock_node_identifier_from_identifier(dock.identifier)
+        lock_identifier = dock.lock_node_identifier
         return DockLockNode(
             identifier=lock_identifier,
             heal=False,
