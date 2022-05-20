@@ -120,6 +120,7 @@ class RandovaniaGraph(BaseGraph):
         scc_found = set()
         scc_queue = []
         i = 0  # Preorder counter
+        neighbors = {v: iter(self.edges[v]) for v in self.edges.keys()}
         for source in self.edges.keys():
             if source not in scc_found:
                 queue = [source]
@@ -129,7 +130,7 @@ class RandovaniaGraph(BaseGraph):
                         i = i + 1
                         preorder[v] = i
                     done = True
-                    for w in self.edges[v].keys():
+                    for w in neighbors[v]:
                         if w not in preorder:
                             queue.append(w)
                             done = False
