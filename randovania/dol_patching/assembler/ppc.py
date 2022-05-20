@@ -16,21 +16,28 @@ class Register:
 
 
 class GeneralRegister(Register):
-    pass
+    def __repr__(self):
+        return f"r{self.number}"
 
 
 class FloatRegister(Register):
-    pass
+    def __repr__(self):
+        return f"f{self.number}"
 
 
 class BaseInstruction:
     label: Optional[str]
+    name: Optional[str] = None
 
     def __init__(self):
         self.label = None
 
     def with_label(self, label: str) -> "BaseInstruction":
         self.label = label
+        return self
+
+    def with_name(self, name: str):
+        self.name = name
         return self
 
     def bytes_for(self, address: int, symbols: Dict[str, int]):
@@ -56,6 +63,11 @@ class Instruction(BaseInstruction):
 
     def __eq__(self, other):
         return isinstance(other, Instruction) and self.value == other.value
+
+    def __repr__(self):
+        if self.name is None:
+            return f"<{self.value:08x}>"
+        return f"<{self.name}>"
 
     @property
     def byte_count(self):
@@ -118,6 +130,11 @@ class RelativeAddressInstruction(BaseInstruction):
         return isinstance(other, RelativeAddressInstruction) and (self.factory == other.factory and
                                                                   self.address_or_symbol == other.address_or_symbol)
 
+    def __repr__(self):
+        if self.name is None:
+            return f"<relative: {self.address_or_symbol} - {self.factory}>"
+        return f"<{self.name}>"
+
     @property
     def byte_count(self):
         return 4
@@ -169,7 +186,7 @@ def lwz(output_register: GeneralRegister, offset: int, input_register: GeneralRe
     return Instruction.compose(((32, 6, False),
                                 (output_register.number, 5, False),
                                 (input_register.number, 5, False),
-                                (offset, 16, True)))
+                                (offset, 16, True))).with_name(f"lwz {output_register}, 0x{offset:x}({input_register})")
 
 
 def lwzx(output_register: GeneralRegister, input_register_a: GeneralRegister, input_register_b: GeneralRegister):
@@ -254,7 +271,7 @@ def li(register: GeneralRegister, literal: int):
     """
     register = literal
     """
-    return addi(register, r0, literal)
+    return addi(register, r0, literal).with_name(f"li {register}, {literal}")
 
 
 def lis(register: GeneralRegister, literal: int):
@@ -329,14 +346,18 @@ def b(address_or_symbol: JumpTarget, *, relative: bool = False):
     """
     jumps to the given address, not setting the link register
     """
-    return _jump_to_relative_address(address_or_symbol, relative=relative, link=False)
+    return _jump_to_relative_address(address_or_symbol, relative=relative, link=False).with_name(
+        f"b {address_or_symbol}"
+    )
 
 
 def bl(address_or_symbol: JumpTarget, *, relative: bool = False):
     """
     jumps to the given address, setting the link register
     """
-    return _jump_to_relative_address(address_or_symbol, relative=relative, link=True)
+    return _jump_to_relative_address(address_or_symbol, relative=relative, link=True).with_name(
+        f"bl {address_or_symbol}"
+    )
 
 
 def _conditional_branch(bo: int, bi: int, address_or_symbol: JumpTarget, *, relative: bool = False,
