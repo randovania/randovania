@@ -92,6 +92,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
 
         self.qol_cosmetic_check.stateChanged.connect(self._persist_option_then_notify("qol_cosmetic"))
         self.open_map_check.stateChanged.connect(self._persist_option_then_notify("open_map"))
+        self.force_fusion_check.stateChanged.connect(self._persist_option_then_notify("force_fusion"))
         self.custom_hud_color.stateChanged.connect(self._persist_option_then_notify("use_hud_color"))
         self.power_suit_rotation_field.valueChanged.connect(self._persist_suit_color_rotations)
         self.varia_suit_rotation_field.valueChanged.connect(self._persist_suit_color_rotations)
@@ -109,6 +110,7 @@ class PrimeCosmeticPatchesDialog(BaseCosmeticPatchesDialog, Ui_PrimeCosmeticPatc
     def on_new_cosmetic_patches(self, patches: PrimeCosmeticPatches):
         self.qol_cosmetic_check.setChecked(patches.qol_cosmetic)
         self.open_map_check.setChecked(patches.open_map)
+        self.force_fusion_check.setChecked(patches.force_fusion)
         self.custom_hud_color.setChecked(patches.use_hud_color)
         self.power_suit_rotation_field.setValue(patches.suit_color_rotations[0])
         self.varia_suit_rotation_field.setValue(patches.suit_color_rotations[1])
