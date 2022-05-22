@@ -33,6 +33,7 @@ def _convert_v13(options: dict) -> dict:
                 "disable_hud_popup": True,
                 "speed_up_credits": True,
                 "open_map": True,
+                "force_fusion": False,
                 "unvisited_room_names": True,
                 "pickup_markers": True,
                 "teleporter_sounds": True,
