@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Spawning in Elite Quarters after killing OP no longer spawns the player OoB
 - Fixed: Ridley boss random size on PAL/NTSC-J and Trilogy
+- Added: Results screen now shows Randovania version and seed hash
 
 #### Logic Database
 
