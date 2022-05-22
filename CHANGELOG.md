@@ -26,12 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- Added "Cosmetic" option to force Fusion Suit
 
 #### Patcher Changes
 
 - Fixed: Spawning in Elite Quarters after killing OP no longer spawns the player OoB
-- Fixed: Combat Lock-ons are no longer standable
 - Fixed: Ridley boss random size on PAL/NTSC-J and Trilogy
 
 #### Logic Database

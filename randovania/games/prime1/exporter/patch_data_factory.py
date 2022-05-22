@@ -788,6 +788,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "quickplay": False,
                 "quiet": False,
                 "suitColors": suit_colors,
+                "forceFusion": self.cosmetic_patches.force_fusion,
             },
             "gameConfig": {
                 "bossSizes": boss_sizes,
