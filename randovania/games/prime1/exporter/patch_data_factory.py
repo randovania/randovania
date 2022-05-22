@@ -23,6 +23,7 @@ from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticP
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
 from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
+from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_SHINY_MISSILE = 1024
 
@@ -172,6 +173,10 @@ def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
         return prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[loc]
     else:
         return world_list.area_name(world_list.area_by_area_location(location), separator=":")
+
+
+def _create_results_screen_text(description: LayoutDescription) -> str:
+    return "%s | Seed Hash - %s (%s)" % (randovania.VERSION, description.shareable_word_hash, description.shareable_hash)
 
 
 class PrimePatchDataFactory(BasePatchDataFactory):
@@ -788,8 +793,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "quickplay": False,
                 "quiet": False,
                 "suitColors": suit_colors,
+                "forceFusion": self.cosmetic_patches.force_fusion,
             },
             "gameConfig": {
+                "resultsString": _create_results_screen_text(self.description),
                 "bossSizes": boss_sizes,
                 "noDoors": self.configuration.no_doors,
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,

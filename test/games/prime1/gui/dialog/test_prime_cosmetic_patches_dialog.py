@@ -27,6 +27,16 @@ def test_open_map(skip_qtbot):
     assert dialog.cosmetic_patches == PrimeCosmeticPatches(open_map=False)
 
 
+def test_force_fusion(skip_qtbot):
+    cosmetic_patches = PrimeCosmeticPatches(force_fusion=True)
+
+    dialog = PrimeCosmeticPatchesDialog(None, cosmetic_patches)
+    skip_qtbot.addWidget(dialog)
+
+    skip_qtbot.mouseClick(dialog.force_fusion_check, QtCore.Qt.LeftButton)
+
+    assert dialog.cosmetic_patches == PrimeCosmeticPatches(force_fusion=False)
+
 def test_custom_hud_color(skip_qtbot):
     cosmetic_patches = PrimeCosmeticPatches(use_hud_color=False)
 
