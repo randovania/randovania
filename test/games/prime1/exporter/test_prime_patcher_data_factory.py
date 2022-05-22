@@ -82,6 +82,9 @@ def _test_preset(rdvgame_file, expected_results_file, mocker):
     data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]
     expected_data["gameConfig"]["mainMenuMessage"] = expected_data["gameConfig"]["mainMenuMessage"].split("\n")[1]
 
+    data["gameConfig"]["resultsString"] = data["gameConfig"]["resultsString"].split("|")[1]
+    expected_data["gameConfig"]["resultsString"] = expected_data["gameConfig"]["resultsString"].split("|")[1]
+
     assert data == expected_data
 
 @pytest.mark.parametrize(
