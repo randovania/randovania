@@ -72,9 +72,15 @@ class LoginPromptDialog(QDialog, Ui_LoginPromptDialog):
     async def on_login_with_discord_button(self):
         try:
             await self.network_client.login_with_discord()
+
+        except pypresence.exceptions.DiscordNotFound as e:
+            await async_dialog.warning(self, "Discord not found",
+                                       str(e))
+
         except pypresence.exceptions.InvalidPipe:
             await async_dialog.warning(self, "Discord login",
                                        "Login failed. Is Discord running?")
+
         except pypresence.exceptions.ServerError:
             await async_dialog.warning(self, "Discord login",
                                        "Login failed. Did you reject the authorization prompt in Discord?")
