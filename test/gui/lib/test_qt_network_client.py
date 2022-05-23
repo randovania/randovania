@@ -59,10 +59,10 @@ async def test_handle_network_errors_exception(skip_qtbot, qapp, mocker, excepti
     mock_dialog.assert_awaited_once_with(qapp, title, message)
 
 
-async def test_login_to_discord(client):
-    client.discord = MagicMock()
-    client.discord.start = AsyncMock()
-    client.discord.authorize = AsyncMock(return_value={"data": {"code": "the-code"}})
+async def test_login_to_discord(client, mocker):
+    mock_aioclient = mocker.patch("pypresence.AioClient")
+    mock_aioclient.return_value = discord_client = AsyncMock()
+    discord_client.authorize.return_value = {"data": {"code": "the-code"}}
     client._emit_with_result = AsyncMock()
     client.on_user_session_updated = AsyncMock()
 
@@ -70,7 +70,8 @@ async def test_login_to_discord(client):
     await client.login_with_discord()
 
     # Assert
-    client.discord.start.assert_awaited_once_with()
-    client.discord.authorize.assert_awaited_once_with(1234, ['identify'])
+    mock_aioclient.assert_called_once_with(1234)
+    discord_client.start.assert_awaited_once_with()
+    discord_client.authorize.assert_awaited_once_with(1234, ['identify'])
     client._emit_with_result.assert_awaited_once_with("login_with_discord", "the-code")
     client.on_user_session_updated.assert_awaited_once_with(client._emit_with_result.return_value)
