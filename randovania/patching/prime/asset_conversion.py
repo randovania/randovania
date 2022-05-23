@@ -14,7 +14,9 @@ from retro_data_structures.dependencies import all_converted_dependencies, Depen
 from retro_data_structures.exceptions import InvalidAssetId, UnknownAssetId
 from retro_data_structures.formats import PAK, format_for
 from retro_data_structures.game_check import Game
+import open_prime_rando.echoes.custom_assets
 
+import randovania
 from randovania import get_data_path
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -24,7 +26,7 @@ from randovania.lib import status_update_lib, json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 PRIME_MODELS_VERSION = 1
-ECHOES_MODELS_VERSION = 2
+ECHOES_MODELS_VERSION = 3
 
 
 def delete_converted_assets(assets_dir: Path):
@@ -334,26 +336,25 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
         with open(metafile, "r") as md:
             return json.load(md)
 
-    next_id = 0xFFFF0000
-
     delete_converted_assets(output_path)
 
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
     with randomizer_data_path.open() as randomizer_data_file:
         randomizer_data = json.load(randomizer_data_file)
 
-    def id_generator(asset_type):
-        nonlocal next_id
-        result = next_id
-        while asset_manager.does_asset_exists(result):
-            result += 1
+    next_id = 0xFFFF0000
 
-        next_id = result + 1
-        asset_manager.register_custom_asset_name(f"custom_{asset_type}_{result}", result)
-        return result
+    def id_generator(_):
+        nonlocal next_id
+        new_id = next_id
+        next_id = new_id + 1
+        return new_id
 
     start = time.time()
+
     asset_manager = echoes_asset_manager()
+    open_prime_rando.echoes.custom_assets.create_custom_assets(asset_manager)
+
     logging.info("Loading PAKs")
     converter = AssetConverter(
         target_game=Game.PRIME,
@@ -363,21 +364,11 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
     )
     logging.info(f"Finished loading PAKs: {time.time() - start}")
 
-    # These aren't guaranteed to be available in the paks yet, so skip them for now
-    models_to_skip = [
-        "VioletTranslator",
-        "AmberTranslator",
-        "EmeraldTranslator",
-        "CobaltTranslator",
-        "DarkBeamAmmoExpansion",
-        "LightBeamAmmoExpansion"
-    ]
-
     # Fix the Varia Suit's character in the suits ANCS referencing a missing skin.
     # 0x3A5E2FE1 is Light Suit's skin
     # this is fixed by Claris' patcher when exporting for Echoes
     suits_ancs = asset_manager.get_parsed_asset(0xa3e787b7)
-    suits_ancs.character_set.characters[0].skin_id = 0x3A5E2FE1
+    suits_ancs.raw.character_set.characters[0].skin_id = 0x3A5E2FE1
     asset_manager.replace_asset(0xa3e787b7, suits_ancs)
 
     # Use echoes missile expansion for unlimited missiles instead of missile launcher
@@ -390,8 +381,7 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
         data
         for data in randomizer_data["ModelData"]
         if (data["Model"] != Game.ECHOES.invalid_asset_id
-            and data["AnimSet"] != Game.ECHOES.invalid_asset_id
-            and data["Name"] not in models_to_skip)
+            and data["AnimSet"] != Game.ECHOES.invalid_asset_id)
     ]
 
     for i, data in enumerate(assets_to_change):
@@ -494,4 +484,5 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
 
 
 if __name__ == '__main__':
+    randovania.setup_logging("DEBUG", None)
     convert_prime2_pickups(Path("converted"), print)
