@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 from typing import NamedTuple, Iterator
 
+import open_prime_rando.echoes.custom_assets
 from retro_data_structures.asset_manager import AssetManager, IsoFileProvider, PathFileProvider
 from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
@@ -14,14 +15,11 @@ from retro_data_structures.dependencies import all_converted_dependencies, Depen
 from retro_data_structures.exceptions import InvalidAssetId, UnknownAssetId
 from retro_data_structures.formats import PAK, format_for
 from retro_data_structures.game_check import Game
-import open_prime_rando.echoes.custom_assets
 
-import randovania
 from randovania import get_data_path
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib, json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
@@ -45,11 +43,8 @@ def prime_asset_manager(input_iso: Path) -> AssetManager:
     return AssetManager(IsoFileProvider(input_iso), Game.PRIME)
 
 
-def echoes_asset_manager() -> AssetManager:
-    internal_copies_path = Options.with_default_data_dir().internal_copies_path
-    game_path = internal_copies_path.joinpath("prime2", "contents", "files")
-
-    return AssetManager(PathFileProvider(game_path), Game.ECHOES)
+def echoes_asset_manager(input_path: Path) -> AssetManager:
+    return AssetManager(PathFileProvider(input_path), Game.ECHOES)
 
 
 class Asset(NamedTuple):
@@ -330,7 +325,7 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
     return converted_assets, randomizer_data_additions
 
 
-def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCallable):
+def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
     if get_asset_cache_version(output_path) >= ECHOES_MODELS_VERSION:
         with open(metafile, "r") as md:
@@ -352,7 +347,7 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
 
     start = time.time()
 
-    asset_manager = echoes_asset_manager()
+    asset_manager = echoes_asset_manager(input_path)
     open_prime_rando.echoes.custom_assets.create_custom_assets(asset_manager)
 
     logging.info("Loading PAKs")
@@ -483,6 +478,15 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
     return metadata
 
 
-if __name__ == '__main__':
+def _debug_main():
+    import randovania
     randovania.setup_logging("DEBUG", None)
-    convert_prime2_pickups(Path("converted"), print)
+
+    from randovania.interface_common.options import Options
+    options = Options.with_default_data_dir()
+    convert_prime2_pickups(options.internal_copies_path.joinpath("prime2", "contents"),
+                           Path("converted"), print)
+
+
+if __name__ == '__main__':
+    _debug_main()

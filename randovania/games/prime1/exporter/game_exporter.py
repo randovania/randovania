@@ -178,7 +178,8 @@ class PrimeGameExporter(GameExporter):
                 from randovania.games.prime2.exporter.game_exporter import extract_and_backup_iso
                 extract_and_backup_iso(export_params.echoes_input_path, export_params.echoes_contents_path,
                                        export_params.echoes_backup_path, updaters[0])
-            assets_meta = asset_conversion.convert_prime2_pickups(assets_path, asset_conversion_progress)
+            assets_meta = asset_conversion.convert_prime2_pickups(export_params.echoes_contents_path,
+                                                                  assets_path, asset_conversion_progress)
             new_config["externAssetsDir"] = os.fspath(assets_path)
 
         # Replace models
