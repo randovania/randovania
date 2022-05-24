@@ -82,6 +82,13 @@ class DockWeakness:
 
 
 @dataclass(frozen=True, slots=True)
+class DockRandoParams:
+    unlocked: DockWeakness
+    locked: DockWeakness
+    included: set[DockWeakness]
+
+
+@dataclass(frozen=True, slots=True)
 class DockType:
     """Represents a kind of dock for the game. Can be things like Door, Tunnel, Portal."""
     short_name: str
@@ -93,6 +100,7 @@ class DockType:
 class DockWeaknessDatabase:
     dock_types: list[DockType]
     weaknesses: dict[DockType, dict[str, DockWeakness]]
+    dock_rando_params: dict[DockType, DockRandoParams]
     default_weakness: tuple[DockType, DockWeakness]
 
     def find_type(self, dock_type_name: str) -> DockType:
@@ -106,6 +114,12 @@ class DockWeaknessDatabase:
 
     def get_by_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
         return self.weaknesses[self.find_type(dock_type_name)][weakness_name]
+
+    def get_unlocked_weakness(self, dock_type_name: str) -> DockWeakness:
+        dock_type = self.find_type(dock_type_name)
+        if dock_type.unlocked_weakness is None:
+            raise ValueError(f"Dock type {dock_type} has no unlocked weakness.")
+        return self.weaknesses[dock_type][dock_type.unlocked_weakness]
 
     @property
     def all_weaknesses(self) -> Iterator[DockWeakness]:
