@@ -109,11 +109,16 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
     resources = state.resources.duplicate()
     pickups_for_this = list(pickup_pool)
 
+    # Check pickups that give less items in total first
+    # This means we test for expansions before the major items, in case both give the same resource
+    # Useful to get Dark Beam Ammo Expansion instead of Dark Beam.
+    pickups_for_this.sort(
+        key=lambda p: sum(1 for _ in p.resource_gain(resources, force_lock=True))
+    )
+
     for individual in sorted(requirement_list.values()):
         if individual.satisfied(resources, state.energy, state.resource_database):
             continue
-
-        # FIXME: this picks Dark Beam to provide Dark Ammo
 
         # Create another copy of the list so we can remove elements while iterating
         for pickup in list(pickups_for_this):
