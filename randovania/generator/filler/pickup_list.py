@@ -117,7 +117,7 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
 
         # Create another copy of the list so we can remove elements while iterating
         for pickup in list(pickups_for_this):
-            new_resources = ResourceCollection.from_resource_gain(pickup.resource_gain(resources))
+            new_resources = ResourceCollection.from_resource_gain(pickup.resource_gain(resources, force_lock=True))
             pickup_progression = ResourceCollection.from_resource_gain(pickup.progression)
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
