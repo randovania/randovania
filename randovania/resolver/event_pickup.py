@@ -2,14 +2,12 @@ import dataclasses
 from typing import Tuple, List
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import ResourceRequirement, Requirement
-from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceGain, CurrentResources, ResourceInfo
-from randovania.game_description.world.node import Node, NodeContext
-from randovania.game_description.world.resource_node import ResourceNode
+from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.resource_node import ResourceNode
 
 
 @dataclasses.dataclass(frozen=True)

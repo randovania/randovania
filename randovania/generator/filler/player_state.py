@@ -93,7 +93,7 @@ class PlayerState:
         print_new_resources(self.game, self.reach, self.hint_seen_count, "Scan Asset")
 
     def _advance_event_seen_count(self):
-        for resource, quantity in self.reach.state.resources.items():
+        for resource, quantity in self.reach.state.resources.as_resource_gain():
             if resource.resource_type == ResourceType.EVENT and quantity > 0:
                 self.event_seen_count[resource] += 1
 

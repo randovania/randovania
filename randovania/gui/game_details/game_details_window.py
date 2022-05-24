@@ -168,9 +168,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         layout_string = gollop_corruption_patcher.layout_string_for_items(pickup_names)
         starting_location = patches.starting_location
 
-        suit_type = game.resource_database.get_item_by_name("Suit Type")
-        starting_items = copy.copy(patches.starting_items)
-        starting_items[suit_type] = starting_items.get(suit_type, 0) + cosmetic.player_suit.value
+        starting_items = patches.starting_items.duplicate()
+        starting_items.add_resource_gain([
+            (game.resource_database.get_item_by_name("Suit Type"), cosmetic.player_suit.value),
+        ])
         if configuration.start_with_corrupted_hypermode:
             hypermode_original = 0
         else:

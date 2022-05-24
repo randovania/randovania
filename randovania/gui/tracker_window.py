@@ -12,7 +12,6 @@ from PySide6.QtCore import Qt
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, Requirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
-from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.configurable_node import ConfigurableNode
@@ -124,7 +123,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.logic = Logic(self.game_description, self.preset.configuration)
         self.map_canvas.select_game(self.game_description.game)
 
-        self._initial_state.resources["add_self_as_requirement_to_resources"] = 1
+        self._initial_state.resources.add_self_as_requirement_to_resources = True
 
         self.menu_reset_action.triggered.connect(self._confirm_reset)
         self.resource_filter_check.stateChanged.connect(self.update_locations_tree_for_reachable_nodes)
@@ -135,7 +134,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self.preset.configuration.trick_level.pretty_description,
             ", ".join(
                 resource.short_name
-                for resource in pool_patches.starting_items.keys()
+                for resource, _ in pool_patches.starting_items.as_resource_gain()
             )
         ))
 
@@ -606,7 +605,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         def is_resource_node_present(node: Node, state: State):
             if node.is_resource_node:
                 assert isinstance(node, ResourceNode)
-                return node.resource(state.node_context()) in self._initial_state.resources
+                return self._initial_state.resources.is_resource_set(node.resource(state.node_context()))
             return False
 
         self._starting_nodes = {
@@ -769,8 +768,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 add_pickup_to_state(state, pickup)
 
         for node in self._collected_nodes:
-            add_resource_gain_to_current_resources(node.resource_gain_on_collect(state.node_context()),
-                                                   state.resources)
+            state.resources.add_resource_gain(
+                node.resource_gain_on_collect(state.node_context())
+            )
 
         return state
 

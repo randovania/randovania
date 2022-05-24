@@ -91,7 +91,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
 
         patches: List[List[assembler.BaseInstruction]] = []
 
-        for item, delta in resources_to_give.items():
+        for item, delta in resources_to_give.as_resource_gain():
             if delta == 0:
                 continue
 

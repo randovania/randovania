@@ -134,10 +134,10 @@ class CSPatchDataFactory(BasePatchDataFactory):
         life = 0
 
         starting_msg = ""
-        missile = next((res for res in self.patches.starting_items.keys()
+        missile = next((res for res, _ in self.patches.starting_items.as_resource_gain()
                         if res.short_name in {"missile", "tempMissile"}),
                        None)
-        for item in self.patches.starting_items.keys():
+        for item, _ in self.patches.starting_items.as_resource_gain():
             if item.resource_type != ResourceType.ITEM or item == missile:
                 continue
 
@@ -205,7 +205,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
                 if trade == "mushrooms":
                     starting_msg += "<IT-0033<IT-0034"
 
-        if len(self.patches.starting_items):
+        if self.patches.starting_items.num_resources > 0:
             starting_msg += items_extra
 
             if life > 0:
