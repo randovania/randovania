@@ -65,7 +65,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models):
     if use_echoes_models:
         expected["externAssetsDir"] = os.fspath(asset_cache_path)
         mock_extract_echoes.assert_called_once_with(echoes_input_path, echoes_contents_path, echoes_backup_path, ANY)
-        mock_asset_convert.assert_called_once_with(asset_cache_path, ANY)
+        mock_asset_convert.assert_called_once_with(echoes_contents_path, asset_cache_path, ANY)
 
     mock_symbols_for_file.assert_called_once_with(tmp_path.joinpath("input.iso"))
     mock_patch_iso_raw.assert_called_once_with(json.dumps(expected, indent=4, separators=(',', ': ')), ANY)
