@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QWidget
 
 from randovania.game_description.requirements import RequirementSet, ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
@@ -37,7 +37,7 @@ def _area_requirement_sets(area: Area,
             yield req.as_set(database)
 
 
-def _check_used_tricks(area: Area, trick_resources: CurrentResources, database: ResourceDatabase):
+def _check_used_tricks(area: Area, trick_resources: ResourceCollection, database: ResourceDatabase):
     result = set()
 
     for s in _area_requirement_sets(area, database):
@@ -97,8 +97,10 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
             return
 
         # Update
-        trick_resources = self._game_description.game.generator.bootstrap.trick_resources_for_configuration(
-            trick_level, database)
+        bootstrap = self._game_description.game.generator.bootstrap
+        trick_resources = ResourceCollection.from_resource_gain(
+            bootstrap.trick_resources_for_configuration(trick_level, database)
+        )
 
         lines = []
 

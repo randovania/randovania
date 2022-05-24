@@ -5,11 +5,11 @@ from typing import Tuple, List
 
 import pytest
 
-from randovania.game_description import derived_nodes, default_database
+from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements import Requirement, ResourceRequirement
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import add_resources_into_another
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
@@ -122,13 +122,14 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.all_nodes))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
                                                        game.resource_database)
-    add_resources_into_another(initial_state.resources, pool_results.initial_resources)
+
+    initial_state.resources.add_resource_gain(pool_results.initial_resources.as_resource_gain())
     for pickup in pool_results.pickups:
         add_pickup_to_state(initial_state, pickup)
     for pickup in pool_results.assignment.values():
         add_pickup_to_state(initial_state, pickup)
     for trick in game.resource_database.trick:
-        initial_state.resources[trick] = LayoutTrickLevel.maximum().as_number
+        initial_state.resources.set_resource(trick, LayoutTrickLevel.maximum().as_number)
 
     expected_events = sorted([event for event in game.resource_database.event if event.short_name not in ignore_events],
                              key=lambda it: it.short_name)
@@ -152,12 +153,12 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
 
     collected_indices = {
         resource
-        for resource, quantity in reach.state.resources.items()
+        for resource, quantity in reach.state.resources.as_resource_gain()
         if quantity > 0 and isinstance(resource, PickupIndex)
     }
     collected_events = {
         resource
-        for resource, quantity in reach.state.resources.items()
+        for resource, quantity in reach.state.resources.as_resource_gain()
         if quantity > 0 and resource.resource_type == ResourceType.EVENT
     }
     assert list(reach_lib.collectable_resource_nodes(reach.nodes, reach)) == []
@@ -207,8 +208,11 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     patches = echoes_game_patches.assign_node_configuration({
         translator_identif: ResourceRequirement(scan_visor, 1, False)
     })
-    initial_state = State({scan_visor: 1 if has_translator else 0}, (), 99,
-                          node_a, patches, None, StateGameData(echoes_resource_database, game.world_list, 100, 99))
+    initial_state = State(
+        ResourceCollection.from_dict({scan_visor: 1 if has_translator else 0}),
+        (), 99, node_a, patches, None,
+        StateGameData(echoes_resource_database, game.world_list, 100, 99),
+    )
 
     # Run
     reach = reach_lib.reach_with_all_safe_resources(game, initial_state)
@@ -264,16 +268,18 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
         game,
         False, player_index=0)
     state = generator.bootstrap.calculate_starting_state(game, patches, default_echoes_configuration)
-    state.resources[item("Combat Visor")] = 1
-    state.resources[item("Amber Translator")] = 1
-    state.resources[item("Scan Visor")] = 1
-    state.resources[item("Morph Ball")] = 1
-    state.resources[item("Power Beam")] = 1
-    state.resources[item("Charge Beam")] = 1
-    state.resources[item("Grapple Beam")] = 1
-    state.resources[item("Dark Beam")] = 1
-    state.resources[item("Dark Ammo")] = 50
-    state.resources[item("Missile")] = 5
+    state.resources.add_resource_gain([
+        (item("Combat Visor"), 1),
+        (item("Amber Translator"), 1),
+        (item("Scan Visor"), 1),
+        (item("Morph Ball"), 1),
+        (item("Power Beam"), 1),
+        (item("Charge Beam"), 1),
+        (item("Grapple Beam"), 1),
+        (item("Dark Beam"), 1),
+        (item("Dark Ammo"), 50),
+        (item("Missile"), 5),
+    ])
 
     # Run
     reach = OldGeneratorReach.reach_from_state(game, state)

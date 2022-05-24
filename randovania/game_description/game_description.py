@@ -5,13 +5,13 @@ from typing import Iterator, FrozenSet, Dict, Optional, List
 
 from randovania.game_description.requirements import SatisfiableRequirements, Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, CurrentResources
+from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceCollection
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeaknessDatabase
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 
@@ -44,7 +44,7 @@ class IndexWithReason:
 @dataclasses.dataclass(frozen=True)
 class MinimalLogicData:
     items_to_exclude: List[IndexWithReason]
-    custom_item_amount: Dict[int, int]
+    custom_item_amount: Dict[str, int]
     events_to_exclude: List[IndexWithReason]
     description: str
 
@@ -101,7 +101,7 @@ class GameDescription:
         self.minimal_logic = minimal_logic
         self.world_list = world_list
 
-    def patch_requirements(self, resources, damage_multiplier: float):
+    def patch_requirements(self, resources: ResourceCollection, damage_multiplier: float):
         if not self.mutable:
             raise ValueError("self is not mutable")
 
@@ -154,7 +154,7 @@ def _resources_for_damage(resource: SimpleResourceInfo, database: ResourceDataba
 
 
 def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
-                                    resources: CurrentResources,
+                                    resources: ResourceCollection,
                                     energy: int,
                                     database: ResourceDatabase) -> FrozenSet[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList """

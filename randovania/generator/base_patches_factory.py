@@ -9,6 +9,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator import elevator_distributor
@@ -36,7 +37,8 @@ class BasePatchesFactory:
         """
         """
         patches = GamePatches(player_index, configuration, {}, game.get_default_elevator_connection(),
-                              {}, {}, {}, {}, game.starting_location, {})
+                              {}, {}, {}, ResourceCollection.with_database(game.resource_database),
+                              game.starting_location, {})
 
         # Elevators
         try:

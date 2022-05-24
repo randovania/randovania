@@ -3,7 +3,7 @@ from typing import List
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 
 LAYOUT_LETTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ(){}[]<>=,.!#^-+?"
@@ -212,10 +212,10 @@ def starting_location_for(game: GameDescription, location: AreaIdentifier) -> st
     return f"custom {world.extra['asset_id']:x} {area.extra['asset_id']:x}"
 
 
-def starting_items_for(resources: CurrentResources, hypermode_original: int) -> str:
+def starting_items_for(resources: ResourceCollection, hypermode_original: int) -> str:
     capacity_by_short_name = {
         item.short_name: capacity
-        for item, capacity in resources.items()
+        for item, capacity in resources.as_resource_gain()
         if isinstance(item, ItemResourceInfo)
     }
     capacity_by_short_name["HyperModeOriginal"] = hypermode_original

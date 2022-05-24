@@ -3,7 +3,7 @@ from PySide6.QtCore import Signal
 from qasync import asyncSlot
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.gui.lib import file_prompts, async_dialog, signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedComboBox
@@ -120,7 +120,7 @@ class ConnectionLayerWidget(QtWidgets.QDockWidget):
             idx = combo.findData(trick_level.level_for_trick(trick).as_number)
             combo.setCurrentIndex(idx)
 
-    def selected_tricks(self) -> CurrentResources:
+    def selected_tricks(self) -> dict[TrickResourceInfo, int]:
         return {
             trick: combo.currentData()
             for (trick, trick_check), combo in self.tricks.items()

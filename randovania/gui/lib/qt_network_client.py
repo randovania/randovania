@@ -29,19 +29,13 @@ class QtNetworkClient(QWidget, NetworkClient):
     GameSessionAuditLogUpdated = Signal(GameSessionAuditLog)
     GameUpdateNotification = Signal()
 
-    discord: Optional[pypresence.AioClient]
+    discord: Optional[pypresence.AioClient] = None
 
     def __init__(self, user_data_dir: Path):
         super().__init__()
         NetworkClient.__init__(self, user_data_dir.joinpath("network_client"), randovania.get_configuration())
         from randovania.gui.lib import common_qt_lib
         common_qt_lib.set_default_window_icon(self)
-
-        if self.configuration.get("discord_client_id") is not None:
-            self.discord = pypresence.AioClient(self.configuration["discord_client_id"])
-            self.discord._events_on = False  # workaround for broken AioClient
-        else:
-            self.discord = None
 
     @NetworkClient.connection_state.setter
     def connection_state(self, value: ConnectionState):
@@ -81,10 +75,13 @@ class QtNetworkClient(QWidget, NetworkClient):
         self.GameSessionAuditLogUpdated.emit(audit_log)
 
     async def login_with_discord(self):
-        if self.discord is None:
+        if "discord_client_id" not in self.configuration:
             raise RuntimeError("Missing Discord configuration for Randovania")
 
+        self.discord = pypresence.AioClient(self.configuration["discord_client_id"])
+        self.discord._events_on = False  # workaround for broken AioClient
         await self.discord.start()
+
         authorize = await self.discord.authorize(self.configuration["discord_client_id"], ['identify'])
 
         new_session = await self._emit_with_result("login_with_discord", authorize["data"]["code"])
@@ -119,7 +116,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         methods = []
         if "guest_secret" in self.configuration:
             methods.append("guest")
-        if self.discord is not None:
+        if "discord_client_id" in self.configuration:
             methods.append("discord")
         return set(methods)
 

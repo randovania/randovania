@@ -13,7 +13,7 @@ from randovania.lib import frozen_lib
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
-    from randovania.game_description.resources.resource_info import CurrentResources, ResourceInfo
+    from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
     from randovania.game_description.world.node_provider import NodeProvider
 
 
@@ -26,12 +26,12 @@ class NodeLocation(NamedTuple):
 @dataclasses.dataclass(frozen=True)
 class NodeContext:
     patches: GamePatches
-    current_resources: CurrentResources
+    current_resources: ResourceCollection
     database: ResourceDatabase
     node_provider: NodeProvider
 
     def has_resource(self, resource: ResourceInfo) -> bool:
-        return self.current_resources.get(resource, 0) > 0
+        return self.current_resources.has_resource(resource)
 
 
 @dataclasses.dataclass(frozen=True, slots=True)

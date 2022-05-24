@@ -9,6 +9,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.hint import Hint
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -79,7 +80,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         "starting_location": patches.starting_location.as_string,
         "starting_items": {
             resource_info.long_name: quantity
-            for resource_info, quantity in patches.starting_items.items()
+            for resource_info, quantity in patches.starting_items.as_resource_gain()
         },
         "teleporters": {
             teleporter.as_string: connection.as_string
@@ -128,7 +129,7 @@ def _find_pickup_with_name(item_pool: List[PickupEntry], pickup_name: str) -> Pi
     raise ValueError(f"Unable to find a pickup with name {pickup_name}. Possible values: {sorted(names)}")
 
 
-def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: GameDescription,
+def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: GameDescription,
                   game_modifications: dict, configuration: BaseConfiguration) -> GamePatches:
     """
     Decodes a dict created by `serialize` back into a GamePatches.
@@ -151,10 +152,10 @@ def decode_single(player_index: int, all_pools: Dict[int, PoolResults], game: Ga
     starting_location = AreaIdentifier.from_string(game_modifications["starting_location"])
 
     # Initial items
-    starting_items = {
+    starting_items = ResourceCollection.from_dict({
         find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
         for resource_name, quantity in game_modifications["starting_items"].items()
-    }
+    })
 
     # Elevators
     elevator_connection: ElevatorConnection = {
