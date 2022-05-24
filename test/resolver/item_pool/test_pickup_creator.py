@@ -227,6 +227,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
             temporary_item=temporary_a,
             item_to_lock=ammo_a,
         ),
+        probability_multiplier=2,
     )
 
 

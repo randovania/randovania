@@ -262,7 +262,7 @@ def _assign_pickup_somewhere(action: PickupEntry,
     if locations_weighted and (current_player.num_random_starting_items_placed
                                >= current_player.configuration.minimum_random_starting_items):
 
-        if debug.debug_level() > 1:
+        if debug.debug_level() > 2:
             debug_print_weighted_locations(all_locations_weighted)
 
         index_owner_state, pickup_index = select_element_with_weight(locations_weighted, rng)
