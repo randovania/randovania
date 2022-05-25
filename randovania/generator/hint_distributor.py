@@ -18,6 +18,7 @@ from randovania.game_description.world.logbook_node import LoreType, LogbookNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
+from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.player_state import PlayerState
 from randovania.generator.filler.runner import PlayerPool
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -176,11 +177,16 @@ class HintDistributor(ABC):
         # But remove these that already have hints
         potential_hint_locations -= patches.hints.keys()
 
+        # We try our best to not hint the same thing twice
+        hinted_indices: set[PickupIndex] = {hint.target for hint in patches.hints.values() if hint.target is not None}
+
         # Get interesting items to place hints for
-        possible_indices = set(patches.pickup_assignment.keys())
-        possible_indices -= {hint.target for hint in patches.hints.values() if hint.target is not None}
-        possible_indices -= {index for index in possible_indices
-                             if not self.interesting_pickup_to_hint(patches.pickup_assignment[index].pickup)}
+        possible_indices: set[PickupIndex] = {
+            index
+            for index, target in patches.pickup_assignment.items()
+            if self.interesting_pickup_to_hint(target.pickup)
+        }
+        possible_indices -= hinted_indices
 
         debug.debug_print("fill_unassigned_hints had {} decent indices for {} hint locations".format(
             len(possible_indices), len(potential_hint_locations)))
@@ -191,11 +197,34 @@ class HintDistributor(ABC):
                 print(f"* {asset}: {len(pickups)} pickups")
             print("> Done.")
 
+        all_pickup_indices = [
+            node.pickup_index
+            for node in world_list.all_nodes
+            if isinstance(node, PickupNode)
+        ]
+        rng.shuffle(all_pickup_indices)
+
+        # If there isn't enough indices, use unhinted non-majors placed by generator
+        if (num_indices_needed := len(potential_hint_locations) - len(possible_indices)) > 0:
+            potential_indices = [
+                index for index in all_pickup_indices
+                if index not in possible_indices and index not in hinted_indices
+            ]
+            debug.debug_print(
+                f"Had only {len(possible_indices)} hintable indices, but needed {len(potential_hint_locations)}."
+                f" Found {len(potential_indices)} less desirable locations.")
+            possible_indices |= set(potential_indices[:num_indices_needed])
+
         # But if we don't have enough hints, just pick randomly from everything
-        if len(possible_indices) < len(potential_hint_locations):
-            possible_indices = {node.pickup_index
-                                for node in world_list.all_nodes
-                                if isinstance(node, PickupNode)}
+        while len(possible_indices) < len(potential_hint_locations):
+            debug.debug_print(
+                f"Still only {len(possible_indices)} indices out of {len(potential_hint_locations)} target."
+                f"Desperate pool has {len(all_pickup_indices)} left."
+            )
+            try:
+                possible_indices.add(all_pickup_indices.pop())
+            except IndexError:
+                raise UnableToGenerate("Not enough PickupNodes in the game to fill all hint locations.")
 
         # Get an stable order
         ordered_possible_indices = list(sorted(possible_indices))
@@ -227,7 +256,8 @@ class HintDistributor(ABC):
             del pickup_indices_weight[new_index]
 
             new_hints[logbook] = Hint(HintType.LOCATION, None, new_index)
-            debug.debug_print(f"Added hint at {logbook} for item at {new_index}")
+            debug.debug_print(f"Added hint at {logbook} for item at "
+                              f"{world_list.node_name(world_list.node_from_pickup_index(new_index))}")
 
         return dataclasses.replace(patches, hints=new_hints)
 
