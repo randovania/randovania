@@ -28,8 +28,18 @@ def test_build_available_indices(major_mode: RandomizationMode, has_exclusion: b
         exclusion = frozenset([PickupIndex(3)])
     else:
         exclusion = frozenset()
-    configuration = FillerConfiguration(major_mode, 0, 0, exclusion, False, LayoutLogicalResourceAction.RANDOMLY,
-                                        False, 0, 0.0)
+    configuration = FillerConfiguration(
+        randomization_mode=major_mode,
+        minimum_random_starting_items=0,
+        maximum_random_starting_items=0,
+        indices_to_exclude=exclusion,
+        multi_pickup_placement=False,
+        multi_pickup_new_weighting=False,
+        logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
+        first_progression_must_be_local=False,
+        minimum_available_locations_for_hint_placement=0,
+        minimum_location_weight_for_hint_placement=0,
+    )
 
     # Run
     indices_per_world, all_indices = randovania.generator.filler.player_state.build_available_indices(world_list,

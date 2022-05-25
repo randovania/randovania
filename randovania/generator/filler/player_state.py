@@ -73,11 +73,11 @@ class PlayerState:
     def update_for_new_state(self):
         debug.debug_print(f"\n>>> Updating state of {self}")
 
-        self._advance_scan_asset_seen_count()
+        self.advance_scan_asset_seen_count()
         self._advance_event_seen_count()
         self._calculate_potential_actions()
 
-    def _advance_scan_asset_seen_count(self):
+    def advance_scan_asset_seen_count(self):
         for hint_identifier in self.reach.state.collected_hints:
             self.hint_seen_count[hint_identifier] += 1
             if self.hint_seen_count[hint_identifier] == 1:
