@@ -119,6 +119,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
     def setup_ui(self):
         window = self.window
         window.create_preset_tree.window_manager = self._window_manager
+        window.create_preset_tree.options = self._options
 
         self._original_show_event = window.tab_create_seed.showEvent
         window.tab_create_seed.showEvent = self._tab_show_event
