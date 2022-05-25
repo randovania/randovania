@@ -83,7 +83,7 @@ class ResourceCollection:
         yield from self._resources.items()
 
     def remove_resource(self, resource: ResourceInfo):
-        self._resources.pop(resource)
+        self._resources.pop(resource, None)
 
     def duplicate(self) -> "ResourceCollection":
         result = ResourceCollection()
