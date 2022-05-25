@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Reduced the lag you get the first time you open the Games tab.
 - Changed: Optimized the game generation. As example, Echoes' Starter Preset is 45% faster.
 - Changed: Optimized the game validation. As example, Echoes' Starter Preset is 91% faster.
+- Changed: The algorithm for how locations lose value over generation has changed. This should have bigger impact in big multiworlds.
 - Removed: The server and discord bot are entirely removed from the distributed executables, reducing it's size.
 - Removed: Metroid Dread is no longer available in releases, as it was never intended to be considered stable.
 
