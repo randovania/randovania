@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.4.0] - 2022-06-01
 
 - Added: When using multi-pickup placement, expansions are now considered for logic.
+- Added: New experimental option for a different algorithm for how the generator weights locations for multi-pickup placement.
 - Changed: Reduced the lag you get the first time you open the Games tab.
 - Changed: Optimized the game generation. As example, Echoes' Starter Preset is 45% faster.
 - Changed: Optimized the game validation. As example, Echoes' Starter Preset is 91% faster.

@@ -217,7 +217,12 @@ def retcon_playthrough_filler(rng: Random,
             rng.shuffle(new_pickups)
 
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
-            for new_pickup in new_pickups:
+            for i, new_pickup in enumerate(new_pickups):
+                if i > 0 and current_player.configuration.multi_pickup_new_weighting:
+                    current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
+                    current_player.advance_scan_asset_seen_count()
+                    all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
+
                 log_entry = _assign_pickup_somewhere(new_pickup, current_player, player_states, rng,
                                                      all_locations_weighted)
                 actions_log.append(log_entry)
@@ -227,7 +232,8 @@ def retcon_playthrough_filler(rng: Random,
                 current_player.pickups_left.remove(new_pickup)
 
             current_player.num_actions += 1
-            increment_considered_count(all_locations_weighted)
+            if not current_player.configuration.multi_pickup_new_weighting:
+                increment_considered_count(all_locations_weighted)
 
         else:
             debug_print_collect_event(action, current_player.game)
@@ -277,6 +283,9 @@ def _assign_pickup_somewhere(action: PickupEntry,
 
         index_owner_state, pickup_index = select_element_with_weight(locations_weighted, rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
+
+        if current_player.configuration.multi_pickup_new_weighting:
+            increment_considered_count(all_locations_weighted)
         all_locations_weighted.pop((index_owner_state, pickup_index))
 
         # Place a hint for the new item
@@ -339,7 +348,8 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
             all_weights[(player_state, pickup_index)] = weight * player_weight
 
     # for (player_state, pickup_index), weight in all_weights.items():
-    #     print(f"> {player_state.index} - {pickup_index}: {weight}")
+    #     wl = player_state.game.world_list
+    #     print(f"> {player_state.index} - {wl.node_name(wl.node_from_pickup_index(pickup_index))}: {weight}")
     # print("============================================")
 
     return all_weights

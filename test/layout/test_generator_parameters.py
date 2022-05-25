@@ -64,7 +64,7 @@ def test_decode(default_echoes_preset, mocker, extra_data):
 
     # This test should break whenever we change how permalinks are created
     # When this happens, we must bump the permalink version and change the tests
-    encoded = b'$\x00\x00\x1fD\x00\x000\xff\xbc\x00'
+    encoded = b'$\x00\x00\x1fD\x00\x00\x18\x7f\xde\x00'
     if extra_data:
         encoded += b"="
 
