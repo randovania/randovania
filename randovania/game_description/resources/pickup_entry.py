@@ -1,11 +1,13 @@
 from dataclasses import dataclass
-from typing import Optional, Iterator, Tuple
+from typing import Optional, Iterator
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.item.item_category import ItemCategory
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.resource_info import ResourceGainTuple, ResourceGain, ResourceQuantity, \
-    CurrentResources
+from randovania.game_description.resources.resource_info import (
+    ResourceGainTuple, ResourceGain, ResourceQuantity,
+    ResourceCollection,
+)
 from randovania.games.game import RandovaniaGame
 
 
@@ -110,17 +112,17 @@ class PickupEntry:
             )
 
     @property
-    def convert_resources(self) -> Tuple[ResourceConversion, ...]:
+    def convert_resources(self) -> tuple[ResourceConversion, ...]:
         if self.unlocks_resource and self.resource_lock is not None:
             return (self.resource_lock.unlock_conversion(),)
         else:
             return tuple()
 
-    def conditional_for_resources(self, current_resources: CurrentResources) -> ConditionalResources:
+    def conditional_for_resources(self, current_resources: ResourceCollection) -> ConditionalResources:
         last_conditional: Optional[ConditionalResources] = None
 
         for conditional in self.conditional_resources:
-            if conditional.item is None or current_resources.get(conditional.item, 0) > 0:
+            if conditional.item is None or current_resources[conditional.item] > 0:
                 last_conditional = conditional
             else:
                 break
@@ -128,17 +130,17 @@ class PickupEntry:
         assert last_conditional is not None
         return last_conditional
 
-    def conversion_resource_gain(self, current_resources: CurrentResources) -> ResourceGain:
+    def conversion_resource_gain(self, current_resources: ResourceCollection) -> ResourceGain:
         for conversion in self.convert_resources:
-            quantity = current_resources.get(conversion.source, 0)
+            quantity = current_resources[conversion.source]
             yield conversion.source, -quantity
             yield conversion.target, quantity
 
-    def resource_gain(self, current_resources: CurrentResources, force_lock: bool = False) -> ResourceGain:
+    def resource_gain(self, current_resources: ResourceCollection, force_lock: bool = False) -> ResourceGain:
         resources = self.conditional_for_resources(current_resources).resources
 
         if (force_lock or self.respects_lock) and not self.unlocks_resource and (
-                self.resource_lock is not None and current_resources.get(self.resource_lock.locked_by, 0) == 0):
+                self.resource_lock is not None and current_resources[self.resource_lock.locked_by] == 0):
             yield from self.resource_lock.convert_gain(resources)
         else:
             yield from resources

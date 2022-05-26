@@ -4,7 +4,7 @@ import uuid
 from distutils.version import StrictVersion
 from enum import Enum
 from pathlib import Path
-from typing import Optional, TypeVar, Callable, Any, Set, List
+from typing import Optional, TypeVar, Callable, Any
 
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.games.game import RandovaniaGame
@@ -32,15 +32,30 @@ class Serializer:
     decode: Callable[[Any], Any]
 
 
-def serialize_alerts(alerts: Set[InfoAlert]) -> List[str]:
+def serialize_alerts(alerts: set[InfoAlert]) -> list[str]:
     return sorted(a.value for a in alerts)
 
 
-def decode_alerts(data: List[str]):
+def decode_alerts(data: list[str]):
     result = set()
     for item in data:
         try:
             result.add(InfoAlert(item))
+        except ValueError:
+            continue
+
+    return result
+
+
+def serialize_uuids(elements: set[uuid.UUID]) -> list[str]:
+    return sorted(str(a) for a in elements)
+
+
+def decode_uuids(data: list[str]):
+    result = set()
+    for item in data:
+        try:
+            result.add(uuid.UUID(item))
         except ValueError:
             continue
 
@@ -82,6 +97,7 @@ _SERIALIZER_FOR_FIELD = {
     "experimental_games": Serializer(identity, bool),
     "selected_preset_uuid": Serializer(str, uuid.UUID),
     "displayed_alerts": Serializer(serialize_alerts, decode_alerts),
+    "hidden_preset_uuids": Serializer(serialize_uuids, decode_uuids),
     "game_backend": Serializer(lambda it: it.value, MemoryExecutorChoice),
     "nintendont_ip": Serializer(identity, str),
     "selected_tracker": Serializer(identity, str),
@@ -97,6 +113,7 @@ def add_per_game_serializer():
             lambda it: it.as_json,
             make_decoder(game),
         )
+        _SERIALIZER_FOR_FIELD[f"is_game_expanded_{game.value}"] = Serializer(identity, bool)
 
 
 add_per_game_serializer()
@@ -134,6 +151,7 @@ class Options:
     _experimental_games: Optional[bool] = None
     _selected_preset_uuid: Optional[uuid.UUID] = None
     _displayed_alerts: Optional[set[InfoAlert]] = None
+    _hidden_preset_uuids: Optional[set[uuid.UUID]] = None
     _game_backend: Optional[MemoryExecutorChoice] = None
     _nintendont_ip: Optional[str] = None
     _selected_tracker: Optional[str] = None
@@ -145,10 +163,17 @@ class Options:
 
         for game in RandovaniaGame.all_games():
             self._set_field(f"game_{game.value}", None)
+            self._set_field(f"is_game_expanded_{game.value}", None)
 
     def __getattr__(self, item):
-        if isinstance(item, str) and item.startswith("game_"):
-            game_name = item[len("game_"):]
+        if isinstance(item, str):
+            if item.startswith("game_"):
+                game_name = item[len("game_"):]
+            elif item.startswith("is_game_expanded_"):
+                game_name = item[len("is_game_expanded_"):]
+            else:
+                raise AttributeError(item)
+
             try:
                 game: RandovaniaGame = RandovaniaGame(game_name)
             except ValueError:
@@ -156,7 +181,10 @@ class Options:
 
             result = getattr(self, f"_{item}", None)
             if result is None:
-                result = game.options.default_for_game(game)
+                if item.startswith("game_"):
+                    result = game.options.default_for_game(game)
+                else:
+                    result = game.data.development_state.is_stable
             return result
 
         raise AttributeError(item)
@@ -405,6 +433,37 @@ class Options:
             raise ValueError(f"Expected {game.options}, got {type(per_game)}")
 
         self._edit_field(f"game_{game.value}", per_game)
+
+    def is_game_expanded(self, game: RandovaniaGame) -> bool:
+        return getattr(self, f"is_game_expanded_{game.value}")
+
+    def set_is_game_expanded(self, game: RandovaniaGame, value: bool):
+        self._edit_field(f"is_game_expanded_{game.value}", value)
+
+    @property
+    def hidden_preset_uuids(self):
+        return _return_with_default(self._hidden_preset_uuids, set)
+
+    @hidden_preset_uuids.setter
+    def hidden_preset_uuids(self, value):
+        self._edit_field("hidden_preset_uuids", value)
+        pass
+
+    def is_preset_uuid_hidden(self, the_uuid: uuid.UUID) -> bool:
+        return the_uuid in self.hidden_preset_uuids
+
+    def set_preset_uuid_hidden(self, the_uuid: uuid.UUID, value: bool):
+        is_present = the_uuid in self.hidden_preset_uuids
+
+        if is_present != value:
+            # Create a copy, so we don't modify the existing field
+            uuids = set(self.hidden_preset_uuids)
+            if value:
+                uuids.add(the_uuid)
+            else:
+                uuids.remove(the_uuid)
+            with self:
+                self.hidden_preset_uuids = uuids
 
     # Advanced
 

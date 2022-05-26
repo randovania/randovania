@@ -8,7 +8,7 @@ from randovania.game_description.resources.pickup_entry import (
     ResourceLock,
     PickupModel,
 )
-from randovania.game_description.resources.resource_info import add_resource_gain_to_current_resources
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.generator.item_pool import pickup_creator
 from randovania.layout.base.major_item_state import MajorItemState
 
@@ -227,6 +227,7 @@ def test_create_ammo_expansion(requires_major_item: bool, echoes_item_database, 
             temporary_item=temporary_a,
             item_to_lock=ammo_a,
         ),
+        probability_multiplier=2,
     )
 
 
@@ -248,23 +249,26 @@ def test_missile_expansion_before_launcher(include_before, echoes_item_database,
         True, echoes_resource_database, ammo, True
     )
 
-    resources = {}
+    def to_dict(col: ResourceCollection):
+        return dict(col.as_resource_gain())
+
+    collection = ResourceCollection.with_database(echoes_resource_database)
 
     if include_before:
         # Ammo Expansion
-        add_resource_gain_to_current_resources(expansion.resource_gain(resources, force_lock=True), resources)
-        assert resources == {percent: 1, temporary: 5}
+        collection.add_resource_gain(expansion.resource_gain(collection, force_lock=True))
+        assert to_dict(collection) == {percent: 1, temporary: 5}
 
     # Add Launcher
-    add_resource_gain_to_current_resources(launcher.resource_gain(resources, force_lock=True), resources)
+    collection.add_resource_gain(launcher.resource_gain(collection, force_lock=True))
     if include_before:
-        assert resources == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}
+        assert to_dict(collection) == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}
     else:
-        assert resources == {percent: 1, temporary: 0, missile_launcher: 1, missile: 5}
+        assert to_dict(collection) == {percent: 1, temporary: 0, missile_launcher: 1, missile: 5}
 
     # Ammo Expansion
-    add_resource_gain_to_current_resources(expansion.resource_gain(resources, force_lock=True), resources)
+    collection.add_resource_gain(expansion.resource_gain(collection, force_lock=True))
     if include_before:
-        assert resources == {percent: 3, temporary: 0, missile_launcher: 1, missile: 15}
+        assert to_dict(collection) == {percent: 3, temporary: 0, missile_launcher: 1, missile: 15}
     else:
-        assert resources == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}
+        assert to_dict(collection) == {percent: 2, temporary: 0, missile_launcher: 1, missile: 10}

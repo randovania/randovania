@@ -102,9 +102,9 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
 
     if request.param.get("starting_item"):
         item_name = request.param.get("starting_item")
-        patches = patches.assign_extra_initial_items({
-            db.get_item_by_name(item_name): 1,
-        })
+        patches = patches.assign_extra_initial_items([
+            (db.get_item_by_name(item_name), 1),
+        ])
         data["starting_items"][item_name] = 1
 
     if request.param.get("elevator"):

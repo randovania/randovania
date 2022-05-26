@@ -11,6 +11,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.gui.generated.pickup_details_tab_ui import Ui_PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.exporter import item_names
 
@@ -57,7 +58,7 @@ class PickupDetailsTab(GameDetailsTab, Ui_PickupDetailsTab):
             pickup.pickup.name
             for pickup in patches.pickup_assignment.values()
         }
-        game_description = default_database.game_description_for(self.game_enum)
+        game_description = filtered_database.game_description_for_layout(configuration)
         self._create_pickup_spoilers(game_description)
         starting_area = game_description.world_list.area_by_area_location(patches.starting_location)
 

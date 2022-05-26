@@ -5,20 +5,20 @@ from math import ceil
 from typing import Optional, Iterable, FrozenSet, Iterator, Tuple, List, Type, Union
 
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo, CurrentResources
+from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 
 MAX_DAMAGE = 9999999
 
 
 class Requirement:
-    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
+    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         raise NotImplementedError()
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         raise NotImplementedError()
 
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> "Requirement":
         """
         Creates a new Requirement that does not contain reference to resources in static_resources.
@@ -71,13 +71,13 @@ class RequirementArrayBase(Requirement):
         self.items = tuple(items)
         self.comment = comment
 
-    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
+    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         raise NotImplementedError()
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         raise NotImplementedError()
 
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> Requirement:
         return type(self)(
             item.patch_requirements(static_resources, damage_multiplier, database) for item in self.items
@@ -125,7 +125,7 @@ class RequirementArrayBase(Requirement):
 
 
 class RequirementAnd(RequirementArrayBase):
-    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
+    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         result = 0
         for item in self.items:
             if item.satisfied(current_resources, MAX_DAMAGE, database):
@@ -134,7 +134,7 @@ class RequirementAnd(RequirementArrayBase):
                 return MAX_DAMAGE
         return result
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         return all(
             item.satisfied(current_resources, current_energy, database)
             for item in self.items
@@ -166,7 +166,7 @@ class RequirementAnd(RequirementArrayBase):
 
 
 class RequirementOr(RequirementArrayBase):
-    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
+    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         try:
             return min(
                 item.damage(current_resources, database)
@@ -176,7 +176,7 @@ class RequirementOr(RequirementArrayBase):
         except ValueError:
             return MAX_DAMAGE
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         return any(
             item.satisfied(current_resources, current_energy, database)
             for item in self.items
@@ -296,13 +296,13 @@ class ResourceRequirement(Requirement):
     def is_damage(self) -> bool:
         return self.resource.resource_type == ResourceType.DAMAGE
 
-    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
+    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         if self.resource.resource_type == ResourceType.DAMAGE:
             return ceil(database.get_damage_reduction(self.resource, current_resources) * self.amount)
         else:
             return 0
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
 
         if self.is_damage:
@@ -310,7 +310,7 @@ class ResourceRequirement(Requirement):
 
             return current_energy > self.damage(current_resources, database)
 
-        has_amount = current_resources.get(self.resource, 0) >= self.amount
+        has_amount = current_resources[self.resource] >= self.amount
         if self.negate:
             return not has_amount
         else:
@@ -348,9 +348,9 @@ class ResourceRequirement(Requirement):
             self.negate,
         )
 
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> Requirement:
-        if static_resources.get(self.resource) is not None:
+        if static_resources.is_resource_set(self.resource):
             if self.satisfied(static_resources, 0, database):
                 return Requirement.trivial()
             else:
@@ -381,13 +381,13 @@ class RequirementTemplate(Requirement):
     def template_requirement(self, database: ResourceDatabase) -> Requirement:
         return database.requirement_template[self.template_name]
 
-    def damage(self, current_resources: CurrentResources, database: ResourceDatabase) -> int:
+    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         return self.template_requirement(database).damage(current_resources, database)
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         return self.template_requirement(database).satisfied(current_resources, current_energy, database)
 
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> Requirement:
         return self.template_requirement(database).patch_requirements(static_resources, damage_multiplier, database)
 
@@ -442,10 +442,10 @@ class RequirementList:
         else:
             return "Trivial"
 
-    def damage(self, current_resources: CurrentResources, database: ResourceDatabase):
+    def damage(self, current_resources: ResourceCollection, database: ResourceDatabase):
         return sum(requirement.damage(current_resources, database) for requirement in self.values())
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """
         A list is considered satisfied if each IndividualRequirement that belongs to it is satisfied.
         In particular, an empty RequirementList is considered satisfied.
@@ -563,7 +563,7 @@ class RequirementSet:
         # No alternatives makes satisfied always return False
         return cls([])
 
-    def satisfied(self, current_resources: CurrentResources, current_energy: int, database: ResourceDatabase) -> bool:
+    def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """
         Checks if at least one alternative is satisfied with the given resources.
         In particular, an empty RequirementSet is *never* considered satisfied.
@@ -606,7 +606,7 @@ class RequirementSet:
             for individual in alternative.values():
                 yield individual
 
-    def patch_requirements(self, resources: CurrentResources, database: ResourceDatabase) -> "RequirementSet":
+    def patch_requirements(self, resources: ResourceCollection, database: ResourceDatabase) -> "RequirementSet":
         return RequirementOr(
             RequirementAnd(
                 individual.patch_requirements(resources, 1, database)

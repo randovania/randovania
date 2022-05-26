@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from unittest.mock import MagicMock, PropertyMock
 
 import pytest
@@ -56,7 +57,8 @@ def test_prime1_pickup_details_to_patcher_shiny_missile(prime1_resource_database
         **shiny_stuff,
     }
 
-def _test_preset(rdvgame_file, expected_results_file, mocker):
+
+def _test_preset(rdvgame_file: Path, expected_results_file: Path, mocker):
     # Setup
     description = LayoutDescription.from_file(rdvgame_file)
     players_config = PlayersConfiguration(0, {0: "Prime", 1: "Echoes"})
@@ -75,8 +77,9 @@ def _test_preset(rdvgame_file, expected_results_file, mocker):
         expected_data = json.load(file)
 
     # Uncomment to easily view diff of failed test
-    # with expected_results_file.open("w") as file:
-    #     file.write(json.dumps(data, indent=4, separators=(',', ': ')))
+    # expected_results_file.write_text(
+    #     json.dumps(data, indent=4, separators=(',', ': '))
+    # )
 
     # Ignore the part of the main menu message which has the randovania version in it
     data["gameConfig"]["mainMenuMessage"] = data["gameConfig"]["mainMenuMessage"].split("\n")[1]
@@ -87,12 +90,14 @@ def _test_preset(rdvgame_file, expected_results_file, mocker):
 
     assert data == expected_data
 
+
 @pytest.mark.parametrize(
     ("rdvgame_filename", "expected_results_filename"),
     [
-        ("prime1_and_2_multi.rdvgame", "randomprime_expected_data.json"), # simple multi
-        ("prime1_crazy_seed.rdvgame", "randomprime_expected_data_crazy.json"), # chaos features
-        ("prime1_crazy_seed_one_way_door.rdvgame", "randomprime_expected_data_one_way_door.json"), # same as above but 1-way doors
+        ("prime1_and_2_multi.rdvgame", "randomprime_expected_data.json"),  # simple multi
+        ("prime1_crazy_seed.rdvgame", "randomprime_expected_data_crazy.json"),  # chaos features
+        ("prime1_crazy_seed_one_way_door.rdvgame", "randomprime_expected_data_one_way_door.json"),
+        # same as above but 1-way doors
     ]
 )
 def test_create_patch_data(test_files_dir, rdvgame_filename, expected_results_filename, mocker):
