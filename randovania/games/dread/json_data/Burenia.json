@@ -634,11 +634,21 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
+                        "Fan Platform - Above": {
                             "type": "and",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "comment": "Temporary until door rando",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Fan Platform - Below": {
@@ -1136,43 +1146,6 @@
                         }
                     }
                 },
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 1500.0,
-                        "y": 4300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_026",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Upper Burenia Hub": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Fan Platform - Above": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Tile Group (POWERBEAM)": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -1397,6 +1370,15 @@
                                 ]
                             }
                         },
+                        "Door to Upper Burenia Hub": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
                         "Pickup (Energy Part)": {
                             "type": "or",
                             "data": {
@@ -1459,15 +1441,6 @@
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Speed",
-                                "amount": 1,
-                                "negate": false
                             }
                         },
                         "Tile Group (POWERBEAM)": {
