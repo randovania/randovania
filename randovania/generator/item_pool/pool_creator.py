@@ -3,7 +3,7 @@ from typing import Tuple
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import add_resources_into_another
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.generator.base_patches_factory import MissingRng
 from randovania.generator.item_pool import PoolResults
 from randovania.generator.item_pool.ammo import add_ammo
@@ -15,7 +15,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 def _extend_pool_results(base_results: PoolResults, extension: PoolResults):
     base_results.pickups.extend(extension.pickups)
     base_results.assignment.update(extension.assignment)
-    add_resources_into_another(base_results.initial_resources, extension.initial_resources)
+    base_results.initial_resources.add_resource_gain(extension.initial_resources.as_resource_gain())
 
 
 def calculate_pool_results(layout_configuration: BaseConfiguration,
@@ -31,7 +31,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     :param resource_database:
     :return:
     """
-    base_results = PoolResults([], {}, {})
+    base_results = PoolResults([], {}, ResourceCollection.with_database(resource_database))
 
     # Adding major items to the pool
     _extend_pool_results(base_results, add_major_items(resource_database,
@@ -61,11 +61,11 @@ def calculate_pool_item_count(layout: BaseConfiguration) -> Tuple[int, int]:
     game_description = filtered_database.game_description_for_layout(layout)
 
     num_pickup_nodes = game_description.world_list.num_pickup_nodes
-    pool_pickups, pool_assignment, _ = calculate_pool_results(layout, game_description.resource_database,
-                                                              rng_required=False)
+    pool_results = calculate_pool_results(layout, game_description.resource_database,
+                                          rng_required=False)
     min_starting_items = layout.major_items_configuration.minimum_random_starting_items
 
-    pool_count = len(pool_pickups) + len(pool_assignment)
+    pool_count = len(pool_results.pickups) + len(pool_results.assignment)
     maximum_size = num_pickup_nodes + min_starting_items
 
     return pool_count, maximum_size

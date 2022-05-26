@@ -16,11 +16,11 @@ from randovania.game_description.requirements import Requirement, RequirementAnd
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import CurrentResources, ResourceGain
+from randovania.game_description.resources.resource_info import ResourceGain, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import hints
@@ -102,7 +102,7 @@ def _create_spawn_point_field(patches: GamePatches,
     capacities = [
         {
             "index": item_id_for_item_resource(item),
-            "amount": patches.starting_items.get(item, 0),
+            "amount": patches.starting_items[item],
         }
         for item in game.resource_database.item
     ]
@@ -383,7 +383,7 @@ def _create_string_patches(hint_config: HintConfiguration,
 
 def _create_starting_popup(layout_configuration: EchoesConfiguration,
                            resource_database: ResourceDatabase,
-                           starting_items: CurrentResources) -> list:
+                           starting_items: ResourceCollection) -> list:
     extra_items = item_names.additional_starting_items(layout_configuration, resource_database, starting_items)
     if extra_items:
         return [

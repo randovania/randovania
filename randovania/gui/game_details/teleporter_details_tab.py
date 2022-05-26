@@ -2,11 +2,11 @@ import collections
 
 from PySide6 import QtWidgets
 
-from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.gui.game_details.game_details_tab import GameDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
+from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.lib.dict_lib import iterate_key_sorted
 from randovania.patching.prime import elevators
@@ -31,7 +31,7 @@ class TeleporterDetailsTab(GameDetailsTab):
         self.tree_widget.setColumnCount(2)
         self.tree_widget.setHeaderLabels(["Source", "Destination"])
 
-        world_list = default_database.game_description_for(self.game_enum).world_list
+        world_list = filtered_database.game_description_for_layout(configuration).world_list
         patches = all_patches[players.player_index]
 
         per_world: dict[str, dict[str, str]] = collections.defaultdict(dict)

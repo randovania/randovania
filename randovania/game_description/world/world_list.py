@@ -5,7 +5,7 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock_node import DockNode
@@ -165,7 +165,7 @@ class WorldList(NodeProvider):
         yield from node.connections_from(context)
         yield from self.area_connections_from(node)
 
-    def patch_requirements(self, static_resources: CurrentResources, damage_multiplier: float,
+    def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
                            database: ResourceDatabase) -> None:
         """
         Patches all Node connections, assuming the given resources will never change their quantity.

@@ -96,6 +96,7 @@ def create_ammo_expansion(ammo: Ammo,
         broad_category=ammo.broad_category,
         respects_lock=requires_major_item,
         resource_lock=ammo.create_resource_lock(resource_database),
+        probability_multiplier=2,
     )
 
 

@@ -4,11 +4,12 @@ import copy
 import dataclasses
 import typing
 from dataclasses import dataclass
-from typing import Tuple, Iterator, Optional
+from typing import Iterator, Optional
 
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 
 ElevatorConnection = dict[NodeIdentifier, Optional[AreaIdentifier]]
 
@@ -17,7 +18,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.hint import Hint
     from randovania.game_description.requirements import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
-    from randovania.game_description.resources.resource_info import CurrentResources
     from randovania.game_description.world.dock import DockWeakness
     from randovania.layout.base.base_configuration import BaseConfiguration
 
@@ -35,9 +35,18 @@ class GamePatches:
     dock_connection: dict[NodeIdentifier, Optional[NodeIdentifier]]
     dock_weakness: dict[NodeIdentifier, DockWeakness]
     configurable_nodes: dict[NodeIdentifier, Requirement]
-    starting_items: CurrentResources
+    starting_items: ResourceCollection
     starting_location: AreaIdentifier
     hints: dict[NodeIdentifier, Hint]
+
+    def __post_init__(self):
+        from randovania.game_description.resources.resource_info import ResourceCollection
+        if not isinstance(self.starting_items, ResourceCollection):
+            raise TypeError("starting_items must be a ResourceCollection")
+
+        for resource, _ in self.starting_items.as_resource_gain():
+            if resource.resource_type != ResourceType.ITEM:
+                raise ValueError(f"starting_items must have only Items, not {resource}")
 
     def assign_new_pickups(self, assignments: Iterator[tuple[PickupIndex, PickupTarget]]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
@@ -64,14 +73,9 @@ class GamePatches:
     def assign_starting_location(self, location: AreaIdentifier) -> "GamePatches":
         return dataclasses.replace(self, starting_location=location)
 
-    def assign_extra_initial_items(self, new_resources: CurrentResources) -> "GamePatches":
-        current = copy.copy(self.starting_items)
-
-        for resource, quantity in new_resources.items():
-            if resource.resource_type != ResourceType.ITEM:
-                raise ValueError("Only ITEM is supported as extra initial items, got {}".format(resource.resource_type))
-            current[resource] = current.get(resource, 0) + quantity
-
+    def assign_extra_initial_items(self, new_resources: ResourceGain) -> "GamePatches":
+        current = self.starting_items.duplicate()
+        current.add_resource_gain(new_resources)
         return dataclasses.replace(self, starting_items=current)
 
     def assign_hint(self, identifier: NodeIdentifier, hint: Hint) -> "GamePatches":
