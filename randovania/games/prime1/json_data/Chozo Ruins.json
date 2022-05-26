@@ -420,9 +420,9 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=atdoBOQ2O60",
+                                            "comment": "https://www.youtube.com/watch?v=kuaxthAhm54",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -430,6 +430,33 @@
                                                         "type": "tricks",
                                                         "name": "Dash",
                                                         "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Event54",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoosting",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Scan",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -8539,6 +8566,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Fallen Rubble": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -8552,6 +8586,26 @@
                     ],
                     "extra": {},
                     "event_name": "Event16",
+                    "connections": {
+                        "Pickup (Missile Launcher)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Fallen Rubble": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Event54",
                     "connections": {
                         "Pickup (Missile Launcher)": {
                             "type": "and",
