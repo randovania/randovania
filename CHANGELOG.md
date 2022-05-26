@@ -44,24 +44,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Changed: Increased Elite Quarters BSJ to Advanced
 - Fixed: Gravityless SJ strat for Cargo Freight Lift to Deck Gamma is no longer dangerous
-- Changed: Increase lower Great Tree Hall Wall Boost to Hypermode
 - Fixed: Main Plaza NSJ Grapple Ledge dash now correctly uses the Wasp damage boost method
-- Added: Thardus is now logical if you only have Thermal Visor with the Invisible Objects trick set to Intermediate
 - Fixed: Hall of the Elders Boost IUJ typos- BSJ is now IUJ and Combat is now Combat/Scan Dash
+- Added: Thardus is now logical if you only have Thermal Visor with the Invisible Objects trick set to Intermediate
 - Added: Flaghra now accounts for defeating it both before and after triggering the fight
-- Changed: Chozo Ruins Save Station 3 boostless/bombless strat to go through the tunnel has had its difficulty decreased to Advanced Movement and Intermediate Standable Terrain
 - Added: Method to reach Main Quarry's crane platform with just Grapple Beam and Beginner Movement
 - Added: Method to reach Main Quarry's crane platform with Expert Wall Boosts and Slope Jumps
-- Changed: Hive Totem NSJ Slope Jump now uses Beginner Underwater Movement
-- Changed: Monitor Station dash to Warrior Shrine is now Beginner with SJ
 - Added: Method of getting Crossway with only Boost Ball and Xxpert Movement
 - Added: Method of climbing Connection Elevator to Deck Beta gravityless NSJ with Advanced Bomb Jump and Expert Slope Jump
 - Added: NSJ/bombless strat of getting Gathering Hall's item with a Hypermode dash
 - Added: Method of getting Crossway item with Advanced Bomb Jump and Expert BSJ, Scan Dash, and Standable Terrain
 - Added: Method of climbing Reflecting Pool using the Stone Toad's wacky physics as Advanced Movement
 - Added: Gravityless NSJ method of leaving Gravity Chamber with Advanced Wall Boost and Expert Slope Jumps and Underwater Movement
+- Changed: Increased Elite Quarters BSJ to Advanced
+- Changed: Increase lower Great Tree Hall Wall Boost to Hypermode
+- Changed: Chozo Ruins Save Station 3 boostless/bombless strat to go through the tunnel has had its difficulty decreased to Advanced Movement and Intermediate Standable Terrain
+- Changed: Hive Totem NSJ Slope Jump now uses Beginner Underwater Movement
+- Changed: Monitor Station dash to Warrior Shrine is now Beginner with SJ
 
 ### Metroid Prime 2: Echoes
 
