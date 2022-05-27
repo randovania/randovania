@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.4.0] - 2022-06-01
 
-- Added: When using multi-pickup placement, expansions are now considered for logic.
+- **Major** - Added: When using multi-pickup placement, expansions are now considered for logic.
 - Added: New experimental option for a different algorithm for how the generator weights locations for multi-pickup placement.
 - Added: "Generate Game" tab now remembers which games and presets were expanded or collapsed.
 - Changed: Considerable more effort is made to keep hints relevant if there isn't enough things to be hinted in a game.
@@ -34,13 +34,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Metroid Prime
 
 - Added "Cosmetic" option to force Fusion Suit
+- Changed: Converting models from Echoes now always needs to be provided with an ISO.
 
 #### Patcher Changes
 
+- **Major** - Added: Models for Echoes' translators and split beam ammo are now also converted to Prime.
 - Fixed: Spawning in Elite Quarters after killing OP no longer spawns the player OoB
 - Fixed: Ridley boss random size on PAL/NTSC-J and Trilogy
 - Added: Results screen now shows Randovania version and seed hash
-- Added: Models for Echoes' translators and split beam ammo are now also converted to Prime.
 
 #### Logic Database
 
