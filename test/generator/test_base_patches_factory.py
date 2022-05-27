@@ -5,6 +5,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -242,7 +243,7 @@ def test_create_base_patches(mocker):
     game_patches_mock.assert_called_once_with(
         0, layout_configuration, {},
         game.get_default_elevator_connection.return_value,
-        {}, {}, {}, {},
+        {}, {}, {}, ResourceCollection.with_database(game.resource_database),
         game.starting_location, {},
     )
 

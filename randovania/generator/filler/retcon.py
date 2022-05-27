@@ -17,6 +17,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator import reach_lib
+from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action, action_name
 from randovania.generator.filler.filler_library import (
     UnableToGenerate, UncollectedState,
@@ -43,7 +44,7 @@ def _calculate_reach_for_progression(reach: GeneratorReach,
 
 def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[PickupIndex],
                                          assigned_indices: AbstractSet[PickupIndex],
-                                         seen_counts: Mapping[PickupIndex, int],
+                                         considered_counts: Mapping[PickupIndex, int],
                                          indices_groups: list[set[PickupIndex]],
                                          ) -> dict[PickupIndex, float]:
     result = {}
@@ -52,9 +53,9 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
         weight_from_collected_indices = math.sqrt(len(indices) / ((1 + len(assigned_indices & indices)) ** 2))
 
         for index in sorted(uncollected_indices & indices):
-            weight_from_seen_count = min(10, seen_counts[index]) ** -2
-            result[index] = weight_from_collected_indices * weight_from_seen_count
-            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_seen_count}")
+            weight_from_considered_count = min(10, considered_counts[index] + 1) ** -2
+            result[index] = weight_from_collected_indices * weight_from_considered_count
+            # print(f"## {index} : {weight_from_collected_indices} ___ {weight_from_considered_count}")
 
     return result
 
@@ -161,6 +162,13 @@ def select_weighted_action(rng: Random, weighted_actions: dict[Action, float]) -
         return rng.choice(list(weighted_actions.keys()))
 
 
+def increment_considered_count(locations_weighted: WeightedLocations):
+    for player, location in locations_weighted.keys():
+        player.pickup_index_considered_count[location] += 1
+        filler_logging.print_new_pickup_index(player.index, player.game, player.reach, location,
+                                              player.pickup_index_considered_count[location])
+
+
 def retcon_playthrough_filler(rng: Random,
                               player_states: list[PlayerState],
                               status_update: Callable[[str], None],
@@ -209,7 +217,12 @@ def retcon_playthrough_filler(rng: Random,
             rng.shuffle(new_pickups)
 
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
-            for new_pickup in new_pickups:
+            for i, new_pickup in enumerate(new_pickups):
+                if i > 0 and current_player.configuration.multi_pickup_new_weighting:
+                    current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
+                    current_player.advance_scan_asset_seen_count()
+                    all_locations_weighted = _calculate_all_pickup_indices_weight(player_states)
+
                 log_entry = _assign_pickup_somewhere(new_pickup, current_player, player_states, rng,
                                                      all_locations_weighted)
                 actions_log.append(log_entry)
@@ -219,6 +232,9 @@ def retcon_playthrough_filler(rng: Random,
                 current_player.pickups_left.remove(new_pickup)
 
             current_player.num_actions += 1
+            if not current_player.configuration.multi_pickup_new_weighting:
+                increment_considered_count(all_locations_weighted)
+
         else:
             debug_print_collect_event(action, current_player.game)
             # This action is potentially dangerous. Use `act_on` to remove invalid paths
@@ -262,11 +278,14 @@ def _assign_pickup_somewhere(action: PickupEntry,
     if locations_weighted and (current_player.num_random_starting_items_placed
                                >= current_player.configuration.minimum_random_starting_items):
 
-        if debug.debug_level() > 1:
+        if debug.debug_level() > 2:
             debug_print_weighted_locations(all_locations_weighted)
 
         index_owner_state, pickup_index = select_element_with_weight(locations_weighted, rng)
         index_owner_state.assign_pickup(pickup_index, PickupTarget(action, current_player.index))
+
+        if current_player.configuration.multi_pickup_new_weighting:
+            increment_considered_count(all_locations_weighted)
         all_locations_weighted.pop((index_owner_state, pickup_index))
 
         # Place a hint for the new item
@@ -322,14 +341,15 @@ def _calculate_all_pickup_indices_weight(player_states: list[PlayerState]) -> We
         pickup_index_weights = _calculate_uncollected_index_weights(
             player_state.all_indices & UncollectedState.from_reach(player_state.reach).indices,
             set(player_state.reach.state.patches.pickup_assignment),
-            player_state.pickup_index_seen_count,
+            player_state.pickup_index_considered_count,
             player_state.indices_groups,
         )
         for pickup_index, weight in pickup_index_weights.items():
             all_weights[(player_state, pickup_index)] = weight * player_weight
 
     # for (player_state, pickup_index), weight in all_weights.items():
-    #     print(f"> {player_state.index} - {pickup_index}: {weight}")
+    #     wl = player_state.game.world_list
+    #     print(f"> {player_state.index} - {wl.node_name(wl.node_from_pickup_index(pickup_index))}: {weight}")
     # print("============================================")
 
     return all_weights

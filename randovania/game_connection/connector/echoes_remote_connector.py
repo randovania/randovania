@@ -86,6 +86,6 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
                 self.version.powerup_functions, self.game.game,
                 item.extra["item_id"], delta,
             )
-            for item, delta in resources_to_give.items()
+            for item, delta in resources_to_give.as_resource_gain()
         ]
         return patches, format_received_item(item_name, provider_name)
