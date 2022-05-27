@@ -44,7 +44,7 @@ def prime_asset_manager(input_iso: Path) -> AssetManager:
 
 
 def echoes_asset_manager(input_path: Path) -> AssetManager:
-    return AssetManager(PathFileProvider(input_path), Game.ECHOES)
+    return AssetManager(IsoFileProvider(input_path), Game.ECHOES)
 
 
 class Asset(NamedTuple):
@@ -351,6 +351,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
     open_prime_rando.echoes.custom_assets.create_custom_assets(asset_manager)
 
     logging.info("Loading PAKs")
+    status_update("Loading assets from Prime 2 to convert", 0.0)
     converter = AssetConverter(
         target_game=Game.PRIME,
         asset_providers={Game.ECHOES: asset_manager},
@@ -392,7 +393,8 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
             raise RuntimeError("Unable to convert {}: {}".format(data["Name"], e))
 
     end = time.time()
-    logging.info(f"Time took: {end - start}")
+    logging.info(f"Time took to convert assets: {end - start}")
+    status_update("Finished converting assets from Prime 2 in {:.3f}.".format(end - start), 1.0)
 
     start = time.time()
     converted_dependencies = all_converted_dependencies(converter)
@@ -474,7 +476,8 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
             assetdata
         )
 
-    logging.info(f"Time took: {time.time() - start}")
+    logging.info(f"Time took to write files: {time.time() - start}")
+    status_update("Finished writing the converted assets in {:.3f}.".format(end - start), 1.0)
     return metadata
 
 

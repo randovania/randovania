@@ -88,7 +88,8 @@ def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
     # Assert
     assert options.options_for_game(RandovaniaGame.METROID_PRIME).output_directory == Path("somewhere")
     if is_prime_multi:
-        assert options.options_for_game(RandovaniaGame.METROID_PRIME).use_external_models == {RandovaniaGame.METROID_PRIME_ECHOES}
+        assert options.options_for_game(RandovaniaGame.METROID_PRIME).use_external_models == {
+            RandovaniaGame.METROID_PRIME_ECHOES}
         assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).input_path == Path("somewhere/echoes.iso")
 
 
@@ -164,11 +165,11 @@ def test_on_input_file_button(skip_qtbot, tmp_path, mocker, test_echoes):
 def test_get_game_export_params(skip_qtbot, tmp_path, is_echoes_multi, use_external_models):
     # Setup
     games = [RandovaniaGame.METROID_PRIME]
+    echoes_path = None
     if is_echoes_multi:
         games.append(RandovaniaGame.METROID_PRIME_ECHOES)
-        echoes_path = tmp_path.joinpath("input/echoes.iso")
-    else:
-        echoes_path = None
+        if use_external_models:
+            echoes_path = tmp_path.joinpath("input/echoes.iso")
 
     if use_external_models:
         models = {RandovaniaGame.METROID_PRIME_ECHOES}
@@ -177,24 +178,19 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_echoes_multi, use_exter
 
     options = MagicMock()
     options.internal_copies_path = tmp_path.joinpath("internal_copies")
-    options.options_for_game.side_effect = [PrimePerGameOptions(
-        cosmetic_patches=PrimeCosmeticPatches.default(),
-        input_path=tmp_path.joinpath("input/game.iso"),
-        output_directory=tmp_path.joinpath("output"),
-        output_format="iso",
-        use_external_models=models,
-    ),
+    options.options_for_game.side_effect = [
+        PrimePerGameOptions(
+            cosmetic_patches=PrimeCosmeticPatches.default(),
+            input_path=tmp_path.joinpath("input/game.iso"),
+            output_directory=tmp_path.joinpath("output"),
+            output_format="iso",
+            use_external_models=models,
+        ),
         EchoesPerGameOptions(
             cosmetic_patches=EchoesCosmeticPatches.default(),
             input_path=echoes_path
-        )]
-
-    expected_backup_path = None
-    expected_contents_path = None
-    if is_echoes_multi:
-        expected_contents_path = tmp_path.joinpath("internal_copies", "prime2", "contents")
-        if use_external_models:
-            expected_backup_path = tmp_path.joinpath("internal_copies", "prime2", "vanilla")
+        ),
+    ]
 
     window = PrimeGameExportDialog(options, {}, "MyHash", True, games)
 
@@ -207,8 +203,6 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_echoes_multi, use_exter
         input_path=tmp_path.joinpath("input/game.iso"),
         output_path=tmp_path.joinpath("output", "Prime Randomizer - MyHash.iso"),
         echoes_input_path=echoes_path,
-        echoes_backup_path=expected_backup_path,
-        echoes_contents_path=expected_contents_path,
         asset_cache_path=tmp_path.joinpath("internal_copies", "prime1", "prime2_models"),
         use_echoes_models=is_echoes_multi and use_external_models,
         cache_path=tmp_path.joinpath("internal_copies", "prime1", "randomprime_cache"),
