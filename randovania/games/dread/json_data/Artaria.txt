@@ -972,8 +972,8 @@ Extra - asset_id: collision_camera_009
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Tile Group (POWERBEAM)
       Trivial
-  > Tile Group (SPEEDBOOST) 2
-      Trivial
+  > Tunnel to Teleport to Dairon
+      Speed Booster
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -1007,37 +1007,13 @@ Extra - asset_id: collision_camera_009
   > Pickup (Missile Tank)
       Trivial
 
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_039
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (SPEEDBOOST) 2
-      Trivial
-  > Tunnel to Teleport to Dairon
-      Trivial
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_040
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Dock to Shinespark Tower to Grapple
-      Trivial
-  > Tile Group (SPEEDBOOST) 1
-      Trivial
-
 > Tunnel to Teleport to Dairon; Heals? False
   * Layers: default
   * Slide Tunnel to Teleport to Dairon/Tunnel to EMMI Zone Exit North
   > Door to EMMI Zone Dome
       Trivial
-  > Tile Group (SPEEDBOOST) 1
-      Trivial
+  > Dock to Shinespark Tower to Grapple
+      Speed Booster
 
 > Tunnel to EMMI Zone Dome; Heals? False
   * Layers: default
@@ -1066,8 +1042,6 @@ Extra - asset_id: collision_camera_010
   * Extra - right_shield_def: actordef:actors/props/doorwavebeam/charclasses/doorwavebeam.bmsad
   > Door to EMMI Zone Exit Southwest (DoorFrame_004)
       Trivial
-  > Tunnel to EMMI Zone Exit Northwest
-      Morph Ball and Knowledge (Beginner)
 
 > Door to EMMI Zone Exit Southwest (DoorFrame_004); Heals? False
   * Layers: default
@@ -1157,7 +1131,7 @@ Extra - asset_id: collision_camera_010
               Grapple Beam or Space Jump
               Spider Magnet and Use Spin Boost
   > Tunnel to EMMI Zone Exit Northwest
-      Space Jump or Speed Booster
+      Ballspark
 
 > Event - Water Device; Heals? False
   * Layers: default
@@ -3302,38 +3276,16 @@ Extra - asset_id: collision_camera_051
   * Pickup 21; Major Location? False
   * Extra - actor_name: item_missiletank_004
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (SPEEDBOOST)
-      Morph Ball
-
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_060
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (SPEEDBOOST)
-      Morph Ball
   > Tunnel to EMMI Zone Hub
-      Morph Ball
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_061
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Missile Tank)
-      Morph Ball
-  > Tile Group (POWERBEAM)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Power Bombs or Lay Bomb or Shoot Diffusion or Wave
 
 > Tunnel to EMMI Zone Hub; Heals? False
   * Layers: default
   * Morph Ball Tunnel to EMMI Zone Hub/Tunnel to EMMI Zone Exit Northwest
-  > Tile Group (POWERBEAM)
-      Morph Ball
+  > Pickup (Missile Tank)
+      Ballspark
 
 > Tunnel to Teleport to Cataris; Heals? False
   * Layers: default
@@ -5341,26 +5293,16 @@ Speed Booster Bonus Room
 Extra - total_boundings: {'x1': -16900.0, 'x2': -14800.0, 'y1': -7500.0, 'y2': -6358.0}
 Extra - polygon: [[-14800.0, -6358.0], [-16900.0, -6358.0], [-16900.0, -7500.0], [-14800.0, -7500.0]]
 Extra - asset_id: collision_camera_083
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_013
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Dock to Speed Hallway
-      Trivial
-
 > Dock to Speed Hallway; Heals? False
   * Layers: default
   * Open Passage to Speed Hallway/Dock to Speed Booster Bonus Room
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Start Point
+      Speed Booster
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Dock to Speed Hallway
+      Speed Booster
 
 ----------------
 Shortcut to Screw Attack
@@ -5414,7 +5356,7 @@ Extra - asset_id: collision_camera_086
   * Pickup 15; Major Location? False
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
-  > Tile Group (SPEEDBOOST) 1
+  > Dock to Speed Booster Bonus Room
       Can Slide
 
 > Pickup (Energy Part); Heals? False
@@ -5434,12 +5376,10 @@ Extra - asset_id: collision_camera_086
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Red Chozo Arena
-      Can Slide
   > Tile Group (MISSILE)
       Trivial
-  > Tile Group (SPEEDBOOST) 5
-      Trivial
+  > Dock to Speed Booster Bonus Room
+      Can Slide
 
 > Door to Red Chozo Arena; Heals? False
   * Layers: default
@@ -5451,12 +5391,6 @@ Extra - asset_id: collision_camera_086
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Pickup (Energy Part)
-      Trivial
-  > Door to Cold Introduction
-      Can Slide
-  > Tile Group (SPEEDBOOST) 3
-      Trivial
-  > Tile Group (SPEEDBOOST) 4
       Trivial
   > Dock to Speed Booster Bonus Room
       Trivial
@@ -5470,80 +5404,28 @@ Extra - asset_id: collision_camera_086
   * Extra - tile_types: ('MISSILE',)
   > Door to Cold Introduction
       Trivial
-  > Tile Group (SPEEDBOOST) 3
-      Trivial
-
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_009
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Missile+ Tank)
-      Can Slide
-  > Tile Group (SPEEDBOOST) 2
-      Trivial
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_010
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (SPEEDBOOST) 1
-      Trivial
-  > Tile Group (SPEEDBOOST) 4
-      Trivial
-
-> Tile Group (SPEEDBOOST) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_011
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Red Chozo Arena
-      Trivial
-  > Tile Group (MISSILE)
-      Trivial
-
-> Tile Group (SPEEDBOOST) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_012
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Red Chozo Arena
-      Trivial
-  > Tile Group (SPEEDBOOST) 2
-      Trivial
-
-> Tile Group (SPEEDBOOST) 5; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_041
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Cold Introduction
-      Trivial
-  > Tunnel to Cold Introduction
-      Morph Ball
+  > Dock to Speed Booster Bonus Room
+      Speed Booster or Can Slide
 
 > Dock to Speed Booster Bonus Room; Heals? False
   * Layers: default
   * Open Passage to Speed Booster Bonus Room/Dock to Speed Hallway
+  > Pickup (Missile+ Tank)
+      Speed Booster and Can Slide
+  > Door to Cold Introduction
+      Can Slide
   > Door to Red Chozo Arena
       Trivial
+  > Tile Group (MISSILE)
+      Speed Booster or Can Slide
+  > Tunnel to Cold Introduction
+      Speed Booster and Can Slide
 
 > Tunnel to Cold Introduction; Heals? False
   * Layers: default
   * Morph Ball Tunnel to Cold Introduction/Tunnel to Speed Hallway
-  > Tile Group (SPEEDBOOST) 5
-      Morph Ball
+  > Door to Cold Introduction
+      Ballspark
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
