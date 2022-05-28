@@ -147,8 +147,10 @@ Extra - asset_id: collision_camera_002
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Fan Platform - Above
+      All of the following:
+          # Temporary until door rando
+          Speed Booster
   > Fan Platform - Below
       Morph Ball and After Burenia - grapplepulloff1x2_000
   > Raft - Top Water Level
@@ -250,18 +252,6 @@ Extra - asset_id: collision_camera_002
   > Water Bottom
       Morph Ball
 
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_026
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Upper Burenia Hub
-      Trivial
-  > Fan Platform - Above
-      Trivial
-
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
   * Configurable Node
@@ -297,13 +287,13 @@ Extra - asset_id: collision_camera_002
           Any of the following:
               Grapple Beam or Spider Magnet or Space Jump
               Walljump (Beginner) and Use Spin Boost
+  > Door to Upper Burenia Hub
+      Speed Booster
   > Pickup (Energy Part)
       Any of the following:
           Speed Booster
           Horizontal Bomb Jump (Beginner) and Lay Cross Comb
           Flash Shift and Movement (Beginner)
-  > Tile Group (SPEEDBOOST)
-      Speed Booster
   > Tile Group (POWERBEAM)
       Trivial
 
@@ -1187,7 +1177,7 @@ Extra - asset_id: collision_camera_010
   * Pickup 94; Major Location? False
   * Extra - actor_name: item_missiletank_007
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (SPEEDBOOST)
+  > Giant Water Bottom
       Trivial
 
 > Event - Pull Central Grapple Block (grapplepulloff1x2_005); Heals? False
@@ -1197,22 +1187,6 @@ Extra - asset_id: collision_camera_010
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Left of Central Grapple Block
       Trivial
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_024
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Missile Tank)
-      Trivial
-  > Giant Water Bottom
-      Trivial
-  > Upper Water Ledge - Left
-      Any of the following:
-          Space Jump
-          Flash Shift and Gravity Suit
 
 > Tunnel to Teleport to Ghavoran (Upper Tunnel); Heals? False
   * Layers: default
@@ -1277,7 +1251,7 @@ Extra - asset_id: collision_camera_010
 
 > Giant Water Bottom; Heals? False
   * Layers: default
-  > Tile Group (SPEEDBOOST)
+  > Pickup (Missile Tank)
       Gravity Suit and Speed Booster
   > Tunnel to Teleport to Ghavoran (Lower Tunnel)
       Trivial
@@ -1713,8 +1687,8 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Door to Early Gravity Speedboost Room 1 (Lower)
+      Speed Booster and After Burenia - Early Gravity Energy Part
   > Top of Enky Shaft
       After Burenia - Ghavoran Teleport Enky
   > Event - Destroy all Enkys
@@ -1729,8 +1703,8 @@ Extra - asset_id: collision_camera_015
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Door to Early Gravity Speedboost Room 1 (Upper)
+      Speed Booster and After Burenia - Early Gravity Energy Part
 
 > Door to Main Hub Tower Middle (Charge); Heals? False
   * Layers: default
@@ -1809,18 +1783,6 @@ Extra - asset_id: collision_camera_015
       Trivial
   > Top of Enky Shaft
       Can Slide
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Early Gravity Speedboost Room 1 (Upper)
-      Trivial
-  > Door to Early Gravity Speedboost Room 1 (Lower)
-      Trivial
 
 > Top of Enky Shaft; Heals? False
   * Layers: default
@@ -2004,6 +1966,8 @@ Extra - asset_id: collision_camera_018
   * Extra - right_shield_def: None
   > Pickup (Energy Part)
       Trivial
+  > Event - Early Gravity Energy Part
+      Trivial
 
 > Door to Teleport to Ghavoran (Lower); Heals? False
   * Layers: default
@@ -2033,18 +1997,6 @@ Extra - asset_id: collision_camera_018
   > Tile Group (POWERBEAM) 1
       Trivial
 
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_013
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (POWERBEAM) 1
-      Trivial
-  > Dock to Early Gravity Speedboost Room 2 (Lower)
-      Trivial
-
 > Tile Group (POWERBEAM) 1; Heals? False
   * Layers: default
   * Configurable Node
@@ -2054,7 +2006,7 @@ Extra - asset_id: collision_camera_018
   * Extra - tile_types: ('POWERBEAM',)
   > Pickup (Missile+ Tank)
       Trivial
-  > Tile Group (SPEEDBOOST)
+  > Dock to Early Gravity Speedboost Room 2 (Lower)
       Trivial
   > Tunnel to Gravity Suit Tower
       Morph Ball
@@ -2103,8 +2055,8 @@ Extra - asset_id: collision_camera_018
 > Dock to Early Gravity Speedboost Room 2 (Lower); Heals? False
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 2/Dock to Early Gravity Speedboost Room 1 (Lower)
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Tile Group (POWERBEAM) 1
+      Speed Booster
 
 > Tunnel to Gravity Suit Tower; Heals? False
   * Layers: default
@@ -2112,36 +2064,36 @@ Extra - asset_id: collision_camera_018
   > Tile Group (POWERBEAM) 1
       Morph Ball
 
+> Event - Early Gravity Energy Part; Heals? False
+  * Layers: default
+  * Event Burenia - Early Gravity Energy Part
+  * Event added to account for door rando as it would otherwise be impossible to
+use the speed blocks just outside
+
+
+  > Door to Teleport to Ghavoran (Upper)
+      Trivial
+
 ----------------
 Early Gravity Speedboost Room 2
 Extra - total_boundings: {'x1': -700.0, 'x2': 2100.0, 'y1': -8300.0, 'y2': -6000.0}
 Extra - polygon: [[2100.0, -6000.0], [-700.0, -6000.0], [-700.0, -8300.0], [2100.0, -8300.0]]
 Extra - asset_id: collision_camera_019
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_012
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Dock to Early Gravity Speedboost Room 1 (Lower)
-      Trivial
-  > Slope Top
-      Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
-
 > Dock to Early Gravity Speedboost Room 1 (Upper); Heals? False
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 1/Dock to Early Gravity Speedboost Room 2 (Upper)
   > Water Pit
       Can Slide
   > Slope Top
-      Flash Shift or Space Jump or Speed Booster
+      All of the following:
+          Can Slide
+          Flash Shift or Speed Booster
 
 > Dock to Early Gravity Speedboost Room 1 (Lower); Heals? False
   * Layers: default
   * Open Passage to Early Gravity Speedboost Room 1/Dock to Early Gravity Speedboost Room 2 (Lower)
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Slope Top
+      Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Water Pit; Heals? False
   * Layers: default
@@ -2156,14 +2108,14 @@ Extra - asset_id: collision_camera_019
 
 > Slope Top; Heals? False
   * Layers: default
-  > Tile Group (SPEEDBOOST)
-      Trivial
   > Dock to Early Gravity Speedboost Room 1 (Upper)
       Any of the following:
           Space Jump
           All of the following:
               Spider Magnet or Walljump (Beginner)
               Flash Shift or Grapple Beam or Use Spin Boost
+  > Dock to Early Gravity Speedboost Room 1 (Lower)
+      Speed Booster
   > Water Pit
       Trivial
 

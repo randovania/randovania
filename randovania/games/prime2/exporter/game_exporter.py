@@ -4,14 +4,14 @@ import functools
 import json
 import shutil
 from pathlib import Path
-from typing import Optional, List
+from typing import Optional
 
 from mp2hudcolor import mp2hudcolor_c
 
 from randovania import get_data_path
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
-from randovania.games.prime2.patcher import claris_randomizer
 from randovania.games.prime2.exporter.patch_data_factory import adjust_model_name
+from randovania.games.prime2.patcher import claris_randomizer
 from randovania.lib import status_update_lib
 from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
