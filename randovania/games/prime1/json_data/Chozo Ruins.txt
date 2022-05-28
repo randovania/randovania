@@ -85,9 +85,9 @@ Extra - aabb: [58.406, -65.29903, -1.3835077, 165.42795, 117.940384, 60.33323]
                   All of the following:
                       # https://youtu.be/ivVhW1cxIz8
                       Scan Visor and Combat/Scan Dash (Intermediate)
-          Any of the following:
-              # https://www.youtube.com/watch?v=atdoBOQ2O60
-              Combat/Scan Dash (Hypermode)
+          All of the following:
+              # https://www.youtube.com/watch?v=kuaxthAhm54
+              Scan Visor and After Chozo - Fallen Rubble and Damage Boosting (Expert) and Combat/Scan Dash (Hypermode)
 
 > Door to Ruins Entrance; Heals? False; Spawn Point
   * Layers: default
@@ -1391,6 +1391,9 @@ Extra - aabb: [388.06592, -155.59135, 10.5427885, 434.5453, -70.19957, 73.9004]
                       Morph Ball Bomb
                       Power Bomb and Knowledge (Beginner)
               Morph Ball Bomb and Bomb Jump (Beginner)
+              All of the following:
+                  # https://clips.twitch.tv/ProductiveAbrasiveTurnipGingerPower
+                  Power Bomb and Scan Visor and Combat/Scan Dash (Hypermode) and Standable Terrain (Hypermode)
 
 > Pickup (Missile Expansion); Heals? False
   * Layers: default
@@ -1494,7 +1497,7 @@ Extra - aabb: [41.40501, 247.92514, -8.917927, 128.55772, 335.16376, 23.842714]
           Space Jump Boots and Movement (Beginner)
           Scan Visor and Combat/Scan Dash (Beginner)
           All of the following:
-              Slope Jump (Intermediate)
+              Slope Jump (Intermediate) and Gravityless Underwater Movement (Beginner)
               After Flaahgra or Poisoned Water Damage ≥ 30
   > Event - Hive Mecha
       Shoot Power Beam
@@ -1506,26 +1509,30 @@ Extra - aabb: [41.40501, 247.92514, -8.917927, 128.55772, 335.16376, 23.842714]
   * Extra - nonstandard: False
   > Door to Totem Access
       Any of the following:
-          Space Jump Boots
+          Space Jump Boots or After Chozo - Fallen Rubble
           Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
           Scan Visor and Combat/Scan Dash (Beginner)
-  > Pickup (Missile Launcher)
-      Trivial
   > Event - Hive Mecha
+      Trivial
+  > Event - Fallen Rubble
       Trivial
 
 > Pickup (Missile Launcher); Heals? False
   * Layers: default
   * Pickup 19; Major Location? True
   * Extra - position_required: False
-  > Door to Totem Access
-      Trivial
   > Door to Transport Access North
       Trivial
 
 > Event - Hive Mecha; Heals? False
   * Layers: default
   * Event Hive Mecha
+  > Door to Transport Access North
+      Trivial
+
+> Event - Fallen Rubble; Heals? False
+  * Layers: default
+  * Event Chozo - Fallen Rubble
   > Pickup (Missile Launcher)
       Trivial
 
@@ -1540,7 +1547,9 @@ Extra - aabb: [225.12708, 65.1913, 54.75615, 343.21954, 198.1482, 138.8626]
   * Normal Door to Sun Tower Access/Door to Sunchamber
   * Extra - dock_index: 0
   * Extra - nonstandard: True
-  > Before Fight
+  > Before Fight (Front)
+      Trivial
+  > Before Fight (Back)
       Trivial
 
 > Door to Sunchamber Access; Heals? False
@@ -1548,20 +1557,20 @@ Extra - aabb: [225.12708, 65.1913, 54.75615, 343.21954, 198.1482, 138.8626]
   * Normal Door to Sunchamber Access/Door to Sunchamber
   * Extra - dock_index: 1
   * Extra - nonstandard: True
-  > Before Fight
+  > Before Fight (Front)
       Trivial
 
 > Pickup (Varia Suit); Heals? False
   * Layers: default
   * Pickup 20; Major Location? True
   * Extra - position_required: False
-  > Before Fight
+  > Before Fight (Front)
       Trivial
 
 > Pickup (Artifact of Wild); Heals? False
   * Layers: default
   * Pickup 21; Major Location? True
-  > Before Fight
+  > Before Fight (Front)
       Trivial
 
 > Event - Flaahgra; Heals? False
@@ -1576,7 +1585,7 @@ Extra - aabb: [225.12708, 65.1913, 54.75615, 343.21954, 198.1482, 138.8626]
   > Pickup (Artifact of Wild)
       Trivial
 
-> Before Fight; Heals? False; Spawn Point
+> Before Fight (Front); Heals? False; Spawn Point
   * Layers: default
   > Door to Sun Tower Access
       After Flaahgra or After Chozo Ghosts (Sunchamber)
@@ -1587,19 +1596,39 @@ Extra - aabb: [225.12708, 65.1913, 54.75615, 343.21954, 198.1482, 138.8626]
           All of the following:
               Morph Ball
               Any of the following:
+                  # Requirements for destroying the bomb slots
                   Morph Ball Bomb
                   Power Bomb ≥ 4 and Combat (Beginner)
               Any of the following:
+                  # Requirements for getting to the bomb slots
                   Shoot Power Beam
-                  Missile ≥ 5 and Shoot Any Beam
+                  Missile ≥ 10 and Shoot Any Beam
                   Space Jump Boots and Combat (Beginner) and L-Jump (Beginner)
                   Combat (Intermediate) and Combat/Scan Dash (Advanced)
+              Any of the following:
+                  # Requirements for shooting the first dish
+                  Shoot Power Beam
+                  Missile and Shoot Any Beam
           Charge Beam and Missile ≥ 230 and Wavebuster and Combat (Advanced) and Shoot Wave Beam
   > Event - Chozo Ghosts
       All of the following:
           After Sunchamber Chozo Ghosts Layer Activated and Shoot Power Beam
           Charge Beam or Combat (Intermediate)
           Space Jump Boots or L-Jump (Beginner)
+
+> Before Fight (Back); Heals? False
+  * Layers: default
+  > Event - Flaahgra
+      All of the following:
+          # Flahgra can be defeated without shooting the first dish if coming from Sun Tower Access and before starting the fight
+          Morph Ball and Knowledge (Beginner)
+          Any of the following:
+              # Requirements for destroying the bomb slots
+              Morph Ball Bomb or Power Bomb ≥ 4
+          Any of the following:
+              # Requirements for getting to the center island
+              Combat/Scan Dash (Advanced)
+              Space Jump Boots and L-Jump (Beginner)
 
 ----------------
 Watery Hall Access
@@ -2282,7 +2311,7 @@ Extra - aabb: [743.8239, -217.36417, 29.29987, 834.11273, -144.96254, 81.37303]
                           Morph Ball Bomb and Bomb Jump (Beginner)
                           All of the following:
                               # https://www.youtube.com/watch?v=e-3y7ykkEwU
-                              Boost Ball and Scan Visor and Bomb Space Jump (Expert) and Combat (Advanced) and Movement (Advanced) and Standable Terrain (Intermediate) and Wall Boost (Advanced)
+                              Boost Ball and Scan Visor and Combat/Scan Dash (Advanced) and Instant Unmorph Jump (Expert) and Movement (Advanced) and Standable Terrain (Intermediate) and Wall Boost (Advanced)
           Morph Ball Bomb and Morph Ball and Bomb Jump (Expert)
 
 > Behind Barrier; Heals? False
@@ -2354,8 +2383,17 @@ Extra - aabb: [751.34436, -97.187256, 38.364685, 833.5538, -55.94176, 91.35127]
                   Spider Ball or Movement (Intermediate)
               Space Jump Boots and L-Jump (Beginner) and Standable Terrain (Intermediate)
               All of the following:
-                  # https://www.youtube.com/watch?v=rdTVYzudgrY
-                  Boost Ball and Scan Visor and Bomb Jump (Advanced) and Bomb Jump (Expert)
+                  Boost Ball
+                  Any of the following:
+                      All of the following:
+                          # https://youtu.be/M6CMVT1VC8g
+                          Movement (Expert)
+                      All of the following:
+                          # https://www.youtube.com/watch?v=rdTVYzudgrY
+                          Scan Visor and Combat/Scan Dash (Expert) and Movement (Advanced) and Standable Terrain (Advanced)
+              All of the following:
+                  # https://www.youtube.com/watch?v=xyJMJhYt81Q
+                  Morph Ball Bomb and Scan Visor and Bomb Jump (Advanced) and Bomb Space Jump (Expert) and Combat/Scan Dash (Expert) and Standable Terrain (Expert)
   > Event - Activate Bomb Slots
       Scan Visor and Shoot Super Missile
 
@@ -2507,7 +2545,11 @@ Extra - aabb: [754.19855, -343.01227, 58.286064, 793.17523, -254.9616, 100.00249
           All of the following:
               Morph Ball
               Any of the following:
-                  Boost Ball and After Reflecting Pool Water Drained
+                  All of the following:
+                      After Reflecting Pool Water Drained
+                      Any of the following:
+                          # Movement method: https://discord.com/channels/458432177223368704/464585290585997343/943702226621321236
+                          Boost Ball or Movement (Advanced)
                   All of the following:
                       Morph Ball Bomb and Standable Terrain (Advanced)
                       Bomb Space Jump (Expert) or Complex Bomb Jump (Expert)
@@ -2575,7 +2617,7 @@ Extra - aabb: [673.9764, -306.40494, 82.517944, 754.19855, -285.93994, 96.718056
           Morph Ball
           Any of the following:
               Morph Ball Bomb
-              Space Jump Boots and Movement (Expert) and Standable Terrain (Advanced)
+              Space Jump Boots and Movement (Advanced) and Standable Terrain (Intermediate)
               Boost Ball and Wall Boost (Hypermode)
 
 > Pickup (Items Every Room); Heals? False

@@ -420,9 +420,9 @@
                                         }
                                     },
                                     {
-                                        "type": "or",
+                                        "type": "and",
                                         "data": {
-                                            "comment": "https://www.youtube.com/watch?v=atdoBOQ2O60",
+                                            "comment": "https://www.youtube.com/watch?v=kuaxthAhm54",
                                             "items": [
                                                 {
                                                     "type": "resource",
@@ -430,6 +430,33 @@
                                                         "type": "tricks",
                                                         "name": "Dash",
                                                         "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Event54",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "DBoosting",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Scan",
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -7852,6 +7879,50 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://clips.twitch.tv/ProductiveAbrasiveTurnipGingerPower",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "PowerBomb",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dash",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Standable",
+                                                                    "amount": 5,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Scan",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -8302,6 +8373,15 @@
                                                     }
                                                 },
                                                 {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "UnderwaterMovement",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
                                                     "type": "or",
                                                     "data": {
                                                         "comment": null,
@@ -8439,18 +8519,27 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "Event54",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
                         },
-                        "Pickup (Missile Launcher)": {
+                        "Event - Hive Mecha": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Event - Hive Mecha": {
+                        "Event - Fallen Rubble": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8473,13 +8562,6 @@
                     "pickup_index": 19,
                     "major_location": true,
                     "connections": {
-                        "Door to Totem Access": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Transport Access North": {
                             "type": "and",
                             "data": {
@@ -8500,6 +8582,26 @@
                     "extra": {},
                     "event_name": "Event16",
                     "connections": {
+                        "Door to Transport Access North": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Fallen Rubble": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "Event54",
+                    "connections": {
                         "Pickup (Missile Launcher)": {
                             "type": "and",
                             "data": {
@@ -8512,7 +8614,7 @@
             }
         },
         "Sunchamber": {
-            "default_node": "Before Fight",
+            "default_node": "Before Fight (Front)",
             "valid_starting_location": true,
             "extra": {
                 "asset_id": 2584347627,
@@ -8553,7 +8655,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Before Fight": {
+                        "Before Fight (Front)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Before Fight (Back)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8588,7 +8697,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Before Fight": {
+                        "Before Fight (Front)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8611,7 +8720,7 @@
                     "pickup_index": 20,
                     "major_location": true,
                     "connections": {
-                        "Before Fight": {
+                        "Before Fight (Front)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8632,7 +8741,7 @@
                     "pickup_index": 21,
                     "major_location": true,
                     "connections": {
-                        "Before Fight": {
+                        "Before Fight (Front)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -8681,7 +8790,7 @@
                         }
                     }
                 },
-                "Before Fight": {
+                "Before Fight (Front)": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": null,
@@ -8748,7 +8857,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Requirements for destroying the bomb slots",
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -8791,7 +8900,7 @@
                                                 {
                                                     "type": "or",
                                                     "data": {
-                                                        "comment": null,
+                                                        "comment": "Requirements for getting to the bomb slots",
                                                         "items": [
                                                             {
                                                                 "type": "and",
@@ -8803,7 +8912,7 @@
                                                                             "data": {
                                                                                 "type": "items",
                                                                                 "name": "Missile",
-                                                                                "amount": 5,
+                                                                                "amount": 10,
                                                                                 "negate": false
                                                                             }
                                                                         },
@@ -8873,6 +8982,39 @@
                                                                                 "type": "tricks",
                                                                                 "name": "Combat",
                                                                                 "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": "Requirements for shooting the first dish",
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Power Beam"
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "template",
+                                                                            "data": "Shoot Any Beam"
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Missile",
+                                                                                "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         }
@@ -9017,6 +9159,113 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "Before Fight (Back)": {
+                    "node_type": "generic",
+                    "heal": false,
+                    "coordinates": null,
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "connections": {
+                        "Event - Flaahgra": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Flahgra can be defeated without shooting the first dish if coming from Sun Tower Access and before starting the fight",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Requirements for destroying the bomb slots",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bombs",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "PowerBomb",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Requirements for getting to the center island",
+                                            "items": [
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "SpaceJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "LJump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Dash",
+                                                        "amount": 3,
+                                                        "negate": false
                                                     }
                                                 }
                                             ]
@@ -13111,7 +13360,7 @@
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "tricks",
-                                                                                                        "name": "BSJ",
+                                                                                                        "name": "IUJ",
                                                                                                         "amount": 4,
                                                                                                         "negate": false
                                                                                                     }
@@ -13138,7 +13387,7 @@
                                                                                                     "type": "resource",
                                                                                                     "data": {
                                                                                                         "type": "tricks",
-                                                                                                        "name": "Combat",
+                                                                                                        "name": "Dash",
                                                                                                         "amount": 3,
                                                                                                         "negate": false
                                                                                                     }
@@ -13767,7 +14016,7 @@
                                                 {
                                                     "type": "and",
                                                     "data": {
-                                                        "comment": "https://www.youtube.com/watch?v=rdTVYzudgrY",
+                                                        "comment": null,
                                                         "items": [
                                                             {
                                                                 "type": "resource",
@@ -13775,6 +14024,119 @@
                                                                     "type": "items",
                                                                     "name": "Boost",
                                                                     "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "or",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "https://youtu.be/M6CMVT1VC8g",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "and",
+                                                                            "data": {
+                                                                                "comment": "https://www.youtube.com/watch?v=rdTVYzudgrY",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Scan",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Standable",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Dash",
+                                                                                            "amount": 4,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": "https://www.youtube.com/watch?v=xyJMJhYt81Q",
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Bombs",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "BJ",
+                                                                    "amount": 3,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Standable",
+                                                                    "amount": 4,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Dash",
+                                                                    "amount": 4,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -13791,26 +14153,8 @@
                                                                 "type": "resource",
                                                                 "data": {
                                                                     "type": "tricks",
-                                                                    "name": "BJ",
+                                                                    "name": "BSJ",
                                                                     "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "BJ",
-                                                                    "amount": 4,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "BJ",
-                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
@@ -14447,19 +14791,36 @@
                                                                         {
                                                                             "type": "resource",
                                                                             "data": {
-                                                                                "type": "items",
-                                                                                "name": "Boost",
+                                                                                "type": "events",
+                                                                                "name": "Event4",
                                                                                 "amount": 1,
                                                                                 "negate": false
                                                                             }
                                                                         },
                                                                         {
-                                                                            "type": "resource",
+                                                                            "type": "or",
                                                                             "data": {
-                                                                                "type": "events",
-                                                                                "name": "Event4",
-                                                                                "amount": 1,
-                                                                                "negate": false
+                                                                                "comment": "Movement method: https://discord.com/channels/458432177223368704/464585290585997343/943702226621321236",
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Boost",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Movement",
+                                                                                            "amount": 3,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    }
+                                                                                ]
                                                                             }
                                                                         }
                                                                     ]
@@ -14905,7 +15266,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Standable",
-                                                                    "amount": 3,
+                                                                    "amount": 2,
                                                                     "negate": false
                                                                 }
                                                             },
@@ -14914,7 +15275,7 @@
                                                                 "data": {
                                                                     "type": "tricks",
                                                                     "name": "Movement",
-                                                                    "amount": 4,
+                                                                    "amount": 3,
                                                                     "negate": false
                                                                 }
                                                             }
