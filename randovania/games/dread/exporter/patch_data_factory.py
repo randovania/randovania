@@ -309,6 +309,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             visual_etm=pickup_creator.create_visual_etm(),
         )
 
+        energy_per_tank = self.configuration.energy_per_tank if self.configuration.immediate_energy_parts else 100.0
+
         return {
             "configuration_identifier": self.description.shareable_hash,
             "starting_location": starting_location,
@@ -329,6 +331,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),
             "cosmetic_patches": self._cosmetic_patch_data(),
+            "energy_per_tank": energy_per_tank,
             "immediate_energy_parts": self.configuration.immediate_energy_parts,
             "game_patches": {
                 "consistent_raven_beak_damage_table": True,
