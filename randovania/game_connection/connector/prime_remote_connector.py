@@ -15,7 +15,7 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import (
-    CurrentResources, add_resource_gain_to_current_resources
+    ResourceCollection
 )
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
@@ -191,34 +191,35 @@ class PrimeRemoteConnector(RemoteConnector):
         self.logger.debug(f"Performing {len(memory_operations)} ops with {len(patches)} patches")
         await executor.perform_memory_operations(memory_operations)
 
-    def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory) -> Tuple[str, CurrentResources]:
-        inventory_resources: CurrentResources = {
-            item: inv_item.capacity
+    def _resources_to_give_for_pickup(self, pickup: PickupEntry, inventory: Inventory,
+                                      ) -> tuple[str, ResourceCollection]:
+        inventory_resources = ResourceCollection.with_database(self.game.resource_database)
+        inventory_resources.add_resource_gain([
+            (item, inv_item.capacity)
             for item, inv_item in inventory.items()
-        }
+        ])
         conditional = pickup.conditional_for_resources(inventory_resources)
         if conditional.name is not None:
             item_name = conditional.name
         else:
             item_name = pickup.name
 
-        resources_to_give = {}
+        resources_to_give = ResourceCollection.with_database(self.game.resource_database)
 
         if pickup.respects_lock and not pickup.unlocks_resource and (
-                pickup.resource_lock is not None and inventory_resources.get(pickup.resource_lock.locked_by, 0) == 0):
+                pickup.resource_lock is not None and inventory_resources[pickup.resource_lock.locked_by] == 0):
             pickup_resources = list(pickup.resource_lock.convert_gain(conditional.resources))
             item_name = f"Locked {item_name}"
         else:
             pickup_resources = conditional.resources
 
-        add_resource_gain_to_current_resources(pickup_resources, inventory_resources)
-        add_resource_gain_to_current_resources(pickup_resources, resources_to_give)
-        add_resource_gain_to_current_resources(pickup.conversion_resource_gain(inventory_resources),
-                                               resources_to_give)
+        inventory_resources.add_resource_gain(pickup_resources)
+        resources_to_give.add_resource_gain(pickup_resources)
+        resources_to_give.add_resource_gain(pickup.conversion_resource_gain(inventory_resources))
 
         # Ignore item% for received items
         if self.game.resource_database.item_percentage is not None:
-            resources_to_give.pop(self.game.resource_database.item_percentage, None)
+            resources_to_give.remove_resource(self.game.resource_database.item_percentage)
 
         return item_name, resources_to_give
 

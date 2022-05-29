@@ -1,19 +1,18 @@
 import collections
-import copy
 import json
 import logging
-import os
 import pprint
 import shutil
 import time
 from pathlib import Path
-from typing import NamedTuple, List, Iterator
+from typing import NamedTuple, Iterator
 
-import nod
-from retro_data_structures.asset_provider import AssetProvider, InvalidAssetId, UnknownAssetId
+import open_prime_rando.echoes.custom_assets
+from retro_data_structures.asset_manager import AssetManager, IsoFileProvider, PathFileProvider
 from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
 from retro_data_structures.dependencies import all_converted_dependencies, Dependency
+from retro_data_structures.exceptions import InvalidAssetId, UnknownAssetId
 from retro_data_structures.formats import PAK, format_for
 from retro_data_structures.game_check import Game
 
@@ -21,12 +20,11 @@ from randovania import get_data_path
 from randovania.game_description import default_database
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common.options import Options
 from randovania.lib import status_update_lib, json_lib
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 
 PRIME_MODELS_VERSION = 1
-ECHOES_MODELS_VERSION = 2
+ECHOES_MODELS_VERSION = 3
 
 
 def delete_converted_assets(assets_dir: Path):
@@ -41,45 +39,12 @@ def get_asset_cache_version(assets_dir: Path) -> int:
         return 0
 
 
-def prime_asset_provider(input_iso: Path) -> AssetProvider:
-    opt = Options.with_default_data_dir()
-    opt.load_from_disk()
-
-    result = nod.open_disc_from_image(os.fspath(input_iso))
-    if result is None:
-        raise RuntimeError(f"Invalid prime1 iso: {input_iso}")
-
-    part = result[0].get_data_partition()
-    pak_file_names: List[str] = [
-        name
-        for name in part.files()
-        if name.lower().endswith(".pak")
-    ]
-    pak_files = [
-        part.read_file(name)
-        for name in pak_file_names
-    ]
-
-    return AssetProvider(Game.PRIME, pak_file_names, pak_files)
+def prime_asset_manager(input_iso: Path) -> AssetManager:
+    return AssetManager(IsoFileProvider(input_iso), Game.PRIME)
 
 
-def echoes_asset_provider() -> AssetProvider:
-    internal_copies_path = Options.with_default_data_dir().internal_copies_path
-    paks_path = internal_copies_path.joinpath("prime2", "contents", "files")
-
-    all_files = list(paks_path.glob("*.pak"))
-    return AssetProvider(Game.ECHOES, all_files)
-
-
-def create_scan_visor_assets():
-    dark_visor_ancs_id = 2233160302
-    scan_visor_cmdl = 2949054468
-
-    with echoes_asset_provider() as asset_provider:
-        dark_visor_ancs = asset_provider.get_asset(dark_visor_ancs_id)
-
-        scan_visor_ancs = copy.deepcopy(dark_visor_ancs)
-        scan_visor_ancs.character_set.characters[0].model_id = scan_visor_cmdl
+def echoes_asset_manager(input_path: Path) -> AssetManager:
+    return AssetManager(IsoFileProvider(input_path), Game.ECHOES)
 
 
 class Asset(NamedTuple):
@@ -246,56 +211,52 @@ def merge_dependencies(dependencies: dict[int, set[Dependency]], asset_ids: Iter
 
 def _convert_prime1_assets(input_iso: Path, output_path: Path, randomizer_data: dict,
                            status_update: ProgressUpdateCallable):
-    asset_provider = prime_asset_provider(input_iso)
+    asset_manager = prime_asset_manager(input_iso)
 
     next_id = 0xFFFF0000
 
     def id_generator(_):
         nonlocal next_id
         new_id = next_id
-        while asset_provider.asset_id_exists(new_id):
-            new_id += 1
-
         next_id = new_id + 1
         return new_id
 
     start = time.time()
-    with asset_provider:
-        conversion_updaters = status_update_lib.split_progress_update(status_update, 2)
-        conversion_updaters[0]("Loading Prime 1 PAKs", 0)
-        converter = AssetConverter(
-            target_game=Game.ECHOES,
-            asset_providers={Game.PRIME: asset_provider},
-            id_generator=id_generator,
-            converters=conversions.converter_for,
-        )
-        conversion_updaters[0]("Finished loading Prime 1 PAKs", 1)
-        # logging.debug(f"Finished loading PAKs: {time.time() - start}")
+    conversion_updaters = status_update_lib.split_progress_update(status_update, 2)
+    conversion_updaters[0]("Loading Prime 1 PAKs", 0)
+    converter = AssetConverter(
+        target_game=Game.ECHOES,
+        asset_providers={Game.PRIME: asset_manager},
+        id_generator=id_generator,
+        converters=conversions.converter_for,
+    )
+    conversion_updaters[0]("Finished loading Prime 1 PAKs", 1)
+    # logging.debug(f"Finished loading PAKs: {time.time() - start}")
 
-        result = {}
-        num_assets = len(prime1_assets)
-        for i, (name, asset) in enumerate(prime1_assets.items()):
-            conversion_updaters[1](f"Converting {name} from Prime 1", i / num_assets)
-            if asset.ancs != 0 and asset.cmdl != 0:
-                result[name] = Asset(
-                    ancs=converter.convert_id(asset.ancs, Game.PRIME),
-                    cmdl=converter.convert_id(asset.cmdl, Game.PRIME),
-                    character=asset.character,
-                    scale=asset.scale,
-                )
-        conversion_updaters[1]("Finished converting Prime 1 assets", 1)
-        output_path.mkdir(exist_ok=True, parents=True)
-        # Cache these assets here
-        # This doesn't work properly so skip this for now
-        '''
-        for asset in converter.converted_assets.values():
-            assetdata = format_for(asset.type).build(asset.resource, target_game=Game.ECHOES)
-            if len(assetdata) % 32 != 0:
-                assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
-            assets_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
-                assetdata
+    result = {}
+    num_assets = len(prime1_assets)
+    for i, (name, asset) in enumerate(prime1_assets.items()):
+        conversion_updaters[1](f"Converting {name} from Prime 1", i / num_assets)
+        if asset.ancs != 0 and asset.cmdl != 0:
+            result[name] = Asset(
+                ancs=converter.convert_id(asset.ancs, Game.PRIME),
+                cmdl=converter.convert_id(asset.cmdl, Game.PRIME),
+                character=asset.character,
+                scale=asset.scale,
             )
-        '''
+    conversion_updaters[1]("Finished converting Prime 1 assets", 1)
+    output_path.mkdir(exist_ok=True, parents=True)
+    # Cache these assets here
+    # This doesn't work properly so skip this for now
+    '''
+    for asset in converter.converted_assets.values():
+        assetdata = format_for(asset.type).build(asset.resource, target_game=Game.ECHOES)
+        if len(assetdata) % 32 != 0:
+            assetdata += b"\xFF" * (32 - (len(assetdata) % 32))
+        assets_path.joinpath(f"{asset.id}.{asset.type.upper()}").write_bytes(
+            assetdata
+        )
+    '''
     end = time.time()
 
     # logging.debug(f"Time took: {end - start}")
@@ -364,13 +325,11 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
     return converted_assets, randomizer_data_additions
 
 
-def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCallable):
+def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
     if get_asset_cache_version(output_path) >= ECHOES_MODELS_VERSION:
         with open(metafile, "r") as md:
             return json.load(md)
-
-    next_id = 0xFFFF0000
 
     delete_converted_assets(output_path)
 
@@ -378,68 +337,64 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
     with randomizer_data_path.open() as randomizer_data_file:
         randomizer_data = json.load(randomizer_data_file)
 
-    def id_generator(asset_type):
-        nonlocal next_id
-        result = next_id
-        while asset_provider.asset_id_exists(result):
-            result += 1
+    next_id = 0xFFFF0000
 
-        next_id = result + 1
-        return result
+    def id_generator(_):
+        nonlocal next_id
+        new_id = next_id
+        next_id = new_id + 1
+        return new_id
 
     start = time.time()
-    with echoes_asset_provider() as asset_provider:
-        logging.info("Loading PAKs")
-        converter = AssetConverter(
-            target_game=Game.PRIME,
-            asset_providers={Game.ECHOES: asset_provider},
-            id_generator=id_generator,
-            converters=conversions.converter_for,
-        )
-        logging.info(f"Finished loading PAKs: {time.time() - start}")
 
-        # These aren't guaranteed to be available in the paks yet, so skip them for now
-        models_to_skip = [
-            "VioletTranslator",
-            "AmberTranslator",
-            "EmeraldTranslator",
-            "CobaltTranslator",
-            "DarkBeamAmmoExpansion",
-            "LightBeamAmmoExpansion"
-        ]
+    asset_manager = echoes_asset_manager(input_path)
+    open_prime_rando.echoes.custom_assets.create_custom_assets(asset_manager)
 
-        # Fix the Varia Suit's character in the suits ANCS referencing a missing skin.
-        # 0x3A5E2FE1 is Light Suit's skin
-        # this is fixed by Claris' patcher when exporting for Echoes
-        asset_provider.get_asset(0xa3e787b7).character_set.characters[0].skin_id = 0x3A5E2FE1
+    logging.info("Loading PAKs")
+    status_update("Loading assets from Prime 2 to convert", 0.0)
+    converter = AssetConverter(
+        target_game=Game.PRIME,
+        asset_providers={Game.ECHOES: asset_manager},
+        id_generator=id_generator,
+        converters=conversions.converter_for,
+    )
+    logging.info(f"Finished loading PAKs: {time.time() - start}")
 
-        # Use echoes missile expansion for unlimited missiles instead of missile launcher
-        unlimited_missile_data = next(i for i in randomizer_data["ModelData"] if i["Index"] == 42)
-        unlimited_missile_data["Model"] = 1581025172
-        unlimited_missile_data["AnimSet"] = 435828657
+    # Fix the Varia Suit's character in the suits ANCS referencing a missing skin.
+    # 0x3A5E2FE1 is Light Suit's skin
+    # this is fixed by Claris' patcher when exporting for Echoes
+    suits_ancs = asset_manager.get_parsed_asset(0xa3e787b7)
+    suits_ancs.raw.character_set.characters[0].skin_id = 0x3A5E2FE1
+    asset_manager.replace_asset(0xa3e787b7, suits_ancs)
 
-        result = {}
-        assets_to_change = [
-            data
-            for data in randomizer_data["ModelData"]
-            if (data["Model"] != Game.ECHOES.invalid_asset_id
-                and data["AnimSet"] != Game.ECHOES.invalid_asset_id
-                and data["Name"] not in models_to_skip)
-        ]
+    # Use echoes missile expansion for unlimited missiles instead of missile launcher
+    unlimited_missile_data = next(i for i in randomizer_data["ModelData"] if i["Index"] == 42)
+    unlimited_missile_data["Model"] = 1581025172
+    unlimited_missile_data["AnimSet"] = 435828657
 
-        for i, data in enumerate(assets_to_change):
-            try:
-                status_update(f"Converting {data['Name']} from Prime 2", i / len(assets_to_change))
-                result["{}_{}".format(RandovaniaGame.METROID_PRIME_ECHOES.value, data["Name"])] = Asset(
-                    ancs=converter.convert_id(data["AnimSet"], Game.ECHOES, missing_assets_as_invalid=False),
-                    cmdl=converter.convert_id(data["Model"], Game.ECHOES, missing_assets_as_invalid=False),
-                    character=data["Character"],
-                    scale=data["Scale"][0],
-                )
-            except (InvalidAssetId, UnknownAssetId) as e:
-                raise RuntimeError("Unable to convert {}: {}".format(data["Name"], e))
+    result = {}
+    assets_to_change = [
+        data
+        for data in randomizer_data["ModelData"]
+        if (data["Model"] != Game.ECHOES.invalid_asset_id
+            and data["AnimSet"] != Game.ECHOES.invalid_asset_id)
+    ]
+
+    for i, data in enumerate(assets_to_change):
+        try:
+            status_update(f"Converting {data['Name']} from Prime 2", i / len(assets_to_change))
+            result["{}_{}".format(RandovaniaGame.METROID_PRIME_ECHOES.value, data["Name"])] = Asset(
+                ancs=converter.convert_id(data["AnimSet"], Game.ECHOES, missing_assets_as_invalid=False),
+                cmdl=converter.convert_id(data["Model"], Game.ECHOES, missing_assets_as_invalid=False),
+                character=data["Character"],
+                scale=data["Scale"][0],
+            )
+        except (InvalidAssetId, UnknownAssetId) as e:
+            raise RuntimeError("Unable to convert {}: {}".format(data["Name"], e))
+
     end = time.time()
-    logging.info(f"Time took: {end - start}")
+    logging.info(f"Time took to convert assets: {end - start}")
+    status_update("Finished converting assets from Prime 2 in {:.3f}.".format(end - start), 1.0)
 
     start = time.time()
     converted_dependencies = all_converted_dependencies(converter)
@@ -521,9 +476,20 @@ def convert_prime2_pickups(output_path: Path, status_update: ProgressUpdateCalla
             assetdata
         )
 
-    logging.info(f"Time took: {time.time() - start}")
+    logging.info(f"Time took to write files: {time.time() - start}")
+    status_update("Finished writing the converted assets in {:.3f}.".format(end - start), 1.0)
     return metadata
 
 
+def _debug_main():
+    import randovania
+    randovania.setup_logging("DEBUG", None)
+
+    from randovania.interface_common.options import Options
+    options = Options.with_default_data_dir()
+    convert_prime2_pickups(options.internal_copies_path.joinpath("prime2", "contents"),
+                           Path("converted"), print)
+
+
 if __name__ == '__main__':
-    convert_prime2_pickups(Path("converted"), print)
+    _debug_main()

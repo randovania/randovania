@@ -5,7 +5,7 @@ from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements import Requirement
-from randovania.game_description.resources.resource_info import convert_resource_gain_to_current_resources
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeakness, DockType
@@ -138,7 +138,7 @@ def find_area_errors(game: GameDescription, area: Area) -> Iterator[str]:
         # FIXME: cannot implement this for PickupNodes because their resource gain depends on GamePatches
         if isinstance(node, EventNode):
             # if this node would satisfy the victory condition, it does not need outgoing connections
-            current = convert_resource_gain_to_current_resources(node.resource_gain_on_collect(None))
+            current = ResourceCollection.from_resource_gain(node.resource_gain_on_collect(None))
             if game.victory_condition.satisfied(current, 0, game.resource_database):
                 continue
 
@@ -170,11 +170,11 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             dock_connection={},
             dock_weakness={},
             configurable_nodes={},
-            starting_items={},
+            starting_items=ResourceCollection.with_database(game.resource_database),
             starting_location=game.starting_location,
             hints={},
         ),
-        current_resources={},
+        current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.world_list,
     )

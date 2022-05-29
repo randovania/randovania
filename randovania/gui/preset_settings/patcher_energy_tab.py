@@ -3,6 +3,7 @@ import dataclasses
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
+from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
 from randovania.gui.generated.preset_patcher_energy_ui import Ui_PresetPatcherEnergy
 from randovania.gui.lib import signal_handling
 from randovania.gui.preset_settings.preset_tab import PresetTab
@@ -54,12 +55,6 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
         else:
             self.progressive_damage_reduction_check.setVisible(False)
             self.heated_damage_box.setVisible(False)
-        
-        if self.game_enum == RandovaniaGame.METROID_DREAD:
-            signal_handling.on_checked(self.immediate_energy_parts_check, self._persist_immediate_energy_parts)
-        else:
-            self.immediate_energy_parts_label.setVisible(False)
-            self.immediate_energy_parts_check.setVisible(False)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -71,6 +66,7 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
     def on_preset_changed(self, preset: Preset):
         config = preset.configuration
+        assert isinstance(config, (PrimeConfiguration, EchoesConfiguration, CorruptionConfiguration))
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
 
         if self.game_enum == RandovaniaGame.METROID_PRIME_ECHOES:
@@ -84,9 +80,6 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
             self.progressive_damage_reduction_check.setChecked(config.progressive_damage_reduction)
             self.heated_damage_varia_check.setChecked(config.heat_protection_only_varia)
             self.heated_damage_spin.setValue(config.heat_damage)
-        
-        elif self.game_enum == RandovaniaGame.METROID_DREAD:
-            self.immediate_energy_parts_check.setChecked(config.immediate_energy_parts)
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
@@ -94,16 +87,20 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
 
     def _persist_safe_zone_regen(self):
         with self._editor as editor:
+            configuration = editor.configuration
+            assert isinstance(configuration, EchoesConfiguration)
             safe_zone = dataclasses.replace(
-                editor.configuration.safe_zone,
+                configuration.safe_zone,
                 heal_per_second=self.safe_zone_regen_spin.value()
             )
             editor.set_configuration_field("safe_zone", safe_zone)
 
     def _persist_safe_zone_logic_heal(self, checked: bool):
         with self._editor as editor:
+            configuration = editor.configuration
+            assert isinstance(configuration, EchoesConfiguration)
             safe_zone = dataclasses.replace(
-                editor.configuration.safe_zone,
+                configuration.safe_zone,
                 fully_heal=checked
             )
             editor.set_configuration_field("safe_zone", safe_zone)
@@ -119,7 +116,3 @@ class PresetPatcherEnergy(PresetTab, Ui_PresetPatcherEnergy):
     def _persist_dangerous_tank(self, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field("dangerous_energy_tank", checked)
-    
-    def _persist_immediate_energy_parts(self, checked: bool):
-        with self._editor as editor:
-            editor.set_configuration_field("immediate_energy_parts", checked)

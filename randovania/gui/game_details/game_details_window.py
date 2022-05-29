@@ -1,4 +1,3 @@
-import copy
 import dataclasses
 import typing
 from typing import Dict, Optional
@@ -7,7 +6,6 @@ from PySide6 import QtCore, QtWidgets, QtGui
 from qasync import asyncSlot
 
 import randovania
-from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
@@ -24,7 +22,6 @@ from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import preset_describer
-from randovania.game_description import default_database
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.versioned_preset import VersionedPreset
 
@@ -45,7 +42,6 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     _options: Options
     _window_manager: Optional[WindowManager]
     _player_names: Dict[int, str]
-    _pickup_spoiler_current_game: Optional[GameDescription] = None
     _last_percentage: float = 0
     _can_stop_background_process: bool = True
     _game_details_tabs: list[GameDetailsTab]
@@ -144,6 +140,7 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         from randovania.games.prime3.patcher import gollop_corruption_patcher
         from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches
         from randovania.games.prime3.layout.corruption_configuration import CorruptionConfiguration
+        from randovania.game_description import default_database
 
         cosmetic = typing.cast(
             CorruptionCosmeticPatches,
@@ -168,9 +165,10 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
         layout_string = gollop_corruption_patcher.layout_string_for_items(pickup_names)
         starting_location = patches.starting_location
 
-        suit_type = game.resource_database.get_item_by_name("Suit Type")
-        starting_items = copy.copy(patches.starting_items)
-        starting_items[suit_type] = starting_items.get(suit_type, 0) + cosmetic.player_suit.value
+        starting_items = patches.starting_items.duplicate()
+        starting_items.add_resource_gain([
+            (game.resource_database.get_item_by_name("Suit Type"), cosmetic.player_suit.value),
+        ])
         if configuration.start_with_corrupted_hypermode:
             hypermode_original = 0
         else:
