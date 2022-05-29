@@ -4,6 +4,7 @@ from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources import resource_info
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
@@ -20,9 +21,9 @@ def find_locations_that_gives_items(
                 continue
 
             # TODO: iterate over all tiers of progression
-            resources = resource_info.convert_resource_gain_to_current_resources(target.pickup.resource_gain({}))
 
-            for resource, quantity in resources.items():
+            resources = ResourceCollection.from_resource_gain(target.pickup.resource_gain(ResourceCollection()))
+            for resource, quantity in resources.as_resource_gain():
                 if quantity > 0 and resource in result:
                     result[resource].append((other_player, PickupLocation(patches.configuration.game, pickup_index)))
 
@@ -30,15 +31,15 @@ def find_locations_that_gives_items(
 
 
 def hint_text_if_items_are_starting(
-        target_items: List[ItemResourceInfo],
-        all_patches: Dict[int, GamePatches],
+        target_items: list[ItemResourceInfo],
+        all_patches: dict[int, GamePatches],
         player: int,
         namer: HintNamer,
         with_color: bool,
-) -> Dict[ItemResourceInfo, str]:
+) -> dict[ItemResourceInfo, str]:
     result = {}
 
-    for resource, quantity in all_patches[player].starting_items.items():
+    for resource, quantity in all_patches[player].starting_items.as_resource_gain():
         if quantity > 0 and resource in target_items:
             result[resource] = namer.format_resource_is_starting(resource, with_color)
 

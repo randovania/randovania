@@ -20,8 +20,6 @@ from randovania.interface_common.options import Options
 
 
 class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGameExportDialog):
-    _prompt_input_file_echoes = False
-    _echoes_contents_path: Optional[Path]
     _use_echoes_models: bool
 
     @property
@@ -53,18 +51,14 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             self.echoes_models_check.setChecked(self._use_echoes_models)
             self._on_echoes_models_check()
             self.echoes_models_check.clicked.connect(self._on_echoes_models_check)
-            self._echoes_contents_path = options.internal_copies_path.joinpath("prime2", "contents")
-            self._prompt_input_file_echoes = check_extracted_game(self.echoes_file_edit, self.echoes_file_button,
-                                                                  self._echoes_contents_path)
 
             echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
             assert isinstance(echoes_options, EchoesPerGameOptions)
-            if self._prompt_input_file_echoes and echoes_options.input_path is not None:
+            if echoes_options.input_path is not None:
                 self.echoes_file_edit.setText(str(echoes_options.input_path))
 
         else:
             self._use_echoes_models = False
-            self._echoes_contents_path = None
             self.echoes_models_check.hide()
             self.echoes_file_edit.hide()
             self.echoes_file_label.hide()
@@ -82,12 +76,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
             fields={
                 self.input_file_edit: lambda: is_file_validator(self.input_file),
                 self.output_file_edit: lambda: output_file_validator(self.output_file),
-                self.echoes_file_edit: lambda: (
-                        self._use_echoes_models
-                        and echoes_input_validator(self.echoes_file,
-                                                   self._prompt_input_file_echoes,
-                                                   self.echoes_file_edit)
-                ),
+                self.echoes_file_edit: lambda: self._use_echoes_models and is_file_validator(self.echoes_file),
             }
         )
 
@@ -120,7 +109,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
                 output_format=self._selected_output_format,
                 use_external_models=use_external_models,
             ))
-            if self._prompt_input_file_echoes:
+            if self._use_echoes_models:
                 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
                 echoes_options = options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES)
                 assert isinstance(echoes_options, EchoesPerGameOptions)
@@ -140,7 +129,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
 
     @property
     def echoes_file(self) -> Optional[Path]:
-        if self._prompt_input_file_echoes:
+        if self._use_echoes_models:
             return Path(self.echoes_file_edit.text())
 
     @property
@@ -164,40 +153,26 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
     def _on_echoes_models_check(self):
         use_echoes_models = self.echoes_models_check.isChecked()
         self._use_echoes_models = use_echoes_models
-        if self._prompt_input_file_echoes:
-            self.echoes_file_edit.setEnabled(use_echoes_models)
+        self.echoes_file_edit.setEnabled(use_echoes_models)
         self.echoes_file_label.setEnabled(use_echoes_models)
         self.echoes_file_button.setEnabled(use_echoes_models)
         update_validation(self.echoes_file_edit)
 
     def _on_echoes_file_button(self):
-        if self._prompt_input_file_echoes:
-            input_file = prompt_for_input_file(self, self.input_file_edit, ["iso"])
-            if input_file is not None:
-                self.echoes_file_edit.setText(str(input_file.absolute()))
-        else:
-            delete_internal_copy(self._options.internal_copies_path)
-            self.echoes_file_edit.setText("")
-            self._prompt_input_file_echoes = check_extracted_game(self.echoes_file_edit, self.echoes_file_button,
-                                                                  self._echoes_contents_path)
+        input_file = prompt_for_input_file(self, self.input_file_edit, ["iso"])
+        if input_file is not None:
+            self.echoes_file_edit.setText(str(input_file.absolute()))
 
     def get_game_export_params(self) -> GameExportParams:
         spoiler_output = spoiler_path_for(self.auto_save_spoiler, self.output_file)
         cache_path = self._options.internal_copies_path.joinpath("prime1", "randomprime_cache")
         asset_cache_path = self._options.internal_copies_path.joinpath("prime1", "prime2_models")
 
-        if self._use_echoes_models:
-            backup_files_path = self._options.internal_copies_path.joinpath("prime2", "vanilla")
-        else:
-            backup_files_path = None
-
         return PrimeGameExportParams(
             spoiler_output=spoiler_output,
             input_path=self.input_file,
             output_path=self.output_file,
             echoes_input_path=self.echoes_file,
-            echoes_contents_path=self._echoes_contents_path,
-            echoes_backup_path=backup_files_path,
             asset_cache_path=asset_cache_path,
             use_echoes_models=self._use_echoes_models,
             cache_path=cache_path,

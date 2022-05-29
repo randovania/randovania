@@ -77,11 +77,11 @@ class LogbookNode(ResourceNode):
             return False
 
         if self.scan_visor is not None:
-            if current_resources.get(self.scan_visor, 0) == 0:
+            if not current_resources.has_resource(self.scan_visor):
                 return False
 
         if self.required_translator is not None:
-            return current_resources.get(self.required_translator, 0) > 0
+            return current_resources.has_resource(self.required_translator)
 
         return True
 

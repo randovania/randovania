@@ -82,7 +82,6 @@ def accumulate_results(game_modifications: dict,
                        location_hints: Dict[str, Dict[str, int]],
 
                        index_to_location: Dict[int, Tuple[str, str]],
-                       logbook_to_name: Dict[str, str],
                        major_progression_items_only: bool,
                        ):
     for world_name, world_data in game_modifications["locations"].items():
@@ -98,14 +97,10 @@ def accumulate_results(game_modifications: dict,
         if hint_data["hint_type"] != "location":
             continue
 
-        logbook_asset = logbook_to_name[logbook_asset]
-
         if hint_data["target"] == -1:
             item_name = "Nothing"
         else:
             area_name, location_name = index_to_location[hint_data["target"]]
-            if "Portal Chamber" in location_name:
-                location_name = "Portal Chamber/Pickup (Missile)"
             item_name = game_modifications["locations"][area_name][location_name]
 
         item_name = _filter_item_name(item_name)
@@ -198,12 +193,6 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     progression_count_for_location = collections.defaultdict(int)
     progression_no_key_count_for_location = collections.defaultdict(int)
 
-    logbook_to_name = {
-        str(node.string_asset_id): game_description.world_list.node_name(node)
-        for node in game_description.world_list.all_nodes
-        if isinstance(node, LogbookNode)
-    }
-
     seed_count = 0
     pickup_count = None
     progression_items = None
@@ -221,7 +210,6 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
                                items, locations,
                                item_hints, location_hints,
                                index_to_location,
-                               logbook_to_name,
                                major_progression_items_only)
         if seed_count == 0:
             pickup_count = calculate_pickup_count(items)

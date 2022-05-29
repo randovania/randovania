@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description import default_database
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
@@ -22,8 +23,10 @@ def test_misc_resources_for_configuration(echoes_resource_database,
     great_resource = echoes_resource_database.get_by_type_and_index(ResourceType.MISC, "VanillaGreatTempleEmeraldGate")
 
     # Run
-    result = configuration.game.generator.bootstrap.misc_resources_for_configuration(configuration,
-                                                                                     echoes_resource_database)
+    result = dict(configuration.game.generator.bootstrap.misc_resources_for_configuration(
+        configuration,
+        echoes_resource_database,
+    ))
     relevant_tricks = {
         trick: result[trick]
         for trick in [gfmc_resource, torvus_resource, great_resource]
@@ -60,10 +63,10 @@ def test_logic_bootstrap(preset_manager, game_enum, empty_patches):
 ])
 def test_prime1_progressive_damage_reduction(prime1_resource_database, expected, suits):
     # Setup
-    current_resources = {
+    current_resources = ResourceCollection.from_dict({
         prime1_resource_database.get_item_by_name(suit): 1
         for suit in suits
-    }
+    })
     bootstrap = RandovaniaGame.METROID_PRIME.generator.bootstrap
     assert isinstance(bootstrap, PrimeBootstrap)
 
@@ -86,10 +89,10 @@ def test_prime1_progressive_damage_reduction(prime1_resource_database, expected,
 ])
 def test_prime1_absolute_damage_reduction(prime1_resource_database, expected, suits):
     # Setup
-    current_resources = {
+    current_resources = ResourceCollection.from_dict({
         prime1_resource_database.get_item_by_name(suit): 1
         for suit in suits
-    }
+    })
     bootstrap = RandovaniaGame.METROID_PRIME.generator.bootstrap
     assert isinstance(bootstrap, PrimeBootstrap)
 

@@ -11,7 +11,7 @@ from randovania.game_description.resources import search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import ResourceInfo
+from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -42,6 +42,14 @@ def _database() -> ResourceDatabase:
         item_percentage_index=None,
         multiworld_magic_item_index=None,
     )
+
+
+def _empty_col():
+    return ResourceCollection()
+
+
+def _col_for(*args: ResourceInfo):
+    return ResourceCollection.from_dict({resource: 1 for resource in args})
 
 
 def _make_resource(name: str):
@@ -75,25 +83,26 @@ def make_single_set(id_req: Tuple[SimpleResourceInfo, ResourceRequirement]) -> R
 
 
 def test_empty_requirement_set_satisfied():
-    assert not RequirementSet([]).satisfied({}, 99, None)
+    assert not RequirementSet([]).satisfied(_empty_col(), 99, None)
 
 
 def test_empty_requirement_list_satisfied():
-    assert RequirementList([]).satisfied({}, 99, None)
+    assert RequirementList([]).satisfied(_empty_col(), 99, None)
 
 
 def test_simplify_requirement_set_static():
     res_a, id_req_a = make_req_a()
     res_b, id_req_b = make_req_b()
+    fd = ResourceCollection.from_dict
 
     the_set = RequirementOr([
         RequirementAnd([id_req_a]),
         RequirementAnd([id_req_b]),
     ])
 
-    simple_1 = the_set.patch_requirements({res_a: 0, res_b: 0}, 1, None)
-    simple_2 = the_set.patch_requirements({res_a: 0, res_b: 1}, 1, None)
-    simple_3 = the_set.patch_requirements({res_a: 1, res_b: 1}, 1, None)
+    simple_1 = the_set.patch_requirements(fd({res_a: 0, res_b: 0}), 1, None)
+    simple_2 = the_set.patch_requirements(fd({res_a: 0, res_b: 1}), 1, None)
+    simple_3 = the_set.patch_requirements(fd({res_a: 1, res_b: 1}), 1, None)
 
     assert simple_1.as_set(None).alternatives == frozenset()
     assert simple_2.as_set(None).alternatives == frozenset([RequirementList([])])
@@ -264,11 +273,11 @@ def test_impossible_requirement_as_set():
 
 
 def test_impossible_requirement_satisfied():
-    assert not Requirement.impossible().satisfied({}, 99, None)
+    assert not Requirement.impossible().satisfied(_empty_col(), 99, None)
 
 
 def test_impossible_requirement_damage():
-    assert Requirement.impossible().damage({}, None) == MAX_DAMAGE
+    assert Requirement.impossible().damage(_empty_col(), None) == MAX_DAMAGE
 
 
 def test_impossible_requirement_str():
@@ -280,11 +289,11 @@ def test_trivial_requirement_as_set():
 
 
 def test_trivial_requirement_satisfied():
-    assert Requirement.trivial().satisfied({}, 99, None)
+    assert Requirement.trivial().satisfied(_empty_col(), 99, None)
 
 
 def test_trivial_requirement_damage():
-    assert Requirement.trivial().damage({}, None) == 0
+    assert Requirement.trivial().damage(_empty_col(), None) == 0
 
 
 def test_trivial_requirement_str():
@@ -486,12 +495,12 @@ def _arr_req(req_type: str, items: list):
 def test_requirement_damage(damage, items, requirement, echoes_resource_database):
     req = data_reader.read_requirement(requirement, echoes_resource_database)
 
-    resources = {
+    collection = ResourceCollection.from_dict({
         echoes_resource_database.get_item(item): 1
         for item in items
-    }
+    })
 
-    assert req.damage(resources, echoes_resource_database) == damage
+    assert req.damage(collection, echoes_resource_database) == damage
 
 
 def test_simple_echoes_damage(echoes_resource_database):
@@ -503,9 +512,9 @@ def test_simple_echoes_damage(echoes_resource_database):
     d_suit = db.get_item_by_name("Dark Suit")
     l_suit = db.get_item_by_name("Light Suit")
 
-    assert req.damage({}, db) == 50
-    assert req.damage({d_suit: 1}, db) == 11
-    assert req.damage({l_suit: 1}, db) == 0
+    assert req.damage(_empty_col(), db) == 50
+    assert req.damage(_col_for(d_suit), db) == 11
+    assert req.damage(_col_for(l_suit), db) == 0
 
 
 def test_requirement_list_constructor(echoes_resource_database):
@@ -571,8 +580,8 @@ def test_node_identifier_as_requirement():
     req = ResourceRequirement.simple(nic("W", "A", "N"))
     db = typing.cast(ResourceDatabase, None)
 
-    assert not req.satisfied({}, 0, db)
-    assert req.satisfied({nic("W", "A", "N"): 1}, 0, db)
+    assert not req.satisfied(_empty_col(), 0, db)
+    assert req.satisfied(_col_for(nic("W", "A", "N")), 0, db)
 
 
 def test_set_as_str_impossible():

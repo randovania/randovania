@@ -19,6 +19,7 @@ def _default_filler_config() -> FillerConfiguration:
         maximum_random_starting_items=0,
         indices_to_exclude=frozenset(),
         multi_pickup_placement=False,
+        multi_pickup_new_weighting=False,
         logical_resource_action=LayoutLogicalResourceAction.RANDOMLY,
         first_progression_must_be_local=False,
         minimum_available_locations_for_hint_placement=0,

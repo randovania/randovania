@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>479</width>
-         <height>911</height>
+         <width>483</width>
+         <height>773</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -115,7 +115,24 @@
            <item>
             <widget class="QLabel" name="multi_pickup_label">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this setting is enabled, the generator will consider placing multiple items in multiple locations (e.g. Morph Ball and Bombs) in order to determine progression, rather than only a single item at a time as it is by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this setting is enabled, the generator will consider placing multiple pickups in multiple locations (e.g. Morph Ball and Bombs) in order to determine progression, rather than only a single item at a time as it is by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="multi_pickup_new_weighting_check">
+             <property name="text">
+              <string>Use new location weighting for multi-pickup placement [Experimental]</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="multi_pickup_new_weighting_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;By default, the generator calculates the weights for all possible locations only once, using the same results for all pickups.&lt;/p&gt;&lt;p&gt;With this enabled, the generator will re-calculate weights after placing each pickup, ensuring later pickups can depend on earlier ones of the same set. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>

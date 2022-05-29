@@ -4,7 +4,7 @@ import dataclasses
 from randovania.game_description.requirements import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver.bootstrap import MetroidBootstrap
@@ -38,8 +38,8 @@ class PrimeBootstrap(MetroidBootstrap):
 
         return enabled_resources
 
-    def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: CurrentResources):
-        num_suits = sum(current_resources.get(db.get_item_by_name(suit), 0)
+    def prime1_progressive_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
+        num_suits = sum(current_resources[db.get_item_by_name(suit)]
                         for suit in ["Varia Suit", "Gravity Suit", "Phazon Suit"])
         if num_suits >= 3:
             return 0.5
@@ -50,12 +50,12 @@ class PrimeBootstrap(MetroidBootstrap):
         else:
             return 1
 
-    def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: CurrentResources):
-        if current_resources.get(db.get_item_by_name("Phazon Suit"), 0) > 0:
+    def prime1_absolute_damage_reduction(self, db: ResourceDatabase, current_resources: ResourceCollection):
+        if current_resources[db.get_item_by_name("Phazon Suit")] > 0:
             return 0.5
-        elif current_resources.get(db.get_item_by_name("Gravity Suit"), 0) > 0:
+        elif current_resources[db.get_item_by_name("Gravity Suit")] > 0:
             return 0.8
-        elif current_resources.get(db.get_item_by_name("Varia Suit"), 0) > 0:
+        elif current_resources[db.get_item_by_name("Varia Suit")] > 0:
             return 0.9
         else:
             return 1
