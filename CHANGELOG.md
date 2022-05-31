@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Added "Cosmetic" option to force Fusion Suit
+- Added: "Cosmetic" option to force Fusion Suit
 - Changed: Converting models from Echoes now always needs to be provided with an ISO.
 
 #### Patcher Changes
@@ -41,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Models for Echoes' translators and split beam ammo are now also converted to Prime.
 - Fixed: Spawning in Elite Quarters after killing OP no longer spawns the player OoB
 - Fixed: Ridley boss random size on PAL/NTSC-J and Trilogy
+- Fixed: Many rooms which, when submerged, the water box would be misaligned with the bounding box
+- Fixed: Certain rooms where item position randomizer biased towards one side or OoB entirely
 - Added: Results screen now shows Randovania version and seed hash
 
 #### Logic Database
