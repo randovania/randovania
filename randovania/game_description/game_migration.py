@@ -73,7 +73,7 @@ def _migrate_v10(data: dict) -> dict:
         dock_type["dock_rando"] = {
             "unlocked": None,
             "locked": None,
-            "included": set(),
+            "included": [],
         }
     
     return data
