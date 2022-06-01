@@ -112,13 +112,16 @@ class PlayerState:
                                   - self.num_random_starting_items_placed)
 
         pickups, uncollected_resource_nodes = self._unfiltered_potential_actions
-        result: list[Action] = [pickup_tuple for pickup_tuple in pickups
+        result: list[Action] = [Action(pickup_tuple) for pickup_tuple in pickups
                                 if len(pickup_tuple) <= num_available_indices]
 
         logical_resource_action = self.configuration.logical_resource_action
         if (logical_resource_action == LayoutLogicalResourceAction.RANDOMLY
                 or (logical_resource_action == LayoutLogicalResourceAction.LAST_RESORT and not result)):
-            result.extend(uncollected_resource_nodes)
+            result.extend(
+                Action((resource_node,))
+                for resource_node in uncollected_resource_nodes
+            )
 
         return result
 
