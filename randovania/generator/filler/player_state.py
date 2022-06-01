@@ -21,7 +21,6 @@ from randovania.generator.filler.filler_library import UncollectedState
 from randovania.generator.filler.filler_logging import print_new_resources, print_retcon_loop_start
 from randovania.generator.filler.pickup_list import (
     get_pickups_that_solves_unreachable,
-    get_pickups_with_interesting_resources,
     interesting_resources_for_reach, PickupCombinations,
 )
 from randovania.layout.base.available_locations import RandomizationMode
@@ -94,14 +93,10 @@ class PlayerState:
 
     def _calculate_potential_actions(self):
         uncollected_resource_nodes = reach_lib.get_collectable_resource_nodes_of_reach(self.reach)
-        if self.configuration.multi_pickup_placement:
-            get_pickups = get_pickups_that_solves_unreachable
-        else:
-            get_pickups = get_pickups_with_interesting_resources
 
         usable_pickups = [pickup for pickup in self.pickups_left
                           if self.num_actions >= pickup.required_progression]
-        pickups = get_pickups(usable_pickups, self.reach, uncollected_resource_nodes)
+        pickups = get_pickups_that_solves_unreachable(usable_pickups, self.reach, uncollected_resource_nodes)
         print_retcon_loop_start(self.game, usable_pickups, self.reach, self.index)
 
         self._unfiltered_potential_actions = pickups, tuple(uncollected_resource_nodes)

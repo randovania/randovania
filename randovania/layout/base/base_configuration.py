@@ -31,7 +31,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     damage_strictness: LayoutDamageStrictness
     pickup_model_style: PickupModelStyle
     pickup_model_data_source: PickupModelDataSource
-    multi_pickup_placement: bool
+    multi_pickup_placement: bool  # FIXME: remove
     multi_pickup_new_weighting: bool
     logical_resource_action: LayoutLogicalResourceAction
     first_progression_must_be_local: bool
