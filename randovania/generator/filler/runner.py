@@ -14,24 +14,6 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug
 
 
-def _split_expansions(item_pool: list[PickupEntry]) -> tuple[list[PickupEntry], list[PickupEntry]]:
-    """
-
-    :param item_pool:
-    :return:
-    """
-    major_items = []
-    expansions = []
-
-    for pickup in item_pool:
-        if pickup.item_category.is_expansion:
-            expansions.append(pickup)
-        else:
-            major_items.append(pickup)
-
-    return major_items, expansions
-
-
 @dataclasses.dataclass(frozen=True)
 class PlayerPool:
     game: GameDescription
@@ -70,18 +52,13 @@ async def run_filler(rng: Random,
     """
 
     player_states = []
-    player_expansions: dict[int, list[PickupEntry]] = {}
 
     for index, pool in enumerate(player_pools):
         config = pool.configuration
 
         status_update(f"Creating state for player {index + 1}")
-        if config.multi_pickup_placement:
-            major_items, player_expansions[index] = list(pool.pickups), []
-        else:
-            major_items, player_expansions[index] = _split_expansions(pool.pickups)
+        major_items = list(pool.pickups)
         rng.shuffle(major_items)
-        rng.shuffle(player_expansions[index])
 
         new_game, state = pool.game_generator.bootstrap.logic_bootstrap(config, pool.game,
                                                                         pool.patches)
@@ -126,7 +103,7 @@ async def run_filler(rng: Random,
             patches=await hint_distributor.assign_post_filler_hints(
                 patches, rng, player_pool, player_state
             ),
-            unassigned_pickups=player_state.pickups_left + player_expansions[player_state.index],
+            unassigned_pickups=player_state.pickups_left,
         )
 
     return FillerResults(results, actions_log)
