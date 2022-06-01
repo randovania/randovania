@@ -277,9 +277,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 "Triclops Pit",
                                 "Elite Quarters",
                                 "Quarantine Cave",
-                                "Burn Done",
-                                "Reserach Lab Hydra",
-                                "Reserach Lab Aether",
+                                "Burn Dome",
+                                "Research Lab Hydra",
+                                "Research Lab Aether",
                             ]
 
                             if room_name in ROOMS_THAT_NEED_HELP:
