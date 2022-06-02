@@ -96,7 +96,7 @@ async def _inner_advance_depth(state: State,
     :return:
     """
 
-    if logic.game.victory_condition.satisfied(state.resources, state.energy, state.resource_database):
+    if logic.victory_condition_satisfied(state):
         return state, True
 
     # Yield back to the asyncio runner, so cancel can do something
@@ -169,16 +169,11 @@ def _quiet_print(s):
     pass
 
 
-async def resolve(configuration: BaseConfiguration,
-                  patches: GamePatches,
-                  status_update: Optional[Callable[[str], None]] = None
-                  ) -> Optional[State]:
-    if status_update is None:
-        status_update = _quiet_print
-
+def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tuple[State, Logic]:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
-    derived_nodes.create_derived_nodes(game)
     bootstrap = game.game.generator.bootstrap
+    derived_nodes.create_derived_nodes(game)
+    
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
     event_pickup.replace_with_event_pickups(game)
@@ -186,6 +181,17 @@ async def resolve(configuration: BaseConfiguration,
     new_game, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
     logic = Logic(new_game, configuration)
     starting_state.resources["add_self_as_requirement_to_resources"] = 1
+
+    return starting_state, logic
+
+async def resolve(configuration: BaseConfiguration,
+                  patches: GamePatches,
+                  status_update: Optional[Callable[[str], None]] = None
+                  ) -> Optional[State]:
+    if status_update is None:
+        status_update = _quiet_print
+
+    starting_state, logic = setup_resolver(configuration, patches)
     debug.log_resolve_start()
 
     return await advance_depth(starting_state, logic, status_update)

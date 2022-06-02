@@ -1,17 +1,21 @@
 import asyncio
 from random import Random
-from typing import Optional, Callable, List, Dict
+from typing import Callable, Dict, List, Optional
 
 import tenacity
-
 from randovania.game_description import derived_nodes
-from randovania.game_description.assignment import PickupAssignment, PickupTarget
+from randovania.game_description.assignment import (PickupAssignment,
+                                                    PickupTarget)
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world_list import WorldList
-from randovania.generator.filler.filler_library import filter_unassigned_pickup_nodes, UnableToGenerate
-from randovania.generator.filler.runner import run_filler, FillerPlayerResult, PlayerPool, FillerResults
+from randovania.generator import dock_weakness_distributor
+from randovania.generator.filler.filler_library import (
+    UnableToGenerate, filter_unassigned_pickup_nodes)
+from randovania.generator.filler.runner import (FillerPlayerResult,
+                                                FillerResults, PlayerPool,
+                                                run_filler)
 from randovania.generator.hint_distributor import PreFillParams
 from randovania.generator.item_pool import pool_creator
 from randovania.layout import filtered_database
@@ -21,7 +25,9 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.preset import Preset
 from randovania.resolver import resolver
-from randovania.resolver.exceptions import GenerationFailure, InvalidConfiguration, ImpossibleForSolver
+from randovania.resolver.exceptions import (GenerationFailure,
+                                            ImpossibleForSolver,
+                                            InvalidConfiguration)
 
 
 def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription,
@@ -45,6 +51,8 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                                                                            num_players > 1,
                                                                            player_index=player_index,
                                                                            rng_required=rng_required)
+
+    base_patches = dock_weakness_distributor.distribute_pre_fill_weaknesses(base_patches)
 
     base_patches = await game_generator.hint_distributor.assign_pre_filler_hints(
         base_patches,
@@ -216,6 +224,8 @@ async def _create_description(generator_params: GeneratorParameters,
     filler_results = await retrying(_create_pools_and_fill, rng, presets, status_update)
 
     all_patches = _distribute_remaining_items(rng, filler_results.player_results)
+    all_patches = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, all_patches, status_update)
+
     return LayoutDescription.create_new(
         generator_parameters=generator_params,
         all_patches=all_patches,

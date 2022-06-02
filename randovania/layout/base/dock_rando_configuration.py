@@ -14,14 +14,17 @@ from randovania.games.game import RandovaniaGame
 
 class DockRandoMode(BitPackEnum, Enum):
     VANILLA = "vanilla"
-    RANDOM = "random"
+    TWO_WAY = "two-way"
+    ONE_WAY = "one-way"
 
     @property
     def long_name(self) -> str:
         if self == DockRandoMode.VANILLA:
             return "Original door locks"
-        if self == DockRandoMode.RANDOM:
-            return "Random door locks"
+        if self == DockRandoMode.TWO_WAY:
+            return "Random door locks; same lock on both sides"
+        if self == DockRandoMode.ONE_WAY:
+            return "Random door locks; each side is separate"
         raise ValueError(f"Unknown value: {self}")
 
 
@@ -43,6 +46,10 @@ class DockTypeState(BitPackValue):
     @property
     def dock_type(self) -> DockType:
         return self.weakness_database.find_type(self.dock_type_name)
+    
+    @property
+    def can_shuffle(self) -> bool:
+        return len(self.can_change_from) > 0
 
     @property
     def as_json(self) -> dict:
@@ -78,8 +85,8 @@ class DockTypeState(BitPackValue):
         return cls(
             game = reference.game,
             dock_type_name = reference.dock_type_name,
-            can_change_from = bitpacking.decode_sorted_array_elements(decoder, weakness_database.all_weaknesses),
-            can_change_to = bitpacking.decode_sorted_array_elements(decoder, weakness_database.all_weaknesses),
+            can_change_from = bitpacking.decode_sorted_array_elements(decoder, sorted(cls._possible_change_from(reference.game, reference.dock_type_name))),
+            can_change_to = bitpacking.decode_sorted_array_elements(decoder, sorted(cls._possible_change_to(reference.game, reference.dock_type_name))),
         )  
     
     @staticmethod
@@ -149,7 +156,7 @@ class DockRandoConfiguration(BitPackValue):
     def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
         reference: DockRandoConfiguration = metadata["reference"]
 
-        yield from bitpacking.pack_value(self.mode)
+        yield from self.mode.bit_pack_encode(None)
 
         modified_types = sorted(
             dock_type for dock_type, type_state in self.types_state.items()

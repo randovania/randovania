@@ -88,7 +88,7 @@ class DockRandoParams:
     included: set[DockWeakness]
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, order=True)
 class DockType:
     """Represents a kind of dock for the game. Can be things like Door, Tunnel, Portal."""
     short_name: str

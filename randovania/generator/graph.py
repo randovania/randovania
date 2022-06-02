@@ -1,3 +1,4 @@
+from collections import defaultdict
 import copy
 import itertools
 from heapq import heappush, heappop
@@ -40,7 +41,7 @@ class RandovaniaGraph(BaseGraph):
 
     @classmethod
     def new(cls):
-        return cls({})
+        return cls(defaultdict(dict))
 
     def __init__(self, edges: Dict[int, Dict[int, RequirementSet]]):
         import networkx
@@ -48,12 +49,12 @@ class RandovaniaGraph(BaseGraph):
         self.edges = edges
 
     def copy(self):
-        return RandovaniaGraph(
-            {
-                source: copy.copy(data)
-                for source, data in self.edges.items()
-            },
-        )
+        edges = defaultdict(dict)
+        edges.update({
+            source: copy.copy(data)
+            for source, data in self.edges.items()
+        })
+        return RandovaniaGraph(edges)
 
     def add_node(self, node: int):
         if node not in self.edges:
