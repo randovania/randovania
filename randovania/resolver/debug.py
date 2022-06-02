@@ -87,7 +87,7 @@ def log_skip_action_missing_requirement(node: Node, game: "GameDescription", req
             print(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, same additional")
         else:
             print(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, missing additional:")
-            requirement_set.pretty_print(_indent(-1))
+            requirement_set.pretty_print(_indent(-1), print_function=print)
             _last_printed_additional[node] = requirement_set
 
 
