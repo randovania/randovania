@@ -1199,7 +1199,9 @@
                 "extra": {},
                 "items": {
                     "Normal Door": {
-                        "extra": {},
+                        "extra": {
+                            "shieldType": "Blue"
+                        },
                         "requirement": {
                             "type": "or",
                             "data": {
@@ -1250,7 +1252,9 @@
                         "lock": null
                     },
                     "Ice Door": {
-                        "extra": {},
+                        "extra": {
+                            "shieldType": "Ice"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Ice Beam"
@@ -1258,7 +1262,9 @@
                         "lock": null
                     },
                     "Wave Door": {
-                        "extra": {},
+                        "extra": {
+                            "shieldType": "Purple"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Wave Beam"
@@ -1266,7 +1272,9 @@
                         "lock": null
                     },
                     "Plasma Door": {
-                        "extra": {},
+                        "extra": {
+                            "shieldType": "Red"
+                        },
                         "requirement": {
                             "type": "template",
                             "data": "Shoot Plasma Beam"
@@ -1274,7 +1282,10 @@
                         "lock": null
                     },
                     "Missile Blast Shield": {
-                        "extra": {},
+                        "extra": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Missiles"
+                        },
                         "requirement": {
                             "type": "and",
                             "data": {
@@ -1308,7 +1319,9 @@
                         }
                     },
                     "Permanently Locked": {
-                        "extra": {},
+                        "extra": {
+                            "shieldType": "Disabled"
+                        },
                         "requirement": {
                             "type": "or",
                             "data": {
@@ -1323,11 +1336,11 @@
                     "unlocked": "Normal Door",
                     "locked": "Permanently Locked",
                     "included": [
-                        "Normal Door",
+                        "Missile Blast Shield",
                         "Ice Door",
+                        "Normal Door",
                         "Wave Door",
-                        "Plasma Door",
-                        "Missile Blast Shield"
+                        "Plasma Door"
                     ]
                 }
             },

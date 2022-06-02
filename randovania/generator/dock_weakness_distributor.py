@@ -30,10 +30,19 @@ def distribute_pre_fill_weaknesses(patches: GamePatches):
     game = default_database.game_description_for(patches.configuration.game)
     weakness_database = game.dock_weakness_database
 
+    context = NodeContext(patches, patches.starting_items, game.resource_database, game.world_list)
+
     docks_to_unlock = {
         node.identifier: weakness_database.dock_rando_params[node.dock_type].unlocked
         for node in game.world_list.all_nodes
-        if isinstance(node, DockNode) and dock_rando.types_state[node.dock_type].can_shuffle
+        if (
+            isinstance(node, DockNode) and dock_rando.types_state[node.dock_type].can_shuffle
+            and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
+            and (
+                dock_rando.mode == DockRandoMode.ONE_WAY or
+                game.world_list.node_by_identifier(node.get_target_identifier(context)).default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
+            )
+        )
     }
 
     return patches.assign_dock_weakness_assignment(docks_to_unlock)
@@ -57,7 +66,7 @@ class DockRandoLogic(Logic):
             self.dock in reach.nodes 
         )
 
-RESOLVER_TIMEOUT = 15
+RESOLVER_TIMEOUT = 0.5
 async def distribute_post_fill_weaknesses(rng: Random,
                                     all_patches: dict[int, GamePatches],
                                     status_update: Callable[[str], None],
