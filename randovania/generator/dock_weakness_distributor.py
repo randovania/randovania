@@ -38,10 +38,10 @@ def distribute_pre_fill_weaknesses(patches: GamePatches):
         if (
             isinstance(node, DockNode) and dock_rando.types_state[node.dock_type].can_shuffle
             and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
-            and (
-                dock_rando.mode == DockRandoMode.ONE_WAY or
-                game.world_list.node_by_identifier(node.get_target_identifier(context)).default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
-            )
+            # and (
+            #     dock_rando.mode == DockRandoMode.ONE_WAY or
+            #     game.world_list.node_by_identifier(node.get_target_identifier(context)).default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
+            # )
         )
     }
 
@@ -122,13 +122,18 @@ async def distribute_post_fill_weaknesses(rng: Random,
         debug.log_resolve_start()
         debug.debug_print(f"Starting {identifier} at {time.perf_counter()}")
         
+        level = debug.debug_level()
+        debug.set_level(0)
+
         state_async = resolver.advance_depth(state, logic, lambda s: None)
         try:
             new_state = await asyncio.wait_for(state_async, RESOLVER_TIMEOUT)
         except asyncio.TimeoutError:
+            debug.set_level(level)
             new_state = None
             debug.debug_print("Timeout")
         else:
+            debug.set_level(level)
             debug.debug_print("Finished resolver")
 
         # Determine valid weaknesses to assign
@@ -137,18 +142,16 @@ async def distribute_post_fill_weaknesses(rng: Random,
         if new_state is not None:
             reach = ResolverReach.calculate_reach(logic, new_state)
 
-            # FIXME: supposed to check if you can reach the target with the dock locked
-
-            # if dock_type_params.locked in dock_type_state.can_change_to and target in reach.nodes:
-            #     possible_weaknesses.append(dock_type_params.locked)
+            if dock_type_params.locked in dock_type_state.can_change_to and target in reach.nodes:
+                possible_weaknesses.append(dock_type_params.locked)
             
             debug.debug_print(f"{[res.long_name for res in new_state.resources if isinstance(res, (ItemResourceInfo, SimpleResourceInfo)) and res.resource_type in {ResourceType.ITEM, ResourceType.EVENT}]}")
-            for weakness in dock_type_state.can_change_to.difference(possible_weaknesses):
-                if weakness.requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database):
-                    if weakness.lock is None or weakness.lock.requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database):
-                        possible_weaknesses.append(weakness)
-            
-            pass
+            possible_weaknesses.extend((
+                weakness for weakness in dock_type_state.can_change_to.difference(possible_weaknesses) if (
+                    weakness.requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database)
+                    and (weakness.lock is None or weakness.lock.requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database))
+                )
+            ))
         
         # Assign the dock (and its target if desired/possible)
         new_assignment: DockWeaknessAssignment = {}
