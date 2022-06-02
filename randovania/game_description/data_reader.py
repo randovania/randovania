@@ -223,7 +223,8 @@ def read_dock_weakness_database(data: dict,
         dock_rando[dock_type] = DockRandoParams(
             unlocked=weakness_or_none(dr["unlocked"]),
             locked=weakness_or_none(dr["locked"]),
-            included={weaknesses[dock_type][weak] for weak in dr["included"]},
+            change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
+            change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
         )
 
     default_dock_type = [dock_type for dock_type in dock_types

@@ -66,7 +66,7 @@ class DockRandoLogic(Logic):
             self.dock in reach.nodes 
         )
 
-RESOLVER_TIMEOUT = 0.5
+RESOLVER_TIMEOUT = 15
 async def distribute_post_fill_weaknesses(rng: Random,
                                     all_patches: dict[int, GamePatches],
                                     status_update: Callable[[str], None],

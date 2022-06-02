@@ -85,7 +85,8 @@ class DockWeakness:
 class DockRandoParams:
     unlocked: DockWeakness
     locked: DockWeakness
-    included: set[DockWeakness]
+    change_from: set[DockWeakness]
+    change_to: set[DockWeakness]
 
 
 @dataclass(frozen=True, slots=True, order=True)
@@ -114,12 +115,6 @@ class DockWeaknessDatabase:
 
     def get_by_weakness(self, dock_type_name: str, weakness_name: str) -> DockWeakness:
         return self.weaknesses[self.find_type(dock_type_name)][weakness_name]
-
-    def get_unlocked_weakness(self, dock_type_name: str) -> DockWeakness:
-        dock_type = self.find_type(dock_type_name)
-        if dock_type.unlocked_weakness is None:
-            raise ValueError(f"Dock type {dock_type} has no unlocked weakness.")
-        return self.weaknesses[dock_type][dock_type.unlocked_weakness]
 
     @property
     def all_weaknesses(self) -> Iterator[DockWeakness]:

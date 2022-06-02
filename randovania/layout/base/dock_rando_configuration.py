@@ -81,7 +81,6 @@ class DockTypeState(BitPackValue):
     @classmethod
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "DockTypeState":
         reference: DockTypeState = metadata["reference"]
-        weakness_database = cls._get_weakness_database(reference.game)
         return cls(
             game = reference.game,
             dock_type_name = reference.dock_type_name,
@@ -92,7 +91,7 @@ class DockTypeState(BitPackValue):
     @staticmethod
     def _possible_change_from(game: RandovaniaGame, dock_type_name: str) -> Iterator[DockWeakness]:
         weakness_database = DockTypeState._get_weakness_database(game)
-        yield from weakness_database.dock_rando_params[weakness_database.find_type(dock_type_name)].included
+        yield from weakness_database.dock_rando_params[weakness_database.find_type(dock_type_name)].change_from
     
     @property
     def possible_change_from(self) -> Iterator[DockWeakness]:
@@ -101,7 +100,7 @@ class DockTypeState(BitPackValue):
     @staticmethod
     def _possible_change_to(game: RandovaniaGame, dock_type_name: str) -> Iterator[DockWeakness]:
         weakness_database = DockTypeState._get_weakness_database(game)
-        yield from weakness_database.get_by_type(weakness_database.find_type(dock_type_name))
+        yield from weakness_database.dock_rando_params[weakness_database.find_type(dock_type_name)].change_to
 
     @property
     def possible_change_to(self) -> Iterator[DockWeakness]:

@@ -1020,6 +1020,53 @@
                         }
                     ]
                 }
+            },
+            "Open Normal Door": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Shoot Any Beam"
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Scan",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "MorphBall",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Bombs",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
             }
         },
         "damage_reductions": [
@@ -1203,51 +1250,8 @@
                             "shieldType": "Blue"
                         },
                         "requirement": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Shoot Any Beam"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Scan",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "MorphBall",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Bombs",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "template",
+                            "data": "Open Normal Door"
                         },
                         "lock": null
                     },
@@ -1282,6 +1286,40 @@
                         "lock": null
                     },
                     "Missile Blast Shield": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-blast",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Any Beam"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Missile Blast Shield (randomprime)": {
                         "extra": {
                             "shieldType": "Blue",
                             "blastShieldType": "Missiles"
@@ -1294,7 +1332,7 @@
                             }
                         },
                         "lock": {
-                            "lock_type": "front-blast-back-blast",
+                            "lock_type": "front-blast-back-free-unlock",
                             "requirement": {
                                 "type": "and",
                                 "data": {
@@ -1330,17 +1368,122 @@
                             }
                         },
                         "lock": null
+                    },
+                    "Circular Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Open Normal Door"
+                        },
+                        "lock": null
+                    },
+                    "Square Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "template",
+                            "data": "Open Normal Door"
+                        },
+                        "lock": null
                     }
                 },
                 "dock_rando": {
                     "unlocked": "Normal Door",
                     "locked": "Permanently Locked",
-                    "included": [
-                        "Missile Blast Shield",
+                    "change_from": [
+                        "Plasma Door",
+                        "Wave Door",
                         "Ice Door",
+                        "Missile Blast Shield",
+                        "Normal Door"
+                    ],
+                    "change_to": [
+                        "Plasma Door",
+                        "Wave Door",
+                        "Ice Door",
+                        "Permanently Locked",
+                        "Missile Blast Shield (randomprime)",
+                        "Normal Door"
+                    ]
+                }
+            },
+            "vertical": {
+                "name": "Vertical Door",
+                "extra": {},
+                "items": {
+                    "Normal Door": {
+                        "extra": {
+                            "shieldType": "Blue",
+                            "vertical": true
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Open Normal Door"
+                        },
+                        "lock": null
+                    },
+                    "Ice Door": {
+                        "extra": {
+                            "shieldType": "Ice",
+                            "vertical": true
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Ice Beam"
+                        },
+                        "lock": null
+                    },
+                    "Wave Door": {
+                        "extra": {
+                            "shieldType": "Purple",
+                            "vertical": true
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Wave Beam"
+                        },
+                        "lock": null
+                    },
+                    "Plasma Door": {
+                        "extra": {
+                            "shieldType": "Red",
+                            "vertical": true
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Plasma Beam"
+                        },
+                        "lock": null
+                    },
+                    "Permanently Locked": {
+                        "extra": {
+                            "shieldType": "Disabled",
+                            "vertical": true
+                        },
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": null
+                    }
+                },
+                "dock_rando": {
+                    "unlocked": "Normal Door",
+                    "locked": "Permanently Locked",
+                    "change_from": [
+                        "Plasma Door",
                         "Normal Door",
                         "Wave Door",
-                        "Plasma Door"
+                        "Ice Door"
+                    ],
+                    "change_to": [
+                        "Plasma Door",
+                        "Wave Door",
+                        "Ice Door",
+                        "Permanently Locked",
+                        "Normal Door"
                     ]
                 }
             },
@@ -1461,7 +1604,8 @@
                 "dock_rando": {
                     "unlocked": null,
                     "locked": null,
-                    "included": []
+                    "change_from": [],
+                    "change_to": []
                 }
             },
             "other": {
@@ -1585,7 +1729,8 @@
                 "dock_rando": {
                     "unlocked": null,
                     "locked": null,
-                    "included": []
+                    "change_from": [],
+                    "change_to": []
                 }
             }
         },

@@ -258,7 +258,7 @@
                         }
                     }
                 },
-                "Door from Deck Alpha Mech Shaft": {
+                "Dock from Deck Alpha Mech Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -274,13 +274,13 @@
                         "dock_index": 2,
                         "nonstandard": true
                     },
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "world_name": "Frigate Orpheon",
                         "area_name": "Deck Alpha Mech Shaft",
-                        "node_name": "Door to Air Lock"
+                        "node_name": "Dock to Air Lock"
                     },
-                    "default_dock_weakness": "Permanently Locked",
+                    "default_dock_weakness": "Closed Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -414,7 +414,7 @@
             }
         },
         "Deck Alpha Mech Shaft": {
-            "default_node": "Door from Connection Elevator to Deck Alpha",
+            "default_node": "Dock from Connection Elevator to Deck Alpha",
             "valid_starting_location": true,
             "extra": {
                 "asset_id": 3365346969,
@@ -429,7 +429,7 @@
                 ]
             },
             "nodes": {
-                "Door from Connection Elevator to Deck Alpha": {
+                "Dock from Connection Elevator to Deck Alpha": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -445,17 +445,17 @@
                         "dock_index": 0,
                         "nonstandard": true
                     },
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "world_name": "Frigate Orpheon",
                         "area_name": "Connection Elevator to Deck Alpha",
-                        "node_name": "Door to Deck Alpha Mech Shaft"
+                        "node_name": "Dock to Deck Alpha Mech Shaft"
                     },
-                    "default_dock_weakness": "Permanently Locked",
+                    "default_dock_weakness": "Closed Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Air Lock": {
+                        "Dock to Air Lock": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -464,13 +464,13 @@
                         }
                     }
                 },
-                "Door to Air Lock": {
+                "Dock to Air Lock": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 17.306926727294922,
-                        "y": -112.51024627685547,
-                        "z": 7.555581569671631
+                        "x": 17.31,
+                        "y": -112.51,
+                        "z": 7.56
                     },
                     "description": "",
                     "layers": [
@@ -480,13 +480,13 @@
                         "dock_index": 1,
                         "nonstandard": true
                     },
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "world_name": "Frigate Orpheon",
                         "area_name": "Air Lock",
-                        "node_name": "Door from Deck Alpha Mech Shaft"
+                        "node_name": "Dock from Deck Alpha Mech Shaft"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -653,7 +653,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Deck Alpha Mech Shaft": {
+                        "Dock to Deck Alpha Mech Shaft": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -672,13 +672,13 @@
                         }
                     }
                 },
-                "Door to Deck Alpha Mech Shaft": {
+                "Dock to Deck Alpha Mech Shaft": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -30.804523468017578,
-                        "y": 0.2793164998292923,
-                        "z": 50.83114242553711
+                        "x": -30.8,
+                        "y": 0.28,
+                        "z": 50.83
                     },
                     "description": "",
                     "layers": [
@@ -688,13 +688,13 @@
                         "dock_index": 1,
                         "nonstandard": true
                     },
-                    "dock_type": "door",
+                    "dock_type": "other",
                     "default_connection": {
                         "world_name": "Frigate Orpheon",
                         "area_name": "Deck Alpha Mech Shaft",
-                        "node_name": "Door from Connection Elevator to Deck Alpha"
+                        "node_name": "Dock from Connection Elevator to Deck Alpha"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Open Passage",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -1218,9 +1218,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -20.5678071975708,
-                        "y": -23.54286766052246,
-                        "z": 4.800855457782745
+                        "x": -20.57,
+                        "y": -23.54,
+                        "z": 4.8
                     },
                     "description": "",
                     "layers": [
@@ -1236,7 +1236,7 @@
                         "area_name": "Biotech Research Area 2",
                         "node_name": "Door from Main Ventilation Shaft Section F"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -1358,9 +1358,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 2.5672540329396725,
-                        "y": -10.713959217071533,
-                        "z": -27.49953269958496
+                        "x": 2.57,
+                        "y": -10.71,
+                        "z": -27.5
                     },
                     "description": "",
                     "layers": [
@@ -1376,7 +1376,7 @@
                         "area_name": "Deck Beta Conduit Hall",
                         "node_name": "Door to Connection Elevator to Deck Beta"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1426,9 +1426,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -26.835307598114014,
-                        "y": 15.727662563323975,
-                        "z": -1.0926852524280548
+                        "x": -26.84,
+                        "y": 15.73,
+                        "z": -1.09
                     },
                     "description": "",
                     "layers": [
@@ -1444,7 +1444,7 @@
                         "area_name": "Main Ventilation Shaft Section F",
                         "node_name": "Door from Main Ventilation Shaft Section E"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -1679,9 +1679,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -9.73665726184845,
-                        "y": 24.011698722839355,
-                        "z": 8.144564390182495
+                        "x": -9.74,
+                        "y": 24.01,
+                        "z": 8.14
                     },
                     "description": "",
                     "layers": [
@@ -1697,7 +1697,7 @@
                         "area_name": "Main Ventilation Shaft Section E",
                         "node_name": "Door from Main Ventilation Shaft Section D"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -2033,9 +2033,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 48.59692192077637,
-                        "y": -2.5408510342240334,
-                        "z": 15.495466947555542
+                        "x": 48.6,
+                        "y": -2.54,
+                        "z": 15.5
                     },
                     "description": "",
                     "layers": [
@@ -2051,7 +2051,7 @@
                         "area_name": "Subventilation Shaft Section A",
                         "node_name": "Door from Biotech Research Area 1"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -2108,9 +2108,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -31.701042652130127,
-                        "y": 17.503027200698853,
-                        "z": -8.899659395217896
+                        "x": -31.7,
+                        "y": 17.5,
+                        "z": -8.9
                     },
                     "description": "",
                     "layers": [
@@ -2126,7 +2126,7 @@
                         "area_name": "Main Ventilation Shaft Section D",
                         "node_name": "Door from Main Ventilation Shaft Section C"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -2446,9 +2446,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 75.44894790649414,
-                        "y": -74.82316780090332,
-                        "z": -2.6979673355817795
+                        "x": 75.45,
+                        "y": -74.82,
+                        "z": -2.7
                     },
                     "description": "",
                     "layers": [
@@ -2464,7 +2464,7 @@
                         "area_name": "Subventilation Shaft Section B",
                         "node_name": "Door from Subventilation Shaft Section A"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -2590,9 +2590,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 26.960155487060547,
-                        "y": 0.7240632474422455,
-                        "z": -0.36160048842430115
+                        "x": 26.96,
+                        "y": 0.72,
+                        "z": -0.36
                     },
                     "description": "",
                     "layers": [
@@ -2608,7 +2608,7 @@
                         "area_name": "Main Ventilation Shaft Section C",
                         "node_name": "Door from Main Ventilation Shaft Section B"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -2858,9 +2858,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 133.3266830444336,
-                        "y": -30.196805000305176,
-                        "z": -30.47887134552002
+                        "x": 133.33,
+                        "y": -30.2,
+                        "z": -30.48
                     },
                     "description": "",
                     "layers": [
@@ -2876,7 +2876,7 @@
                         "area_name": "Cargo Freight Lift to Deck Gamma",
                         "node_name": "Door from Subventilation Shaft Section B"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -2988,9 +2988,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 30.042105674743652,
-                        "y": 50.91055679321289,
-                        "z": 1.4354674816131592
+                        "x": 30.04,
+                        "y": 50.91,
+                        "z": 1.44
                     },
                     "description": "",
                     "layers": [
@@ -3006,7 +3006,7 @@
                         "area_name": "Main Ventilation Shaft Section B",
                         "node_name": "Door from Main Ventilation Shaft Section A"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -3455,9 +3455,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 8.924219608306885,
-                        "y": -38.319539070129395,
-                        "z": -32.63650608062744
+                        "x": 8.92,
+                        "y": -38.32,
+                        "z": -32.64
                     },
                     "description": "",
                     "layers": [
@@ -3473,7 +3473,7 @@
                         "area_name": "Main Ventilation Shaft Section A",
                         "node_name": "Door from Cargo Freight Lift to Deck Gamma"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Circular Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -3482,9 +3482,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -1.575854778289795,
-                        "y": -74.1997299194336,
-                        "z": -37.29453659057617
+                        "x": -1.58,
+                        "y": -74.2,
+                        "z": -37.29
                     },
                     "description": "",
                     "layers": [
@@ -3500,7 +3500,7 @@
                         "area_name": "Reactor Core Entrance",
                         "node_name": "Door to Cargo Freight Lift to Deck Gamma"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Square Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}
@@ -3542,9 +3542,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.7021780014038086,
-                        "y": 14.202085494995117,
-                        "z": 4.999997064471245
+                        "x": -0.7,
+                        "y": 14.2,
+                        "z": 5.0
                     },
                     "description": "",
                     "layers": [
@@ -3560,7 +3560,7 @@
                         "area_name": "Cargo Freight Lift to Deck Gamma",
                         "node_name": "Door to Reactor Core Entrance"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Square Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -3603,9 +3603,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -0.7021633386611938,
-                        "y": -14.20208740234375,
-                        "z": 4.99998827278614
+                        "x": -0.7,
+                        "y": -14.2,
+                        "z": 5.0
                     },
                     "description": "",
                     "layers": [
@@ -3621,7 +3621,7 @@
                         "area_name": "Reactor Core",
                         "node_name": "Door from Reactor Core Entrance"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Square Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {}

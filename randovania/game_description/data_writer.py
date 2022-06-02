@@ -207,7 +207,8 @@ def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
     return {
         "unlocked": name_or_none(dock_rando.unlocked),
         "locked": name_or_none(dock_rando.locked),
-        "included": [weakness.name for weakness in dock_rando.included],
+        "change_from": [weakness.name for weakness in dock_rando.change_from],
+        "change_to": [weakness.name for weakness in dock_rando.change_to],
     }
 
 

@@ -301,7 +301,15 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                     world_data[world.name]["rooms"][area.name]["pickups"].append(pickup)
                 
-                dock_nodes = sorted((node for node in area.nodes if (isinstance(node, DockNode)) and (node.identifier in self.patches.dock_weakness)), key=lambda n: n.extra["dock_index"])
+                dock_nodes = sorted(
+                    (
+                        node for node in area.nodes if (
+                        isinstance(node, DockNode))
+                        and not node.extra.get("exclude_dock_rando", False)
+                        and (node.identifier in self.patches.dock_weakness)
+                    ),
+                    key=lambda n: n.extra["dock_index"]
+                )
                 for node in dock_nodes:
                     dock_index = node.extra["dock_index"]
                     weakness = self.patches.dock_weakness[node.identifier]
