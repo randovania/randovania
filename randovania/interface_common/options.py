@@ -8,9 +8,9 @@ from typing import Optional, TypeVar, Callable, Any
 
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.games.game import RandovaniaGame
-from randovania.interface_common import persistence, update_checker
-from randovania.interface_common.persisted_options import get_persisted_options_from_data, serialized_data_for_options
+from randovania.interface_common import persistence, update_checker, persisted_options
 from randovania.layout.base.cosmetic_patches import BaseCosmeticPatches
+from randovania.lib import migration_lib
 
 T = TypeVar("T")
 
@@ -193,15 +193,6 @@ class Options:
     def with_default_data_dir(cls) -> "Options":
         return cls(persistence.local_data_dir(), persistence.roaming_data_dir())
 
-    def _read_persisted_options(self) -> Optional[dict]:
-        try:
-            contents = self._data_dir.joinpath("config.json").read_text("utf-8")
-            if contents.strip() == "":
-                return None
-            return json.loads(contents)
-        except FileNotFoundError:
-            return None
-
     def _set_field(self, field_name: str, value):
         setattr(self, "_" + field_name, value)
 
@@ -211,20 +202,30 @@ class Options:
         :param ignore_decode_errors: If True, errors in the config file are ignored.
         :return: True, if a valid file exists.
         """
-        try:
-            persisted_data = self._read_persisted_options()
+        result = None
+        for content in persisted_options.find_config_files(self._data_dir):
+            try:
+                persisted_data = json.loads(content)
 
-        except json.decoder.JSONDecodeError as e:
-            if ignore_decode_errors:
-                persisted_data = None
-            else:
-                raise DecodeFailedException(f"Unable to decode JSON: {e}")
+            except json.decoder.JSONDecodeError as e:
+                if ignore_decode_errors:
+                    continue
+                else:
+                    raise DecodeFailedException(f"Unable to decode JSON: {e}")
 
-        if persisted_data is None:
+            try:
+                result = persisted_options.get_persisted_options_from_data(persisted_data)
+
+            except migration_lib.UnsupportedVersion as e:
+                if ignore_decode_errors:
+                    continue
+                else:
+                    raise DecodeFailedException(f"Configuration file unsupported: {e}")
+
+        if result is None:
             return False
 
-        persisted_options = get_persisted_options_from_data(persisted_data)
-        self.load_from_persisted(persisted_options, ignore_decode_errors)
+        self.load_from_persisted(result, ignore_decode_errors)
         return True
 
     def load_from_persisted(self,
@@ -260,25 +261,13 @@ class Options:
             if value is not None:
                 data_to_persist[field_name] = serializer.encode(value)
 
-        return serialized_data_for_options(data_to_persist)
+        return persisted_options.serialized_data_for_options(data_to_persist)
 
     def _save_to_disk(self):
         """Serializes the fields of this Option and writes then to a file."""
         self._is_dirty = False
         data_to_persist = self._serialize_fields()
-
-        self._data_dir.mkdir(parents=True, exist_ok=True)
-
-        # Write to a separate file, so we don't corrupt the existing one in case we unexpectedly
-        # are unable to finish writing the file
-        new_config_path = self._data_dir.joinpath("config_new.json")
-        with new_config_path.open("w") as options_file:
-            json.dump(data_to_persist, options_file,
-                      indent=4, separators=(',', ': '))
-
-        # Place the new, complete, config to the desired path
-        config_path = self._data_dir.joinpath("config.json")
-        new_config_path.replace(config_path)
+        persisted_options.replace_config_file_with(self._data_dir, data_to_persist)
 
     def __enter__(self):
         self._nested_autosave_level += 1
