@@ -11611,13 +11611,11 @@
                     "pickup_index": 53,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "resource",
+                        "Lower Center": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -11951,45 +11949,6 @@
                         }
                     }
                 },
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -13000.0,
-                        "y": 1300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_069",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Missile Tank - Bottom)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Lower Center": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
                 "Tile Group (POWERBEAM) 2": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -12011,6 +11970,36 @@
                         ]
                     },
                     "connections": {
+                        "Pickup (Missile Tank - Bottom)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Can Slide"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Lower Center": {
                             "type": "and",
                             "data": {
@@ -12127,15 +12116,6 @@
                         "Event - Lower-left Tunnel Blob": {
                             "type": "template",
                             "data": "Shoot Beam"
-                        },
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
-                            }
                         },
                         "Tile Group (POWERBEAM) 2": {
                             "type": "resource",
@@ -16404,11 +16384,13 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "and",
+                        "Pickup (Missile Tank)": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "items",
+                                "name": "Speed",
+                                "amount": 1,
+                                "negate": false
                             }
                         },
                         "Event - Push Wide Beam Block": {
@@ -16436,7 +16418,7 @@
                     "pickup_index": 54,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
+                        "Dock to Thermal Device Room North (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16467,40 +16449,6 @@
                     },
                     "connections": {
                         "Door to Transport to Dairon": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": 3200.0,
-                        "y": 9500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_070",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Dock to Thermal Device Room North (Top)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
-                        },
-                        "Pickup (Missile Tank)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -23591,30 +23539,13 @@
                     "pickup_index": 44,
                     "major_location": true,
                     "connections": {
-                        "Tile Group (SPEEDBOOST) 2": {
-                            "type": "and",
+                        "Dock to Underlava Puzzle Room 1": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -23642,148 +23573,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3800.0,
-                        "y": -6500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_000",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (SPEEDBOOST) 2": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:grapplepulloff1x2_000",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Dock to Underlava Puzzle Room 1": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Lava",
-                                            "amount": 400,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3800.0,
-                        "y": -6300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_001",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Pickup (Energy Part)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST) 1": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s020_magma:default:grapplepulloff1x2_000",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -24279,8 +24068,8 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (SPEEDBOOST) 1": {
-                            "type": "or",
+                        "Pickup (Energy Part)": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -24294,12 +24083,67 @@
                                         }
                                     },
                                     {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    },
+                                    {
                                         "type": "resource",
                                         "data": {
-                                            "type": "damage",
-                                            "name": "Lava",
-                                            "amount": 400,
+                                            "type": "events",
+                                            "name": "s020_magma:default:grapplepulloff1x2_000",
+                                            "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Speedbooster",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -24340,81 +24184,6 @@
                 "asset_id": "collision_camera_054"
             },
             "nodes": {
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -4800.0,
-                        "y": -6500.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_024",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Dock to Underlava Puzzle Room 2": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Lava",
-                                            "amount": 400,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Dock to Teleport to Dairon": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Lava",
-                                            "amount": 400,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Dock to Underlava Puzzle Room 2": {
                     "node_type": "dock",
                     "heal": false,
@@ -24438,30 +24207,13 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "or",
+                        "Dock to Teleport to Dairon": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Lava",
-                                            "amount": 400,
-                                            "negate": false
-                                        }
-                                    }
-                                ]
+                                "type": "items",
+                                "name": "Gravity",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -24489,8 +24241,8 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "or",
+                        "Dock to Underlava Puzzle Room 2": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -24504,13 +24256,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "damage",
-                                            "name": "Lava",
-                                            "amount": 400,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Ballspark"
                                     }
                                 ]
                             }
