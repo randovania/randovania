@@ -64,8 +64,8 @@ class DockTypeState(BitPackValue):
     @property
     def as_json(self) -> dict:
         return {
-            "can_change_from": [weakness.name for weakness in self.can_change_from],
-            "can_change_to": [weakness.name for weakness in self.can_change_to],
+            "can_change_from": sorted((weakness.name for weakness in self.can_change_from)),
+            "can_change_to": sorted((weakness.name for weakness in self.can_change_to)),
         }
     
     @classmethod
