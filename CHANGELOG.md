@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
+- **Major** - Added: Door rando. Door locks can now be randomized, with many options to fine-tune your experience.
 - Added: "Cosmetic" option to force Fusion Suit
 - Changed: Converting models from Echoes now always needs to be provided with an ISO.
 
