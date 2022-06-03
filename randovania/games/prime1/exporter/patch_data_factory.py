@@ -17,7 +17,7 @@ from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
-from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
+from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode, LoreHintMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, RoomRandoMode
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
@@ -689,6 +689,21 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 True,
             )
 
+        equipment = [
+            db.resource_database.get_item(index)
+            for index in prime_items.EQUIPMENT
+        ]
+        if hint_config.lore == LoreHintMode.DISABLED:
+            resulting_lore_hints = {item: "{} is lost somewhere on Tallon IV.".format(item.long_name) for item in equipment}
+        else:
+            resulting_lore_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
+                self.description.all_patches,
+                self.players_config, namer,
+                hint_config.lore == LoreHintMode.HIDE_AREA,
+                [db.resource_database.get_item(index) for index in prime_items.EQUIPMENT],
+                True,
+            )
+
         # Tweaks
         ctwk_config = {}
         if self.configuration.small_samus:
@@ -772,7 +787,6 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "platedBeetle": get_random_size(0.05, 6.0),
                 "cloakedDrone": get_random_size(0.05, 6.0), # only scales width (lmao)
             }
-
         return {
             "seed": seed,
             "preferences": {
@@ -838,6 +852,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "artifactHints": {
                     artifact.long_name: text
                     for artifact, text in resulting_hints.items()
+                },
+                "loreHints": {
+                    item.long_name: text
+                    for item, text in  resulting_lore_hints.items()
                 },
                 "artifactTempleLayerOverrides": {
                     artifact.long_name: self.patches.starting_items.get(artifact, 0) == 0
