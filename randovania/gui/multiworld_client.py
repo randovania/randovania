@@ -168,6 +168,8 @@ class MultiworldClient(QObject):
             self.game_connection.set_permanent_pickups(pickups.pickups)
 
     def num_locations_to_upload(self) -> int:
+        if self._data is None:
+            return 0
         return len(self._data.collected_locations - self._data.uploaded_locations)
 
     def emit_pending_upload_count(self):
