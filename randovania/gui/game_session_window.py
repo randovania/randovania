@@ -13,6 +13,7 @@ from PySide6.QtWidgets import QMessageBox
 from qasync import asyncSlot, asyncClose
 
 from randovania.game_connection.game_connection import GameConnection
+from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
@@ -30,7 +31,6 @@ from randovania.interface_common.options import Options, InfoAlert
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.interface_common.preset_manager import PresetManager
 from randovania.layout import preset_describer
-from randovania.game_description import default_database
 from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
@@ -38,7 +38,7 @@ from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
     GameSessionAuditLog
-from randovania.network_client.network_client import ConnectionState
+from randovania.network_client.network_client import ConnectionState, UnableToConnect
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
 from randovania.resolver.exceptions import GenerationFailure
@@ -1157,7 +1157,8 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                      options.options_for_game(game).cosmetic_patches.as_json)
 
         other_worlds = [p.game for p in self._game_session.presets]
-        dialog = game.gui.export_dialog(options, patch_data, self._game_session.game_details.word_hash, False, other_worlds)
+        dialog = game.gui.export_dialog(options, patch_data, self._game_session.game_details.word_hash, False,
+                                        other_worlds)
         result = await async_dialog.execute_dialog(dialog)
 
         if result != QtWidgets.QDialog.Accepted:
@@ -1268,7 +1269,11 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
     @asyncSlot()
     async def on_game_connection_updated(self):
-        async with self._update_status_lock:
-            await self.network_client.session_self_update(self.game_connection.get_current_inventory(),
-                                                          self.game_connection.current_status,
-                                                          self.game_connection.backend_choice)
+        try:
+            async with self._update_status_lock:
+                await self.network_client.session_self_update(self.game_connection.get_current_inventory(),
+                                                              self.game_connection.current_status,
+                                                              self.game_connection.backend_choice)
+        except UnableToConnect:
+            logger.info("Unable to connect to server to update status")
+            await asyncio.sleep(1)
