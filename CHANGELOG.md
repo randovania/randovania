@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed: The server and discord bot are entirely removed from the distributed executables, reducing it's size.
 - Removed: Metroid Dread is no longer available in releases, as it was never intended to be considered stable.
 - Fixed: The "Spoiler: Pickups" tab no longer shows locations that aren't present in the given preset.
+- Fixed: The Game Session Window now better handles getting disconnected from the server.
 
 ### Cave Story
 
