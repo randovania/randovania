@@ -56,6 +56,7 @@ class UnableToConnect(Exception):
 
 _MINIMUM_TIMEOUT = 30
 _MAXIMUM_TIMEOUT = 180
+_TIMEOUTS_TO_DISCONNECT = 4
 _TIMEOUT_STEP = 10
 
 isrgrootx1 = """-----BEGIN CERTIFICATE-----
@@ -100,6 +101,7 @@ class NetworkClient:
     _waiting_for_on_connect: Optional[asyncio.Future] = None
     _restore_session_task: Optional[asyncio.Task] = None
     _connect_error: Optional[str] = None
+    _num_emit_failures: int = 0
 
     # Game Session
     _current_game_session_meta: Optional[GameSessionEntry] = None
@@ -188,6 +190,7 @@ class NetworkClient:
 
             self.logger.info(f"connecting to {self.configuration['server_address']}")
             self._connect_error = None
+            self._num_emit_failures = 0
             await self.sio.connect(
                 self.configuration["server_address"],
                 socketio_path=self.configuration["socketio_path"],
@@ -363,6 +366,7 @@ class NetworkClient:
                 self.logger.debug(f"decreasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
         else:
             self._current_timeout += _TIMEOUT_STEP
+            self._num_emit_failures += 1
             self.logger.debug(f"increasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
 
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
@@ -386,6 +390,9 @@ class NetworkClient:
             except socketio.exceptions.TimeoutError:
                 request_time = time.time() - request_start
                 self._update_timeout_with(request_time, False)
+                if self._num_emit_failures >= _TIMEOUTS_TO_DISCONNECT:
+                    # If getting too many timeouts in a row, just disconnect so the user is aware something is wrong.
+                    await self.disconnect_from_server()
                 raise error.RequestTimeout(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
 
         if result is None:
