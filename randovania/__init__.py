@@ -60,6 +60,7 @@ def get_configuration() -> dict:
 def setup_logging(default_level: str, log_to_file: Optional[Path]):
     import logging.config
     import logging.handlers
+    import time
 
     handlers = {
         'default': {
@@ -79,6 +80,7 @@ def setup_logging(default_level: str, log_to_file: Optional[Path]):
             'backupCount': 10,
         }
 
+    logging.Formatter.converter = time.gmtime
     logging.config.dictConfig({
         'version': 1,
         'formatters': {
