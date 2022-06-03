@@ -1287,3 +1287,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         except UnableToConnect:
             logger.info("Unable to connect to server to update status")
             await asyncio.sleep(1)
+
+        except error.BaseNetworkError as e:
+            logger.warning(f"Received a {e} when updating status for server")
+            await asyncio.sleep(1)
