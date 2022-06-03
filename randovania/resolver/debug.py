@@ -29,13 +29,18 @@ def increment_attempts():
     # if count > 1500:
     #     raise SystemExit
 
+def get_attempts() -> int:
+    global count
+    return count
+
 
 def _indent(offset=0):
     return " " * (_current_indent - offset)
 
 
 def log_resolve_start():
-    global _current_indent, _last_printed_additional
+    global _current_indent, _last_printed_additional, count
+    count = 0
     _current_indent = 0
     _last_printed_additional = {}
 

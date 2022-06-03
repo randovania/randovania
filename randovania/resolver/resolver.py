@@ -81,11 +81,19 @@ def _should_check_if_action_is_safe(state: State,
     return False
 
 
+class ResolverTimeout(Exception):
+    pass
+
+def _check_attempts(max_attempts: Optional[int]):
+    if max_attempts is not None and debug.get_attempts() >= max_attempts:
+        raise ResolverTimeout(f"Timed out after {max_attempts} attempts")
+
 async def _inner_advance_depth(state: State,
                                logic: Logic,
                                status_update: Callable[[str], None],
                                *,
                                reach: Optional[ResolverReach] = None,
+                               max_attempts: Optional[int] = None,
                                ) -> Tuple[Optional[State], bool]:
     """
 
@@ -96,7 +104,7 @@ async def _inner_advance_depth(state: State,
     :return:
     """
 
-    if logic.victory_condition_satisfied(state):
+    if logic.victory_condition.satisfied(state.resources, state.energy, state.resource_database):
         return state, True
 
     # Yield back to the asyncio runner, so cancel can do something
@@ -111,7 +119,7 @@ async def _inner_advance_depth(state: State,
     for action, energy in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources,
                                            logic.game.world_list.all_nodes):
-
+            _check_attempts(max_attempts)
             potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
@@ -122,6 +130,7 @@ async def _inner_advance_depth(state: State,
                     logic=logic,
                     status_update=status_update,
                     reach=potential_reach,
+                    max_attempts=max_attempts,
                 )
 
                 if not new_result[1]:
@@ -132,11 +141,13 @@ async def _inner_advance_depth(state: State,
 
     debug.log_checking_satisfiable_actions()
     has_action = False
-    for action, energy in reach.satisfiable_actions(state, logic.game.victory_condition):
+    for action, energy in reach.satisfiable_actions(state, logic.victory_condition):
+        _check_attempts(max_attempts)
         new_result = await _inner_advance_depth(
             state=state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy),
             logic=logic,
             status_update=status_update,
+            max_attempts=max_attempts,
         )
 
         # We got a positive result. Send it back up
@@ -161,8 +172,8 @@ async def _inner_advance_depth(state: State,
     return None, has_action
 
 
-async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Optional[State]:
-    return (await _inner_advance_depth(state, logic, status_update))[0]
+async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None], max_attempts: Optional[int] = None) -> Optional[State]:
+    return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
 
 def _quiet_print(s):

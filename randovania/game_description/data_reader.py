@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashable, Any
-from xml.etree.ElementInclude import include
 
 from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
