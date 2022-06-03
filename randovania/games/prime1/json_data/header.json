@@ -1430,25 +1430,242 @@
                             "data": "Open Normal Door"
                         },
                         "lock": null
+                    },
+                    "Super Missile Blast Shield": {
+                        "extra": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Super"
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Open Normal Door"
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "template",
+                                "data": "Shoot Super Missile"
+                            }
+                        }
+                    },
+                    "Power Bomb Blast Shield": {
+                        "extra": {
+                            "shieldType": "Blue",
+                            "blastShieldType": "Power Bomb"
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Open Normal Door"
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "MorphBall",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "PowerBomb",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Wavebuster Blast Shield": {
+                        "extra": {
+                            "shieldType": "Purple",
+                            "blastShieldType": "Wavebuster"
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Wave Beam"
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Charge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 10,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Wavebuster",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Wave Beam"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Ice Spreader Blast Shield": {
+                        "extra": {
+                            "shieldType": "Ice",
+                            "blastShieldType": "Ice Spreader"
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Ice Beam"
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Charge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 10,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "IceSpreader",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Ice Beam"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "Flamethrower Blast Shield": {
+                        "extra": {
+                            "shieldType": "Red",
+                            "blastShieldType": "Flamethrower"
+                        },
+                        "requirement": {
+                            "type": "template",
+                            "data": "Shoot Plasma Beam"
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-free-unlock",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": [
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Charge",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Missile",
+                                                "amount": 10,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "resource",
+                                            "data": {
+                                                "type": "items",
+                                                "name": "Flamethrower",
+                                                "amount": 1,
+                                                "negate": false
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "data": "Shoot Plasma Beam"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
                     }
                 },
                 "dock_rando": {
                     "unlocked": "Normal Door",
                     "locked": "Permanently Locked",
                     "change_from": [
-                        "Plasma Door",
-                        "Wave Door",
                         "Ice Door",
+                        "Wave Door",
                         "Missile Blast Shield",
-                        "Normal Door"
+                        "Normal Door",
+                        "Plasma Door"
                     ],
                     "change_to": [
-                        "Plasma Door",
-                        "Wave Door",
                         "Ice Door",
+                        "Wave Door",
+                        "Super Missile Blast Shield",
                         "Permanently Locked",
+                        "Ice Spreader Blast Shield",
+                        "Normal Door",
                         "Missile Blast Shield (randomprime)",
-                        "Normal Door"
+                        "Flamethrower Blast Shield",
+                        "Power Bomb Blast Shield",
+                        "Wavebuster Blast Shield",
+                        "Plasma Door"
                     ]
                 }
             },
@@ -1519,17 +1736,17 @@
                     "unlocked": "Normal Door",
                     "locked": "Permanently Locked",
                     "change_from": [
-                        "Plasma Door",
+                        "Ice Door",
                         "Normal Door",
-                        "Wave Door",
-                        "Ice Door"
+                        "Plasma Door",
+                        "Wave Door"
                     ],
                     "change_to": [
                         "Plasma Door",
-                        "Wave Door",
-                        "Ice Door",
+                        "Normal Door",
                         "Permanently Locked",
-                        "Normal Door"
+                        "Wave Door",
+                        "Ice Door"
                     ]
                 }
             },

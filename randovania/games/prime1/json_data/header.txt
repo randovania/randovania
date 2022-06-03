@@ -90,7 +90,8 @@ Dock Weaknesses
       Extra - shieldType: Disabled
       Open:
           Impossible
-      No lock
+      Lock type: FRONT_BLAST_BACK_IMPOSSIBLE
+          Trivial
 
 
   * Circular Door
@@ -105,9 +106,55 @@ Dock Weaknesses
       No lock
 
 
+  * Super Missile Blast Shield
+      Extra - shieldType: Blue
+      Extra - blastShieldType: Super
+      Open:
+          Open Normal Door
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Shoot Super Missile
+
+
+  * Power Bomb Blast Shield
+      Extra - shieldType: Blue
+      Extra - blastShieldType: Power Bomb
+      Open:
+          Open Normal Door
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Morph Ball and Power Bomb
+
+
+  * Wavebuster Blast Shield
+      Extra - shieldType: Purple
+      Extra - blastShieldType: Wavebuster
+      Open:
+          Shoot Wave Beam
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Charge Beam and Missile ≥ 10 and Wavebuster and Shoot Wave Beam
+
+
+  * Ice Spreader Blast Shield
+      Extra - shieldType: Ice
+      Extra - blastShieldType: Ice Spreader
+      Open:
+          Shoot Ice Beam
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Charge Beam and Ice Spreader and Missile ≥ 10 and Shoot Ice Beam
+
+
+  * Flamethrower Blast Shield
+      Extra - shieldType: Red
+      Extra - blastShieldType: Flamethrower
+      Open:
+          Shoot Plasma Beam
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Charge Beam and Flamethrower and Missile ≥ 10 and Shoot Plasma Beam
+
+
 > Vertical Door
   * Normal Door
       Extra - shieldType: Blue
+      Extra - vertical: True
       Open:
           Open Normal Door
       No lock
@@ -115,6 +162,7 @@ Dock Weaknesses
 
   * Ice Door
       Extra - shieldType: Ice
+      Extra - vertical: True
       Open:
           Shoot Ice Beam
       No lock
@@ -122,6 +170,7 @@ Dock Weaknesses
 
   * Wave Door
       Extra - shieldType: Purple
+      Extra - vertical: True
       Open:
           Shoot Wave Beam
       No lock
@@ -129,6 +178,7 @@ Dock Weaknesses
 
   * Plasma Door
       Extra - shieldType: Red
+      Extra - vertical: True
       Open:
           Shoot Plasma Beam
       No lock
@@ -136,6 +186,7 @@ Dock Weaknesses
 
   * Permanently Locked
       Extra - shieldType: Disabled
+      Extra - vertical: True
       Open:
           Impossible
       No lock
