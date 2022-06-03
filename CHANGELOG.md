@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed: Optimized the game generation. As example, Echoes' Starter Preset is 45% faster.
 - Changed: Optimized the game validation. As example, Echoes' Starter Preset is 91% faster.
 - Changed: The algorithm for how locations lose value over generation has changed. This should have bigger impact in big multiworlds.
+- Changed: It's now possible to login again directly in the Game Session Window.
 - Removed: The server and discord bot are entirely removed from the distributed executables, reducing it's size.
 - Removed: Metroid Dread is no longer available in releases, as it was never intended to be considered stable.
 - Fixed: The "Spoiler: Pickups" tab no longer shows locations that aren't present in the given preset.
