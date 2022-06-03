@@ -16,6 +16,7 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator.filler.runner import FillerPlayerResult
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.lib import random_lib
 from randovania.resolver import debug, resolver
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
@@ -31,18 +32,12 @@ def distribute_pre_fill_weaknesses(patches: GamePatches):
     game = default_database.game_description_for(patches.configuration.game)
     weakness_database = game.dock_weakness_database
 
-    context = NodeContext(patches, patches.starting_items, game.resource_database, game.world_list)
-
     docks_to_unlock = {
         node.identifier: weakness_database.dock_rando_params[node.dock_type].unlocked
         for node in game.world_list.all_nodes
         if (
             isinstance(node, DockNode) and dock_rando.types_state[node.dock_type].can_shuffle
             and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
-            # and (
-            #     dock_rando.mode == DockRandoMode.ONE_WAY or
-            #     game.world_list.node_by_identifier(node.get_target_identifier(context)).default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
-            # )
         )
     }
 
@@ -162,31 +157,26 @@ async def distribute_post_fill_weaknesses(rng: Random,
         debug.debug_print(result)
 
         # Determine valid weaknesses to assign
-        weighted_weaknesses = {dock_type_params.unlocked: 1}
+        weighted_weaknesses = {dock_type_params.unlocked: 1.0}
 
         if new_state is not None:
             reach = ResolverReach.calculate_reach(logic, new_state)
 
             if dock_type_params.locked in dock_type_state.can_change_to and target in reach.nodes:
-                weighted_weaknesses[dock_type_params.locked] = 2
+                weighted_weaknesses[dock_type_params.locked] = 2.0
             
             # debug.debug_print(f"{[res.long_name for res in new_state.resources if isinstance(res, (ItemResourceInfo, SimpleResourceInfo)) and res.resource_type in {ResourceType.ITEM, ResourceType.EVENT}]}")
             weighted_weaknesses.update({
-                weakness: 1 for weakness in sorted(dock_type_state.can_change_to.difference(weighted_weaknesses.keys())) if (
+                weakness: 1.0 for weakness in sorted(dock_type_state.can_change_to.difference(weighted_weaknesses.keys())) if (
                     weakness.requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database)
                     and (weakness.lock is None or weakness.lock.requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database))
                 )
             })
         
-        possible_weaknesses = []
-        for weakness, weight in weighted_weaknesses.items():
-            for _ in range(weight):
-                possible_weaknesses.append(weakness)
-        
         # Assign the dock (and its target if desired/possible)
         new_assignment: DockWeaknessAssignment = {}
 
-        weakness = rng.choice(possible_weaknesses)
+        weakness = random_lib.select_element_with_weight(weighted_weaknesses, rng)
         new_assignment[identifier] = weakness
 
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY and target.default_dock_weakness in dock_type_state.can_change_from:

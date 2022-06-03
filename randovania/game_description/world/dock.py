@@ -67,7 +67,7 @@ class DockWeakness:
 
     @property
     def long_name(self):
-        return self.name
+        return self.extra.get("display_name", self.name)
 
     def can_unlock_from_back(self: DockWeakness, back_weak: Optional[DockWeakness]) -> bool:
         if back_weak is not None and back_weak.lock is not None:
