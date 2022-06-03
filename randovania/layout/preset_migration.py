@@ -6,7 +6,7 @@ from randovania.game_description import migration_data, default_database
 from randovania.games.game import RandovaniaGame
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 29
+CURRENT_VERSION = 30
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -606,6 +606,11 @@ def _migrate_v28(preset: dict) -> dict:
 
     return preset
 
+def _migrate_v29(preset: dict) -> dict:
+    if preset["game"] == "prime1" and "lore" not in preset["configuration"]["hints"].keys():
+        preset["configuration"]["hints"]["lore"] = "hide-area"
+    return preset
+
 
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
@@ -636,6 +641,7 @@ _MIGRATIONS = {
     26: _migrate_v26,
     27: _migrate_v27,
     28: _migrate_v28,
+    29: _migrate_v29,
 }
 
 
