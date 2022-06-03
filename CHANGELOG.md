@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: When using multi-pickup placement, expansions are now considered for logic.
 - Added: New experimental option for a different algorithm for how the generator weights locations for multi-pickup placement.
 - Added: "Generate Game" tab now remembers which games and presets were expanded or collapsed.
+- Added: The Game Session Window now has a counter for how many pickups it's currently trying to send to the server.
 - Changed: Considerable more effort is made to keep hints relevant if there isn't enough things to be hinted in a game.
 - Changed: Reduced the lag you get the first time you open the Games tab.
 - Changed: Optimized the game generation. As example, Echoes' Starter Preset is 45% faster.

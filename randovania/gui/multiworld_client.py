@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Set, Optional, AsyncContextManager
 
 import pid
-from PySide6.QtCore import QObject
+from PySide6.QtCore import QObject, Signal
 from qasync import asyncSlot
 
 from randovania.game_connection.game_connection import GameConnection
@@ -61,6 +61,7 @@ class MultiworldClient(QObject):
     _expected_game: RandovaniaGame = None
     _notify_task: Optional[asyncio.Task] = None
     _pid: Optional[pid.PidFile] = None
+    PendingUploadCount = Signal(int)
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection):
         super().__init__()
@@ -136,6 +137,7 @@ class MultiworldClient(QObject):
 
             async with self._data as data:
                 data.uploaded_locations.update(locations_to_upload)
+            self.emit_pending_upload_count()
 
     def start_notify_collect_locations_task(self):
         if self._notify_task is not None and not self._notify_task.done():
@@ -155,6 +157,7 @@ class MultiworldClient(QObject):
         async with self._data as data:
             data.collected_locations.add(location.index)
 
+        self.emit_pending_upload_count()
         self.start_notify_collect_locations_task()
 
     @asyncSlot(GameSessionPickups)
@@ -163,3 +166,9 @@ class MultiworldClient(QObject):
             self._expected_game = pickups.game
             self.game_connection.set_expected_game(pickups.game)
             self.game_connection.set_permanent_pickups(pickups.pickups)
+
+    def num_locations_to_upload(self) -> int:
+        return len(self._data.collected_locations - self._data.uploaded_locations)
+
+    def emit_pending_upload_count(self):
+        self.PendingUploadCount.emit(self.num_locations_to_upload())

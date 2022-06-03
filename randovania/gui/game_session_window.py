@@ -293,6 +293,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             self._admin_global_action_slot, SessionAdminGlobalAction.CREATE_ROW,
             self._preset_manager.default_preset.as_json))
 
+        self.multiworld_client.PendingUploadCount.connect(self.on_pending_upload_count_changed)
         self.network_client.GameSessionMetaUpdated.connect(self.on_game_session_meta_update)
         self.network_client.GameSessionActionsUpdated.connect(self.on_game_session_actions_update)
         self.network_client.GameSessionAuditLogUpdated.connect(self.on_game_session_audit_log_update)
@@ -330,6 +331,10 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         is_kicked = self.network_client.current_user.id not in self._game_session.players
 
         await self.multiworld_client.stop()
+        try:
+            self.multiworld_client.PendingUploadCount.disconnect(self.on_pending_upload_count_changed)
+        except Exception as e:
+            logging.exception(f"Unable to disconnect: {e}")
         try:
             self.network_client.GameSessionMetaUpdated.disconnect(self.on_game_session_meta_update)
         except Exception as e:
@@ -1261,13 +1266,21 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                                        cosmetic_patches=dialog.cosmetic_patches))
 
     def on_server_connection_state_updated(self, state: ConnectionState):
+        pending_upload = self.multiworld_client.num_locations_to_upload()
+
         self.server_connection_button.setEnabled(state in {ConnectionState.Disconnected,
                                                            ConnectionState.ConnectedNotLogged})
         self.server_connection_button.setText("Login" if state == ConnectionState.ConnectedNotLogged else "Connect")
-        self.server_connection_label.setText(f"Server: {state.value}")
+
+        message = f"Server: {state.value}"
+        if pending_upload > 0:
+            message += f", with {pending_upload} unsent pickups"
+        self.server_connection_label.setText(message)
         common_qt_lib.set_error_border_stylesheet(self.server_connection_label,
                                                   state == ConnectionState.ConnectedNotLogged)
 
+    def on_pending_upload_count_changed(self, count: int):
+        self.on_server_connection_state_updated(self.network_client.connection_state)
 
     @asyncSlot()
     @handle_network_errors
