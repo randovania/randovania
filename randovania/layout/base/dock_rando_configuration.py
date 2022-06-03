@@ -20,11 +20,21 @@ class DockRandoMode(BitPackEnum, Enum):
     @property
     def long_name(self) -> str:
         if self == DockRandoMode.VANILLA:
-            return "Original door locks"
+            return "Vanilla"
         if self == DockRandoMode.TWO_WAY:
-            return "Random door locks; same lock on both sides"
+            return "Two-way"
         if self == DockRandoMode.ONE_WAY:
-            return "Random door locks; each side is separate"
+            return "One-way"
+        raise ValueError(f"Unknown value: {self}")
+
+    @property
+    def description(self) -> str:
+        if self == DockRandoMode.VANILLA:
+            return "Original door locks."
+        if self == DockRandoMode.TWO_WAY:
+            return "Random door locks; same lock on both sides."
+        if self == DockRandoMode.ONE_WAY:
+            return "Random door locks; each side is separate."
         raise ValueError(f"Unknown value: {self}")
 
 
