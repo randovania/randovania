@@ -126,8 +126,8 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: O
 
         return result
 
-    # except UserNotAuthorized:
-    #     raise
+    except UserNotAuthorized:
+        raise
 
     except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, OAuth2Error) as e:
         # OAuth2Error: discord token expired and couldn't renew
