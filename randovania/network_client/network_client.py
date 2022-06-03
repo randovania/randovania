@@ -243,7 +243,8 @@ class NetworkClient:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
                 self.logger.debug(f"session restoring session, with id {session_id}")
                 await self.on_user_session_updated(await self._emit_with_result("restore_user_session",
-                                                                                (persisted_session, session_id)))
+                                                                                (persisted_session, session_id),
+                                                                                handle_invalid_session=False))
 
                 if self._current_game_session_meta is not None:
                     await self.game_session_request_update()
@@ -371,7 +372,7 @@ class NetworkClient:
 
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
 
-    async def _emit_with_result(self, event, data=None, namespace=None):
+    async def _emit_with_result(self, event: str, data=None, namespace=None, *, handle_invalid_session: bool = True):
         if self.connection_state.is_disconnected:
             self.logger.debug(f"{event}, urgent connect start")
             await self.connect_to_server()
@@ -402,6 +403,10 @@ class NetworkClient:
         if possible_error is None:
             return result["result"]
         else:
+            if handle_invalid_session and isinstance(possible_error, error.InvalidSession):
+                self.logger.info("Received InvalidSession during a %s call", event)
+                await self.logout()
+
             raise possible_error
 
     async def game_session_request_update(self):
@@ -455,6 +460,16 @@ class NetworkClient:
     @property
     def current_user(self) -> Optional[User]:
         return self._current_user
+
+    async def logout(self):
+        self.logger.info("Logging out")
+        self.session_data_path.unlink()
+        self._current_user = None
+
+        if self.connection_state != ConnectionState.Connected:
+            return
+        self.connection_state = ConnectionState.ConnectedNotLogged
+        await self._emit_with_result("logout")
 
     @property
     def current_game_session(self) -> Optional[GameSessionEntry]:
