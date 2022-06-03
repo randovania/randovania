@@ -1,4 +1,5 @@
 import logging
+import time
 from logging.config import dictConfig
 
 import flask
@@ -13,6 +14,7 @@ from randovania.server.server_app import ServerApp
 def create_app():
     configuration = randovania.get_configuration()
 
+    logging.Formatter.converter = time.gmtime
     dictConfig({
         'version': 1,
         'formatters': {'default': {
