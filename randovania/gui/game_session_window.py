@@ -16,6 +16,7 @@ from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description import default_database
 from randovania.games.game import RandovaniaGame
 from randovania.gui import game_specific_gui
+from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 from randovania.gui.dialog.permalink_dialog import PermalinkDialog
 from randovania.gui.generated.game_session_ui import Ui_GameSessionWindow
 from randovania.gui.lib import common_qt_lib, async_dialog, game_exporter, file_prompts
@@ -39,6 +40,7 @@ from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.network_client.game_session import GameSessionEntry, PlayerSessionEntry, GameSessionActions, \
     GameSessionAuditLog
 from randovania.network_client.network_client import ConnectionState, UnableToConnect
+from randovania.network_common import error
 from randovania.network_common.admin_actions import SessionAdminUserAction, SessionAdminGlobalAction
 from randovania.network_common.session_state import GameSessionState
 from randovania.resolver.exceptions import GenerationFailure
@@ -1259,13 +1261,21 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                                                                        cosmetic_patches=dialog.cosmetic_patches))
 
     def on_server_connection_state_updated(self, state: ConnectionState):
-        self.server_connection_button.setEnabled(state == ConnectionState.Disconnected)
+        self.server_connection_button.setEnabled(state in {ConnectionState.Disconnected,
+                                                           ConnectionState.ConnectedNotLogged})
+        self.server_connection_button.setText("Login" if state == ConnectionState.ConnectedNotLogged else "Connect")
         self.server_connection_label.setText(f"Server: {state.value}")
+        common_qt_lib.set_error_border_stylesheet(self.server_connection_label,
+                                                  state == ConnectionState.ConnectedNotLogged)
+
 
     @asyncSlot()
     @handle_network_errors
     async def _connect_to_server(self):
-        await self.network_client.connect_to_server()
+        if self.network_client.connection_state == ConnectionState.ConnectedNotLogged:
+            await async_dialog.execute_dialog(LoginPromptDialog(self.network_client))
+        else:
+            await self.network_client.connect_to_server()
 
     @asyncSlot()
     async def on_game_connection_updated(self):
