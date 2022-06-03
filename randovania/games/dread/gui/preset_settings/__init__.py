@@ -14,10 +14,9 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
     from randovania.gui.preset_settings.starting_area_tab import PresetMetroidStartingArea
     from randovania.gui.preset_settings.generation_tab import PresetGeneration
     from randovania.gui.preset_settings.location_pool_tab import PresetLocationPool
-    from randovania.gui.preset_settings.metroid_item_pool_tab import MetroidPresetItemPool
-    from randovania.gui.preset_settings.patcher_energy_tab import PresetPatcherEnergy
     from randovania.games.dread.gui.preset_settings.dread_patches_tab import PresetDreadPatches
-
+    from randovania.games.dread.gui.preset_settings.dread_item_pool_tab import DreadPresetItemPool
+    from randovania.games.dread.gui.preset_settings.dread_energy_tab import PresetDreadEnergy
     return [
         PresetTrickLevel(editor, game_description, window_manager),
         *([
@@ -26,7 +25,7 @@ def dread_preset_tabs(editor: PresetEditor, window_manager: WindowManager):
         ] if window_manager.is_preview_mode else []),
         PresetGeneration(editor, game_description),
         PresetLocationPool(editor, game_description),
-        MetroidPresetItemPool(editor),
-        PresetPatcherEnergy(editor, RandovaniaGame.METROID_DREAD),
+        DreadPresetItemPool(editor),
+        PresetDreadEnergy(editor),
         PresetDreadPatches(editor),
     ]

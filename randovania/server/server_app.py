@@ -140,9 +140,13 @@ class ServerApp:
             @functools.wraps(handler)
             def _handler(**kwargs):
                 try:
-                    user: User = User.get(discord_id=self.discord.fetch_user().id)
-                    if user is None or not user.admin:
-                        return "User not authorized", 403
+                    user: User
+                    if not self.app.debug:
+                        user = User.get(discord_id=self.discord.fetch_user().id)
+                        if user is None or not user.admin:
+                            return "User not authorized", 403
+                    else:
+                        user = list(User.select().limit(1))[0]
 
                     return handler(user, **kwargs)
 

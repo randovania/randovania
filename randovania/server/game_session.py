@@ -9,6 +9,7 @@ import construct
 import flask
 import flask_socketio
 import peewee
+from playhouse import flask_utils
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
@@ -741,8 +742,14 @@ def setup_app(sio: ServerApp):
 
     @sio.admin_route("/sessions")
     def admin_sessions(user):
+        paginated_query = flask_utils.PaginatedQuery(
+            GameSession.select().order_by(GameSession.creation_date.desc()),
+            paginate_by=20,
+            check_bounds=True,
+        )
+
         lines = []
-        for session in GameSession.select().order_by(GameSession.creation_date):
+        for session in paginated_query.get_object_list():
             lines.append("<tr><td><a href='{}'>{}</a></td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>".format(
                 flask.url_for('admin_session', session_id=session.id),
                 session.name,
@@ -752,9 +759,30 @@ def setup_app(sio: ServerApp):
                 len(session.players),
             ))
 
-        return ("<table border='1'>"
-                "<tr><th>Name</th><th>Creator</th><th>Creation Date</th><th>State</th><th>Num Players</th></tr>"
-                "{}</table>").format("".join(lines))
+        page = paginated_query.get_page()
+        previous = "Previous"
+        if page > 1:
+            previous = "<a href='{}'>Previous</a>".format(
+                flask.url_for(".admin_sessions", page=page - 1)
+            )
+
+        next_link = "Next"
+        if page < paginated_query.get_page_count():
+            next_link = "<a href='{}'>Next</a>".format(
+                flask.url_for(".admin_sessions", page=page + 1)
+            )
+
+        return (
+            "<table border='1'>"
+            "<tr><th>Name</th><th>Creator</th><th>Creation Date</th><th>State</th><th>Num Players</th></tr>"
+            "{content}</table>Page {page} of {num_pages}. {previous} / {next}."
+        ).format(
+            content="".join(lines),
+            page=page,
+            num_pages=paginated_query.get_page_count(),
+            previous=previous,
+            next=next_link,
+        )
 
     @sio.admin_route("/session/<session_id>")
     def admin_session(user, session_id):

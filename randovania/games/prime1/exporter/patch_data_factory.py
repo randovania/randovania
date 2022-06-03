@@ -4,25 +4,25 @@ from typing import List, Union
 
 import randovania
 from randovania.exporter import pickup_exporter, item_names
-from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.exporter.hints import guaranteed_item_hint, credits_spoiler
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.exporter.patch_data_factory import BasePatchDataFactory
 from randovania.game_description.assignment import PickupTarget
+from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.resources.resource_info import CurrentResources
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.hint_namer import PrimeHintNamer
+from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.games.prime1.layout.hint_configuration import ArtifactHintMode, PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, RoomRandoMode
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
-from randovania.games.prime1.exporter.vanilla_maze_seeds import VANILLA_MAZE_SEEDS
 from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.layout_description import LayoutDescription
 
@@ -99,6 +99,7 @@ _LOCATIONS_GROUPED_TOGETHER = [
     ({52, 53}, None),  # Research Lab Aether
 ]
 
+
 def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetails,
                                      modal_hud_override: bool,
                                      rng: Random) -> dict:
@@ -159,9 +160,9 @@ def _create_locations_with_modal_hud_memo(pickups: List[pickup_exporter.Exported
 
 
 def _starting_items_value_for(resource_database: ResourceDatabase,
-                              starting_items: CurrentResources, index: str) -> Union[bool, int]:
+                              starting_items: ResourceCollection, index: str) -> Union[bool, int]:
     item = resource_database.get_item(index)
-    value = starting_items.get(item, 0)
+    value = starting_items[item]
     if item.max_capacity > 1:
         return value
     else:
@@ -238,7 +239,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             }
 
             for area in world.areas:
-                world_data[world.name]["rooms"][area.name] = {"pickups":[], "doors": {}}
+                world_data[world.name]["rooms"][area.name] = {"pickups": [], "doors": {}}
 
                 def node_len(a: PickupNode):
                     return a.pickup_index
@@ -277,9 +278,9 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 "Triclops Pit",
                                 "Elite Quarters",
                                 "Quarantine Cave",
-                                "Burn Done",
-                                "Reserach Lab Hydra",
-                                "Reserach Lab Aether",
+                                "Burn Dome",
+                                "Research Lab Hydra",
+                                "Research Lab Aether",
                             ]
 
                             if room_name in ROOMS_THAT_NEED_HELP:
@@ -291,13 +292,13 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             z_factor = random_factor(rng, 0.1, 0.8 + offset_max_z, 0.35)
 
                             return [
-                                aabb[0] + (aabb[3]-aabb[0])*x_factor,
-                                aabb[1] + (aabb[4]-aabb[1])*y_factor,
-                                aabb[2] + (aabb[5]-aabb[2])*z_factor,
+                                aabb[0] + (aabb[3] - aabb[0]) * x_factor,
+                                aabb[1] + (aabb[4] - aabb[1]) * y_factor,
+                                aabb[2] + (aabb[5] - aabb[2]) * z_factor,
                             ]
 
                         pickup["position"] = pick_random_point_in_aabb(self.rng, aabb, area.name)
-                        pickup["jumboScan"] = True # Scan this item through walls
+                        pickup["jumboScan"] = True  # Scan this item through walls
 
                     world_data[world.name]["rooms"][area.name]["pickups"].append(pickup)
                 
@@ -329,10 +330,12 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 )
 
                 if self.configuration.superheated_probability != 0:
-                    world_data[world.name]["rooms"][area.name]["superheated"] = self.rng.random() < self.configuration.superheated_probability/1000.0
+                    world_data[world.name]["rooms"][area.name][
+                        "superheated"] = self.rng.random() < self.configuration.superheated_probability / 1000.0
 
                 if self.configuration.submerged_probability != 0:
-                    world_data[world.name]["rooms"][area.name]["submerge"] = self.rng.random() < self.configuration.submerged_probability/1000.0
+                    world_data[world.name]["rooms"][area.name][
+                        "submerge"] = self.rng.random() < self.configuration.submerged_probability / 1000.0
 
                 for node in area.nodes:
                     if not isinstance(node, TeleporterNode) or not node.editable:
@@ -371,7 +374,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         index = node.extra["dock_index"]
                         dock_num_by_area_node[(area.name, node.name)] = index
                         is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
-                        default_connections_node_name[(area.name, index)] = (node.default_connection.area_name, node.default_connection.node_name)
+                        default_connections_node_name[(area.name, index)] = (
+                        node.default_connection.area_name, node.default_connection.node_name)
 
                         if node.default_dock_weakness.name == "Permanently Locked":
                             disabled_doors.add((area.name, index))
@@ -412,21 +416,21 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     if src_name == dst_name:
                         # print("same room")
                         return False
-                    
+
                     # src/dst must not be exempt
                     if src_dock is not None and is_nonstandard[(src_name, src_dock)]:
-                            # print("src exempt")
-                            return False
+                        # print("src exempt")
+                        return False
                     if dst_dock is not None and is_nonstandard[(dst_name, dst_dock)]:
-                            # print("dst exempt")
-                            return False
+                        # print("dst exempt")
+                        return False
 
                     # rooms cannot be neighbors
                     if src_name in attached_areas[dst_name]:
                         if mode == RoomRandoMode.ONE_WAY:
                             # print("neighbor")
                             return False
-                        
+
                         # Unless it's a vanilla 2-way connection
                         if default_connections[(src_name, src_dock)] != (dst_name, dst_dock):
                             # print("two-way non-neighbor")
@@ -445,7 +449,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         return False
 
                     return True
-                
+
                 if self.configuration.room_rando == RoomRandoMode.ONE_WAY:
                     for area in world.areas:
                         for dock_num in area_dock_nums[area.name]:
@@ -460,11 +464,14 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                             # If that wasn't successful, pick random destinations until it works out
                             deadman_count = 1000
-                            while dst_name is None or dst_dock is None or not are_rooms_compatible(area.name, dock_num, dst_name, dst_dock, self.configuration.room_rando):
+                            while dst_name is None or dst_dock is None or not are_rooms_compatible(area.name, dock_num,
+                                                                                                   dst_name, dst_dock,
+                                                                                                   self.configuration.room_rando):
 
                                 deadman_count -= 1
                                 if deadman_count == 0:
-                                    raise Exception("Failed to find suitible destination for %s:%s" % (area.name, dock_num))
+                                    raise Exception(
+                                        "Failed to find suitible destination for %s:%s" % (area.name, dock_num))
 
                                 dst_name = self.rng.choice(world.areas).name
                                 dst_dock = None
@@ -503,7 +510,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                     def pick_random_dst(src_name, src_dock):
                         for (dst_name, dst_dock) in candidates:
-                            if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock, self.configuration.room_rando):
+                            if are_rooms_compatible(src_name, src_dock, dst_name, dst_dock,
+                                                    self.configuration.room_rando):
                                 return (dst_name, dst_dock)
                         return (None, None)
 
@@ -560,11 +568,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                             }
                         }
                         world_data[world.name]["rooms"][dst_name]["doors"][str(dst_dock)] = {
-                                "destination": {
-                                    "roomName": src_name,
-                                    "dockNum": src_dock,
-                                }
+                            "destination": {
+                                "roomName": src_name,
+                                "dockNum": src_dock,
                             }
+                        }
 
                         # print("%s:%d <--> %s:%d" % (src_name, src_dock, dst_name, dst_dock))
 
@@ -589,7 +597,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                     dst_room_name = room["doors"][dock_num]["destination"]["roomName"]
 
                                     assert {room_name, dst_room_name} in used_room_pairings
-                                    
+
                                     room_connections.append((room_name, dst_room_name))
 
                             # Handle unrandomized connections
@@ -606,7 +614,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                             if not networkx.is_strongly_connected(graph):
                                 # Split graph into strongly connected components
-                                strongly_connected_components = sorted(networkx.strongly_connected_components(graph), key=len, reverse=True)
+                                strongly_connected_components = sorted(networkx.strongly_connected_components(graph),
+                                                                       key=len, reverse=True)
                                 assert len(strongly_connected_components) > 1
 
                                 def component_number(name):
@@ -614,9 +623,10 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                     for component in strongly_connected_components:
                                         if name in list(component):
                                             return i
-                                        i += 1    
+                                        i += 1
 
-                                # randomply pick two room pairs which are not members of the same strongly connected component and
+                                        # randomply pick two room pairs which are not members of the same strongly connected component and
+
                                 # put back into pool for re-randomization (cross fingers that they connect the two strong components)
                                 assert len(shuffled) > 2
 
@@ -636,7 +646,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                     (dst_name, dst_dock) = b[1]
                                     if component_number(src_name) == a_component_num:
                                         continue
-                                    (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (src_name, src_dock, dst_name, dst_dock)
+                                    (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (
+                                    src_name, src_dock, dst_name, dst_dock)
                                     break
 
                                 # If we could not find two rooms that were part of two different components, still remove a random room pairing
@@ -680,11 +691,11 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         "rotation": 45.0,
                         "isRed": True,
                         "logbookTitle": "Phazon Suit",
-                        "logbookCategory": 5 # Artifacts
+                        "logbookCategory": 5  # Artifacts
                     }
                 ]
             except ValueError:
-                pass # Skip making the hint if Phazon Suit is not in the seed
+                pass  # Skip making the hint if Phazon Suit is not in the seed
 
         starting_memo = None
         extra_starting = item_names.additional_starting_items(self.configuration, db.resource_database,
@@ -728,7 +739,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             ctwk_config["playerSize"] = 0.3
             ctwk_config["morphBallSize"] = 0.3
             ctwk_config["easyLavaEscape"] = True
-        
+
         if self.configuration.large_samus:
             ctwk_config["playerSize"] = 1.75
 
@@ -770,7 +781,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             }
         else:
             idrone_config = None
-        
+
         if self.configuration.deterministic_maze:
             maze_seeds = [self.rng.choice(VANILLA_MAZE_SEEDS)]
         else:
@@ -803,7 +814,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "essence": get_random_size(0.05, 2.25),
                 "flaahgra": get_random_size(0.15, 3.3),
                 "platedBeetle": get_random_size(0.05, 6.0),
-                "cloakedDrone": get_random_size(0.05, 6.0), # only scales width (lmao)
+                "cloakedDrone": get_random_size(0.05, 6.0),  # only scales width (lmao)
             }
 
         return {
@@ -839,7 +850,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "nonvariaHeatDamage": self.configuration.heat_protection_only_varia,
                 "staggeredSuitDamage": self.configuration.progressive_damage_reduction,
                 "heatDamagePerSec": self.configuration.heat_damage,
-                "autoEnabledElevators": self.patches.starting_items.get(scan_visor, 0) == 0,
+                "autoEnabledElevators": not self.patches.starting_items.has_resource(scan_visor),
                 "multiworldDolPatches": True,
 
                 "disableItemLoss": True,  # Item Loss in Frigate
@@ -876,7 +887,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                     for artifact, text in resulting_hints.items()
                 },
                 "artifactTempleLayerOverrides": {
-                    artifact.long_name: self.patches.starting_items.get(artifact, 0) == 0
+                    artifact.long_name: not self.patches.starting_items.has_resource(artifact)
                     for artifact in artifacts
                 },
             },

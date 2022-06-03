@@ -7,7 +7,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 32
+CURRENT_VERSION = 33
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -624,6 +624,12 @@ def _migrate_v30(preset: dict) -> dict:
 
 
 def _migrate_v31(preset: dict) -> dict:
+    preset["configuration"]["multi_pickup_new_weighting"] = False
+
+    return preset
+
+
+def _migrate_v32(preset: dict) -> dict:
     game = RandovaniaGame(preset["game"])
     weakness_database = default_database.game_description_for(game).dock_weakness_database
 
@@ -669,6 +675,7 @@ _MIGRATIONS = {
     29: _migrate_v29,
     30: _migrate_v30,
     31: _migrate_v31,
+    32: _migrate_v32,
 }
 
 

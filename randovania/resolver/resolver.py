@@ -114,7 +114,7 @@ async def _inner_advance_depth(state: State,
         reach = ResolverReach.calculate_reach(logic, state)
 
     debug.log_new_advance(state, reach)
-    status_update("Resolving... {} total resources".format(len(state.resources)))
+    status_update("Resolving... {} total resources".format(state.resources.num_resources))
 
     for action, energy in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources,
@@ -191,7 +191,7 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tu
 
     new_game, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
     logic = Logic(new_game, configuration)
-    starting_state.resources["add_self_as_requirement_to_resources"] = 1
+    starting_state.resources.add_self_as_requirement_to_resources = True
 
     return starting_state, logic
 

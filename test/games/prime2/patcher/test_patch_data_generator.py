@@ -12,6 +12,7 @@ from randovania.game_description.requirements import RequirementAnd, ResourceReq
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -31,7 +32,7 @@ from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
 
 def test_create_starting_popup_empty(default_echoes_configuration, echoes_resource_database):
-    starting_items = {}
+    starting_items = ResourceCollection.with_database(echoes_resource_database)
 
     # Run
     result = patch_data_factory._create_starting_popup(default_echoes_configuration,
@@ -43,12 +44,12 @@ def test_create_starting_popup_empty(default_echoes_configuration, echoes_resour
 
 
 def test_create_starting_popup_items(default_echoes_configuration, echoes_resource_database):
-    starting_items = {
+    starting_items = ResourceCollection.from_dict({
         echoes_resource_database.get_item_by_name("Missile"): 15,
         echoes_resource_database.energy_tank: 3,
         echoes_resource_database.get_item_by_name("Dark Beam"): 1,
         echoes_resource_database.get_item_by_name("Screw Attack"): 1,
-    }
+    })
 
     # Run
     result = patch_data_factory._create_starting_popup(default_echoes_configuration,
@@ -115,9 +116,9 @@ def test_create_spawn_point_field(echoes_game_description, empty_patches):
     resource_db = echoes_game_description.resource_database
 
     loc = AreaIdentifier("Temple Grounds", "Hive Chamber B")
-    patches = empty_patches.assign_starting_location(loc).assign_extra_initial_items({
-        resource_db.get_by_type_and_index(ResourceType.ITEM, "MorphBall"): 3,
-    })
+    patches = empty_patches.assign_starting_location(loc).assign_extra_initial_items([
+        (resource_db.get_item("MorphBall"), 3),
+    ])
 
     capacities = [
         {'amount': 3 if item.short_name == "MorphBall" else 0, 'index': item.extra["item_id"]}

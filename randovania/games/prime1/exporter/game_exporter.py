@@ -2,6 +2,7 @@ import copy
 import dataclasses
 import json
 import os
+import shutil
 from pathlib import Path
 from textwrap import wrap
 
@@ -22,8 +23,6 @@ class PrimeGameExportParams(GameExportParams):
     input_path: Path
     output_path: Path
     echoes_input_path: Path
-    echoes_contents_path: Path
-    echoes_backup_path: Path
     asset_cache_path: Path
     use_echoes_models: bool
     cache_path: Path
@@ -170,16 +169,13 @@ class PrimeGameExporter(GameExporter):
         assets_meta = {}
         updaters = [progress_update]
         if export_params.use_echoes_models:
+            updaters = status_update_lib.split_progress_update(progress_update, 2)
             assets_path = export_params.asset_cache_path
-            asset_conversion_progress = None
-            if asset_conversion.get_asset_cache_version(assets_path) != asset_conversion.ECHOES_MODELS_VERSION:
-                updaters = status_update_lib.split_progress_update(progress_update, 3)
-                asset_conversion_progress = updaters[1]
-                from randovania.games.prime2.exporter.game_exporter import extract_and_backup_iso
-                extract_and_backup_iso(export_params.echoes_input_path, export_params.echoes_contents_path,
-                                       export_params.echoes_backup_path, updaters[0])
-            assets_meta = asset_conversion.convert_prime2_pickups(assets_path, asset_conversion_progress)
+            assets_meta = asset_conversion.convert_prime2_pickups(export_params.echoes_input_path,
+                                                                  assets_path, updaters[0])
             new_config["externAssetsDir"] = os.fspath(assets_path)
+        else:
+            asset_conversion.delete_converted_assets(export_params.asset_cache_path)
 
         # Replace models
         adjust_model_names(new_config, assets_meta, export_params.use_echoes_models)
