@@ -121,7 +121,7 @@ class NetworkClient:
         aiohttp.ClientSession.ws_connect = wrap_ws_connect
 
         self._connection_state = ConnectionState.Disconnected
-        self.sio = socketio.AsyncClient()
+        self.sio = socketio.AsyncClient(ssl_verify=configuration.get("verify_ssl", True))
         self._call_lock = asyncio.Lock()
         self._current_timeout = _MINIMUM_TIMEOUT
 
