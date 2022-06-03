@@ -54,10 +54,14 @@ def blank_game_data() -> dict:
 
 
 @pytest.fixture(scope="session")
-def default_blank_configuration() -> BlankConfiguration:
-    preset = PresetManager(None).default_preset_for_game(RandovaniaGame.BLANK).get_preset()
-    assert isinstance(preset.configuration, BlankConfiguration)
-    return preset.configuration
+def default_blank_preset() -> Preset:
+    return PresetManager(None).default_preset_for_game(RandovaniaGame.BLANK).get_preset()
+
+
+@pytest.fixture(scope="session")
+def default_blank_configuration(default_blank_preset) -> BlankConfiguration:
+    assert isinstance(default_blank_preset.configuration, BlankConfiguration)
+    return default_blank_preset.configuration
 
 
 @pytest.fixture(scope="session")
