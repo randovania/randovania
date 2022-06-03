@@ -367,17 +367,6 @@ class NetworkClient:
 
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
 
-    async def _emit_without_result(self, event, data=None, namespace=None):
-        if self.connection_state.is_disconnected:
-            self.logger.debug(f"{event}, urgent connect start")
-            await self.connect_to_server()
-            self.logger.debug(f"{event}, urgent connect finished")
-
-        self.logger.debug(f"{event}, getting lock")
-        async with self._call_lock:
-            self.logger.debug(f"{event}, will emit")
-            await self.sio.emit(event, data, namespace=namespace)
-
     async def _emit_with_result(self, event, data=None, namespace=None):
         if self.connection_state.is_disconnected:
             self.logger.debug(f"{event}, urgent connect start")
@@ -409,7 +398,7 @@ class NetworkClient:
             raise possible_error
 
     async def game_session_request_update(self):
-        await self._emit_without_result("game_session_request_update", self._current_game_session_meta.id)
+        await self._emit_with_result("game_session_request_update", self._current_game_session_meta.id)
 
     async def game_session_collect_locations(self, locations: Tuple[int, ...]):
         await self._emit_with_result("game_session_collect_locations",
@@ -453,8 +442,8 @@ class NetworkClient:
         ])
         state_string = f"{state.pretty_text} ({backend.pretty_text})"
 
-        await self._emit_without_result("game_session_self_update",
-                                        (self._current_game_session_meta.id, inventory_binary, state_string))
+        await self._emit_with_result("game_session_self_update",
+                                     (self._current_game_session_meta.id, inventory_binary, state_string))
 
     @property
     def current_user(self) -> Optional[User]:
