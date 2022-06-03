@@ -13,6 +13,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.game import RandovaniaGame
 from randovania.gui.lib.qt_network_client import QtNetworkClient
 from randovania.network_client.game_session import GameSessionPickups
+from randovania.network_client.network_client import UnableToConnect
 
 
 class BackendInUse(Exception):
@@ -123,9 +124,12 @@ class MultiworldClient(QObject):
 
             try:
                 await self.network_client.game_session_collect_locations(locations_to_upload)
-            except Exception as e:
-                self.logger.exception(f"Exception {type(e)} when attempting to "
-                                      f"upload {len(locations_to_upload)} locations.")
+            except (Exception, UnableToConnect) as e:
+                message = f"Exception {type(e)} when attempting to upload {len(locations_to_upload)} locations."
+                if isinstance(e, UnableToConnect):
+                    self.logger.warning(message)
+                else:
+                    self.logger.exception(message)
                 await asyncio.sleep(1)
                 continue
 
