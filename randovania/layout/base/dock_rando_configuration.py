@@ -191,5 +191,11 @@ class DockRandoConfiguration(BitPackValue):
             mode = mode,
             types_state = types_state,
         )
+    
+    def dangerous_settings(self) -> list[str]:
+        danger = []
+        if self.mode != DockRandoMode.VANILLA:
+            danger.append("Door rando has very poor results in multiworld, and slows down generation significantly.")
+        return danger
 
 
