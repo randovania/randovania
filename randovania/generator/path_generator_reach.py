@@ -27,7 +27,7 @@ from randovania.resolver.state import State
 #   tuple[ safe nodes, reachable nodes ]
 
 
-PATH_GENERATOR_DEBUG = False
+PATH_GENERATOR_DEBUG = True
 _empty_list = RequirementList([])
 
 
@@ -276,10 +276,11 @@ class PathGeneratorReach(GeneratorReach):
         if PATH_GENERATOR_DEBUG:
             print(">>>>>>>>>>>>>>>>>>>>>>> explore!")
             for node, paths in existing_paths.items():
-                print("\n>> {}. Cost min {}, max {}".format(
+                print("\n>> {}. Cost min {}, max {}, {}".format(
                     self._game.world_list.node_name(node, True),
                     min(path.cost for path in paths),
                     max(path.cost for path in paths),
+                    len(paths),
                 ))
                 # for path in paths:
                 #     # print("; ".join([f"{i}: {path.is_worse_than(p)}" for i, p in enumerate(paths)]))
