@@ -2,8 +2,12 @@ import copy
 from typing import Callable
 
 
+class UnsupportedVersion(ValueError):
+    pass
+
+
 def unsupported_migration(data: dict) -> dict:
-    raise RuntimeError("Support for migrating from this version has been removed")
+    raise UnsupportedVersion("Support for migrating from this version has been removed")
 
 
 def migrate_to_version(data: dict, version: int, migrations: dict[int, Callable[[dict], dict]],
@@ -19,7 +23,8 @@ def migrate_to_version(data: dict, version: int, migrations: dict[int, Callable[
         schema_version += 1
 
     if schema_version > version:
-        raise ValueError(f"Requested a migration up to version {version}, but got version {schema_version}.")
+        raise UnsupportedVersion(f"Requested a migration up to version {version}, but got version {schema_version}. "
+                                 f"This file was created using a newer Randovania version.")
 
     data["schema_version"] = schema_version
 
