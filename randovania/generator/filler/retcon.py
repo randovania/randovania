@@ -2,10 +2,9 @@ from __future__ import annotations
 
 import math
 import pprint
-import typing
 from random import Random
 from typing import (
-    Iterator, AbstractSet, Mapping, FrozenSet, Callable, Optional,
+    AbstractSet, Mapping, FrozenSet, Callable, Optional,
 )
 
 from randovania.game_description.assignment import PickupTarget
@@ -18,7 +17,7 @@ from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
-from randovania.generator.filler.action import Action, action_name
+from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_library import (
     UnableToGenerate, UncollectedState,
     find_node_with_resource
@@ -34,12 +33,6 @@ _EVENTS_WEIGHT_MULTIPLIER = 0.5
 _INDICES_WEIGHT_MULTIPLIER = 1
 _LOGBOOKS_WEIGHT_MULTIPLIER = 1
 _VICTORY_WEIGHT = 1000
-
-
-def _calculate_reach_for_progression(reach: GeneratorReach,
-                                     progressions: Iterator[PickupEntry],
-                                     ) -> GeneratorReach:
-    return reach_lib.advance_to_with_reach_copy(reach, reach.state.assign_pickups_resources(progressions))
 
 
 def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[PickupIndex],
@@ -125,26 +118,30 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
         status_update("Checked {} of {} options.".format(options_considered, len(actions)))
 
     for action in actions:
-        if isinstance(action, tuple):
-            pickups = typing.cast(tuple[PickupEntry, ...], action)
-            base_weight = _calculate_weights_for(_calculate_reach_for_progression(player_state.reach, pickups),
-                                                 current_uncollected)
+        state = player_state.reach.state
+        multiplier = 1
+        offset = 0
 
-            multiplier = sum(pickup.probability_multiplier for pickup in pickups) / len(pickups)
-            offset = sum(pickup.probability_offset for pickup in pickups)
-            weight = (base_weight * multiplier + offset) / len(pickups)
+        resources, pickups = action.split_pickups()
 
-        else:
-            weight = _calculate_weights_for(
-                reach_lib.advance_to_with_reach_copy(player_state.reach, player_state.reach.state.act_on_node(action)),
-                current_uncollected) * _DANGEROUS_ACTION_MULTIPLIER
+        if resources:
+            for resource in resources:
+                state = state.act_on_node(resource)
+            multiplier *= _DANGEROUS_ACTION_MULTIPLIER
 
-        actions_weights[action] = weight
+        if pickups:
+            state = state.assign_pickups_resources(pickups)
+            multiplier *= sum(pickup.probability_multiplier for pickup in pickups) / len(pickups)
+            offset += sum(pickup.probability_offset for pickup in pickups) / len(pickups)
+
+        base_weight = _calculate_weights_for(reach_lib.advance_to_with_reach_copy(player_state.reach, state),
+                                             current_uncollected)
+        actions_weights[action] = base_weight * multiplier + offset
         update_for_option()
 
     if debug.debug_level() > 1:
         for action, weight in actions_weights.items():
-            print("{} - {}".format(action_name(action), weight))
+            print("{} - {}".format(action.name, weight))
 
     return actions_weights
 
@@ -212,10 +209,16 @@ def retcon_playthrough_filler(rng: Random,
         weighted_actions = weighted_potential_actions(current_player, action_report, all_locations_weighted)
         action = select_weighted_action(rng, weighted_actions)
 
-        if isinstance(action, tuple):
-            new_pickups: list[PickupEntry] = sorted(action)
-            rng.shuffle(new_pickups)
+        new_resources, new_pickups = action.split_pickups()
+        new_pickups.sort()
+        rng.shuffle(new_pickups)
 
+        for new_resource in new_resources:
+            debug_print_collect_event(new_resource, current_player.game)
+            # This action is potentially dangerous. Use `act_on` to remove invalid paths
+            current_player.reach.act_on(new_resource)
+
+        if new_pickups:
             debug.debug_print(f"\n>>> Will place {len(new_pickups)} pickups")
             for i, new_pickup in enumerate(new_pickups):
                 if i > 0 and current_player.configuration.multi_pickup_new_weighting:
@@ -234,11 +237,6 @@ def retcon_playthrough_filler(rng: Random,
             current_player.num_actions += 1
             if not current_player.configuration.multi_pickup_new_weighting:
                 increment_considered_count(all_locations_weighted)
-
-        else:
-            debug_print_collect_event(action, current_player.game)
-            # This action is potentially dangerous. Use `act_on` to remove invalid paths
-            current_player.reach.act_on(action)
 
         last_message = "{} actions performed.".format(sum(player.num_actions for player in player_states))
         status_update(last_message)
