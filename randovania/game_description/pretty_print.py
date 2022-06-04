@@ -180,6 +180,25 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             else:
                 output.write("      No lock\n")
             output.write("\n")
+        
+        dock_rando = game.dock_weakness_database.dock_rando_params[dock_type]
+        if dock_rando.locked is None or dock_rando.unlocked is None:
+            output.write("  > Dock Rando: Disabled\n\n")
+        else:
+            output.write("  > Dock Rando:")
+
+            output.write(f"\n      Unlocked: {dock_rando.unlocked.name}")
+            output.write(f"\n      Locked: {dock_rando.locked.name}")
+            
+            output.write(f"\n      Change from:")
+            for weakness in sorted(dock_rando.change_from):
+                output.write(f"\n          {weakness.name}")
+            
+            output.write(f"\n      Change to:")
+            for weakness in sorted(dock_rando.change_to):
+                output.write(f"\n          {weakness.name}")
+            
+            output.write("\n\n")
 
 
 def write_human_readable_world_list(game: GameDescription, output: TextIO) -> None:

@@ -1,3 +1,4 @@
+import contextlib
 from typing import Set
 
 from randovania.game_description.requirements import RequirementList, RequirementSet
@@ -28,18 +29,13 @@ def increment_attempts():
     # if count > 1500:
     #     raise SystemExit
 
-def get_attempts() -> int:
-    global count
-    return count
-
 
 def _indent(offset=0):
     return " " * (_current_indent - offset)
 
 
 def log_resolve_start():
-    global _current_indent, _last_printed_additional, count
-    count = 0
+    global _current_indent, _last_printed_additional
     _current_indent = 0
     _last_printed_additional = {}
 
@@ -107,6 +103,12 @@ def set_level(level: int):
 def debug_level() -> int:
     return _DEBUG_LEVEL
 
+@contextlib.contextmanager
+def with_level(level: int):
+    current_level = debug_level()
+    set_level(level)
+    yield
+    set_level(current_level)
 
 def debug_print(message: str):
     if _DEBUG_LEVEL > 0:

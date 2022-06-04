@@ -1,4 +1,5 @@
 import asyncio
+import dataclasses
 from random import Random
 from typing import Callable, Dict, List, Optional
 
@@ -158,13 +159,13 @@ async def _create_pools_and_fill(rng: Random,
 
 
 def _distribute_remaining_items(rng: Random,
-                                filler_results: Dict[int, FillerPlayerResult],
-                                ) -> Dict[int, GamePatches]:
+                                filler_results: FillerResults,
+                                ) -> FillerResults:
     unassigned_pickup_nodes = []
     all_remaining_pickups = []
     assignments: Dict[int, PickupAssignment] = {}
 
-    for player, filler_result in filler_results.items():
+    for player, filler_result in filler_results.player_results.items():
         for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.all_nodes,
                                                           filler_result.patches.pickup_assignment):
             unassigned_pickup_nodes.append((player, pickup_node))
@@ -186,10 +187,16 @@ def _distribute_remaining_items(rng: Random,
     for (node_player, node), (pickup_player, pickup) in zip(unassigned_pickup_nodes, all_remaining_pickups):
         assignments[node_player][node.pickup_index] = PickupTarget(pickup, pickup_player)
 
-    return {
-        index: filler_results[index].patches.assign_pickup_assignment(assignment)
-        for index, assignment in assignments.items()
-    }
+    return dataclasses.replace(
+        filler_results,
+        player_results={
+            player: dataclasses.replace(
+                result,
+                patches=result.patches.assign_pickup_assignment(assignments[player])
+            ) for player, result in filler_results.player_results.items()
+        }
+    )
+
     # FIXME: ignoring major-minor randomization
 
     # return {
@@ -225,12 +232,15 @@ async def _create_description(generator_params: GeneratorParameters,
 
     filler_results = await retrying(_create_pools_and_fill, rng, presets, status_update)
 
-    all_patches = _distribute_remaining_items(rng, filler_results.player_results)
-    all_patches = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, all_patches, status_update)
+    filler_results = _distribute_remaining_items(rng, filler_results)
+    filler_results = await dock_weakness_distributor.distribute_post_fill_weaknesses(rng, filler_results, status_update)
 
     return LayoutDescription.create_new(
         generator_parameters=generator_params,
-        all_patches=all_patches,
+        all_patches={
+            player: result.patches
+            for player, result in filler_results.player_results.items()
+        },
         item_order=filler_results.action_log,
     )
 

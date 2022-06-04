@@ -1,4 +1,5 @@
 import asyncio
+import dataclasses
 from random import Random
 import time
 from typing import Callable, Tuple
@@ -10,12 +11,13 @@ from randovania.game_description.requirements import Requirement, ResourceRequir
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
+from randovania.game_description.world.dock import DockRandoParams, DockWeakness
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.generator.filler.runner import FillerPlayerResult
+from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.layout.base.dock_rando_configuration import DockRandoMode
+from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import random_lib
 from randovania.resolver import debug, resolver
 from randovania.resolver.logic import Logic
@@ -62,30 +64,22 @@ class DockRandoLogic(Logic):
 
 
 TO_SHUFFLE_PROPORTION = 0.6
-RESOLVER_ATTEMPTS = 125
-async def distribute_post_fill_weaknesses(rng: Random,
-                                    all_patches: dict[int, GamePatches],
-                                    status_update: Callable[[str], None],
-                                    ) -> dict[int, GamePatches]:
+def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tuple[int, NodeIdentifier]]:
     """
-    Distributes dock weaknesses using a modified assume fill algorithm
+    Collects all docks to be assigned from each player, returning them in a random order
     """
-
-    descriptions = {
-        player: default_database.game_description_for(patches.configuration.game)
-        for player, patches in all_patches.items()
-    }
 
     unassigned_docks: list[Tuple[int, NodeIdentifier]] = []
 
-    for player, patches in all_patches.items():
+    for player, results in filler_results.player_results.items():
+        patches = results.patches
         player_docks: list[Tuple[int, NodeIdentifier]] = []
 
         if patches.configuration.dock_rando.mode == DockRandoMode.ONE_WAY:
             player_docks.extend(((player, identifier) for identifier in patches.dock_weakness.keys()))
         
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
-            game = descriptions[player]
+            game = results.game
             ctx = NodeContext(
                 patches,
                 patches.starting_items,
@@ -106,7 +100,82 @@ async def distribute_post_fill_weaknesses(rng: Random,
         unassigned_docks.extend(player_docks)
     
     rng.shuffle(unassigned_docks)
+    return unassigned_docks
 
+
+RESOLVER_ATTEMPTS = 125
+async def _run_dock_resolver(dock: DockNode,
+                             target: DockNode,
+                             dock_type_params: DockRandoParams,
+                             patches: GamePatches
+                             ) -> Tuple[State, Logic]:
+    """
+    Run the resolver with the objective of reaching the dock, assuming the dock is locked.
+    """
+
+    locks = {dock.identifier: dock_type_params.locked}
+    if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
+        locks[target.identifier] = dock_type_params.locked
+    locked_patches = patches.assign_dock_weakness_assignment(locks)
+
+    state, logic = resolver.setup_resolver(patches.configuration, locked_patches)
+    logic = DockRandoLogic.from_logic(logic, dock)
+    
+    debug.log_resolve_start()
+    debug.debug_print(f"{dock.identifier}")
+    
+    with debug.with_level(0):
+        try:
+            new_state = await resolver.advance_depth(state, logic, lambda s: None, max_attempts=RESOLVER_ATTEMPTS)
+        except resolver.ResolverTimeout:
+            new_state = None
+            result = f"Timeout ({resolver.get_attempts()} attempts)"
+        else:
+            result = f"Finished resolver ({resolver.get_attempts()} attempts)"
+    debug.debug_print(result)
+
+    return (new_state, logic)
+
+def _determine_valid_weaknesses(dock: DockNode,
+                                target: DockNode,
+                                dock_type_params: DockRandoParams,
+                                dock_type_state: DockTypeState,
+                                state: State,
+                                logic: Logic,
+                                ) -> dict[DockWeakness, float]:
+    """
+    Determine the valid weaknesses to assign to the dock given a reach
+    """
+
+    weighted_weaknesses = {dock_type_params.unlocked: 1.0}
+
+    if state is not None:
+        reach = ResolverReach.calculate_reach(logic, state)
+
+        if dock_type_params.locked in dock_type_state.can_change_to and target in reach.nodes:
+            weighted_weaknesses[dock_type_params.locked] = 2.0
+        
+        weighted_weaknesses.update({
+            weakness: 1.0 for weakness in sorted(dock_type_state.can_change_to.difference(weighted_weaknesses.keys())) if (
+                weakness.requirement.satisfied(state.resources, state.energy, state.resource_database)
+                and (weakness.lock is None or weakness.lock.requirement.satisfied(state.resources, state.energy, state.resource_database))
+            )
+        })
+    
+    return weighted_weaknesses
+
+
+async def distribute_post_fill_weaknesses(rng: Random,
+                                    filler_results: FillerResults,
+                                    status_update: Callable[[str], None],
+                                    ) -> FillerResults:
+    """
+    Distributes dock weaknesses using a modified assume fill algorithm
+    """
+
+    unassigned_docks = _get_docks_to_assign(rng, filler_results)
+
+    new_patches = {player: result.patches for player, result in filler_results.player_results.items()}
     docks_placed = 0
     docks_to_place = len(unassigned_docks)
 
@@ -118,8 +187,8 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
         player, identifier = unassigned_docks.pop()
 
-        game = descriptions[player]
-        patches = all_patches[player]
+        game = filler_results.player_results[player].game
+        patches = filler_results.player_results[player].patches
 
         dock: DockNode = game.world_list.node_by_identifier(identifier)
         target: DockNode = game.world_list.node_by_identifier(dock.get_target_identifier(NodeContext(
@@ -132,46 +201,9 @@ async def distribute_post_fill_weaknesses(rng: Random,
         dock_type_params = game.dock_weakness_database.dock_rando_params[dock.dock_type]
         dock_type_state = patches.configuration.dock_rando.types_state[dock.dock_type]
 
-        # Calculate the reach assuming this dock is completely locked
-        locks = {identifier: dock_type_params.locked}
-        if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
-            locks[target.identifier] = dock_type_params.locked
-        locked_patches = patches.assign_dock_weakness_assignment(locks)
-
-        state, logic = resolver.setup_resolver(patches.configuration, locked_patches)
-        logic = DockRandoLogic.from_logic(logic, dock)
-        debug.log_resolve_start()
-        debug.debug_print(f"{identifier}")
-        
-        level = debug.debug_level()
-        debug.set_level(0)
-
-        try:
-            new_state = await resolver.advance_depth(state, logic, lambda s: None, max_attempts=RESOLVER_ATTEMPTS)
-        except resolver.ResolverTimeout:
-            new_state = None
-            result = f"Timeout ({debug.get_attempts()} attempts)"
-        else:
-            result = f"Finished resolver ({debug.get_attempts()} attempts)"
-        debug.set_level(level)
-        debug.debug_print(result)
-
-        # Determine valid weaknesses to assign
-        weighted_weaknesses = {dock_type_params.unlocked: 1.0}
-
-        if new_state is not None:
-            reach = ResolverReach.calculate_reach(logic, new_state)
-
-            if dock_type_params.locked in dock_type_state.can_change_to and target in reach.nodes:
-                weighted_weaknesses[dock_type_params.locked] = 2.0
-            
-            # debug.debug_print(f"{[res.long_name for res in new_state.resources if isinstance(res, (ItemResourceInfo, SimpleResourceInfo)) and res.resource_type in {ResourceType.ITEM, ResourceType.EVENT}]}")
-            weighted_weaknesses.update({
-                weakness: 1.0 for weakness in sorted(dock_type_state.can_change_to.difference(weighted_weaknesses.keys())) if (
-                    weakness.requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database)
-                    and (weakness.lock is None or weakness.lock.requirement.satisfied(new_state.resources, new_state.energy, new_state.resource_database))
-                )
-            })
+        # Determine the reach and possible weaknesses given that reach
+        new_state, logic = await _run_dock_resolver(dock, target, dock_type_params, patches)
+        weighted_weaknesses = _determine_valid_weaknesses(dock, target, dock_type_params, dock_type_state, new_state, logic)
         
         # Assign the dock (and its target if desired/possible)
         new_assignment: DockWeaknessAssignment = {}
@@ -186,8 +218,16 @@ async def distribute_post_fill_weaknesses(rng: Random,
         debug.debug_print(f"Possibilities: {weighted_weaknesses}")
         debug.debug_print(f"Chosen: {weakness}\n")
         
-        all_patches[player] = patches.assign_dock_weakness_assignment(new_assignment)
+        new_patches[player] = patches.assign_dock_weakness_assignment(new_assignment)
     
     debug.debug_print(f"Dock weakness distribution finished in {int(time.perf_counter() - start_time)}s")
 
-    return all_patches
+    return dataclasses.replace(
+        filler_results,
+        player_results={
+            player: dataclasses.replace(
+                result,
+                patches=new_patches[player]
+            ) for player, result in filler_results.player_results.items()
+        }
+    )

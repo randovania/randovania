@@ -5,7 +5,7 @@ from mock import MagicMock, patch, call, AsyncMock
 
 import randovania
 from randovania.generator import generator
-from randovania.generator.filler.runner import FillerPlayerResult
+from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
 from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver.exceptions import InvalidConfiguration
 
@@ -24,6 +24,9 @@ async def test_create_patches(mock_random: MagicMock,
     filler_result = MagicMock()
     mock_run_filler: AsyncMock = mocker.patch("randovania.generator.generator.run_filler", new_callable=AsyncMock,
                                               return_value=filler_result)
+    mock_dock_weakness_distributor: AsyncMock = mocker.patch("randovania.generator.dock_weakness_distributor.distribute_post_fill_weaknesses",
+                                                            new_callable=AsyncMock, return_value=filler_result)
+    mock_distribute_remaining_items.return_value = filler_result
 
     num_players = 1
     rng = mock_random.return_value
@@ -50,11 +53,12 @@ async def test_create_patches(mock_random: MagicMock,
         for i in range(num_players)
     ])
     mock_run_filler.assert_awaited_once_with(rng, [player_pools[i] for i in range(num_players)], status_update)
-    mock_distribute_remaining_items.assert_called_once_with(rng, filler_result.player_results)
+    mock_distribute_remaining_items.assert_called_once_with(rng, filler_result)
+    mock_dock_weakness_distributor.assert_called_once_with(rng, filler_result, status_update)
 
     assert result == LayoutDescription.create_new(
         generator_parameters=generator_parameters,
-        all_patches=mock_distribute_remaining_items.return_value,
+        all_patches={},
         item_order=filler_result.action_log,
     )
 
@@ -67,7 +71,7 @@ def test_distribute_remaining_items_no_locations_left(echoes_game_description, e
         patches=echoes_game_patches,
         unassigned_pickups=[MagicMock()] * 1000,
     )
-    filler_results = {0: player_result}
+    filler_results = FillerResults({0: player_result}, tuple())
 
     # Run
     with pytest.raises(InvalidConfiguration,
