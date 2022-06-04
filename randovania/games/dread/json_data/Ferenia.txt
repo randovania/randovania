@@ -299,7 +299,9 @@ Extra - asset_id: collision_camera_006
   * Pickup 128; Major Location? False
   * Extra - actor_name: item_missiletankplus_001
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
-  > Tile Group (SPEEDBOOST)
+  > Tile Group (WEIGHT)
+      Trivial
+  > Tile Group (POWERBEAM)
       Trivial
 
 > Tile Group (WEIGHT); Heals? False
@@ -311,20 +313,6 @@ Extra - asset_id: collision_camera_006
   > Door to Transport to Dairon
       Trivial
 
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_049
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Missile+ Tank)
-      Trivial
-  > Tile Group (WEIGHT)
-      Trivial
-  > Tile Group (POWERBEAM)
-      Trivial
-
 > Tile Group (POWERBEAM); Heals? False
   * Layers: default
   * Configurable Node
@@ -334,9 +322,14 @@ Extra - asset_id: collision_camera_006
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Cold Room (Small)
       Morph Ball
+  > Pickup (Missile+ Tank)
+      All of the following:
+          Ballspark
+          Any of the following:
+              # These methods are temporary until door rando is supported
+              Gravity Suit or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+              Heat/Cold Runs (Beginner) and Cold Damage ≥ 30
   > Tile Group (WEIGHT)
-      Trivial
-  > Tile Group (SPEEDBOOST)
       Trivial
 
 > Tunnel to Fan Room Access; Heals? False
@@ -470,8 +463,8 @@ Extra - asset_id: collision_camera_009
   * Pickup 131; Major Location? True
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Tile Group (SPEEDBOOST) 1
-      Morph Ball
+  > Ledge above Slope
+      Trivial
 
 > Event - Blob to Elevator (db_reg_b2_003); Heals? False
   * Layers: default
@@ -525,30 +518,6 @@ Extra - asset_id: collision_camera_009
   > Tile Group (POWERBEAM) 4
       Trivial
 
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_045
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Energy Part)
-      Morph Ball
-  > Tile Group (SPEEDBOOST) 2
-      Trivial
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_046
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (SPEEDBOOST) 1
-      Space Jump or Speed Booster or Infinite Bomb Jump (Beginner)
-  > Ledge above Slope
-      Trivial
-
 > Tile Group (POWERBEAM) 4; Heals? False
   * Layers: default
   * Configurable Node
@@ -577,8 +546,10 @@ Extra - asset_id: collision_camera_009
 
 > Ledge above Slope; Heals? False
   * Layers: default
-  > Tile Group (SPEEDBOOST) 2
-      Flash Shift or Speed Booster or Use Spin Boost
+  > Pickup (Energy Part)
+      All of the following:
+          After Ferenia - db_reg_b2_003 and Ballspark
+          Flash Shift or Speedbooster Conservation (Beginner) or Use Spin Boost
   > Tile Group (POWERBEAM) 4
       Morph Ball
   > Bottom
@@ -846,8 +817,10 @@ Extra - asset_id: collision_camera_012
   * Extra - right_shield_def: None
   > Dock to Transport to Ghavoran
       Trivial
-  > Tile Group (POWERBEAM) 2
-      Trivial
+  > Tile Group (WEIGHT) 2
+      All of the following:
+          Can Slide
+          Power Bombs or Speed Booster or Lay Bomb or Shoot Beam
 
 > Pickup (Space Jump); Heals? False
   * Layers: default
@@ -873,8 +846,10 @@ Extra - asset_id: collision_camera_012
   * Pickup 130; Major Location? False
   * Extra - actor_name: item_missiletankplus_000
   * Extra - actor_def: actordef:actors/items/item_missiletankplus/charclasses/item_missiletankplus.bmsad
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Tile Group (WEIGHT) 2
+      Any of the following:
+          Lay Bomb or Lay Power Bomb
+          Movement (Beginner) and Can Slide
 
 > Event - Blob from below (db_reg_b2_001); Heals? False
   * Layers: default
@@ -929,62 +904,10 @@ Extra - asset_id: collision_camera_012
   * Extra - tile_types: ('WEIGHT',)
   > Door to Space Jump Room Access (Top)
       Trivial
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_024
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
   > Pickup (Missile+ Tank)
-      Trivial
-  > Tile Group (BOMB) 1
-      Trivial
-
-> Tile Group (POWERBEAM) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_025
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (WEIGHT) 2
-      Can Slide
-  > Tile Group (BOMB) 1
-      Morph Ball
-  > Tile Group (POWERBEAM) 2
       All of the following:
-          Morph Ball
-          Cross Bomb or Speed Booster
-
-> Tile Group (BOMB) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_026
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('BOMB',)
-  > Tile Group (WEIGHT) 2
-      Can Slide
-  > Tile Group (SPEEDBOOST)
-      Space Jump or Speed Booster or Simple IBJ
-  > Tile Group (POWERBEAM) 1
-      Morph Ball
-
-> Tile Group (POWERBEAM) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_027
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-  > Tile Group (WEIGHT) 2
-      Can Slide
-  > Tile Group (POWERBEAM) 1
-      All of the following:
-          Lay Cross Comb
-          Speed Booster or Can Slide
+          Ballspark
+          Power Bombs or Lay Bomb
 
 > Tile Group (BOMB) 2; Heals? False
   * Layers: default
@@ -1565,12 +1488,16 @@ Extra - asset_id: collision_camera_018
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
           Simple IBJ or Use Spin Boost
-  > Tile Group (SPEEDBOOST) 1
+  > Tile Group (POWERBEAM)
       All of the following:
-          Can Slide
+          Speed Booster
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+          Any of the following:
+              # Temporary until door rando
+              Charge Beam
+              Knowledge (Beginner) and Lay Power Bomb
 
 > Door to Cold Room (Storm Missile Gate) (Grapple); Heals? False
   * Layers: default
@@ -1585,6 +1512,15 @@ Extra - asset_id: collision_camera_018
       Any of the following:
           Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
+  > Tile Group (POWERBEAM)
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+          All of the following:
+              # Temporary until door rando
+              Grapple Beam
 
 > Event - Grapple Block (grapplepulloff1x2_002); Heals? False
   * Layers: default
@@ -1629,22 +1565,6 @@ Extra - asset_id: collision_camera_018
           Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_015
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Cold Room (Storm Missile Gate) (Charge)
-      All of the following:
-          Can Slide
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-  > Tile Group (POWERBEAM)
-      Trivial
-
 > Tile Group (BOMB); Heals? False
   * Layers: default
   * Configurable Node
@@ -1666,33 +1586,21 @@ Extra - asset_id: collision_camera_018
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Door to Cold Room (Storm Missile Gate) (Charge)
+      All of the following:
+          Can Slide
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
   > Event - Grapple Block (grapplepulloff1x2_002)
       All of the following:
           Grapple Beam
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-  > Tile Group (SPEEDBOOST) 1
-      Trivial
-  > Tile Group (SPEEDBOOST) 2
-      All of the following:
-          Morph Ball and After Ferenia - grapplepulloff1x2_002
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_071
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (POWERBEAM)
-      Morph Ball and After Ferenia - grapplepulloff1x2_002
   > Tunnel to Cold Room (Storm Missile Gate)
       All of the following:
-          Morph Ball
+          After Ferenia - grapplepulloff1x2_002 and Ballspark
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
@@ -1713,9 +1621,9 @@ Extra - asset_id: collision_camera_018
 > Tunnel to Cold Room (Storm Missile Gate); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Cold Room (Storm Missile Gate)/Tunnel to Cold Room (Energy Recharge Station)
-  > Tile Group (SPEEDBOOST) 2
+  > Tile Group (POWERBEAM)
       All of the following:
-          Morph Ball
+          Morph Ball and After Ferenia - grapplepulloff1x2_002
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
@@ -2578,10 +2486,12 @@ Extra - asset_id: collision_camera_030
   * Extra - tile_types: ('MISSILE',)
   > Pickup (Missile Tank)
       Morph Ball
-  > Tile Group (SPEEDBOOST)
-      Any of the following:
-          Gravity Suit
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+  > Tunnel to Cold Room (Energy Recharge Station)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 250
 
 > Tile Group (BOMB); Heals? False
   * Layers: default
@@ -2603,24 +2513,6 @@ Extra - asset_id: collision_camera_030
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
 
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_072
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (MISSILE)
-      Any of the following:
-          Gravity Suit
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-  > Tunnel to Cold Room (Energy Recharge Station)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
-
 > Event - Storm Missile Gate; Heals? False
   * Layers: default
   * Event Ferenia - Storm Missile Gate Cold
@@ -2630,12 +2522,12 @@ Extra - asset_id: collision_camera_030
 > Tunnel to Cold Room (Energy Recharge Station); Heals? False
   * Layers: default
   * Morph Ball Tunnel to Cold Room (Energy Recharge Station)/Tunnel to Cold Room (Storm Missile Gate)
-  > Tile Group (SPEEDBOOST)
+  > Tile Group (MISSILE)
       All of the following:
-          Morph Ball
+          Ballspark
           Any of the following:
               Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 250
 
 ----------------
 Wave Beam Tutorial
