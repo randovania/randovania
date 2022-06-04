@@ -23,6 +23,7 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_SHINY_MISSILE = 1024
@@ -238,7 +239,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             }
 
             for area in world.areas:
-                world_data[world.name]["rooms"][area.name] = {"pickups": []}
+                world_data[world.name]["rooms"][area.name] = {"pickups": [], "doors": {}}
 
                 def node_len(a: PickupNode):
                     return a.pickup_index
@@ -300,6 +301,33 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         pickup["jumboScan"] = True  # Scan this item through walls
 
                     world_data[world.name]["rooms"][area.name]["pickups"].append(pickup)
+                
+                dock_nodes = sorted(
+                    (
+                        node for node in area.nodes if (
+                        isinstance(node, DockNode))
+                        and not node.extra.get("exclude_dock_rando", False)
+                        and (node.identifier in self.patches.dock_weakness)
+                    ),
+                    key=lambda n: n.extra["dock_index"]
+                )
+                for node in dock_nodes:
+                    dock_index = node.extra["dock_index"]
+                    weakness = self.patches.dock_weakness[node.identifier]
+                    
+                    dock_data = {
+                        "shieldType": weakness.extra["shieldType"],
+                        "blastShieldType": weakness.extra.get("blastShieldType", None)
+                    }
+                    
+                    world_data[world.name]["rooms"][area.name]["doors"][dock_index] = dock_data
+                
+                regular_door = self.game.dock_weakness_database.find_type("door")
+                missile_shield = self.game.dock_weakness_database.get_by_weakness("door", "Missile Blast Shield")
+                remove_blast_shields = (
+                    self.configuration.dock_rando.mode != DockRandoMode.VANILLA and
+                    missile_shield in self.configuration.dock_rando.types_state[regular_door].can_change_from
+                )
 
                 if self.configuration.superheated_probability != 0:
                     world_data[world.name]["rooms"][area.name][
@@ -811,7 +839,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "bossSizes": boss_sizes,
                 "noDoors": self.configuration.no_doors,
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,
-                "shufflePickupPosAllRooms": False,  # functionality is handled in randovania as of v4.3
+                "shufflePickupPosAllRooms": False, # functionality is handled in randovania as of v4.3
+                "removeVanillaBlastShields": remove_blast_shields,
                 "startingRoom": starting_room,
                 "startingMemo": starting_memo,
                 "warpToStart": self.configuration.warp_to_start,

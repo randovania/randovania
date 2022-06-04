@@ -7,6 +7,7 @@ from randovania.generator.item_pool import pool_creator
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import RandomizationMode
 from randovania.layout.base.base_configuration import BaseConfiguration
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.preset import Preset
@@ -126,6 +127,11 @@ class GamePresetDescriber:
             starting_location = "{} locations".format(len(starting_locations))
 
         template_strings["Gameplay"].append(f"Starting Location: {starting_location}")
+
+        # Dock Rando
+        dock_mode = configuration.dock_rando.mode
+        if dock_mode != DockRandoMode.VANILLA:
+            template_strings["Door Rando"].append(f"Mode: {dock_mode.long_name} ({dock_mode.description})")
 
         return template_strings
 

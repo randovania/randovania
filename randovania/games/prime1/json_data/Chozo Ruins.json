@@ -716,7 +716,7 @@
                         }
                     }
                 },
-                "Door to Plaza Access": {
+                "Door from Plaza Access": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -730,7 +730,8 @@
                     ],
                     "extra": {
                         "dock_index": 4,
-                        "nonstandard": false
+                        "nonstandard": false,
+                        "exclude_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
@@ -738,7 +739,7 @@
                         "area_name": "Plaza Access",
                         "node_name": "Door to Main Plaza"
                     },
-                    "default_dock_weakness": "Normal Door",
+                    "default_dock_weakness": "Permanently Locked",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -1021,7 +1022,7 @@
                                 "items": []
                             }
                         },
-                        "Door to Plaza Access": {
+                        "Door from Plaza Access": {
                             "type": "resource",
                             "data": {
                                 "type": "misc",
@@ -1636,9 +1637,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": -29.957454681396484,
-                        "y": -0.05403780937194824,
-                        "z": 2.5196607364341617
+                        "x": -29.96,
+                        "y": -0.05,
+                        "z": 2.52
                     },
                     "description": "",
                     "layers": [
@@ -1646,13 +1647,14 @@
                     ],
                     "extra": {
                         "dock_index": 0,
-                        "nonstandard": false
+                        "nonstandard": false,
+                        "exclude_dock_rando": true
                     },
                     "dock_type": "door",
                     "default_connection": {
                         "world_name": "Chozo Ruins",
                         "area_name": "Main Plaza",
-                        "node_name": "Door to Plaza Access"
+                        "node_name": "Door from Plaza Access"
                     },
                     "default_dock_weakness": "Normal Door",
                     "override_default_open_requirement": null,

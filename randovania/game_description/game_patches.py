@@ -4,7 +4,8 @@ import copy
 import dataclasses
 import typing
 from dataclasses import dataclass
-from typing import Iterator, Optional
+from typing import Tuple, Iterator, Optional
+from randovania.game_description.assignment import DockWeaknessAssignment
 
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -33,7 +34,7 @@ class GamePatches:
     pickup_assignment: PickupAssignment
     elevator_connection: ElevatorConnection
     dock_connection: dict[NodeIdentifier, Optional[NodeIdentifier]]
-    dock_weakness: dict[NodeIdentifier, DockWeakness]
+    dock_weakness: DockWeaknessAssignment
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
     starting_location: AreaIdentifier
@@ -69,6 +70,14 @@ class GamePatches:
             new_configurable[identifier] = requirement
 
         return dataclasses.replace(self, configurable_nodes=new_configurable)
+    
+    def assign_dock_weakness_assignment(self, assignment: DockWeaknessAssignment) -> "GamePatches":
+        new_weakness = copy.copy(self.dock_weakness)
+
+        for identifier, weakness in assignment.items():
+            new_weakness[identifier] = weakness
+        
+        return dataclasses.replace(self, dock_weakness=new_weakness)
 
     def assign_starting_location(self, location: AreaIdentifier) -> "GamePatches":
         return dataclasses.replace(self, starting_location=location)

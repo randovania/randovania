@@ -15,7 +15,7 @@ from randovania.game_description.resources.simple_resource_info import SimpleRes
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.dock import DockWeaknessDatabase, DockWeakness, DockLock
+from randovania.game_description.world.dock import DockRandoParams, DockWeaknessDatabase, DockWeakness, DockLock
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.logbook_node import LoreType, LogbookNode
@@ -200,6 +200,17 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "lock": write_dock_lock(dock_weakness.lock),
     }
 
+def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
+    def name_or_none(weak: DockWeakness):
+        return weak.name if weak is not None else weak
+    
+    return {
+        "unlocked": name_or_none(dock_rando.unlocked),
+        "locked": name_or_none(dock_rando.locked),
+        "change_from": sorted((weakness.name for weakness in dock_rando.change_from)),
+        "change_to": sorted((weakness.name for weakness in dock_rando.change_to)),
+    }
+
 
 def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
     return {
@@ -210,7 +221,8 @@ def write_dock_weakness_database(database: DockWeaknessDatabase) -> dict:
                 "items": {
                     name: write_dock_weakness(weakness)
                     for name, weakness in database.weaknesses[dock_type].items()
-                }
+                },
+                "dock_rando": write_dock_rando_params(database.dock_rando_params[dock_type]),
             }
             for dock_type in database.dock_types
         },

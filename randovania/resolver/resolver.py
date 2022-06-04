@@ -81,11 +81,31 @@ def _should_check_if_action_is_safe(state: State,
     return False
 
 
+class ResolverTimeout(Exception):
+    pass
+
+attempts = 0
+
+def set_attempts(value: int):
+    global attempts
+    attempts = value
+
+def get_attempts() -> int:
+    global attempts
+    return attempts
+
+def _check_attempts(max_attempts: Optional[int]):
+    global attempts
+    if max_attempts is not None and attempts >= max_attempts:
+        raise ResolverTimeout(f"Timed out after {max_attempts} attempts")
+    attempts += 1
+
 async def _inner_advance_depth(state: State,
                                logic: Logic,
                                status_update: Callable[[str], None],
                                *,
                                reach: Optional[ResolverReach] = None,
+                               max_attempts: Optional[int] = None,
                                ) -> Tuple[Optional[State], bool]:
     """
 
@@ -96,7 +116,7 @@ async def _inner_advance_depth(state: State,
     :return:
     """
 
-    if logic.game.victory_condition.satisfied(state.resources, state.energy, state.resource_database):
+    if logic.victory_condition.satisfied(state.resources, state.energy, state.resource_database):
         return state, True
 
     # Yield back to the asyncio runner, so cancel can do something
@@ -105,13 +125,14 @@ async def _inner_advance_depth(state: State,
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
 
+
+    _check_attempts(max_attempts)
     debug.log_new_advance(state, reach)
     status_update("Resolving... {} total resources".format(state.resources.num_resources))
 
     for action, energy in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources,
                                            logic.game.world_list.all_nodes):
-
             potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
 
@@ -122,6 +143,7 @@ async def _inner_advance_depth(state: State,
                     logic=logic,
                     status_update=status_update,
                     reach=potential_reach,
+                    max_attempts=max_attempts,
                 )
 
                 if not new_result[1]:
@@ -132,11 +154,12 @@ async def _inner_advance_depth(state: State,
 
     debug.log_checking_satisfiable_actions()
     has_action = False
-    for action, energy in reach.satisfiable_actions(state, logic.game.victory_condition):
+    for action, energy in reach.satisfiable_actions(state, logic.victory_condition):
         new_result = await _inner_advance_depth(
             state=state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy),
             logic=logic,
             status_update=status_update,
+            max_attempts=max_attempts,
         )
 
         # We got a positive result. Send it back up
@@ -161,13 +184,29 @@ async def _inner_advance_depth(state: State,
     return None, has_action
 
 
-async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None]) -> Optional[State]:
-    return (await _inner_advance_depth(state, logic, status_update))[0]
+async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None], max_attempts: Optional[int] = None) -> Optional[State]:
+    return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
 
 def _quiet_print(s):
     pass
 
+def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tuple[State, Logic]:
+    set_attempts(0)
+
+    game = filtered_database.game_description_for_layout(configuration).get_mutable()
+    bootstrap = game.game.generator.bootstrap
+    derived_nodes.create_derived_nodes(game)
+    
+
+    game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
+    event_pickup.replace_with_event_pickups(game)
+
+    new_game, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
+    logic = Logic(new_game, configuration)
+    starting_state.resources.add_self_as_requirement_to_resources = True
+
+    return starting_state, logic
 
 async def resolve(configuration: BaseConfiguration,
                   patches: GamePatches,
@@ -176,16 +215,7 @@ async def resolve(configuration: BaseConfiguration,
     if status_update is None:
         status_update = _quiet_print
 
-    game = filtered_database.game_description_for_layout(configuration).get_mutable()
-    derived_nodes.create_derived_nodes(game)
-    bootstrap = game.game.generator.bootstrap
-
-    game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
-    event_pickup.replace_with_event_pickups(game)
-
-    new_game, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
-    logic = Logic(new_game, configuration)
-    starting_state.resources.add_self_as_requirement_to_resources = True
+    starting_state, logic = setup_resolver(configuration, patches)
     debug.log_resolve_start()
 
     return await advance_depth(starting_state, logic, status_update)

@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Nothing.
+- **Major** - Added: Door rando. Door locks can now be randomized, with many options to fine-tune your experience.
 
 #### Patcher Changes
 

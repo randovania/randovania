@@ -1,5 +1,5 @@
 {
-    "schema_version": 27,
+    "schema_version": 33,
     "name": "Starter Preset",
     "uuid": "407e97ed-decb-4889-8ab7-943f86ae48a4",
     "description": "Basic preset.",
@@ -22,15 +22,9 @@
         },
         "major_items_configuration": {
             "items_state": {
-                "Power Beam": {
-                    "num_included_in_starting_items": 1
-                },
                 "Wide Beam": {},
                 "Plasma Beam": {},
                 "Wave Beam": {},
-                "Hyper Beam": {
-                    "include_copy_in_original_location": true
-                },
                 "Progressive Beam": {
                     "num_shuffled_pickups": 3
                 },
@@ -65,14 +59,8 @@
                 "Pulse Radar": {
                     "num_included_in_starting_items": 1
                 },
-                "Power Suit": {
-                    "num_included_in_starting_items": 1
-                },
                 "Varia Suit": {},
                 "Gravity Suit": {},
-                "Metroid Suit": {
-                    "include_copy_in_original_location": true
-                },
                 "Progressive Suit": {
                     "num_shuffled_pickups": 2
                 },
@@ -149,10 +137,28 @@
         "pickup_model_style": "all-visible",
         "pickup_model_data_source": "etm",
         "multi_pickup_placement": false,
+        "multi_pickup_new_weighting": false,
         "logical_resource_action": "randomly",
         "first_progression_must_be_local": false,
         "minimum_available_locations_for_hint_placement": 5,
-        "minimum_location_weight_for_hint_placement": 0.10,
+        "minimum_location_weight_for_hint_placement": 0.1,
+        "dock_rando": {
+            "mode": "vanilla",
+            "types_state": {
+                "door": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                },
+                "tunnel": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                },
+                "other": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                }
+            }
+        },
         "elevators": {
             "mode": "vanilla",
             "excluded_teleporters": [],
@@ -161,6 +167,10 @@
             "allow_unvisited_room_names": true
         },
         "energy_per_tank": 100,
-        "immediate_energy_parts": true
+        "immediate_energy_parts": true,
+        "hanubia_shortcut_no_grapple": true,
+        "hanubia_easier_path_to_itorash": true,
+        "extra_pickups_for_bosses": true,
+        "x_starts_released": false
     }
 }

@@ -1,5 +1,5 @@
 {
-    "schema_version": 17,
+    "schema_version": 33,
     "name": "Starter Preset",
     "uuid": "5682c9ef-d447-4327-b473-ba1216d83439",
     "description": "In these settings, the game starts after the two trips to G.F.S. Olympus and the pirate attack to Norion, but with no items you'd have at that moment.",
@@ -141,7 +141,28 @@
         "pickup_model_style": "all-visible",
         "pickup_model_data_source": "etm",
         "multi_pickup_placement": false,
+        "multi_pickup_new_weighting": false,
         "logical_resource_action": "randomly",
+        "first_progression_must_be_local": false,
+        "minimum_available_locations_for_hint_placement": 0,
+        "minimum_location_weight_for_hint_placement": 0.0,
+        "dock_rando": {
+            "mode": "vanilla",
+            "types_state": {
+                "door": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                },
+                "morph_ball": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                },
+                "other": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                }
+            }
+        },
         "elevators": {
             "mode": "vanilla",
             "excluded_teleporters": [],

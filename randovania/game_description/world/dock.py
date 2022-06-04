@@ -67,7 +67,7 @@ class DockWeakness:
 
     @property
     def long_name(self):
-        return self.name
+        return self.extra.get("display_name", self.name)
 
     def can_unlock_from_back(self: DockWeakness, back_weak: Optional[DockWeakness]) -> bool:
         if back_weak is not None and back_weak.lock is not None:
@@ -82,6 +82,14 @@ class DockWeakness:
 
 
 @dataclass(frozen=True, slots=True)
+class DockRandoParams:
+    unlocked: DockWeakness
+    locked: DockWeakness
+    change_from: set[DockWeakness]
+    change_to: set[DockWeakness]
+
+
+@dataclass(frozen=True, slots=True, order=True)
 class DockType:
     """Represents a kind of dock for the game. Can be things like Door, Tunnel, Portal."""
     short_name: str
@@ -93,6 +101,7 @@ class DockType:
 class DockWeaknessDatabase:
     dock_types: list[DockType]
     weaknesses: dict[DockType, dict[str, DockWeakness]]
+    dock_rando_params: dict[DockType, DockRandoParams]
     default_weakness: tuple[DockType, DockWeakness]
 
     def find_type(self, dock_type_name: str) -> DockType:

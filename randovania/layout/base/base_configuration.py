@@ -8,6 +8,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
 from randovania.layout.base.logical_resource_action import LayoutLogicalResourceAction
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
@@ -39,6 +40,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     minimum_location_weight_for_hint_placement: float = dataclasses.field(metadata={
         "min": 0, "max": 5.0, "precision": 0.1,
     })
+    dock_rando: DockRandoConfiguration
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

@@ -1,5 +1,5 @@
 {
-    "schema_version": 26,
+    "schema_version": 33,
     "name": "April Fools 2022",
     "uuid": "798dd544-d607-4304-981d-388468192159",
     "description": "Having debuted with the reveal of 'Chaos Options' on April 1st 2022, this preset features logicless room rando with random superheated rooms, random submerged rooms and random boss sizes. Because of the logicless nature of Chaos Options, this preset may generate seeds which are not able to be completed.<br><br>To help compensate for the lack of logic, hypermode difficulty is enabled and many duplicate items have been placed into the pool.",
@@ -158,8 +158,41 @@
         "pickup_model_style": "all-visible",
         "pickup_model_data_source": "etm",
         "multi_pickup_placement": true,
+        "multi_pickup_new_weighting": false,
         "logical_resource_action": "randomly",
         "first_progression_must_be_local": false,
+        "minimum_available_locations_for_hint_placement": 0,
+        "minimum_location_weight_for_hint_placement": 0.0,
+        "dock_rando": {
+            "mode": "vanilla",
+            "types_state": {
+                "door": {
+                    "can_change_from": [
+                        "Ice Door",
+                        "Missile Blast Shield",
+                        "Normal Door",
+                        "Plasma Door",
+                        "Wave Door"
+                    ],
+                    "can_change_to": [
+                        "Ice Door",
+                        "Missile Blast Shield (randomprime)",
+                        "Normal Door",
+                        "Permanently Locked",
+                        "Plasma Door",
+                        "Wave Door"
+                    ]
+                },
+                "morph_ball": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                },
+                "other": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                }
+            }
+        },
         "elevators": {
             "mode": "one-way-elevator",
             "excluded_teleporters": [
@@ -189,7 +222,8 @@
             "allow_unvisited_room_names": true
         },
         "hints": {
-            "artifacts": "precise"
+            "artifacts": "precise",
+            "phazon_suit": "hide-area"
         },
         "energy_per_tank": 25,
         "artifact_target": 3,

@@ -1,5 +1,5 @@
 {
-    "schema_version": 10,
+    "schema_version": 11,
     "game": "blank",
     "resource_database": {
         "items": {
@@ -214,7 +214,45 @@
                                 }
                             }
                         }
+                    },
+                    "Locked Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "lock": {
+                            "lock_type": "front-blast-back-impossible",
+                            "requirement": {
+                                "type": "and",
+                                "data": {
+                                    "comment": null,
+                                    "items": []
+                                }
+                            }
+                        }
                     }
+                },
+                "dock_rando": {
+                    "unlocked": "Normal Door",
+                    "locked": "Locked Door",
+                    "change_from": [
+                        "Back-Only Door",
+                        "Blue Key Door",
+                        "Explosive Door",
+                        "Locked Door",
+                        "Normal Door"
+                    ],
+                    "change_to": [
+                        "Back-Only Door",
+                        "Blue Key Door",
+                        "Explosive Door",
+                        "Locked Door",
+                        "Normal Door"
+                    ]
                 }
             },
             "other": {
@@ -243,6 +281,12 @@
                         },
                         "lock": null
                     }
+                },
+                "dock_rando": {
+                    "unlocked": null,
+                    "locked": null,
+                    "change_from": [],
+                    "change_to": []
                 }
             }
         },

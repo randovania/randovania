@@ -1,5 +1,5 @@
 {
-    "schema_version": 20,
+    "schema_version": 33,
     "name": "Starter Preset",
     "uuid": "e36f52b3-ccd9-4dd7-a18f-b57b25f6b079",
     "description": "This preset is ideal for those new to playing Metroid Prime or it's Randomizer. Every seed can be completed without utilizing any tricks or glitches, and the world will be familiar to the base game.<br/><br/>In addition to shuffling items, this preset includes some minor improvements over the base game such as crash and soft-lock fixes.",
@@ -133,7 +133,41 @@
         "pickup_model_style": "all-visible",
         "pickup_model_data_source": "etm",
         "multi_pickup_placement": true,
+        "multi_pickup_new_weighting": false,
         "logical_resource_action": "randomly",
+        "first_progression_must_be_local": false,
+        "minimum_available_locations_for_hint_placement": 0,
+        "minimum_location_weight_for_hint_placement": 0.0,
+        "dock_rando": {
+            "mode": "vanilla",
+            "types_state": {
+                "door": {
+                    "can_change_from": [
+                        "Ice Door",
+                        "Missile Blast Shield",
+                        "Normal Door",
+                        "Plasma Door",
+                        "Wave Door"
+                    ],
+                    "can_change_to": [
+                        "Ice Door",
+                        "Missile Blast Shield (randomprime)",
+                        "Normal Door",
+                        "Permanently Locked",
+                        "Plasma Door",
+                        "Wave Door"
+                    ]
+                },
+                "morph_ball": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                },
+                "other": {
+                    "can_change_from": [],
+                    "can_change_to": []
+                }
+            }
+        },
         "elevators": {
             "mode": "vanilla",
             "excluded_teleporters": [
@@ -163,7 +197,8 @@
             "allow_unvisited_room_names": true
         },
         "hints": {
-            "artifacts": "precise"
+            "artifacts": "precise",
+            "phazon_suit": "hide-area"
         },
         "energy_per_tank": 100,
         "artifact_target": 6,
@@ -174,9 +209,17 @@
         "progressive_damage_reduction": true,
         "allow_underwater_movement_without_gravity": false,
         "small_samus": false,
+        "large_samus": false,
         "shuffle_item_pos": false,
         "items_every_room": false,
-        "spring_ball": true,
+        "random_boss_sizes": false,
+        "no_doors": false,
+        "superheated_probability": 0,
+        "submerged_probability": 0,
+        "room_rando": "None",
+        "spring_ball": false,
+        "deterministic_idrone": true,
+        "deterministic_maze": true,
         "main_plaza_door": true,
         "backwards_frigate": true,
         "backwards_labs": true,

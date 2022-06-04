@@ -16,6 +16,7 @@ from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.base_configuration import StartingLocationList
 from randovania.layout.base.damage_strictness import LayoutDamageStrictness
+from randovania.layout.base.dock_rando_configuration import DockRandoConfiguration
 from randovania.layout.base.major_items_configuration import MajorItemsConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle
 from randovania.layout.base.trick_level_configuration import TrickLevelConfiguration
@@ -90,6 +91,7 @@ def _layout_config_with_data(request, default_echoes_configuration):
         "translator_configuration": TranslatorConfiguration,
         "hints": HintConfiguration,
         "beam_configuration": BeamConfiguration,
+        "dock_rando": DockRandoConfiguration,
     }
 
     with contextlib.ExitStack() as stack:
