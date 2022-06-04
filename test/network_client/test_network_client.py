@@ -238,7 +238,7 @@ def test_decode_pickup(client: NetworkClient, echoes_resource_database, generic_
 
 
 async def test_session_self_update(client: NetworkClient):
-    client._emit_without_result = AsyncMock()
+    client._emit_with_result = AsyncMock()
     client._current_game_session_meta = MagicMock()
     client._current_game_session_meta.id = 1234
 
@@ -246,7 +246,7 @@ async def test_session_self_update(client: NetworkClient):
 
     await client.session_self_update(inventory, GameConnectionStatus.InGame, MemoryExecutorChoice.DOLPHIN)
 
-    client._emit_without_result.assert_awaited_once_with(
+    client._emit_with_result.assert_awaited_once_with(
         "game_session_self_update",
         (1234, b'\x01None\x00\x01\x01', "In-game (Dolphin)")
     )

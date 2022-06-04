@@ -133,7 +133,6 @@ by [SpaghettiToastBook](https://www.twitch.tv/spaghettitoastbook), [gollop](http
 
 ## Auto Tracker
 * Game theme assets were provided by [MaskedTAS](https://twitter.com/MaskedTAS).
-* Pixel theme assets were provided by Shawn Sigma.
 
 ## Multiworld
 Server and logic written by Henrique, including Dolphin and Nintendont integrations. These were based on [Dolphin Memory Engine](https://github.com/aldelaro5/Dolphin-memory-engine) and Pwootage's Nintendont fork, respectively. In-game message alert initially written by [encounter](https://github.com/encounter).

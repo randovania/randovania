@@ -101,13 +101,6 @@ class QtNetworkClient(QWidget, NetworkClient):
         new_session = await self._emit_with_result("login_with_guest", login_request)
         await self.on_user_session_updated(new_session)
 
-    async def logout(self):
-        self.session_data_path.unlink()
-        self._current_user = None
-        self._current_game_session = None
-        self.connection_state = ConnectionState.ConnectedNotLogged
-        await self._emit_with_result("logout")
-
     async def on_game_update_notification(self, details):
         self.GameUpdateNotification.emit()
 

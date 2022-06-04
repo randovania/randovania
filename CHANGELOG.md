@@ -5,19 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.4.0] - 2022-06-01
+## [4.4.0] - 2022-06-05
 
 - **Major** - Added: When using multi-pickup placement, expansions are now considered for logic.
 - Added: New experimental option for a different algorithm for how the generator weights locations for multi-pickup placement.
 - Added: "Generate Game" tab now remembers which games and presets were expanded or collapsed.
+- Added: The Game Session Window now has a counter for how many pickups it's currently trying to send to the server.
 - Changed: Considerable more effort is made to keep hints relevant if there isn't enough things to be hinted in a game.
 - Changed: Reduced the lag you get the first time you open the Games tab.
 - Changed: Optimized the game generation. As example, Echoes' Starter Preset is 45% faster.
 - Changed: Optimized the game validation. As example, Echoes' Starter Preset is 91% faster.
 - Changed: The algorithm for how locations lose value over generation has changed. This should have bigger impact in big multiworlds.
+- Changed: It's now possible to login again directly in the Game Session Window.
 - Removed: The server and discord bot are entirely removed from the distributed executables, reducing it's size.
 - Removed: Metroid Dread is no longer available in releases, as it was never intended to be considered stable.
+- Removed: All auto trackers based on pixel art style were removed by request of their artist.
 - Fixed: The "Spoiler: Pickups" tab no longer shows locations that aren't present in the given preset.
+- Fixed: The Game Session Window now better handles getting disconnected from the server.
 
 ### Cave Story
 
@@ -33,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Metroid Prime
 
-- Added "Cosmetic" option to force Fusion Suit
+- Added: "Cosmetic" option to force Fusion Suit
 - Changed: Converting models from Echoes now always needs to be provided with an ISO.
 
 #### Patcher Changes
@@ -41,6 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Major** - Added: Models for Echoes' translators and split beam ammo are now also converted to Prime.
 - Fixed: Spawning in Elite Quarters after killing OP no longer spawns the player OoB
 - Fixed: Ridley boss random size on PAL/NTSC-J and Trilogy
+- Fixed: Many rooms which, when submerged, the water box would be misaligned with the bounding box
+- Fixed: Certain rooms where item position randomizer biased towards one side or OoB entirely
 - Added: Results screen now shows Randovania version and seed hash
 
 #### Logic Database

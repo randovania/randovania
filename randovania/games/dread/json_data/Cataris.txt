@@ -2185,8 +2185,8 @@ Extra - asset_id: collision_camera_026
   * Pickup 53; Major Location? False
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (SPEEDBOOST)
-      Gravity Suit
+  > Lower Center
+      Trivial
 
 > Event - Lower-left Tunnel Blob; Heals? False
   * Layers: default
@@ -2250,18 +2250,6 @@ Extra - asset_id: collision_camera_026
   > Top room
       Trivial
 
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_069
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Missile Tank - Bottom)
-      Gravity Suit
-  > Lower Center
-      Trivial
-
 > Tile Group (POWERBEAM) 2; Heals? False
   * Layers: default
   * Configurable Node
@@ -2269,6 +2257,8 @@ Extra - asset_id: collision_camera_026
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
+  > Pickup (Missile Tank - Bottom)
+      Gravity Suit and Speed Booster and Can Slide
   > Lower Center
       Trivial
 
@@ -2292,8 +2282,6 @@ Extra - asset_id: collision_camera_026
   * Layers: default
   > Event - Lower-left Tunnel Blob
       Shoot Beam
-  > Tile Group (SPEEDBOOST)
-      Gravity Suit
   > Tile Group (POWERBEAM) 2
       Gravity Suit
   > Tile Group (POWERBEAM) 3
@@ -3125,8 +3113,8 @@ Extra - asset_id: collision_camera_040
       Trivial
   > Dock to EMMI Zone Tower West
       After Cataris - Dairon Transport Wide Beam Block
-  > Tile Group (SPEEDBOOST)
-      Trivial
+  > Pickup (Missile Tank)
+      Speed Booster
   > Event - Push Wide Beam Block
       Push Wide Beam Block
 
@@ -3135,7 +3123,7 @@ Extra - asset_id: collision_camera_040
   * Pickup 54; Major Location? False
   * Extra - actor_name: item_missiletank_000
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Tile Group (SPEEDBOOST)
+  > Dock to Thermal Device Room North (Top)
       Trivial
 
 > Tile Group (POWERBEAM); Heals? False
@@ -3146,18 +3134,6 @@ Extra - asset_id: collision_camera_040
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('POWERBEAM',)
   > Door to Transport to Dairon
-      Trivial
-
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_070
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Dock to Thermal Device Room North (Top)
-      Shoot Beam
-  > Pickup (Missile Tank)
       Trivial
 
 > Dock to Thermal Device Room North (Bottom); Heals? False
@@ -4424,8 +4400,8 @@ Extra - asset_id: collision_camera_053
   * Pickup 44; Major Location? True
   * Extra - actor_name: item_energyfragment_000
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Tile Group (SPEEDBOOST) 2
-      Gravity Suit and Morph Ball
+  > Dock to Underlava Puzzle Room 1
+      Morph Ball
 
 > Event - Lava Grapple Block (grapplepulloff1x2_000); Heals? False
   * Layers: default
@@ -4434,32 +4410,6 @@ Extra - asset_id: collision_camera_053
   * Extra - actor_def: actordef:actors/props/grapplepulloff1x2/charclasses/grapplepulloff1x2.bmsad
   > Below Lava
       Trivial
-
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_000
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (SPEEDBOOST) 2
-      After Cataris - grapplepulloff1x2_000
-  > Dock to Underlava Puzzle Room 1
-      Gravity Suit or Lava Damage ≥ 400
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_001
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Pickup (Energy Part)
-      All of the following:
-          Gravity Suit and Morph Ball
-          Space Jump or Speed Booster
-  > Tile Group (SPEEDBOOST) 1
-      After Cataris - grapplepulloff1x2_000
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Layers: default
@@ -4542,37 +4492,29 @@ Extra - asset_id: collision_camera_053
 > Dock to Underlava Puzzle Room 1; Heals? False
   * Layers: default
   * Open Passage to Underlava Puzzle Room 1/Dock to Underlava Puzzle Room 2
-  > Tile Group (SPEEDBOOST) 1
-      Gravity Suit or Lava Damage ≥ 400
+  > Pickup (Energy Part)
+      All of the following:
+          Gravity Suit and After Cataris - grapplepulloff1x2_000 and Ballspark
+          Any of the following:
+              Flash Shift or Simple IBJ or Use Spin Boost
+              Speedbooster Conservation (Intermediate) and Walljump (Beginner)
 
 ----------------
 Underlava Puzzle Room 1
 Extra - total_boundings: {'x1': -6700.0, 'x2': -4600.0, 'y1': -6600.0, 'y2': -5458.0}
 Extra - polygon: [[-4600.0, -5458.0], [-6700.0, -5458.0], [-6700.0, -6600.0], [-4600.0, -6600.0]]
 Extra - asset_id: collision_camera_054
-> Tile Group (SPEEDBOOST); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_024
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Dock to Underlava Puzzle Room 2
-      Gravity Suit or Lava Damage ≥ 400
-  > Dock to Teleport to Dairon
-      Gravity Suit or Lava Damage ≥ 400
-
 > Dock to Underlava Puzzle Room 2; Heals? False
   * Layers: default
   * Open Passage to Underlava Puzzle Room 2/Dock to Underlava Puzzle Room 1
-  > Tile Group (SPEEDBOOST)
-      Gravity Suit or Lava Damage ≥ 400
+  > Dock to Teleport to Dairon
+      Gravity Suit
 
 > Dock to Teleport to Dairon; Heals? False
   * Layers: default
   * Open Passage to Teleport to Dairon/Dock to Underlava Puzzle Room 1
-  > Tile Group (SPEEDBOOST)
-      Gravity Suit or Lava Damage ≥ 400
+  > Dock to Underlava Puzzle Room 2
+      Gravity Suit and Ballspark
 
 ----------------
 EMMI Zone Hidden Missile Room
