@@ -56,6 +56,7 @@ class UnableToConnect(Exception):
 
 _MINIMUM_TIMEOUT = 30
 _MAXIMUM_TIMEOUT = 180
+_TIMEOUTS_TO_DISCONNECT = 4
 _TIMEOUT_STEP = 10
 
 isrgrootx1 = """-----BEGIN CERTIFICATE-----
@@ -100,6 +101,7 @@ class NetworkClient:
     _waiting_for_on_connect: Optional[asyncio.Future] = None
     _restore_session_task: Optional[asyncio.Task] = None
     _connect_error: Optional[str] = None
+    _num_emit_failures: int = 0
 
     # Game Session
     _current_game_session_meta: Optional[GameSessionEntry] = None
@@ -188,6 +190,7 @@ class NetworkClient:
 
             self.logger.info(f"connecting to {self.configuration['server_address']}")
             self._connect_error = None
+            self._num_emit_failures = 0
             await self.sio.connect(
                 self.configuration["server_address"],
                 socketio_path=self.configuration["socketio_path"],
@@ -240,7 +243,8 @@ class NetworkClient:
                 self.connection_state = ConnectionState.ConnectedRestoringSession
                 self.logger.debug(f"session restoring session, with id {session_id}")
                 await self.on_user_session_updated(await self._emit_with_result("restore_user_session",
-                                                                                (persisted_session, session_id)))
+                                                                                (persisted_session, session_id),
+                                                                                handle_invalid_session=False))
 
                 if self._current_game_session_meta is not None:
                     await self.game_session_request_update()
@@ -363,22 +367,12 @@ class NetworkClient:
                 self.logger.debug(f"decreasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
         else:
             self._current_timeout += _TIMEOUT_STEP
+            self._num_emit_failures += 1
             self.logger.debug(f"increasing timeout by {_TIMEOUT_STEP}, to {self._current_timeout}")
 
         self._current_timeout = min(max(self._current_timeout, _MINIMUM_TIMEOUT), _MAXIMUM_TIMEOUT)
 
-    async def _emit_without_result(self, event, data=None, namespace=None):
-        if self.connection_state.is_disconnected:
-            self.logger.debug(f"{event}, urgent connect start")
-            await self.connect_to_server()
-            self.logger.debug(f"{event}, urgent connect finished")
-
-        self.logger.debug(f"{event}, getting lock")
-        async with self._call_lock:
-            self.logger.debug(f"{event}, will emit")
-            await self.sio.emit(event, data, namespace=namespace)
-
-    async def _emit_with_result(self, event, data=None, namespace=None):
+    async def _emit_with_result(self, event: str, data=None, namespace=None, *, handle_invalid_session: bool = True):
         if self.connection_state.is_disconnected:
             self.logger.debug(f"{event}, urgent connect start")
             await self.connect_to_server()
@@ -397,6 +391,9 @@ class NetworkClient:
             except socketio.exceptions.TimeoutError:
                 request_time = time.time() - request_start
                 self._update_timeout_with(request_time, False)
+                if self._num_emit_failures >= _TIMEOUTS_TO_DISCONNECT:
+                    # If getting too many timeouts in a row, just disconnect so the user is aware something is wrong.
+                    await self.disconnect_from_server()
                 raise error.RequestTimeout(f"Timeout after {request_time:.2f}s, with a timeout of {timeout}.")
 
         if result is None:
@@ -406,10 +403,14 @@ class NetworkClient:
         if possible_error is None:
             return result["result"]
         else:
+            if handle_invalid_session and isinstance(possible_error, error.InvalidSession):
+                self.logger.info("Received InvalidSession during a %s call", event)
+                await self.logout()
+
             raise possible_error
 
     async def game_session_request_update(self):
-        await self._emit_without_result("game_session_request_update", self._current_game_session_meta.id)
+        await self._emit_with_result("game_session_request_update", self._current_game_session_meta.id)
 
     async def game_session_collect_locations(self, locations: Tuple[int, ...]):
         await self._emit_with_result("game_session_collect_locations",
@@ -453,12 +454,22 @@ class NetworkClient:
         ])
         state_string = f"{state.pretty_text} ({backend.pretty_text})"
 
-        await self._emit_without_result("game_session_self_update",
-                                        (self._current_game_session_meta.id, inventory_binary, state_string))
+        await self._emit_with_result("game_session_self_update",
+                                     (self._current_game_session_meta.id, inventory_binary, state_string))
 
     @property
     def current_user(self) -> Optional[User]:
         return self._current_user
+
+    async def logout(self):
+        self.logger.info("Logging out")
+        self.session_data_path.unlink()
+        self._current_user = None
+
+        if self.connection_state != ConnectionState.Connected:
+            return
+        self.connection_state = ConnectionState.ConnectedNotLogged
+        await self._emit_with_result("logout")
 
     @property
     def current_game_session(self) -> Optional[GameSessionEntry]:

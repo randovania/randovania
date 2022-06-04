@@ -5,18 +5,61 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.4.0] - 2022-06-01
+## [4.5.0] - 2022-07-01
+
+- Added: Preferences are now saved separately for each version. This means newer Randovania versions don't break the preferences of older versions. 
+
+### Cave Story
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime 2: Echoes
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+## [4.4.1] - 2022-06-04
 
 - **Major** - Added: When using multi-pickup placement, expansions are now considered for logic.
 - Added: New experimental option for a different algorithm for how the generator weights locations for multi-pickup placement.
 - Added: "Generate Game" tab now remembers which games and presets were expanded or collapsed.
+- Added: The Game Session Window now has a counter for how many pickups it's currently trying to send to the server.
 - Changed: Considerable more effort is made to keep hints relevant if there isn't enough things to be hinted in a game.
 - Changed: Reduced the lag you get the first time you open the Games tab.
 - Changed: Optimized the game generation. As example, Echoes' Starter Preset is 45% faster.
 - Changed: Optimized the game validation. As example, Echoes' Starter Preset is 91% faster.
 - Changed: The algorithm for how locations lose value over generation has changed. This should have bigger impact in big multiworlds.
+- Changed: It's now possible to login again directly in the Game Session Window.
 - Removed: The server and discord bot are entirely removed from the distributed executables, reducing it's size.
 - Removed: Metroid Dread is no longer available in releases, as it was never intended to be considered stable.
+- Removed: All auto trackers based on pixel art style were removed by request of their artist.
 - Fixed: The "Spoiler: Pickups" tab no longer shows locations that aren't present in the given preset.
 - Fixed: The Game Session Window now better handles getting disconnected from the server.
 
@@ -79,6 +122,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Logic Database
 
 - Nothing.
+
+## [4.4.0] - Not released
+
+This release was skipped.
 
 ## [4.3.2] - 2022-05-13
 

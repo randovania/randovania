@@ -113,3 +113,11 @@ def with_level(level: int):
 def debug_print(message: str):
     if _DEBUG_LEVEL > 0:
         print(message)
+
+
+@contextlib.contextmanager
+def with_level(level: int):
+    current_level = debug_level()
+    set_level(level)
+    yield
+    set_level(current_level)

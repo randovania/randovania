@@ -1,12 +1,10 @@
-import logging
+from pathlib import Path
+from typing import Optional, Iterator
+
+from randovania.lib import migration_lib, json_lib
 
 _CURRENT_OPTIONS_FILE_VERSION = 18
-
-
-def _convert_logic(layout_logic: str) -> str:
-    if layout_logic == "no-glitches":
-        return "no-tricks"
-    return layout_logic
+_FIRST_VERSION_IN_SUBFOLDER = 18
 
 
 def _convert_v11(options: dict) -> dict:
@@ -112,28 +110,14 @@ _CONVERTER_FOR_VERSION = {
 # debug_locations_check
 
 def get_persisted_options_from_data(persisted_data: dict) -> dict:
-    version = persisted_data.get("version", 0)
-    options = persisted_data.get("options")
+    options = persisted_data.get("options", {})
+    options["schema_version"] = persisted_data.get("version", 0)
 
-    if not isinstance(options, dict):
-        logging.error("Data has no options.")
-        return {}
-
-    while version < _CURRENT_OPTIONS_FILE_VERSION:
-        converter = _CONVERTER_FOR_VERSION.get(version)
-        if converter is None:
-            logging.error("Converter not found for version '{}'".format(version))
-            return {}
-
-        options = converter(options)
-        version += 1
-
-    if version > _CURRENT_OPTIONS_FILE_VERSION:
-        logging.error("Options has an version from the future '{}'. Supported is only up to {}".format(
-            version, _CURRENT_OPTIONS_FILE_VERSION))
-        return {}
-
-    return options
+    return migration_lib.migrate_to_version(
+        options,
+        _CURRENT_OPTIONS_FILE_VERSION,
+        _CONVERTER_FOR_VERSION,
+    )
 
 
 def serialized_data_for_options(data_to_persist: dict) -> dict:
@@ -141,3 +125,34 @@ def serialized_data_for_options(data_to_persist: dict) -> dict:
         "version": _CURRENT_OPTIONS_FILE_VERSION,
         "options": data_to_persist
     }
+
+
+def _try_read_file(file_path: Path) -> Optional[str]:
+    try:
+        contents = file_path.read_text("utf-8")
+        if contents.strip() == "":
+            return None
+        return contents
+    except FileNotFoundError:
+        return None
+
+
+def find_config_files(data_path: Path) -> Iterator[str]:
+    for version in range(_CURRENT_OPTIONS_FILE_VERSION, _FIRST_VERSION_IN_SUBFOLDER - 1, -1):
+        if (result := _try_read_file(data_path.joinpath("versioned_config", f"{version}.json"))) is not None:
+            yield result
+
+    if (result := _try_read_file(data_path.joinpath("config.json"))) is not None:
+        yield result
+
+
+def replace_config_file_with(data_path: Path, new_data: dict):
+    # Write to a separate file, so we don't corrupt the existing one in case we unexpectedly
+    # are unable to finish writing the file
+    new_config_path = data_path.joinpath("config_new.json")
+    json_lib.write_path(new_config_path, new_data)
+
+    # Place the new, complete, config to the desired path
+    config_path = data_path.joinpath("versioned_config", f"{_CURRENT_OPTIONS_FILE_VERSION}.json")
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    new_config_path.replace(config_path)
