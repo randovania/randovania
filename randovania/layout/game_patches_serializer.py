@@ -18,6 +18,7 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.item_pool import pool_creator, PoolResults
+from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 
 _ETM_NAME = "Energy Transfer Module"
@@ -66,7 +67,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
     :param patches:
     :return:
     """
-    game = default_database.game_description_for(patches.configuration.game)
+    game = filtered_database.game_description_for_layout(patches.configuration)
     world_list = game.world_list
 
     dock_weakness_to_type = {}
@@ -235,7 +236,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
 def decode(game_modifications: List[dict],
            layout_configurations: Dict[int, BaseConfiguration],
            ) -> Dict[int, GamePatches]:
-    all_games = {index: default_database.game_description_for(configuration.game)
+    all_games = {index: filtered_database.game_description_for_layout(configuration)
                  for index, configuration in layout_configurations.items()}
     all_pools = {index: pool_creator.calculate_pool_results(configuration, all_games[index].resource_database)
                  for index, configuration in layout_configurations.items()}
