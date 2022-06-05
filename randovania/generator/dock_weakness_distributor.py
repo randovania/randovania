@@ -188,7 +188,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
         player, identifier = unassigned_docks.pop()
 
         game = filler_results.player_results[player].game
-        patches = filler_results.player_results[player].patches
+        patches = new_patches[player]
 
         dock: DockNode = game.world_list.node_by_identifier(identifier)
         target: DockNode = game.world_list.node_by_identifier(dock.get_target_identifier(NodeContext(
