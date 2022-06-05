@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.5.0] - 2022-07-01
 
-- Added: Preferences are now saved separately for each version. This means newer Randovania versions don't break the preferences of older versions. 
+- Added: Preferences are now saved separately for each version. This means newer Randovania versions don't break the preferences of older versions.
+- Fixed: Using a trick to break a door lock is now properly displayed in the UI. 
 
 ### Cave Story
 
