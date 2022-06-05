@@ -610,7 +610,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         self._starting_nodes = {
             node
-            for node in world_list.all_nodes
+            for node in world_list.iterate_nodes()
             if is_resource_node_present(node, self._initial_state)
         }
 

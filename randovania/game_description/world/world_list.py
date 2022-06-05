@@ -22,7 +22,7 @@ class WorldList(NodeProvider):
 
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
-    _nodes: Optional[Tuple[Node, ...]]
+    _nodes: Optional[Tuple[Optional[Node], ...]]
     _pickup_index_to_node: Dict[PickupIndex, PickupNode]
     _identifier_to_node: Dict[NodeIdentifier, Node]
 
@@ -78,13 +78,18 @@ class WorldList(NodeProvider):
             yield from world.areas
 
     @property
-    def all_nodes(self) -> Tuple[Node, ...]:
+    def all_nodes(self) -> tuple[Optional[Node], ...]:
         self.ensure_has_node_cache()
         return self._nodes
 
+    def iterate_nodes(self) -> Iterator[Node]:
+        for node in self.all_nodes:
+            if node is not None:
+                yield node
+
     @property
     def num_pickup_nodes(self) -> int:
-        return sum(1 for node in self.all_nodes if isinstance(node, PickupNode))
+        return sum(1 for node in self.iterate_nodes() if isinstance(node, PickupNode))
 
     @property
     def all_worlds_areas_nodes(self) -> Iterable[Tuple[World, Area, Node]]:

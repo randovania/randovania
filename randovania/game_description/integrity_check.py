@@ -156,7 +156,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
     import networkx
     graph = networkx.DiGraph()
 
-    for node in game.world_list.all_nodes:
+    for node in game.world_list.iterate_nodes():
         if isinstance(node, DockLockNode):
             continue
         graph.add_node(node)
@@ -179,7 +179,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         node_provider=game.world_list,
     )
 
-    for node in game.world_list.all_nodes:
+    for node in game.world_list.iterate_nodes():
         if node not in graph:
             continue
 

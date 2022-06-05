@@ -57,7 +57,7 @@ def distances_to_node(world_list: WorldList, starting_node: Node,
 
 
 def pickup_index_to_node(world_list: WorldList, index: PickupIndex) -> PickupNode:
-    for node in world_list.all_nodes:
+    for node in world_list.iterate_nodes():
         if isinstance(node, PickupNode) and node.pickup_index == index:
             return node
     raise ValueError(f"PickupNode with {index} not found.")

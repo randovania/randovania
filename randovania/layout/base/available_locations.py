@@ -14,7 +14,7 @@ from randovania.games.game import RandovaniaGame
 def _all_indices(db: GameDescription) -> list[int]:
     return sorted(
         node.pickup_index.index
-        for node in db.world_list.all_nodes
+        for node in db.world_list.iterate_nodes()
         if isinstance(node, PickupNode)
     )
 

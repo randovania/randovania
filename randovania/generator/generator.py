@@ -93,7 +93,7 @@ def _assign_remaining_items(rng: Random,
     :return:
     """
 
-    unassigned_pickup_nodes = list(filter_unassigned_pickup_nodes(world_list.all_nodes, pickup_assignment))
+    unassigned_pickup_nodes = list(filter_unassigned_pickup_nodes(world_list.iterate_nodes(), pickup_assignment))
 
     num_etm = len(unassigned_pickup_nodes) - len(remaining_items)
     if num_etm < 0:
@@ -156,7 +156,7 @@ def _distribute_remaining_items(rng: Random,
     assignments: Dict[int, PickupAssignment] = {}
 
     for player, filler_result in filler_results.items():
-        for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.all_nodes,
+        for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
                                                           filler_result.patches.pickup_assignment):
             unassigned_pickup_nodes.append((player, pickup_node))
 
