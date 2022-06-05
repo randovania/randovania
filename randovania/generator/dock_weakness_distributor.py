@@ -4,7 +4,7 @@ from random import Random
 import time
 from typing import Callable, Tuple
 from randovania.game_description import default_database
-from randovania.game_description.assignment import DockWeaknessAssignment
+from randovania.game_description.assignment import DockWeaknessAssociation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -35,16 +35,16 @@ def distribute_pre_fill_weaknesses(patches: GamePatches):
     game = default_database.game_description_for(patches.configuration.game)
     weakness_database = game.dock_weakness_database
 
-    docks_to_unlock = {
-        node.identifier: weakness_database.dock_rando_params[node.dock_type].unlocked
+    docks_to_unlock = [
+        (node.identifier, weakness_database.dock_rando_params[node.dock_type].unlocked)
         for node in game.world_list.all_nodes
         if (
             isinstance(node, DockNode) and dock_rando.types_state[node.dock_type].can_shuffle
             and node.default_dock_weakness in dock_rando.types_state[node.dock_type].can_change_from
         )
-    }
+    ]
 
-    return patches.assign_dock_weakness_assignment(docks_to_unlock)
+    return patches.assign_dock_weakness(docks_to_unlock)
 
     
 
@@ -114,10 +114,10 @@ async def _run_dock_resolver(dock: DockNode,
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
     """
 
-    locks = {dock.identifier: dock_type_params.locked}
+    locks = [(dock.identifier, dock_type_params.locked)]
     if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
-        locks[target.identifier] = dock_type_params.locked
-    locked_patches = patches.assign_dock_weakness_assignment(locks)
+        locks.append((target.identifier, dock_type_params.locked))
+    locked_patches = patches.assign_dock_weakness(locks)
 
     state, logic = resolver.setup_resolver(patches.configuration, locked_patches)
     logic = DockRandoLogic.from_logic(logic, dock)
@@ -207,19 +207,18 @@ async def distribute_post_fill_weaknesses(rng: Random,
         weighted_weaknesses = _determine_valid_weaknesses(dock, target, dock_type_params, dock_type_state, new_state, logic)
         
         # Assign the dock (and its target if desired/possible)
-        new_assignment: DockWeaknessAssignment = {}
-
         weakness = random_lib.select_element_with_weight(weighted_weaknesses, rng)
-        new_assignment[identifier] = weakness
-
+        new_assignment = [
+            (identifier, weakness),
+        ]
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY and target.default_dock_weakness in dock_type_state.can_change_from:
-            new_assignment[target.identifier] = weakness
+            new_assignment.append((target.identifier, weakness))
         
         docks_placed += 1
         debug.debug_print(f"Possibilities: {weighted_weaknesses}")
         debug.debug_print(f"Chosen: {weakness}\n")
         
-        new_patches[player] = patches.assign_dock_weakness_assignment(new_assignment)
+        new_patches[player] = patches.assign_dock_weakness(new_assignment)
     
     debug.debug_print(f"Dock weakness distribution finished in {int(time.perf_counter() - start_time)}s")
 

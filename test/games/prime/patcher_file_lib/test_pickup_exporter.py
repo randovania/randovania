@@ -118,12 +118,12 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
 
     useless_pickup = PickupEntry("P-Useless", model_0, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY,
                                  progression=((useless_resource, 1),))
-    patches = empty_patches.assign_pickup_assignment({
-        PickupIndex(0): PickupTarget(pickup_a, 0),
-        PickupIndex(2): PickupTarget(pickup_b, 0),
-        PickupIndex(3): PickupTarget(pickup_a, 0),
-        PickupIndex(4): PickupTarget(pickup_c, 0),
-    })
+    patches = empty_patches.assign_new_pickups([
+        (PickupIndex(0), PickupTarget(pickup_a, 0)),
+        (PickupIndex(2), PickupTarget(pickup_b, 0)),
+        (PickupIndex(3), PickupTarget(pickup_a, 0)),
+        (PickupIndex(4), PickupTarget(pickup_c, 0)),
+    ])
     creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
 
     world_list = MagicMock()
@@ -224,12 +224,12 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     useless_pickup = PickupEntry("Useless", useless_model, USELESS_ITEM_CATEGORY, USELESS_ITEM_CATEGORY,
                                  progression=tuple())
 
-    patches = empty_patches.assign_pickup_assignment({
-        PickupIndex(0): PickupTarget(pickup_a, 0),
-        PickupIndex(2): PickupTarget(pickup_b, 0),
-        PickupIndex(3): PickupTarget(pickup_a, 0),
-        PickupIndex(4): PickupTarget(pickup_c, 0),
-    })
+    patches = empty_patches.assign_new_pickups([
+        (PickupIndex(0), PickupTarget(pickup_a, 0)),
+        (PickupIndex(2), PickupTarget(pickup_b, 0)),
+        (PickupIndex(3), PickupTarget(pickup_a, 0)),
+        (PickupIndex(4), PickupTarget(pickup_c, 0)),
+    ])
 
     if has_memo_data:
         memo_data = {

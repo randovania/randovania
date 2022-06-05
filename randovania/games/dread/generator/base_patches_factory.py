@@ -1,7 +1,8 @@
 import dataclasses
 from random import Random
+from typing import Iterator
 
-from randovania.game_description.assignment import NodeConfigurationAssignment
+from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -20,8 +21,8 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         return 0
 
     def configurable_node_assignment(self, configuration: DreadConfiguration, game: GameDescription,
-                                     rng: Random) -> NodeConfigurationAssignment:
-        result = {}
+                                     rng: Random) -> Iterator[NodeConfigurationAssociation]:
+        result = []
 
         rsb = game.resource_database
 
@@ -40,10 +41,10 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             if not isinstance(node, ConfigurableNode):
                 continue
 
-            result[game.world_list.identifier_for_node(node)] = RequirementAnd([
+            result.append((game.world_list.identifier_for_node(node), RequirementAnd([
                 requirement_for_type[block_type]
                 for block_type in node.extra["tile_types"]
-            ]).simplify()
+            ]).simplify()))
 
         return result
 

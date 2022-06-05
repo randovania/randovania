@@ -1,4 +1,4 @@
-from typing import NamedTuple
+from typing import NamedTuple, Iterator
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -13,5 +13,6 @@ class PickupTarget(NamedTuple):
 
 
 PickupAssignment = dict[PickupIndex, PickupTarget]
-NodeConfigurationAssignment = dict[NodeIdentifier, Requirement]
-DockWeaknessAssignment = dict[NodeIdentifier, DockWeakness]
+PickupTargetAssociation = tuple[PickupIndex, PickupTarget]
+NodeConfigurationAssociation = tuple[NodeIdentifier, Requirement]
+DockWeaknessAssociation = tuple[NodeIdentifier, DockWeakness]

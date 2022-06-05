@@ -8,7 +8,7 @@ from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
-from randovania.game_description.assignment import NodeConfigurationAssignment, PickupTarget
+from randovania.game_description.assignment import NodeConfigurationAssociation, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
@@ -196,7 +196,7 @@ def translator_index_for_requirement(requirement: Requirement) -> int:
     return 9
 
 
-def _create_translator_gates_field(game: GameDescription, gate_assignment: NodeConfigurationAssignment) -> list:
+def _create_translator_gates_field(game: GameDescription, gate_assignment: dict[NodeIdentifier, Requirement]) -> list:
     """
     Creates the translator gate entries in the patcher file
     :param gate_assignment:

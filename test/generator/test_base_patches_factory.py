@@ -158,11 +158,12 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
     rng = MagicMock()
 
     # Run
-    results = patches_factory.configurable_node_assignment(
-        configuration, echoes_game_description, rng)
+    results = list(patches_factory.configurable_node_assignment(configuration, echoes_game_description, rng))
 
     # Assert
-    assert list(results.values()) == [
+    associated_requirements = [req for _, req in results]
+
+    assert associated_requirements == [
         RequirementAnd([
             ResourceRequirement(scan_visor, 1, False),
             ResourceRequirement(emerald, 1, False),
@@ -200,11 +201,11 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
     rng.choice.side_effect = choices * len(translator_configuration.translator_requirement)
 
     # Run
-    results = patches_factory.configurable_node_assignment(
-        configuration, echoes_game_description, rng)
+    results = list(patches_factory.configurable_node_assignment(configuration, echoes_game_description, rng))
 
     # Assert
-    assert list(results.values()) == requirements[:len(translator_configuration.translator_requirement)]
+    associated_requirements = [req for _, req in results]
+    assert associated_requirements == requirements[:len(translator_configuration.translator_requirement)]
 
 
 def test_create_base_patches(mocker):

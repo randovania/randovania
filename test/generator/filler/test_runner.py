@@ -145,9 +145,9 @@ def test_add_relative_hint(echoes_game_description, empty_patches, precise_dista
     rng = Random(5000)
     target_precision = MagicMock(spec=HintItemPrecision)
     precision = MagicMock(spec=HintItemPrecision)
-    patches = empty_patches.assign_pickup_assignment({
-        PickupIndex(8): PickupTarget(_make_pickup(echoes_item_database.item_categories["movement"]), 0),
-    })
+    patches = empty_patches.assign_new_pickups([
+        (PickupIndex(8), PickupTarget(_make_pickup(echoes_item_database.item_categories["movement"]), 0)),
+    ])
     hint_distributor = EchoesHintDistributor()
 
     if location_precision == HintLocationPrecision.RELATIVE_TO_AREA:

@@ -1,9 +1,9 @@
 import copy
 import dataclasses
 from random import Random
-from typing import Tuple
+from typing import Tuple, Iterator
 
-from randovania.game_description.assignment import NodeConfigurationAssignment
+from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision
@@ -96,9 +96,9 @@ class BasePatchesFactory:
 
         return location
 
-    def configurable_node_assignment(self, configuration: BaseConfiguration, game: GameDescription,
-                                     rng: Random) -> NodeConfigurationAssignment:
-        return NodeConfigurationAssignment()
+    def configurable_node_assignment(self, configuration: BaseConfiguration, game: GameDescription, rng: Random,
+                                     ) -> Iterator[NodeConfigurationAssociation]:
+        yield from []
 
 
 class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):

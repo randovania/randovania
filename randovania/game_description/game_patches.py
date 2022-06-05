@@ -5,7 +5,6 @@ import dataclasses
 import typing
 from dataclasses import dataclass
 from typing import Tuple, Iterator, Optional
-from randovania.game_description.assignment import DockWeaknessAssignment
 
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -15,11 +14,13 @@ from randovania.game_description.resources.resource_info import ResourceCollecti
 ElevatorConnection = dict[NodeIdentifier, Optional[AreaIdentifier]]
 
 if typing.TYPE_CHECKING:
-    from randovania.game_description.assignment import PickupAssignment, NodeConfigurationAssignment, PickupTarget
+    from randovania.game_description.world.dock import DockWeakness
+    from randovania.game_description.assignment import (
+        PickupTarget, PickupTargetAssociation, NodeConfigurationAssociation, DockWeaknessAssociation
+    )
     from randovania.game_description.hint import Hint
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
-    from randovania.game_description.world.dock import DockWeakness
     from randovania.layout.base.base_configuration import BaseConfiguration
 
 
@@ -31,10 +32,10 @@ class GamePatches:
     """
     player_index: int
     configuration: BaseConfiguration
-    pickup_assignment: PickupAssignment
+    pickup_assignment: dict[PickupIndex, PickupTarget]
     elevator_connection: ElevatorConnection
     dock_connection: dict[NodeIdentifier, Optional[NodeIdentifier]]
-    dock_weakness: DockWeaknessAssignment
+    dock_weakness: dict[NodeIdentifier, DockWeakness]
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
     starting_location: AreaIdentifier
@@ -49,7 +50,7 @@ class GamePatches:
             if resource.resource_type != ResourceType.ITEM:
                 raise ValueError(f"starting_items must have only Items, not {resource}")
 
-    def assign_new_pickups(self, assignments: Iterator[tuple[PickupIndex, PickupTarget]]) -> "GamePatches":
+    def assign_new_pickups(self, assignments: Iterator[PickupTargetAssociation]) -> "GamePatches":
         new_pickup_assignment = copy.copy(self.pickup_assignment)
 
         for index, pickup in assignments:
@@ -58,23 +59,19 @@ class GamePatches:
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
 
-    def assign_pickup_assignment(self, assignment: PickupAssignment) -> "GamePatches":
-        items: Iterator[tuple[PickupIndex, PickupTarget]] = assignment.items()
-        return self.assign_new_pickups(items)
-
-    def assign_node_configuration(self, assignment: NodeConfigurationAssignment) -> "GamePatches":
+    def assign_node_configuration(self, assignment: Iterator[NodeConfigurationAssociation]) -> "GamePatches":
         new_configurable = copy.copy(self.configurable_nodes)
 
-        for identifier, requirement in assignment.items():
+        for identifier, requirement in assignment:
             assert identifier not in new_configurable
             new_configurable[identifier] = requirement
 
         return dataclasses.replace(self, configurable_nodes=new_configurable)
     
-    def assign_dock_weakness_assignment(self, assignment: DockWeaknessAssignment) -> "GamePatches":
+    def assign_dock_weakness(self, weaknesses: Iterator[DockWeaknessAssociation]) -> "GamePatches":
         new_weakness = copy.copy(self.dock_weakness)
 
-        for identifier, weakness in assignment.items():
+        for identifier, weakness in weaknesses:
             new_weakness[identifier] = weakness
         
         return dataclasses.replace(self, dock_weakness=new_weakness)

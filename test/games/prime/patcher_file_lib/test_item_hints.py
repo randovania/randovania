@@ -380,10 +380,10 @@ def test_create_hints_light_suit_location(echoes_game_patches, players_config, b
 def test_create_message_for_hint_relative_item(echoes_game_patches, blank_pickup, players_config,
                                                distance_precise, distance_text,
                                                reference_precision, reference_name):
-    patches = echoes_game_patches.assign_pickup_assignment({
-        PickupIndex(5): PickupTarget(blank_pickup, 0),
-        PickupIndex(15): PickupTarget(dataclasses.replace(blank_pickup, name="Reference Pickup"), 0),
-    })
+    patches = echoes_game_patches.assign_new_pickups([
+        (PickupIndex(5), PickupTarget(blank_pickup, 0)),
+        (PickupIndex(15), PickupTarget(dataclasses.replace(blank_pickup, name="Reference Pickup"), 0)),
+    ])
 
     hint = Hint(
         HintType.LOCATION,
@@ -414,9 +414,9 @@ def test_create_message_for_hint_relative_item(echoes_game_patches, blank_pickup
 def test_create_message_for_hint_relative_area(echoes_game_patches, blank_pickup, players_config,
                                                echoes_hint_exporter,
                                                offset, distance_text):
-    patches = echoes_game_patches.assign_pickup_assignment({
-        PickupIndex(5): PickupTarget(blank_pickup, 0),
-    })
+    patches = echoes_game_patches.assign_new_pickups([
+        (PickupIndex(5), PickupTarget(blank_pickup, 0)),
+    ])
 
     hint = Hint(
         HintType.LOCATION,

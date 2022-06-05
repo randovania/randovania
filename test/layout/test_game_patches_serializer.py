@@ -116,10 +116,10 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
         data["teleporters"][teleporter.as_string] = "Temple Grounds/Landing Site"
 
     if request.param.get("configurable_nodes"):
-        gates = {}
+        gates = []
         for identifier, translator in request.param.get("configurable_nodes"):
             requirement = ResourceRequirement(db.get_item(translator), 1, False)
-            gates[NodeIdentifier.from_string(identifier)] = requirement
+            gates.append((NodeIdentifier.from_string(identifier), requirement))
             data["configurable_nodes"][identifier] = data_writer.write_requirement(requirement)
 
         patches = patches.assign_node_configuration(gates)
