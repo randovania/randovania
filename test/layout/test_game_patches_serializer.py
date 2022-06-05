@@ -109,10 +109,9 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
 
     if request.param.get("elevator"):
         teleporter = request.param.get("elevator")
-        elevator_connection = copy.copy(patches.elevator_connection)
-        elevator_connection[teleporter] = game.starting_location
-
-        patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
+        patches = patches.assign_elevators([
+            (teleporter, game.starting_location),
+        ])
         data["teleporters"][teleporter.as_string] = "Temple Grounds/Landing Site"
 
     if request.param.get("configurable_nodes"):
@@ -165,7 +164,7 @@ def test_decode(patches_with_data, default_echoes_configuration):
     decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration)
 
     # Assert
-    assert decoded.elevator_connection == expected.elevator_connection
+    assert set(decoded.all_elevator_connections()) == set(expected.all_elevator_connections())
     assert decoded == expected
 
 

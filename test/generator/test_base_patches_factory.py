@@ -23,12 +23,14 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                      echoes_game_patches):
     # Setup
     patches_factory = echoes_game_description.game.generator.base_patches_factory
-    expected = dataclasses.replace(echoes_game_patches,
-                                   elevator_connection=echoes_game_description.get_default_elevator_connection())
+    expected = echoes_game_patches
+
     if skip_final_bosses:
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
                                            "Teleport to Great Temple - Sky Temple Energy Controller")
-        expected.elevator_connection[node_ident] = AreaIdentifier("Temple Grounds", "Credits")
+        expected = expected.assign_elevators([
+            (node_ident, AreaIdentifier("Temple Grounds", "Credits")),
+        ])
 
     config = default_echoes_configuration
     config = dataclasses.replace(config,
@@ -52,7 +54,6 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
                                                     echoes_game_patches):
     # Setup
     patches_factory = echoes_game_description.game.generator.base_patches_factory
-    game = echoes_game_description
     layout_configuration = dataclasses.replace(
         default_echoes_configuration,
         elevators=dataclasses.replace(
@@ -62,10 +63,10 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
         ),
     )
 
-    elevator_connection = {}
+    elevator_connection = []
 
     def ni(w: str, a: str, n: str, tw: str, ta: str):
-        elevator_connection[NodeIdentifier.create(w, a, n)] = AreaIdentifier(tw, ta)
+        elevator_connection.append((NodeIdentifier.create(w, a, n), AreaIdentifier(tw, ta)))
 
     ni("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
        "Torvus Bog", "Transport to Temple Grounds")
@@ -119,9 +120,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     ni("Sanctuary Fortress", "Aerie", "Elevator to Sanctuary Fortress - Aerie Transport Station",
        "Sanctuary Fortress", "Aerie Transport Station")
 
-    expected = dataclasses.replace(
-        echoes_game_patches,
-        elevator_connection=elevator_connection)
+    expected = echoes_game_patches.assign_elevators(elevator_connection)
 
     # Run
     result = patches_factory.add_elevator_connections_to_patches(
@@ -131,8 +130,11 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     )
 
     # Assert
-    assert len(result.elevator_connection) == len(expected.elevator_connection)
-    assert result.elevator_connection == expected.elevator_connection
+    result_conn = set(result.all_elevator_connections())
+    expected_conn = set(expected.all_elevator_connections())
+
+    assert len(result_conn) == len(expected_conn)
+    assert result_conn == expected_conn
 
     assert result == expected
 

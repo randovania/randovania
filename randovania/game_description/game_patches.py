@@ -23,6 +23,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.game_description.world.teleporter_node import TeleporterNode
 
 
 @dataclass(frozen=True)
@@ -61,7 +62,7 @@ class GamePatches:
             game.starting_location, {},
         )
 
-    def assign_new_pickups(self, assignments: Iterator[PickupTargetAssociation]) -> "GamePatches":
+    def assign_new_pickups(self, assignments: Iterator[PickupTargetAssociation]) -> GamePatches:
         new_pickup_assignment = copy.copy(self.pickup_assignment)
 
         for index, pickup in assignments:
@@ -69,6 +70,14 @@ class GamePatches:
             new_pickup_assignment[index] = pickup
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
+
+    def assign_elevators(self, assignments: Iterator[tuple[NodeIdentifier, AreaIdentifier]]) -> GamePatches:
+        elevator_connection = copy.copy(self.elevator_connection)
+
+        for identifier, target in assignments:
+            elevator_connection[identifier] = target
+
+        return dataclasses.replace(self, elevator_connection=elevator_connection)
 
     def assign_node_configuration(self, assignment: Iterator[NodeConfigurationAssociation]) -> "GamePatches":
         new_configurable = copy.copy(self.configurable_nodes)
@@ -99,3 +108,10 @@ class GamePatches:
         current = copy.copy(self.hints)
         current[identifier] = hint
         return dataclasses.replace(self, hints=current)
+
+    # Getters
+    def get_elevator_connection_for(self, node: TeleporterNode) -> Optional[AreaIdentifier]:
+        return self.elevator_connection.get(node.identifier, node.default_connection)
+
+    def all_elevator_connections(self) -> Iterator[NodeIdentifier, Optional[AreaIdentifier]]:
+        yield from self.elevator_connection.items()

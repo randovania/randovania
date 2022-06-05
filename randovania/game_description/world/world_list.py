@@ -148,8 +148,7 @@ class WorldList(NodeProvider):
             return self.node_by_identifier(connection)
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Optional[Node]:
-        connection = patches.elevator_connection.get(self.identifier_for_node(node),
-                                                     node.default_connection)
+        connection = patches.get_elevator_connection_for(node)
         if connection is not None:
             return self.resolve_teleporter_connection(connection)
 

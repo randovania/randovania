@@ -342,7 +342,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         continue
 
                     identifier = db.world_list.identifier_for_node(node)
-                    target = _name_for_location(db.world_list, self.patches.elevator_connection[identifier])
+                    target = _name_for_location(db.world_list, self.patches.get_elevator_connection_for(node))
 
                     source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[(
                         identifier.area_location.world_name,

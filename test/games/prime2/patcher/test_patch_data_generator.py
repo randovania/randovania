@@ -152,12 +152,14 @@ def test_create_elevators_field_no_elevator(empty_patches, echoes_game_descripti
 
 @pytest.mark.parametrize("vanilla_gateway", [False, True])
 def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
-                                                     echoes_game_description, empty_patches):
+                                                     echoes_game_description,
+                                                     echoes_game_patches):
     # Setup
-    elevator_connection = echoes_game_description.get_default_elevator_connection()
+    elevator_connection = []
 
     def add(world: str, area: str, node: str, target_world: str, target_area: str):
-        elevator_connection[NodeIdentifier.create(world, area, node)] = AreaIdentifier(target_world, target_area)
+        elevator_connection.append((NodeIdentifier.create(world, area, node),
+                                    AreaIdentifier(target_world, target_area)))
 
     add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
         "Sanctuary Fortress", "Transport to Agon Wastes")
@@ -168,7 +170,7 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
         add("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
             "Great Temple", "Sanctum")
 
-    patches = dataclasses.replace(empty_patches, elevator_connection=elevator_connection)
+    patches = echoes_game_patches.assign_elevators(elevator_connection)
 
     # Run
     result = patch_data_factory._create_elevators_field(patches, echoes_game_description)

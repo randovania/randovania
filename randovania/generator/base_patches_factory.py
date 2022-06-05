@@ -1,5 +1,3 @@
-import copy
-import dataclasses
 from random import Random
 from typing import Tuple, Iterator
 
@@ -9,7 +7,6 @@ from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator import elevator_distributor
@@ -102,8 +99,9 @@ class BasePatchesFactory:
 class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
     def add_elevator_connections_to_patches(self, configuration: EchoesConfiguration, rng: Random,
                                             patches: GamePatches) -> GamePatches:
-        elevator_connection = copy.copy(patches.elevator_connection)
         elevators = configuration.elevators
+
+        elevator_connection = {}
 
         if not elevators.is_vanilla:
             if rng is None:
@@ -132,4 +130,8 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
         for teleporter, destination in elevators.static_teleporters.items():
             elevator_connection[teleporter] = destination
 
-        return dataclasses.replace(patches, elevator_connection=elevator_connection)
+        assignment = []
+        for it in elevator_connection.items():
+            assignment.append(it)
+
+        return patches.assign_elevators(assignment)

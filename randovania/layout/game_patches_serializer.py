@@ -85,7 +85,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
         },
         "teleporters": {
             teleporter.as_string: connection.as_string
-            for teleporter, connection in patches.elevator_connection.items()
+            for teleporter, connection in patches.all_elevator_connections()
         },
         "dock_weakness": {
             dock.as_string: {
