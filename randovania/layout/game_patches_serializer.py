@@ -13,7 +13,6 @@ from randovania.game_description.resources.resource_info import ResourceCollecti
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockWeakness
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
@@ -226,12 +225,12 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
         pickup_assignment=pickup_assignment,  # PickupAssignment
         elevator_connection=elevator_connection,  # ElevatorConnection
         dock_connection={},  # Dict[Tuple[int, int], DockConnection]
-        dock_weakness=dock_weakness,
+        dock_weakness={},
         configurable_nodes=configurable_nodes,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaIdentifier
         hints=hints,
-    )
+    ).assign_dock_weakness(dock_weakness)
 
 
 def decode(game_modifications: List[dict],
