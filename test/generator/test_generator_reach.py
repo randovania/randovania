@@ -43,7 +43,6 @@ def run_bootstrap(preset: Preset):
     game = filtered_database.game_description_for_layout(preset.configuration).get_mutable()
     generator = game.game.generator
 
-    derived_nodes.create_derived_nodes(game)
     game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database,
                                                                          preset.configuration)
     permalink = GeneratorParameters(
@@ -230,7 +229,6 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
         small_echoes_game_description,
         default_echoes_configuration.active_layers()
     ).get_mutable()
-    derived_nodes.create_derived_nodes(game)
 
     mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
     generator = game.game.generator

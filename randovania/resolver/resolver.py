@@ -177,7 +177,6 @@ async def resolve(configuration: BaseConfiguration,
         status_update = _quiet_print
 
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
-    derived_nodes.create_derived_nodes(game)
     bootstrap = game.game.generator.bootstrap
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)

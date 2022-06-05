@@ -222,17 +222,14 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
 
 
 def find_database_errors(game: GameDescription) -> list[str]:
-    copy = game.get_mutable()
-    derived_nodes.create_derived_nodes(copy)
-
     result = []
 
-    for layer in copy.layers:
+    for layer in game.layers:
         if layer_name_re.match(layer) is None:
             result.append(f"Layer '{layer}' doesn't match {layer_name_re.pattern}")
 
-    for world in copy.world_list.worlds:
-        result.extend(find_world_errors(copy, world))
-    result.extend(find_invalid_strongly_connected_components(copy))
+    for world in game.world_list.worlds:
+        result.extend(find_world_errors(game, world))
+    result.extend(find_invalid_strongly_connected_components(game))
 
     return result
