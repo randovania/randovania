@@ -52,6 +52,10 @@ class MajorItemState:
     def check_consistency(self, item: MajorItem):
         db = default_database.resource_database_for(item.game)
 
+        if self.num_shuffled_pickups < 0 or self.num_shuffled_pickups > DEFAULT_MAXIMUM_SHUFFLED[-1]:
+            raise ValueError(f"Can only shuffle between 0 and {DEFAULT_MAXIMUM_SHUFFLED[-1]} copies,"
+                             f" got {self.num_shuffled_pickups}. ({item.name})")
+
         if item.must_be_starting:
             if not self.num_included_in_starting_items:
                 raise ValueError(f"Required items must be included in starting items. ({item.name})")

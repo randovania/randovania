@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 from randovania.game_description.item.major_item import MajorItem
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.gui.generated.item_configuration_popup_ui import Ui_ItemConfigurationPopup
-from randovania.layout.base.major_item_state import MajorItemState, MajorItemStateCase
+from randovania.layout.base.major_item_state import MajorItemState, MajorItemStateCase, DEFAULT_MAXIMUM_SHUFFLED
 from randovania.lib import enum_lib
 
 
@@ -47,7 +47,7 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         self.vanilla_check.toggled.connect(self._on_select)
         self.starting_check.toggled.connect(self._on_select)
         self.shuffled_spinbox.valueChanged.connect(self._on_select)
-        self.shuffled_spinbox.setMaximum(999)
+        self.shuffled_spinbox.setMaximum(DEFAULT_MAXIMUM_SHUFFLED[-1])
         self.provided_ammo_spinbox.valueChanged.connect(self._on_select)
         self.priority_combo.currentIndexChanged.connect(self._on_select)
 

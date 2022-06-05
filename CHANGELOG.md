@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.4.2] - 2022-06-05
 
-- Fixed: Generating multiworld games where one Prime 1 player has item in every room while another Prime 1 player doesn't now works properly. 
+- Fixed: Generating multiworld games where one Prime 1 player has item in every room while another Prime 1 player doesn't now works properly.
+- Fixed: It's no longer possible to configure more than 99 shuffled copies of a major item, as that causes errors. 
 
 ## [4.4.1] - 2022-06-04
 
