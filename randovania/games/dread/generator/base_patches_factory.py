@@ -38,7 +38,7 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             "SPEEDBOOST": ResourceRequirement(rsb.get_item("Speed"), 1, False),
         }
 
-        for node in game.world_list.all_nodes:
+        for node in game.world_list.iterate_nodes():
             if not isinstance(node, ConfigurableNode):
                 continue
 

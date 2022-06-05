@@ -266,7 +266,7 @@ def export_all_indices(patches: GamePatches,
 
     indices = sorted(
         node.pickup_index
-        for node in world_list.all_nodes
+        for node in world_list.iterate_nodes()
         if isinstance(node, PickupNode)
     )
 

@@ -35,7 +35,7 @@ class PresetCSStartingArea(PresetStartingArea):
     def _starting_location_on_select_save_point(self):
         world_list = self.game_description.world_list
         save_points = [world_list.node_to_area_location(node)
-                       for node in world_list.all_nodes if "Save Point" in node.name]
+                       for node in world_list.iterate_nodes() if "Save Point" in node.name]
 
         # remove because save point is locked behind a boss fight
         save_points = [i for i in save_points if i.area_name != "Egg Observation Room?"]

@@ -43,7 +43,6 @@ def run_bootstrap(preset: Preset):
     game = filtered_database.game_description_for_layout(preset.configuration).get_mutable()
     generator = game.game.generator
 
-    derived_nodes.create_derived_nodes(game)
     game.resource_database = generator.bootstrap.patch_resource_database(game.resource_database,
                                                                          preset.configuration)
     permalink = GeneratorParameters(
@@ -119,7 +118,7 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
                               ignore_events: set[str], ignore_pickups: set[int]):
     game, initial_state, permalink = run_bootstrap(
         preset_manager.default_preset_for_game(game_enum).get_preset())
-    all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.all_nodes))
+    all_pickups = set(reach_lib.filter_pickup_nodes(game.world_list.iterate_nodes()))
     pool_results = pool_creator.calculate_pool_results(permalink.get_preset(0).configuration,
                                                        game.resource_database)
 
@@ -230,7 +229,6 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
         small_echoes_game_description,
         default_echoes_configuration.active_layers()
     ).get_mutable()
-    derived_nodes.create_derived_nodes(game)
 
     mocker.patch("randovania.game_description.default_database.game_description_for", return_value=game)
     generator = game.game.generator

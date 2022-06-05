@@ -223,7 +223,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                     self.description.all_patches, self.players_config, True
                 ),
             }
-            for logbook_node in self.game.world_list.all_nodes
+            for logbook_node in self.game.world_list.iterate_nodes()
             if isinstance(logbook_node, LogbookNode)
         ]
 
