@@ -89,7 +89,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             for teleporter, connection in patches.all_elevator_connections()
         },
         "dock_weakness": {
-            dock.as_string: {
+            dock.identifier.as_string: {
                 "type": dock_weakness_to_type[weakness].short_name,
                 "name": weakness.name,
             }

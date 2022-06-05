@@ -80,9 +80,8 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tup
             return node
 
         if patches.configuration.dock_rando.mode == DockRandoMode.ONE_WAY:
-            player_docks.extend((player, get_dock(identifier))
-                                for identifier, _ in patches.all_dock_weaknesses())
-
+            player_docks.extend((player, node) for node, _ in patches.all_dock_weaknesses())
+        
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
             game = results.game
             ctx = NodeContext(
@@ -92,8 +91,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tup
                 game.world_list
             )
 
-            for identifier, _ in patches.all_dock_weaknesses():
-                dock = get_dock(identifier)
+            for dock, _ in patches.all_dock_weaknesses():
                 if (player, get_dock(dock.get_target_identifier(ctx))) not in player_docks:
                     player_docks.append((player, dock))
 

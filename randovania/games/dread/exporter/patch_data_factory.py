@@ -274,17 +274,17 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         result = []
         used_actors = {}
 
-        for identifier, weakness in self.patches.all_dock_weaknesses():
+        for node, weakness in self.patches.all_dock_weaknesses():
             if "type" not in weakness.extra:
-                raise ValueError(f"Unable to change door {identifier} into {weakness.name}: incompatible door weakness")
+                raise ValueError(f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness")
 
             result.append({
-                "actor": (actor := self._teleporter_ref_for(wl.node_by_identifier(identifier))),
+                "actor": (actor := self._teleporter_ref_for(node)),
                 "door_type": (door_type := weakness.extra["type"]),
             })
             actor_idef = str(actor)
             if used_actors.get(actor_idef, door_type) != door_type:
-                raise ValueError(f"Door for {identifier} ({actor}) previously "
+                raise ValueError(f"Door for {wl.node_name(node)} ({actor}) previously "
                                  f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}.")
             used_actors[actor_idef] = door_type
 

@@ -130,4 +130,6 @@ class GamePatches:
         return self.dock_weakness.get(node.identifier, node.default_dock_weakness)
 
     def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
-        yield from self.dock_weakness.items()
+        wl = self.game.world_list
+        for identifier, weakness in self.dock_weakness.items():
+            yield wl.node_by_identifier(identifier), weakness
