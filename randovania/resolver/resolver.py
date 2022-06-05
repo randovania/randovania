@@ -110,7 +110,7 @@ async def _inner_advance_depth(state: State,
 
     for action, energy in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources,
-                                           logic.game.world_list.all_nodes):
+                                           logic.game.world_list.iterate_nodes()):
 
             potential_state = state.act_on_node(action, path=reach.path_to_node(action), new_energy=energy)
             potential_reach = ResolverReach.calculate_reach(logic, potential_state)
@@ -177,7 +177,6 @@ async def resolve(configuration: BaseConfiguration,
         status_update = _quiet_print
 
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
-    derived_nodes.create_derived_nodes(game)
     bootstrap = game.game.generator.bootstrap
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)

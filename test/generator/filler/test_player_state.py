@@ -31,7 +31,6 @@ def _default_filler_config() -> FillerConfiguration:
 def _state_for_blank(default_filler_config, blank_game_description, default_blank_configuration,
                      blank_game_patches) -> player_state.PlayerState:
     game = blank_game_description.get_mutable()
-    derived_nodes.create_derived_nodes(game)
 
     return player_state.PlayerState(
         index=0,

@@ -187,7 +187,7 @@ def create_report(seeds_dir: str, output_file: str, csv_dir: Optional[str], use_
     index_to_location = {
         node.pickup_index.index: (world_list.world_name_from_node(node, distinguish_dark_aether=True),
                                   world_list.node_name(node))
-        for node in game_description.world_list.all_nodes
+        for node in game_description.world_list.iterate_nodes()
         if isinstance(node, PickupNode)
     }
     progression_count_for_location = collections.defaultdict(int)

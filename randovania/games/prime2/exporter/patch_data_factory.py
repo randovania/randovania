@@ -169,7 +169,7 @@ def _get_nodes_by_teleporter_id(world_list: WorldList) -> Dict[NodeIdentifier, T
     return {
         world_list.identifier_for_node(node): node
 
-        for node in world_list.all_nodes
+        for node in world_list.iterate_nodes()
         if isinstance(node, TeleporterNode) and node.editable
     }
 

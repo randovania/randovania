@@ -51,7 +51,7 @@ class HintDistributor(ABC):
     def get_generic_logbook_nodes(self, prefill: PreFillParams) -> list[NodeIdentifier]:
         return [
             prefill.game.world_list.identifier_for_node(node)
-            for node in prefill.game.world_list.all_nodes
+            for node in prefill.game.world_list.iterate_nodes()
             if isinstance(node, LogbookNode) and node.lore_type.holds_generic_hint
         ]
 
@@ -67,7 +67,7 @@ class HintDistributor(ABC):
                                           include_owner=True)
 
         wl = prefill.game.world_list
-        for node in wl.all_nodes:
+        for node in wl.iterate_nodes():
             if isinstance(node, LogbookNode) and node.lore_type == LoreType.SPECIFIC_PICKUP:
                 identifier = wl.identifier_for_node(node)
                 patches = patches.assign_hint(
@@ -167,7 +167,7 @@ class HintDistributor(ABC):
         # Get all LogbookAssets from the WorldList
         potential_hint_locations: set[NodeIdentifier] = {
             world_list.identifier_for_node(node)
-            for node in world_list.all_nodes
+            for node in world_list.iterate_nodes()
             if isinstance(node, LogbookNode)
         }
         for logbook in potential_hint_locations:
@@ -199,7 +199,7 @@ class HintDistributor(ABC):
 
         all_pickup_indices = [
             node.pickup_index
-            for node in world_list.all_nodes
+            for node in world_list.iterate_nodes()
             if isinstance(node, PickupNode)
         ]
         rng.shuffle(all_pickup_indices)

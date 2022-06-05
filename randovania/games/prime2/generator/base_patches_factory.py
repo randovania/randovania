@@ -38,7 +38,7 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         )
         scan_visor_req = ResourceRequirement(scan_visor, 1, False)
 
-        for node in game.world_list.all_nodes:
+        for node in game.world_list.iterate_nodes():
             if not isinstance(node, ConfigurableNode):
                 continue
 

@@ -73,3 +73,7 @@ class DockLockNode(ResourceNode):
         target_identifier = dock.get_target_identifier(context)
         if target_identifier is not None and dock._lock_connection(context) is not None:
             yield dock, Requirement.trivial()
+
+    @property
+    def is_derived_node(self) -> bool:
+        return True

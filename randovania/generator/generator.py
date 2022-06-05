@@ -36,7 +36,6 @@ def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription
 async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                              player_index: int, num_players: int, rng_required: bool = True) -> PlayerPool:
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
-    derived_nodes.create_derived_nodes(game)
 
     game_generator = game.game.generator
     game.resource_database = game_generator.bootstrap.patch_resource_database(game.resource_database, configuration)
@@ -94,7 +93,7 @@ def _assign_remaining_items(rng: Random,
     :return:
     """
 
-    unassigned_pickup_nodes = list(filter_unassigned_pickup_nodes(world_list.all_nodes, pickup_assignment))
+    unassigned_pickup_nodes = list(filter_unassigned_pickup_nodes(world_list.iterate_nodes(), pickup_assignment))
 
     num_etm = len(unassigned_pickup_nodes) - len(remaining_items)
     if num_etm < 0:
@@ -157,7 +156,7 @@ def _distribute_remaining_items(rng: Random,
     assignments: Dict[int, PickupAssignment] = {}
 
     for player, filler_result in filler_results.items():
-        for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.all_nodes,
+        for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
                                                           filler_result.patches.pickup_assignment):
             unassigned_pickup_nodes.append((player, pickup_node))
 

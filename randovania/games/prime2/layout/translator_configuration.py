@@ -64,7 +64,7 @@ def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifi
         game.world_list.identifier_for_node(node): LayoutTranslatorRequirement.from_item_short_name(
             node.extra[extra_field]
         )
-        for node in game.world_list.all_nodes
+        for node in game.world_list.iterate_nodes()
         if isinstance(node, ConfigurableNode)
     }
 

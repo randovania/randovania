@@ -34,7 +34,7 @@ def gate_data():
     }
     identifier_to_gate = {
         db.world_list.identifier_for_node(node): node.extra["gate_index"]
-        for node in db.world_list.all_nodes
+        for node in db.world_list.iterate_nodes()
         if isinstance(node, ConfigurableNode)
     }
     return gate_index_to_name, identifier_to_gate

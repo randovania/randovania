@@ -50,7 +50,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
         nothing_item_script = "<PRI<MSG<TUR<IT+0000\r\nGot =Nothing=!<WAI0025<NOD<EVE0015"
 
         pickups = {area.extra["map_name"]: {} for area in game_description.world_list.all_areas}
-        for index in sorted(node.pickup_index for node in game_description.world_list.all_nodes
+        for index in sorted(node.pickup_index for node in game_description.world_list.iterate_nodes()
                             if isinstance(node, PickupNode)):
             target = self.patches.pickup_assignment.get(index, nothing_item)
 
@@ -77,7 +77,7 @@ class CSPatchDataFactory(BasePatchDataFactory):
 
         hints_for_identifier = get_hints(self.description.all_patches, self.players_config, hint_rng)
         hints = {}
-        for logbook_node in game_description.world_list.all_nodes:
+        for logbook_node in game_description.world_list.iterate_nodes():
             if not isinstance(logbook_node, LogbookNode):
                 continue
 

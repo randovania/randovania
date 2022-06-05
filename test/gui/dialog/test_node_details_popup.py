@@ -21,7 +21,7 @@ from randovania.gui.dialog.node_details_popup import NodeDetailsPopup
     LogbookNode,
 ])
 def test_unchanged_create_new_node_echoes(skip_qtbot, echoes_game_description, node_type):
-    node = next(node for node in echoes_game_description.world_list.all_nodes if isinstance(node, node_type))
+    node = next(node for node in echoes_game_description.world_list.iterate_nodes() if isinstance(node, node_type))
     dialog = NodeDetailsPopup(echoes_game_description, node)
 
     # Run
@@ -35,7 +35,7 @@ def test_unchanged_create_new_node_echoes(skip_qtbot, echoes_game_description, n
     PlayerShipNode,
 ])
 def test_unchanged_create_new_node_corruption(skip_qtbot, corruption_game_description, node_type):
-    node = next(node for node in corruption_game_description.world_list.all_nodes if isinstance(node, node_type))
+    node = next(node for node in corruption_game_description.world_list.iterate_nodes() if isinstance(node, node_type))
     dialog = NodeDetailsPopup(corruption_game_description, node)
 
     # Run
