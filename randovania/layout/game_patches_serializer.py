@@ -92,7 +92,7 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
                 "type": dock_weakness_to_type[weakness].short_name,
                 "name": weakness.name,
             }
-            for dock, weakness in patches.dock_weakness.items()
+            for dock, weakness in patches.all_dock_weaknesses()
         },
         "configurable_nodes": {
             identifier.as_string: data_writer.write_requirement(requirement)

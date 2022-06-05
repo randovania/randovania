@@ -1,4 +1,3 @@
-import dataclasses
 from random import Random
 from typing import Iterator
 
@@ -59,15 +58,14 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         assert isinstance(configuration, DreadConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
 
+        dock_weakness = []
         if configuration.hanubia_easier_path_to_itorash:
             nic = NodeIdentifier.create
             power_weak = game.dock_weakness_database.get_by_weakness("door", "Power Beam Door")
 
-            dock_weakness = {
-                nic("Hanubia", "Entrance Tall Room", "Door to Total Recharge Station North"): power_weak,
-                nic("Hanubia", "Total Recharge Station North", "Door to Gold Chozo Warrior Arena"): power_weak,
-            }
-        else:
-            dock_weakness = {}
+            dock_weakness.extend([
+                (nic("Hanubia", "Entrance Tall Room", "Door to Total Recharge Station North"), power_weak),
+                (nic("Hanubia", "Total Recharge Station North", "Door to Gold Chozo Warrior Arena"), power_weak),
+            ])
 
-        return dataclasses.replace(parent, dock_weakness=dock_weakness)
+        return parent.assign_dock_weakness(dock_weakness)

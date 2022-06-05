@@ -77,7 +77,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tup
         player_docks: list[Tuple[int, NodeIdentifier]] = []
 
         if patches.configuration.dock_rando.mode == DockRandoMode.ONE_WAY:
-            player_docks.extend(((player, identifier) for identifier in patches.dock_weakness.keys()))
+            player_docks.extend(((player, identifier) for identifier, _ in patches.all_dock_weaknesses()))
         
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
             game = results.game
@@ -88,7 +88,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tup
                 game.world_list
             )
 
-            for identifier in patches.dock_weakness:
+            for identifier, _ in patches.all_dock_weaknesses():
                 dock: DockNode = game.world_list.node_by_identifier(identifier)
                 if (player, dock.get_target_identifier(ctx)) not in player_docks:
                     player_docks.append((player, identifier))

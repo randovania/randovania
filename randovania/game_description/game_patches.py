@@ -9,7 +9,6 @@ from typing import Iterator, Optional
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
 ElevatorConnection = dict[NodeIdentifier, Optional[AreaIdentifier]]
@@ -25,6 +24,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.game_description.world.teleporter_node import TeleporterNode
+    from randovania.game_description.world.dock_node import DockNode
 
 
 @dataclass(frozen=True)
@@ -110,12 +110,23 @@ class GamePatches:
         current[identifier] = hint
         return dataclasses.replace(self, hints=current)
 
-    # Getters
+    # Elevators
     def get_elevator_connection_for(self, node: TeleporterNode) -> Optional[AreaIdentifier]:
         return self.elevator_connection.get(node.identifier, node.default_connection)
 
-    def all_elevator_connections(self) -> Iterator[NodeIdentifier, Optional[AreaIdentifier]]:
+    def all_elevator_connections(self) -> Iterator[tuple[NodeIdentifier, Optional[AreaIdentifier]]]:
         yield from self.elevator_connection.items()
 
+    # Dock Connection
     def get_dock_connection_for(self, node: DockNode) -> Optional[NodeIdentifier]:
         return self.dock_connection.get(node.identifier, node.default_connection)
+
+    def all_dock_connections(self) -> Iterator[tuple[NodeIdentifier, Optional[NodeIdentifier]]]:
+        yield from self.dock_connection.items()
+
+    # Dock Weakness
+    def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
+        return self.dock_weakness.get(node.identifier, node.default_dock_weakness)
+
+    def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
+        yield from self.dock_weakness.items()
