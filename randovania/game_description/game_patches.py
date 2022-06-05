@@ -90,11 +90,11 @@ class GamePatches:
 
         return dataclasses.replace(self, configurable_nodes=new_configurable)
 
-    def assign_dock_weakness(self, weaknesses: Iterator[DockWeaknessAssociation]) -> "GamePatches":
+    def assign_dock_weakness(self, weaknesses: Iterator[tuple[DockNode, DockWeakness]]) -> "GamePatches":
         new_weakness = copy.copy(self.dock_weakness)
 
-        for identifier, weakness in weaknesses:
-            new_weakness[identifier] = weakness
+        for node, weakness in weaknesses:
+            new_weakness[node.identifier] = weakness
 
         return dataclasses.replace(self, dock_weakness=new_weakness)
 

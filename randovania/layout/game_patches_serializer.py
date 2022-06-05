@@ -164,13 +164,14 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     }
 
     # Dock Weakness
-    dock_weakness: dict[NodeIdentifier, DockWeakness] = {
-        NodeIdentifier.from_string(source_name): weakness_db.get_by_weakness(
-            weakness_data["type"],
-            weakness_data["name"],
-        )
+    dock_weakness = [
+        (game.world_list.node_by_identifier(NodeIdentifier.from_string(source_name)),
+         weakness_db.get_by_weakness(
+             weakness_data["type"],
+             weakness_data["name"],
+         ))
         for source_name, weakness_data in game_modifications["dock_weakness"].items()
-    }
+    ]
 
     # Configurable Nodes
     configurable_nodes = {

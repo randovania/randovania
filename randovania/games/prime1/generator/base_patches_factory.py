@@ -29,4 +29,7 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
                 (nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"), power_weak),
             )
         
-        return parent.assign_dock_weakness(dock_weakness)
+        return parent.assign_dock_weakness((
+            (game.world_list.node_by_identifier(identifier), target)
+            for identifier, target in dock_weakness
+        ))

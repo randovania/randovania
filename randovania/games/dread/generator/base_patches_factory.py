@@ -68,4 +68,7 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
                 (nic("Hanubia", "Total Recharge Station North", "Door to Gold Chozo Warrior Arena"), power_weak),
             ])
 
-        return parent.assign_dock_weakness(dock_weakness)
+        return parent.assign_dock_weakness((
+            (game.world_list.node_by_identifier(identifier), target)
+            for identifier, target in dock_weakness
+        ))
