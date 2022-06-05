@@ -12,10 +12,7 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
 def _resolve_dock_node(context: NodeContext, node: DockNode) -> typing.Optional[Node]:
-    connection = context.patches.dock_connection.get(
-        context.node_provider.identifier_for_node(node),
-        node.default_connection
-    )
+    connection = context.patches.get_dock_connection_for(node)
     if connection is not None:
         return context.node_provider.node_by_identifier(connection)
     else:
@@ -132,11 +129,7 @@ class DockNode(Node):
         return lock_node, requirement
 
     def get_target_identifier(self, context: NodeContext) -> typing.Optional[NodeIdentifier]:
-        self_identifier = context.node_provider.identifier_for_node(self)
-        return context.patches.dock_connection.get(
-            self_identifier,
-            self.default_connection,
-        )
+        return context.patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
         target_identifier = self.get_target_identifier(context)

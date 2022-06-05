@@ -9,6 +9,7 @@ from typing import Iterator, Optional
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
 ElevatorConnection = dict[NodeIdentifier, Optional[AreaIdentifier]]
@@ -115,3 +116,6 @@ class GamePatches:
 
     def all_elevator_connections(self) -> Iterator[NodeIdentifier, Optional[AreaIdentifier]]:
         yield from self.elevator_connection.items()
+
+    def get_dock_connection_for(self, node: DockNode) -> Optional[NodeIdentifier]:
+        return self.dock_connection.get(node.identifier, node.default_connection)

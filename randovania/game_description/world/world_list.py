@@ -142,10 +142,10 @@ class WorldList(NodeProvider):
         return self._nodes_to_area[node]
 
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Optional[Node]:
-        connection = patches.dock_connection.get(self.identifier_for_node(node),
-                                                 node.default_connection)
+        connection = patches.get_dock_connection_for(node)
         if connection is not None:
             return self.node_by_identifier(connection)
+        return None
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Optional[Node]:
         connection = patches.get_elevator_connection_for(node)

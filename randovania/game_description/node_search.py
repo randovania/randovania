@@ -28,13 +28,15 @@ def distances_to_node(world_list: WorldList, starting_node: Node,
     import networkx
     g = networkx.DiGraph()
 
-    dock_connections = patches.dock_connection if patches is not None else {}
-
     if patches is None:
         def get_elevator_connection_for(n: TeleporterNode):
             return n.default_connection
+
+        def get_dock_connection_for(n: DockNode):
+            return n.default_connection
     else:
         get_elevator_connection_for = patches.get_elevator_connection_for
+        get_dock_connection_for = patches.get_dock_connection_for
 
     for area in world_list.all_areas:
         g.add_node(area)
@@ -45,8 +47,7 @@ def distances_to_node(world_list: WorldList, starting_node: Node,
             for node in area.nodes:
                 connection = None
                 if isinstance(node, DockNode):
-                    connection = dock_connections.get(world_list.identifier_for_node(node),
-                                                      node.default_connection).area_identifier
+                    connection = get_dock_connection_for(node).area_identifier
 
                 elif isinstance(node, TeleporterNode) and not ignore_elevators:
                     connection = get_elevator_connection_for(node)
