@@ -155,9 +155,7 @@ def test_encode(patches_with_data):
 def test_decode(patches_with_data, default_echoes_configuration):
     encoded, expected = patches_with_data
 
-    data = default_data.read_json_then_binary(default_echoes_configuration.game)[1]
-
-    game = data_reader.decode_data(data)
+    game = expected.game
     pool = pool_creator.calculate_pool_results(default_echoes_configuration, game.resource_database)
 
     # Run

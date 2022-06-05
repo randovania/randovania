@@ -110,7 +110,7 @@ def default_prime_configuration() -> PrimeConfiguration:
 
 @pytest.fixture()
 def prime_game_patches(default_prime_configuration, prime_game_description) -> GamePatches:
-    return GamePatches.create_from_game(prime_game_description, default_prime_configuration)
+    return GamePatches.create_from_game(prime_game_description, 0, default_prime_configuration)
 
 
 @pytest.fixture(scope="session")

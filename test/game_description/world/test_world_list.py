@@ -43,6 +43,7 @@ def test_connections_from_dock_blast_shield(empty_patches):
 
     world = World("W", [area_1, area_2], {})
     world_list = WorldList([world])
+    world_list.ensure_has_node_cache()
 
     context = NodeContext(
         patches=empty_patches,

@@ -3,7 +3,7 @@ import re
 import typing
 from typing import Dict, List, DefaultDict
 
-from randovania.game_description import data_reader, data_writer, default_database
+from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
@@ -220,6 +220,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
         hints[NodeIdentifier.from_string(identifier_str)] = Hint.from_json(hint)
 
     return GamePatches(
+        game=game,
         player_index=player_index,
         configuration=configuration,
         pickup_assignment=pickup_assignment,  # PickupAssignment

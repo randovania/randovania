@@ -33,6 +33,7 @@ class GamePatches:
     Currently we support:
     * Swapping pickup locations
     """
+    game: GameDescription
     player_index: int
     configuration: BaseConfiguration
     pickup_assignment: dict[PickupIndex, PickupTarget]
@@ -57,7 +58,7 @@ class GamePatches:
     def create_from_game(cls, game: GameDescription, player_index: int, configuration: BaseConfiguration,
                          ) -> GamePatches:
         return GamePatches(
-            player_index, configuration, {}, game.get_default_elevator_connection(),
+            game, player_index, configuration, {}, game.get_default_elevator_connection(),
             {}, {}, {},
             ResourceCollection.with_database(game.resource_database),
             game.starting_location, {},
