@@ -255,6 +255,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         is_first = True
         for node in sorted(current_area.nodes, key=lambda x: x.name):
+            if node.is_derived_node:
+                continue
+
             button = QRadioButton(self.nodes_scroll_contents)
             button.setText(node.name)
             self.radio_button_to_node[button] = node
