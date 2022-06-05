@@ -39,7 +39,7 @@ class GamePatches:
     pickup_assignment: dict[PickupIndex, PickupTarget]
     elevator_connection: ElevatorConnection
     dock_connection: dict[NodeIdentifier, Optional[NodeIdentifier]]
-    dock_weakness: dict[NodeIdentifier, DockWeakness]
+    dock_weakness: dict[int, DockWeakness]
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
     starting_location: AreaIdentifier
@@ -94,7 +94,7 @@ class GamePatches:
         new_weakness = copy.copy(self.dock_weakness)
 
         for node, weakness in weaknesses:
-            new_weakness[node.identifier] = weakness
+            new_weakness[node.get_index()] = weakness
 
         return dataclasses.replace(self, dock_weakness=new_weakness)
 
@@ -127,9 +127,9 @@ class GamePatches:
 
     # Dock Weakness
     def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
-        return self.dock_weakness.get(node.identifier, node.default_dock_weakness)
+        return self.dock_weakness.get(node.get_index(), node.default_dock_weakness)
 
     def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
-        wl = self.game.world_list
-        for identifier, weakness in self.dock_weakness.items():
-            yield wl.node_by_identifier(identifier), weakness
+        nodes = self.game.world_list.all_nodes
+        for index, weakness in self.dock_weakness.items():
+            yield nodes[index], weakness
