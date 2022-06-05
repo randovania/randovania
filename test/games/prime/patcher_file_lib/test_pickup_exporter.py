@@ -127,7 +127,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
 
     world_list = MagicMock()
-    world_list.all_nodes = [
+    world_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("World", "Area", f"Name {i}"),
                    False, None, "", ("default",), {}, PickupIndex(i), False)
         for i in range(5)
@@ -247,7 +247,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     creator = pickup_exporter.PickupExporterSolo(memo_data)
 
     world_list = MagicMock()
-    world_list.all_nodes = [
+    world_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("W", "A", f"Name {i}"),
                    False, None, "", ("default",), {}, PickupIndex(i), False)
         for i in range(5)

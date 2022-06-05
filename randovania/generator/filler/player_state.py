@@ -168,7 +168,7 @@ class PlayerState:
                 ))
 
         teleporters = []
-        for node in wl.all_nodes:
+        for node in wl.iterate_nodes():
             if isinstance(node, TeleporterNode) and self.reach.is_reachable_node(node):
                 other = wl.resolve_teleporter_node(node, s.patches)
                 teleporters.append("* {} to {}".format(
@@ -181,7 +181,7 @@ class PlayerState:
                 ))
 
         accessible_nodes = [
-            wl.node_name(n, with_world=True) for n in self.reach.all_nodes if self.reach.is_reachable_node(n)
+            wl.node_name(n, with_world=True) for n in self.reach.iterate_nodes if self.reach.is_reachable_node(n)
         ]
 
         return (
@@ -200,7 +200,7 @@ class PlayerState:
                       for name, quantity in sorted(pickups_by_name_and_quantity.items())),
             ", ".join(sorted(to_progress)),
             "\n".join(accessible_nodes) if len(accessible_nodes) < 15 else f"{len(accessible_nodes)} nodes total",
-            sum(1 for n in self.reach.all_nodes if self.reach.is_safe_node(n)),
+            sum(1 for n in self.reach.iterate_nodes if self.reach.is_safe_node(n)),
             "\n".join(sorted(paths_to_be_opened)) or "None",
             "\n".join(teleporters) or "None",
         )

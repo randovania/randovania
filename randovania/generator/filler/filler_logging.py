@@ -51,7 +51,7 @@ def print_new_resources(game: GameDescription,
         world_list = game.world_list
         for index, count in seen_count.items():
             if count == 1:
-                node = find_node_with_resource(index, reach.node_context(), world_list.all_nodes)
+                node = find_node_with_resource(index, reach.node_context(), world_list.iterate_nodes())
                 print("-> New {}: {}".format(label, world_list.node_name(node, with_world=True)))
 
 
@@ -59,5 +59,5 @@ def print_new_pickup_index(player: int, game: GameDescription, reach: GeneratorR
                            location: ResourceInfo, count: int):
     if debug.debug_level() > 1 and count == 1:
         world_list = game.world_list
-        node = find_node_with_resource(location, reach.node_context(), world_list.all_nodes)
+        node = find_node_with_resource(location, reach.node_context(), world_list.iterate_nodes())
         print("-> New Pickup Index: Player {}'s {}".format(player, world_list.node_name(node, with_world=True)))

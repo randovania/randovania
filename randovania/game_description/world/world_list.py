@@ -22,7 +22,7 @@ class WorldList(NodeProvider):
 
     _nodes_to_area: Dict[Node, Area]
     _nodes_to_world: Dict[Node, World]
-    _nodes: Optional[Tuple[Node, ...]]
+    _nodes: Optional[Tuple[Optional[Node], ...]]
     _pickup_index_to_node: Dict[PickupIndex, PickupNode]
     _identifier_to_node: Dict[NodeIdentifier, Node]
 
@@ -37,10 +37,24 @@ class WorldList(NodeProvider):
 
     def _refresh_node_cache(self):
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
-        self._nodes = tuple(self._iterate_over_nodes())
+        nodes = tuple(self._iterate_over_nodes())
 
-        for i, node in enumerate(self._nodes):
-            object.__setattr__(node, "index", i)
+        # Node objects are shared between different WorldList instances, even those with a different list of nodes
+        # For example: removing nodes via inactive layers
+
+        # For nodes that don't already have an index, assign one that is bigger than any other node we know of
+        next_index: int = max([getattr(node, "index", -1) for node in nodes], default=-1)
+        for node in nodes:
+            if getattr(node, "index", None) is None:
+                next_index += 1
+                object.__setattr__(node, "index", next_index)
+
+        # Create a big list for all known indices then add all nodes to their expected locations
+        final_nodes: list[Optional[Node]] = [None] * (next_index + 1)
+        for node in nodes:
+            assert final_nodes[node.index] is None
+            final_nodes[node.index] = node
+        self._nodes = tuple(final_nodes)
 
         self._pickup_index_to_node = {
             node.pickup_index: node
@@ -78,13 +92,18 @@ class WorldList(NodeProvider):
             yield from world.areas
 
     @property
-    def all_nodes(self) -> Tuple[Node, ...]:
+    def all_nodes(self) -> tuple[Optional[Node], ...]:
         self.ensure_has_node_cache()
         return self._nodes
 
+    def iterate_nodes(self) -> Iterator[Node]:
+        for node in self.all_nodes:
+            if node is not None:
+                yield node
+
     @property
     def num_pickup_nodes(self) -> int:
-        return sum(1 for node in self.all_nodes if isinstance(node, PickupNode))
+        return sum(1 for node in self.iterate_nodes() if isinstance(node, PickupNode))
 
     @property
     def all_worlds_areas_nodes(self) -> Iterable[Tuple[World, Area, Node]]:

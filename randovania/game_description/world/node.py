@@ -74,6 +74,11 @@ class Node:
     def is_resource_node(self) -> bool:
         return False
 
+    @property
+    def is_derived_node(self) -> bool:
+        """If True, this node was created dynamically from other nodes."""
+        return False
+
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         return Requirement.trivial()
 

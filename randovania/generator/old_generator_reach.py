@@ -170,8 +170,10 @@ class OldGeneratorReach(GeneratorReach):
             else:
                 return 1
 
-        self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra({self.state.node.get_index()},
-                                                                                           weight=weight)
+        self._reachable_costs, self._reachable_paths = self._digraph.multi_source_dijkstra(
+            {self.state.node.get_index()},
+            weight=weight,
+        )
 
     def is_reachable_node(self, node: Node) -> bool:
         index = node.get_index()
@@ -215,12 +217,12 @@ class OldGeneratorReach(GeneratorReach):
         return self._game
 
     @property
-    def all_nodes(self) -> Tuple[Node, ...]:
+    def all_nodes(self) -> tuple[Optional[Node], ...]:
         return self.game.world_list.all_nodes
 
     @property
     def nodes(self) -> Iterator[Node]:
-        for node in self.all_nodes:
+        for node in self.iterate_nodes:
             if node.get_index() in self._digraph:
                 yield node
 
@@ -252,7 +254,7 @@ class OldGeneratorReach(GeneratorReach):
                 del self._node_reachable_cache[index]
 
             for node_index in [node_index for node_index, flag in self._is_node_safe_cache.items()
-                         if not flag]:
+                               if not flag]:
                 del self._is_node_safe_cache[node_index]
         else:
             self._node_reachable_cache = {}
@@ -278,7 +280,6 @@ class OldGeneratorReach(GeneratorReach):
         self._expand_graph(paths_to_check)
 
     def act_on(self, node: ResourceNode) -> None:
-        all_nodes = self.all_nodes
         new_dangerous_resources = set(
             resource
             for resource, quantity in node.resource_gain_on_collect(self.state.node_context())

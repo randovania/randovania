@@ -112,7 +112,7 @@ class GameDescription:
         return {
             self.world_list.identifier_for_node(node): node.default_connection
 
-            for node in self.world_list.all_nodes
+            for node in self.world_list.iterate_nodes()
             if isinstance(node, TeleporterNode) and node.editable
         }
 

@@ -26,8 +26,8 @@ class GeneratorReach:
                                                      self.state.resource_database)
 
     @property
-    def all_nodes(self) -> Tuple[Node, ...]:
-        return self.game.world_list.all_nodes
+    def iterate_nodes(self) -> Iterator[Node]:
+        yield from self.game.world_list.iterate_nodes()
 
     # ASDF
 

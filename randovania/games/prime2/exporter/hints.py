@@ -41,7 +41,7 @@ def create_patches_hints(all_patches: Dict[int, GamePatches],
             hints_for_asset.get(world_list.identifier_for_node(logbook_node),
                                 "Someone forgot to leave a message."),
         )
-        for logbook_node in world_list.all_nodes
+        for logbook_node in world_list.iterate_nodes()
         if isinstance(logbook_node, LogbookNode)
     ]
 
@@ -54,7 +54,7 @@ def hide_patches_hints(world_list: WorldList) -> list:
     """
 
     return [create_simple_logbook_hint(logbook_node.string_asset_id, "Some item was placed somewhere.")
-            for logbook_node in world_list.all_nodes if isinstance(logbook_node, LogbookNode)]
+            for logbook_node in world_list.iterate_nodes() if isinstance(logbook_node, LogbookNode)]
 
 
 _SKY_TEMPLE_KEY_SCAN_ASSETS = [

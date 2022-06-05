@@ -300,7 +300,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
 
         elif lore_type == LoreType.SPECIFIC_PICKUP:
             self.logbook_extra_label.setText("Pickup index hinted:")
-            for node in self.game.world_list.all_nodes:
+            for node in self.game.world_list.iterate_nodes():
                 if isinstance(node, PickupNode):
                     self.logbook_extra_combo.addItem("{} - {}".format(
                         self.game.world_list.node_name(node, True, True),

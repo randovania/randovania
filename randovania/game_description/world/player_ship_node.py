@@ -12,7 +12,7 @@ from randovania.game_description.world.resource_node import ResourceNode
 
 
 def _all_ship_nodes(context: NodeContext) -> typing.Iterator[PlayerShipNode]:
-    for node in context.node_provider.all_nodes:
+    for node in context.node_provider.iterate_nodes():
         if isinstance(node, PlayerShipNode):
             yield node
 

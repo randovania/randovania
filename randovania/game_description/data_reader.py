@@ -24,6 +24,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import (
     DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
 )
+from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.game_description.world.node import (
     GenericNode, Node,
     NodeLocation
@@ -391,6 +392,13 @@ class WorldReader:
                     connections[origin][nodes_by_name[target_name]] = the_set
                 except (MissingResource, KeyError) as e:
                     raise type(e)(f"In area {area_name}, connection from {origin.name} to {target_name} got error: {e}")
+
+        for node in list(nodes):
+            if isinstance(node, DockNode):
+                lock_node = DockLockNode.create_from_dock(node)
+                nodes.append(lock_node)
+                connections[lock_node] = {}
+
         try:
             return Area(area_name, data["default_node"],
                         data["valid_starting_location"],
