@@ -41,6 +41,10 @@ def _area_uses_resource(area: Area,
             if _uses_trick(node.default_dock_weakness.requirement):
                 return True
 
+            if node.default_dock_weakness.lock is not None:
+                if _uses_trick(node.default_dock_weakness.lock.requirement):
+                    return True
+
         if any(_uses_trick(req) for req in area.connections[node].values()):
             return True
 
