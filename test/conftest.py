@@ -241,9 +241,9 @@ def dataclass_test_lib() -> DataclassTestLib:
 
 
 @pytest.fixture()
-def empty_patches(preset_manager) -> GamePatches:
-    configuration = preset_manager.default_preset_for_game(RandovaniaGame.BLANK).get_preset().configuration
-    return GamePatches(0, configuration, {}, {}, {}, {}, {}, ResourceCollection(), None, {})
+def empty_patches(default_blank_configuration, blank_game_description) -> GamePatches:
+    configuration = default_blank_configuration
+    return GamePatches.create_from_game(blank_game_description, 0, configuration)
 
 
 def pytest_addoption(parser):

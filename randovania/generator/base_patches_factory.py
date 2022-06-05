@@ -36,9 +36,7 @@ class BasePatchesFactory:
                             ) -> GamePatches:
         """
         """
-        patches = GamePatches(player_index, configuration, {}, game.get_default_elevator_connection(),
-                              {}, {}, {}, ResourceCollection.with_database(game.resource_database),
-                              game.starting_location, {})
+        patches = GamePatches.create_from_game(game, player_index, configuration)
 
         # Elevators
         try:

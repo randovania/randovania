@@ -162,18 +162,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
         graph.add_node(node)
 
     context = NodeContext(
-        patches=GamePatches(
-            player_index=0,
-            configuration=None,
-            pickup_assignment={},
-            elevator_connection={},
-            dock_connection={},
-            dock_weakness={},
-            configurable_nodes={},
-            starting_items=ResourceCollection.with_database(game.resource_database),
-            starting_location=game.starting_location,
-            hints={},
-        ),
+        patches=GamePatches.create_from_game(game, 0, None),
         current_resources=ResourceCollection.with_database(game.resource_database),
         database=game.resource_database,
         node_provider=game.world_list,
