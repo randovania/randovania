@@ -1,4 +1,5 @@
 import collections
+import dataclasses
 import re
 import typing
 from typing import Dict, List, DefaultDict
@@ -13,6 +14,7 @@ from randovania.game_description.resources.resource_info import ResourceCollecti
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
@@ -164,8 +166,13 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     }
 
     # Dock Weakness
+    def get_dock(ni: NodeIdentifier):
+        result = game.world_list.node_by_identifier(ni)
+        assert isinstance(result, DockNode)
+        return result
+
     dock_weakness = [
-        (game.world_list.node_by_identifier(NodeIdentifier.from_string(source_name)),
+        (get_dock(NodeIdentifier.from_string(source_name)),
          weakness_db.get_by_weakness(
              weakness_data["type"],
              weakness_data["name"],
@@ -219,19 +226,17 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     for identifier_str, hint in game_modifications["hints"].items():
         hints[NodeIdentifier.from_string(identifier_str)] = Hint.from_json(hint)
 
-    return GamePatches(
-        game=game,
-        player_index=player_index,
-        configuration=configuration,
+    patches = GamePatches.create_from_game(game, player_index, configuration)
+    patches = patches.assign_dock_weakness(dock_weakness)
+    return dataclasses.replace(
+        patches,
         pickup_assignment=pickup_assignment,  # PickupAssignment
         elevator_connection=elevator_connection,  # ElevatorConnection
-        dock_connection={},  # Dict[Tuple[int, int], DockConnection]
-        dock_weakness={},
         configurable_nodes=configurable_nodes,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaIdentifier
         hints=hints,
-    ).assign_dock_weakness(dock_weakness)
+    )
 
 
 def decode(game_modifications: List[dict],
