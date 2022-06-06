@@ -36,17 +36,8 @@ core_blank_json = {
 
 @pytest.fixture(
     params=[
-        {"encoded": b'\x00\x00', "bit_count": 15, "json": {}},
-    ],
-    name="trick_level_data")
-def _trick_level_data(request, mocker, blank_game_description):
-    return (request.param["encoded"], request.param["bit_count"],
-            DockRandoConfiguration.from_json(request.param["json"], game=RandovaniaGame.BLANK))
-
-
-@pytest.fixture(
-    params=[
-        {"game": RandovaniaGame.BLANK, "encoded": b'@', "json_override": {}},
+        {"game": RandovaniaGame.BLANK, "encoded": b'@'},
+        {"game": RandovaniaGame.BLANK, "encoded": b'J\x05\x00', "can_change_to": ["Explosive Door"]},
     ],
     name="config_with_data")
 def _config_with_data(request):
@@ -54,7 +45,12 @@ def _config_with_data(request):
 
     default = DockRandoConfiguration.from_json(core_blank_json, game)
     data = copy.deepcopy(core_blank_json)
-    data.update(request.param["json_override"])
+
+    if "can_change_from" in request.param:
+        data["types_state"]["door"]["can_change_from"] = request.param["can_change_from"]
+
+    if "can_change_to" in request.param:
+        data["types_state"]["door"]["can_change_to"] = request.param["can_change_to"]
 
     config = DockRandoConfiguration.from_json(data, game)
     return request.param["encoded"], config, default
@@ -81,3 +77,50 @@ def test_encode(config_with_data):
 
     # Assert
     assert result == expected
+
+
+def test_prime_thing(default_prime_configuration):
+    config = {
+        "mode": "two-way",
+        "types_state": {
+            "door": {
+                "can_change_from": [
+                    "Ice Door",
+                    "Missile Blast Shield",
+                    "Normal Door",
+                    "Plasma Door",
+                    "Wave Door"
+                ],
+                "can_change_to": [
+                    "Ice Door",
+                    "Ice Spreader Blast Shield",
+                    "Missile Blast Shield (randomprime)",
+                    "Normal Door",
+                    "Plasma Door",
+                    "Power Bomb Blast Shield",
+                    "Super Missile Blast Shield",
+                    "Wave Door"
+                ]
+            },
+            "morph_ball": {
+                "can_change_from": [],
+                "can_change_to": []
+            },
+            "other": {
+                "can_change_from": [],
+                "can_change_to": []
+            }
+        }
+    }
+    ref = {"reference": default_prime_configuration.dock_rando}
+
+    dc = DockRandoConfiguration.from_json(config, RandovaniaGame.METROID_PRIME)
+    encoded = bitpacking.pack_value(dc, metadata=ref)
+
+    decoder = BitPackDecoder(encoded)
+    decoded = DockRandoConfiguration.bit_pack_unpack(decoder, ref)
+
+    assert dc == decoded
+
+
+
