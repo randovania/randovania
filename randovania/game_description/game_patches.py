@@ -39,7 +39,7 @@ class GamePatches:
     pickup_assignment: dict[PickupIndex, PickupTarget]
     elevator_connection: ElevatorConnection
     dock_connection: dict[NodeIdentifier, Optional[NodeIdentifier]]
-    dock_weakness: dict[int, DockWeakness]
+    dock_weakness: list[Optional[DockWeakness]]
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
     starting_location: AreaIdentifier
@@ -57,9 +57,10 @@ class GamePatches:
     @classmethod
     def create_from_game(cls, game: GameDescription, player_index: int, configuration: BaseConfiguration,
                          ) -> GamePatches:
+        game.world_list.ensure_has_node_cache()
         return GamePatches(
             game, player_index, configuration, {}, game.get_default_elevator_connection(),
-            {}, {}, {},
+            {}, [None] * len(game.world_list.all_nodes), {},
             ResourceCollection.with_database(game.resource_database),
             game.starting_location, {},
         )
@@ -91,7 +92,7 @@ class GamePatches:
         return dataclasses.replace(self, configurable_nodes=new_configurable)
 
     def assign_dock_weakness(self, weaknesses: Iterator[tuple[DockNode, DockWeakness]]) -> "GamePatches":
-        new_weakness = copy.copy(self.dock_weakness)
+        new_weakness = list(self.dock_weakness)
 
         for node, weakness in weaknesses:
             new_weakness[node.get_index()] = weakness
@@ -127,9 +128,10 @@ class GamePatches:
 
     # Dock Weakness
     def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
-        return self.dock_weakness.get(node.get_index(), node.default_dock_weakness)
+        return self.dock_weakness[node.get_index()] or node.default_dock_weakness
 
     def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
         nodes = self.game.world_list.all_nodes
-        for index, weakness in self.dock_weakness.items():
-            yield nodes[index], weakness
+        for index, weakness in enumerate(self.dock_weakness):
+            if weakness is not None and (node := nodes[index]) is not None:
+                yield node, weakness
