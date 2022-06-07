@@ -460,7 +460,7 @@ class RequirementList:
 
         energy = current_energy
         for requirement in self.values():
-            if requirement.satisfied(current_resources, current_energy, database):
+            if requirement.satisfied(current_resources, energy, database):
                 if requirement.resource.resource_type == ResourceType.DAMAGE:
                     energy -= requirement.damage(current_resources, database)
             else:
