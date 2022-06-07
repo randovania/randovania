@@ -4,7 +4,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area_identifier import AreaIdentifier

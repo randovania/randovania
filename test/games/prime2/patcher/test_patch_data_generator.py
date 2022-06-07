@@ -8,7 +8,8 @@ from frozendict import frozendict
 import randovania
 from randovania.exporter import pickup_exporter
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex

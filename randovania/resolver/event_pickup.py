@@ -2,7 +2,8 @@ import dataclasses
 from typing import Tuple, List
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import ResourceRequirement, Requirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.node import NodeContext

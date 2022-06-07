@@ -8,8 +8,12 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QHBoxLayout, QComboBox, \
     QLineEdit
 
-from randovania.game_description.requirements import ResourceRequirement, Requirement, \
-    RequirementOr, RequirementAnd, RequirementTemplate, RequirementArrayBase
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.array_base import RequirementArrayBase
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType

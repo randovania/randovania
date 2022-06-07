@@ -4,7 +4,7 @@ from typing import Iterator, Optional
 from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier

@@ -6,7 +6,7 @@ from typing import Iterator, Optional
 
 from frozendict import frozendict
 
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 
 
 @unique

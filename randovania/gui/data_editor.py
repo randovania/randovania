@@ -13,7 +13,7 @@ from randovania.game_description import data_reader, data_writer, pretty_print, 
     derived_nodes, default_database
 from randovania.game_description.editor import Editor
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area

@@ -10,7 +10,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
-from randovania.game_description.requirements import ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import (
     PickupEntry, ResourceLock, PickupModel,
 )

@@ -7,7 +7,7 @@ from typing import Optional, NamedTuple
 from frozendict import frozendict
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.lib import frozen_lib
 

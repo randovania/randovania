@@ -17,7 +17,7 @@ ElevatorConnection = dict[NodeIdentifier, Optional[AreaIdentifier]]
 if typing.TYPE_CHECKING:
     from randovania.game_description.assignment import PickupAssignment, NodeConfigurationAssignment, PickupTarget
     from randovania.game_description.hint import Hint
-    from randovania.game_description.requirements import Requirement
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.game_description.world.dock import DockWeakness
     from randovania.layout.base.base_configuration import BaseConfiguration

@@ -1,7 +1,8 @@
 from typing import Dict
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import Requirement, RequirementSet
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.node import Node
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver.state import State
