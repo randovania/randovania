@@ -3,7 +3,8 @@ from typing import Optional, Tuple, Callable, FrozenSet
 
 from randovania.game_description import derived_nodes
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements import RequirementSet, RequirementList
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.node import Node

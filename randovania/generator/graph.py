@@ -4,7 +4,7 @@ import itertools
 from heapq import heappush, heappop
 from typing import Dict, Iterator, Tuple, Set, Callable
 
-from randovania.game_description.requirements import RequirementSet
+from randovania.game_description.requirements.requirement_set import RequirementSet
 
 
 class BaseGraph:

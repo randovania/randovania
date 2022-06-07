@@ -5,8 +5,13 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description import data_reader
-from randovania.game_description.requirements import ResourceRequirement, RequirementList, RequirementSet, \
-    RequirementAnd, RequirementOr, Requirement, MAX_DAMAGE, RequirementTemplate
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.requirement_list import RequirementList
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex

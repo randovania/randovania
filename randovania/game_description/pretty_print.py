@@ -3,9 +3,11 @@ from pathlib import Path
 from typing import Iterator, Tuple, TextIO
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import (
-    ResourceRequirement, RequirementOr, RequirementTemplate, Requirement, RequirementArrayBase
-)
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.array_base import RequirementArrayBase
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import (

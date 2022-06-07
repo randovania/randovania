@@ -4,7 +4,8 @@ from typing import Iterator, Dict
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QWidget
 
-from randovania.game_description.requirements import RequirementSet, ResourceRequirement
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType

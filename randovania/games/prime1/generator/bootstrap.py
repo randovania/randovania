@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 
-from randovania.game_description.requirements import ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection

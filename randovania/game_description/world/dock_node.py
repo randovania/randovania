@@ -3,7 +3,9 @@ from __future__ import annotations
 import dataclasses
 import typing
 
-from randovania.game_description.requirements import Requirement, RequirementAnd, ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.dock import DockType, DockWeakness, DockLockType
 from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier

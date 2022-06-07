@@ -2,7 +2,7 @@ import copy
 from typing import List, Dict, Iterator, Tuple, Iterable, Optional
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
