@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed: Generating multiworld games where one Prime 1 player has item in every room while another Prime 1 player doesn't now works properly.
 - Fixed: It's no longer possible to configure more than 99 shuffled copies of a major item, as that causes errors. 
-- Fixed: Using a trick to break a door lock is now properly displayed in the UI. 
+- Fixed: Using a trick to break a door lock is now properly displayed in the UI.
+- Fixed: The description for expansions now mention they can be logical with multi-pickup placement.
+- Removed: The broken option for enabling required mains for Metroid Prime 1. It was non-functional and incorrectly displayed.
 
 ## [4.4.1] - 2022-06-04
 
