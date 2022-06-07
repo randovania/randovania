@@ -19,4 +19,4 @@ async def test_dock_weakness_distribute(default_blank_preset):
     gen_params = GeneratorParameters(5000, False, [preset])
     description = await generate_and_validate_description(gen_params, None, False)
 
-    assert description.all_patches[0].dock_weakness
+    assert list(description.all_patches[0].all_dock_weaknesses())

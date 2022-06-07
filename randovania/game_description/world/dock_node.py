@@ -12,10 +12,7 @@ from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
 def _resolve_dock_node(context: NodeContext, node: DockNode) -> typing.Optional[Node]:
-    connection = context.patches.dock_connection.get(
-        context.node_provider.identifier_for_node(node),
-        node.default_connection
-    )
+    connection = context.patches.get_dock_connection_for(node)
     if connection is not None:
         return context.node_provider.node_by_identifier(connection)
     else:
@@ -25,7 +22,7 @@ def _resolve_dock_node(context: NodeContext, node: DockNode) -> typing.Optional[
 def _requirement_from_back(context: NodeContext, identifier: NodeIdentifier) -> typing.Optional[ResourceRequirement]:
     target_node = context.node_provider.node_by_identifier(identifier)
     if isinstance(target_node, DockNode):
-        weak = context.patches.dock_weakness.get(identifier, target_node.default_dock_weakness)
+        weak = context.patches.get_dock_weakness_for(target_node)
         if weak.lock is not None:
             return ResourceRequirement.simple(identifier)
 
@@ -63,8 +60,7 @@ class DockNode(Node):
         return "DockNode({!r} -> {})".format(self.name, self.default_connection)
 
     def get_front_weakness(self, context: NodeContext) -> DockWeakness:
-        self_identifier = context.node_provider.identifier_for_node(self)
-        return context.patches.dock_weakness.get(self_identifier, self.default_dock_weakness)
+        return context.patches.get_dock_weakness_for(self)
 
     def get_back_weakness(self, context: NodeContext) -> typing.Optional[DockWeakness]:
         target_identifier = self.get_target_identifier(context)
@@ -73,7 +69,7 @@ class DockNode(Node):
 
         target_node = context.node_provider.node_by_identifier(target_identifier)
         if isinstance(target_node, DockNode):
-            return context.patches.dock_weakness.get(target_identifier, target_node.default_dock_weakness)
+            return context.patches.get_dock_weakness_for(target_node)
 
         return None
 
@@ -132,11 +128,7 @@ class DockNode(Node):
         return lock_node, requirement
 
     def get_target_identifier(self, context: NodeContext) -> typing.Optional[NodeIdentifier]:
-        self_identifier = context.node_provider.identifier_for_node(self)
-        return context.patches.dock_connection.get(
-            self_identifier,
-            self.default_connection,
-        )
+        return context.patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
         target_identifier = self.get_target_identifier(context)

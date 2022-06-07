@@ -274,17 +274,17 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         result = []
         used_actors = {}
 
-        for identifier, weakness in self.patches.dock_weakness.items():
+        for node, weakness in self.patches.all_dock_weaknesses():
             if "type" not in weakness.extra:
-                raise ValueError(f"Unable to change door {identifier} into {weakness.name}: incompatible door weakness")
+                raise ValueError(f"Unable to change door {wl.node_name(node)} into {weakness.name}: incompatible door weakness")
 
             result.append({
-                "actor": (actor := self._teleporter_ref_for(wl.node_by_identifier(identifier))),
+                "actor": (actor := self._teleporter_ref_for(node)),
                 "door_type": (door_type := weakness.extra["type"]),
             })
             actor_idef = str(actor)
             if used_actors.get(actor_idef, door_type) != door_type:
-                raise ValueError(f"Door for {identifier} ({actor}) previously "
+                raise ValueError(f"Door for {wl.node_name(node)} ({actor}) previously "
                                  f"patched to use {used_actors[actor_idef]}, tried to change to {door_type}.")
             used_actors[actor_idef] = door_type
 
@@ -323,10 +323,10 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             ],
             "elevators": [
                 {
-                    "teleporter": self._teleporter_ref_for(self._node_for(source)),
+                    "teleporter": self._teleporter_ref_for(source),
                     "destination": self._start_point_ref_for(self._node_for(target)),
                 }
-                for source, target in self.patches.elevator_connection.items()
+                for source, target in self.patches.all_elevator_connections()
             ],
             "hints": self._encode_hints(),
             "text_patches": self._static_text_changes(),

@@ -10,9 +10,9 @@ from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
@@ -747,8 +747,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if self._actions:
             state.node = self._actions[-1]
 
-        for teleporter, combo in self._elevator_id_to_combo.items():
-            state.patches.elevator_connection[teleporter] = combo.currentData()
+        state.patches = state.patches.assign_elevators(
+            (state.world_list.get_teleporter_node(teleporter), combo.currentData())
+            for teleporter, combo in self._elevator_id_to_combo.items()
+        )
 
         for gate, item in self._translator_gate_to_combo.items():
             scan_visor = self.game_description.resource_database.get_item("Scan")

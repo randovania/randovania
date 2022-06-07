@@ -29,7 +29,7 @@ def _default_filler_config() -> FillerConfiguration:
 
 @pytest.fixture(name="state_for_blank")
 def _state_for_blank(default_filler_config, blank_game_description, default_blank_configuration,
-                     blank_game_patches) -> player_state.PlayerState:
+                     empty_patches) -> player_state.PlayerState:
     game = blank_game_description.get_mutable()
 
     return player_state.PlayerState(
@@ -37,7 +37,7 @@ def _state_for_blank(default_filler_config, blank_game_description, default_blan
         game=game,
         initial_state=game.game.generator.bootstrap.calculate_starting_state(
             game,
-            blank_game_patches,
+            empty_patches,
             default_blank_configuration,
         ),
         pickups_left=[],

@@ -1,5 +1,6 @@
 import copy
-from typing import List, Dict, Iterator, Tuple, Iterable, Optional
+import typing
+from typing import List, Dict, Iterator, Tuple, Iterable, Optional, Type
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
@@ -15,6 +16,8 @@ from randovania.game_description.world.node_provider import NodeProvider
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
+
+NodeType = typing.TypeVar("NodeType", bound=Node)
 
 
 class WorldList(NodeProvider):
@@ -142,14 +145,13 @@ class WorldList(NodeProvider):
         return self._nodes_to_area[node]
 
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Optional[Node]:
-        connection = patches.dock_connection.get(self.identifier_for_node(node),
-                                                 node.default_connection)
+        connection = patches.get_dock_connection_for(node)
         if connection is not None:
             return self.node_by_identifier(connection)
+        return None
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Optional[Node]:
-        connection = patches.elevator_connection.get(self.identifier_for_node(node),
-                                                     node.default_connection)
+        connection = patches.get_elevator_connection_for(node)
         if connection is not None:
             return self.resolve_teleporter_connection(connection)
 
@@ -221,6 +223,14 @@ class WorldList(NodeProvider):
             return node
 
         raise ValueError(f"No node with name {identifier.node_name} found in {area}")
+
+    def typed_node_by_identifier(self, i: NodeIdentifier, t: Type[NodeType]) -> NodeType:
+        result = self.node_by_identifier(i)
+        assert isinstance(result, t)
+        return result
+
+    def get_teleporter_node(self, identifier: NodeIdentifier):
+        return self.typed_node_by_identifier(identifier, TeleporterNode)
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self.world_and_area_by_area_identifier(location)[1]

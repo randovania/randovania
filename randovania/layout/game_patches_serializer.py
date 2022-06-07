@@ -1,9 +1,10 @@
 import collections
+import dataclasses
 import re
 import typing
 from typing import Dict, List, DefaultDict
 
-from randovania.game_description import data_reader, data_writer, default_database
+from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
@@ -13,9 +14,10 @@ from randovania.game_description.resources.resource_info import ResourceCollecti
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.dock import DockWeakness
+from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout import filtered_database
@@ -84,15 +86,15 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             for resource_info, quantity in patches.starting_items.as_resource_gain()
         },
         "teleporters": {
-            teleporter.as_string: connection.as_string
-            for teleporter, connection in patches.elevator_connection.items()
+            source.identifier.as_string: connection.as_string
+            for source, connection in patches.all_elevator_connections()
         },
         "dock_weakness": {
-            dock.as_string: {
+            dock.identifier.as_string: {
                 "type": dock_weakness_to_type[weakness].short_name,
                 "name": weakness.name,
             }
-            for dock, weakness in patches.dock_weakness.items()
+            for dock, weakness in patches.all_dock_weaknesses()
         },
         "configurable_nodes": {
             identifier.as_string: data_writer.write_requirement(requirement)
@@ -159,19 +161,26 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     })
 
     # Elevators
-    elevator_connection: ElevatorConnection = {
-        NodeIdentifier.from_string(source_name): AreaIdentifier.from_string(target_name)
+    elevator_connection = [
+        (world_list.get_teleporter_node(NodeIdentifier.from_string(source_name)),
+         AreaIdentifier.from_string(target_name))
         for source_name, target_name in game_modifications["teleporters"].items()
-    }
+    ]
 
     # Dock Weakness
-    dock_weakness: dict[NodeIdentifier, DockWeakness] = {
-        NodeIdentifier.from_string(source_name): weakness_db.get_by_weakness(
-            weakness_data["type"],
-            weakness_data["name"],
-        )
+    def get_dock(ni: NodeIdentifier):
+        result = game.world_list.node_by_identifier(ni)
+        assert isinstance(result, DockNode)
+        return result
+
+    dock_weakness = [
+        (get_dock(NodeIdentifier.from_string(source_name)),
+         weakness_db.get_by_weakness(
+             weakness_data["type"],
+             weakness_data["name"],
+         ))
         for source_name, weakness_data in game_modifications["dock_weakness"].items()
-    }
+    ]
 
     # Configurable Nodes
     configurable_nodes = {
@@ -219,13 +228,12 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     for identifier_str, hint in game_modifications["hints"].items():
         hints[NodeIdentifier.from_string(identifier_str)] = Hint.from_json(hint)
 
-    return GamePatches(
-        player_index=player_index,
-        configuration=configuration,
+    patches = GamePatches.create_from_game(game, player_index, configuration)
+    patches = patches.assign_dock_weakness(dock_weakness)
+    patches = patches.assign_elevators(elevator_connection)
+    return dataclasses.replace(
+        patches,
         pickup_assignment=pickup_assignment,  # PickupAssignment
-        elevator_connection=elevator_connection,  # ElevatorConnection
-        dock_connection={},  # Dict[Tuple[int, int], DockConnection]
-        dock_weakness=dock_weakness,
         configurable_nodes=configurable_nodes,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaIdentifier

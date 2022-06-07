@@ -16,10 +16,7 @@ class TeleporterNode(Node):
         return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        target_area_identifier = context.patches.elevator_connection.get(
-            context.node_provider.identifier_for_node(self),
-            self.default_connection,
-        )
+        target_area_identifier = context.patches.get_elevator_connection_for(self)
         if target_area_identifier is None:
             return
 

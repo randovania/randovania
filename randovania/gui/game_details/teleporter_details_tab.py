@@ -36,10 +36,10 @@ class TeleporterDetailsTab(GameDetailsTab):
 
         per_world: dict[str, dict[str, str]] = collections.defaultdict(dict)
 
-        for source_loc, destination_loc in patches.elevator_connection.items():
-            source_world = world_list.world_by_area_location(source_loc.area_identifier)
+        for source, destination_loc in patches.all_elevator_connections():
+            source_world = world_list.world_by_area_location(source.identifier.area_identifier)
             source_name = elevators.get_elevator_or_area_name(self.game_enum, world_list,
-                                                              source_loc.area_identifier, True)
+                                                              source.identifier.area_identifier, True)
 
             per_world[source_world.name][source_name] = elevators.get_elevator_or_area_name(self.game_enum, world_list,
                                                                                             destination_loc, True)

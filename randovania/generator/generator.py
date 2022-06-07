@@ -6,7 +6,7 @@ from typing import Callable, Dict, List, Optional
 import tenacity
 from randovania.game_description import derived_nodes
 from randovania.game_description.assignment import (PickupAssignment,
-                                                    PickupTarget)
+                                                    PickupTarget, PickupTargetAssociation)
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
@@ -70,11 +70,11 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
                                                        base_patches,
                                                        rng,
                                                        rng_required=rng_required)
-    target_assignment = {
-        index: PickupTarget(pickup, player_index)
+    target_assignment = [
+        (index, PickupTarget(pickup, player_index))
         for index, pickup in pool_results.assignment.items()
-    }
-    patches = base_patches.assign_pickup_assignment(target_assignment).assign_extra_initial_items(
+    ]
+    patches = base_patches.assign_new_pickups(target_assignment).assign_extra_initial_items(
         pool_results.initial_resources.as_resource_gain()
     )
 
@@ -162,7 +162,7 @@ def _distribute_remaining_items(rng: Random,
                                 ) -> FillerResults:
     unassigned_pickup_nodes = []
     all_remaining_pickups = []
-    assignments: Dict[int, PickupAssignment] = {}
+    assignments: Dict[int, list[PickupTargetAssociation]] = {}
 
     for player, filler_result in filler_results.player_results.items():
         for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
@@ -171,7 +171,7 @@ def _distribute_remaining_items(rng: Random,
 
         all_remaining_pickups.extend(zip([player] * len(filler_result.unassigned_pickups),
                                          filler_result.unassigned_pickups))
-        assignments[player] = {}
+        assignments[player] = []
 
     rng.shuffle(unassigned_pickup_nodes)
     rng.shuffle(all_remaining_pickups)
@@ -184,14 +184,14 @@ def _distribute_remaining_items(rng: Random,
             ))
 
     for (node_player, node), (pickup_player, pickup) in zip(unassigned_pickup_nodes, all_remaining_pickups):
-        assignments[node_player][node.pickup_index] = PickupTarget(pickup, pickup_player)
+        assignments[node_player].append((node.pickup_index, PickupTarget(pickup, pickup_player)))
 
     return dataclasses.replace(
         filler_results,
         player_results={
             player: dataclasses.replace(
                 result,
-                patches=result.patches.assign_pickup_assignment(assignments[player])
+                patches=result.patches.assign_new_pickups(assignments[player])
             ) for player, result in filler_results.player_results.items()
         }
     )

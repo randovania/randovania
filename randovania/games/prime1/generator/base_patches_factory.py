@@ -20,14 +20,16 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         assert isinstance(configuration, PrimeConfiguration)
         parent = super().create_base_patches(configuration, rng, game, is_multiworld, player_index, rng_required)
 
+        dock_weakness = []
         if configuration.main_plaza_door and configuration.dock_rando.mode == DockRandoMode.VANILLA:
             nic = NodeIdentifier.create
             power_weak = game.dock_weakness_database.get_by_weakness("door", "Normal Door")
 
-            dock_weakness = {
-                nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"): power_weak,
-            }
-        else:
-            dock_weakness = {}
+            dock_weakness.append(
+                (nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"), power_weak),
+            )
         
-        return parent.assign_dock_weakness_assignment(dock_weakness)
+        return parent.assign_dock_weakness((
+            (game.world_list.node_by_identifier(identifier), target)
+            for identifier, target in dock_weakness
+        ))

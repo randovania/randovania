@@ -1,4 +1,3 @@
-import dataclasses
 import json
 from unittest.mock import MagicMock
 
@@ -7,16 +6,18 @@ from frozendict import frozendict
 
 import randovania
 from randovania.exporter import pickup_exporter
+from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel, ConditionalResources
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceCollection
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter import patch_data_factory
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
@@ -24,10 +25,8 @@ from randovania.games.prime2.layout.echoes_cosmetic_patches import EchoesCosmeti
 from randovania.games.prime2.layout.hint_configuration import SkyTempleKeyHintMode, HintConfiguration
 from randovania.generator.item_pool import pickup_creator, pool_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
-from randovania.game_description import default_database
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle
-from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 
@@ -152,12 +151,17 @@ def test_create_elevators_field_no_elevator(empty_patches, echoes_game_descripti
 
 @pytest.mark.parametrize("vanilla_gateway", [False, True])
 def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
-                                                     echoes_game_description, empty_patches):
+                                                     echoes_game_description,
+                                                     echoes_game_patches):
     # Setup
-    elevator_connection = echoes_game_description.get_default_elevator_connection()
+    wl = echoes_game_description.world_list
+    elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
 
     def add(world: str, area: str, node: str, target_world: str, target_area: str):
-        elevator_connection[NodeIdentifier.create(world, area, node)] = AreaIdentifier(target_world, target_area)
+        elevator_connection.append((
+            wl.get_teleporter_node(NodeIdentifier.create(world, area, node)),
+            AreaIdentifier(target_world, target_area),
+        ))
 
     add("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
         "Sanctuary Fortress", "Transport to Agon Wastes")
@@ -168,7 +172,7 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
         add("Temple Grounds", "Sky Temple Gateway", "Teleport to Great Temple - Sky Temple Energy Controller",
             "Great Temple", "Sanctum")
 
-    patches = dataclasses.replace(empty_patches, elevator_connection=elevator_connection)
+    patches = echoes_game_patches.assign_elevators(elevator_connection)
 
     # Run
     result = patch_data_factory._create_elevators_field(patches, echoes_game_description)

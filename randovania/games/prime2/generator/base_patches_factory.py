@@ -1,7 +1,8 @@
 import copy
 from random import Random
+from typing import Iterator
 
-from randovania.game_description.assignment import NodeConfigurationAssignment
+from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
@@ -15,7 +16,7 @@ from randovania.generator.base_patches_factory import (PrimeTrilogyBasePatchesFa
 
 class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
     def configurable_node_assignment(self, configuration: EchoesConfiguration, game: GameDescription,
-                                     rng: Random) -> NodeConfigurationAssignment:
+                                     rng: Random) -> Iterator[NodeConfigurationAssociation]:
         """
         :param configuration:
         :param game:
@@ -30,7 +31,7 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
         without_removed.remove(LayoutTranslatorRequirement.REMOVED)
         random_requirements = {LayoutTranslatorRequirement.RANDOM, LayoutTranslatorRequirement.RANDOM_WITH_REMOVED}
 
-        result = {}
+        result = []
 
         scan_visor = search.find_resource_info_with_long_name(
             game.resource_database.item,
@@ -51,9 +52,9 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
                                          else without_removed)
 
             translator = game.resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_name)
-            result[identifier] = RequirementAnd([
+            result.append((identifier, RequirementAnd([
                 scan_visor_req,
                 ResourceRequirement(translator, 1, False),
-            ])
+            ])))
 
         return result
