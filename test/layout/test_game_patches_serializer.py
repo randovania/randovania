@@ -1,5 +1,4 @@
 import collections
-import copy
 import dataclasses
 import uuid
 
@@ -7,7 +6,7 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description import data_reader, data_writer
+from randovania.game_description import data_writer
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -18,8 +17,6 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
@@ -111,7 +108,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     if request.param.get("elevator"):
         teleporter: NodeIdentifier = request.param.get("elevator")
         patches = patches.assign_elevators([
-            (game.world_list.typed_node_by_identifier(teleporter, TeleporterNode),
+            (game.world_list.get_teleporter_node(teleporter),
              game.starting_location),
         ])
         data["teleporters"][teleporter.as_string] = "Temple Grounds/Landing Site"

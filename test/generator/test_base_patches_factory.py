@@ -29,7 +29,7 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
                                            "Teleport to Great Temple - Sky Temple Energy Controller")
         expected = expected.assign_elevators([
-            (echoes_game_description.world_list.typed_node_by_identifier(node_ident, TeleporterNode),
+            (echoes_game_description.world_list.get_teleporter_node(node_ident),
              AreaIdentifier("Temple Grounds", "Credits")),
         ])
 
@@ -69,7 +69,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
 
     def ni(w: str, a: str, n: str, tw: str, ta: str):
         elevator_connection.append((
-            wl.typed_node_by_identifier(NodeIdentifier.create(w, a, n), TeleporterNode),
+            wl.get_teleporter_node(NodeIdentifier.create(w, a, n)),
             AreaIdentifier(tw, ta),
         ))
 

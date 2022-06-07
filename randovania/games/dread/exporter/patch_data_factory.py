@@ -323,7 +323,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
             ],
             "elevators": [
                 {
-                    "teleporter": self._teleporter_ref_for(self._node_for(source)),
+                    "teleporter": self._teleporter_ref_for(source),
                     "destination": self._start_point_ref_for(self._node_for(target)),
                 }
                 for source, target in self.patches.all_elevator_connections()

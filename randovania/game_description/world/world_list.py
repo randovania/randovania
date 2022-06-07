@@ -229,6 +229,9 @@ class WorldList(NodeProvider):
         assert isinstance(result, t)
         return result
 
+    def get_teleporter_node(self, identifier: NodeIdentifier):
+        return self.typed_node_by_identifier(identifier, TeleporterNode)
+
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self.world_and_area_by_area_identifier(location)[1]
 

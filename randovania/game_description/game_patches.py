@@ -74,14 +74,6 @@ class GamePatches:
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
 
-    def assign_elevators(self, assignments: Iterator[tuple[TeleporterNode, AreaIdentifier]]) -> GamePatches:
-        elevator_connection = copy.copy(self.elevator_connection)
-
-        for identifier, target in assignments:
-            elevator_connection[identifier.identifier] = target
-
-        return dataclasses.replace(self, elevator_connection=elevator_connection)
-
     def assign_node_configuration(self, assignment: Iterator[NodeConfigurationAssociation]) -> "GamePatches":
         new_configurable = copy.copy(self.configurable_nodes)
 
@@ -113,11 +105,20 @@ class GamePatches:
         return dataclasses.replace(self, hints=current)
 
     # Elevators
+    def assign_elevators(self, assignments: Iterator[tuple[TeleporterNode, AreaIdentifier]]) -> GamePatches:
+        elevator_connection = copy.copy(self.elevator_connection)
+
+        for teleporter, target in assignments:
+            elevator_connection[teleporter.identifier] = target
+
+        return dataclasses.replace(self, elevator_connection=elevator_connection)
+
     def get_elevator_connection_for(self, node: TeleporterNode) -> Optional[AreaIdentifier]:
         return self.elevator_connection.get(node.identifier, node.default_connection)
 
-    def all_elevator_connections(self) -> Iterator[tuple[NodeIdentifier, Optional[AreaIdentifier]]]:
-        yield from self.elevator_connection.items()
+    def all_elevator_connections(self) -> Iterator[tuple[TeleporterNode, Optional[AreaIdentifier]]]:
+        for identifier, target in self.elevator_connection.items():
+            yield self.game.world_list.get_teleporter_node(identifier), target
 
     # Dock Connection
     def get_dock_connection_for(self, node: DockNode) -> Optional[NodeIdentifier]:

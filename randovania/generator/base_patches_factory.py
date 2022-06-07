@@ -8,8 +8,6 @@ from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.node_identifier import NodeIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator import elevator_distributor
 from randovania.layout import filtered_database
@@ -132,7 +130,7 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
             elevator_connection[teleporter] = destination
 
         assignment = [
-            (world_list.typed_node_by_identifier(identifier, TeleporterNode), target)
+            (world_list.get_teleporter_node(identifier), target)
             for identifier, target in elevator_connection.items()
         ]
 

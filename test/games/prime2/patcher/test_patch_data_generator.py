@@ -159,7 +159,7 @@ def test_create_elevators_field_elevators_for_a_seed(vanilla_gateway: bool,
 
     def add(world: str, area: str, node: str, target_world: str, target_area: str):
         elevator_connection.append((
-            wl.typed_node_by_identifier(NodeIdentifier.create(world, area, node), TeleporterNode),
+            wl.get_teleporter_node(NodeIdentifier.create(world, area, node)),
             AreaIdentifier(target_world, target_area),
         ))
 

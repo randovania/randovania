@@ -146,12 +146,10 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
 
     elevator_fields = []
 
-    for teleporter, connection in patches.all_elevator_connections():
-        node = world_list.node_by_identifier(teleporter)
-        assert isinstance(node, TeleporterNode)
+    for node, connection in patches.all_elevator_connections():
         elevator_fields.append({
             "instance_id": node.extra["teleporter_instance_id"],
-            "origin_location": _area_identifier_to_json(game.world_list, teleporter.area_location),
+            "origin_location": _area_identifier_to_json(game.world_list, node.identifier.area_location),
             "target_location": _area_identifier_to_json(game.world_list, connection),
             "room_name": _pretty_name_for_elevator(game.game, world_list, node, connection)
         })

@@ -86,8 +86,8 @@ def serialize_single(player_index: int, num_players: int, patches: GamePatches) 
             for resource_info, quantity in patches.starting_items.as_resource_gain()
         },
         "teleporters": {
-            teleporter.as_string: connection.as_string
-            for teleporter, connection in patches.all_elevator_connections()
+            source.identifier.as_string: connection.as_string
+            for source, connection in patches.all_elevator_connections()
         },
         "dock_weakness": {
             dock.identifier.as_string: {
@@ -162,7 +162,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
 
     # Elevators
     elevator_connection = [
-        (world_list.typed_node_by_identifier(NodeIdentifier.from_string(source_name), TeleporterNode),
+        (world_list.get_teleporter_node(NodeIdentifier.from_string(source_name)),
          AreaIdentifier.from_string(target_name))
         for source_name, target_name in game_modifications["teleporters"].items()
     ]
