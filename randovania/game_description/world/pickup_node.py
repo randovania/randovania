@@ -19,7 +19,7 @@ class PickupNode(ResourceNode):
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         if context.current_resources.add_self_as_requirement_to_resources:
-            return ResourceRequirement(self.resource(context), 1, False)
+            return ResourceRequirement.simple(self.resource(context))
         else:
             return Requirement.trivial()
 

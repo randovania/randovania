@@ -67,7 +67,7 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
     sum_damage = sum(req.damage(state.resources, state.resource_database) for req in damage)
     if state.energy < sum_damage:
         tank_count = (sum_damage - state.energy) // state.game_data.energy_per_tank
-        yield items + [ResourceRequirement(state.resource_database.energy_tank, tank_count + 1, False)]
+        yield items + [ResourceRequirement.create(state.resource_database.energy_tank, tank_count + 1, False)]
         # FIXME: get the required items for reductions (aka suits)
     else:
         yield items

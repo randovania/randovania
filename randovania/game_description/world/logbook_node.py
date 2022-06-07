@@ -59,9 +59,9 @@ class LogbookNode(ResourceNode):
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         items = []
         if self.scan_visor is not None:
-            items.append(ResourceRequirement(self.scan_visor, 1, False))
+            items.append(ResourceRequirement.simple(self.scan_visor))
         if self.required_translator is not None:
-            items.append(ResourceRequirement(self.required_translator, 1, False))
+            items.append(ResourceRequirement.simple(self.required_translator))
 
         return RequirementAnd(items)
 

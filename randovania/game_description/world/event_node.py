@@ -16,7 +16,7 @@ class EventNode(ResourceNode):
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         if context.current_resources.add_self_as_requirement_to_resources:
-            return ResourceRequirement(self.event, 1, False)
+            return ResourceRequirement.simple(self.event)
         else:
             return Requirement.trivial()
 
