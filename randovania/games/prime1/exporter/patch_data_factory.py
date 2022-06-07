@@ -209,6 +209,13 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         db = self.game
         namer = PrimeHintNamer(self.description.all_patches, self.players_config)
 
+        ammo_with_mains = [ammo.name for ammo, state in self.configuration.ammo_configuration.items_state.items()
+                           if state.requires_major_item]
+        if ammo_with_mains:
+            raise ValueError("Preset has {} with required mains enabled. This is currently not supported.".format(
+                " and ".join(ammo_with_mains)
+            ))
+
         scan_visor = self.game.resource_database.get_item_by_name("Scan Visor")
         useless_target = PickupTarget(pickup_creator.create_nothing_pickup(db.resource_database),
                                       self.players_config.player_index)
