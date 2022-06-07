@@ -77,10 +77,16 @@ class ResourceDatabase:
             return self.get_item(self.multiworld_magic_item_index)
 
     def get_damage_reduction(self, resource: SimpleResourceInfo, current_resources: ResourceCollection):
+        cached_result = current_resources.get_damage_reduction_cache(resource)
+        if cached_result is not None:
+            return cached_result
+
         multiplier = self.base_damage_reduction(self, current_resources)
 
         for reduction in self.damage_reductions.get(resource, []):
             if reduction.inventory_item is None or current_resources[reduction.inventory_item] > 0:
                 multiplier *= reduction.damage_multiplier
+
+        current_resources.add_damage_reduction_cache(resource, multiplier)
 
         return multiplier

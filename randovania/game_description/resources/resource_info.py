@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import typing
 from typing import Union, Tuple, Iterator, Optional
 
@@ -22,6 +23,7 @@ ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, 
 class ResourceCollection:
     _resources: dict[ResourceInfo, int]
     add_self_as_requirement_to_resources: bool = False
+    _damage_reduction_cache: Optional[dict[ResourceInfo, float]] = None
 
     def __init__(self):
         self._resources = {}
@@ -61,6 +63,7 @@ class ResourceCollection:
         return resource in self._resources
 
     def set_resource(self, resource: ResourceInfo, quantity: int):
+        self._damage_reduction_cache = None
         self._resources[resource] = quantity
 
     @classmethod
@@ -76,6 +79,7 @@ class ResourceCollection:
         return result
 
     def add_resource_gain(self, resource_gain: ResourceGain):
+        self._damage_reduction_cache = None
         for resource, quantity in resource_gain:
             self._resources[resource] = self._resources.get(resource, 0) + quantity
 
@@ -90,3 +94,13 @@ class ResourceCollection:
         result._resources.update(self._resources)
         result.add_self_as_requirement_to_resources = self.add_self_as_requirement_to_resources
         return result
+
+    def get_damage_reduction_cache(self, resource: ResourceInfo) -> Optional[float]:
+        if self._damage_reduction_cache is not None:
+            return self._damage_reduction_cache.get(resource)
+        return None
+
+    def add_damage_reduction_cache(self, resource: ResourceInfo, multiplier: float):
+        if self._damage_reduction_cache is None:
+            self._damage_reduction_cache = {}
+        self._damage_reduction_cache[resource] = multiplier
