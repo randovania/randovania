@@ -465,7 +465,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.other_node_connection_combo.clear()
 
         for node in sorted(self.current_area.nodes, key=lambda x: x.name):
-            if node is current_node:
+            if node is current_node or node.is_derived_node:
                 continue
 
             if not self.edit_mode and node not in self.current_area.connections[current_node]:
