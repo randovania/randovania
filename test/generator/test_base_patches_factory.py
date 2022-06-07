@@ -4,12 +4,12 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator import base_patches_factory
@@ -29,7 +29,8 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
                                            "Teleport to Great Temple - Sky Temple Energy Controller")
         expected = expected.assign_elevators([
-            (node_ident, AreaIdentifier("Temple Grounds", "Credits")),
+            (echoes_game_description.world_list.typed_node_by_identifier(node_ident, TeleporterNode),
+             AreaIdentifier("Temple Grounds", "Credits")),
         ])
 
     config = default_echoes_configuration
@@ -63,10 +64,14 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
         ),
     )
 
-    elevator_connection = []
+    wl = echoes_game_description.world_list
+    elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
 
     def ni(w: str, a: str, n: str, tw: str, ta: str):
-        elevator_connection.append((NodeIdentifier.create(w, a, n), AreaIdentifier(tw, ta)))
+        elevator_connection.append((
+            wl.typed_node_by_identifier(NodeIdentifier.create(w, a, n), TeleporterNode),
+            AreaIdentifier(tw, ta),
+        ))
 
     ni("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
        "Torvus Bog", "Transport to Temple Grounds")

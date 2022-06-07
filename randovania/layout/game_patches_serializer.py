@@ -17,6 +17,7 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout import filtered_database
@@ -160,10 +161,11 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     })
 
     # Elevators
-    elevator_connection: ElevatorConnection = {
-        NodeIdentifier.from_string(source_name): AreaIdentifier.from_string(target_name)
+    elevator_connection = [
+        (world_list.typed_node_by_identifier(NodeIdentifier.from_string(source_name), TeleporterNode),
+         AreaIdentifier.from_string(target_name))
         for source_name, target_name in game_modifications["teleporters"].items()
-    }
+    ]
 
     # Dock Weakness
     def get_dock(ni: NodeIdentifier):
@@ -228,10 +230,10 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
 
     patches = GamePatches.create_from_game(game, player_index, configuration)
     patches = patches.assign_dock_weakness(dock_weakness)
+    patches = patches.assign_elevators(elevator_connection)
     return dataclasses.replace(
         patches,
         pickup_assignment=pickup_assignment,  # PickupAssignment
-        elevator_connection=elevator_connection,  # ElevatorConnection
         configurable_nodes=configurable_nodes,
         starting_items=starting_items,  # ResourceGainTuple
         starting_location=starting_location,  # AreaIdentifier

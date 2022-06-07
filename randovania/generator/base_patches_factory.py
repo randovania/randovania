@@ -8,6 +8,8 @@ from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator import elevator_distributor
 from randovania.layout import filtered_database
@@ -101,15 +103,14 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
                                             patches: GamePatches) -> GamePatches:
         elevators = configuration.elevators
 
+        world_list = filtered_database.game_description_for_layout(configuration).world_list
         elevator_connection = {}
 
         if not elevators.is_vanilla:
             if rng is None:
                 raise MissingRng("Elevator")
 
-            world_list = filtered_database.game_description_for_layout(configuration).world_list
-            elevator_db = elevator_distributor.create_elevator_database(
-                world_list, elevators.editable_teleporters)
+            elevator_db = elevator_distributor.create_elevator_database(world_list, elevators.editable_teleporters)
 
             if elevators.mode in {TeleporterShuffleMode.TWO_WAY_RANDOMIZED, TeleporterShuffleMode.TWO_WAY_UNCHECKED}:
                 connections = elevator_distributor.two_way_elevator_connections(
@@ -130,8 +131,9 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
         for teleporter, destination in elevators.static_teleporters.items():
             elevator_connection[teleporter] = destination
 
-        assignment = []
-        for it in elevator_connection.items():
-            assignment.append(it)
+        assignment = [
+            (world_list.typed_node_by_identifier(identifier, TeleporterNode), target)
+            for identifier, target in elevator_connection.items()
+        ]
 
         return patches.assign_elevators(assignment)

@@ -1,5 +1,6 @@
 import copy
-from typing import List, Dict, Iterator, Tuple, Iterable, Optional
+import typing
+from typing import List, Dict, Iterator, Tuple, Iterable, Optional, Type
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
@@ -15,6 +16,8 @@ from randovania.game_description.world.node_provider import NodeProvider
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
+
+NodeType = typing.TypeVar("NodeType", bound=Node)
 
 
 class WorldList(NodeProvider):
@@ -220,6 +223,11 @@ class WorldList(NodeProvider):
             return node
 
         raise ValueError(f"No node with name {identifier.node_name} found in {area}")
+
+    def typed_node_by_identifier(self, i: NodeIdentifier, t: Type[NodeType]) -> NodeType:
+        result = self.node_by_identifier(i)
+        assert isinstance(result, t)
+        return result
 
     def area_by_area_location(self, location: AreaIdentifier) -> Area:
         return self.world_and_area_by_area_identifier(location)[1]

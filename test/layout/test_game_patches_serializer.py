@@ -18,6 +18,7 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
@@ -108,9 +109,10 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
         data["starting_items"][item_name] = 1
 
     if request.param.get("elevator"):
-        teleporter = request.param.get("elevator")
+        teleporter: NodeIdentifier = request.param.get("elevator")
         patches = patches.assign_elevators([
-            (teleporter, game.starting_location),
+            (game.world_list.typed_node_by_identifier(teleporter, TeleporterNode),
+             game.starting_location),
         ])
         data["teleporters"][teleporter.as_string] = "Temple Grounds/Landing Site"
 

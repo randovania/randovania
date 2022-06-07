@@ -748,7 +748,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             state.node = self._actions[-1]
 
         state.patches = state.patches.assign_elevators(
-            (teleporter, combo.currentData())
+            (state.world_list.typed_node_by_identifier(teleporter, TeleporterNode), combo.currentData())
             for teleporter, combo in self._elevator_id_to_combo.items()
         )
 

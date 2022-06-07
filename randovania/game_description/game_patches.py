@@ -74,11 +74,11 @@ class GamePatches:
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
 
-    def assign_elevators(self, assignments: Iterator[tuple[NodeIdentifier, AreaIdentifier]]) -> GamePatches:
+    def assign_elevators(self, assignments: Iterator[tuple[TeleporterNode, AreaIdentifier]]) -> GamePatches:
         elevator_connection = copy.copy(self.elevator_connection)
 
         for identifier, target in assignments:
-            elevator_connection[identifier] = target
+            elevator_connection[identifier.identifier] = target
 
         return dataclasses.replace(self, elevator_connection=elevator_connection)
 
