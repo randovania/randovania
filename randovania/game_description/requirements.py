@@ -63,13 +63,15 @@ class Requirement:
 
 
 class RequirementArrayBase(Requirement):
+    __slots__ = ("items", "comment", "_cached_hash")
     items: Tuple[Requirement, ...]
     comment: Optional[str]
-    _cached_hash = None
+    _cached_hash: Optional[int]
 
     def __init__(self, items: Iterable[Requirement], comment: Optional[str] = None):
         self.items = tuple(items)
         self.comment = comment
+        self._cached_hash = None
 
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase) -> int:
         raise NotImplementedError()
@@ -177,10 +179,10 @@ class RequirementOr(RequirementArrayBase):
             return MAX_DAMAGE
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
-        return any(
-            item.satisfied(current_resources, current_energy, database)
-            for item in self.items
-        )
+        for item in self.items:
+            if item.satisfied(current_resources, current_energy, database):
+                return True
+        return False
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         new_items = _expand_items(self.items, RequirementOr, Requirement.impossible(), keep_comments)
@@ -270,7 +272,7 @@ def _expand_items(items: Tuple[Requirement, ...],
     return expanded
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class ResourceRequirement(Requirement):
     resource: ResourceInfo
     amount: int
@@ -305,7 +307,7 @@ class ResourceRequirement(Requirement):
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """Checks if a given resources dict satisfies this requirement"""
 
-        if self.is_damage:
+        if self.resource.resource_type == ResourceType.DAMAGE:
             assert not self.negate, "Damage requirements shouldn't have the negate flag"
 
             return current_energy > self.damage(current_resources, database)
@@ -373,6 +375,7 @@ class ResourceRequirement(Requirement):
 
 
 class RequirementTemplate(Requirement):
+    __slots__ = ("template_name",)
     template_name: str
 
     def __init__(self, template_name: str):
