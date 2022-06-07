@@ -31,7 +31,7 @@ class RequirementSet:
         self.alternatives = frozenset(
             requirement
             for requirement in input_set
-            if not any(other.items < requirement.items for other in input_set)
+            if not any(other.is_subset_of(requirement) for other in input_set)
         )
 
     def __deepcopy__(self, memodict):
@@ -134,7 +134,7 @@ class RequirementSet:
         return RequirementOr(
             RequirementAnd(
                 individual.patch_requirements(resources, 1, database)
-                for individual in alternative.items
+                for individual in alternative.values()
             )
             for alternative in self.alternatives
         ).as_set(database)

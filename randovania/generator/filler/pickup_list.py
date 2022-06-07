@@ -42,7 +42,7 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
     items = []
     damage = []
 
-    for individual in alternative.items:
+    for individual in alternative.values():
         if individual.negate:
             possible = False
             break

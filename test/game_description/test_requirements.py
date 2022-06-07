@@ -561,7 +561,7 @@ def test_requirement_list_constructor(echoes_resource_database):
         ResourceRequirement.create(item("Missile"), 5, False),
         ResourceRequirement.simple(item("Seeker Launcher")),
     ])
-    extract = [(req.resource.long_name, req.amount) for req in req_list.items]
+    extract = [(req.resource.long_name, req.amount) for req in req_list.values()]
 
     assert sorted(extract) == [
         ("Dark Visor", 1),
@@ -589,7 +589,7 @@ def test_requirement_set_constructor(echoes_resource_database):
         ]),
     ])
     extract = [
-        sorted((req.resource.long_name, req.amount) for req in req_list.items)
+        sorted((req.resource.long_name, req.amount) for req in req_list.values())
         for req_list in req_set.alternatives
     ]
 
