@@ -11,13 +11,14 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
-ElevatorConnection = dict[NodeIdentifier, Optional[AreaIdentifier]]
+ElevatorConnection = dict[NodeIdentifier, AreaIdentifier]
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.world.dock import DockWeakness
     from randovania.game_description.assignment import (
-        PickupTarget, PickupTargetAssociation, NodeConfigurationAssociation, DockWeaknessAssociation
+        PickupTarget, PickupTargetAssociation, TeleporterAssociation,
+        NodeConfigurationAssociation, DockWeaknessAssociation
     )
     from randovania.game_description.hint import Hint
     from randovania.game_description.requirements.base import Requirement
@@ -105,7 +106,7 @@ class GamePatches:
         return dataclasses.replace(self, hints=current)
 
     # Elevators
-    def assign_elevators(self, assignments: Iterator[tuple[TeleporterNode, AreaIdentifier]]) -> GamePatches:
+    def assign_elevators(self, assignments: Iterator[TeleporterAssociation]) -> GamePatches:
         elevator_connection = copy.copy(self.elevator_connection)
 
         for teleporter, target in assignments:
@@ -116,7 +117,7 @@ class GamePatches:
     def get_elevator_connection_for(self, node: TeleporterNode) -> Optional[AreaIdentifier]:
         return self.elevator_connection.get(node.identifier, node.default_connection)
 
-    def all_elevator_connections(self) -> Iterator[tuple[TeleporterNode, Optional[AreaIdentifier]]]:
+    def all_elevator_connections(self) -> Iterator[TeleporterAssociation]:
         for identifier, target in self.elevator_connection.items():
             yield self.game.world_list.get_teleporter_node(identifier), target
 
