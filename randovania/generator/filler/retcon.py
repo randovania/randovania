@@ -401,7 +401,7 @@ def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: 
     else:
         hint_string = ""
 
-    pickup_node = find_node_with_resource(pickup_index, node_context, world_list.iterate_nodes())
+    pickup_node = world_list.node_from_pickup_index(pickup_index)
     return "{4}{0} at {3}{1}{2}".format(
         action.name,
         world_list.node_name(pickup_node, with_world=True, distinguish_dark_aether=True),

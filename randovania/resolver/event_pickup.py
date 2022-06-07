@@ -28,10 +28,10 @@ class EventPickupNode(ResourceNode):
         return True
 
     def resource(self, context: NodeContext) -> ResourceInfo:
-        return self.pickup_node.pickup_index
+        return self.pickup_node.resource(context)
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        return ResourceRequirement(self.pickup_node.pickup_index, 1, False)
+        return ResourceRequirement(self.pickup_node.resource(context), 1, False)
 
     def can_collect(self, context: NodeContext) -> bool:
         # FIXME

@@ -67,3 +67,4 @@ def find_node_with_resource(resource: ResourceInfo,
     for node in haystack:
         if isinstance(node, ResourceNode) and node.resource(context) == resource:
             return node
+    raise ValueError(f"Could not find a node with resource {resource}")
