@@ -9,6 +9,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.world.dock import DockRandoParams, DockWeakness
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node import NodeContext
@@ -57,7 +58,7 @@ class DockRandoLogic(Logic):
 
     @property
     def victory_condition(self) -> Requirement:
-        return ResourceRequirement(self.dock.identifier, 1, False)
+        return ResourceRequirement(NodeResourceInfo.from_node(self.dock, None), 1, False)
 
 
 TO_SHUFFLE_PROPORTION = 0.6
@@ -81,7 +82,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tup
 
         if patches.configuration.dock_rando.mode == DockRandoMode.ONE_WAY:
             player_docks.extend((player, node) for node, _ in patches.all_dock_weaknesses())
-        
+
         if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
             game = results.game
             ctx = NodeContext(

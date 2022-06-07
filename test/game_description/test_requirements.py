@@ -14,6 +14,7 @@ from randovania.game_description.requirements.requirement_and import Requirement
 from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
@@ -580,13 +581,16 @@ def test_requirement_set_constructor(echoes_resource_database):
     ]
 
 
-def test_node_identifier_as_requirement():
-    nic = NodeIdentifier.create
-    req = ResourceRequirement.simple(nic("W", "A", "N"))
+def test_node_resource_info_as_requirement(blank_game_description):
+    node = blank_game_description.world_list.all_nodes[0]
+    context = None
+
+    nri = NodeResourceInfo.from_node
+    req = ResourceRequirement.simple(nri(node, context))
     db = typing.cast(ResourceDatabase, None)
 
     assert not req.satisfied(_empty_col(), 0, db)
-    assert req.satisfied(_col_for(nic("W", "A", "N")), 0, db)
+    assert req.satisfied(_col_for(nri(node, context)), 0, db)
 
 
 def test_set_as_str_impossible():
@@ -635,9 +639,12 @@ def test_set_hash(echoes_resource_database):
     assert hash_a == req_set_a._cached_hash
 
 
-def test_sort_resource_requirement():
+def test_sort_resource_requirement(blank_game_description):
+    node = blank_game_description.world_list.all_nodes[0]
+    assert node is not None
+
     resources = [
-        NodeIdentifier.create("World", "Area", "Node"),
+        NodeResourceInfo.from_node(node, None),
         PickupIndex(10),
         _make_resource("Resource"),
         TrickResourceInfo("Trick", "Trick", "Long Description"),
