@@ -11,7 +11,6 @@ class ResourceType(int, enum.Enum):
     DAMAGE = enum.auto()
     VERSION = enum.auto()
     MISC = enum.auto()
-    PICKUP_INDEX = enum.auto()
     NODE_IDENTIFIER = enum.auto()
 
     @classmethod
@@ -23,7 +22,6 @@ class ResourceType(int, enum.Enum):
             ResourceType.DAMAGE: "damage",
             ResourceType.VERSION: "versions",
             ResourceType.MISC: "misc",
-            ResourceType.PICKUP_INDEX: "pickup_index",
             ResourceType.NODE_IDENTIFIER: "node_identifier",
         }
 

@@ -6,16 +6,18 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.world.node import NodeContext
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.resolver import state
 from randovania.resolver.state import StateGameData
 
 
 @pytest.fixture(name="state_game_data")
-def _state_game_data() -> StateGameData:
+def _state_game_data(empty_patches) -> StateGameData:
     return StateGameData(
         Mock(energy_tank=ItemResourceInfo("Energy Tank", "EnergyTank", 14, None),
              item_percentage=ItemResourceInfo("Item Percentage", "Percentage", 255, None)),
-        None,
+        empty_patches.game.world_list,
         100,
         99
     )
@@ -23,10 +25,19 @@ def _state_game_data() -> StateGameData:
 
 def test_collected_pickup_indices(state_game_data, empty_patches):
     # Setup
+    pickup_nodes = [node for node in empty_patches.game.world_list.all_nodes
+                    if isinstance(node, PickupNode)]
+
+    context = NodeContext(
+        empty_patches,
+        ResourceCollection(),
+        empty_patches.game.resource_database,
+        empty_patches.game.world_list,
+    )
     resources = ResourceCollection.from_dict({
-        ItemResourceInfo("A", "A", 50, None): 5,
-        PickupIndex(1): 1,
-        PickupIndex(15): 1
+        ItemResourceInfo("A", "A", 50): 5,
+        pickup_nodes[0].resource(context): 1,
+        pickup_nodes[1].resource(context): 1
     })
     s = state.State(resources, (), 99, None, empty_patches, None, state_game_data)
 
@@ -34,7 +45,7 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
     indices = list(s.collected_pickup_indices)
 
     # Assert
-    assert indices == [PickupIndex(1), PickupIndex(15)]
+    assert indices == [pickup_nodes[0].pickup_index, pickup_nodes[1].pickup_index]
 
 
 def test_add_pickup_to_state(state_game_data, empty_patches, generic_item_category):

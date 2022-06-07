@@ -5,6 +5,8 @@ from frozendict import frozendict
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world.area import Area
@@ -47,8 +49,8 @@ def test_connections_from_dock_blast_shield(empty_patches):
 
     context = NodeContext(
         patches=empty_patches,
-        current_resources={},
-        database=None,
+        current_resources=ResourceCollection(),
+        database=empty_patches.game.resource_database,
         node_provider=world_list,
     )
 
@@ -57,12 +59,14 @@ def test_connections_from_dock_blast_shield(empty_patches):
     result_2 = list(node_2.connections_from(context))
 
     # Assert
+    simple = ResourceRequirement.simple
+
     assert result_1 == [
-        (node_2, RequirementAnd([req_1, ResourceRequirement.simple(node_2_identifier)])),
+        (node_2, RequirementAnd([req_1, simple(NodeResourceInfo.from_node(node_2, context))])),
         (node_1_lock, RequirementAnd([trivial, req_2])),
     ]
     assert result_2 == [
-        (node_1, ResourceRequirement.simple(node_2_identifier)),
+        (node_1, simple(NodeResourceInfo.from_node(node_2, context))),
         (node_2_lock, req_2),
     ]
 

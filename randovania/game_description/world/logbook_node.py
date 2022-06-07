@@ -6,9 +6,9 @@ from randovania.game_description.requirements.resource_requirement import Resour
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 
 
@@ -65,8 +65,8 @@ class LogbookNode(ResourceNode):
 
         return RequirementAnd(items)
 
-    def resource(self, context: NodeContext) -> NodeIdentifier:
-        return context.node_provider.identifier_for_node(self)
+    def resource(self, context: NodeContext) -> NodeResourceInfo:
+        return NodeResourceInfo.from_node(self, context)
 
     def can_collect(self, context: NodeContext) -> bool:
         """
