@@ -26,7 +26,7 @@ class PlayerShipNode(ResourceNode):
     item_to_summon: ItemResourceInfo
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        return RequirementAnd([self.is_unlocked, ResourceRequirement(self.resource(context), 1, False)])
+        return RequirementAnd([self.is_unlocked, ResourceRequirement.simple(self.resource(context))])
 
     def resource(self, context: NodeContext) -> NodeResourceInfo:
         return NodeResourceInfo.from_node(self, context)

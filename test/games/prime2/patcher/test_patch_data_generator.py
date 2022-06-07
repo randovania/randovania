@@ -298,11 +298,11 @@ def test_create_translator_gates_field(echoes_game_description):
 
     def make_req(item_id: int):
         return RequirementAnd([
-            ResourceRequirement(
-                ItemResourceInfo("Scan Visor", "Scan", 1, frozendict({"item_id": 9})), 1, False,
+            ResourceRequirement.simple(
+                ItemResourceInfo("Scan Visor", "Scan", 1, frozendict({"item_id": 9})),
             ),
-            ResourceRequirement(
-                ItemResourceInfo("Other", "Other", 1, frozendict({"item_id": item_id})), 1, False,
+            ResourceRequirement.simple(
+                ItemResourceInfo("Other", "Other", 1, frozendict({"item_id": item_id})),
             ),
         ])
 

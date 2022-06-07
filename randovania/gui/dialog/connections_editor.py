@@ -196,7 +196,7 @@ class ResourceRequirementEditor:
         else:
             negate = False
 
-        return ResourceRequirement(self.resource_name_combo.currentData(), quantity, negate)
+        return ResourceRequirement.create(self.resource_name_combo.currentData(), quantity, negate)
 
 
 class ArrayRequirementEditor:

@@ -37,7 +37,7 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             game.resource_database.item,
             "Scan Visor"
         )
-        scan_visor_req = ResourceRequirement(scan_visor, 1, False)
+        scan_visor_req = ResourceRequirement.simple(scan_visor)
 
         for node in game.world_list.iterate_nodes():
             if not isinstance(node, ConfigurableNode):
@@ -54,7 +54,7 @@ class EchoesBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             translator = game.resource_database.get_by_type_and_index(ResourceType.ITEM, requirement.item_name)
             result.append((identifier, RequirementAnd([
                 scan_visor_req,
-                ResourceRequirement(translator, 1, False),
+                ResourceRequirement.simple(translator),
             ])))
 
         return result

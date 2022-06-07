@@ -172,8 +172,8 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
 
     assert associated_requirements == [
         RequirementAnd([
-            ResourceRequirement(scan_visor, 1, False),
-            ResourceRequirement(emerald, 1, False),
+            ResourceRequirement.simple(scan_visor),
+            ResourceRequirement.simple(emerald),
         ])
     ] * len(translator_configuration.translator_requirement)
 
@@ -193,12 +193,12 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
 
     requirements = [
         RequirementAnd([
-            ResourceRequirement(scan_visor, 1, False),
-            ResourceRequirement(emerald, 1, False),
+            ResourceRequirement.simple(scan_visor),
+            ResourceRequirement.simple(emerald),
         ]),
         RequirementAnd([
-            ResourceRequirement(scan_visor, 1, False),
-            ResourceRequirement(violet, 1, False),
+            ResourceRequirement.simple(scan_visor),
+            ResourceRequirement.simple(violet),
         ])
     ]
     requirements = requirements * len(translator_configuration.translator_requirement)
