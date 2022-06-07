@@ -645,7 +645,6 @@ def test_sort_resource_requirement(blank_game_description):
 
     resources = [
         NodeResourceInfo.from_node(node, None),
-        PickupIndex(10),
         _make_resource("Resource"),
         TrickResourceInfo("Trick", "Trick", "Long Description"),
         ItemResourceInfo("Item", "Item", 1),

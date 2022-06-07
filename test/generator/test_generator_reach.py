@@ -151,11 +151,7 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     #             if isinstance(node, ResourceNode) else "",
     #             game.world_list.node_name(node, with_world=True)))
 
-    collected_indices = {
-        resource
-        for resource, quantity in reach.state.resources.as_resource_gain()
-        if quantity > 0 and isinstance(resource, PickupIndex)
-    }
+    collected_indices = set(reach.state.collected_pickup_indices)
     collected_events = {
         resource
         for resource, quantity in reach.state.resources.as_resource_gain()

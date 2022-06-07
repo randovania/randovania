@@ -6,15 +6,13 @@ from typing import Union, Tuple, Iterator, Optional
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
-ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo,
-                     PickupIndex, NodeResourceInfo]
+ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo, NodeResourceInfo]
 ResourceQuantity = Tuple[ResourceInfo, int]
 ResourceGainTuple = Tuple[ResourceQuantity, ...]
 ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
