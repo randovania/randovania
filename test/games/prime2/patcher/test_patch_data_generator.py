@@ -44,7 +44,7 @@ def test_create_starting_popup_empty(default_echoes_configuration, echoes_resour
 
 
 def test_create_starting_popup_items(default_echoes_configuration, echoes_resource_database):
-    starting_items = ResourceCollection.from_dict({
+    starting_items = ResourceCollection.from_dict(echoes_resource_database, {
         echoes_resource_database.get_item_by_name("Missile"): 15,
         echoes_resource_database.energy_tank: 3,
         echoes_resource_database.get_item_by_name("Dark Beam"): 1,

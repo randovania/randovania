@@ -174,6 +174,7 @@ class Bootstrap:
         if not game.mutable:
             raise ValueError("Running logic_bootstrap with non-mutable game")
 
+        game.world_list.ensure_has_node_cache()
         starting_state = self.calculate_starting_state(game, patches, configuration)
 
         if configuration.trick_level.minimal_logic:

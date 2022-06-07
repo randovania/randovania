@@ -739,7 +739,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             resources = self.layers_editor.selected_tricks()
             if resources:
                 game = game.get_mutable()
-                game.patch_requirements(ResourceCollection.from_resource_gain(resources.items()), 1.0)
+                game.patch_requirements(
+                    ResourceCollection.from_resource_gain(game.resource_database, resources.items()),
+                    1.0,
+                )
 
         self.update_game(game)
 

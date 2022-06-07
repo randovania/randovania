@@ -15,8 +15,7 @@ from randovania.resolver.state import StateGameData
 @pytest.fixture(name="state_game_data")
 def _state_game_data(empty_patches) -> StateGameData:
     return StateGameData(
-        Mock(energy_tank=ItemResourceInfo("Energy Tank", "EnergyTank", 14, None),
-             item_percentage=ItemResourceInfo("Item Percentage", "Percentage", 255, None)),
+        empty_patches.game.resource_database,
         empty_patches.game.world_list,
         100,
         99
@@ -25,6 +24,8 @@ def _state_game_data(empty_patches) -> StateGameData:
 
 def test_collected_pickup_indices(state_game_data, empty_patches):
     # Setup
+    db = state_game_data.resource_database
+    starting = state_game_data.world_list.resolve_teleporter_connection(empty_patches.game.starting_location)
     pickup_nodes = [node for node in empty_patches.game.world_list.all_nodes
                     if isinstance(node, PickupNode)]
 
@@ -34,12 +35,12 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
         empty_patches.game.resource_database,
         empty_patches.game.world_list,
     )
-    resources = ResourceCollection.from_dict({
-        ItemResourceInfo("A", "A", 50): 5,
+    resources = ResourceCollection.from_dict(db, {
+        db.item[0]: 5,
         pickup_nodes[0].resource(context): 1,
         pickup_nodes[1].resource(context): 1
     })
-    s = state.State(resources, (), 99, None, empty_patches, None, state_game_data)
+    s = state.State(resources, (), 99, starting, empty_patches, None, state_game_data)
 
     # Run
     indices = list(s.collected_pickup_indices)
@@ -50,10 +51,12 @@ def test_collected_pickup_indices(state_game_data, empty_patches):
 
 def test_add_pickup_to_state(state_game_data, empty_patches, generic_item_category):
     # Starting State
-    s = state.State(ResourceCollection(), (), 99, None, empty_patches, None, state_game_data)
+    db = state_game_data.resource_database
+    starting_node = state_game_data.world_list.resolve_teleporter_connection(empty_patches.game.starting_location)
+    s = state.State(ResourceCollection(), (), 99, starting_node, empty_patches, None, state_game_data)
 
-    resource_a = ItemResourceInfo("A", "A", 10)
-    resource_b = ItemResourceInfo("B", "B", 10)
+    resource_a = db.item[0]
+    resource_b = db.item[1]
     p = PickupEntry("B", 2, generic_item_category, generic_item_category,
                     progression=(
                         (resource_a, 1),
@@ -65,7 +68,7 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_item_catego
     state.add_pickup_to_state(s, p)
 
     # Assert
-    assert s.resources == ResourceCollection.from_dict({
+    assert s.resources == ResourceCollection.from_dict(db, {
         resource_a: 1,
         resource_b: 1,
     })
@@ -73,17 +76,17 @@ def test_add_pickup_to_state(state_game_data, empty_patches, generic_item_catego
 
 def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic_item_category):
     # Setup
+    db = state_game_data.resource_database
+    starting_node = state_game_data.world_list.resolve_teleporter_connection(empty_patches.game.starting_location)
+    starting = state.State(ResourceCollection(), (), 99, starting_node, empty_patches, None, state_game_data)
 
-    starting = state.State(ResourceCollection(), (), 99, None, empty_patches, None, state_game_data)
-
-    resource_a = ItemResourceInfo("A", "A", 10)
-    resource_b = ItemResourceInfo("B", "B", 10)
+    resource_a = db.get_item("Ammo")
+    resource_b = db.item[0]
     p = PickupEntry("A", 2, generic_item_category, generic_item_category,
                     progression=(
                         (resource_a, 5),
                     ),
                     extra_resources=(
-                        (state_game_data.resource_database.item_percentage, 1),
                     ),
                     unlocks_resource=True,
                     resource_lock=ResourceLock(resource_a, resource_a, resource_b),
@@ -93,15 +96,16 @@ def test_assign_pickup_to_starting_items(empty_patches, state_game_data, generic
     final = starting.assign_pickup_to_starting_items(p)
 
     # Assert
-    assert final.patches.starting_items == ResourceCollection.from_dict({resource_a: 5, resource_b: 0})
-    assert final.resources == ResourceCollection.from_dict({resource_a: 5, resource_b: 0})
+    assert final.patches.starting_items == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})
+    assert final.resources == ResourceCollection.from_dict(db, {resource_a: 5, resource_b: 0})
 
 
 def test_state_with_pickup(state_game_data, empty_patches, generic_item_category):
     # Setup
+    db = state_game_data.resource_database
     starting = state.State(ResourceCollection(), (), 99, None, empty_patches, None, state_game_data)
 
-    resource_a = ItemResourceInfo("A", "A", 10, None)
+    resource_a = db.item[0]
     p = PickupEntry("A", 2, generic_item_category, generic_item_category,
                     progression=(
                         (resource_a, 1),
@@ -112,4 +116,4 @@ def test_state_with_pickup(state_game_data, empty_patches, generic_item_category
 
     # Assert
     assert final.previous_state is starting
-    assert final.resources == ResourceCollection.from_dict({resource_a: 1})
+    assert final.resources == ResourceCollection.from_dict(db, {resource_a: 1})

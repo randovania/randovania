@@ -5,17 +5,35 @@ import pytest
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import ResourceLock
 from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 
 
+def wrap(db: ResourceDatabase, data):
+    if isinstance(data, dict):
+        return {
+            db.get_item(key): value
+            for key, value in data.items()
+        }
+    else:
+        return [
+            (db.get_item(key), value)
+            for key, value in data
+        ]
+
+
 @pytest.mark.parametrize(["a", "b", "result"], [
-    ({"a": 5}, {"b": 6}, {"a": 5, "b": 6}),
-    ({"a": 5}, {"a": 6}, {"a": 11}),
+    ({"Ammo": 5}, {"Health": 6}, {"Ammo": 5, "Health": 6}),
+    ({"Ammo": 5}, {"Ammo": 6}, {"Ammo": 11}),
 ])
-def test_add_resources_into_another(a, b, result):
-    ac = ResourceCollection.from_dict(a)
-    bc = ResourceCollection.from_dict(b)
+def test_add_resources_into_another(blank_resource_db, a, b, result):
+    a = wrap(blank_resource_db, a)
+    b = wrap(blank_resource_db, b)
+    result = wrap(blank_resource_db, result)
+
+    ac = ResourceCollection.from_dict(blank_resource_db, a)
+    bc = ResourceCollection.from_dict(blank_resource_db, b)
 
     ac.add_resource_gain(bc.as_resource_gain())
 
@@ -31,10 +49,10 @@ def test_pickup_index_has():
     assert PickupIndex(1) in d
 
 
-def test_add_resource_gain_to_current_resources_convert(blank_pickup):
+def test_add_resource_gain_to_current_resources_convert(blank_resource_db, blank_pickup):
     # Setup
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    resource_a = blank_resource_db.get_item("Ammo")
+    resource_b = blank_resource_db.item[0]
 
     pickup = dataclasses.replace(
         blank_pickup,
@@ -47,7 +65,7 @@ def test_add_resource_gain_to_current_resources_convert(blank_pickup):
     current_resources.add_resource_gain(pickup.resource_gain(current_resources))
 
     # Assert
-    assert current_resources._resources == {
+    assert dict(current_resources.as_resource_gain()) == {
         resource_a: 0,
         resource_b: 5
     }
@@ -55,14 +73,18 @@ def test_add_resource_gain_to_current_resources_convert(blank_pickup):
 
 @pytest.mark.parametrize(["resource_gain", "expected"], [
     ([], {}),
-    ([("a", 5), ("b", 6)], {"a": 5, "b": 6}),
-    ([("a", 5), ("a", 6)], {"a": 11}),
-    ([("a", 5), ("a", -5)], {"a": 0}),
+    ([("Ammo", 5), ("Health", 6)], {"Ammo": 5, "Health": 6}),
+    ([("Ammo", 5), ("Ammo", 6)], {"Ammo": 11}),
+    ([("Ammo", 5), ("Ammo", -5)], {"Ammo": 0}),
 ])
-def test_convert_resource_gain_to_current_resources(resource_gain, expected):
+def test_convert_resource_gain_to_current_resources(blank_resource_db, resource_gain, expected):
     # Setup
+    db = blank_resource_db
+    resource_gain = wrap(db, resource_gain)
+    expected = wrap(db, expected)
+
     # Run
-    result = ResourceCollection.from_resource_gain(resource_gain)
+    result = ResourceCollection.from_resource_gain(db, resource_gain)
 
     # Assert
     assert dict(result.as_resource_gain()) == expected
