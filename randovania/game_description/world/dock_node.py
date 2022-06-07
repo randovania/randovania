@@ -6,6 +6,7 @@ import typing
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.world.dock import DockType, DockWeakness, DockLockType
 from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -19,12 +20,11 @@ def _resolve_dock_node(context: NodeContext, node: DockNode) -> typing.Optional[
         return None
 
 
-def _requirement_from_back(context: NodeContext, identifier: NodeIdentifier) -> typing.Optional[ResourceRequirement]:
-    target_node = context.node_provider.node_by_identifier(identifier)
+def _requirement_from_back(context: NodeContext, target_node: Node) -> typing.Optional[ResourceRequirement]:
     if isinstance(target_node, DockNode):
         weak = context.patches.get_dock_weakness_for(target_node)
         if weak.lock is not None:
-            return ResourceRequirement.simple(identifier)
+            return ResourceRequirement.simple(NodeResourceInfo.from_node(target_node, context))
 
     return None
 
@@ -85,7 +85,7 @@ class DockNode(Node):
         else:
             return weakness.lock.requirement
 
-    def _open_dock_connection(self, context: NodeContext, target_identifier: NodeIdentifier,
+    def _open_dock_connection(self, context: NodeContext, target_node: Node,
                               ) -> tuple[Node, Requirement]:
 
         forward_weakness = self.get_front_weakness(context)
@@ -94,13 +94,12 @@ class DockNode(Node):
 
         # This dock has a lock, so require it
         if forward_weakness.lock is not None:
-            reqs.append(ResourceRequirement.simple(context.node_provider.identifier_for_node(self)))
+            reqs.append(ResourceRequirement.simple(NodeResourceInfo.from_node(self, context)))
 
         # The other dock has a lock, so require it
-        if (other_lock_req := _requirement_from_back(context, target_identifier)) is not None:
+        if (other_lock_req := _requirement_from_back(context, target_node)) is not None:
             reqs.append(other_lock_req)
 
-        target_node = context.node_provider.node_by_identifier(target_identifier)
         requirement = RequirementAnd(reqs).simplify() if len(reqs) != 1 else reqs[0]
         return target_node, requirement
 
@@ -136,6 +135,8 @@ class DockNode(Node):
             # Explicitly connected to nothing.
             return
 
-        yield self._open_dock_connection(context, target_identifier)
+        target_node = context.node_provider.node_by_identifier(target_identifier)
+
+        yield self._open_dock_connection(context, target_node)
         if (lock_connection := self._lock_connection(context)) is not None:
             yield lock_connection

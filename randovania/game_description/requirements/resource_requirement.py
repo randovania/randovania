@@ -17,6 +17,10 @@ class ResourceRequirement(Requirement):
     amount: int
     negate: bool
 
+    def __post_init__(self):
+        # Make sure this requirement received an actual resource
+        assert isinstance(self.resource.resource_type, ResourceType)
+
     @classmethod
     def simple(cls, simple: ResourceInfo) -> ResourceRequirement:
         return cls(simple, 1, False)
