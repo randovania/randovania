@@ -84,14 +84,6 @@ class GamePatches:
 
         return dataclasses.replace(self, configurable_nodes=new_configurable)
 
-    def assign_dock_weakness(self, weaknesses: Iterator[tuple[DockNode, DockWeakness]]) -> "GamePatches":
-        new_weakness = list(self.dock_weakness)
-
-        for node, weakness in weaknesses:
-            new_weakness[node.get_index()] = weakness
-
-        return dataclasses.replace(self, dock_weakness=new_weakness)
-
     def assign_starting_location(self, location: AreaIdentifier) -> "GamePatches":
         return dataclasses.replace(self, starting_location=location)
 
@@ -129,6 +121,14 @@ class GamePatches:
         yield from self.dock_connection.items()
 
     # Dock Weakness
+    def assign_dock_weakness(self, weaknesses: Iterator[tuple[DockNode, DockWeakness]]) -> "GamePatches":
+        new_weakness = list(self.dock_weakness)
+
+        for node, weakness in weaknesses:
+            new_weakness[node.get_index()] = weakness
+
+        return dataclasses.replace(self, dock_weakness=new_weakness)
+
     def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
         return self.dock_weakness[node.get_index()] or node.default_dock_weakness
 
