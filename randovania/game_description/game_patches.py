@@ -40,7 +40,7 @@ class GamePatches:
     configuration: BaseConfiguration
     pickup_assignment: dict[PickupIndex, PickupTarget]
     elevator_connection: ElevatorConnection
-    dock_connection: dict[NodeIdentifier, NodeIdentifier]
+    dock_connection: list[Optional[int]]
     dock_weakness: list[Optional[DockWeakness]]
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
@@ -61,10 +61,15 @@ class GamePatches:
                          ) -> GamePatches:
         game.world_list.ensure_has_node_cache()
         return GamePatches(
-            game, player_index, configuration, {}, game.get_default_elevator_connection(),
-            {}, [None] * len(game.world_list.all_nodes), {},
-            ResourceCollection.with_database(game.resource_database),
-            game.starting_location, {},
+            game, player_index, configuration,
+            pickup_assignment={},
+            elevator_connection=game.get_default_elevator_connection(),
+            dock_connection=[None] * len(game.world_list.all_nodes),
+            dock_weakness=[None] * len(game.world_list.all_nodes),
+            configurable_nodes={},
+            starting_items=ResourceCollection.with_database(game.resource_database),
+            starting_location=game.starting_location,
+            hints={},
         )
 
     def assign_new_pickups(self, assignments: Iterator[PickupTargetAssociation]) -> GamePatches:
@@ -115,20 +120,28 @@ class GamePatches:
             yield self.game.world_list.get_teleporter_node(identifier), target
 
     # Dock Connection
-    def assign_dock_connections(self, assignment: Iterator[DockNode, Node]) -> GamePatches:
-        connections = copy.copy(self.dock_connection)
+    def assign_dock_connections(self, assignment: Iterator[tuple[DockNode, Node]]) -> GamePatches:
+        connections = list(self.dock_connection)
 
         for source, target in assignment:
-            connections[source] = target
+            connections[source.index] = target.index
 
         return dataclasses.replace(self, dock_connection=connections)
 
     def get_dock_connection_for(self, node: DockNode) -> Node:
-        target_identifier = self.dock_connection.get(node.identifier, node.default_connection)
-        return self.game.world_list.node_by_identifier(target_identifier)
+        target_index = self.dock_connection[node.index]
+        if target_index is None:
+            return self.game.world_list.node_by_identifier(node.default_connection)
+        else:
+            return self.game.world_list.all_nodes[target_index]
 
-    def all_dock_connections(self) -> Iterator[tuple[NodeIdentifier, NodeIdentifier]]:
-        yield from self.dock_connection.items()
+    def all_dock_connections(self) -> Iterator[tuple[DockNode, Node]]:
+        nodes = self.game.world_list.all_nodes
+        for index, target in enumerate(self.dock_connection):
+            if target is not None:
+                node = nodes[index]
+                assert node is not None
+                yield node, nodes[target]
 
     # Dock Weakness
     def assign_dock_weakness(self, weaknesses: Iterator[tuple[DockNode, DockWeakness]]) -> "GamePatches":
@@ -145,5 +158,7 @@ class GamePatches:
     def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
         nodes = self.game.world_list.all_nodes
         for index, weakness in enumerate(self.dock_weakness):
-            if weakness is not None and (node := nodes[index]) is not None:
+            if weakness is not None:
+                node = nodes[index]
+                assert node is not None
                 yield node, weakness
