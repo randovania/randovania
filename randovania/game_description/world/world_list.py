@@ -28,6 +28,7 @@ class WorldList(NodeProvider):
     _nodes: Optional[Tuple[Optional[Node], ...]]
     _pickup_index_to_node: dict[PickupIndex, PickupNode]
     _identifier_to_node: dict[NodeIdentifier, Node]
+    _patched_node_connections: Optional[dict[NodeIndex, dict[NodeIndex, Requirement]]]
 
     def __deepcopy__(self, memodict):
         return WorldList(
@@ -36,6 +37,7 @@ class WorldList(NodeProvider):
 
     def __init__(self, worlds: List[World]):
         self.worlds = worlds
+        self._patched_node_connections = None
         self.invalidate_node_cache()
 
     def _refresh_node_cache(self):
@@ -160,9 +162,14 @@ class WorldList(NodeProvider):
         :param node:
         :return: Generator of pairs Node + Requirement for going to that node
         """
-        area = self.nodes_to_area(node)
-        for target_node, requirements in area.connections[node].items():
-            yield target_node, requirements
+        if self._patched_node_connections is not None:
+            all_nodes = self.all_nodes
+            for target_index, requirements in self._patched_node_connections[node.node_index].items():
+                yield all_nodes[target_index], requirements
+        else:
+            area = self.nodes_to_area(node)
+            for target_node, requirements in area.connections[node].items():
+                yield target_node, requirements
 
     def potential_nodes_from(self, node: Node, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
         """
@@ -185,19 +192,25 @@ class WorldList(NodeProvider):
         :param database:
         :return:
         """
+
+        # for node in area.nodes:
+        #     if isinstance(node, DockNode):
+        #         requirement = node.default_dock_weakness.requirement
+        #         object.__setattr__(node.default_dock_weakness, "requirement",
+        #                            requirement.patch_requirements(static_resources,
+        #                                                           damage_multiplier,
+        #                                                           database).simplify())
+        self._patched_node_connections = {
+            node.node_index: {
+                target.node_index: value.patch_requirements(static_resources, damage_multiplier, database).simplify()
+                for target, value in area.connections[node].items()
+            }
+            for _, area, node in self.all_worlds_areas_nodes
+        }
+        # FIXME: hack to find what's using the old value
         for world in self.worlds:
             for area in world.areas:
-                # for node in area.nodes:
-                #     if isinstance(node, DockNode):
-                #         requirement = node.default_dock_weakness.requirement
-                #         object.__setattr__(node.default_dock_weakness, "requirement",
-                #                            requirement.patch_requirements(static_resources,
-                #                                                           damage_multiplier,
-                #                                                           database).simplify())
-                for connections in area.connections.values():
-                    for target, value in connections.items():
-                        connections[target] = value.patch_requirements(
-                            static_resources, damage_multiplier, database).simplify()
+                object.__setattr__(area, "connections", None)
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         cache_result = self._identifier_to_node.get(identifier)
