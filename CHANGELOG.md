@@ -8,9 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.4.2] - 2022-06-05
 
 - Fixed: Generating multiworld games where one Prime 1 player has item in every room while another Prime 1 player doesn't now works properly.
-- Fixed: It's no longer possible to configure more than 99 shuffled copies of a major item, as that causes errors. 
+- Fixed: It's no longer possible to configure more than 99 shuffled copies of a major item, as that causes errors.
 - Fixed: Using a trick to break a door lock is now properly displayed in the UI.
 - Fixed: The description for expansions now mention they can be logical with multi-pickup placement.
+- Fixed: The change log tab no longer causes the window to have absurd sizes on macOS.
 - Removed: The broken option for enabling required mains for Metroid Prime 1. It was non-functional and incorrectly displayed.
 
 ## [4.4.1] - 2022-06-04
@@ -205,7 +206,7 @@ This release was skipped.
 - Nothing.
 
 ### Metroid Prime
- 
+
 - **Major** - Added: In multiworld, pickups from an Echoes player now uses the correct model from Echoes.
 - **Major** - Added: **April Fool's Day Special!** New game modification category "Chaos Options" in "Other" tab. Chaos options are patcher-side only, and thus are not accounted for by the seed generator logic.
     - Enable Large Samus
@@ -243,8 +244,8 @@ This release was skipped.
 
 ## [4.1.1] - 2022-03-12
 
-- Added: The game details window now displays the Randovania version the game was generated with. 
-- Added: You can now import a game layout/spoiler file in multiworld sessions. 
+- Added: The game details window now displays the Randovania version the game was generated with.
+- Added: You can now import a game layout/spoiler file in multiworld sessions.
 - Changed: A popup shows up while waiting for the game session list.
 - Fixed: The error message when the client is incompatible is now properly displayed.
 - Fixed: Player inventory is now properly sent to the server in multiworld sessions.
@@ -338,7 +339,7 @@ This release was skipped.
 
 - **Major** - Added: Cave Story has been added with full single-player support.
 - **Major** - Added: Data Visualizer/Editor now contains a visual representation of the nodes in the area.
-This feature comes with plenty of quality of life functionality for editing the database. 
+This feature comes with plenty of quality of life functionality for editing the database.
 - Added: A new tab has been added to the preset editor, Generation Settings, consolidating various settings such as minimal logic, multi-pickup placement, dangerous actions, etc.
 - Added: The Logic Database can now have descriptions for nodes.
 - Added: Game Details window can now spoil the item order, elevators, translator gates and hints.
@@ -527,7 +528,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 ## [3.2.0] - 2021-10-16
 
 - **Major** - Added: The Logic Database can now have comments in requirements.
-- **Major** - Changed: Expansions contents are now configured directly, instead of being calculated from a target. 
+- **Major** - Changed: Expansions contents are now configured directly, instead of being calculated from a target.
 - Added: Files in the "Previously generated games" folder now includes the name of the games used.
 - Added: Custom names for Prime 1 elevators
 - Added: Support for Minimal Logic has been added for Metroid Prime and Metroid Prime 3.
@@ -573,7 +574,7 @@ This feature comes with plenty of quality of life functionality for editing the 
 - Added: Knowledge (Beginner) trick to leave Central Dynamo without completing the maze or fighting the drone.
 - Added: Additional Lower Mines NSJ logic.
 - Added: Movement tricks for logical forced damage in Magmoor Caverns, Phazon Mines, and Impact Crater.
-- Added: Tricks for climbing Research Lab Aether NSJ 
+- Added: Tricks for climbing Research Lab Aether NSJ
 - Added: Tricks for traversing Magmoor Workstation bombless NSJ
 - Added: More detailed boss/combat logic
 - Fixed: Shorelines tower item being accessible from Ruins Entryway and not Temple Entryway.
@@ -598,13 +599,13 @@ This feature comes with plenty of quality of life functionality for editing the 
 ## [3.1.4] - 2021-09-19
 
 - Changed: Force one specific certificate root when connecting to the server.
-- Fixed: Checking for updated versions will no longer close Randovania when no internet connectivity is present. 
+- Fixed: Checking for updated versions will no longer close Randovania when no internet connectivity is present.
 - Fixed: The server will properly reject clients with mismatched versions.
 
 ## [3.1.3] - 2021-09-19
 
 - Added: Dialog that shows all enabled tricks in a preset and a list of all rooms that have some combination of tricks that ends up active in that preset.
-  - This dialog can be accessed by right-clicking a preset on the "Generate Game" tab, or by pressing the "..." menu in the "Game Details" window. 
+  - This dialog can be accessed by right-clicking a preset on the "Generate Game" tab, or by pressing the "..." menu in the "Game Details" window.
 - Added: Multiworld Help entry regarding maximum number of players.
 - Added: Metroid Prime FAQ entry regarding the forced popup alert.
 - Changed: Long lines of requirements (Check for all artifacts in Artifact Temple) are now word wrapped.
@@ -661,7 +662,7 @@ time, before giving the error message of why it failed. It's useful for investig
 - Fixed: The tracker now properly restores states for games other than Echoes.
 - Fixed: Fixed a crash that sometimes occurs when deleting presets.
 - Fixed: Generator now directly accounts for events weighting actions.
-- Changed: Removed customization of Qt theme for decreasing whitespace. 
+- Changed: Removed customization of Qt theme for decreasing whitespace.
 - Changed: Upgrades in the tracker fills an entire column first, instead of filling rows first.
 - Changed: Tracker now properly saves the preset used when persisting the state.
 
@@ -682,7 +683,7 @@ time, before giving the error message of why it failed. It's useful for investig
 - Speed up opening of gate in sun tower
 - Fixed Thardus cutscene skip softlock
 
-### Metroid Prime - Logic Database 
+### Metroid Prime - Logic Database
 
 - Added: Method of reaching Ruins Entryway from Plaza Walkway in Phendrana Shorelines with a Dash (Intermediate).
 - Added: Easier NSJ trick to climb Ruined Courtyard using the water puzzle platforms.
@@ -690,7 +691,7 @@ time, before giving the error message of why it failed. It's useful for investig
     - (Beginner) Elite research - Phazon Elite
     - (Beginner) Research Entrance
     - (Intermediate) Hall of the Elders - Wave and Ice bomb slots
-    - (Intermediate) Sunchamber - Ghosts fight 
+    - (Intermediate) Sunchamber - Ghosts fight
     - (Intermediate) Mine Security Station with >= 200 energy
     - (Advanced) Mine Security Station
 - Fixed: Main Plaza door to Plaza Access is now properly a normal door, instead of a permanently locked door.
@@ -702,7 +703,7 @@ time, before giving the error message of why it failed. It's useful for investig
 - Fixed: Crossing the gap by Specimen Storage door no longer sometimes requires L-Jump (Intermediate) instead of Beginner.
 - Changed: Improved readability of Ruined Courtyard logic.
 - Changed: Reorganized Sunchamber logic to improve usage by generator/solver.
-- Changed: Picking up Sunchamber Ghosts item NSJ is now L-Jump (Beginner) instead of Intermediate.   
+- Changed: Picking up Sunchamber Ghosts item NSJ is now L-Jump (Beginner) instead of Intermediate.
 - Changed: Crossing TFT to TF with Gravity+SJ now requires Movement (Beginner)
 - Changed: FCS Item Scan Dash method is now Intermediate without SJ.
 - Added: FCS Grapple strat - Movement (Beginner)
@@ -711,7 +712,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 - Added: A-Kul's scan in Sky Temple Gateway now displays a list of previous tournament winners.
 - Changed: Echoes now uses a different game ID when saving ISOs with menu mod enabled, preventing issues from incompatible save files.
-- Changed: The elevator sound effect is never removed when elevators are vanilla, ignoring the preference. 
+- Changed: The elevator sound effect is never removed when elevators are vanilla, ignoring the preference.
 
 ### Metroid Prime 2: Echoes - Logic Database
 - Added: Method of reaching the pickup in Reactor Core with Space Jump, Bombs, Spider Ball, and Standable Terrain (Intermediate and above).
@@ -734,7 +735,7 @@ time, before giving the error message of why it failed. It's useful for investig
 ## [3.0.3] - 2021-08-08
 
 - Fixed: "Open FAQ" in the main window now works correctly.
-- Fixed: Pressing Yes to ignore invalid configuration now works correctly. 
+- Fixed: Pressing Yes to ignore invalid configuration now works correctly.
 - Changed: Randovania now silently handles some invalid configuration states.
 - Changed: Improved handling of corrupted repository for old preset versions.
 
@@ -754,7 +755,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 - Fixed: Server will now re-authenticate with Discord, preventing users from logging with the incorrect account.
 
-- Fixed: Game Sessions - History entries with invalid locations no longer cause error messages. 
+- Fixed: Game Sessions - History entries with invalid locations no longer cause error messages.
 
 ## [3.0.0] - 2021-07-30
 
@@ -822,7 +823,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 -   Method of leaving Dark Agon Temple by opening the gate from OoB with Single Room OoB, Slope Jump, Standable Terrain, Bomb Space Jump, Space Jump, and the Agon Keys (Expert and above).
 
--   Great Bridge: 
+-   Great Bridge:
     - Method of reaching Abandoned Worksite door with Space Jump and Extended Dash (Advanced and above).
     - Method of reaching Abandoned Worksite and Torvus Map Station doors from Temple Access Dark door with Boost Ball and Boost Jump (Advanced and above).
     - Method of reaching the pickup with Screw Attack and Single Room Out of Bounds (Expert and above).
@@ -866,7 +867,7 @@ time, before giving the error message of why it failed. It's useful for investig
 -   Trial Grounds, reaching the door:
     - From the portal with Space Jump and a Slope Jump is now Beginner (from Intermediate).
     - From the left safe zone with a Dash is now Intermediate (from Expert) and without anything is now Advanced (from Expert).
-	
+
 -   Opening the Seeker Lock without Seekers in Mine Shaft is now Advanced (From Expert)
 
 -   Opening the Seeker Lock without Seekers in Plain of Dark Worship is now Expert (From Hypermode).
@@ -890,7 +891,7 @@ time, before giving the error message of why it failed. It's useful for investig
 -   Morph Ball is no longer required to reach the portal from the Echo Gate in Profane Path Scan Dash method.
 
 -   Various Standable Terrain tricks (Dark Agon - Portal Site, Temple Grounds - Sacred Path) have been lowered to Beginner/Intermediate (from Advanced). This is to
-    attempt to fix an old database limitation from before tricks had their own difficulty levels. 
+    attempt to fix an old database limitation from before tricks had their own difficulty levels.
 
 -   The dashes in Gathering Hall from Transit Tunnel South/West to the Kinetic Orb Cannon are now Intermediate (from Advanced).
 
@@ -906,7 +907,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 -   The dashes in Trial Grounds to Dark Transit Station without Space Jump are now Advanced (from Intermediate).
 
--   The dashes in Undertemple Shaft to reach Sacrificial Chamber Tunnel (and back) are now Advanced (from Intermediate). 
+-   The dashes in Undertemple Shaft to reach Sacrificial Chamber Tunnel (and back) are now Advanced (from Intermediate).
 
 -   The dash in Hall of Combat Mastery to reach the upper area after the glass is now Advanced (from Intermediate).
 
@@ -915,7 +916,7 @@ time, before giving the error message of why it failed. It's useful for investig
 ## [2.6.1] - 2021-05-05
 
 -   Changed: Invalid values for the Multiworld magic item are ignored when detecting if the game is properly connected.
-    
+
 -   Fixed: "One-way anywhere" no longer shows up twice in preset warnings for multiworld
 
 -   Fixed: Changing starting location to Ship or Save Stations now works again.
@@ -924,7 +925,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 ## [2.6.0] - 2021-05-02
 
--   **Major** - Added: New elevator randomization settings: 
+-   **Major** - Added: New elevator randomization settings:
     * New mode: *One-way, elevator room with replacement*. One way elevator, but loops aren't guaranteed.
     * Select which elevators can be randomized.
     * Select possible destinations for *One-way, anywhere*.
@@ -933,7 +934,7 @@ time, before giving the error message of why it failed. It's useful for investig
 -   **Major** - Added: The Energy Controllers in Agon Wastes, Torvus Bog and Sanctuary Fortress are always visible in the map, regardless if map is revealed by default. All regions are also always available for selection. This allows the light beam warps after U-Mos 2 to always be used.
 
 -   **Major** - Added: An user preference (in *Customize in-game settings*) for the map to display names of unvisited rooms.
-    When randomizing elevators, the elevator rooms are excluded to prevent spoiling their destinations. An option were added to disallow displaying names entirely, since otherwise you can use a Map Station to find the names.  
+    When randomizing elevators, the elevator rooms are excluded to prevent spoiling their destinations. An option were added to disallow displaying names entirely, since otherwise you can use a Map Station to find the names.
 
 -   Added: An option to disable the elevator sound effect, preventing it from playing endlessly in certain cases.
 
@@ -950,14 +951,14 @@ time, before giving the error message of why it failed. It's useful for investig
 -   Added: Player names are now colored yellow in hints.
 
 -   Changed: Elevator names in the tracker uses their customized names, not the vanilla ones.
-    
+
 -   Changed: Optimized Randovania startup time and extensive logging of what's being done during it.
 
 -   Changed: Improve scan text for expansions.
 
 -   Changed: Some hints in multiworld games now also include the player names.
 
--   Changed: Missiles, Power Bombs and Ship Missiles are now only in logic after their respective main launcher, even if it's not required in game. 
+-   Changed: Missiles, Power Bombs and Ship Missiles are now only in logic after their respective main launcher, even if it's not required in game.
 
 -   Changed: You can add up to 99 of any expansion to the pool, up from 64.
 
@@ -1102,7 +1103,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 -   Changed: Auto tracker internally uses a configuration file for the item positions.
 
--   Changed: The item pool tab when customizing presets now can edit major items directly. 
+-   Changed: The item pool tab when customizing presets now can edit major items directly.
 
 -   Changed: Defeating Quadraxis with Power Bombs is now Advanced (from Beginner).
 
@@ -1136,7 +1137,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 -   Changed: Phazon Grounds and Transport to Agon Wastes (Torvus) Seeker Locks without Seekers are now Expert (from Hypermode).
 
--   Fixed: Properly handle invalid ammo configurations in preset editor. 
+-   Fixed: Properly handle invalid ammo configurations in preset editor.
 
 -   Fixed: Randovania no longer instantly crashes on macOS.
 
@@ -1154,7 +1155,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 -   Fixed: Alerts are now properly saved as displayed.
 
--   Fixed: Errors in the default preset no longer prevent Randovania from starting. 
+-   Fixed: Errors in the default preset no longer prevent Randovania from starting.
 
 -   Changed: Optimized game generation, it now takes roughly 2/3 of the time.
 
@@ -1198,7 +1199,7 @@ time, before giving the error message of why it failed. It's useful for investig
 
 -   Changed: The lowest level for a trick is now called "Disabled" instead of "No Tricks".
 
--   Changed: Minimum Varia Suit Dark Aether is now 0.1, as 0 crashes the game. 
+-   Changed: Minimum Varia Suit Dark Aether is now 0.1, as 0 crashes the game.
 
 -   Changed: Permalinks are now entirely different for different games.
 
@@ -1211,7 +1212,7 @@ time, before giving the error message of why it failed. It's useful for investig
 -   Fixed: Changing a trick level to No Tricks no longer cause inconsistent behavior with the permalinks.
 
 -   Removed: Intermediate path for reaching item in Main Reactor from Security Station B door without Screw Attack since it was broken and impossible.
-    
+
 -   Changed: Renamed "Before Pickup" to "Next to Pickup" in various locations for more clarity
 
 
@@ -1224,7 +1225,7 @@ time, before giving the error message of why it failed. It's useful for investig
 -   Changed: The pickup spoiler in game details is now sorted.
 
 -   Fixed: Multiworld sessions should no longer occasionally duplicate messages.
-    
+
 -   Fixed: Custom safe zone healing should now work in multiworld sessions.
 
 -   Fixed: Occasional error with switching an observer into a player.
@@ -1237,7 +1238,7 @@ This version is dedicated to SpaghettiToastBook, a great member of our community
 
 Her contributions to Randovania were invaluable and she'll be missed.
 
---- 
+---
 
 -   **Major** - New game mode: Multiworld. In this co-op multiplayer mode, there's one different world for each player which is filled with items for specific players.
 
@@ -1297,7 +1298,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Added: A dark theme has been added. It can be toggled in the Advanced menu.
 
 -   Added: Requirements in the logic database can now use templates of requirements, allowing for easy re-use.
-    
+
 -   Added: Data Editor can now edit all fields of a node, from type, name and all type specific fields.
 
 -   Added: Data Visualizer and Editor now can operate in the included database for Prime 1 and 3.
@@ -1305,7 +1306,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Added: The Data Editor now displays a warning if you're closing with unsaved changes.
 
 -   Added: Randovania can generate a game by importing permalinks directly from a race on racetime.gg.
-    
+
 -   Added: Some tricks now have a description on the Trick Details popup.
 
 -   Fixed: Some complex combination of requirements with different depths now are displayed correctly.
@@ -1314,7 +1315,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Changed: After generating a game, the details shows up in a new window instead of in a new tab.
 
--   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks. 
+-   Changed: In game details, the permalink is now placed inside a line edit, so the window doesn't stretch with long permalinks.
 
 -   Changed: All cosmetic game changes are now configured in the same dialog as the in-game options.
 
@@ -1342,7 +1343,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Fixed: The Data Editor no longer errors when saving after creating a new node.
 
--   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly. 
+-   Fixed: Certain combinations of item requirements with damage requirements weren't being processed correctly.
 
 -   Fixed: Duplicated requirements are now properly removed when simplifying requirements.
 
@@ -1352,7 +1353,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Changed: The `database` command is no longer a subcommand of `echoes`. It also has the `--game` argument to choose which database to use.
 
--   Changed: The `_locations_internal` field is no longer needed for .rdvgame files. 
+-   Changed: The `_locations_internal` field is no longer needed for .rdvgame files.
 
 ### Logic Database changes
 
@@ -1441,7 +1442,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
     - Method to reach Abandoned Worksite door from the bridge before rotating and with an Extended Dash (Expert and above).
     - Method to reach Bridge Center with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
 
--   Gathering Hall: 
+-   Gathering Hall:
     - Method to reach the Kinetic Orb Cannon with Gravity Boost and Bombs (Expert and above) or Gravity Boost and Space Jump (Beginner and above).
     - Method to reach Transit Tunnel South from Transit Tunnel West with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
     - Method to reach the Spider Ball tracks with Morph Ball, Gravity Boost, and Reverse Air Underwater (Advanced and above).
@@ -1540,7 +1541,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 #### Fixed
 
--   Scan Visor Requirements: 
+-   Scan Visor Requirements:
     - Dash Requirements in many rooms
     - Grand Abyss Bridge terminal
     - Sand Processing item
@@ -1691,7 +1692,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   *Major* - Added: The text of the scan that unlocks an elevator now includes the
     elevators destination.
-    
+
 -   *Major* - Added: Translator gates can be configured as Unlocked: the hologram will be invisible and can be scanned
     without any translator.
 
@@ -1717,8 +1718,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
     KNOWN ISSUE: While scanning something, the categories that show up are incorrect.
 
 -   Added: Open -> Trick Details menu entry, similar to what's available in the
-    Trick Level tab when customizing a preset. 
-    
+    Trick Level tab when customizing a preset.
+
 -   Added: Play -> Import game file, to load spoiler logs.
 
 -   Added: The "Heals?" checkbox in the database editor now works.
@@ -1728,8 +1729,8 @@ Her contributions to Randovania were invaluable and she'll be missed.
 -   Changed: One-way elevators now have a chance of warping to credits.
 
 -   Changed: Clarified that the item from Space Jump Guardian and Power Bomb Guardian
-    must be collected for the appropriate events to be triggered. 
-    
+    must be collected for the appropriate events to be triggered.
+
 -   Changed: In Menu Mod, the list of rooms to warp to is now sorted.
 
 -   Changed: The export-areas command line option now outputs details about requirements for each area.
@@ -1750,7 +1751,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Fixed: Staging Area is now correctly considered a dark world room.
 
--   Fixed: The Ing Cache in Dark Oasis now requires Power Bombs. 
+-   Fixed: The Ing Cache in Dark Oasis now requires Power Bombs.
 
 -   Fixed: Bioenergy Production correctly requires Scan Visor for connections using the racks.
 
@@ -1836,7 +1837,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
     input field.
 
 -   Fixed: "Starting Items" is now properly implemented in the preset summary.
-    
+
 -   Changed: "Custom Items" is now "Item Pool" in the preset summary, and lists all
     deviations from the standard item pool.
 
@@ -1846,11 +1847,11 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Added: The "Save ISO" dialog now remembers the last output directory used.
 
--   Added: A copy of the game file is automatically saved to 
+-   Added: A copy of the game file is automatically saved to
     `%LOCALAPPDATA%\Randovania\game_history` whenever a game is generated. There's no
     interface in Randovania to view this history.
 
--   Changed: The "Save Spoiler" button now provides a default name for the game file. 
+-   Changed: The "Save Spoiler" button now provides a default name for the game file.
 
 -   Changed: Shortened permalinks with customized starting locations.
 
@@ -1882,9 +1883,9 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Changed: A Luminoth Lore scan is less likely to have hints for what was already accessible
     when that scan was found.
-    
+
 -   Changed: Power Bombs and Progressive Grapple are now slightly more likely to appear earlier.
-    
+
 -   Changed: The hints randomly assigned at the end of generation are less likely to be repeats.
 
 -   Changed: Loading a new game will automatically clear any existing one.
@@ -1912,7 +1913,7 @@ Her contributions to Randovania were invaluable and she'll be missed.
 
 -   Fixed: Fix AttributeError preventing major/minor randomization from working.
 
--   Fixed: Seeds where no progression is needed to finish should no longer fail to generate. 
+-   Fixed: Seeds where no progression is needed to finish should no longer fail to generate.
 
 ## [0.29.0] - 2019-10-01
 
