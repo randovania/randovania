@@ -115,6 +115,14 @@ class GamePatches:
             yield self.game.world_list.get_teleporter_node(identifier), target
 
     # Dock Connection
+    def assign_dock_connections(self, assignment: Iterator[DockNode, Node]) -> GamePatches:
+        connections = copy.copy(self.dock_connection)
+
+        for source, target in assignment:
+            connections[source] = target
+
+        return dataclasses.replace(self, dock_connection=connections)
+
     def get_dock_connection_for(self, node: DockNode) -> Node:
         target_identifier = self.dock_connection.get(node.identifier, node.default_connection)
         return self.game.world_list.node_by_identifier(target_identifier)
