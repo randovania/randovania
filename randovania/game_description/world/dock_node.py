@@ -51,9 +51,8 @@ class DockNode(Node):
 
     def __post_init__(self):
         super().__post_init__()
-        object.__setattr__(self, "lock_node_identifier", dataclasses.replace(
-            self.identifier,
-            node_name=f"Lock - {self.name}",
+        object.__setattr__(self, "lock_node_identifier", self.identifier.renamed(
+            f"Lock - {self.name}",
         ))
 
     def __repr__(self):
