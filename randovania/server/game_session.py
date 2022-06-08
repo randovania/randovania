@@ -552,7 +552,11 @@ def game_session_admin_player(sio: ServerApp, session_id: int, user_id: int, act
         _add_audit_entry(sio, session, f"Made an ISO for row {membership.row + 1}")
 
         data_factory = preset.game.patch_data_factory(layout_description, players_config, cosmetic_patches)
-        return data_factory.create_data()
+        try:
+            return data_factory.create_data()
+        except Exception as e:
+            logger().exception("Error when creating patch data")
+            raise InvalidAction(f"Unable to export game: {e}")
 
     elif action == SessionAdminUserAction.ABANDON:
         # FIXME

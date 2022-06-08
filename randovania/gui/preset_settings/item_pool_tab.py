@@ -33,7 +33,7 @@ _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
     "For a total of {total} from this source."
     "\n{from_items} will be provided from other sources."
     "\n{maximum} is the maximum you can have at once.\n"
-    "\nResources from sources like this are not considered by logic!"
+    "\nResources from sources like this are only considered by logic when using 'multi-pickup placement'."
 )
 
 
@@ -134,6 +134,8 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             if widgets.require_major_item_check is not None:
                 widgets.require_major_item_check.setChecked(state.requires_major_item)
+                if self.game == RandovaniaGame.METROID_PRIME:
+                    widgets.require_major_item_check.setChecked(False)
 
             self_counts = []
             for ammo_index, count in enumerate(state.ammo_count):
@@ -342,10 +344,13 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
             add_row(count_label, pickup_spinbox)
 
+            # FIXME: hardcoded check to hide required mains for Prime 1
             if ammo.temporary:
                 require_major_item_check = QtWidgets.QCheckBox(pickup_box)
                 require_major_item_check.setText("Requires the major item to work?")
                 require_major_item_check.stateChanged.connect(partial(self._on_update_ammo_require_major_item, ammo))
+                if self.game == RandovaniaGame.METROID_PRIME:
+                    require_major_item_check.setVisible(False)
                 layout.addWidget(require_major_item_check, current_row, 0, 1, 2)
                 current_row += 1
             else:

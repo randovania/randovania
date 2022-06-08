@@ -10,6 +10,8 @@ class ChangeLogWidget(QtWidgets.QTabWidget):
         # VerticalTabBar doesn't work as expected in Qt 6, so it's disabled for now
         # self.setTabBar(VerticalTabBar())
         self.setTabPosition(QtWidgets.QTabWidget.West)
+        self.tabBar().setUsesScrollButtons(True)
+        self.tabBar().setElideMode(QtCore.Qt.ElideNone)
 
         for version_name, version_text in all_change_logs.items():
             scroll_area = QtWidgets.QScrollArea()
