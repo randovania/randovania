@@ -20,7 +20,7 @@ def _extra_requirement_for_node(game: GameDescription, context: NodeContext, nod
         assert isinstance(node, ResourceNode)
         node_resource = node.resource(context)
         if node_resource in game.dangerous_resources:
-            extra_requirement = ResourceRequirement(node_resource, 1, False)
+            extra_requirement = ResourceRequirement.simple(node_resource)
 
     return extra_requirement
 

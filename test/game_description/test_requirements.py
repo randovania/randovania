@@ -5,23 +5,21 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description import data_reader
-from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_list import RequirementList
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.game import RandovaniaGame
 
 
@@ -64,7 +62,7 @@ def _make_resource(name: str):
 
 def _make_req(name: str):
     req = _make_resource(name)
-    id_req = ResourceRequirement(req, 1, False)
+    id_req = ResourceRequirement.simple(req)
     return req, id_req
 
 
@@ -167,7 +165,7 @@ def test_expand_alternatives(a: RequirementSet, b: RequirementSet, expected: Req
 def test_list_dangerous_resources(input_data, output_data):
     # setup
     req_list = RequirementList((
-        ResourceRequirement(_make_resource(str(item[0])), 1, item[1])
+        ResourceRequirement.create(_make_resource(str(item[0])), 1, item[1])
         for item in input_data
     ))
 
@@ -511,7 +509,7 @@ def test_requirement_damage(damage, items, requirement, echoes_resource_database
 
 def test_simple_echoes_damage(echoes_resource_database):
     db = echoes_resource_database
-    req = ResourceRequirement(
+    req = ResourceRequirement.create(
         db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1"),
         50, False,
     )
@@ -528,9 +526,9 @@ def test_requirement_list_constructor(echoes_resource_database):
         return search.find_resource_info_with_long_name(echoes_resource_database.item, name)
 
     req_list = RequirementList([
-        ResourceRequirement(item("Dark Visor"), 1, False),
-        ResourceRequirement(item("Missile"), 5, False),
-        ResourceRequirement(item("Seeker Launcher"), 1, False),
+        ResourceRequirement.simple(item("Dark Visor")),
+        ResourceRequirement.create(item("Missile"), 5, False),
+        ResourceRequirement.simple(item("Seeker Launcher")),
     ])
     extract = [(req.resource.long_name, req.amount) for req in req_list.items]
 
@@ -546,17 +544,17 @@ def test_requirement_set_constructor(echoes_resource_database):
 
     req_set = RequirementSet([
         RequirementList([
-            ResourceRequirement(item("Dark Visor"), 1, False),
-            ResourceRequirement(item("Missile"), 5, False),
-            ResourceRequirement(item("Seeker Launcher"), 1, False),
+            ResourceRequirement.simple(item("Dark Visor")),
+            ResourceRequirement.create(item("Missile"), 5, False),
+            ResourceRequirement.simple(item("Seeker Launcher")),
         ]),
         RequirementList([
-            ResourceRequirement(item("Screw Attack"), 1, False),
-            ResourceRequirement(item("Space Jump Boots"), 1, False),
+            ResourceRequirement.simple(item("Screw Attack")),
+            ResourceRequirement.simple(item("Space Jump Boots")),
         ]),
         RequirementList([
-            ResourceRequirement(item("Power Bomb"), 1, False),
-            ResourceRequirement(item("Boost Ball"), 1, False),
+            ResourceRequirement.simple(item("Power Bomb")),
+            ResourceRequirement.simple(item("Boost Ball")),
         ]),
     ])
     extract = [
@@ -606,11 +604,11 @@ def test_set_as_str_things(echoes_resource_database):
 
     req_set = RequirementSet([
         RequirementList([
-            ResourceRequirement(item("Screw Attack"), 1, False),
-            ResourceRequirement(item("Space Jump Boots"), 1, False),
+            ResourceRequirement.simple(item("Screw Attack")),
+            ResourceRequirement.simple(item("Space Jump Boots")),
         ]),
         RequirementList([
-            ResourceRequirement(item("Power Bomb"), 1, False),
+            ResourceRequirement.simple(item("Power Bomb")),
         ]),
     ])
 
@@ -620,12 +618,12 @@ def test_set_as_str_things(echoes_resource_database):
 def test_set_hash(echoes_resource_database):
     req_set_a = RequirementSet([
         RequirementList([
-            ResourceRequirement(echoes_resource_database.get_item_by_name("Power Bomb"), 1, False),
+            ResourceRequirement.simple(echoes_resource_database.get_item_by_name("Power Bomb")),
         ]),
     ])
     req_set_b = RequirementSet([
         RequirementList([
-            ResourceRequirement(echoes_resource_database.get_item_by_name("Power Bomb"), 1, False),
+            ResourceRequirement.simple(echoes_resource_database.get_item_by_name("Power Bomb")),
         ]),
     ])
 

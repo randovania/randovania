@@ -31,9 +31,9 @@ class DreadBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             "MISSILE": rsb.requirement_template["Shoot Missile"],
             "SUPERMISSILE": rsb.requirement_template["Shoot Super Missile"],
             "POWERBOMB": rsb.requirement_template["Lay Power Bomb"],
-            "SCREWATTACK": ResourceRequirement(rsb.get_item("Screw"), 1, False),
+            "SCREWATTACK": ResourceRequirement.simple(rsb.get_item("Screw")),
             "WEIGHT": Requirement.impossible(),
-            "SPEEDBOOST": ResourceRequirement(rsb.get_item("Speed"), 1, False),
+            "SPEEDBOOST": ResourceRequirement.simple(rsb.get_item("Speed")),
         }
 
         for node in game.world_list.iterate_nodes():

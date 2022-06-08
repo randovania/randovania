@@ -760,10 +760,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
                 translator_req = Requirement.impossible()
             else:
                 translator = self.game_description.resource_database.get_item(requirement.item_name)
-                translator_req = ResourceRequirement(translator, 1, False)
+                translator_req = ResourceRequirement.simple(translator)
 
             state.patches.configurable_nodes[gate] = RequirementAnd([
-                ResourceRequirement(scan_visor, 1, False),
+                ResourceRequirement.simple(scan_visor),
                 translator_req,
             ])
 

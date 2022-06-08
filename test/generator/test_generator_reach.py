@@ -202,7 +202,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                            None, {}, None, world_list)
 
     patches = echoes_game_patches.assign_node_configuration([
-        (translator_identif, ResourceRequirement(scan_visor, 1, False)),
+        (translator_identif, ResourceRequirement.simple(scan_visor)),
     ])
     initial_state = State(
         ResourceCollection.from_dict({scan_visor: 1 if has_translator else 0}),
