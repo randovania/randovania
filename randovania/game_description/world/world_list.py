@@ -144,11 +144,8 @@ class WorldList(NodeProvider):
         self.ensure_has_node_cache()
         return self._nodes_to_area[node.index]
 
-    def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Optional[Node]:
-        connection = patches.get_dock_connection_for(node)
-        if connection is not None:
-            return self.node_by_identifier(connection)
-        return None
+    def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
+        return patches.get_dock_connection_for(node)
 
     def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Optional[Node]:
         connection = patches.get_elevator_connection_for(node)

@@ -3,6 +3,7 @@ from typing import Dict, Optional
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.dock_node import DockNode
@@ -36,7 +37,9 @@ def distances_to_node(world_list: WorldList, starting_node: Node,
             return n.default_connection
     else:
         get_elevator_connection_for = patches.get_elevator_connection_for
-        get_dock_connection_for = patches.get_dock_connection_for
+
+        def get_dock_connection_for(n: DockNode):
+            return patches.get_dock_connection_for(n).identifier
 
     for area in world_list.all_areas:
         g.add_node(area)
