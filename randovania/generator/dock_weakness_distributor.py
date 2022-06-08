@@ -78,11 +78,6 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tup
         patches = results.patches
         player_docks: list[Tuple[int, DockNode]] = []
 
-        def get_dock(iden: NodeIdentifier) -> DockNode:
-            node = results.game.world_list.node_by_identifier(iden)
-            assert isinstance(node, DockNode)
-            return node
-
         if patches.configuration.dock_rando.mode == DockRandoMode.ONE_WAY:
             player_docks.extend((player, node) for node, _ in patches.all_dock_weaknesses())
 
@@ -96,7 +91,7 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tup
             )
 
             for dock, _ in patches.all_dock_weaknesses():
-                if (player, get_dock(dock.get_target_identifier(ctx))) not in player_docks:
+                if (player, dock.get_target_identifier(ctx)) not in player_docks:
                     player_docks.append((player, dock))
 
         if TO_SHUFFLE_PROPORTION < 1.0:
@@ -202,12 +197,12 @@ async def distribute_post_fill_weaknesses(rng: Random,
         game = filler_results.player_results[player].game
         patches = new_patches[player]
 
-        target = game.world_list.node_by_identifier(dock.get_target_identifier(NodeContext(
+        target = dock.get_target_identifier(NodeContext(
             patches,
             patches.starting_items,
             game.resource_database,
             game.world_list,
-        )))
+        ))
         assert isinstance(target, DockNode)
 
         dock_type_params = game.dock_weakness_database.dock_rando_params[dock.dock_type]

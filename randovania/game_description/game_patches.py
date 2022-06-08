@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.resources.pickup_index import PickupIndex
     from randovania.layout.base.base_configuration import BaseConfiguration
+    from randovania.game_description.world.node import Node
     from randovania.game_description.world.teleporter_node import TeleporterNode
     from randovania.game_description.world.dock_node import DockNode
 
@@ -114,8 +115,9 @@ class GamePatches:
             yield self.game.world_list.get_teleporter_node(identifier), target
 
     # Dock Connection
-    def get_dock_connection_for(self, node: DockNode) -> NodeIdentifier:
-        return self.dock_connection.get(node.identifier, node.default_connection)
+    def get_dock_connection_for(self, node: DockNode) -> Node:
+        target_identifier = self.dock_connection.get(node.identifier, node.default_connection)
+        return self.game.world_list.node_by_identifier(target_identifier)
 
     def all_dock_connections(self) -> Iterator[tuple[NodeIdentifier, NodeIdentifier]]:
         yield from self.dock_connection.items()
