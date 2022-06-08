@@ -74,9 +74,8 @@ def _create_resource_type_combo(current_resource_type: ResourceType, parent: QWi
 
 
 def _create_default_resource_requirement(resource_database: ResourceDatabase) -> ResourceRequirement:
-    return ResourceRequirement(
+    return ResourceRequirement.simple(
         resource_database.get_by_type(ResourceType.ITEM)[0],
-        1, False
     )
 
 
@@ -336,7 +335,11 @@ class RequirementEditor:
         self.line_layout.addWidget(self.requirement_type_combo)
 
     def create_specialized_editor(self, requirement: Requirement):
-        self.requirement_type_combo.setCurrentIndex(self.requirement_type_combo.findData(type(requirement)))
+        if isinstance(requirement, ResourceRequirement):
+            requirement_type = ResourceRequirement
+        else:
+            requirement_type = type(requirement)
+        self.requirement_type_combo.setCurrentIndex(self.requirement_type_combo.findData(requirement_type))
 
         if isinstance(requirement, ResourceRequirement):
             self._editor = ResourceRequirementEditor(self.parent, self.line_layout, self.resource_database, requirement)
