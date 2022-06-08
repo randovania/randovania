@@ -69,8 +69,7 @@ class DockLockNode(ResourceNode):
 
     def connections_from(self, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
         dock = self.dock
-        target_identifier = dock.get_target_identifier(context)
-        if target_identifier is not None and dock._lock_connection(context) is not None:
+        if dock._lock_connection(context) is not None:
             yield dock, Requirement.trivial()
 
     @property

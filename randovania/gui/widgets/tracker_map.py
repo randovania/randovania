@@ -47,8 +47,7 @@ class MatplotlibWidget(QtWidgets.QWidget):
                 if isinstance(node, DockNode):
                     try:
                         target_node = self.world_list.resolve_dock_node(node, state.patches)
-                        if target_node is not None:
-                            nearby_areas.add(self.world_list.nodes_to_area(target_node))
+                        nearby_areas.add(self.world_list.nodes_to_area(target_node))
                     except IndexError as e:
                         logging.error(f"For {node.name} in {area.name}, received {e}")
                         continue

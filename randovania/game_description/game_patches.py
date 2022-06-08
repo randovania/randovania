@@ -39,7 +39,7 @@ class GamePatches:
     configuration: BaseConfiguration
     pickup_assignment: dict[PickupIndex, PickupTarget]
     elevator_connection: ElevatorConnection
-    dock_connection: dict[NodeIdentifier, Optional[NodeIdentifier]]
+    dock_connection: dict[NodeIdentifier, NodeIdentifier]
     dock_weakness: list[Optional[DockWeakness]]
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
@@ -114,10 +114,10 @@ class GamePatches:
             yield self.game.world_list.get_teleporter_node(identifier), target
 
     # Dock Connection
-    def get_dock_connection_for(self, node: DockNode) -> Optional[NodeIdentifier]:
+    def get_dock_connection_for(self, node: DockNode) -> NodeIdentifier:
         return self.dock_connection.get(node.identifier, node.default_connection)
 
-    def all_dock_connections(self) -> Iterator[tuple[NodeIdentifier, Optional[NodeIdentifier]]]:
+    def all_dock_connections(self) -> Iterator[tuple[NodeIdentifier, NodeIdentifier]]:
         yield from self.dock_connection.items()
 
     # Dock Weakness
