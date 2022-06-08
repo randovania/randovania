@@ -126,9 +126,9 @@ class Editor:
                                 identifier=node.identifier.renamed(
                                     node.name.replace(old_identifier.area_name, new_identifier.area_name),
                                 ),
-                                default_connection=dataclasses.replace(
-                                    node.default_connection,
+                                default_connection=NodeIdentifier(
                                     area_identifier=new_identifier,
+                                    node_name=node.default_connection.node_name,
                                 ),
                             )
 

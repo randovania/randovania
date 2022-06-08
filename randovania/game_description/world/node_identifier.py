@@ -1,19 +1,12 @@
-import dataclasses
-from typing import Optional
+import attrs
 
 from randovania.game_description.world.area_identifier import AreaIdentifier
 
 
-@dataclasses.dataclass(frozen=True, order=True, slots=True)
+@attrs.define(init=True, frozen=True, cache_hash=True, order=True, slots=True)
 class NodeIdentifier:
     area_identifier: AreaIdentifier
     node_name: str
-    _hash_cache: Optional[int] = dataclasses.field(init=False, hash=False, compare=False, default=None)
-
-    def __hash__(self):
-        if self._hash_cache is None:
-            object.__setattr__(self, "_hash_cache", hash((self.area_identifier, self.node_name)))
-        return self._hash_cache
 
     @classmethod
     def create(cls, world_name: str, area_name: str, node_name: str) -> "NodeIdentifier":
@@ -55,4 +48,4 @@ class NodeIdentifier:
         return self.area_identifier
 
     def renamed(self, new_name: str) -> "NodeIdentifier":
-        return dataclasses.replace(self, node_name=new_name)
+        return NodeIdentifier(area_identifier=self.area_identifier, node_name=new_name)
