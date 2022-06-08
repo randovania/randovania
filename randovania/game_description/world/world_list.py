@@ -1,6 +1,6 @@
 import copy
 import typing
-from typing import List, Dict, Iterator, Tuple, Iterable, Optional, Type
+from typing import List, Iterator, Tuple, Iterable, Optional, Type
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
@@ -10,7 +10,7 @@ from randovania.game_description.resources.resource_info import ResourceCollecti
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node import Node, NodeContext
+from randovania.game_description.world.node import Node, NodeContext, NodeIndex
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.node_provider import NodeProvider
 from randovania.game_description.world.pickup_node import PickupNode
@@ -23,11 +23,11 @@ NodeType = typing.TypeVar("NodeType", bound=Node)
 class WorldList(NodeProvider):
     worlds: List[World]
 
-    _nodes_to_area: Dict[Node, Area]
-    _nodes_to_world: Dict[Node, World]
+    _nodes_to_area: dict[NodeIndex, Area]
+    _nodes_to_world: dict[NodeIndex, World]
     _nodes: Optional[Tuple[Optional[Node], ...]]
-    _pickup_index_to_node: Dict[PickupIndex, PickupNode]
-    _identifier_to_node: Dict[NodeIdentifier, Node]
+    _pickup_index_to_node: dict[PickupIndex, PickupNode]
+    _identifier_to_node: dict[NodeIdentifier, Node]
 
     def __deepcopy__(self, memodict):
         return WorldList(
@@ -39,7 +39,6 @@ class WorldList(NodeProvider):
         self.invalidate_node_cache()
 
     def _refresh_node_cache(self):
-        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
         nodes = tuple(self._iterate_over_nodes())
 
         # Node objects are shared between different WorldList instances, even those with a different list of nodes
@@ -59,6 +58,7 @@ class WorldList(NodeProvider):
             final_nodes[node.index] = node
         self._nodes = tuple(final_nodes)
 
+        self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
         self._pickup_index_to_node = {
             node.pickup_index: node
             for node in self._nodes
@@ -138,11 +138,11 @@ class WorldList(NodeProvider):
 
     def nodes_to_world(self, node: Node) -> World:
         self.ensure_has_node_cache()
-        return self._nodes_to_world[node]
+        return self._nodes_to_world[node.index]
 
     def nodes_to_area(self, node: Node) -> Area:
         self.ensure_has_node_cache()
-        return self._nodes_to_area[node]
+        return self._nodes_to_area[node.index]
 
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Optional[Node]:
         connection = patches.get_dock_connection_for(node)
@@ -266,8 +266,8 @@ class WorldList(NodeProvider):
 
     def add_new_node(self, area: Area, node: Node):
         self.ensure_has_node_cache()
-        self._nodes_to_area[node] = area
-        self._nodes_to_world[node] = self.world_with_area(area)
+        self._nodes_to_area[node.index] = area
+        self._nodes_to_world[node.index] = self.world_with_area(area)
 
 
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):
@@ -277,11 +277,11 @@ def _calculate_nodes_to_area_world(worlds: Iterable[World]):
     for world in worlds:
         for area in world.areas:
             for node in area.nodes:
-                if node in nodes_to_area:
+                if node.index in nodes_to_area:
                     raise ValueError(
                         "Trying to map {} to {}, but already mapped to {}".format(
-                            node, area, nodes_to_area[node]))
-                nodes_to_area[node] = area
-                nodes_to_world[node] = world
+                            node, area, nodes_to_area[node.index]))
+                nodes_to_area[node.index] = area
+                nodes_to_world[node.index] = world
 
     return nodes_to_area, nodes_to_world
