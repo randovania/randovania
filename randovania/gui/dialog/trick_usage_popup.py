@@ -100,6 +100,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         # Update
         bootstrap = self._game_description.game.generator.bootstrap
         trick_resources = ResourceCollection.from_resource_gain(
+            database,
             bootstrap.trick_resources_for_configuration(trick_level, database)
         )
 

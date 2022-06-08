@@ -155,7 +155,7 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     starting_location = AreaIdentifier.from_string(game_modifications["starting_location"])
 
     # Initial items
-    starting_items = ResourceCollection.from_dict({
+    starting_items = ResourceCollection.from_dict(game.resource_database, {
         find_resource_info_with_long_name(game.resource_database.item, resource_name): quantity
         for resource_name, quantity in game_modifications["starting_items"].items()
     })

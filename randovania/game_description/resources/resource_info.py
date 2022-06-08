@@ -65,14 +65,14 @@ class ResourceCollection:
         self._resources[resource] = quantity
 
     @classmethod
-    def from_dict(cls, resources: dict[ResourceInfo, int]) -> "ResourceCollection":
-        result = cls()
+    def from_dict(cls, db: ResourceDatabase, resources: dict[ResourceInfo, int]) -> ResourceCollection:
+        result = cls.with_database(db)
         result.add_resource_gain(resources.items())
         return result
 
     @classmethod
-    def from_resource_gain(cls, resource_gain: ResourceGain) -> "ResourceCollection":
-        result = cls()
+    def from_resource_gain(cls, db: ResourceDatabase, resource_gain: ResourceGain) -> ResourceCollection:
+        result = cls.with_database(db)
         result.add_resource_gain(resource_gain)
         return result
 

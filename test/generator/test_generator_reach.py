@@ -205,7 +205,7 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
         (translator_identif, ResourceRequirement.simple(scan_visor)),
     ])
     initial_state = State(
-        ResourceCollection.from_dict({scan_visor: 1 if has_translator else 0}),
+        ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0}),
         (), 99, node_a, patches, None,
         StateGameData(echoes_resource_database, game.world_list, 100, 99),
     )
