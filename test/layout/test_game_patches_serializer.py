@@ -116,7 +116,7 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
     if request.param.get("configurable_nodes"):
         gates = []
         for identifier, translator in request.param.get("configurable_nodes"):
-            requirement = ResourceRequirement(db.get_item(translator), 1, False)
+            requirement = ResourceRequirement.simple(db.get_item(translator))
             gates.append((NodeIdentifier.from_string(identifier), requirement))
             data["configurable_nodes"][identifier] = data_writer.write_requirement(requirement)
 

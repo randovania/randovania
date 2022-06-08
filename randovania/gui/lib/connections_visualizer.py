@@ -128,7 +128,7 @@ class ItemRow:
 
     @property
     def current_individual(self) -> ResourceRequirement:
-        return ResourceRequirement(
+        return ResourceRequirement.create(
             self.resource_name_combo.currentData(),
             int(self.amount_edit.text()),
             self.negate_combo.currentData()

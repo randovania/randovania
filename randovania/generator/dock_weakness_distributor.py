@@ -58,7 +58,7 @@ class DockRandoLogic(Logic):
 
     @property
     def victory_condition(self) -> Requirement:
-        return ResourceRequirement(NodeResourceInfo.from_node(self.dock, None), 1, False)
+        return ResourceRequirement.simple(NodeResourceInfo.from_node(self.dock, None))
 
 
 TO_SHUFFLE_PROPORTION = 0.6

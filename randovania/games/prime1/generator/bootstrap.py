@@ -67,8 +67,7 @@ class PrimeBootstrap(MetroidBootstrap):
 
         suits = [db.get_item_by_name("Varia Suit")]
         if configuration.heat_protection_only_varia:
-            requirement_template["Heat-Resisting Suit"] = ResourceRequirement(db.get_item_by_name("Varia Suit"),
-                                                                              1, False)
+            requirement_template["Heat-Resisting Suit"] = ResourceRequirement.simple(db.get_item_by_name("Varia Suit"))
         else:
             suits.extend([db.get_item_by_name("Gravity Suit"), db.get_item_by_name("Phazon Suit")])
 
