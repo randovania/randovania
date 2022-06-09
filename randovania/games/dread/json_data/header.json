@@ -929,6 +929,10 @@
             "BureniaEarlyGravEPart": {
                 "long_name": "Burenia - Early Gravity Energy Part",
                 "extra": {}
+            },
+            "ArtariaThermalItemDoor": {
+                "long_name": "Artaria - Open Thermal Device Item Door",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1945,6 +1949,39 @@
                                 "name": "WBJ",
                                 "amount": 2,
                                 "negate": false
+                            }
+                        }
+                    ]
+                }
+            },
+            "Open Charge Door": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "template",
+                            "data": "Shoot Charge Beam"
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Knowledge",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
