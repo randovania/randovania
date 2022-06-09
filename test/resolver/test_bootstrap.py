@@ -63,7 +63,7 @@ def test_logic_bootstrap(preset_manager, game_enum, empty_patches):
 ])
 def test_prime1_progressive_damage_reduction(prime1_resource_database, expected, suits):
     # Setup
-    current_resources = ResourceCollection.from_dict({
+    current_resources = ResourceCollection.from_dict(prime1_resource_database, {
         prime1_resource_database.get_item_by_name(suit): 1
         for suit in suits
     })
@@ -89,7 +89,7 @@ def test_prime1_progressive_damage_reduction(prime1_resource_database, expected,
 ])
 def test_prime1_absolute_damage_reduction(prime1_resource_database, expected, suits):
     # Setup
-    current_resources = ResourceCollection.from_dict({
+    current_resources = ResourceCollection.from_dict(prime1_resource_database, {
         prime1_resource_database.get_item_by_name(suit): 1
         for suit in suits
     })

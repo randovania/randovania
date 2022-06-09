@@ -42,7 +42,7 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
     items = []
     damage = []
 
-    for individual in alternative.items:
+    for individual in alternative.values():
         if individual.negate:
             possible = False
             break
@@ -108,6 +108,7 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
                           state: State):
     pickups = []
 
+    db = state.resource_database
     resources = state.resources.duplicate()
     pickups_for_this = list(pickup_pool)
 
@@ -124,8 +125,8 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
 
         # Create another copy of the list so we can remove elements while iterating
         for pickup in list(pickups_for_this):
-            new_resources = ResourceCollection.from_resource_gain(pickup.resource_gain(resources, force_lock=True))
-            pickup_progression = ResourceCollection.from_resource_gain(pickup.progression)
+            new_resources = ResourceCollection.from_resource_gain(db, pickup.resource_gain(resources, force_lock=True))
+            pickup_progression = ResourceCollection.from_resource_gain(db, pickup.progression)
             if new_resources[individual.resource] + pickup_progression[individual.resource] > 0:
                 pickups.append(pickup)
                 pickups_for_this.remove(pickup)

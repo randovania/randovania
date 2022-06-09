@@ -85,11 +85,14 @@ class RequirementList:
             if individual.negate:
                 yield individual.resource
 
-    def values(self) -> FrozenSet[ResourceRequirement]:
-        return self.items
+    def values(self) -> Iterator[ResourceRequirement]:
+        yield from self.items
 
     def union(self, other: RequirementList) -> RequirementList:
         return RequirementList(self.items | other.items)
+
+    def is_subset_of(self, requirement: RequirementList) -> bool:
+        return self.items < requirement.items
 
 
 SatisfiableRequirements = FrozenSet[RequirementList]

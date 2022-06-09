@@ -175,7 +175,10 @@ class State:
         )
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> "State":
-        pickup_resources = ResourceCollection.from_resource_gain(pickup.resource_gain(self.resources, force_lock=True))
+        pickup_resources = ResourceCollection.from_resource_gain(
+            self.resource_database,
+            pickup.resource_gain(self.resources, force_lock=True)
+        )
 
         # Make sure there's no item percentage on starting items
         if self.resource_database.item_percentage is not None:

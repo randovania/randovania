@@ -45,7 +45,7 @@ def _check_used_tricks(area: Area, trick_resources: ResourceCollection, database
         for alternative in s.alternatives:
             tricks: Dict[TrickResourceInfo, ResourceRequirement] = {
                 req.resource: req
-                for req in alternative.items
+                for req in alternative.values()
                 if req.resource.resource_type == ResourceType.TRICK
             }
             if tricks and all(trick_resources[trick] >= tricks[trick].amount for trick in tricks):
@@ -100,6 +100,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         # Update
         bootstrap = self._game_description.game.generator.bootstrap
         trick_resources = ResourceCollection.from_resource_gain(
+            database,
             bootstrap.trick_resources_for_configuration(trick_level, database)
         )
 

@@ -3,21 +3,13 @@ from __future__ import annotations
 import dataclasses
 import typing
 
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.world.dock import DockType, DockWeakness, DockLockType
 from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
-
-
-def _resolve_dock_node(context: NodeContext, node: DockNode) -> typing.Optional[Node]:
-    connection = context.patches.get_dock_connection_for(node)
-    if connection is not None:
-        return context.node_provider.node_by_identifier(connection)
-    else:
-        return None
 
 
 def _requirement_from_back(context: NodeContext, target_node: Node) -> typing.Optional[ResourceRequirement]:
@@ -51,9 +43,8 @@ class DockNode(Node):
 
     def __post_init__(self):
         super().__post_init__()
-        object.__setattr__(self, "lock_node_identifier", dataclasses.replace(
-            self.identifier,
-            node_name=f"Lock - {self.name}",
+        object.__setattr__(self, "lock_node_identifier", self.identifier.renamed(
+            f"Lock - {self.name}",
         ))
 
     def __repr__(self):
@@ -63,11 +54,7 @@ class DockNode(Node):
         return context.patches.get_dock_weakness_for(self)
 
     def get_back_weakness(self, context: NodeContext) -> typing.Optional[DockWeakness]:
-        target_identifier = self.get_target_identifier(context)
-        if target_identifier is None:
-            return None
-
-        target_node = context.node_provider.node_by_identifier(target_identifier)
+        target_node = self.get_target_identifier(context)
         if isinstance(target_node, DockNode):
             return context.patches.get_dock_weakness_for(target_node)
 
@@ -126,17 +113,12 @@ class DockNode(Node):
         lock_node = context.node_provider.node_by_identifier(self.lock_node_identifier)
         return lock_node, requirement
 
-    def get_target_identifier(self, context: NodeContext) -> typing.Optional[NodeIdentifier]:
+    def get_target_identifier(self, context: NodeContext) -> Node:
         return context.patches.get_dock_connection_for(self)
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
-        target_identifier = self.get_target_identifier(context)
-        if target_identifier is None:
-            # Explicitly connected to nothing.
-            return
-
-        target_node = context.node_provider.node_by_identifier(target_identifier)
-
+        target_node = self.get_target_identifier(context)
         yield self._open_dock_connection(context, target_node)
+
         if (lock_connection := self._lock_connection(context)) is not None:
             yield lock_connection

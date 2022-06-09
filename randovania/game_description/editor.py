@@ -5,6 +5,7 @@ from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -44,6 +45,9 @@ class Editor:
 
         self.game.world_list.invalidate_node_cache()
 
+        if isinstance(node, DockNode):
+            self.remove_node(area, self.game.world_list.node_by_identifier(node.lock_node_identifier))
+
     def replace_node(self, area: Area, old_node: Node, new_node: Node):
         def sub(n: Node):
             return new_node if n == old_node else n
@@ -57,6 +61,9 @@ class Editor:
 
         if old_node.name != new_node.name and area.node_with_name(new_node.name) is not None:
             raise ValueError(f"A node named {new_node.name} already exists.")
+
+        if isinstance(old_node, DockNode):
+            self.remove_node(area, self.game.world_list.node_by_identifier(old_node.lock_node_identifier))
 
         old_identifier = old_node.identifier
         self.replace_references_to_node_identifier(
@@ -78,6 +85,9 @@ class Editor:
         if area.default_node == old_node.name:
             object.__setattr__(area, "default_node", new_node.name)
         area.clear_dock_cache()
+
+        if isinstance(new_node, DockNode):
+            self.add_node(area, DockLockNode.create_from_dock(new_node))
 
         self.game.world_list.invalidate_node_cache()
 
@@ -126,9 +136,9 @@ class Editor:
                                 identifier=node.identifier.renamed(
                                     node.name.replace(old_identifier.area_name, new_identifier.area_name),
                                 ),
-                                default_connection=dataclasses.replace(
-                                    node.default_connection,
+                                default_connection=NodeIdentifier(
                                     area_identifier=new_identifier,
+                                    node_name=node.default_connection.node_name,
                                 ),
                             )
 

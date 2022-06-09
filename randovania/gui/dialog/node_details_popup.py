@@ -325,7 +325,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
     # Final
     def create_new_node(self) -> Node:
         node_type = self.node_type_combo.currentData()
-        identifier = dataclasses.replace(self.node.identifier, node_name=self.name_edit.text())
+        identifier = self.node.identifier.renamed(self.name_edit.text())
         heal = self.heals_check.isChecked()
         location = None
         if self.location_group.isChecked():

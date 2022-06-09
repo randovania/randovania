@@ -69,6 +69,11 @@ def blank_game_description() -> GameDescription:
 
 
 @pytest.fixture(scope="session")
+def blank_resource_db(blank_game_description) -> ResourceDatabase:
+    return blank_game_description.resource_database
+
+
+@pytest.fixture(scope="session")
 def customized_preset(default_preset) -> Preset:
     return Preset(
         name="{} Custom".format(default_preset.name),

@@ -1,4 +1,5 @@
 import dataclasses
+from unittest.mock import MagicMock
 
 from frozendict import frozendict
 
@@ -47,10 +48,14 @@ def test_connections_from_dock_blast_shield(empty_patches):
     world_list = WorldList([world])
     world_list.ensure_has_node_cache()
 
+    game_mock = MagicMock()
+    game_mock.world_list = world_list
+    patches = dataclasses.replace(empty_patches, game=game_mock)
+
     context = NodeContext(
-        patches=empty_patches,
+        patches=patches,
         current_resources=ResourceCollection(),
-        database=empty_patches.game.resource_database,
+        database=patches.game.resource_database,
         node_provider=world_list,
     )
 
