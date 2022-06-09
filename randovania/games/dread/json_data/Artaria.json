@@ -110,8 +110,20 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Event - First Tutorial Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         },
                         "Dock to Intro Room": {
                             "type": "template",
@@ -1842,6 +1854,22 @@
                                             "amount": 1,
                                             "negate": true
                                         }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam"
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Lay Bomb"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -1882,12 +1910,24 @@
                                         "data": "Shoot Diffusion or Wave"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Pseudo",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2097,12 +2137,24 @@
                                         "data": "Shoot Diffusion Beam"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Pseudo",
-                                            "amount": 2,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Pseudo",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -2364,8 +2416,20 @@
                             }
                         },
                         "Event - Water Introduction Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -2407,8 +2471,20 @@
                             }
                         },
                         "Event - Early Cloak Blob": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -6854,7 +6930,7 @@
                                 "items": []
                             }
                         },
-                        "Door from Cold Introduction": {
+                        "Door to Cold Introduction (Missile)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6877,7 +6953,7 @@
                         }
                     }
                 },
-                "Door from Cold Introduction": {
+                "Door to Cold Introduction (Missile)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6903,7 +6979,7 @@
                         "area_name": "Cold Introduction",
                         "node_name": "Door to Charge Beam Access (Side Tunnel)"
                     },
-                    "default_dock_weakness": "Access Closed",
+                    "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
@@ -6916,7 +6992,7 @@
                         }
                     }
                 },
-                "Door to Cold Introduction": {
+                "Door to Cold Introduction (Power)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -7028,7 +7104,7 @@
                     },
                     "event_name": "s010_cave:default:PRP_DB_CV_010",
                     "connections": {
-                        "Door to Cold Introduction": {
+                        "Door to Cold Introduction (Power)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7167,7 +7243,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Cold Introduction": {
+                        "Door to Cold Introduction (Power)": {
                             "type": "resource",
                             "data": {
                                 "type": "events",
@@ -7201,7 +7277,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Cold Introduction": {
+                        "Door to Cold Introduction (Power)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -7224,7 +7300,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Door from Cold Introduction": {
+                        "Door to Cold Introduction (Missile)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -17692,7 +17768,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Charge Beam Access",
-                        "node_name": "Door from Cold Introduction"
+                        "node_name": "Door to Cold Introduction (Missile)"
                     },
                     "default_dock_weakness": "Missile Door",
                     "override_default_open_requirement": null,
@@ -17731,7 +17807,7 @@
                     "default_connection": {
                         "world_name": "Artaria",
                         "area_name": "Charge Beam Access",
-                        "node_name": "Door to Cold Introduction"
+                        "node_name": "Door to Cold Introduction (Power)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -17770,7 +17846,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Suitless",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -17845,7 +17921,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Suitless",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 }
@@ -20587,6 +20663,32 @@
                                     {
                                         "type": "template",
                                         "data": "Use Spin Boost"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "Corpius",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
