@@ -140,6 +140,7 @@ class ConnectionBackend(ConnectionBase):
         self._expected_game = game
 
     def set_permanent_pickups(self, pickups: PermanentPickups):
+        self.logger.info("num permanent pickups: %d", len(pickups))
         self._permanent_pickups = pickups
 
     async def update_current_inventory(self):
