@@ -5,7 +5,6 @@ import pytest
 
 from randovania.game_description import default_database
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.cave_story.generator.pool_creator import CAMP_INDICES, FIRST_CAVE_INDICES, STRONG_WEAPONS
@@ -48,9 +47,9 @@ def test_cs_item_pool_creator(default_cs_configuration: CSConfiguration, puppies
         LayoutTrickLevel.HYPERMODE)
     default_cs_configuration = dataclasses.replace(default_cs_configuration, trick_level=tricks)
 
-    base_patches = GamePatches(0, default_cs_configuration, {}, {}, {}, {}, {},
-                               ResourceCollection.with_database(game_description.resource_database),
-                               starting_area, {})
+    base_patches = GamePatches.create_from_game(
+        game_description, 0, default_cs_configuration,
+    ).assign_starting_location(starting_area)
     rng = Random()
 
     result = pool_creator.calculate_pool_results(

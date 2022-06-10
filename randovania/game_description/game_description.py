@@ -3,7 +3,8 @@ import copy
 import dataclasses
 from typing import Iterator, FrozenSet, Dict, Optional, List
 
-from randovania.game_description.requirements import SatisfiableRequirements, Requirement
+from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceCollection
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo

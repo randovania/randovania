@@ -1,6 +1,8 @@
 import dataclasses
 
-from randovania.game_description.requirements import Requirement, ResourceRequirement
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
 from randovania.game_description.world.node import NodeContext
@@ -17,21 +19,21 @@ class PickupNode(ResourceNode):
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         if context.current_resources.add_self_as_requirement_to_resources:
-            return ResourceRequirement(self.pickup_index, 1, False)
+            return ResourceRequirement.simple(self.resource(context))
         else:
             return Requirement.trivial()
 
     def resource(self, context: NodeContext) -> ResourceInfo:
-        return self.pickup_index
+        return NodeResourceInfo.from_node(self, context)
 
     def can_collect(self, context: NodeContext) -> bool:
         return not self.is_collected(context)
 
     def is_collected(self, context: NodeContext) -> bool:
-        return context.has_resource(self.pickup_index)
+        return context.has_resource(self.resource(context))
 
     def resource_gain_on_collect(self, context: NodeContext) -> ResourceGain:
-        yield self.pickup_index, 1
+        yield self.resource(context), 1
 
         patches = context.patches
         target = patches.pickup_assignment.get(self.pickup_index)

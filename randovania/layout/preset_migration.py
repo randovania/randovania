@@ -4,9 +4,10 @@ from typing import Dict
 
 from randovania.game_description import migration_data, default_database
 from randovania.games.game import RandovaniaGame
+from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 32
+CURRENT_VERSION = 33
 
 
 def _migrate_v1(preset: dict) -> dict:
@@ -628,6 +629,20 @@ def _migrate_v31(preset: dict) -> dict:
     return preset
 
 
+def _migrate_v32(preset: dict) -> dict:
+    game = RandovaniaGame(preset["game"])
+    weakness_database = default_database.game_description_for(game).dock_weakness_database
+
+    preset["configuration"]["dock_rando"] = {
+        "mode": DockRandoMode.VANILLA.value,
+        "types_state": {
+            dock_type.short_name: DockTypeState.default_state(game, dock_type.short_name).as_json
+            for dock_type in weakness_database.dock_types
+        }
+    }
+    return preset
+
+
 _MIGRATIONS = {
     1: _migrate_v1,  # v1.1.1-247-gaf9e4a69
     2: _migrate_v2,  # v1.2.2-71-g0fbabe91
@@ -660,6 +675,7 @@ _MIGRATIONS = {
     29: _migrate_v29,
     30: _migrate_v30,
     31: _migrate_v31,
+    32: _migrate_v32,
 }
 
 

@@ -1,5 +1,5 @@
 {
-    "schema_version": 10,
+    "schema_version": 11,
     "game": "dread",
     "resource_database": {
         "items": {
@@ -1009,6 +1009,11 @@
             },
             "DBoost": {
                 "long_name": "Damage Boost",
+                "description": "",
+                "extra": {}
+            },
+            "FrozenEnemy": {
+                "long_name": "Stand on Frozen Enemy",
                 "description": "",
                 "extra": {}
             }
@@ -2272,7 +2277,26 @@
                             }
                         },
                         "lock": null
+                    },
+                    "Cataris Thermal Door": {
+                        "extra": {},
+                        "requirement": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "s020_magma:default:deviceheat_002",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        "lock": null
                     }
+                },
+                "dock_rando": {
+                    "unlocked": null,
+                    "locked": null,
+                    "change_from": [],
+                    "change_to": []
                 }
             },
             "tunnel": {
@@ -2428,6 +2452,12 @@
                         },
                         "lock": null
                     }
+                },
+                "dock_rando": {
+                    "unlocked": null,
+                    "locked": null,
+                    "change_from": [],
+                    "change_to": []
                 }
             },
             "other": {
@@ -2478,6 +2508,12 @@
                         },
                         "lock": null
                     }
+                },
+                "dock_rando": {
+                    "unlocked": null,
+                    "locked": null,
+                    "change_from": [],
+                    "change_to": []
                 }
             }
         },

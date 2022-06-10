@@ -5,17 +5,22 @@ from unittest.mock import MagicMock
 import pytest
 
 from randovania.game_description import data_reader
-from randovania.game_description.requirements import ResourceRequirement, RequirementList, RequirementSet, \
-    RequirementAnd, RequirementOr, Requirement, MAX_DAMAGE, RequirementTemplate
+from randovania.game_description.requirements.base import MAX_DAMAGE, Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_list import RequirementList
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.node import NodeContext
 from randovania.games.game import RandovaniaGame
 
 
@@ -48,8 +53,8 @@ def _empty_col():
     return ResourceCollection()
 
 
-def _col_for(*args: ResourceInfo):
-    return ResourceCollection.from_dict({resource: 1 for resource in args})
+def _col_for(db: ResourceDatabase, *args: ResourceInfo):
+    return ResourceCollection.from_dict(db, {resource: 1 for resource in args})
 
 
 def _make_resource(name: str):
@@ -58,7 +63,7 @@ def _make_resource(name: str):
 
 def _make_req(name: str):
     req = _make_resource(name)
-    id_req = ResourceRequirement(req, 1, False)
+    id_req = ResourceRequirement.simple(req)
     return req, id_req
 
 
@@ -66,19 +71,22 @@ def _req(name: str):
     return _make_req(name)[1]
 
 
-def make_req_a():
-    return _make_req("A")
+def make_req_a(db: ResourceDatabase):
+    res = db.item[0]
+    return res, ResourceRequirement.simple(res)
 
 
-def make_req_b():
-    return _make_req("B")
+def make_req_b(db: ResourceDatabase):
+    res = db.item[1]
+    return res, ResourceRequirement.simple(res)
 
 
-def make_req_c():
-    return _make_req("C")
+def make_req_c(db: ResourceDatabase):
+    res = db.item[2]
+    return res, ResourceRequirement.simple(res)
 
 
-def make_single_set(id_req: Tuple[SimpleResourceInfo, ResourceRequirement]) -> RequirementSet:
+def make_single_set(id_req: Tuple[ResourceInfo, ResourceRequirement]) -> RequirementSet:
     return RequirementSet([RequirementList([id_req[1]])])
 
 
@@ -90,9 +98,10 @@ def test_empty_requirement_list_satisfied():
     assert RequirementList([]).satisfied(_empty_col(), 99, None)
 
 
-def test_simplify_requirement_set_static():
-    res_a, id_req_a = make_req_a()
-    res_b, id_req_b = make_req_b()
+def test_simplify_requirement_set_static(blank_game_description):
+    db = blank_game_description.resource_database
+    res_a, id_req_a = make_req_a(db)
+    res_b, id_req_b = make_req_b(db)
     fd = ResourceCollection.from_dict
 
     the_set = RequirementOr([
@@ -100,18 +109,19 @@ def test_simplify_requirement_set_static():
         RequirementAnd([id_req_b]),
     ])
 
-    simple_1 = the_set.patch_requirements(fd({res_a: 0, res_b: 0}), 1, None)
-    simple_2 = the_set.patch_requirements(fd({res_a: 0, res_b: 1}), 1, None)
-    simple_3 = the_set.patch_requirements(fd({res_a: 1, res_b: 1}), 1, None)
+    simple_1 = the_set.patch_requirements(fd(db, {res_a: 0, res_b: 0}), 1, db)
+    simple_2 = the_set.patch_requirements(fd(db, {res_a: 0, res_b: 1}), 1, db)
+    simple_3 = the_set.patch_requirements(fd(db, {res_a: 1, res_b: 1}), 1, db)
 
-    assert simple_1.as_set(None).alternatives == frozenset()
-    assert simple_2.as_set(None).alternatives == frozenset([RequirementList([])])
-    assert simple_3.as_set(None).alternatives == frozenset([RequirementList([])])
+    assert simple_1.as_set(db).alternatives == frozenset()
+    assert simple_2.as_set(db).alternatives == frozenset([RequirementList([])])
+    assert simple_3.as_set(db).alternatives == frozenset([RequirementList([])])
 
 
-def test_prevent_redundant():
-    res_a, id_req_a = make_req_a()
-    res_b, id_req_b = make_req_b()
+def test_prevent_redundant(blank_game_description):
+    db = blank_game_description.resource_database
+    res_a, id_req_a = make_req_a(db)
+    res_b, id_req_b = make_req_b(db)
 
     the_set = RequirementSet([
         RequirementList([id_req_a]),
@@ -121,10 +131,11 @@ def test_prevent_redundant():
     assert the_set.alternatives == frozenset([RequirementList([id_req_a])])
 
 
-def test_trivial_merge():
+def test_trivial_merge(blank_game_description):
+    db = blank_game_description.resource_database
+    res_a, id_req_a = make_req_a(db)
     trivial = RequirementSet.trivial()
     impossible = RequirementSet.impossible()
-    res_a, id_req_a = make_req_a()
 
     the_set = RequirementSet([
         RequirementList([id_req_a]),
@@ -139,14 +150,38 @@ def test_trivial_merge():
     assert the_set.union(the_set) == the_set
 
 
-@pytest.mark.parametrize(["a", "b", "expected"], [
-    (RequirementSet.impossible(), make_single_set(make_req_a()), make_single_set(make_req_a())),
-    (RequirementSet.impossible(), RequirementSet.trivial(), RequirementSet.trivial()),
-    (RequirementSet.trivial(), make_single_set(make_req_a()), RequirementSet.trivial()),
-    (make_single_set(make_req_a()), make_single_set(make_req_b()),
-     RequirementSet([RequirementList([make_req_a()[1]]), RequirementList([make_req_b()[1]])])),
-])
-def test_expand_alternatives(a: RequirementSet, b: RequirementSet, expected: RequirementSet):
+def test_expand_alternatives_1(blank_resource_db):
+    db = blank_resource_db
+    a = RequirementSet.impossible()
+    b = make_single_set(make_req_a(db))
+    expected = make_single_set(make_req_a(db))
+
+    assert a.expand_alternatives(b) == expected
+
+
+def test_expand_alternatives_2():
+    a = RequirementSet.impossible()
+    b = RequirementSet.trivial()
+    expected = RequirementSet.trivial()
+
+    assert a.expand_alternatives(b) == expected
+
+
+def test_expand_alternatives_3(blank_resource_db):
+    db = blank_resource_db
+    a = RequirementSet.trivial()
+    b = make_single_set(make_req_a(db))
+    expected = RequirementSet.trivial()
+
+    assert a.expand_alternatives(b) == expected
+
+
+def test_expand_alternatives_4(blank_resource_db):
+    db = blank_resource_db
+    a = make_single_set(make_req_a(db))
+    b = make_single_set(make_req_b(db))
+    expected = RequirementSet([RequirementList([make_req_a(db)[1]]), RequirementList([make_req_b(db)[1]])])
+
     assert a.expand_alternatives(b) == expected
 
 
@@ -161,7 +196,7 @@ def test_expand_alternatives(a: RequirementSet, b: RequirementSet, expected: Req
 def test_list_dangerous_resources(input_data, output_data):
     # setup
     req_list = RequirementList((
-        ResourceRequirement(_make_resource(str(item[0])), 1, item[1])
+        ResourceRequirement.create(_make_resource(str(item[0])), 1, item[1])
         for item in input_data
     ))
 
@@ -495,7 +530,7 @@ def _arr_req(req_type: str, items: list):
 def test_requirement_damage(damage, items, requirement, echoes_resource_database):
     req = data_reader.read_requirement(requirement, echoes_resource_database)
 
-    collection = ResourceCollection.from_dict({
+    collection = ResourceCollection.from_dict(echoes_resource_database, {
         echoes_resource_database.get_item(item): 1
         for item in items
     })
@@ -505,7 +540,7 @@ def test_requirement_damage(damage, items, requirement, echoes_resource_database
 
 def test_simple_echoes_damage(echoes_resource_database):
     db = echoes_resource_database
-    req = ResourceRequirement(
+    req = ResourceRequirement.create(
         db.get_by_type_and_index(ResourceType.DAMAGE, "DarkWorld1"),
         50, False,
     )
@@ -513,8 +548,8 @@ def test_simple_echoes_damage(echoes_resource_database):
     l_suit = db.get_item_by_name("Light Suit")
 
     assert req.damage(_empty_col(), db) == 50
-    assert req.damage(_col_for(d_suit), db) == 11
-    assert req.damage(_col_for(l_suit), db) == 0
+    assert req.damage(_col_for(db, d_suit), db) == 11
+    assert req.damage(_col_for(db, l_suit), db) == 0
 
 
 def test_requirement_list_constructor(echoes_resource_database):
@@ -522,11 +557,11 @@ def test_requirement_list_constructor(echoes_resource_database):
         return search.find_resource_info_with_long_name(echoes_resource_database.item, name)
 
     req_list = RequirementList([
-        ResourceRequirement(item("Dark Visor"), 1, False),
-        ResourceRequirement(item("Missile"), 5, False),
-        ResourceRequirement(item("Seeker Launcher"), 1, False),
+        ResourceRequirement.simple(item("Dark Visor")),
+        ResourceRequirement.create(item("Missile"), 5, False),
+        ResourceRequirement.simple(item("Seeker Launcher")),
     ])
-    extract = [(req.resource.long_name, req.amount) for req in req_list.items]
+    extract = [(req.resource.long_name, req.amount) for req in req_list.values()]
 
     assert sorted(extract) == [
         ("Dark Visor", 1),
@@ -540,21 +575,21 @@ def test_requirement_set_constructor(echoes_resource_database):
 
     req_set = RequirementSet([
         RequirementList([
-            ResourceRequirement(item("Dark Visor"), 1, False),
-            ResourceRequirement(item("Missile"), 5, False),
-            ResourceRequirement(item("Seeker Launcher"), 1, False),
+            ResourceRequirement.simple(item("Dark Visor")),
+            ResourceRequirement.create(item("Missile"), 5, False),
+            ResourceRequirement.simple(item("Seeker Launcher")),
         ]),
         RequirementList([
-            ResourceRequirement(item("Screw Attack"), 1, False),
-            ResourceRequirement(item("Space Jump Boots"), 1, False),
+            ResourceRequirement.simple(item("Screw Attack")),
+            ResourceRequirement.simple(item("Space Jump Boots")),
         ]),
         RequirementList([
-            ResourceRequirement(item("Power Bomb"), 1, False),
-            ResourceRequirement(item("Boost Ball"), 1, False),
+            ResourceRequirement.simple(item("Power Bomb")),
+            ResourceRequirement.simple(item("Boost Ball")),
         ]),
     ])
     extract = [
-        sorted((req.resource.long_name, req.amount) for req in req_list.items)
+        sorted((req.resource.long_name, req.amount) for req in req_list.values())
         for req_list in req_set.alternatives
     ]
 
@@ -575,13 +610,16 @@ def test_requirement_set_constructor(echoes_resource_database):
     ]
 
 
-def test_node_identifier_as_requirement():
-    nic = NodeIdentifier.create
-    req = ResourceRequirement.simple(nic("W", "A", "N"))
-    db = typing.cast(ResourceDatabase, None)
+def test_node_resource_info_as_requirement(blank_game_description):
+    db = blank_game_description.resource_database
+    node = blank_game_description.world_list.all_nodes[0]
+    context = NodeContext(None, None, db, blank_game_description.world_list)
+
+    nri = NodeResourceInfo.from_node
+    req = ResourceRequirement.simple(nri(node, context))
 
     assert not req.satisfied(_empty_col(), 0, db)
-    assert req.satisfied(_col_for(nic("W", "A", "N")), 0, db)
+    assert req.satisfied(_col_for(db, nri(node, context)), 0, db)
 
 
 def test_set_as_str_impossible():
@@ -597,11 +635,11 @@ def test_set_as_str_things(echoes_resource_database):
 
     req_set = RequirementSet([
         RequirementList([
-            ResourceRequirement(item("Screw Attack"), 1, False),
-            ResourceRequirement(item("Space Jump Boots"), 1, False),
+            ResourceRequirement.simple(item("Screw Attack")),
+            ResourceRequirement.simple(item("Space Jump Boots")),
         ]),
         RequirementList([
-            ResourceRequirement(item("Power Bomb"), 1, False),
+            ResourceRequirement.simple(item("Power Bomb")),
         ]),
     ])
 
@@ -611,12 +649,12 @@ def test_set_as_str_things(echoes_resource_database):
 def test_set_hash(echoes_resource_database):
     req_set_a = RequirementSet([
         RequirementList([
-            ResourceRequirement(echoes_resource_database.get_item_by_name("Power Bomb"), 1, False),
+            ResourceRequirement.simple(echoes_resource_database.get_item_by_name("Power Bomb")),
         ]),
     ])
     req_set_b = RequirementSet([
         RequirementList([
-            ResourceRequirement(echoes_resource_database.get_item_by_name("Power Bomb"), 1, False),
+            ResourceRequirement.simple(echoes_resource_database.get_item_by_name("Power Bomb")),
         ]),
     ])
 
@@ -630,10 +668,13 @@ def test_set_hash(echoes_resource_database):
     assert hash_a == req_set_a._cached_hash
 
 
-def test_sort_resource_requirement():
+def test_sort_resource_requirement(blank_game_description):
+    db = blank_game_description.resource_database
+    node = blank_game_description.world_list.all_nodes[0]
+    assert node is not None
+
     resources = [
-        NodeIdentifier.create("World", "Area", "Node"),
-        PickupIndex(10),
+        NodeResourceInfo.from_node(node, NodeContext(None, None, db, blank_game_description.world_list)),
         _make_resource("Resource"),
         TrickResourceInfo("Trick", "Trick", "Long Description"),
         ItemResourceInfo("Item", "Item", 1),

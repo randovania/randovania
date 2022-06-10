@@ -23,6 +23,7 @@ from randovania.games.prime1.layout.prime_configuration import PrimeConfiguratio
 from randovania.games.prime1.layout.prime_cosmetic_patches import PrimeCosmeticPatches
 from randovania.games.prime1.patcher import prime1_elevators, prime_items
 from randovania.generator.item_pool import pickup_creator
+from randovania.layout.base.dock_rando_configuration import DockRandoMode
 from randovania.layout.layout_description import LayoutDescription
 
 _EASTER_EGG_SHINY_MISSILE = 1024
@@ -177,7 +178,8 @@ def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
 
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
-    return "%s | Seed Hash - %s (%s)" % (randovania.VERSION, description.shareable_word_hash, description.shareable_hash)
+    return "%s | Seed Hash - %s (%s)" % (
+        randovania.VERSION, description.shareable_word_hash, description.shareable_hash)
 
 
 class PrimePatchDataFactory(BasePatchDataFactory):
@@ -245,7 +247,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
             }
 
             for area in world.areas:
-                world_data[world.name]["rooms"][area.name] = {"pickups": []}
+                world_data[world.name]["rooms"][area.name] = {"pickups": [], "doors": {}}
 
                 def node_len(a: PickupNode):
                     return a.pickup_index
@@ -308,6 +310,30 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                     world_data[world.name]["rooms"][area.name]["pickups"].append(pickup)
 
+                dock_nodes = sorted(
+                    (node for node in area.nodes if isinstance(node, DockNode)),
+                    key=lambda n: n.extra["dock_index"]
+                )
+                for node in dock_nodes:
+                    weakness = self.patches.get_dock_weakness_for(node)
+                    if weakness == node.default_dock_weakness or node.extra.get("exclude_dock_rando", False):
+                        continue
+
+                    dock_index = node.extra["dock_index"]
+                    dock_data = {
+                        "shieldType": weakness.extra["shieldType"],
+                        "blastShieldType": weakness.extra.get("blastShieldType", None)
+                    }
+
+                    world_data[world.name]["rooms"][area.name]["doors"][dock_index] = dock_data
+
+                regular_door = self.game.dock_weakness_database.find_type("door")
+                missile_shield = self.game.dock_weakness_database.get_by_weakness("door", "Missile Blast Shield")
+                remove_blast_shields = (
+                        self.configuration.dock_rando.mode != DockRandoMode.VANILLA and
+                        missile_shield in self.configuration.dock_rando.types_state[regular_door].can_change_from
+                )
+
                 if self.configuration.superheated_probability != 0:
                     world_data[world.name]["rooms"][area.name][
                         "superheated"] = self.rng.random() < self.configuration.superheated_probability / 1000.0
@@ -321,7 +347,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         continue
 
                     identifier = db.world_list.identifier_for_node(node)
-                    target = _name_for_location(db.world_list, self.patches.elevator_connection[identifier])
+                    target = _name_for_location(db.world_list, self.patches.get_elevator_connection_for(node))
 
                     source_name = prime1_elevators.RANDOM_PRIME_CUSTOM_NAMES[(
                         identifier.area_location.world_name,
@@ -354,7 +380,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                         dock_num_by_area_node[(area.name, node.name)] = index
                         is_nonstandard[(area.name, index)] = node.extra["nonstandard"]
                         default_connections_node_name[(area.name, index)] = (
-                        node.default_connection.area_name, node.default_connection.node_name)
+                            node.default_connection.area_name, node.default_connection.node_name)
 
                         if node.default_dock_weakness.name == "Permanently Locked":
                             disabled_doors.add((area.name, index))
@@ -626,7 +652,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                     if component_number(src_name) == a_component_num:
                                         continue
                                     (src_name_b, src_dock_b, dst_name_b, dst_dock_b) = (
-                                    src_name, src_dock, dst_name, dst_dock)
+                                        src_name, src_dock, dst_name, dst_dock)
                                     break
 
                                 # If we could not find two rooms that were part of two different components, still remove a random room pairing
@@ -819,6 +845,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                 "noDoors": self.configuration.no_doors,
                 "shufflePickupPosition": self.configuration.shuffle_item_pos,
                 "shufflePickupPosAllRooms": False,  # functionality is handled in randovania as of v4.3
+                "removeVanillaBlastShields": remove_blast_shields,
                 "startingRoom": starting_room,
                 "startingMemo": starting_memo,
                 "warpToStart": self.configuration.warp_to_start,

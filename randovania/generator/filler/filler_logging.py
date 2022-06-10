@@ -2,6 +2,7 @@ from typing import Iterator
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.pickup_entry import PickupEntry
+from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator.filler.filler_library import UncollectedState, find_node_with_resource
@@ -56,8 +57,8 @@ def print_new_resources(game: GameDescription,
 
 
 def print_new_pickup_index(player: int, game: GameDescription, reach: GeneratorReach,
-                           location: ResourceInfo, count: int):
+                           location: PickupIndex, count: int):
     if debug.debug_level() > 1 and count == 1:
         world_list = game.world_list
-        node = find_node_with_resource(location, reach.node_context(), world_list.iterate_nodes())
+        node = world_list.node_from_pickup_index(location)
         print("-> New Pickup Index: Player {}'s {}".format(player, world_list.node_name(node, with_world=True)))

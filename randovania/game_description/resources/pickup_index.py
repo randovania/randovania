@@ -1,13 +1,6 @@
-from randovania.game_description.resources.resource_type import ResourceType
-
-
 class PickupIndex:
     __slots__ = ("_index",)
     _index: int
-
-    @property
-    def resource_type(self) -> ResourceType:
-        return ResourceType.PICKUP_INDEX
 
     @property
     def long_name(self) -> str:

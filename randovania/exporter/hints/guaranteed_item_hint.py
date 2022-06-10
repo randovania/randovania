@@ -21,8 +21,8 @@ def find_locations_that_gives_items(
                 continue
 
             # TODO: iterate over all tiers of progression
-
-            resources = ResourceCollection.from_resource_gain(target.pickup.resource_gain(ResourceCollection()))
+            db = patches.game.resource_database
+            resources = ResourceCollection.from_resource_gain(db, target.pickup.resource_gain(ResourceCollection()))
             for resource, quantity in resources.as_resource_gain():
                 if quantity > 0 and resource in result:
                     result[resource].append((other_player, PickupLocation(patches.configuration.game, pickup_index)))

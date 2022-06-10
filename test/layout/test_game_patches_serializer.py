@@ -1,5 +1,4 @@
 import collections
-import copy
 import dataclasses
 import uuid
 
@@ -7,10 +6,10 @@ import pytest
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
-from randovania.game_description import data_reader, data_writer
+from randovania.game_description import data_writer
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.hint import Hint
-from randovania.game_description.requirements import ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import (
     PickupEntry, ResourceLock, PickupModel,
 )
@@ -18,7 +17,6 @@ from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
-from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 from randovania.generator import generator
 from randovania.generator.item_pool import pickup_creator, pool_creator
@@ -108,18 +106,18 @@ def _patches_with_data(request, echoes_game_description, echoes_game_patches, ec
         data["starting_items"][item_name] = 1
 
     if request.param.get("elevator"):
-        teleporter = request.param.get("elevator")
-        elevator_connection = copy.copy(patches.elevator_connection)
-        elevator_connection[teleporter] = game.starting_location
-
-        patches = dataclasses.replace(patches, elevator_connection=elevator_connection)
+        teleporter: NodeIdentifier = request.param.get("elevator")
+        patches = patches.assign_elevators([
+            (game.world_list.get_teleporter_node(teleporter),
+             game.starting_location),
+        ])
         data["teleporters"][teleporter.as_string] = "Temple Grounds/Landing Site"
 
     if request.param.get("configurable_nodes"):
-        gates = {}
+        gates = []
         for identifier, translator in request.param.get("configurable_nodes"):
-            requirement = ResourceRequirement(db.get_item(translator), 1, False)
-            gates[NodeIdentifier.from_string(identifier)] = requirement
+            requirement = ResourceRequirement.simple(db.get_item(translator))
+            gates.append((NodeIdentifier.from_string(identifier), requirement))
             data["configurable_nodes"][identifier] = data_writer.write_requirement(requirement)
 
         patches = patches.assign_node_configuration(gates)
@@ -156,16 +154,14 @@ def test_encode(patches_with_data):
 def test_decode(patches_with_data, default_echoes_configuration):
     encoded, expected = patches_with_data
 
-    data = default_data.read_json_then_binary(default_echoes_configuration.game)[1]
-
-    game = data_reader.decode_data(data)
+    game = expected.game
     pool = pool_creator.calculate_pool_results(default_echoes_configuration, game.resource_database)
 
     # Run
     decoded = game_patches_serializer.decode_single(0, {0: pool}, game, encoded, default_echoes_configuration)
 
     # Assert
-    assert decoded.elevator_connection == expected.elevator_connection
+    assert set(decoded.all_elevator_connections()) == set(expected.all_elevator_connections())
     assert decoded == expected
 
 
@@ -239,6 +235,10 @@ async def test_round_trip_generated_patches(default_preset):
     # Run
     encoded = game_patches_serializer.serialize(all_patches)
     decoded = game_patches_serializer.decode(encoded, {0: preset.configuration})
+    decoded_with_original_game = {
+        i: dataclasses.replace(d, game=orig.game)
+        for (i, d), orig in zip(decoded.items(), all_patches.values())
+    }
 
     # Assert
-    assert all_patches == decoded
+    assert all_patches == decoded_with_original_game

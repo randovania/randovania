@@ -7,7 +7,7 @@ from typing import Optional, NamedTuple
 from frozendict import frozendict
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.lib import frozen_lib
 
@@ -15,6 +15,9 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
     from randovania.game_description.world.node_provider import NodeProvider
+
+
+NodeIndex = int
 
 
 class NodeLocation(NamedTuple):
@@ -42,7 +45,7 @@ class Node:
     description: str
     layers: tuple[str, ...]
     extra: dict[str, typing.Any]
-    index: int = dataclasses.field(init=False, hash=False, compare=False)
+    index: NodeIndex = dataclasses.field(init=False, hash=False, compare=False)
 
     def __lt__(self, other: "Node"):
         return self.identifier < other.identifier
@@ -54,7 +57,7 @@ class Node:
     def name(self):
         return self.identifier.node_name
 
-    def get_index(self):
+    def get_index(self) -> NodeIndex:
         """
         Gets a unique index for this node. Used by GeneratorReach
         :return:

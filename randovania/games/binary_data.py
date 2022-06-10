@@ -260,6 +260,12 @@ ConstructDockWeaknessDatabase = Struct(
         name=String,
         extra=JsonEncodedValue,
         items=ConstructDict(ConstructDockWeakness),
+        dock_rando=Struct(
+            unlocked=OptionalValue(String),
+            locked=OptionalValue(String),
+            change_from=PrefixedArray(VarInt, String),
+            change_to=PrefixedArray(VarInt, String),
+        ),
     )),
     default_weakness=Struct(
         type=String,

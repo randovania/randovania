@@ -7,7 +7,8 @@ import pytest
 
 from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import Requirement, ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -150,11 +151,7 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     #             if isinstance(node, ResourceNode) else "",
     #             game.world_list.node_name(node, with_world=True)))
 
-    collected_indices = {
-        resource
-        for resource, quantity in reach.state.resources.as_resource_gain()
-        if quantity > 0 and isinstance(resource, PickupIndex)
-    }
+    collected_indices = set(reach.state.collected_pickup_indices)
     collected_events = {
         resource
         for resource, quantity in reach.state.resources.as_resource_gain()
@@ -200,15 +197,15 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
                  )
         ], {})
     ])
-    game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], {}, (None, None)),
+    game = GameDescription(RandovaniaGame.METROID_PRIME_ECHOES, DockWeaknessDatabase([], {}, {}, (None, None)),
                            echoes_resource_database, ("default",), Requirement.impossible(),
                            None, {}, None, world_list)
 
-    patches = echoes_game_patches.assign_node_configuration({
-        translator_identif: ResourceRequirement(scan_visor, 1, False)
-    })
+    patches = echoes_game_patches.assign_node_configuration([
+        (translator_identif, ResourceRequirement.simple(scan_visor)),
+    ])
     initial_state = State(
-        ResourceCollection.from_dict({scan_visor: 1 if has_translator else 0}),
+        ResourceCollection.from_dict(echoes_resource_database, {scan_visor: 1 if has_translator else 0}),
         (), 99, node_a, patches, None,
         StateGameData(echoes_resource_database, game.world_list, 100, 99),
     )

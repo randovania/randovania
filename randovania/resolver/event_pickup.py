@@ -2,7 +2,8 @@ import dataclasses
 from typing import Tuple, List
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import ResourceRequirement, Requirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceGain, ResourceInfo
 from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.node import NodeContext
@@ -27,10 +28,10 @@ class EventPickupNode(ResourceNode):
         return True
 
     def resource(self, context: NodeContext) -> ResourceInfo:
-        return self.pickup_node.pickup_index
+        return self.pickup_node.resource(context)
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
-        return ResourceRequirement(self.pickup_node.pickup_index, 1, False)
+        return ResourceRequirement.simple(self.pickup_node.resource(context))
 
     def can_collect(self, context: NodeContext) -> bool:
         # FIXME
@@ -71,9 +72,8 @@ def replace_with_event_pickups(game: GameDescription):
 
         for event_node, next_node in nodes_to_replace:
             combined_node = EventPickupNode(
-                dataclasses.replace(
-                    event_node.identifier,
-                    node_name="EventPickup - {} + {}".format(event_node.event.long_name, next_node.name),
+                event_node.identifier.renamed(
+                    "EventPickup - {} + {}".format(event_node.event.long_name, next_node.name),
                 ),
                 event_node.heal or next_node.heal,
                 next_node.location,
@@ -84,6 +84,7 @@ def replace_with_event_pickups(game: GameDescription):
                     "pickup": next_node.extra,
                 },
                 event_node, next_node)
+            object.__setattr__(combined_node, "index", event_node.index)
 
             # If the default node index is beyond one of the removed nodes, then fix it
             if area.default_node in {event_node.name, next_node.name}:

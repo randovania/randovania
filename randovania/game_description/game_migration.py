@@ -1,6 +1,6 @@
 from randovania.lib import migration_lib
 
-CURRENT_VERSION = 10
+CURRENT_VERSION = 11
 
 
 def _migrate_v6(data: dict) -> dict:
@@ -68,6 +68,18 @@ def _migrate_v9(data: dict) -> dict:
     return data
 
 
+def _migrate_v10(data: dict) -> dict:
+    for dock_type in data["dock_weakness_database"]["types"].values():
+        dock_type["dock_rando"] = {
+            "unlocked": None,
+            "locked": None,
+            "change_from": [],
+            "change_to": []
+        }
+    
+    return data
+
+
 _MIGRATIONS = {
     1: migration_lib.unsupported_migration,
     2: migration_lib.unsupported_migration,
@@ -78,6 +90,7 @@ _MIGRATIONS = {
     7: _migrate_v7,
     8: _migrate_v8,
     9: _migrate_v9,
+    10: _migrate_v10,
 }
 
 

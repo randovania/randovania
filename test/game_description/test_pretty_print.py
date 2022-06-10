@@ -4,7 +4,9 @@ import pytest
 
 import randovania
 from randovania.game_description import pretty_print, default_database
-from randovania.game_description.requirements import RequirementAnd, ResourceRequirement, RequirementTemplate
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.games.game import RandovaniaGame
 
 
@@ -41,7 +43,7 @@ def test_pretty_print_requirement_array_combinable(mock_print_requirement: Magic
     mock_print_requirement.return_value = ["a", "b"]
 
     array = RequirementAnd([
-        ResourceRequirement(echoes_resource_database.item[0], 1, False),
+        ResourceRequirement.simple(echoes_resource_database.item[0]),
         RequirementTemplate("Shoot Sunburst"),
     ])
 

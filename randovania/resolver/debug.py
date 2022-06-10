@@ -1,7 +1,8 @@
 import contextlib
 from typing import Set
 
-from randovania.game_description.requirements import RequirementList, RequirementSet
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.resource_node import ResourceNode
@@ -103,6 +104,12 @@ def set_level(level: int):
 def debug_level() -> int:
     return _DEBUG_LEVEL
 
+@contextlib.contextmanager
+def with_level(level: int):
+    current_level = debug_level()
+    set_level(level)
+    yield
+    set_level(current_level)
 
 def debug_print(message: str):
     if _DEBUG_LEVEL > 0:

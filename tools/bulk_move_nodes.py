@@ -5,7 +5,7 @@ from randovania.game_description import data_reader
 from randovania.game_description import data_writer
 from randovania.game_description import pretty_print
 from randovania.game_description.editor import Editor
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.games import default_data
 from randovania.games.game import RandovaniaGame
 

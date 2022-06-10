@@ -1,6 +1,6 @@
 import dataclasses
 from random import Random
-from typing import Dict, Iterator
+from typing import Dict, Iterator, Callable
 
 import randovania
 import randovania.games.prime2.exporter.hints
@@ -8,11 +8,13 @@ from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints import credits_spoiler
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.patch_data_factory import BasePatchDataFactory
-from randovania.game_description.assignment import NodeConfigurationAssignment, PickupTarget
+from randovania.game_description.assignment import NodeConfigurationAssociation, PickupTarget
 from randovania.game_description.default_database import default_prime2_memo_data
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches, ElevatorConnection
-from randovania.game_description.requirements import Requirement, RequirementAnd, ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -140,38 +142,31 @@ def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list
     :param game:
     :return:
     """
-
     world_list = game.world_list
-    elevator_connection = patches.elevator_connection
-
-    nodes_by_teleporter = _get_nodes_by_teleporter_id(world_list)
-    if len(elevator_connection) != len(nodes_by_teleporter):
-        raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
-            len(nodes_by_teleporter), len(elevator_connection)
-        ))
 
     elevator_fields = []
 
-    for teleporter, connection in elevator_connection.items():
-        node = world_list.node_by_identifier(teleporter)
-        assert isinstance(node, TeleporterNode)
+    for node, connection in patches.all_elevator_connections():
         elevator_fields.append({
             "instance_id": node.extra["teleporter_instance_id"],
-            "origin_location": _area_identifier_to_json(game.world_list, teleporter.area_location),
+            "origin_location": _area_identifier_to_json(game.world_list, node.identifier.area_location),
             "target_location": _area_identifier_to_json(game.world_list, connection),
             "room_name": _pretty_name_for_elevator(game.game, world_list, node, connection)
         })
 
+    num_teleporter_nodes = sum(1 for _ in _get_nodes_by_teleporter_id(world_list))
+    if len(elevator_fields) != num_teleporter_nodes:
+        raise ValueError("Invalid elevator count. Expected {}, got {}.".format(
+            num_teleporter_nodes, len(elevator_fields)
+        ))
+
     return elevator_fields
 
 
-def _get_nodes_by_teleporter_id(world_list: WorldList) -> Dict[NodeIdentifier, TeleporterNode]:
-    return {
-        world_list.identifier_for_node(node): node
-
-        for node in world_list.iterate_nodes()
-        if isinstance(node, TeleporterNode) and node.editable
-    }
+def _get_nodes_by_teleporter_id(world_list: WorldList) -> Iterator[TeleporterNode]:
+    for node in world_list.iterate_nodes():
+        if isinstance(node, TeleporterNode) and node.editable:
+            yield node
 
 
 def translator_index_for_requirement(requirement: Requirement) -> int:
@@ -194,7 +189,7 @@ def translator_index_for_requirement(requirement: Requirement) -> int:
     return 9
 
 
-def _create_translator_gates_field(game: GameDescription, gate_assignment: NodeConfigurationAssignment) -> list:
+def _create_translator_gates_field(game: GameDescription, gate_assignment: dict[NodeIdentifier, Requirement]) -> list:
     """
     Creates the translator gate entries in the patcher file
     :param gate_assignment:
@@ -224,15 +219,14 @@ def _apply_translator_gate_patches(specific_patches: dict, elevator_shuffle_mode
 def _create_elevator_scan_port_patches(
         game: RandovaniaGame,
         world_list: WorldList,
-        elevator_connection: ElevatorConnection,
+        get_elevator_connection_for: Callable[[TeleporterNode], AreaIdentifier],
 ) -> Iterator[dict]:
-    nodes_by_teleporter_id = _get_nodes_by_teleporter_id(world_list)
-
-    for teleporter, node in nodes_by_teleporter_id.items():
+    for node in _get_nodes_by_teleporter_id(world_list):
         if node.extra.get("scan_asset_id") is None:
             continue
 
-        target_area_name = elevators.get_elevator_or_area_name(game, world_list, elevator_connection[teleporter], True)
+        target_area_name = elevators.get_elevator_or_area_name(game, world_list,
+                                                               get_elevator_connection_for(node), True)
         yield {
             "asset_id": node.extra["scan_asset_id"],
             "strings": [f"Access to &push;&main-color=#FF3333;{target_area_name}&pop; granted.", ""],
@@ -374,7 +368,8 @@ def _create_string_patches(hint_config: HintConfiguration,
         ))
 
     # Elevator Scans
-    string_patches.extend(_create_elevator_scan_port_patches(game.game, game.world_list, patches.elevator_connection))
+    string_patches.extend(_create_elevator_scan_port_patches(game.game, game.world_list,
+                                                             patches.get_elevator_connection_for))
 
     string_patches.extend(_logbook_title_string_patches())
 

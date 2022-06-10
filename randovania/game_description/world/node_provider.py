@@ -4,7 +4,7 @@ from typing import Iterator, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from randovania.game_description.game_patches import GamePatches
-    from randovania.game_description.requirements import Requirement
+    from randovania.game_description.requirements.base import Requirement
     from randovania.game_description.world.area import Area
     from randovania.game_description.world.area_identifier import AreaIdentifier
     from randovania.game_description.world.node import Node

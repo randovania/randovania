@@ -13,7 +13,7 @@ from randovania.game_description import data_reader, data_writer, pretty_print, 
     derived_nodes, default_database
 from randovania.game_description.editor import Editor
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
@@ -465,7 +465,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             self.other_node_connection_combo.clear()
 
         for node in sorted(self.current_area.nodes, key=lambda x: x.name):
-            if node is current_node:
+            if node is current_node or node.is_derived_node:
                 continue
 
             if not self.edit_mode and node not in self.current_area.connections[current_node]:
@@ -739,7 +739,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             resources = self.layers_editor.selected_tricks()
             if resources:
                 game = game.get_mutable()
-                game.patch_requirements(ResourceCollection.from_resource_gain(resources.items()), 1.0)
+                game.patch_requirements(
+                    ResourceCollection.from_resource_gain(game.resource_database, resources.items()),
+                    1.0,
+                )
 
         self.update_game(game)
 

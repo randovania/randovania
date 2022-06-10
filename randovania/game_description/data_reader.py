@@ -4,9 +4,11 @@ from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashabl
 
 from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
-from randovania.game_description.requirements import (
-    ResourceRequirement, Requirement, RequirementOr, RequirementAnd, RequirementTemplate
-)
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.damage_resource_info import DamageReduction
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -22,7 +24,7 @@ from randovania.game_description.resources.trick_resource_info import TrickResou
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import (
-    DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
+    DockRandoParams, DockWeakness, DockType, DockWeaknessDatabase, DockLockType, DockLock
 )
 from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.game_description.world.node import (
@@ -208,12 +210,24 @@ def read_dock_weakness_database(data: dict,
                                 ) -> DockWeaknessDatabase:
     dock_types = read_dict(data["types"], read_dock_type)
     weaknesses: dict[DockType, dict[str, DockWeakness]] = {}
+    dock_rando: dict[DockType, DockRandoParams] = {}
 
     for dock_type, type_data in zip(dock_types, data["types"].values()):
         weaknesses[dock_type] = {
             weak_name: read_dock_weakness(weak_name, weak_data, resource_database)
             for weak_name, weak_data in type_data["items"].items()
         }
+
+        def weakness_or_none(weak):
+            return weak if weak is None else weaknesses[dock_type][weak]
+        
+        dr = type_data["dock_rando"]
+        dock_rando[dock_type] = DockRandoParams(
+            unlocked=weakness_or_none(dr["unlocked"]),
+            locked=weakness_or_none(dr["locked"]),
+            change_from={weaknesses[dock_type][weak] for weak in dr["change_from"]},
+            change_to={weaknesses[dock_type][weak] for weak in dr["change_to"]},
+        )
 
     default_dock_type = [dock_type for dock_type in dock_types
                          if dock_type.short_name == data["default_weakness"]["type"]][0]
@@ -222,6 +236,7 @@ def read_dock_weakness_database(data: dict,
     return DockWeaknessDatabase(
         dock_types=dock_types,
         weaknesses=weaknesses,
+        dock_rando_params=dock_rando,
         default_weakness=(default_dock_type, default_dock_weakness),
     )
 

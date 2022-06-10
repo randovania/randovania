@@ -4,7 +4,8 @@ from typing import Iterator, Dict
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QWidget
 
-from randovania.game_description.requirements import RequirementSet, ResourceRequirement
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
@@ -44,7 +45,7 @@ def _check_used_tricks(area: Area, trick_resources: ResourceCollection, database
         for alternative in s.alternatives:
             tricks: Dict[TrickResourceInfo, ResourceRequirement] = {
                 req.resource: req
-                for req in alternative.items
+                for req in alternative.values()
                 if req.resource.resource_type == ResourceType.TRICK
             }
             if tricks and all(trick_resources[trick] >= tricks[trick].amount for trick in tricks):
@@ -99,6 +100,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
         # Update
         bootstrap = self._game_description.game.generator.bootstrap
         trick_resources = ResourceCollection.from_resource_gain(
+            database,
             bootstrap.trick_resources_for_configuration(trick_level, database)
         )
 

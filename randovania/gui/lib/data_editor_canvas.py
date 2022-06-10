@@ -6,7 +6,7 @@ from typing import Optional, Type, NamedTuple, Union
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
 
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.node import GenericNode, Node, \
     NodeLocation

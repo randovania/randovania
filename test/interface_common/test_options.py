@@ -1,16 +1,14 @@
 import itertools
 import json
 from pathlib import Path
-from typing import List
 from unittest.mock import patch, MagicMock, call
 
 import pytest
 
 import randovania.interface_common.options
-import randovania.interface_common.persisted_options
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
-from randovania.interface_common import update_checker
+from randovania.interface_common import update_checker, persisted_options
 from randovania.interface_common.options import Options, DecodeFailedException, InfoAlert
 
 
@@ -30,7 +28,7 @@ def test_migrate_from_v11(option):
                     }}}
 
     # Run
-    new_data = randovania.interface_common.persisted_options.get_persisted_options_from_data(old_data)
+    new_data = persisted_options.get_persisted_options_from_data(old_data)
     option.load_from_persisted(new_data, False)
 
     # Assert
@@ -47,7 +45,8 @@ def test_migrate_from_v11(option):
             'output_directory': None,
             'output_format': None,
             'use_external_models': []
-        }
+        },
+        'schema_version': persisted_options._CURRENT_OPTIONS_FILE_VERSION,
     }
     assert new_data == expected_data
 
@@ -142,30 +141,40 @@ def test_set_options_for_game_with_wrong_type(option: Options):
     )
 
 
-@patch("randovania.interface_common.options.get_persisted_options_from_data", autospec=True)
-@patch("randovania.interface_common.options.Options._read_persisted_options", return_value=None, autospec=True)
-def test_load_from_disk_no_data(mock_read_persisted_options: MagicMock,
-                                mock_get_persisted_options_from_data: MagicMock,
-                                option: Options):
+def test_load_from_disk_no_data(tmp_path, mocker):
+    # Setup
+    mock_get_persisted_options_from_data: MagicMock = mocker.patch(
+        "randovania.interface_common.persisted_options.get_persisted_options_from_data", autospec=True
+    )
+    option = Options(tmp_path)
+
     # Run
     option.load_from_disk()
 
     # Assert
-    mock_read_persisted_options.assert_called_once_with(option)
     mock_get_persisted_options_from_data.assert_not_called()
 
 
-@pytest.mark.parametrize("fields_to_test",
-                         itertools.combinations(randovania.interface_common.options._SERIALIZER_FOR_FIELD.keys(), 2))
-@patch("randovania.interface_common.options.Options._set_field", autospec=True)
-@patch("randovania.interface_common.options.get_persisted_options_from_data", autospec=True)
-@patch("randovania.interface_common.options.Options._read_persisted_options", autospec=True)
-def test_load_from_disk_with_data(mock_read_persisted_options: MagicMock,
-                                  mock_get_persisted_options_from_data: MagicMock,
-                                  mock_set_field: MagicMock,
-                                  fields_to_test: List[str],
-                                  option: Options):
+@pytest.mark.parametrize(
+    "fields_to_test",
+    [
+        pytest.param(combination, id=",".join(combination))
+        for combination in itertools.combinations(randovania.interface_common.options._SERIALIZER_FOR_FIELD.keys(), 2)
+    ]
+)
+def test_load_from_disk_with_data(fields_to_test: list[str],
+                                  tmp_path, mocker):
     # Setup
+    mock_get_persisted_options_from_data: MagicMock = mocker.patch(
+        "randovania.interface_common.persisted_options.get_persisted_options_from_data", autospec=True
+    )
+    mock_set_field: MagicMock = mocker.patch(
+        "randovania.interface_common.options.Options._set_field", autospec=True
+    )
+    tmp_path.joinpath("config.json").write_text("[1, 2, 54, 69]")
+
+    option = Options(tmp_path)
+
     persisted_options = {
         field_name: MagicMock()
         for field_name in fields_to_test
@@ -181,8 +190,7 @@ def test_load_from_disk_with_data(mock_read_persisted_options: MagicMock,
         option.load_from_disk()
 
     # Assert
-    mock_read_persisted_options.assert_called_once_with(option)
-    mock_get_persisted_options_from_data.assert_called_once_with(mock_read_persisted_options.return_value)
+    mock_get_persisted_options_from_data.assert_called_once_with([1, 2, 54, 69])
     for field_name, serializer in new_serializers.items():
         serializer.decode.assert_called_once_with(persisted_options[field_name])
 

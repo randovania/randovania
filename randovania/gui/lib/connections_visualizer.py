@@ -7,7 +7,8 @@ from PySide6.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QLab
     QLineEdit
 
 import randovania.game_description.pretty_print
-from randovania.game_description.requirements import ResourceRequirement, Requirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
@@ -127,7 +128,7 @@ class ItemRow:
 
     @property
     def current_individual(self) -> ResourceRequirement:
-        return ResourceRequirement(
+        return ResourceRequirement.create(
             self.resource_name_combo.currentData(),
             int(self.amount_edit.text()),
             self.negate_combo.currentData()

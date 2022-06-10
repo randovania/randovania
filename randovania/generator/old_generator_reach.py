@@ -2,7 +2,10 @@ import copy
 from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements import RequirementSet, Requirement, ResourceRequirement, RequirementAnd
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator import graph as graph_module
@@ -17,7 +20,7 @@ def _extra_requirement_for_node(game: GameDescription, context: NodeContext, nod
         assert isinstance(node, ResourceNode)
         node_resource = node.resource(context)
         if node_resource in game.dangerous_resources:
-            extra_requirement = ResourceRequirement(node_resource, 1, False)
+            extra_requirement = ResourceRequirement.simple(node_resource)
 
     return extra_requirement
 

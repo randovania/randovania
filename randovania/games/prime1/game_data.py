@@ -28,12 +28,12 @@ def _gui() -> game.GameGui:
 def _generator() -> game.GameGenerator:
     from randovania.games.prime1.generator.item_pool.pool_creator import prime1_specific_pool
     from randovania.games.prime1.generator.bootstrap import PrimeBootstrap
-    from randovania.generator.base_patches_factory import PrimeTrilogyBasePatchesFactory
+    from randovania.games.prime1.generator.base_patches_factory import PrimeBasePatchesFactory
 
     return game.GameGenerator(
         item_pool_creator=prime1_specific_pool,
         bootstrap=PrimeBootstrap(),
-        base_patches_factory=PrimeTrilogyBasePatchesFactory(),
+        base_patches_factory=PrimeBasePatchesFactory(),
         hint_distributor=PrimeHintDistributor(),
     )
 

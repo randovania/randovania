@@ -33,31 +33,38 @@ Templates
 * Use Grapple Beam:
       Grapple Beam and Can Use Arm Cannon
 
+* Open Normal Door:
+      Any of the following:
+          Shoot Any Beam
+          Morph Ball Bomb and Morph Ball and Scan Visor
+
 ====================
 Dock Weaknesses
 
 > Door
   * Normal Door
+      Extra - shieldType: Blue
       Open:
-          Any of the following:
-              Shoot Any Beam
-              Morph Ball Bomb and Morph Ball and Scan Visor
+          Open Normal Door
       No lock
 
 
   * Ice Door
+      Extra - shieldType: Ice
       Open:
           Shoot Ice Beam
       No lock
 
 
   * Wave Door
+      Extra - shieldType: Purple
       Open:
           Shoot Wave Beam
       No lock
 
 
   * Plasma Door
+      Extra - shieldType: Red
       Open:
           Shoot Plasma Beam
       No lock
@@ -70,10 +77,101 @@ Dock Weaknesses
           Missile and Shoot Any Beam
 
 
+  * Missile Blast Shield (randomprime)
+      Extra - shieldType: Blue
+      Extra - blastShieldType: Missiles
+      Extra - display_name: Missile Blast Shield
+      Open:
+          Trivial
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Missile and Shoot Any Beam
+
+
   * Permanently Locked
+      Extra - shieldType: Disabled
       Open:
           Impossible
+      Lock type: FRONT_BLAST_BACK_IMPOSSIBLE
+          Trivial
+
+
+  * Circular Door
+      Open:
+          Open Normal Door
       No lock
+
+
+  * Square Door
+      Open:
+          Open Normal Door
+      No lock
+
+
+  * Super Missile Blast Shield
+      Extra - shieldType: Blue
+      Extra - blastShieldType: Super
+      Open:
+          Open Normal Door
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Shoot Super Missile
+
+
+  * Power Bomb Blast Shield
+      Extra - shieldType: Blue
+      Extra - blastShieldType: Power Bomb
+      Open:
+          Open Normal Door
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Morph Ball and Power Bomb
+
+
+  * Wavebuster Blast Shield
+      Extra - shieldType: Purple
+      Extra - blastShieldType: Wavebuster
+      Open:
+          Shoot Wave Beam
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Charge Beam and Missile ≥ 10 and Wavebuster and Shoot Wave Beam
+
+
+  * Ice Spreader Blast Shield
+      Extra - shieldType: Ice
+      Extra - blastShieldType: Ice Spreader
+      Open:
+          Shoot Ice Beam
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Charge Beam and Ice Spreader and Missile ≥ 10 and Shoot Ice Beam
+
+
+  * Flamethrower Blast Shield
+      Extra - shieldType: Red
+      Extra - blastShieldType: Flamethrower
+      Open:
+          Shoot Plasma Beam
+      Lock type: FRONT_BLAST_BACK_FREE_UNLOCK
+          Charge Beam and Flamethrower and Missile ≥ 10 and Shoot Plasma Beam
+
+  > Dock Rando:
+      Unlocked: Normal Door
+      Locked: Permanently Locked
+      Change from:
+          Ice Door
+          Missile Blast Shield
+          Normal Door
+          Plasma Door
+          Wave Door
+      Change to:
+          Flamethrower Blast Shield
+          Ice Door
+          Ice Spreader Blast Shield
+          Missile Blast Shield (randomprime)
+          Normal Door
+          Permanently Locked
+          Plasma Door
+          Power Bomb Blast Shield
+          Super Missile Blast Shield
+          Wave Door
+          Wavebuster Blast Shield
 
 
 > Morph Ball Door
@@ -84,6 +182,8 @@ Dock Weaknesses
               Ice Beam or Plasma Beam or Power Beam or Wave Beam
               Combat Visor or Scan Visor or Thermal Visor or X-Ray Visor
       No lock
+
+  > Dock Rando: Disabled
 
 
 > Dock
@@ -105,4 +205,6 @@ Dock Weaknesses
       Open:
           Impossible
       No lock
+
+  > Dock Rando: Disabled
 

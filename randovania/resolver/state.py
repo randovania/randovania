@@ -3,6 +3,7 @@ import dataclasses
 from typing import Optional, Tuple, Iterator
 
 from randovania.game_description.game_patches import GamePatches
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -11,6 +12,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.world_list import WorldList
 
@@ -85,8 +87,10 @@ class State:
     @property
     def collected_pickup_indices(self) -> Iterator[PickupIndex]:
         for resource, count in self.resources.as_resource_gain():
-            if isinstance(resource, PickupIndex) and count > 0:
-                yield resource
+            if count > 0 and isinstance(resource, NodeResourceInfo):
+                node = self.world_list.node_by_identifier(resource.node_identifier)
+                if isinstance(node, PickupNode):
+                    yield node.pickup_index
 
     @property
     def collected_hints(self) -> Iterator[NodeIdentifier]:
@@ -171,7 +175,10 @@ class State:
         )
 
     def assign_pickup_to_starting_items(self, pickup: PickupEntry) -> "State":
-        pickup_resources = ResourceCollection.from_resource_gain(pickup.resource_gain(self.resources, force_lock=True))
+        pickup_resources = ResourceCollection.from_resource_gain(
+            self.resource_database,
+            pickup.resource_gain(self.resources, force_lock=True)
+        )
 
         # Make sure there's no item percentage on starting items
         if self.resource_database.item_percentage is not None:

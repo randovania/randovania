@@ -4,8 +4,10 @@ from collections import defaultdict
 from typing import Dict, Set, Iterator, Tuple, FrozenSet
 
 from randovania.game_description.game_description import calculate_interesting_resources
-from randovania.game_description.requirements import RequirementList, RequirementSet, SatisfiableRequirements, \
-    RequirementAnd, Requirement
+from randovania.game_description.requirements.requirement_set import RequirementSet
+from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.resolver import debug

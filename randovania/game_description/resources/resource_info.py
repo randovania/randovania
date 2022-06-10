@@ -1,19 +1,18 @@
 from __future__ import annotations
 
+import copy
 import typing
 from typing import Union, Tuple, Iterator, Optional
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
-from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
-from randovania.game_description.world.node_identifier import NodeIdentifier
 
 if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
-ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo,
-                     PickupIndex, NodeIdentifier]
+ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo, NodeResourceInfo]
 ResourceQuantity = Tuple[ResourceInfo, int]
 ResourceGainTuple = Tuple[ResourceQuantity, ...]
 ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
@@ -22,6 +21,7 @@ ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, 
 class ResourceCollection:
     _resources: dict[ResourceInfo, int]
     add_self_as_requirement_to_resources: bool = False
+    _damage_reduction_cache: Optional[dict[ResourceInfo, float]] = None
 
     def __init__(self):
         self._resources = {}
@@ -61,21 +61,23 @@ class ResourceCollection:
         return resource in self._resources
 
     def set_resource(self, resource: ResourceInfo, quantity: int):
+        self._damage_reduction_cache = None
         self._resources[resource] = quantity
 
     @classmethod
-    def from_dict(cls, resources: dict[ResourceInfo, int]) -> "ResourceCollection":
-        result = cls()
+    def from_dict(cls, db: ResourceDatabase, resources: dict[ResourceInfo, int]) -> ResourceCollection:
+        result = cls.with_database(db)
         result.add_resource_gain(resources.items())
         return result
 
     @classmethod
-    def from_resource_gain(cls, resource_gain: ResourceGain) -> "ResourceCollection":
-        result = cls()
+    def from_resource_gain(cls, db: ResourceDatabase, resource_gain: ResourceGain) -> ResourceCollection:
+        result = cls.with_database(db)
         result.add_resource_gain(resource_gain)
         return result
 
     def add_resource_gain(self, resource_gain: ResourceGain):
+        self._damage_reduction_cache = None
         for resource, quantity in resource_gain:
             self._resources[resource] = self._resources.get(resource, 0) + quantity
 
@@ -90,3 +92,13 @@ class ResourceCollection:
         result._resources.update(self._resources)
         result.add_self_as_requirement_to_resources = self.add_self_as_requirement_to_resources
         return result
+
+    def get_damage_reduction_cache(self, resource: ResourceInfo) -> Optional[float]:
+        if self._damage_reduction_cache is not None:
+            return self._damage_reduction_cache.get(resource)
+        return None
+
+    def add_damage_reduction_cache(self, resource: ResourceInfo, multiplier: float):
+        if self._damage_reduction_cache is None:
+            self._damage_reduction_cache = {}
+        self._damage_reduction_cache[resource] = multiplier

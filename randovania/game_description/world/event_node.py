@@ -1,6 +1,7 @@
 import dataclasses
 
-from randovania.game_description.requirements import Requirement, ResourceRequirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
 from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.resource_node import ResourceNode
@@ -15,7 +16,7 @@ class EventNode(ResourceNode):
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         if context.current_resources.add_self_as_requirement_to_resources:
-            return ResourceRequirement(self.event, 1, False)
+            return ResourceRequirement.simple(self.event)
         else:
             return Requirement.trivial()
 

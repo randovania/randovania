@@ -1,8 +1,13 @@
 import dataclasses
+from unittest.mock import MagicMock
 
 from frozendict import frozendict
 
-from randovania.game_description.requirements import ResourceRequirement, RequirementAnd, Requirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.resources.node_resource_info import NodeResourceInfo
+from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.world.area import Area
@@ -20,8 +25,8 @@ from randovania.layout import filtered_database
 def test_connections_from_dock_blast_shield(empty_patches):
     # Setup
     trivial = Requirement.trivial()
-    req_1 = ResourceRequirement(SimpleResourceInfo("Ev1", "Ev1", ResourceType.EVENT), 1, False)
-    req_2 = ResourceRequirement(SimpleResourceInfo("Ev2", "Ev2", ResourceType.EVENT), 1, False)
+    req_1 = ResourceRequirement.simple(SimpleResourceInfo("Ev1", "Ev1", ResourceType.EVENT))
+    req_2 = ResourceRequirement.simple(SimpleResourceInfo("Ev2", "Ev2", ResourceType.EVENT))
     dock_type = DockType("Type", "Type", frozendict())
     weak_1 = DockWeakness("Weak 1", frozendict(), req_1, None)
     weak_2 = DockWeakness("Weak 2", frozendict(), trivial, DockLock(DockLockType.FRONT_BLAST_BACK_BLAST, req_2))
@@ -41,11 +46,16 @@ def test_connections_from_dock_blast_shield(empty_patches):
 
     world = World("W", [area_1, area_2], {})
     world_list = WorldList([world])
+    world_list.ensure_has_node_cache()
+
+    game_mock = MagicMock()
+    game_mock.world_list = world_list
+    patches = dataclasses.replace(empty_patches, game=game_mock)
 
     context = NodeContext(
-        patches=empty_patches,
-        current_resources={},
-        database=None,
+        patches=patches,
+        current_resources=ResourceCollection(),
+        database=patches.game.resource_database,
         node_provider=world_list,
     )
 
@@ -54,12 +64,14 @@ def test_connections_from_dock_blast_shield(empty_patches):
     result_2 = list(node_2.connections_from(context))
 
     # Assert
+    simple = ResourceRequirement.simple
+
     assert result_1 == [
-        (node_2, RequirementAnd([req_1, ResourceRequirement.simple(node_2_identifier)])),
+        (node_2, RequirementAnd([req_1, simple(NodeResourceInfo.from_node(node_2, context))])),
         (node_1_lock, RequirementAnd([trivial, req_2])),
     ]
     assert result_2 == [
-        (node_1, ResourceRequirement.simple(node_2_identifier)),
+        (node_1, simple(NodeResourceInfo.from_node(node_2, context))),
         (node_2_lock, req_2),
     ]
 

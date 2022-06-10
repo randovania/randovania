@@ -4,11 +4,12 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.requirements import RequirementAnd, ResourceRequirement
-from randovania.game_description.resources.resource_info import ResourceCollection
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.search import find_resource_info_with_long_name
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
 from randovania.generator import base_patches_factory
@@ -22,12 +23,15 @@ def test_add_elevator_connections_to_patches_vanilla(echoes_game_description,
                                                      echoes_game_patches):
     # Setup
     patches_factory = echoes_game_description.game.generator.base_patches_factory
-    expected = dataclasses.replace(echoes_game_patches,
-                                   elevator_connection=echoes_game_description.get_default_elevator_connection())
+    expected = echoes_game_patches
+
     if skip_final_bosses:
         node_ident = NodeIdentifier.create("Temple Grounds", "Sky Temple Gateway",
                                            "Teleport to Great Temple - Sky Temple Energy Controller")
-        expected.elevator_connection[node_ident] = AreaIdentifier("Temple Grounds", "Credits")
+        expected = expected.assign_elevators([
+            (echoes_game_description.world_list.get_teleporter_node(node_ident),
+             AreaIdentifier("Temple Grounds", "Credits")),
+        ])
 
     config = default_echoes_configuration
     config = dataclasses.replace(config,
@@ -51,7 +55,6 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
                                                     echoes_game_patches):
     # Setup
     patches_factory = echoes_game_description.game.generator.base_patches_factory
-    game = echoes_game_description
     layout_configuration = dataclasses.replace(
         default_echoes_configuration,
         elevators=dataclasses.replace(
@@ -61,10 +64,14 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
         ),
     )
 
-    elevator_connection = {}
+    wl = echoes_game_description.world_list
+    elevator_connection: list[tuple[TeleporterNode, AreaIdentifier]] = []
 
     def ni(w: str, a: str, n: str, tw: str, ta: str):
-        elevator_connection[NodeIdentifier.create(w, a, n)] = AreaIdentifier(tw, ta)
+        elevator_connection.append((
+            wl.get_teleporter_node(NodeIdentifier.create(w, a, n)),
+            AreaIdentifier(tw, ta),
+        ))
 
     ni("Temple Grounds", "Temple Transport C", "Elevator to Great Temple - Temple Transport C",
        "Torvus Bog", "Transport to Temple Grounds")
@@ -118,9 +125,7 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     ni("Sanctuary Fortress", "Aerie", "Elevator to Sanctuary Fortress - Aerie Transport Station",
        "Sanctuary Fortress", "Aerie Transport Station")
 
-    expected = dataclasses.replace(
-        echoes_game_patches,
-        elevator_connection=elevator_connection)
+    expected = echoes_game_patches.assign_elevators(elevator_connection)
 
     # Run
     result = patches_factory.add_elevator_connections_to_patches(
@@ -130,8 +135,11 @@ def test_add_elevator_connections_to_patches_random(echoes_game_description,
     )
 
     # Assert
-    assert len(result.elevator_connection) == len(expected.elevator_connection)
-    assert result.elevator_connection == expected.elevator_connection
+    result_conn = set(result.all_elevator_connections())
+    expected_conn = set(expected.all_elevator_connections())
+
+    assert len(result_conn) == len(expected_conn)
+    assert result_conn == expected_conn
 
     assert result == expected
 
@@ -157,14 +165,15 @@ def test_gate_assignment_for_configuration_all_emerald(echoes_game_description, 
     rng = MagicMock()
 
     # Run
-    results = patches_factory.configurable_node_assignment(
-        configuration, echoes_game_description, rng)
+    results = list(patches_factory.configurable_node_assignment(configuration, echoes_game_description, rng))
 
     # Assert
-    assert list(results.values()) == [
+    associated_requirements = [req for _, req in results]
+
+    assert associated_requirements == [
         RequirementAnd([
-            ResourceRequirement(scan_visor, 1, False),
-            ResourceRequirement(emerald, 1, False),
+            ResourceRequirement.simple(scan_visor),
+            ResourceRequirement.simple(emerald),
         ])
     ] * len(translator_configuration.translator_requirement)
 
@@ -184,12 +193,12 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
 
     requirements = [
         RequirementAnd([
-            ResourceRequirement(scan_visor, 1, False),
-            ResourceRequirement(emerald, 1, False),
+            ResourceRequirement.simple(scan_visor),
+            ResourceRequirement.simple(emerald),
         ]),
         RequirementAnd([
-            ResourceRequirement(scan_visor, 1, False),
-            ResourceRequirement(violet, 1, False),
+            ResourceRequirement.simple(scan_visor),
+            ResourceRequirement.simple(violet),
         ])
     ]
     requirements = requirements * len(translator_configuration.translator_requirement)
@@ -199,11 +208,11 @@ def test_gate_assignment_for_configuration_all_random(echoes_game_description, d
     rng.choice.side_effect = choices * len(translator_configuration.translator_requirement)
 
     # Run
-    results = patches_factory.configurable_node_assignment(
-        configuration, echoes_game_description, rng)
+    results = list(patches_factory.configurable_node_assignment(configuration, echoes_game_description, rng))
 
     # Assert
-    assert list(results.values()) == requirements[:len(translator_configuration.translator_requirement)]
+    associated_requirements = [req for _, req in results]
+    assert associated_requirements == requirements[:len(translator_configuration.translator_requirement)]
 
 
 def test_create_base_patches(mocker):
@@ -214,7 +223,9 @@ def test_create_base_patches(mocker):
     layout_configuration.game = RandovaniaGame.METROID_PRIME_ECHOES
     is_multiworld = MagicMock()
 
-    game_patches_mock: MagicMock = mocker.patch("randovania.generator.base_patches_factory.GamePatches", autospec=True)
+    mock_create_from_game: MagicMock = mocker.patch(
+        "randovania.generator.base_patches_factory.GamePatches.create_from_game", autospec=True,
+    )
     mock_add_elevator_connections_to_patches: MagicMock = mocker.patch(
         "randovania.generator.base_patches_factory.BasePatchesFactory.add_elevator_connections_to_patches",
         autospec=True,
@@ -228,7 +239,7 @@ def test_create_base_patches(mocker):
     )
 
     patches = ([
-        game_patches_mock.return_value,
+        mock_create_from_game.return_value,
         mock_add_elevator_connections_to_patches.return_value,
     ])
     patches.append(patches[-1].assign_node_configuration.return_value)
@@ -240,14 +251,10 @@ def test_create_base_patches(mocker):
     result = factory.create_base_patches(layout_configuration, rng, game, is_multiworld, player_index=0)
 
     # Assert
-    game_patches_mock.assert_called_once_with(
-        0, layout_configuration, {},
-        game.get_default_elevator_connection.return_value,
-        {}, {}, {}, ResourceCollection.with_database(game.resource_database),
-        game.starting_location, {},
+    mock_create_from_game.assert_called_once_with(
+        game, 0, layout_configuration,
     )
 
-    game.get_default_elevator_connection.assert_called_once_with()
     mock_add_elevator_connections_to_patches.assert_called_once_with(factory, layout_configuration, rng, patches[0])
 
     # Gate Assignment

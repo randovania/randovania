@@ -1,15 +1,12 @@
-import copy
-import dataclasses
 from random import Random
-from typing import Tuple
+from typing import Tuple, Iterator
 
-from randovania.game_description.assignment import NodeConfigurationAssignment
+from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import HintItemPrecision
 from randovania.game_description.hint import HintLocationPrecision
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.generator import elevator_distributor
@@ -36,9 +33,7 @@ class BasePatchesFactory:
                             ) -> GamePatches:
         """
         """
-        patches = GamePatches(player_index, configuration, {}, game.get_default_elevator_connection(),
-                              {}, {}, {}, ResourceCollection.with_database(game.resource_database),
-                              game.starting_location, {})
+        patches = GamePatches.create_from_game(game, player_index, configuration)
 
         # Elevators
         try:
@@ -96,24 +91,24 @@ class BasePatchesFactory:
 
         return location
 
-    def configurable_node_assignment(self, configuration: BaseConfiguration, game: GameDescription,
-                                     rng: Random) -> NodeConfigurationAssignment:
-        return NodeConfigurationAssignment()
+    def configurable_node_assignment(self, configuration: BaseConfiguration, game: GameDescription, rng: Random,
+                                     ) -> Iterator[NodeConfigurationAssociation]:
+        yield from []
 
 
 class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
     def add_elevator_connections_to_patches(self, configuration: EchoesConfiguration, rng: Random,
                                             patches: GamePatches) -> GamePatches:
-        elevator_connection = copy.copy(patches.elevator_connection)
         elevators = configuration.elevators
+
+        world_list = filtered_database.game_description_for_layout(configuration).world_list
+        elevator_connection = {}
 
         if not elevators.is_vanilla:
             if rng is None:
                 raise MissingRng("Elevator")
 
-            world_list = filtered_database.game_description_for_layout(configuration).world_list
-            elevator_db = elevator_distributor.create_elevator_database(
-                world_list, elevators.editable_teleporters)
+            elevator_db = elevator_distributor.create_elevator_database(world_list, elevators.editable_teleporters)
 
             if elevators.mode in {TeleporterShuffleMode.TWO_WAY_RANDOMIZED, TeleporterShuffleMode.TWO_WAY_UNCHECKED}:
                 connections = elevator_distributor.two_way_elevator_connections(
@@ -134,4 +129,9 @@ class PrimeTrilogyBasePatchesFactory(BasePatchesFactory):
         for teleporter, destination in elevators.static_teleporters.items():
             elevator_connection[teleporter] = destination
 
-        return dataclasses.replace(patches, elevator_connection=elevator_connection)
+        assignment = [
+            (world_list.get_teleporter_node(identifier), target)
+            for identifier, target in elevator_connection.items()
+        ]
+
+        return patches.assign_elevators(assignment)

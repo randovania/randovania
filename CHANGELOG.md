@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.0] - 2022-07-01
+
+- Added: Preferences are now saved separately for each version. This means newer Randovania versions don't break the preferences of older versions. 
+
+### Cave Story
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime
+
+- **Major** - Added: Door rando. Door locks can now be randomized, with many options to fine-tune your experience.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
+### Metroid Prime 2: Echoes
+
+- Nothing.
+
+#### Patcher Changes
+
+- Nothing.
+
+#### Logic Database
+
+- Nothing.
+
 ## [4.4.2] - 2022-06-05
 
 - Fixed: Generating multiworld games where one Prime 1 player has item in every room while another Prime 1 player doesn't now works properly.

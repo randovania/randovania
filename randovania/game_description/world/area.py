@@ -4,7 +4,7 @@ import dataclasses
 import typing
 from typing import List, Dict, Optional, Iterator, Tuple
 
-from randovania.game_description.requirements import Requirement
+from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.pickup_node import PickupNode

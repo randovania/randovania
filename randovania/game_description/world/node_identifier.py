@@ -1,10 +1,9 @@
-import dataclasses
+import attrs
 
-from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area_identifier import AreaIdentifier
 
 
-@dataclasses.dataclass(frozen=True, order=True, slots=True)
+@attrs.define(init=True, frozen=True, cache_hash=True, order=True, slots=True)
 class NodeIdentifier:
     area_identifier: AreaIdentifier
     node_name: str
@@ -49,17 +48,4 @@ class NodeIdentifier:
         return self.area_identifier
 
     def renamed(self, new_name: str) -> "NodeIdentifier":
-        return dataclasses.replace(self, node_name=new_name)
-
-    # Resource API
-    @property
-    def resource_type(self):
-        return ResourceType.NODE_IDENTIFIER
-
-    @property
-    def long_name(self):
-        return repr(self)
-
-    @property
-    def short_name(self):
-        return self.long_name
+        return NodeIdentifier(area_identifier=self.area_identifier, node_name=new_name)
