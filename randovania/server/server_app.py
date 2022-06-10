@@ -3,6 +3,7 @@ from typing import Optional, Mapping
 
 import flask
 import flask_discord
+import flask_discord.configs
 import flask_socketio
 import peewee
 import requests
@@ -64,6 +65,9 @@ class ServerApp:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
         if app.config["ENFORCE_ROLE"] is not None:
             self.enforce_role = EnforceDiscordRole(app.config["ENFORCE_ROLE"])
+
+        flask_discord.configs.DISCORD_OAUTH_DEFAULT_SCOPES.clear()
+        flask_discord.configs.DISCORD_OAUTH_DEFAULT_SCOPES.append("identify")
 
         self.expected_headers = connection_headers()
         self.expected_headers.pop("X-Randovania-Version")
