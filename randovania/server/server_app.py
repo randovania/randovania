@@ -3,19 +3,19 @@ from typing import Optional, Mapping
 
 import flask
 import flask_discord
-import flask_discord.configs
 import flask_socketio
 import peewee
 import requests
 import socketio.exceptions
 from cryptography.fernet import Fernet
-from flask_discord import DiscordOAuth2Session
 from prometheus_flask_exporter import PrometheusMetrics
 
 from randovania.network_common import connection_headers
-from randovania.network_common.error import NotLoggedIn, BaseNetworkError, ServerError, InvalidSession, \
-    UnsupportedClient
+from randovania.network_common.error import (
+    NotLoggedIn, BaseNetworkError, ServerError, InvalidSession, UnsupportedClient,
+)
 from randovania.server import client_check
+from randovania.server.custom_discord_oauth import CustomDiscordOAuth2Session
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 
@@ -48,7 +48,7 @@ class EnforceDiscordRole:
 
 class ServerApp:
     sio: flask_socketio.SocketIO
-    discord: DiscordOAuth2Session
+    discord: CustomDiscordOAuth2Session
     metrics: PrometheusMetrics
     fernet_encrypt: Fernet
     guest_encrypt: Optional[Fernet] = None
@@ -58,16 +58,13 @@ class ServerApp:
     def __init__(self, app: flask.Flask):
         self.app = app
         self.sio = flask_socketio.SocketIO(app)
-        self.discord = DiscordOAuth2Session(app)
+        self.discord = CustomDiscordOAuth2Session(app)
         self.metrics = PrometheusMetrics(app)
         self.fernet_encrypt = Fernet(app.config["FERNET_KEY"])
         if app.config["GUEST_KEY"] is not None:
             self.guest_encrypt = Fernet(app.config["GUEST_KEY"])
         if app.config["ENFORCE_ROLE"] is not None:
             self.enforce_role = EnforceDiscordRole(app.config["ENFORCE_ROLE"])
-
-        flask_discord.configs.DISCORD_OAUTH_DEFAULT_SCOPES.clear()
-        flask_discord.configs.DISCORD_OAUTH_DEFAULT_SCOPES.append("identify")
 
         self.expected_headers = connection_headers()
         self.expected_headers.pop("X-Randovania-Version")
