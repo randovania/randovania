@@ -231,7 +231,8 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         pass
 
     def _on_export_preset(self):
-        path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True)
+        default_name = "{}.rdvpreset".format(self._current_preset_data.slug_name)
+        path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True, name=default_name)
         if path is not None:
             self._current_preset_data.save_to_file(path)
 
