@@ -206,21 +206,19 @@ class Options:
         for content in persisted_options.find_config_files(self._data_dir):
             try:
                 persisted_data = json.loads(content)
-
-            except json.decoder.JSONDecodeError as e:
-                if ignore_decode_errors:
-                    continue
-                else:
-                    raise DecodeFailedException(f"Unable to decode JSON: {e}")
-
-            try:
                 result = persisted_options.get_persisted_options_from_data(persisted_data)
 
-            except migration_lib.UnsupportedVersion as e:
+            except (json.decoder.JSONDecodeError, migration_lib.UnsupportedVersion) as e:
                 if ignore_decode_errors:
                     continue
                 else:
-                    raise DecodeFailedException(f"Configuration file unsupported: {e}")
+                    if isinstance(e, migration_lib.UnsupportedVersion):
+                        raise DecodeFailedException(f"Configuration file unsupported: {e}")
+                    else:
+                        raise DecodeFailedException(f"Unable to decode JSON: {e}")
+
+            # Read something successfully, so stop it here
+            break
 
         if result is None:
             return False
