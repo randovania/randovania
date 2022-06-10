@@ -10,6 +10,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 from randovania.interface_common import update_checker, persisted_options
 from randovania.interface_common.options import Options, DecodeFailedException, InfoAlert
+from randovania.lib import migration_lib
 
 
 @pytest.fixture(name="option")
@@ -153,6 +154,60 @@ def test_load_from_disk_no_data(tmp_path, mocker):
 
     # Assert
     mock_get_persisted_options_from_data.assert_not_called()
+
+
+def test_load_from_disk_first_successful(tmp_path, mocker):
+    mocker.patch(
+        "randovania.interface_common.persisted_options.find_config_files", autospec=True,
+        return_value=[
+            "[1]",
+            "[2]",
+        ]
+    )
+    mock_get_persisted_options_from_data = mocker.patch(
+        "randovania.interface_common.persisted_options.get_persisted_options_from_data", autospec=True,
+    )
+    option = Options(tmp_path)
+    option.load_from_persisted = MagicMock()
+
+    # Run
+    result = option.load_from_disk(False)
+
+    # Assert
+    assert result
+    option.load_from_persisted.assert_called_once_with(mock_get_persisted_options_from_data.return_value, False)
+    mock_get_persisted_options_from_data.assert_called_once_with([1])
+
+
+def test_load_from_disk_first_failure(tmp_path, mocker):
+    persisted_result = MagicMock()
+    mocker.patch(
+        "randovania.interface_common.persisted_options.find_config_files", autospec=True,
+        return_value=[
+            "[1]",
+            "[2]",
+        ]
+    )
+    mock_get_persisted_options_from_data = mocker.patch(
+        "randovania.interface_common.persisted_options.get_persisted_options_from_data", autospec=True,
+        side_effect=[
+            migration_lib.UnsupportedVersion(),
+            persisted_result,
+        ]
+    )
+    option = Options(tmp_path)
+    option.load_from_persisted = MagicMock()
+
+    # Run
+    result = option.load_from_disk(True)
+
+    # Assert
+    assert result
+    option.load_from_persisted.assert_called_once_with(persisted_result, True)
+    mock_get_persisted_options_from_data.assert_has_calls([
+        call([1]),
+        call([2]),
+    ])
 
 
 @pytest.mark.parametrize(
