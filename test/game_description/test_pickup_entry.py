@@ -6,7 +6,7 @@ from randovania.games.game import RandovaniaGame
 
 
 def test_extra_resources_maximum(generic_item_category):
-    item = ItemResourceInfo("Item", "Item", 2, None)
+    item = ItemResourceInfo(0, "Item", "Item", 2)
     msg = "Attempt to give 5 of Item, more than max capacity"
 
     with pytest.raises(ValueError, match=msg):

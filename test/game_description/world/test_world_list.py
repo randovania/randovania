@@ -25,8 +25,8 @@ from randovania.layout import filtered_database
 def test_connections_from_dock_blast_shield(empty_patches):
     # Setup
     trivial = Requirement.trivial()
-    req_1 = ResourceRequirement.simple(SimpleResourceInfo("Ev1", "Ev1", ResourceType.EVENT))
-    req_2 = ResourceRequirement.simple(SimpleResourceInfo("Ev2", "Ev2", ResourceType.EVENT))
+    req_1 = ResourceRequirement.simple(SimpleResourceInfo(0, "Ev1", "Ev1", ResourceType.EVENT))
+    req_2 = ResourceRequirement.simple(SimpleResourceInfo(1, "Ev2", "Ev2", ResourceType.EVENT))
     dock_type = DockType("Type", "Type", frozendict())
     weak_1 = DockWeakness("Weak 1", frozendict(), req_1, None)
     weak_2 = DockWeakness("Weak 2", frozendict(), trivial, DockLock(DockLockType.FRONT_BLAST_BACK_BLAST, req_2))

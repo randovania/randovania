@@ -22,7 +22,7 @@ def test_click_on_link(echoes_game_description,
         main_window,
         main_window,
         echoes_game_description,
-        TrickResourceInfo("Nothing", "Nothing", "Some description!"),
+        TrickResourceInfo(1234, "Nothing", "Nothing", "Some description!"),
         LayoutTrickLevel.EXPERT
     )
     popup._on_click_link_to_data_editor(f"data-editor://{world_name}/{area_name}")

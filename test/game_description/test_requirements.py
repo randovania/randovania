@@ -29,17 +29,16 @@ def _database() -> ResourceDatabase:
     return ResourceDatabase(
         game_enum=RandovaniaGame.METROID_PRIME_ECHOES,
         item=[
-            ItemResourceInfo("A", "A", 1),
-            ItemResourceInfo("B", "B", 1),
-            ItemResourceInfo("C", "C", 1),
+            ItemResourceInfo(i, l, l, 1)
+            for i, l in enumerate("ABCDEF")
         ],
         event=[],
         trick=[],
         damage=[],
         version=[],
         misc=[
-            SimpleResourceInfo("Trivial", "Trivial", ResourceType.MISC),
-            SimpleResourceInfo("Impossible", "Impossible", ResourceType.MISC),
+            SimpleResourceInfo(13, "Trivial", "Trivial", ResourceType.MISC),
+            SimpleResourceInfo(14, "Impossible", "Impossible", ResourceType.MISC),
         ],
         requirement_template={},
         damage_reductions={},
@@ -55,20 +54,6 @@ def _empty_col():
 
 def _col_for(db: ResourceDatabase, *args: ResourceInfo):
     return ResourceCollection.from_dict(db, {resource: 1 for resource in args})
-
-
-def _make_resource(name: str):
-    return SimpleResourceInfo(name, name, ResourceType.MISC)
-
-
-def _make_req(name: str):
-    req = _make_resource(name)
-    id_req = ResourceRequirement.simple(req)
-    return req, id_req
-
-
-def _req(name: str):
-    return _make_req(name)[1]
 
 
 def make_req_a(db: ResourceDatabase):
@@ -193,15 +178,15 @@ def test_expand_alternatives_4(blank_resource_db):
     ([(0, True), (1, False)], [0]),
     ([(0, True), (1, True)], [0, 1]),
 ])
-def test_list_dangerous_resources(input_data, output_data):
+def test_list_dangerous_resources(database, input_data, output_data):
     # setup
     req_list = RequirementList((
-        ResourceRequirement.create(_make_resource(str(item[0])), 1, item[1])
+        ResourceRequirement.create(database.resource_by_index[item[0]], 1, item[1])
         for item in input_data
     ))
 
     expected_result = {
-        _make_resource(str(item))
+        database.resource_by_index[item]
         for item in output_data
     }
 
@@ -229,13 +214,17 @@ def test_set_dangerous_resources():
     assert result == {1, 2, 3, "a", "b", "c"}
 
 
-def test_requirement_as_set_1():
+def test_requirement_as_set_1(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
     req = RequirementAnd([
         _req("A"),
         RequirementOr([_req("B"), _req("C")]),
         RequirementOr([_req("D"), _req("E")]),
     ])
-    assert req.as_set(None) == RequirementSet([
+    assert req.as_set(database) == RequirementSet([
         RequirementList([_req("A"), _req("B"), _req("D")]),
         RequirementList([_req("A"), _req("B"), _req("E")]),
         RequirementList([_req("A"), _req("C"), _req("D")]),
@@ -243,49 +232,69 @@ def test_requirement_as_set_1():
     ])
 
 
-def test_requirement_as_set_2():
+def test_requirement_as_set_2(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
     req = RequirementAnd([
         Requirement.trivial(),
         _req("A"),
     ])
-    assert req.as_set(None) == RequirementSet([
+    assert req.as_set(database) == RequirementSet([
         RequirementList([_req("A")]),
     ])
 
 
-def test_requirement_as_set_3():
+def test_requirement_as_set_3(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
     req = RequirementOr([
         Requirement.impossible(),
         _req("A"),
     ])
-    assert req.as_set(None) == RequirementSet([
+    assert req.as_set(database) == RequirementSet([
         RequirementList([_req("A")]),
     ])
 
 
-def test_requirement_as_set_4():
+def test_requirement_as_set_4(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
     req = RequirementOr([
         Requirement.impossible(),
         _req("A"),
         Requirement.trivial(),
     ])
-    assert req.as_set(None) == RequirementSet([
+    assert req.as_set(database) == RequirementSet([
         RequirementList([]),
     ])
 
 
-def test_requirement_as_set_5():
+def test_requirement_as_set_5(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
     req = RequirementAnd([
         _req("A"),
         _req("B"),
         _req("C"),
     ])
-    assert req.as_set(None) == RequirementSet([
+    assert req.as_set(database) == RequirementSet([
         RequirementList([_req("A"), _req("B"), _req("C")]),
     ])
 
 
-def test_requirement_and_str():
+def test_requirement_and_str(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
     req = RequirementAnd([
         _req("B"),
         _req("A"),
@@ -294,7 +303,11 @@ def test_requirement_and_str():
     assert str(req) == "(A ≥ 1 and B ≥ 1 and C ≥ 1)"
 
 
-def test_requirement_or_str():
+def test_requirement_or_str(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
     req = RequirementOr([
         _req("C"),
         _req("A"),
@@ -335,24 +348,29 @@ def test_trivial_requirement_str():
     assert str(Requirement.trivial()) == "Trivial"
 
 
-@pytest.mark.parametrize(["original", "expected"], [
-    (
+def test_simplified_requirement(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
+    test_parameters = [
+        (
             RequirementOr([
                 RequirementAnd([
                     _req("A"),
                 ]),
             ]),
             _req("A"),
-    ),
-    (
+        ),
+        (
             RequirementAnd([
                 RequirementOr([
                     _req("A"),
                 ]),
             ]),
             _req("A"),
-    ),
-    (
+        ),
+        (
             RequirementAnd([
                 RequirementOr([
                     _req("B"),
@@ -364,8 +382,8 @@ def test_trivial_requirement_str():
                 ]),
             ]),
             _req("A"),
-    ),
-    (
+        ),
+        (
             RequirementOr([
                 _req("A"),
                 RequirementAnd([_req("B"), _req("C")]),
@@ -381,8 +399,8 @@ def test_trivial_requirement_str():
                     ]),
                 ]),
             ]),
-    ),
-    (
+        ),
+        (
             RequirementOr([
                 RequirementAnd([_req("B"), _req("C")]),
                 RequirementAnd([_req("B"), _req("D")]),
@@ -394,22 +412,22 @@ def test_trivial_requirement_str():
                     _req("D"),
                 ]),
             ]),
-    ),
-    (
+        ),
+        (
             RequirementOr([
                 _req("A"),
                 _req("A"),
             ]),
             _req("A"),
-    ),
-    (
+        ),
+        (
             RequirementAnd([
                 _req("A"),
                 _req("A"),
             ]),
             _req("A"),
-    ),
-    (
+        ),
+        (
             RequirementOr([
                 RequirementAnd([
                     _req("A"),
@@ -427,8 +445,8 @@ def test_trivial_requirement_str():
                 ]),
             ]),
             _req("A"),
-    ),
-    (
+        ),
+        (
             RequirementOr([
                 RequirementAnd([
                     _req("A"),
@@ -446,15 +464,21 @@ def test_trivial_requirement_str():
                 ])
             ]),
             _req("A"),
-    )
-])
-def test_simplified_requirement(original, expected):
-    simplified = original.simplify()
-    assert simplified == expected
-    assert simplified.as_set(None) == expected.as_set(None)
+        )
+    ]
+
+    for original, expected in test_parameters:
+        simplified = original.simplify()
+        assert simplified == expected
+        assert simplified.as_set(database) == expected.as_set(database)
 
 
 def test_requirement_template(database):
+    def _make_req(name: str):
+        req = database.get_item(name)
+        id_req = ResourceRequirement.simple(req)
+        return req, id_req
+
     # Setup
     database.requirement_template["Use A"] = _make_req("A")[1]
     use_a = RequirementTemplate("Use A")
@@ -468,6 +492,10 @@ def test_requirement_template(database):
 
 
 def test_requirement_template_nested(database):
+    def _req(name: str):
+        id_req = ResourceRequirement.simple(database.get_item(name))
+        return id_req
+
     # Setup
     use_a = RequirementTemplate("Use A")
     use_b = RequirementTemplate("Use B")
@@ -675,9 +703,9 @@ def test_sort_resource_requirement(blank_game_description):
 
     resources = [
         NodeResourceInfo.from_node(node, NodeContext(None, None, db, blank_game_description.world_list)),
-        _make_resource("Resource"),
-        TrickResourceInfo("Trick", "Trick", "Long Description"),
-        ItemResourceInfo("Item", "Item", 1),
+        SimpleResourceInfo(1, "Resource", "Resource", ResourceType.MISC),
+        TrickResourceInfo(2, "Trick", "Trick", "Long Description"),
+        ItemResourceInfo(3, "Item", "Item", 1),
     ]
 
     # Assert resources has an entry for every type of ResourceInfo
