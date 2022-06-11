@@ -29,7 +29,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.world.dock_node import DockNode
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class GamePatches:
     """Determines patches that are made to the game's data.
     Currently we support:
