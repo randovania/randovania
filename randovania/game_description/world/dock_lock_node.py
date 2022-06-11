@@ -17,10 +17,11 @@ class DockLockNode(ResourceNode):
     dock: DockNode
 
     @classmethod
-    def create_from_dock(cls, dock: DockNode) -> DockLockNode:
+    def create_from_dock(cls, dock: DockNode, node_index: int) -> DockLockNode:
         lock_identifier = dock.lock_node_identifier
         return DockLockNode(
             identifier=lock_identifier,
+            node_index=node_index,
             heal=False,
             location=None,
             description="",

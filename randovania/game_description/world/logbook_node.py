@@ -38,7 +38,7 @@ _LORE_TYPE_LONG_NAME = {
 @dataclasses.dataclass(frozen=True, slots=True)
 class LogbookNode(ResourceNode):
     string_asset_id: int
-    scan_visor: ItemResourceInfo
+    scan_visor: Optional[ItemResourceInfo]
     lore_type: LoreType
     required_translator: Optional[ItemResourceInfo]
     hint_index: Optional[int]

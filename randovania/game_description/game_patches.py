@@ -124,12 +124,12 @@ class GamePatches:
         connections = list(self.dock_connection)
 
         for source, target in assignment:
-            connections[source.index] = target.index
+            connections[source.node_index] = target.node_index
 
         return dataclasses.replace(self, dock_connection=connections)
 
     def get_dock_connection_for(self, node: DockNode) -> Node:
-        target_index = self.dock_connection[node.index]
+        target_index = self.dock_connection[node.node_index]
         if target_index is None:
             return self.game.world_list.node_by_identifier(node.default_connection)
         else:
@@ -148,12 +148,12 @@ class GamePatches:
         new_weakness = list(self.dock_weakness)
 
         for node, weakness in weaknesses:
-            new_weakness[node.get_index()] = weakness
+            new_weakness[node.node_index] = weakness
 
         return dataclasses.replace(self, dock_weakness=new_weakness)
 
     def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
-        return self.dock_weakness[node.get_index()] or node.default_dock_weakness
+        return self.dock_weakness[node.node_index] or node.default_dock_weakness
 
     def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
         nodes = self.game.world_list.all_nodes

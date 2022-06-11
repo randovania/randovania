@@ -40,12 +40,12 @@ class NodeContext:
 @dataclasses.dataclass(frozen=True, slots=True)
 class Node:
     identifier: NodeIdentifier
+    node_index: NodeIndex = dataclasses.field(hash=False, compare=False)
     heal: bool
     location: Optional[NodeLocation]
     description: str
     layers: tuple[str, ...]
     extra: dict[str, typing.Any]
-    index: NodeIndex = dataclasses.field(init=False, hash=False, compare=False)
 
     def __lt__(self, other: "Node"):
         return self.identifier < other.identifier
@@ -56,13 +56,6 @@ class Node:
     @property
     def name(self):
         return self.identifier.node_name
-
-    def get_index(self) -> NodeIndex:
-        """
-        Gets a unique index for this node. Used by GeneratorReach
-        :return:
-        """
-        return self.index
 
     def __post_init__(self):
         if not self.layers:

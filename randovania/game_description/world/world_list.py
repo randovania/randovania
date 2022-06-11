@@ -41,21 +41,12 @@ class WorldList(NodeProvider):
     def _refresh_node_cache(self):
         nodes = tuple(self._iterate_over_nodes())
 
-        # Node objects are shared between different WorldList instances, even those with a different list of nodes
-        # For example: removing nodes via inactive layers
-
-        # For nodes that don't already have an index, assign one that is bigger than any other node we know of
-        next_index: int = max([getattr(node, "index", -1) for node in nodes], default=-1)
+        max_index: NodeIndex = max(node.node_index for node in nodes)
+        final_nodes: list[Optional[Node]] = [None] * (max_index + 1)
         for node in nodes:
-            if getattr(node, "index", None) is None:
-                next_index += 1
-                object.__setattr__(node, "index", next_index)
+            assert final_nodes[node.node_index] is None
+            final_nodes[node.node_index] = node
 
-        # Create a big list for all known indices then add all nodes to their expected locations
-        final_nodes: list[Optional[Node]] = [None] * (next_index + 1)
-        for node in nodes:
-            assert final_nodes[node.index] is None
-            final_nodes[node.index] = node
         self._nodes = tuple(final_nodes)
 
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
@@ -138,11 +129,11 @@ class WorldList(NodeProvider):
 
     def nodes_to_world(self, node: Node) -> World:
         self.ensure_has_node_cache()
-        return self._nodes_to_world[node.index]
+        return self._nodes_to_world[node.node_index]
 
     def nodes_to_area(self, node: Node) -> Area:
         self.ensure_has_node_cache()
-        return self._nodes_to_area[node.index]
+        return self._nodes_to_area[node.node_index]
 
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
         return patches.get_dock_connection_for(node)
@@ -263,8 +254,8 @@ class WorldList(NodeProvider):
 
     def add_new_node(self, area: Area, node: Node):
         self.ensure_has_node_cache()
-        self._nodes_to_area[node.index] = area
-        self._nodes_to_world[node.index] = self.world_with_area(area)
+        self._nodes_to_area[node.node_index] = area
+        self._nodes_to_world[node.node_index] = self.world_with_area(area)
 
 
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):
@@ -274,11 +265,11 @@ def _calculate_nodes_to_area_world(worlds: Iterable[World]):
     for world in worlds:
         for area in world.areas:
             for node in area.nodes:
-                if node.index in nodes_to_area:
+                if node.node_index in nodes_to_area:
                     raise ValueError(
                         "Trying to map {} to {}, but already mapped to {}".format(
-                            node, area, nodes_to_area[node.index]))
-                nodes_to_area[node.index] = area
-                nodes_to_world[node.index] = world
+                            node, area, nodes_to_area[node.node_index]))
+                nodes_to_area[node.node_index] = area
+                nodes_to_world[node.node_index] = world
 
     return nodes_to_area, nodes_to_world

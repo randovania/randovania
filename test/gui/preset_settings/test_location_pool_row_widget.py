@@ -11,14 +11,16 @@ from randovania.interface_common.preset_editor import PresetEditor
 @pytest.fixture(name="pickup_node")
 def _pickup_node():
     return PickupNode(
-        pickup_index=PickupIndex(1),
-        major_location=True,
         identifier=NodeIdentifier.create("W", "A", "Pickup (Ultra Beam)"),
+        node_index=0,
         heal=False,
         location=None,
         layers=("default",),
         description="",
         extra={},
+
+        pickup_index=PickupIndex(1),
+        major_location=True,
     )
 
 

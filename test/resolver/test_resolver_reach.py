@@ -43,7 +43,7 @@ def test_possible_actions_with_event():
     state = MagicMock()
 
     event = MagicMock(spec=EventNode, name="event node")
-    event.get_index.return_value = 0
+    event.node_index = 0
     type(event).is_resource_node = prop = PropertyMock(return_value=True)
     event.can_collect.return_value = True
 

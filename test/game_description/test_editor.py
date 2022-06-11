@@ -53,6 +53,7 @@ def test_replace_node(game_editor):
     landing_site = world_list.area_by_area_location(loc)
     source = landing_site.node_with_name("Save Station")
     door = landing_site.node_with_name("Door to Service Access")
+    assert isinstance(door, DockNode)
     req = landing_site.connections[source][door]
 
     new_node = dataclasses.replace(door, identifier=door.identifier.renamed("FooBar"))

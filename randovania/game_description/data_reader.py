@@ -250,14 +250,15 @@ class WorldReader:
     dock_weakness_database: DockWeaknessDatabase
     current_world_name: str
     current_area_name: str
+    next_node_index : int
 
     def __init__(self,
                  resource_database: ResourceDatabase,
                  dock_weakness_database: DockWeaknessDatabase,
                  ):
-
         self.resource_database = resource_database
         self.dock_weakness_database = dock_weakness_database
+        self.next_node_index = 0
 
     def _get_scan_visor(self) -> ItemResourceInfo:
         try:
@@ -285,12 +286,14 @@ class WorldReader:
 
             generic_args = {
                 "identifier": NodeIdentifier.create(self.current_world_name, self.current_area_name, name),
+                "node_index": self.next_node_index,
                 "heal": data["heal"],
                 "location": location,
                 "description": data["description"],
                 "layers": tuple(data["layers"]),
                 "extra": frozen_lib.wrap(data["extra"]),
             }
+            self.next_node_index += 1
             node_type: int = data["node_type"]
 
             if node_type == "generic":
@@ -397,9 +400,10 @@ class WorldReader:
 
         for node in list(nodes):
             if isinstance(node, DockNode):
-                lock_node = DockLockNode.create_from_dock(node)
+                lock_node = DockLockNode.create_from_dock(node, self.next_node_index)
                 nodes.append(lock_node)
                 connections[lock_node] = {}
+                self.next_node_index += 1
 
         try:
             return Area(area_name, data["default_node"],
