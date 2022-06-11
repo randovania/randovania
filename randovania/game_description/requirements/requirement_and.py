@@ -16,10 +16,11 @@ class RequirementAnd(RequirementArrayBase):
         return result
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
-        return all(
-            item.satisfied(current_resources, current_energy, database)
-            for item in self.items
-        )
+        for item in self.items:
+            if not item.satisfied(current_resources, current_energy, database):
+                return False
+
+        return True
 
     def simplify(self, keep_comments: bool = False) -> Requirement:
         new_items = expand_items(self.items, RequirementAnd, Requirement.trivial(), keep_comments)

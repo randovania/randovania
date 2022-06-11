@@ -1,4 +1,5 @@
 import copy
+import dataclasses
 import typing
 from typing import List, Iterator, Tuple, Iterable, Optional, Type
 
@@ -21,6 +22,7 @@ from randovania.game_description.world.world import World
 NodeType = typing.TypeVar("NodeType", bound=Node)
 
 
+@dataclasses.dataclass(init=False, slots=True)
 class WorldList(NodeProvider):
     worlds: List[World]
 

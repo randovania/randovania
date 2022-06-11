@@ -18,8 +18,8 @@ class DockLockNode(ResourceNode):
 
     @classmethod
     def create_from_dock(cls, dock: DockNode, node_index: int) -> DockLockNode:
-        lock_identifier = dock.lock_node_identifier
-        return DockLockNode(
+        lock_identifier = dock.identifier.renamed(f"Lock - {dock.name}")
+        result = DockLockNode(
             identifier=lock_identifier,
             node_index=node_index,
             heal=False,
@@ -29,6 +29,8 @@ class DockLockNode(ResourceNode):
             extra={},
             dock=dock,
         )
+        object.__setattr__(dock, "lock_node", result)
+        return result
 
     def __repr__(self):
         return "DockLockNode({!r} -> {})".format(self.name, self.dock.name)
