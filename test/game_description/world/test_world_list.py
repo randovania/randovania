@@ -28,8 +28,8 @@ def test_connections_from_dock_blast_shield(empty_patches):
     req_1 = ResourceRequirement.simple(SimpleResourceInfo(0, "Ev1", "Ev1", ResourceType.EVENT))
     req_2 = ResourceRequirement.simple(SimpleResourceInfo(1, "Ev2", "Ev2", ResourceType.EVENT))
     dock_type = DockType("Type", "Type", frozendict())
-    weak_1 = DockWeakness("Weak 1", frozendict(), req_1, None)
-    weak_2 = DockWeakness("Weak 2", frozendict(), trivial, DockLock(DockLockType.FRONT_BLAST_BACK_BLAST, req_2))
+    weak_1 = DockWeakness(0, "Weak 1", frozendict(), req_1, None)
+    weak_2 = DockWeakness(1, "Weak 2", frozendict(), trivial, DockLock(DockLockType.FRONT_BLAST_BACK_BLAST, req_2))
 
     node_1_identifier = NodeIdentifier.create("W", "Area 1", "Node 1")
     node_2_identifier = NodeIdentifier.create("W", "Area 2", "Node 2")
