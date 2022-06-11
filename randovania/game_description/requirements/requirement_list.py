@@ -17,17 +17,27 @@ def _key_hash(req: ResourceRequirement):
 
 
 class RequirementList:
-    _items: dict[int, ResourceRequirement]
-    _cached_hash: Optional[int] = None
+    __slots__ = ("_bitmask", "_items", "_extra", "_cached_hash")
+    _bitmask: int
+    _items: dict[tuple[int, int, bool], ResourceRequirement]
+    _extra: list[ResourceRequirement]
+    _cached_hash: Optional[int]
 
     def __deepcopy__(self, memodict):
         return self
 
     def __init__(self, items: Iterable[ResourceRequirement]):
-        self._items = {
-            _key_hash(it): it
-            for it in items
-        }
+        self._items = {}
+        self._extra = []
+        self._bitmask = 0
+        self._cached_hash = None
+
+        for it in items:
+            self._items[_key_hash(it)] = it
+            if it.amount == 1 and not it.negate and not it.is_damage:
+                self._bitmask |= 1 << it.resource.resource_index
+            else:
+                self._extra.append(it)
 
     def __eq__(self, other):
         return isinstance(other, RequirementList) and self._items == other._items
@@ -62,6 +72,8 @@ class RequirementList:
         :param database:
         :return:
         """
+        if self._bitmask & current_resources.resource_bitmask != self._bitmask:
+            return False
 
         energy = current_energy
         for requirement in self.values():
