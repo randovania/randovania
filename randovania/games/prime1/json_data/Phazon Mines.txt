@@ -266,13 +266,14 @@ Extra - aabb: [66.58455, 129.7148, 11.163003, 138.8284, 204.85583, 77.01038]
   > Door to Elevator Access A
       Any of the following:
           All of the following:
-              Morph Ball and Spider Ball
+              Morph Ball and Spider Ball and Shoot Power Beam
               Any of the following:
                   Morph Ball Bomb
                   Boost Ball and Power Bomb ≥ 3 and Wall Boost (Advanced)
           All of the following:
               # https://youtu.be/gnqifLICKyo
               Space Jump Boots and Slope Jump (Intermediate) and Standable Terrain (Intermediate)
+              Combat (Advanced) or Shoot Power Beam
 
 > Door to Storage Depot B; Heals? False
   * Layers: default
@@ -280,14 +281,16 @@ Extra - aabb: [66.58455, 129.7148, 11.163003, 138.8284, 204.85583, 77.01038]
   * Extra - dock_index: 1
   * Extra - nonstandard: False
   > Door to Waste Disposal
-      Any of the following:
-          Use Grapple Beam
-          All of the following:
-              # https://youtu.be/oRZOljmytRQ
-              Standable Terrain (Beginner)
-          All of the following:
-              # https://youtu.be/7ATtR9o9PRw
-              Space Jump Boots and L-Jump (Beginner)
+      All of the following:
+          Any of the following:
+              Use Grapple Beam
+              All of the following:
+                  # https://youtu.be/oRZOljmytRQ
+                  Standable Terrain (Beginner)
+              All of the following:
+                  # https://youtu.be/7ATtR9o9PRw
+                  Space Jump Boots and L-Jump (Beginner)
+          Combat (Beginner) or Normal Damage ≥ 100 or Shoot Wave Beam
   > Door to Elevator Access A
       Trivial
 
@@ -358,7 +361,13 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
   * Extra - nonstandard: False
   > Door to Security Access B
       All of the following:
-          Shoot Wave Beam
+          After Mine Security Station Unlock Doors
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 200
+              Shoot Ice Beam and Shoot Wave Beam
+  > Event - Mine Security Station Doors Unlocked
+      All of the following:
+          Before Mine Security Station Unlock Doors and Shoot Wave Beam
           Any of the following:
               Charge Beam or Combat (Advanced)
               Combat (Intermediate) and Normal Damage ≥ 200
@@ -370,14 +379,20 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
   * Extra - nonstandard: False
   > Door to Security Access A
       All of the following:
-          Shoot Wave Beam
+          After Mine Security Station Unlock Doors
           Any of the following:
-              Charge Beam or Combat (Advanced)
-              Combat (Intermediate) and Normal Damage ≥ 200
+              Combat (Intermediate) or Normal Damage ≥ 200
+              Shoot Ice Beam and Shoot Wave Beam
   > Door to Storage Depot A
       After Mine Security Station Barrier
   > Event - Mine Security Station Barrier Opened
       Morph Ball and Power Bomb and Scan Visor
+  > Event - Mine Security Station Doors Unlocked
+      All of the following:
+          Before Mine Security Station Unlock Doors and Shoot Wave Beam
+          Any of the following:
+              Charge Beam or Combat (Advanced)
+              Combat (Intermediate) and Normal Damage ≥ 200
 
 > Door to Storage Depot A; Heals? False
   * Layers: default
@@ -397,6 +412,14 @@ Extra - aabb: [-36.12424, -29.465834, -4.4074636, 29.15716, 66.50636, 24.451797]
   * Layers: items_every_room
   * Pickup 205; Major Location? False
   * Extra - position_required: True
+
+> Event - Mine Security Station Doors Unlocked; Heals? False
+  * Layers: default
+  * Event Mine Security Station Unlock Doors
+  > Door to Security Access A
+      Trivial
+  > Door to Security Access B
+      Trivial
 
 ----------------
 Research Access
@@ -568,6 +591,9 @@ Extra - aabb: [-86.10738, 118.43238, 15.926657, 29.835865, 233.99252, 83.92861]
               # Standable for fast ascent: https://youtu.be/ezNh_4a3uNg
               Space Jump Boots
               Morph Ball Bomb and Morph Ball and Bomb Jump (Intermediate)
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 200
+              Shoot Power Beam and Shoot Wave Beam
 
 > Event - Rock Wall in Elite Research Destroyed; Heals? False
   * Layers: default
@@ -593,7 +619,9 @@ Extra - aabb: [-86.10738, 118.43238, 15.926657, 29.835865, 233.99252, 83.92861]
   > Door to Research Access
       After Elite Research Rock Wall
   > Door to Security Access B
-      Trivial
+      Any of the following:
+          Combat (Intermediate) or Normal Damage ≥ 200
+          Shoot Power Beam and Shoot Wave Beam
   > Event - Rock Wall in Elite Research Destroyed
       All of the following:
           Morph Ball and Scan Visor
@@ -750,10 +778,12 @@ Extra - aabb: [-18.74421, 79.04062, -74.48461, 91.819305, 157.94768, -0.48807144
       All of the following:
           After Elite Control Barriers
           Any of the following:
-              After Elite Pirate Fight (Elite Control)
               All of the following:
                   # https://youtu.be/VOesQWYfL-4
                   Standable Terrain (Intermediate)
+              All of the following:
+                  After Elite Pirate Fight (Elite Control)
+                  Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Ice Beam
   > Event - Elite Control Barriers Lowered
       All of the following:
           Scan Visor
@@ -763,9 +793,9 @@ Extra - aabb: [-18.74421, 79.04062, -74.48461, 91.819305, 157.94768, -0.48807144
                   # https://youtu.be/VOesQWYfL-4
                   Standable Terrain (Intermediate)
   > Event - Elite Pirate Defeated
-      All of the following:
+      Any of the following:
           # https://youtu.be/mx0rQa9ZAY4
-          Charge Beam and Combat (Beginner) and Normal Damage ≥ 200
+          Charge Beam or Combat (Beginner) or Normal Damage ≥ 200
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -860,18 +890,26 @@ Extra - aabb: [-132.15839, 87.526505, -111.61871, -26.354706, 153.05708, -8.0265
   * Extra - dock_index: 1
   * Extra - nonstandard: False
   > Door to Transport Access
-      Any of the following:
-          All of the following:
-              Space Jump Boots
-              Any of the following:
-                  # Halfway up: https://youtu.be/vOr2W2ut25k All the way up: https://youtu.be/gU2yAun0Zvg
-                  Standable Terrain (Intermediate)
-                  Morph Ball and Spider Ball
-          All of the following:
-              Morph Ball Bomb and Morph Ball
-              Any of the following:
-                  Spider Ball and Bomb Jump (Expert) and Standable Terrain (Expert)
-                  Complex Bomb Jump (Hypermode) and L-Jump (Expert) and Standable Terrain (Hypermode)
+      All of the following:
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      # Halfway up: https://youtu.be/vOr2W2ut25k All the way up: https://youtu.be/gU2yAun0Zvg
+                      Standable Terrain (Intermediate)
+                      Morph Ball and Spider Ball
+              All of the following:
+                  Morph Ball Bomb and Morph Ball
+                  Any of the following:
+                      Spider Ball and Bomb Jump (Expert) and Standable Terrain (Expert)
+                      Complex Bomb Jump (Hypermode) and L-Jump (Expert) and Standable Terrain (Hypermode)
+          Any of the following:
+              Before Plasma Processing Item
+              All of the following:
+                  After Plasma Processing Item
+                  Any of the following:
+                      Combat (Intermediate) or Normal Damage ≥ 300
+                      Shoot Plasma Beam and Shoot Power Beam and Shoot Wave Beam
   > Door to Processing Center Access
       Any of the following:
           Phazon Suit
@@ -885,27 +923,42 @@ Extra - aabb: [-132.15839, 87.526505, -111.61871, -26.354706, 153.05708, -8.0265
   * Extra - dock_index: 2
   * Extra - nonstandard: False
   > Door to Maintenance Tunnel
-      Any of the following:
-          All of the following:
-              Space Jump Boots
-              Any of the following:
-                  Phazon Suit
-                  Movement (Beginner) and Phazon Damage ≥ 45
-              Any of the following:
-                  # https://youtu.be/SjS_b_HBmqE
-                  Standable Terrain (Beginner)
-                  Morph Ball Bomb and Morph Ball and Spider Ball
-          All of the following:
-              Morph Ball Bomb and Morph Ball and Phazon Damage ≥ 65
-              Any of the following:
-                  Bomb Space Jump (Expert) or Complex Bomb Jump (Expert) or L-Jump (Advanced) or Standable Terrain (Advanced)
-                  Spider Ball and Bomb Jump (Advanced) and L-Jump (Advanced) and Standable Terrain (Advanced)
+      All of the following:
+          Any of the following:
+              All of the following:
+                  Space Jump Boots
+                  Any of the following:
+                      Phazon Suit
+                      Movement (Beginner) and Phazon Damage ≥ 45
+                  Any of the following:
+                      # https://youtu.be/SjS_b_HBmqE
+                      Standable Terrain (Beginner)
+                      Morph Ball Bomb and Morph Ball and Spider Ball
+              All of the following:
+                  Morph Ball Bomb and Morph Ball and Phazon Damage ≥ 65
+                  Any of the following:
+                      Bomb Space Jump (Expert) or Complex Bomb Jump (Expert) or L-Jump (Advanced) or Standable Terrain (Advanced)
+                      Spider Ball and Bomb Jump (Advanced) and L-Jump (Advanced) and Standable Terrain (Advanced)
+          Any of the following:
+              Before Plasma Processing Item
+              All of the following:
+                  After Plasma Processing Item
+                  Any of the following:
+                      Combat (Intermediate) or Normal Damage ≥ 200
+                      Shoot Plasma Beam and Shoot Power Beam and Shoot Wave Beam
   > Pickup (Missile)
       All of the following:
           Morph Ball and Power Bomb and Space Jump Boots
           Any of the following:
               # https://youtu.be/cxZ7-YewvDw
               Thermal Visor or X-Ray Visor or Invisible Objects (Beginner)
+          Any of the following:
+              Before Plasma Processing Item
+              All of the following:
+                  After Plasma Processing Item
+                  Any of the following:
+                      Combat (Intermediate) or Normal Damage ≥ 200
+                      Shoot Plasma Beam and Shoot Power Beam and Shoot Wave Beam
 
 > Pickup (Missile); Heals? False
   * Layers: default
@@ -936,7 +989,9 @@ Extra - aabb: [-30.495464, -73.79053, -86.16589, 78.22917, 33.54581, 12.443928]
   > Door to Map Station Mines
       Morph Ball and Power Bomb
   > Door to Dynamo Access
-      Trivial
+      Any of the following:
+          Combat (Intermediate) or Normal Damage ≥ 200
+          Shoot Power Beam and Shoot Wave Beam
 
 > Door to Dynamo Access; Heals? False
   * Layers: default
@@ -949,6 +1004,9 @@ Extra - aabb: [-30.495464, -73.79053, -86.16589, 78.22917, 33.54581, 12.443928]
           Any of the following:
               Space Jump Boots or Slope Jump (Intermediate)
               Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 200
+              Shoot Power Beam and Shoot Wave Beam
 
 > Pickup (Items Every Room); Heals? False
   * Layers: items_every_room
@@ -1199,6 +1257,7 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
       All of the following:
           # The Security Drone event triggers door locks on all doors in Central Dynamo except for the door to Quarantine Access A. However, if Samus leaves this room without picking up the item, the doors to Save Station Mines B and Dynamo Access will then permanently be sealed, making it impossible to backtrack through the room.
           Morph Ball and Power Bomb and Knowledge (Beginner)
+          Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Ice Beam
   > Door to Save Station Mines B
       After Invisible Drone
   > Event - Security Drone
@@ -1220,12 +1279,16 @@ Extra - aabb: [122.126015, -44.231895, -102.18276, 201.19897, 105.61425, -30.731
   * Extra - dock_index: 2
   * Extra - nonstandard: False
   > Door to Dynamo Access
-      Any of the following:
-          # Fast climb with Standable: https://youtu.be/MtpgWKgaF-U
-          Space Jump Boots
-          Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert) and Standable Terrain (Intermediate)
+      All of the following:
+          Any of the following:
+              # Fast climb with Standable: https://youtu.be/MtpgWKgaF-U
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Complex Bomb Jump (Expert) and Standable Terrain (Intermediate)
+          Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Ice Beam
   > Door to Quarantine Access A
-      Morph Ball and Power Bomb and After Invisible Drone
+      All of the following:
+          Morph Ball and Power Bomb and After Invisible Drone
+          Combat (Intermediate) or Normal Damage ≥ 200 or Shoot Ice Beam
 
 > Event - Security Drone; Heals? False
   * Layers: default
@@ -1353,6 +1416,7 @@ Extra - aabb: [-108.57961, -160.31125, -168.22823, 77.58658, -50.59403, -92.4295
           All of the following:
               Space Jump Boots and Slope Jump (Beginner) and Standable Terrain (Intermediate)
               L-Jump (Intermediate) or Use Grapple Beam
+              Combat (Advanced) or Shoot Plasma Beam
           All of the following:
               Morph Ball
               Any of the following:
@@ -1362,6 +1426,7 @@ Extra - aabb: [-108.57961, -160.31125, -168.22823, 77.58658, -50.59403, -92.4295
                           Use Grapple Beam
                           Scan Visor and Combat/Scan Dash (Expert)
                   Morph Ball Bomb and Scan Visor and Complex Bomb Jump (Expert) and Combat/Scan Dash (Expert) and Standable Terrain (Intermediate)
+              Combat (Intermediate) or Normal Damage ≥ 300 or Shoot Plasma Beam
 
 > Door to Elite Quarters Access; Heals? False
   * Layers: default
@@ -1369,7 +1434,9 @@ Extra - aabb: [-108.57961, -160.31125, -168.22823, 77.58658, -50.59403, -92.4295
   * Extra - dock_index: 1
   * Extra - nonstandard: False
   > Door to Save Station Mines C
-      Trivial
+      Any of the following:
+          Combat (Intermediate) or Normal Damage ≥ 200
+          Shoot Plasma Beam and Shoot Wave Beam
 
 > Door to Save Station Mines C; Heals? False
   * Layers: default
@@ -1382,11 +1449,18 @@ Extra - aabb: [-108.57961, -160.31125, -168.22823, 77.58658, -50.59403, -92.4295
           Any of the following:
               Space Jump Boots and Single Room Out of Bounds (Advanced) and Standable Terrain (Advanced)
               Morph Ball Bomb and Bomb Jump (Advanced) and Complex Bomb Jump (Expert) and Single Room Out of Bounds (Expert) and Standable Terrain (Hypermode)
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 300
+              Shoot Plasma Beam and Shoot Wave Beam
   > Door to Elite Quarters Access
-      Any of the following:
-          Space Jump Boots or Slope Jump (Beginner)
-          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
-          Scan Visor and Combat/Scan Dash (Beginner) and Standable Terrain (Beginner)
+      All of the following:
+          Any of the following:
+              Space Jump Boots or Slope Jump (Beginner)
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner)
+              Scan Visor and Combat/Scan Dash (Beginner) and Standable Terrain (Beginner)
+          Any of the following:
+              Combat (Intermediate) or Normal Damage ≥ 200
+              Shoot Plasma Beam and Shoot Wave Beam
   > Pickup (Missile)
       Shoot Super Missile
   > Event - Metroid Quarantine B Barrier Lowered
@@ -1410,10 +1484,12 @@ Extra - aabb: [-108.57961, -160.31125, -168.22823, 77.58658, -50.59403, -92.4295
 > Front of Barrier; Heals? False
   * Layers: default
   > Door to Quarantine Access B
-      Any of the following:
-          Space Jump Boots
-          Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
-          Slope Jump (Beginner) and Phazon Damage ≥ 50
+      All of the following:
+          Any of the following:
+              Space Jump Boots
+              Morph Ball Bomb and Morph Ball and Bomb Jump (Beginner) and Phazon Damage ≥ 150
+              Slope Jump (Beginner) and Phazon Damage ≥ 50
+          Combat (Intermediate) or Normal Damage ≥ 300 or Shoot Plasma Beam
   > Door to Save Station Mines C
       After Metroid Quarantine B Barrier
   > Event - Metroid Quarantine B Barrier Lowered
