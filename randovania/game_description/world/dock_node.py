@@ -60,24 +60,24 @@ class DockNode(Node):
 
         return None
 
-    def _get_open_requirement(self, weakness: DockWeakness) -> Requirement:
+    def _get_open_requirement(self, context: NodeContext, weakness: DockWeakness) -> Requirement:
         if weakness is self.default_dock_weakness and self.override_default_open_requirement is not None:
             return self.override_default_open_requirement
         else:
-            return weakness.requirement
+            return context.node_provider.open_requirement_for(weakness)
 
-    def _get_lock_requirement(self, weakness: DockWeakness) -> Requirement:
+    def _get_lock_requirement(self, context: NodeContext, weakness: DockWeakness) -> Requirement:
         if weakness is self.default_dock_weakness and self.override_default_lock_requirement is not None:
             return self.override_default_lock_requirement
         else:
-            return weakness.lock.requirement
+            return context.node_provider.lock_requirement_for(weakness)
 
     def _open_dock_connection(self, context: NodeContext, target_node: Node,
                               ) -> tuple[Node, Requirement]:
 
         forward_weakness = self.get_front_weakness(context)
 
-        reqs: list[Requirement] = [self._get_open_requirement(forward_weakness)]
+        reqs: list[Requirement] = [self._get_open_requirement(context, forward_weakness)]
 
         # This dock has a lock, so require it
         if forward_weakness.lock is not None:
@@ -97,7 +97,7 @@ class DockNode(Node):
         forward_lock = forward_weakness.lock
 
         if forward_lock is not None:
-            requirement = self._get_lock_requirement(forward_weakness)
+            requirement = self._get_lock_requirement(context, forward_weakness)
 
         back_weakness = self.get_back_weakness(context)
         back_lock = None
