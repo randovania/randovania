@@ -158,9 +158,9 @@ class ServerApp:
 
         return decorator
 
-    def current_client_ip(self) -> str:
+    def current_client_ip(self, sid=None) -> str:
         try:
-            environ = self.get_server().get_environ(self._request_sid)
+            environ = self.get_server().get_environ(sid or self._request_sid)
             forwarded_for = environ.get('HTTP_X_FORWARDED_FOR')
             return f"{environ['REMOTE_ADDR']} ({forwarded_for})"
         except KeyError as e:
