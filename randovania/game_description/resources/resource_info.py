@@ -19,14 +19,16 @@ ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, 
 
 
 class ResourceCollection:
-    __slots__ = ("_resource_array", "_existing_resources", "add_self_as_requirement_to_resources",
+    __slots__ = ("resource_bitmask", "_resource_array", "_existing_resources", "add_self_as_requirement_to_resources",
                  "_damage_reduction_cache")
+    resource_bitmask: int
     _resource_array: list[int]
     _existing_resources: dict[int, ResourceInfo]
     add_self_as_requirement_to_resources: bool
     _damage_reduction_cache: Optional[dict[ResourceInfo, float]]
 
     def __init__(self):
+        self.resource_bitmask = 0
         self._resource_array = [0]
         self._existing_resources = {}
         self.add_self_as_requirement_to_resources = False
@@ -88,6 +90,12 @@ class ResourceCollection:
             self._resource_array[resource_index] = quantity
         self._existing_resources[resource_index] = resource
 
+        mask = 1 << resource_index
+        if quantity > 0:
+            self.resource_bitmask |= mask
+        elif self.resource_bitmask & mask:
+            self.resource_bitmask -= mask
+
     @classmethod
     def from_dict(cls, db: ResourceDatabase, resources: dict[ResourceInfo, int]) -> ResourceCollection:
         result = cls.with_database(db)
@@ -111,6 +119,12 @@ class ResourceCollection:
                 self._resource_array[resource_index] += quantity
             self._existing_resources[resource_index] = resource
 
+            mask = 1 << resource_index
+            if self._resource_array[resource_index] > 0:
+                self.resource_bitmask |= mask
+            elif self.resource_bitmask & mask:
+                self.resource_bitmask -= mask
+
     def as_resource_gain(self) -> ResourceGain:
         for index, resource in self._existing_resources.items():
             yield resource, self._resource_array[index]
@@ -123,10 +137,15 @@ class ResourceCollection:
         except IndexError:
             pass
 
+        mask = 1 << resource_index
+        if self.resource_bitmask & mask:
+            self.resource_bitmask -= mask
+
     def duplicate(self) -> "ResourceCollection":
         result = ResourceCollection()
         result._existing_resources.update(self._existing_resources)
         result._resource_array = copy.copy(self._resource_array)
+        result.resource_bitmask = self.resource_bitmask
         result.add_self_as_requirement_to_resources = self.add_self_as_requirement_to_resources
         return result
 

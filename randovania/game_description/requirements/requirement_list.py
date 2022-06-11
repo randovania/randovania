@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import itertools
 import typing
 from typing import FrozenSet, Optional, Iterable, Iterator
 
@@ -11,39 +12,56 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 
 
+def _key_hash(req: ResourceRequirement):
+    return req.resource.resource_index, req.amount, req.negate
+
+
 class RequirementList:
-    items: FrozenSet[ResourceRequirement]
-    _cached_hash: Optional[int] = None
+    __slots__ = ("_bitmask", "_items", "_extra", "_cached_hash")
+    _bitmask: int
+    _items: dict[tuple[int, int, bool], ResourceRequirement]
+    _extra: list[ResourceRequirement]
+    _cached_hash: Optional[int]
 
     def __deepcopy__(self, memodict):
         return self
 
     def __init__(self, items: Iterable[ResourceRequirement]):
-        self.items = frozenset(items)
+        self._items = {}
+        self._extra = []
+        self._bitmask = 0
+        self._cached_hash = None
+
+        for it in items:
+            self._items[_key_hash(it)] = it
+            if it.amount == 1 and not it.negate and not it.is_damage:
+                self._bitmask |= 1 << it.resource.resource_index
+            else:
+                self._extra.append(it)
 
     def __eq__(self, other):
-        return isinstance(other, RequirementList) and self.items == other.items
+        return isinstance(other, RequirementList) and self._items == other._items
 
     @property
     def as_stable_sort_tuple(self):
-        return len(self.items), sorted(self.items)
+        return len(self._items), sorted(self._items.keys())
 
     def __hash__(self) -> int:
         if self._cached_hash is None:
-            self._cached_hash = hash(self.items)
+            self._cached_hash = hash(tuple(self._items.keys()))
         return self._cached_hash
 
     def __repr__(self):
-        return repr(self.items)
+        return repr(self._items)
 
     def __str__(self) -> str:
-        if self.items:
-            return ", ".join(sorted(map(str, self.items)))
+        if self._items:
+            return ", ".join(sorted(str(item) for item in self._items.values()))
         else:
             return "Trivial"
 
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase):
-        return sum(requirement.damage(current_resources, database) for requirement in self.values())
+        return sum(requirement.damage(current_resources, database) for requirement in self._extra)
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """
@@ -54,9 +72,11 @@ class RequirementList:
         :param database:
         :return:
         """
+        if self._bitmask & current_resources.resource_bitmask != self._bitmask:
+            return False
 
         energy = current_energy
-        for requirement in self.values():
+        for requirement in self._extra:
             if requirement.satisfied(current_resources, energy, database):
                 if requirement.resource.resource_type == ResourceType.DAMAGE:
                     energy -= requirement.damage(current_resources, database)
@@ -81,18 +101,20 @@ class RequirementList:
         Return an iterator of all SimpleResourceInfo in this list that have the negate flag
         :return:
         """
-        for individual in self.values():
+        for individual in self._extra:
             if individual.negate:
                 yield individual.resource
 
     def values(self) -> Iterator[ResourceRequirement]:
-        yield from self.items
+        yield from self._items.values()
 
     def union(self, other: RequirementList) -> RequirementList:
-        return RequirementList(self.items | other.items)
+        return RequirementList(itertools.chain(self.values(), other.values()))
 
     def is_subset_of(self, requirement: RequirementList) -> bool:
-        return self.items < requirement.items
+        if len(self._items) >= len(requirement._items):
+            return False
+        return all(key in requirement._items for key in self._items.keys())
 
 
 SatisfiableRequirements = FrozenSet[RequirementList]
