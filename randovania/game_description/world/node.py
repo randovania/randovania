@@ -40,12 +40,12 @@ class NodeContext:
 @dataclasses.dataclass(frozen=True, slots=True)
 class Node:
     identifier: NodeIdentifier
+    node_index: NodeIndex = dataclasses.field(hash=False, compare=False)
     heal: bool
     location: Optional[NodeLocation]
     description: str
     layers: tuple[str, ...]
     extra: dict[str, typing.Any]
-    node_index: NodeIndex = dataclasses.field(init=False, hash=False, compare=False)
 
     def __lt__(self, other: "Node"):
         return self.identifier < other.identifier

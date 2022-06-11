@@ -168,11 +168,11 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     scan_visor = echoes_resource_database.get_item("DarkVisor")
     nc = functools.partial(NodeIdentifier.create, "Test World", "Test Area A")
 
-    node_a = GenericNode(nc("Node A"), True, None, "", ("default",), {})
-    node_b = GenericNode(nc("Node B"), True, None, "", ("default",), {})
-    node_c = GenericNode(nc("Node C"), True, None, "", ("default",), {})
+    node_a = GenericNode(nc("Node A"), 0, True, None, "", ("default",), {})
+    node_b = GenericNode(nc("Node B"), 1, True, None, "", ("default",), {})
+    node_c = GenericNode(nc("Node C"), 2, True, None, "", ("default",), {})
     translator_node = ConfigurableNode(translator_identif := nc("Translator Gate"),
-                                       True, None, "", ("default",), {})
+                                       3, True, None, "", ("default",), {})
 
     world_list = WorldList([
         World("Test World", [

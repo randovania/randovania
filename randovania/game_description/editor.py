@@ -7,7 +7,7 @@ from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock_lock_node import DockLockNode
 from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.node import Node
+from randovania.game_description.world.node import Node, NodeIndex
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
 
@@ -15,6 +15,12 @@ from randovania.game_description.world.teleporter_node import TeleporterNode
 class Editor:
     def __init__(self, game: GameDescription):
         self.game = game
+        self.next_node_index = len(game.world_list.all_nodes)
+
+    def new_node_index(self) -> NodeIndex:
+        result = self.next_node_index
+        self.next_node_index += 1
+        return result
 
     def edit_connections(self, area: Area, from_node: Node, target_node: Node, requirement: Optional[Requirement]):
         current_connections = area.connections[from_node]
@@ -87,7 +93,7 @@ class Editor:
         area.clear_dock_cache()
 
         if isinstance(new_node, DockNode):
-            self.add_node(area, DockLockNode.create_from_dock(new_node))
+            self.add_node(area, DockLockNode.create_from_dock(new_node, self.new_node_index()))
 
         self.game.world_list.invalidate_node_cache()
 

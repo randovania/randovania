@@ -41,21 +41,12 @@ class WorldList(NodeProvider):
     def _refresh_node_cache(self):
         nodes = tuple(self._iterate_over_nodes())
 
-        # Node objects are shared between different WorldList instances, even those with a different list of nodes
-        # For example: removing nodes via inactive layers
-
-        # For nodes that don't already have an index, assign one that is bigger than any other node we know of
-        next_index: int = max([getattr(node, "node_index", -1) for node in nodes], default=-1)
-        for node in nodes:
-            if getattr(node, "node_index", None) is None:
-                next_index += 1
-                object.__setattr__(node, "node_index", next_index)
-
-        # Create a big list for all known indices then add all nodes to their expected locations
-        final_nodes: list[Optional[Node]] = [None] * (next_index + 1)
+        max_index: NodeIndex = max(node.node_index for node in nodes)
+        final_nodes: list[Optional[Node]] = [None] * (max_index + 1)
         for node in nodes:
             assert final_nodes[node.node_index] is None
             final_nodes[node.node_index] = node
+
         self._nodes = tuple(final_nodes)
 
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
