@@ -195,6 +195,7 @@ async def advance_depth(state: State, logic: Logic, status_update: Callable[[str
 def _quiet_print(s):
     pass
 
+
 def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tuple[State, Logic]:
     set_attempts(0)
 
@@ -209,6 +210,7 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tu
     starting_state.resources.add_self_as_requirement_to_resources = True
 
     return starting_state, logic
+
 
 async def resolve(configuration: BaseConfiguration,
                   patches: GamePatches,

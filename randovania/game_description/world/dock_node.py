@@ -39,13 +39,8 @@ class DockNode(Node):
     default_dock_weakness: DockWeakness
     override_default_open_requirement: typing.Optional[Requirement]
     override_default_lock_requirement: typing.Optional[Requirement]
-    lock_node_identifier: NodeIdentifier = dataclasses.field(init=False, hash=False, compare=False)
-
-    def __post_init__(self):
-        super().__post_init__()
-        object.__setattr__(self, "lock_node_identifier", self.identifier.renamed(
-            f"Lock - {self.name}",
-        ))
+    lock_node: Node | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
+    cache_default_connection: int | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
 
     def __repr__(self):
         return "DockNode({!r} -> {})".format(self.name, self.default_connection)
@@ -110,8 +105,7 @@ class DockNode(Node):
         if forward_lock is None and back_lock is None:
             return None
 
-        lock_node = context.node_provider.node_by_identifier(self.lock_node_identifier)
-        return lock_node, requirement
+        return self.lock_node, requirement
 
     def get_target_identifier(self, context: NodeContext) -> Node:
         return context.patches.get_dock_connection_for(self)
