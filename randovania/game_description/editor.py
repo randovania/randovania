@@ -52,7 +52,7 @@ class Editor:
         self.game.world_list.invalidate_node_cache()
 
         if isinstance(node, DockNode):
-            self.remove_node(area, self.game.world_list.node_by_identifier(node.lock_node_identifier))
+            self.remove_node(area, node.lock_node)
 
     def replace_node(self, area: Area, old_node: Node, new_node: Node):
         def sub(n: Node):
@@ -69,7 +69,7 @@ class Editor:
             raise ValueError(f"A node named {new_node.name} already exists.")
 
         if isinstance(old_node, DockNode):
-            self.remove_node(area, self.game.world_list.node_by_identifier(old_node.lock_node_identifier))
+            self.remove_node(area, old_node.lock_node)
 
         old_identifier = old_node.identifier
         self.replace_references_to_node_identifier(

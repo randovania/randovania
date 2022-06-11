@@ -131,9 +131,12 @@ class GamePatches:
     def get_dock_connection_for(self, node: DockNode) -> Node:
         target_index = self.dock_connection[node.node_index]
         if target_index is None:
-            return self.game.world_list.node_by_identifier(node.default_connection)
-        else:
-            return self.game.world_list.all_nodes[target_index]
+            target_index = node.cache_default_connection
+            if target_index is None:
+                target_index = self.game.world_list.node_by_identifier(node.default_connection).node_index
+                object.__setattr__(node, "cache_default_connection", target_index)
+
+        return self.game.world_list.all_nodes[target_index]
 
     def all_dock_connections(self) -> Iterator[tuple[DockNode, Node]]:
         nodes = self.game.world_list.all_nodes
