@@ -84,7 +84,7 @@ def replace_with_event_pickups(game: GameDescription):
                     "pickup": next_node.extra,
                 },
                 event_node, next_node)
-            object.__setattr__(combined_node, "index", event_node.index)
+            object.__setattr__(combined_node, "index", event_node.node_index)
 
             # If the default node index is beyond one of the removed nodes, then fix it
             if area.default_node in {event_node.name, next_node.name}:

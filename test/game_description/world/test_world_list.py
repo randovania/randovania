@@ -88,7 +88,7 @@ def test_node_index_multiple_games(default_prime_preset):
     all_nodes_alt = alt_game.world_list.all_nodes
 
     for node in alt_game.world_list.iterate_nodes():
-        assert all_nodes_alt[node.get_index()] is node
+        assert all_nodes_alt[node.node_index] is node
 
     for node in default_game.world_list.iterate_nodes():
-        assert all_nodes_default[node.get_index()] is node
+        assert all_nodes_default[node.node_index] is node

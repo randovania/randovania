@@ -16,7 +16,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock import DockWeaknessDatabase
-from randovania.game_description.world.node import GenericNode
+from randovania.game_description.world.node import GenericNode, Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.world import World
@@ -241,11 +241,14 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
     ni = NodeIdentifier.create
 
     def nodes(*names: str):
+        def get_index(n: Node):
+            return n.node_index
+
         result = [
             game.world_list.node_by_identifier(ni(*name.split("/")))
             for name in names
         ]
-        result.sort(key=lambda it: it.get_index())
+        result.sort(key=get_index)
         return result
 
     layout_configuration = dataclasses.replace(
