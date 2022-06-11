@@ -179,9 +179,12 @@ async def _inner_advance_depth(state: State,
 
         additional_requirements = additional_requirements.union(RequirementSet(additional))
 
-    logic.additional_requirements[state.node] = _simplify_additional_requirement_set(additional_requirements,
-                                                                                     state,
-                                                                                     logic.game.dangerous_resources)
+    logic.set_additional_requirements(
+        state.node,
+        _simplify_additional_requirement_set(additional_requirements,
+                                             state,
+                                             logic.game.dangerous_resources)
+    )
     return None, has_action
 
 
