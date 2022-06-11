@@ -538,6 +538,14 @@
             "Event54": {
                 "long_name": "Chozo - Fallen Rubble",
                 "extra": {}
+            },
+            "Event55": {
+                "long_name": "Mine Security Station Unlock Doors",
+                "extra": {}
+            },
+            "Event56": {
+                "long_name": "Plasma Processing Item",
+                "extra": {}
             }
         },
         "tricks": {
@@ -1101,6 +1109,71 @@
                                     }
                                 ]
                             }
+                        }
+                    ]
+                }
+            },
+            "Move Past Scatter Bombu": {
+                "type": "or",
+                "data": {
+                    "comment": null,
+                    "items": [
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "MorphBall",
+                                "amount": 1,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "damage",
+                                            "name": "Damage",
+                                            "amount": 12,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "tricks",
+                                "name": "Movement",
+                                "amount": 2,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "resource",
+                            "data": {
+                                "type": "damage",
+                                "name": "Damage",
+                                "amount": 30,
+                                "negate": false
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "data": "Shoot Wave Beam"
                         }
                     ]
                 }

@@ -34,7 +34,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Logic Database
 
-- Nothing.
+- Added: Advancing through rooms containing Trooper Pirates now requires either the proper beam(s), basic defensive capabilities (varies slightly by room), or Combat (Intermediate), except where noted. Rooms affected:
+    - Elite Control
+    - Elite Research
+    - Ore Processing - Climbing the room vanilla now requires Power Beam. Ore Processing climb without Power Beam now requires Combat (Advanced).
+    - Central Dynamo
+    - Omega Research
+    - Mine Security Station
+    - Metroid Quarantine B - The Standable Terrain method of traversing the room now requires Combat (Advanced) without Plasma Beam.
+    - Phazon Processing Center - This room is only affected after picking up the item in Plasma Processing.
+- Added: Advancing through rooms containing Scatter Bombus now requires Morph Ball, Wave Beam, Movement tricks, or basic defensive capabilities. Rooms affected:
+    - Ice Ruins Access
+    - Canyon Entryway
+    - Temple Entryway
+    - Hydra Lab Entryway
+    - West Tower Entrance
+    - Aether Lab Entryway
+    - Lower Edge Tunnel
+    - Lake Tunnel
 
 ### Metroid Prime 2: Echoes
 

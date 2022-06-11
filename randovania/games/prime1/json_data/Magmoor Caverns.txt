@@ -1594,7 +1594,7 @@ Extra - aabb: [324.22482, -808.70245, 85.270874, 412.18738, -720.1435, 116.73451
   * Plasma Door to Geothermal Core/Door to Plasma Processing
   * Extra - dock_index: 0
   * Extra - nonstandard: False
-  > Pickup (Plasma Beam)
+  > Event - Plasma Beam
       Trivial
 
 > Pickup (Plasma Beam); Heals? False
@@ -1602,6 +1602,12 @@ Extra - aabb: [324.22482, -808.70245, 85.270874, 412.18738, -720.1435, 116.73451
   * Pickup 98; Major Location? True
   * Extra - position_required: False
   > Door to Geothermal Core
+      Trivial
+
+> Event - Plasma Beam; Heals? False
+  * Layers: default
+  * Event Plasma Processing Item
+  > Pickup (Plasma Beam)
       Trivial
 
 ----------------
