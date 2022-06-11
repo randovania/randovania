@@ -9,6 +9,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock import DockWeakness, DockWeaknessDatabase
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node import Node, NodeContext, NodeIndex
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -28,6 +29,9 @@ class WorldList(NodeProvider):
     _nodes: Optional[Tuple[Optional[Node], ...]]
     _pickup_index_to_node: dict[PickupIndex, PickupNode]
     _identifier_to_node: dict[NodeIdentifier, Node]
+    _patched_node_connections: Optional[dict[NodeIndex, dict[NodeIndex, Requirement]]]
+    _patches_dock_open_requirements: Optional[list[Requirement]]
+    _patches_dock_lock_requirements: Optional[list[Optional[Requirement]]]
 
     def __deepcopy__(self, memodict):
         return WorldList(
@@ -36,6 +40,9 @@ class WorldList(NodeProvider):
 
     def __init__(self, worlds: List[World]):
         self.worlds = worlds
+        self._patched_node_connections = None
+        self._patches_dock_open_requirements = None
+        self._patches_dock_lock_requirements = None
         self.invalidate_node_cache()
 
     def _refresh_node_cache(self):
@@ -160,9 +167,14 @@ class WorldList(NodeProvider):
         :param node:
         :return: Generator of pairs Node + Requirement for going to that node
         """
-        area = self.nodes_to_area(node)
-        for target_node, requirements in area.connections[node].items():
-            yield target_node, requirements
+        if self._patched_node_connections is not None:
+            all_nodes = self.all_nodes
+            for target_index, requirements in self._patched_node_connections[node.node_index].items():
+                yield all_nodes[target_index], requirements
+        else:
+            area = self.nodes_to_area(node)
+            for target_node, requirements in area.connections[node].items():
+                yield target_node, requirements
 
     def potential_nodes_from(self, node: Node, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
         """
@@ -175,7 +187,7 @@ class WorldList(NodeProvider):
         yield from self.area_connections_from(node)
 
     def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase) -> None:
+                           database: ResourceDatabase, dock_weakness_database: DockWeaknessDatabase) -> None:
         """
         Patches all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
@@ -183,21 +195,33 @@ class WorldList(NodeProvider):
         :param static_resources:
         :param damage_multiplier:
         :param database:
+        :param dock_weakness_database
         :return:
         """
-        for world in self.worlds:
-            for area in world.areas:
-                # for node in area.nodes:
-                #     if isinstance(node, DockNode):
-                #         requirement = node.default_dock_weakness.requirement
-                #         object.__setattr__(node.default_dock_weakness, "requirement",
-                #                            requirement.patch_requirements(static_resources,
-                #                                                           damage_multiplier,
-                #                                                           database).simplify())
-                for connections in area.connections.values():
-                    for target, value in connections.items():
-                        connections[target] = value.patch_requirements(
-                            static_resources, damage_multiplier, database).simplify()
+        # Area Connections
+        self._patched_node_connections = {
+            node.node_index: {
+                target.node_index: value.patch_requirements(static_resources, damage_multiplier, database).simplify()
+                for target, value in area.connections[node].items()
+            }
+            for _, area, node in self.all_worlds_areas_nodes
+        }
+
+        # Dock Weaknesses
+        self._patches_dock_open_requirements = []
+        self._patches_dock_lock_requirements = []
+        for weakness in sorted(dock_weakness_database.all_weaknesses, key=lambda it: it.weakness_index):
+            assert len(self._patches_dock_open_requirements) == weakness.weakness_index
+            self._patches_dock_open_requirements.append(
+                weakness.requirement.patch_requirements(static_resources, damage_multiplier, database).simplify()
+            )
+            if weakness.lock is None:
+                self._patches_dock_lock_requirements.append(None)
+            else:
+                self._patches_dock_lock_requirements.append(
+                    weakness.lock.requirement.patch_requirements(
+                        static_resources, damage_multiplier, database).simplify()
+                )
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         cache_result = self._identifier_to_node.get(identifier)
@@ -256,6 +280,16 @@ class WorldList(NodeProvider):
         self.ensure_has_node_cache()
         self._nodes_to_area[node.node_index] = area
         self._nodes_to_world[node.node_index] = self.world_with_area(area)
+
+    def open_requirement_for(self, weakness: DockWeakness) -> Requirement:
+        if self._patches_dock_open_requirements is not None:
+            return self._patches_dock_open_requirements[weakness.weakness_index]
+        return weakness.requirement
+
+    def lock_requirement_for(self, weakness: DockWeakness) -> Requirement:
+        if self._patches_dock_lock_requirements is not None:
+            return self._patches_dock_lock_requirements[weakness.weakness_index]
+        return weakness.lock.requirement
 
 
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):

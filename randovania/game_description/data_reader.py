@@ -196,8 +196,9 @@ def read_dock_lock(data: Optional[dict], resource_database: ResourceDatabase) ->
 
 # Dock Weakness
 
-def read_dock_weakness(name: str, item: dict, resource_database: ResourceDatabase) -> DockWeakness:
+def read_dock_weakness(index: int, name: str, item: dict, resource_database: ResourceDatabase) -> DockWeakness:
     return DockWeakness(
+        index,
         name,
         frozen_lib.wrap(item["extra"]),
         read_requirement(item["requirement"], resource_database),
@@ -219,10 +220,17 @@ def read_dock_weakness_database(data: dict,
     dock_types = read_dict(data["types"], read_dock_type)
     weaknesses: dict[DockType, dict[str, DockWeakness]] = {}
     dock_rando: dict[DockType, DockRandoParams] = {}
+    next_index = 0
+
+    def get_index():
+        nonlocal next_index
+        result = next_index
+        next_index += 1
+        return result
 
     for dock_type, type_data in zip(dock_types, data["types"].values()):
         weaknesses[dock_type] = {
-            weak_name: read_dock_weakness(weak_name, weak_data, resource_database)
+            weak_name: read_dock_weakness(get_index(), weak_name, weak_data, resource_database)
             for weak_name, weak_data in type_data["items"].items()
         }
 

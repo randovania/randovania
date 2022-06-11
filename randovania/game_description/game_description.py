@@ -106,7 +106,8 @@ class GameDescription:
         if not self.mutable:
             raise ValueError("self is not mutable")
 
-        self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database)
+        self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database,
+                                           self.dock_weakness_database)
         self._dangerous_resources = None
 
     def get_default_elevator_connection(self) -> dict[NodeIdentifier, AreaIdentifier]:
