@@ -117,9 +117,10 @@ class ResourceDatabaseGenericModel(QtCore.QAbstractTableModel):
         return False
 
     def _create_item(self, short_name) -> ResourceInfo:
-        return SimpleResourceInfo(short_name, short_name, self.resource_type, frozen_lib.wrap({}))
+        return SimpleResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, self.resource_type)
 
     def append_item(self, resource: ResourceInfo) -> bool:
+        assert resource.resource_index == self.db.first_unused_resource_index()
         row = self.rowCount()
         self.beginInsertRows(QtCore.QModelIndex(), row + 1, row + 1)
         self._get_items().append(resource)
@@ -150,7 +151,7 @@ class ResourceDatabaseItemModel(ResourceDatabaseGenericModel):
         return ITEM_FIELDS
 
     def _create_item(self, short_name) -> ItemResourceInfo:
-        return ItemResourceInfo(short_name, short_name, 1, frozen_lib.wrap({}))
+        return ItemResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, 1)
 
 
 TRICK_FIELDS = copy.copy(GENERIC_FIELDS)
@@ -165,7 +166,7 @@ class ResourceDatabaseTrickModel(ResourceDatabaseGenericModel):
         return TRICK_FIELDS
 
     def _create_item(self, short_name) -> TrickResourceInfo:
-        return TrickResourceInfo(short_name, short_name, "", frozen_lib.wrap({}))
+        return TrickResourceInfo(self.db.first_unused_resource_index(), short_name, short_name, "")
 
 
 @dataclasses.dataclass()
