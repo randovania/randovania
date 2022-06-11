@@ -61,7 +61,7 @@ class RequirementList:
             return "Trivial"
 
     def damage(self, current_resources: ResourceCollection, database: ResourceDatabase):
-        return sum(requirement.damage(current_resources, database) for requirement in self.values())
+        return sum(requirement.damage(current_resources, database) for requirement in self._extra)
 
     def satisfied(self, current_resources: ResourceCollection, current_energy: int, database: ResourceDatabase) -> bool:
         """
@@ -76,7 +76,7 @@ class RequirementList:
             return False
 
         energy = current_energy
-        for requirement in self.values():
+        for requirement in self._extra:
             if requirement.satisfied(current_resources, energy, database):
                 if requirement.resource.resource_type == ResourceType.DAMAGE:
                     energy -= requirement.damage(current_resources, database)
@@ -101,7 +101,7 @@ class RequirementList:
         Return an iterator of all SimpleResourceInfo in this list that have the negate flag
         :return:
         """
-        for individual in self.values():
+        for individual in self._extra:
             if individual.negate:
                 yield individual.resource
 
