@@ -13,15 +13,18 @@ class Logic:
 
     game: GameDescription
     configuration: BaseConfiguration
-    additional_requirements: Dict[Node, RequirementSet]
+    additional_requirements: list[RequirementSet]
 
     def __init__(self, game: GameDescription, configuration: BaseConfiguration):
         self.game = game
         self.configuration = configuration
-        self.additional_requirements = {}
+        self.additional_requirements = [RequirementSet.trivial()] * len(game.world_list.all_nodes)
 
     def get_additional_requirements(self, node: Node) -> RequirementSet:
-        return self.additional_requirements.get(node, RequirementSet.trivial())
+        return self.additional_requirements[node.node_index]
+
+    def set_additional_requirements(self, node: Node, req: RequirementSet):
+        self.additional_requirements[node.node_index] = req
     
     @property
     def victory_condition(self) -> Requirement:
