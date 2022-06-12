@@ -110,6 +110,7 @@ async def test_on_database_area_selected(echoes_game_description, mocker):
     dot.node.assert_has_calls([
         call(node.name)
         for node in area.nodes
+        if not node.is_derived_node
     ])
     dot.render.assert_called_once_with(format="png", cleanup=True)
     mock_file.assert_called_once_with(ANY, filename=f"{area.name}_graph.png")
