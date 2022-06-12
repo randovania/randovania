@@ -95,10 +95,18 @@ Extra - map_name: Square
   * Normal Door to Starting Area/Door to Explosive Depot
   > Pickup (Explosive)
       Trivial
+  > Door to Hint Room
+      Trivial
 
 > Pickup (Explosive); Heals? False
   * Layers: default
   * Pickup 2; Major Location? True
+  > Door to Starting Area
+      Trivial
+
+> Door to Hint Room; Heals? False
+  * Layers: default
+  * Normal Door to Hint Room/Door to Explosive Depot
   > Door to Starting Area
       Trivial
 
@@ -151,5 +159,29 @@ Extra - map_name: Square
   > Event - Key Switch 2
       Trivial
   > Pickup (Blue Key)
+      Trivial
+
+----------------
+Hint Room
+Extra - map_name: Square
+> Door to Explosive Depot; Heals? False
+  * Layers: default
+  * Normal Door to Explosive Depot/Door to Hint Room
+  > Hint with Translator
+      Trivial
+  > Hint no Translator
+      Trivial
+
+> Hint with Translator; Heals? False
+  * Layers: default
+  * Logbook Requires Item (Blue Key) for 0
+  * Extra - translator: BlueKey
+  > Door to Explosive Depot
+      Trivial
+
+> Hint no Translator; Heals? False
+  * Layers: default
+  * Logbook Generic for 1
+  > Door to Explosive Depot
       Trivial
 

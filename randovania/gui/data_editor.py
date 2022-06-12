@@ -19,7 +19,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
-from randovania.game_description.world.node import Node, GenericNode, NodeLocation
+from randovania.game_description.world.node import Node, GenericNode, NodeLocation, NodeIndex
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
@@ -626,7 +626,8 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         return NodeIdentifier.create(self.current_world.name, self.current_area.name, node_name)
 
     def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
-        new_node = GenericNode(self._create_identifier(node_name), False, location, "", ("default",), {})
+        new_node = GenericNode(self._create_identifier(node_name), self.editor.new_node_index(),
+                               False, location, "", ("default",), {})
         self.editor.add_node(self.current_area, new_node)
         self.on_select_area(new_node)
 
@@ -656,6 +657,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         new_node_this_area = DockNode(
             identifier=new_node_this_area_identifier,
+            node_index=self.editor.new_node_index(),
             heal=False, location=location, description="", layers=("default",), extra={},
             dock_type=dock_weakness[0],
             default_connection=new_node_other_area_identifier,
@@ -665,6 +667,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         new_node_other_area = DockNode(
             identifier=new_node_other_area_identifier,
+            node_index=self.editor.new_node_index(),
             heal=False, location=location, description="", layers=("default",), extra={},
             dock_type=dock_weakness[0],
             default_connection=new_node_this_area_identifier,

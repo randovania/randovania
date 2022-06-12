@@ -36,16 +36,16 @@ def _create_world_list(asset_id: int, pickup_index: PickupIndex):
     nc = NodeIdentifier.create
 
     logbook_node = LogbookNode(nc("World", "Area", "Logbook A"),
-                               True, None, "", ("default",), {}, asset_id, None, None, None, None)
+                               0, True, None, "", ("default",), {}, asset_id, None, None, None, None)
     pickup_node = PickupNode(nc("World", "Area", "Pickup Node"),
-                             True, None, "", ("default",), {}, pickup_index, True)
+                             1, True, None, "", ("default",), {}, pickup_index, True)
 
     world_list = WorldList([
         World("World", [
-            Area("Area", 0, True, [logbook_node, pickup_node], {}, {}),
-            Area("Other Area", 0, True,
+            Area("Area", None, True, [logbook_node, pickup_node], {}, {}),
+            Area("Other Area", None, True,
                  [PickupNode(nc("World", "Other Area", f"Pickup {i}"),
-                             True, None, "", ("default",), {}, PickupIndex(i), True)
+                             2 + i, True, None, "", ("default",), {}, PickupIndex(i), True)
                   for i in range(pickup_index.index)],
                  {}, {}),
         ], {}),

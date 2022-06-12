@@ -321,6 +321,9 @@ class NetworkClient:
         await self.on_game_session_meta_update(entry)
 
     async def on_game_session_meta_update(self, entry: GameSessionEntry):
+        self.logger.info("name: %s, rows: %d, players: %d, game: %s, %s",
+                         entry.name, entry.num_rows, len(entry.players), str(entry.game_details),
+                         entry.state.user_friendly_name)
         self._current_game_session_meta = entry
 
     async def _on_game_session_actions_update_raw(self, data: bytes):
@@ -330,6 +333,7 @@ class NetworkClient:
         ))
 
     async def on_game_session_actions_update(self, actions: GameSessionActions):
+        self.logger.info("num actions: %d", len(actions.actions))
         self._current_game_session_actions = actions
 
     async def _on_game_session_pickups_update_raw(self, data):
@@ -345,6 +349,7 @@ class NetworkClient:
         ))
 
     async def on_game_session_pickups_update(self, pickups: GameSessionPickups):
+        self.logger.info("num pickups: %d", len(pickups.pickups))
         self._current_game_session_pickups = pickups
 
     async def _on_game_session_audit_update_raw(self, data):
@@ -356,6 +361,7 @@ class NetworkClient:
         ))
 
     async def on_game_session_audit_update(self, audit_log: GameSessionAuditLog):
+        self.logger.info("num aduit: %d", len(audit_log.entries))
         self._current_game_session_audit_log = audit_log
 
     #

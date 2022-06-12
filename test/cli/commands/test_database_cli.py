@@ -19,9 +19,9 @@ def test_list_paths_with_resource_logic(mock_load_game_description: MagicMock,
     args = MagicMock()
     game = mock_load_game_description.return_value
 
-    resource_a = SimpleResourceInfo("Long Name A", "A", ResourceType.ITEM)
-    resource_b = SimpleResourceInfo("Long Name B", "B", ResourceType.ITEM)
-    resource_c = SimpleResourceInfo("Long Name C", "C", ResourceType.ITEM)
+    resource_a = SimpleResourceInfo(0, "Long Name A", "A", ResourceType.ITEM)
+    resource_b = SimpleResourceInfo(1, "Long Name B", "B", ResourceType.ITEM)
+    resource_c = SimpleResourceInfo(2, "Long Name C", "C", ResourceType.ITEM)
     resources = [resource_a, resource_b, resource_c]
 
     game.resource_database = [

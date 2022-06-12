@@ -177,9 +177,9 @@
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
-                        "x": 365.95,
-                        "y": 383.6,
-                        "z": 0.0
+                        "x": 423.5772357723577,
+                        "y": 363.4146341463415,
+                        "z": 0
                     },
                     "description": "",
                     "layers": [
@@ -489,6 +489,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Door to Hint Room": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -507,6 +514,38 @@
                     "extra": {},
                     "pickup_index": 2,
                     "major_location": true,
+                    "connections": {
+                        "Door to Starting Area": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Door to Hint Room": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 239.5,
+                        "y": 119.92,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Hint Room",
+                        "node_name": "Door to Explosive Depot"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Starting Area": {
                             "type": "and",
@@ -733,6 +772,106 @@
                             }
                         },
                         "Pickup (Blue Key)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "Hint Room": {
+            "default_node": null,
+            "valid_starting_location": false,
+            "extra": {
+                "map_name": "Square"
+            },
+            "nodes": {
+                "Door to Explosive Depot": {
+                    "node_type": "dock",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 10.57,
+                        "y": 123.69,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "dock_type": "door",
+                    "default_connection": {
+                        "world_name": "Intro",
+                        "area_name": "Explosive Depot",
+                        "node_name": "Door to Hint Room"
+                    },
+                    "default_dock_weakness": "Normal Door",
+                    "override_default_open_requirement": null,
+                    "override_default_lock_requirement": null,
+                    "connections": {
+                        "Hint with Translator": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Hint no Translator": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint with Translator": {
+                    "node_type": "logbook",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 179.16,
+                        "y": 171.73,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {
+                        "translator": "BlueKey"
+                    },
+                    "string_asset_id": 0,
+                    "lore_type": "requires-item",
+                    "connections": {
+                        "Door to Explosive Depot": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Hint no Translator": {
+                    "node_type": "logbook",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 173.04,
+                        "y": 81.76,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "string_asset_id": 1,
+                    "lore_type": "generic",
+                    "connections": {
+                        "Door to Explosive Depot": {
                             "type": "and",
                             "data": {
                                 "comment": null,

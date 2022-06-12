@@ -15,6 +15,12 @@ def default_base_damage_reduction(db: "ResourceDatabase", current_resources: Res
     return 1.0
 
 
+_ALL_TYPES = (
+    ResourceType.ITEM, ResourceType.EVENT, ResourceType.TRICK,
+    ResourceType.DAMAGE, ResourceType.VERSION, ResourceType.MISC
+)
+
+
 @dataclasses.dataclass(frozen=True)
 class ResourceDatabase:
     game_enum: RandovaniaGame
@@ -30,7 +36,21 @@ class ResourceDatabase:
     item_percentage_index: Optional[str]
     multiworld_magic_item_index: Optional[str]
     base_damage_reduction: Callable[["ResourceDatabase", ResourceCollection], float] = default_base_damage_reduction
-    resource_count: Optional[int] = dataclasses.field(default=None, init=False)
+    resource_by_index: list[Optional[ResourceInfo]] = dataclasses.field(default_factory=list)
+
+    def __post_init__(self):
+        # Reserve index 0 as a placeholder for things without index
+        max_index = max(
+            max((resource.resource_index for resource in self.get_by_type(resource_type)), default=0)
+            for resource_type in _ALL_TYPES
+        )
+        self.resource_by_index.clear()
+        self.resource_by_index.extend([None] * (max_index + 1))
+
+        for resource_type in _ALL_TYPES:
+            for resource in self.get_by_type(resource_type):
+                assert self.resource_by_index[resource.resource_index] is None
+                self.resource_by_index[resource.resource_index] = resource
 
     def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
         if resource_type == ResourceType.ITEM:
@@ -90,3 +110,6 @@ class ResourceDatabase:
         current_resources.add_damage_reduction_cache(resource, multiplier)
 
         return multiplier
+
+    def first_unused_resource_index(self) -> int:
+        return len(self.resource_by_index)

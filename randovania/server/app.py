@@ -93,7 +93,7 @@ def create_app():
     def disconnect(sid):
         connected_clients.dec()
 
-        app.logger.info(f"Client at {sio.current_client_ip()} disconnected.")
+        app.logger.info(f"Client at {sio.current_client_ip(sid)} disconnected.")
 
         session = sio.get_server().get_session(sid)
         if "user-id" in session:
