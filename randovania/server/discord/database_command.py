@@ -2,6 +2,7 @@ import functools
 import io
 import logging
 import math
+import typing
 from pathlib import Path
 from typing import List, Dict, Optional, NamedTuple
 
@@ -33,10 +34,15 @@ class SplitWorld(NamedTuple):
 def render_area_with_graphviz(area: Area) -> Optional[io.BytesIO]:
     dot = graphviz.Digraph(comment=area.name)
     for node in area.nodes:
+        if node.is_derived_node:
+            continue
         dot.node(node.name)
 
     known_edges = set()
     for source, target in area.connections.items():
+        if source.is_derived_node:
+            continue
+
         for target_node, requirement in target.items():
             direction = None
             if source in area.connections.get(target_node):
@@ -84,10 +90,11 @@ def render_area_with_pillow(area: Area, data_path: Path) -> Optional[io.BytesIO]
                 draw.line(source + target, width=1, fill=(0, 0, 0, 255))
 
         for node in area.nodes:
-            draw_connections_from(node)
+            if not node.is_derived_node:
+                draw_connections_from(node)
 
         for node in area.nodes:
-            if node.location is None:
+            if node.location is None or node.is_derived_node:
                 return None
 
             p = location_to_pos(node.location)
@@ -269,13 +276,15 @@ class DatabaseCommandCog(RandovaniaCog):
         db = default_database.game_description_for(game)
 
         title = "{}: {}".format(game.long_name, db.world_list.area_name(area))
+        valid_nodes = [node for node in sorted(area.nodes, key=lambda it: it.name)
+                       if not node.is_derived_node]
 
         select = manage_components.create_select(
             options=[
                 manage_components.create_select_option(node.name, value=node.name)
-                for i, node in sorted(enumerate(area.nodes), key=lambda it: it[1].name)
+                for node in valid_nodes
             ],
-            max_values=min(10, len(area.nodes)),
+            max_values=min(10, len(valid_nodes)),
             custom_id=f"{game.value}_world_{world_id}_{option_selected}",
             placeholder="Choose the room",
         )

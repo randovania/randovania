@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: Exporting presets now fills in default file name
 - Added: Logging messages when receiving events from the server.
 - Changed: Internal changes to server for hopefully less expired sessions.
+- Fixed: The discord bot no longer includes the lock nodes.
 
 ### Cave Story
 
