@@ -49,6 +49,7 @@ class ResourceDatabase:
 
         for resource_type in _ALL_TYPES:
             for resource in self.get_by_type(resource_type):
+                assert resource.resource_type == resource_type
                 assert self.resource_by_index[resource.resource_index] is None
                 self.resource_by_index[resource.resource_index] = resource
 
