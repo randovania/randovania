@@ -7,13 +7,13 @@ from typing import Callable, Tuple
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.world.dock import DockRandoParams, DockWeakness
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node import NodeContext
-from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.generator.filler.filler_library import UnableToGenerate
 from randovania.generator.filler.runner import FillerResults
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.layout.base.dock_rando_configuration import DockRandoMode, DockTypeState
@@ -108,6 +108,14 @@ def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tup
 RESOLVER_ATTEMPTS = 125
 
 
+async def _run_resolver(state: State, logic: Logic, max_attempts: int):
+    debug.log_resolve_start()
+
+    resolver.set_attempts(0)
+    with debug.with_level(0):
+        return await resolver.advance_depth(state, logic, lambda s: None, max_attempts=max_attempts)
+
+
 async def _run_dock_resolver(dock: DockNode,
                              target: DockNode,
                              dock_type_params: DockRandoParams,
@@ -124,21 +132,18 @@ async def _run_dock_resolver(dock: DockNode,
     state.patches = state.patches.assign_dock_weakness(locks)
     logic = DockRandoLogic.from_logic(setup[1], dock)
 
-    debug.log_resolve_start()
     debug.debug_print(f"{dock.identifier}")
+    try:
+        new_state = await _run_resolver(state, logic, RESOLVER_ATTEMPTS)
+    except resolver.ResolverTimeout:
+        new_state = None
+        result = f"Timeout ({resolver.get_attempts()} attempts)"
+    else:
+        result = f"Finished resolver ({resolver.get_attempts()} attempts)"
 
-    resolver.set_attempts(0)
-    with debug.with_level(0):
-        try:
-            new_state = await resolver.advance_depth(state, logic, lambda s: None, max_attempts=RESOLVER_ATTEMPTS)
-        except resolver.ResolverTimeout:
-            new_state = None
-            result = f"Timeout ({resolver.get_attempts()} attempts)"
-        else:
-            result = f"Finished resolver ({resolver.get_attempts()} attempts)"
     debug.debug_print(result)
 
-    return (new_state, logic)
+    return new_state, logic
 
 
 def _determine_valid_weaknesses(dock: DockNode,
@@ -182,16 +187,36 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
     unassigned_docks = _get_docks_to_assign(rng, filler_results)
 
-    new_patches = {player: result.patches for player, result in filler_results.player_results.items()}
+    new_patches: dict[int, GamePatches] = {
+        player: result.patches for player, result in filler_results.player_results.items()
+    }
     docks_placed = 0
     docks_to_place = len(unassigned_docks)
 
     start_time = time.perf_counter()
 
-    resolver_setup = {
+    resolver_setup: dict[int, tuple[State, Logic]] = {
         player: resolver.setup_resolver(patches.configuration, patches)
         for player, patches in new_patches.items()
     }
+
+    for player, patches in new_patches.items():
+        if patches.configuration.dock_rando.mode == DockRandoMode.VANILLA:
+            continue
+
+        status_update(f"Preparing dock randomizer for player {player + 1}.")
+        resolver_setup[player] = resolver.setup_resolver(patches.configuration, patches)
+        state, logic = resolver_setup[player]
+
+        try:
+            new_state = await _run_resolver(state, logic, RESOLVER_ATTEMPTS * 2)
+        except resolver.ResolverTimeout:
+            new_state = None
+
+        if new_state is None:
+            raise UnableToGenerate(f"Unable to solve game for player {player + 1} with all doors unlocked.")
+        else:
+            debug.debug_print(f">> Player {player + 1} is solve-able with all doors unlocked.")
 
     while unassigned_docks:
         await asyncio.sleep(0)
