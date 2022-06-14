@@ -1,4 +1,5 @@
 import copy
+import dataclasses
 import typing
 from typing import List, Iterator, Tuple, Iterable, Optional, Type
 
@@ -9,6 +10,7 @@ from randovania.game_description.resources.resource_database import ResourceData
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
+from randovania.game_description.world.dock import DockWeakness, DockWeaknessDatabase
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node import Node, NodeContext, NodeIndex
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -20,6 +22,7 @@ from randovania.game_description.world.world import World
 NodeType = typing.TypeVar("NodeType", bound=Node)
 
 
+@dataclasses.dataclass(init=False, slots=True)
 class WorldList(NodeProvider):
     worlds: List[World]
 
@@ -28,6 +31,9 @@ class WorldList(NodeProvider):
     _nodes: Optional[Tuple[Optional[Node], ...]]
     _pickup_index_to_node: dict[PickupIndex, PickupNode]
     _identifier_to_node: dict[NodeIdentifier, Node]
+    _patched_node_connections: Optional[dict[NodeIndex, dict[NodeIndex, Requirement]]]
+    _patches_dock_open_requirements: Optional[list[Requirement]]
+    _patches_dock_lock_requirements: Optional[list[Optional[Requirement]]]
 
     def __deepcopy__(self, memodict):
         return WorldList(
@@ -36,26 +42,20 @@ class WorldList(NodeProvider):
 
     def __init__(self, worlds: List[World]):
         self.worlds = worlds
+        self._patched_node_connections = None
+        self._patches_dock_open_requirements = None
+        self._patches_dock_lock_requirements = None
         self.invalidate_node_cache()
 
     def _refresh_node_cache(self):
         nodes = tuple(self._iterate_over_nodes())
 
-        # Node objects are shared between different WorldList instances, even those with a different list of nodes
-        # For example: removing nodes via inactive layers
-
-        # For nodes that don't already have an index, assign one that is bigger than any other node we know of
-        next_index: int = max([getattr(node, "index", -1) for node in nodes], default=-1)
+        max_index: NodeIndex = max(node.node_index for node in nodes)
+        final_nodes: list[Optional[Node]] = [None] * (max_index + 1)
         for node in nodes:
-            if getattr(node, "index", None) is None:
-                next_index += 1
-                object.__setattr__(node, "index", next_index)
+            assert final_nodes[node.node_index] is None
+            final_nodes[node.node_index] = node
 
-        # Create a big list for all known indices then add all nodes to their expected locations
-        final_nodes: list[Optional[Node]] = [None] * (next_index + 1)
-        for node in nodes:
-            assert final_nodes[node.index] is None
-            final_nodes[node.index] = node
         self._nodes = tuple(final_nodes)
 
         self._nodes_to_area, self._nodes_to_world = _calculate_nodes_to_area_world(self.worlds)
@@ -138,11 +138,11 @@ class WorldList(NodeProvider):
 
     def nodes_to_world(self, node: Node) -> World:
         self.ensure_has_node_cache()
-        return self._nodes_to_world[node.index]
+        return self._nodes_to_world[node.node_index]
 
     def nodes_to_area(self, node: Node) -> Area:
         self.ensure_has_node_cache()
-        return self._nodes_to_area[node.index]
+        return self._nodes_to_area[node.node_index]
 
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
         return patches.get_dock_connection_for(node)
@@ -169,9 +169,14 @@ class WorldList(NodeProvider):
         :param node:
         :return: Generator of pairs Node + Requirement for going to that node
         """
-        area = self.nodes_to_area(node)
-        for target_node, requirements in area.connections[node].items():
-            yield target_node, requirements
+        if self._patched_node_connections is not None:
+            all_nodes = self.all_nodes
+            for target_index, requirements in self._patched_node_connections[node.node_index].items():
+                yield all_nodes[target_index], requirements
+        else:
+            area = self.nodes_to_area(node)
+            for target_node, requirements in area.connections[node].items():
+                yield target_node, requirements
 
     def potential_nodes_from(self, node: Node, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:
         """
@@ -184,7 +189,7 @@ class WorldList(NodeProvider):
         yield from self.area_connections_from(node)
 
     def patch_requirements(self, static_resources: ResourceCollection, damage_multiplier: float,
-                           database: ResourceDatabase) -> None:
+                           database: ResourceDatabase, dock_weakness_database: DockWeaknessDatabase) -> None:
         """
         Patches all Node connections, assuming the given resources will never change their quantity.
         This is removes all checking for tricks and difficulties in runtime since these never change.
@@ -192,21 +197,33 @@ class WorldList(NodeProvider):
         :param static_resources:
         :param damage_multiplier:
         :param database:
+        :param dock_weakness_database
         :return:
         """
-        for world in self.worlds:
-            for area in world.areas:
-                # for node in area.nodes:
-                #     if isinstance(node, DockNode):
-                #         requirement = node.default_dock_weakness.requirement
-                #         object.__setattr__(node.default_dock_weakness, "requirement",
-                #                            requirement.patch_requirements(static_resources,
-                #                                                           damage_multiplier,
-                #                                                           database).simplify())
-                for connections in area.connections.values():
-                    for target, value in connections.items():
-                        connections[target] = value.patch_requirements(
-                            static_resources, damage_multiplier, database).simplify()
+        # Area Connections
+        self._patched_node_connections = {
+            node.node_index: {
+                target.node_index: value.patch_requirements(static_resources, damage_multiplier, database).simplify()
+                for target, value in area.connections[node].items()
+            }
+            for _, area, node in self.all_worlds_areas_nodes
+        }
+
+        # Dock Weaknesses
+        self._patches_dock_open_requirements = []
+        self._patches_dock_lock_requirements = []
+        for weakness in sorted(dock_weakness_database.all_weaknesses, key=lambda it: it.weakness_index):
+            assert len(self._patches_dock_open_requirements) == weakness.weakness_index
+            self._patches_dock_open_requirements.append(
+                weakness.requirement.patch_requirements(static_resources, damage_multiplier, database).simplify()
+            )
+            if weakness.lock is None:
+                self._patches_dock_lock_requirements.append(None)
+            else:
+                self._patches_dock_lock_requirements.append(
+                    weakness.lock.requirement.patch_requirements(
+                        static_resources, damage_multiplier, database).simplify()
+                )
 
     def node_by_identifier(self, identifier: NodeIdentifier) -> Node:
         cache_result = self._identifier_to_node.get(identifier)
@@ -263,8 +280,18 @@ class WorldList(NodeProvider):
 
     def add_new_node(self, area: Area, node: Node):
         self.ensure_has_node_cache()
-        self._nodes_to_area[node.index] = area
-        self._nodes_to_world[node.index] = self.world_with_area(area)
+        self._nodes_to_area[node.node_index] = area
+        self._nodes_to_world[node.node_index] = self.world_with_area(area)
+
+    def open_requirement_for(self, weakness: DockWeakness) -> Requirement:
+        if self._patches_dock_open_requirements is not None:
+            return self._patches_dock_open_requirements[weakness.weakness_index]
+        return weakness.requirement
+
+    def lock_requirement_for(self, weakness: DockWeakness) -> Requirement:
+        if self._patches_dock_lock_requirements is not None:
+            return self._patches_dock_lock_requirements[weakness.weakness_index]
+        return weakness.lock.requirement
 
 
 def _calculate_nodes_to_area_world(worlds: Iterable[World]):
@@ -274,11 +301,11 @@ def _calculate_nodes_to_area_world(worlds: Iterable[World]):
     for world in worlds:
         for area in world.areas:
             for node in area.nodes:
-                if node.index in nodes_to_area:
+                if node.node_index in nodes_to_area:
                     raise ValueError(
                         "Trying to map {} to {}, but already mapped to {}".format(
-                            node, area, nodes_to_area[node.index]))
-                nodes_to_area[node.index] = area
-                nodes_to_world[node.index] = world
+                            node, area, nodes_to_area[node.node_index]))
+                nodes_to_area[node.node_index] = area
+                nodes_to_world[node.node_index] = world
 
     return nodes_to_area, nodes_to_world

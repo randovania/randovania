@@ -16,7 +16,7 @@ from randovania.game_description.resources.search import find_resource_info_with
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.dock import DockWeaknessDatabase
-from randovania.game_description.world.node import GenericNode
+from randovania.game_description.world.node import GenericNode, Node
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.game_description.world.world import World
@@ -168,11 +168,11 @@ def test_basic_search_with_translator_gate(has_translator: bool, echoes_resource
     scan_visor = echoes_resource_database.get_item("DarkVisor")
     nc = functools.partial(NodeIdentifier.create, "Test World", "Test Area A")
 
-    node_a = GenericNode(nc("Node A"), True, None, "", ("default",), {})
-    node_b = GenericNode(nc("Node B"), True, None, "", ("default",), {})
-    node_c = GenericNode(nc("Node C"), True, None, "", ("default",), {})
+    node_a = GenericNode(nc("Node A"), 0, True, None, "", ("default",), {})
+    node_b = GenericNode(nc("Node B"), 1, True, None, "", ("default",), {})
+    node_c = GenericNode(nc("Node C"), 2, True, None, "", ("default",), {})
     translator_node = ConfigurableNode(translator_identif := nc("Translator Gate"),
-                                       True, None, "", ("default",), {})
+                                       3, True, None, "", ("default",), {})
 
     world_list = WorldList([
         World("Test World", [
@@ -241,11 +241,14 @@ def test_reach_size_from_start_echoes(small_echoes_game_description, default_ech
     ni = NodeIdentifier.create
 
     def nodes(*names: str):
+        def get_index(n: Node):
+            return n.node_index
+
         result = [
             game.world_list.node_by_identifier(ni(*name.split("/")))
             for name in names
         ]
-        result.sort(key=lambda it: it.get_index())
+        result.sort(key=get_index)
         return result
 
     layout_configuration = dataclasses.replace(

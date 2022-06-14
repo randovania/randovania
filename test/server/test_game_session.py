@@ -404,7 +404,9 @@ def test_game_session_admin_kick_last(clean_database, flask_app, mocker, mock_au
         BinaryGameSessionEntry.build({'id': 1, 'name': 'My Room', 'state': 'setup', 'players': [], 'presets': [],
                                       'game_details': None, 'generation_in_progress': None,
                                       'allowed_games': ['prime1', 'prime2'], }),
-        room='game-session-1')
+        room='game-session-1',
+        namespace='/',
+    )
     mock_audit.assert_called_once_with(sio, session, "Left session")
 
 
@@ -983,7 +985,8 @@ def test_emit_session_meta_update(session_update, mocker):
     mock_emit.assert_called_once_with(
         "game_session_meta_update",
         BinaryGameSessionEntry.build(session_json),
-        room=f"game-session-{session_update.id}"
+        room=f"game-session-{session_update.id}",
+        namespace='/',
     )
 
 
@@ -1008,7 +1011,8 @@ def test_emit_session_actions_update(session_update, mocker):
     mock_emit.assert_called_once_with(
         "game_session_actions_update",
         BinaryGameSessionActions.build(actions),
-        room=f"game-session-{session_update.id}"
+        room=f"game-session-{session_update.id}",
+        namespace='/',
     )
 
 
@@ -1032,7 +1036,8 @@ def test_emit_session_audit_update(session_update, mocker):
     mock_emit.assert_called_once_with(
         "game_session_audit_update",
         BinaryGameSessionAuditLog.build(audit_log),
-        room=f"game-session-{session_update.id}"
+        room=f"game-session-{session_update.id}",
+        namespace='/',
     )
 
 

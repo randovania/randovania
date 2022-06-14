@@ -25,21 +25,21 @@ from randovania.layout import filtered_database
 def test_connections_from_dock_blast_shield(empty_patches):
     # Setup
     trivial = Requirement.trivial()
-    req_1 = ResourceRequirement.simple(SimpleResourceInfo("Ev1", "Ev1", ResourceType.EVENT))
-    req_2 = ResourceRequirement.simple(SimpleResourceInfo("Ev2", "Ev2", ResourceType.EVENT))
+    req_1 = ResourceRequirement.simple(SimpleResourceInfo(0, "Ev1", "Ev1", ResourceType.EVENT))
+    req_2 = ResourceRequirement.simple(SimpleResourceInfo(1, "Ev2", "Ev2", ResourceType.EVENT))
     dock_type = DockType("Type", "Type", frozendict())
-    weak_1 = DockWeakness("Weak 1", frozendict(), req_1, None)
-    weak_2 = DockWeakness("Weak 2", frozendict(), trivial, DockLock(DockLockType.FRONT_BLAST_BACK_BLAST, req_2))
+    weak_1 = DockWeakness(0, "Weak 1", frozendict(), req_1, None)
+    weak_2 = DockWeakness(1, "Weak 2", frozendict(), trivial, DockLock(DockLockType.FRONT_BLAST_BACK_BLAST, req_2))
 
     node_1_identifier = NodeIdentifier.create("W", "Area 1", "Node 1")
     node_2_identifier = NodeIdentifier.create("W", "Area 2", "Node 2")
 
-    node_1 = DockNode(node_1_identifier, False, None, "", ("default",), {}, dock_type,
+    node_1 = DockNode(node_1_identifier, 0, False, None, "", ("default",), {}, dock_type,
                       node_2_identifier, weak_1, None, None)
-    node_1_lock = DockLockNode.create_from_dock(node_1)
-    node_2 = DockNode(node_2_identifier, False, None, "", ("default",), {}, dock_type,
+    node_1_lock = DockLockNode.create_from_dock(node_1, 1)
+    node_2 = DockNode(node_2_identifier, 2, False, None, "", ("default",), {}, dock_type,
                       node_1_identifier, weak_2, None, None)
-    node_2_lock = DockLockNode.create_from_dock(node_2)
+    node_2_lock = DockLockNode.create_from_dock(node_2, 3)
 
     area_1 = Area("Area 1", None, True, [node_1, node_1_lock], {}, {})
     area_2 = Area("Area 2", None, True, [node_2, node_2_lock], {}, {})
@@ -88,7 +88,7 @@ def test_node_index_multiple_games(default_prime_preset):
     all_nodes_alt = alt_game.world_list.all_nodes
 
     for node in alt_game.world_list.iterate_nodes():
-        assert all_nodes_alt[node.get_index()] is node
+        assert all_nodes_alt[node.node_index] is node
 
     for node in default_game.world_list.iterate_nodes():
-        assert all_nodes_default[node.get_index()] is node
+        assert all_nodes_default[node.node_index] is node

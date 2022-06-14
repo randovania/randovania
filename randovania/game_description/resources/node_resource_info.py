@@ -11,8 +11,9 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.world.node import Node, NodeContext
 
 
-@dataclasses.dataclass(frozen=True, order=True, slots=True)
+@dataclasses.dataclass(frozen=True, slots=True)
 class NodeResourceInfo:
+    resource_index: int
     node_identifier: NodeIdentifier
     long_name: str = dataclasses.field(hash=False, repr=False)
     short_name: str = dataclasses.field(hash=False, repr=False)
@@ -25,6 +26,7 @@ class NodeResourceInfo:
     @classmethod
     def from_node(cls, node: Node, context: NodeContext) -> NodeResourceInfo:
         return cls(
+            context.database.first_unused_resource_index() + node.node_index,
             node.identifier,
             node.name,
             node.name,

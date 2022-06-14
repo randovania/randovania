@@ -111,23 +111,23 @@ RESOLVER_ATTEMPTS = 125
 async def _run_dock_resolver(dock: DockNode,
                              target: DockNode,
                              dock_type_params: DockRandoParams,
-                             patches: GamePatches
+                             setup: Tuple[State, Logic]
                              ) -> Tuple[State, Logic]:
     """
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
     """
-
     locks = [(dock, dock_type_params.locked)]
-    if patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
+    if setup[0].patches.configuration.dock_rando.mode == DockRandoMode.TWO_WAY:
         locks.append((target, dock_type_params.locked))
-    locked_patches = patches.assign_dock_weakness(locks)
 
-    state, logic = resolver.setup_resolver(patches.configuration, locked_patches)
-    logic = DockRandoLogic.from_logic(logic, dock)
+    state = setup[0].copy()
+    state.patches = state.patches.assign_dock_weakness(locks)
+    logic = DockRandoLogic.from_logic(setup[1], dock)
 
     debug.log_resolve_start()
     debug.debug_print(f"{dock.identifier}")
 
+    resolver.set_attempts(0)
     with debug.with_level(0):
         try:
             new_state = await resolver.advance_depth(state, logic, lambda s: None, max_attempts=RESOLVER_ATTEMPTS)
@@ -188,6 +188,11 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
     start_time = time.perf_counter()
 
+    resolver_setup = {
+        player: resolver.setup_resolver(patches.configuration, patches)
+        for player, patches in new_patches.items()
+    }
+
     while unassigned_docks:
         await asyncio.sleep(0)
         status_update(f"{docks_placed}/{docks_to_place} docks placed")
@@ -209,7 +214,7 @@ async def distribute_post_fill_weaknesses(rng: Random,
         dock_type_state = patches.configuration.dock_rando.types_state[dock.dock_type]
 
         # Determine the reach and possible weaknesses given that reach
-        new_state, logic = await _run_dock_resolver(dock, target, dock_type_params, patches)
+        new_state, logic = await _run_dock_resolver(dock, target, dock_type_params, resolver_setup[player])
         weighted_weaknesses = _determine_valid_weaknesses(dock, target, dock_type_params, dock_type_state, new_state,
                                                           logic)
 

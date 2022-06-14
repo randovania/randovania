@@ -147,7 +147,7 @@ def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Optional[Path]:
     return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
 
 
-def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool) -> Optional[Path]:
+def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name: Optional[str] = None) -> Optional[Path]:
     """
     Shows an QFileDialog asking the user for a Randovania preset file
     :param window:
@@ -158,6 +158,7 @@ def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool) -> Op
     return _prompt_user_for_file(window, caption="Select a Randovania Preset file.",
                                  filter=f"Randovania Preset, *.{VersionedPreset.file_extension()};;"
                                         f"All Files (*.*)",
+                                 dir=name,
                                  new_file=new_file)
 
 

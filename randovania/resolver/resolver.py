@@ -179,9 +179,12 @@ async def _inner_advance_depth(state: State,
 
         additional_requirements = additional_requirements.union(RequirementSet(additional))
 
-    logic.additional_requirements[state.node] = _simplify_additional_requirement_set(additional_requirements,
-                                                                                     state,
-                                                                                     logic.game.dangerous_resources)
+    logic.set_additional_requirements(
+        state.node,
+        _simplify_additional_requirement_set(additional_requirements,
+                                             state,
+                                             logic.game.dangerous_resources)
+    )
     return None, has_action
 
 
@@ -191,6 +194,7 @@ async def advance_depth(state: State, logic: Logic, status_update: Callable[[str
 
 def _quiet_print(s):
     pass
+
 
 def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tuple[State, Logic]:
     set_attempts(0)
@@ -206,6 +210,7 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tu
     starting_state.resources.add_self_as_requirement_to_resources = True
 
     return starting_state, logic
+
 
 async def resolve(configuration: BaseConfiguration,
                   patches: GamePatches,

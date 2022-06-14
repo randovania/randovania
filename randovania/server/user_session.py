@@ -7,13 +7,12 @@ import cryptography.fernet
 import flask
 import flask_socketio
 import peewee
-from oauthlib.oauth2 import OAuth2Error
-from requests_oauthlib import OAuth2Session
-
+from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
 from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction, UserNotAuthorized
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
+from requests_oauthlib import OAuth2Session
 
 
 def _create_client_side_session(sio: ServerApp, user: Optional[User]) -> dict:
@@ -66,7 +65,6 @@ def _create_session_with_discord_token(sio: ServerApp, access_token: str) -> Tup
 def login_with_discord(sio: ServerApp, code: str) -> dict:
     oauth = OAuth2Session(
         client_id=sio.app.config["DISCORD_CLIENT_ID"],
-        scope=["identify"],
         redirect_uri=sio.app.config["DISCORD_REDIRECT_URI"],
     )
     access_token = oauth.fetch_token(
@@ -129,8 +127,8 @@ def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: O
     except UserNotAuthorized:
         raise
 
-    except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, OAuth2Error) as e:
-        # OAuth2Error: discord token expired and couldn't renew
+    except (KeyError, peewee.DoesNotExist, json.JSONDecodeError, InvalidTokenError) as e:
+        # InvalidTokenError: discord token expired and couldn't renew
         logger().info("Client at %s was unable to restore session: (%s) %s",
                       sio.current_client_ip(), str(type(e)), str(e))
         raise InvalidSession()
@@ -160,7 +158,7 @@ def setup_app(sio: ServerApp):
 
     @sio.app.route("/login")
     def browser_login_with_discord():
-        return sio.discord.create_session(scope=["identify"])
+        return sio.discord.create_session()
 
     @sio.app.route("/login_callback")
     def browser_discord_login_callback():

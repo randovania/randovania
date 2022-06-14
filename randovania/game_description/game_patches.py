@@ -29,7 +29,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.world.dock_node import DockNode
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class GamePatches:
     """Determines patches that are made to the game's data.
     Currently we support:
@@ -124,16 +124,19 @@ class GamePatches:
         connections = list(self.dock_connection)
 
         for source, target in assignment:
-            connections[source.index] = target.index
+            connections[source.node_index] = target.node_index
 
         return dataclasses.replace(self, dock_connection=connections)
 
     def get_dock_connection_for(self, node: DockNode) -> Node:
-        target_index = self.dock_connection[node.index]
+        target_index = self.dock_connection[node.node_index]
         if target_index is None:
-            return self.game.world_list.node_by_identifier(node.default_connection)
-        else:
-            return self.game.world_list.all_nodes[target_index]
+            target_index = node.cache_default_connection
+            if target_index is None:
+                target_index = self.game.world_list.node_by_identifier(node.default_connection).node_index
+                object.__setattr__(node, "cache_default_connection", target_index)
+
+        return self.game.world_list.all_nodes[target_index]
 
     def all_dock_connections(self) -> Iterator[tuple[DockNode, Node]]:
         nodes = self.game.world_list.all_nodes
@@ -148,12 +151,12 @@ class GamePatches:
         new_weakness = list(self.dock_weakness)
 
         for node, weakness in weaknesses:
-            new_weakness[node.get_index()] = weakness
+            new_weakness[node.node_index] = weakness
 
         return dataclasses.replace(self, dock_weakness=new_weakness)
 
     def get_dock_weakness_for(self, node: DockNode) -> DockWeakness:
-        return self.dock_weakness[node.get_index()] or node.default_dock_weakness
+        return self.dock_weakness[node.node_index] or node.default_dock_weakness
 
     def all_dock_weaknesses(self) -> Iterator[DockWeaknessAssociation]:
         nodes = self.game.world_list.all_nodes

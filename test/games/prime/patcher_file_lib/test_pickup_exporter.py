@@ -46,8 +46,8 @@ def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resour
 ])
 def test_calculate_hud_text(order: Tuple[str, str], generic_item_category):
     # Setup
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    resource_a = ItemResourceInfo(0, "A", "A", 10)
+    resource_b = ItemResourceInfo(1, "B", "B", 10)
 
     pickup_x = PickupEntry("A", 1, generic_item_category, generic_item_category,
                            progression=(
@@ -88,7 +88,8 @@ def test_calculate_hud_text(order: Tuple[str, str], generic_item_category):
 
 
 @pytest.mark.parametrize("model_style", PickupModelStyle)
-def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generic_item_category):
+def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generic_item_category,
+                            blank_resource_db):
     # Setup
     has_scan_text = model_style in {PickupModelStyle.ALL_VISIBLE, PickupModelStyle.HIDE_MODEL}
     rng = Random(5000)
@@ -101,9 +102,9 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         name="EnergyTransferModule",
     )
 
-    useless_resource = ItemResourceInfo("Useless", "Useless", 10, None)
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    useless_resource =  ItemResourceInfo(0, "Useless", "Useless", 10)
+    resource_a = ItemResourceInfo(1, "A", "A", 10)
+    resource_b = ItemResourceInfo(2, "B", "B", 10)
     pickup_a = PickupEntry("P-A", model_1, generic_item_category, generic_item_category,
                            progression=((resource_a, 1),),
                            )
@@ -129,7 +130,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
     world_list = MagicMock()
     world_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("World", "Area", f"Name {i}"),
-                   False, None, "", ("default",), {}, PickupIndex(i), False)
+                   i, False, None, "", ("default",), {}, PickupIndex(i), False)
         for i in range(5)
     ]
 
@@ -209,7 +210,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
 def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patches, generic_item_category):
     # Setup
     rng = Random(5000)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    resource_b = ItemResourceInfo(0, "B", "B", 10)
 
     model_1 = MagicMock(spec=PickupModel)
     model_2 = MagicMock(spec=PickupModel)
@@ -249,7 +250,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
     world_list = MagicMock()
     world_list.iterate_nodes.return_value = [
         PickupNode(NodeIdentifier.create("W", "A", f"Name {i}"),
-                   False, None, "", ("default",), {}, PickupIndex(i), False)
+                   i, False, None, "", ("default",), {}, PickupIndex(i), False)
         for i in range(5)
     ]
 
@@ -353,8 +354,8 @@ def test_pickup_scan_for_ammo_expansion(echoes_item_database, echoes_resource_da
 
 @pytest.fixture(name="pickup_for_create_pickup_data")
 def _create_pickup_data(generic_item_category):
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    resource_a = ItemResourceInfo(0, "A", "A", 10)
+    resource_b = ItemResourceInfo(1, "B", "B", 10)
     return PickupEntry("Cake", 1, generic_item_category, generic_item_category,
                        progression=(
                            (resource_a, 1),
@@ -366,8 +367,8 @@ def test_solo_create_pickup_data(pickup_for_create_pickup_data):
     # Setup
     creator = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
     model = MagicMock()
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    resource_a = ItemResourceInfo(0, "A", "A", 10)
+    resource_b = ItemResourceInfo(1, "B", "B", 10)
 
     # Run
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),
@@ -395,8 +396,8 @@ def test_multi_create_pickup_data_for_self(pickup_for_create_pickup_data):
     solo = pickup_exporter.PickupExporterSolo(pickup_exporter.GenericAcquiredMemo())
     creator = pickup_exporter.PickupExporterMulti(solo, MagicMock(), PlayersConfiguration(0, {0: "You", 1: "Someone"}))
     model = MagicMock()
-    resource_a = ItemResourceInfo("A", "A", 10, None)
-    resource_b = ItemResourceInfo("B", "B", 10, None)
+    resource_a = ItemResourceInfo(0, "A", "A", 10)
+    resource_b = ItemResourceInfo(1, "B", "B", 10)
 
     # Run
     data = creator.create_details(PickupIndex(10), PickupTarget(pickup_for_create_pickup_data, 0),

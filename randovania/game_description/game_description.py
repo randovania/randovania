@@ -18,21 +18,24 @@ from randovania.games.game import RandovaniaGame
 
 
 def _calculate_dangerous_resources_in_db(
+        wl: WorldList,
         db: DockWeaknessDatabase,
         database: ResourceDatabase,
 ) -> Iterator[ResourceInfo]:
     for dock_type in db.dock_types:
         for dock_weakness in db.weaknesses[dock_type].values():
-            yield from dock_weakness.requirement.as_set(database).dangerous_resources
+            yield from wl.open_requirement_for(dock_weakness).as_set(database).dangerous_resources
+            if dock_weakness.lock is not None:
+                yield from wl.lock_requirement_for(dock_weakness).as_set(database).dangerous_resources
 
 
 def _calculate_dangerous_resources_in_areas(
-        areas: Iterator[Area],
+        wl: WorldList,
         database: ResourceDatabase,
 ) -> Iterator[ResourceInfo]:
-    for area in areas:
+    for area in wl.all_areas:
         for node in area.nodes:
-            for requirement in area.connections[node].values():
+            for _, requirement in wl.area_connections_from(node):
                 yield from requirement.as_set(database).dangerous_resources
 
 
@@ -106,7 +109,8 @@ class GameDescription:
         if not self.mutable:
             raise ValueError("self is not mutable")
 
-        self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database)
+        self.world_list.patch_requirements(resources, damage_multiplier, self.resource_database,
+                                           self.dock_weakness_database)
         self._dangerous_resources = None
 
     def get_default_elevator_connection(self) -> dict[NodeIdentifier, AreaIdentifier]:
@@ -120,9 +124,12 @@ class GameDescription:
     @property
     def dangerous_resources(self) -> FrozenSet[ResourceInfo]:
         if self._dangerous_resources is None:
-            self._dangerous_resources = frozenset(
-                _calculate_dangerous_resources_in_areas(self.world_list.all_areas, self.resource_database)) | frozenset(
-                _calculate_dangerous_resources_in_db(self.dock_weakness_database, self.resource_database))
+            first = _calculate_dangerous_resources_in_areas(self.world_list, self.resource_database)
+            second = _calculate_dangerous_resources_in_db(
+                self.world_list, self.dock_weakness_database, self.resource_database
+            )
+            self._dangerous_resources = frozenset(first) | frozenset(second)
+
         return self._dangerous_resources
 
     def get_mutable(self) -> "GameDescription":
