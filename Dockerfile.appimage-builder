@@ -1,3 +1,4 @@
+# vim:ft=dockerfile
 FROM ubuntu:jammy
 ARG APPIMAGETOOL_APPIMAGE="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
 ARG DEBIAN_FRONTEND=noninteractive
@@ -27,7 +28,7 @@ RUN	apt-get -y update && \
 # Install yet more packages that are required for create_release.py to ship
 # all the libraries we need to include.
 RUN	apt-get -y install \
-		ligblig-2.0-0 \
+		libglib2.0-0 \
 		libqt6pdf6 \
 		libqt6virtualkeyboard6 \
 		qt6-tools-dev
