@@ -17,8 +17,6 @@ set -e
 # These variables can be freely modified
 #
 
-# The URL to the Python AppImage we'll bundle RDV in
-python_appimage="https://github.com/niess/python-appimage/releases/download/python3.9/python3.9.10-cp39-cp39-manylinux1_x86_64.AppImage"
 # The string to feed to gh-releases-zsync, which is used for automatic AppImage
 # update delivery.
 # TODO: Add two of these and pick one based on whether this is a devel or
@@ -62,23 +60,28 @@ setup-activate-env() {
 	pushd "$workdir"
 }
 
-build-obtain-python() {
-	# Obtain the version of Python we need to build Randovania
-	# This extracst the image to ./squashfs-root
-	wget "$python_appimage"
-	chmod +x python*-manylinux1_x86_64.AppImage
-	./python*-manylinux1_x86_64.AppImage --appimage-extract
+build-create-release() {
+	# Invoke create_release.py to create a static Randovania binary plus or minus
+	# some bundled libraries
+	(
+	bash tools/prepare_virtual_env.sh
+	. venv/bin/activate
+	export PRODUCTION=true
+	# Have to manually install pyinstaller here
+	pip install pyinstaller
+	python tools/create_release.py
+	)
 }
 build-copy-randovania-into-image() {
 	# Create a directory in the working squashfs-root and sync the source tree
 	# into it.
 	mkdir -p squashfs-root/"$randovania_location"
-	rsync -a --exclude={"$workdir"/,"$outdir"/} ../ squashfs-root/"$randovania_location"
+	rsync -a ../dist/randovania/ squashfs-root/"$randovania_location"
 }
 build-copy-overlay-into-image() {
 	# Copy the overlay (which contains AppImage and Linux-specific files) into the
 	# working squashfs-root
-	rsync -a ../tools/appimage/overlay/ squashfs-root/
+	rsync -a --no-owner --no-group ../tools/appimage/overlay/ squashfs-root/
 }
 build-static-mono() {
 	# Bundle up our Mono apps to avoid having to redistribute the Mono runtime
@@ -100,7 +103,7 @@ build-static-mono() {
 	# runtime required. No futzing with liblzo2 required. Just Werks.
 
 	# EchoesMenu.exe
-	pushd squashfs-root/"$randovania_location"/randovania/data/ClarisEchoesMenu
+	pushd squashfs-root/"$randovania_location"/data/ClarisEchoesMenu
 	mkbundle $mono_mkbundle_args --config EchoesMenu.exe.config EchoesMenu.exe -o echoes-menu
 	popd
 
@@ -111,48 +114,16 @@ build-static-mono() {
 	mono /usr/local/lib/nuget.exe install NewtonSoft.json -OutputDirectory nuget
 	#mono nuget.exe install Novell.Directory.Ldap -OutputDirectory nuget
 	nugetdir="$PWD/nuget"
-	pushd squashfs-root/"$randovania_location"/randovania/data/ClarisPrimeRandomizer/
+	pushd squashfs-root/"$randovania_location"/data/ClarisPrimeRandomizer/
 	mkbundle $mono_mkbundle_args --config Randomizer.exe.config Randomizer.exe -o randomizer \
 		-L "$nugetdir"/Newtonsoft.Json.*/lib/net45 \
 		-L "$nugetdir"/Novell.Directory.Ldap.*/lib
 	popd
 }
-build-install-randovania() {
-	# Enter the Randovania directory inside squashfs-root and install its
-	# dependencies. We avoid activating the venv here because the Python
-	# interpreter in the AppImage we extracted already has a pseudo-venv going on
-	# with respect to the AppImage root.
-	pushd squashfs-root/"$randovania_location"
-	# Install dependencies
-	python -m pip install --upgrade -r requirements-setuptools.txt
-	python -m pip install -e . -e ".[gui]"
-	# Workaround for #2968
-	python -m pip install pyqt-distutils
-	python setup.py build_ui
-	# I'm not building a whole release just to get this one json file lol
-	cat > randovania/data/configuration.json <<- EOF
-	{"discord_client_id": 618134325921316864, "server_address": "https://randovania.metroidprime.run/randovania", "socketio_path": "/randovania/socket.io"}
-	EOF
-	popd
-}
-build-thin-image() {
-	# Note: this step does not "build a thin image", it's a build step that "thins
-	# the image". This removes some large cruft that we don't hard depend on so we
-	# can lower the size of the distributed AppImage
-	# Remove configuration from the upstream python AppImage
-	rm \
-		squashfs-root/usr/share/applications/python*.desktop \
-		squashfs-root/usr/share/icons/hicolor/256x256/apps/python*.png \
-		squashfs-root/usr/share/metainfo/python*.appdata.xml \
-		squashfs-root/python*.desktop \
-		squashfs-root/python*.png
-	# Trim the fat
-	rm -rf \
-		squashfs-root/opt/randovania/.git* \
-		squashfs-root/opt/randovania/pylintrc \
-		squashfs-root/opt/randovania/requirements* \
-		squashfs-root/opt/randovania/setup.cfg \
-		squashfs-root/opt/python3.9/lib/python3.9/site-packages/PySide6/Qt/lib/libQt5WebEngineCore.so.6
+build-appimage-meta() {
+	# Build AppImage metainfo
+	# TODO: That
+	:
 }
 build-compile-image() {
 	# Build the squashfs-root into an AppImage
@@ -166,10 +137,10 @@ main() {
 	# Set debugging mode from here on
 	set -x
 
+	build-create-release
+
 	setup-build-env
 	setup-activate-env
-
-	build-obtain-python
 
 	# We add squashfs-root to PATH here so we can leverage this particular python
 	# install instead of the system-wide one
@@ -178,9 +149,7 @@ main() {
 	build-copy-overlay-into-image
 	build-copy-randovania-into-image
 	build-static-mono
-	build-install-randovania
-
-	build-thin-image
+	build-appimage-meta
 	build-compile-image
 }
 main "$@"
