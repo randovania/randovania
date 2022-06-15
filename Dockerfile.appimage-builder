@@ -1,5 +1,6 @@
 FROM ubuntu:jammy
 ARG APPIMAGETOOL_APPIMAGE="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+ARG DEBIAN_FRONTEND=noninteractive
 # The homedir for this user is required for nuget
 RUN	groupadd builder --gid 1000 && \
 	useradd builder --uid 1000 -g builder -d /home/builder -m
