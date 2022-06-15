@@ -1541,6 +1541,8 @@ Extra - asset_id: collision_camera_013
   * Extra - right_shield_def: None
   > Door to Intro Room
       Trivial
+  > Event - Charge Beam Access Blob (Below)
+      Wave Beam
 
 > Door to Cold Introduction (Power); Heals? False
   * Layers: default
@@ -1551,7 +1553,7 @@ Extra - asset_id: collision_camera_013
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Event - Charge Beam Access Blob
+  > Event - Charge Beam Access Blob (Above)
       Trivial
   > Dock to Cold Introduction
       After Artaria - Charge Beam Access Blob
@@ -1568,7 +1570,7 @@ Extra - asset_id: collision_camera_013
   > Tunnel to Cold Introduction
       Morph Ball
 
-> Event - Charge Beam Access Blob; Heals? False
+> Event - Charge Beam Access Blob (Above); Heals? False
   * Layers: default
   * Event Artaria - Charge Beam Access Blob
   * Extra - actor_name: PRP_DB_CV_010
@@ -1614,6 +1616,12 @@ Extra - asset_id: collision_camera_013
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
+  > Door to Cold Introduction (Missile)
+      Trivial
+
+> Event - Charge Beam Access Blob (Below); Heals? False
+  * Layers: default
+  * Event Artaria - Charge Beam Access Blob
   > Door to Cold Introduction (Missile)
       Trivial
 
@@ -2184,7 +2192,10 @@ Extra - asset_id: collision_camera_022
   > Tunnel to David Jaffe Room
       All of the following:
           Morph Ball
-          Speed Booster or Simple IBJ
+          Any of the following:
+              Simple IBJ
+              Speed Booster and Open Charge Door
+              Movement (Intermediate) and Use Spin Boost
 
 > Door to Thermal Device; Heals? False
   * Layers: default
@@ -2200,7 +2211,7 @@ Extra - asset_id: collision_camera_022
   > Door to Invisible Corpius Room
       After Artaria - Thermal Device West Blob
   > Event - Thermal Device East Blob
-      Shoot Beam
+      Lay Bomb or Shoot Beam
   > Event - Thermal Device West Blob
       Wave Beam or Pseudo-Wave Beam (Intermediate)
 
@@ -2216,7 +2227,7 @@ Extra - asset_id: collision_camera_022
   > Door to Thermal Device
       After Artaria - Thermal Device West Blob
   > Event - Thermal Device West Blob
-      Shoot Beam
+      Lay Bomb or Shoot Beam
 
 > Event - Thermal Device East Blob; Heals? False
   * Layers: default
@@ -2312,7 +2323,10 @@ Extra - asset_id: collision_camera_023_B
               Any of the following:
                   Varia Suit
                   Heat/Cold Runs (Intermediate) and Heat Damage ≥ 200
-              Grapple Beam or Spider Magnet or Space Jump or Speed Booster
+              Any of the following:
+                  Spider Magnet or Space Jump
+                  Speed Booster and Movement (Beginner) and Open Charge Door
+                  Grapple Beam and Movement (Intermediate)
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -2322,7 +2336,10 @@ Extra - asset_id: collision_camera_023_B
   > Door to Hot Room Hub
       All of the following:
           Varia Suit
-          Spider Magnet or Space Jump
+          Any of the following:
+              Gravity Suit or Spider Magnet or Space Jump
+              Grapple Beam and Movement (Intermediate)
+              Heat/Cold Runs (Intermediate) and Lava Damage ≥ 500
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
@@ -3416,12 +3433,12 @@ Extra - asset_id: collision_camera_054
       Trivial
   > Dock to EMMI Zone Exit South
       Any of the following:
-          Simple IBJ or Use Spin Boost
+          Speed Booster or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
           Morph Ball and Single-wall Wall Jump (Intermediate)
   > Pickup (Missile Tank)
       Any of the following:
-          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+          Grapple Beam or Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
           Morph Ball and Single-wall Wall Jump (Intermediate)
   > Dock to Charge Beam Access
@@ -4100,7 +4117,7 @@ Extra - asset_id: collision_camera_066
   > Door to Save Station East
       Trivial
   > Door to Thermal Device (Upper)
-      Trivial
+      After Artaria - Open Thermal Device Item Door
 
 > Door to Save Station East; Heals? False
   * Layers: default
@@ -4205,6 +4222,10 @@ Extra - asset_id: collision_camera_067
       Trivial
   > Tile Group (MISSILE)
       Morph Ball
+  > Event - Open Item Door
+      All of the following:
+          Shoot Missile
+          Missiles ≥ 2 or Shoot Beam
 
 > Tile Group (MISSILE); Heals? False
   * Layers: default
@@ -4217,6 +4238,12 @@ Extra - asset_id: collision_camera_067
       Morph Ball
   > Start Point
       Can Slide
+
+> Event - Open Item Door; Heals? False
+  * Layers: default
+  * Event Artaria - Open Thermal Device Item Door
+  > Start Point
+      Trivial
 
 ----------------
 Navigation Station South
@@ -4373,7 +4400,7 @@ Extra - asset_id: collision_camera_070
   * Extra - actor_name: DoorEmmy06
   * Extra - actor_def: actordef:actors/props/dooremmy/charclasses/dooremmy.bmsad
   > Total Recharge
-      Before Artaria - Central Unit or Shoot Ice Missile
+      Before Artaria - Central Unit or Destroy Enky
 
 > Dock to Teleport to Dairon (DoorEmmy07); Heals? False
   * Layers: default
@@ -4410,7 +4437,7 @@ Extra - asset_id: collision_camera_070
   > Door to Navigation Station North (Thermal)
       Trivial
   > Dock to Teleport to Dairon (DoorEmmy06)
-      Before Artaria - Central Unit or Shoot Ice Missile
+      Before Artaria - Central Unit or Destroy Enky
 
 > Tile Group (BOMB); Heals? False
   * Layers: default
@@ -4439,9 +4466,11 @@ Extra - asset_id: collision_camera_070
   > Dock to Teleport to Dairon (DoorEmmy07)
       After Artaria - ArbEnky Blob West and Can Slide
   > Event - ArbEnky Blob West
-      After Artaria - ArbEnky Blob East and Shoot Beam
+      All of the following:
+          After Artaria - ArbEnky Blob East
+          Lay Bomb or Shoot Beam
   > Event - ArbEnky Blob East
-      Shoot Beam
+      Lay Bomb or Shoot Beam
 
 ----------------
 EMMI First Chase End
@@ -4733,7 +4762,9 @@ Extra - asset_id: collision_camera_077
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Elevator to Cataris - Transport to Artaria
-      Grapple Beam or Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
+      Any of the following:
+          Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
+          Grapple Beam and Movement (Beginner)
 
 > Elevator to Cataris - Transport to Artaria; Heals? False; Spawn Point
   * Layers: default
@@ -4787,6 +4818,8 @@ Extra - asset_id: collision_camera_078
               All of the following:
                   Flash Shift
                   Grapple Beam or Walljump (Beginner)
+              Morph Ball and Single-wall Wall Jump (Beginner)
+              Speed Booster and Open Charge Door
   > Door to Transport to Cataris
       All of the following:
           Morph Ball
@@ -4839,7 +4872,8 @@ Extra - asset_id: collision_camera_079
   * Extra - right_shield_def: None
   > Door to Transport to Cataris
       Any of the following:
-          Spider Magnet or Morph Ball or Simple IBJ or Use Spin Boost
+          Spider Magnet or Simple IBJ or Use Spin Boost
+          Morph Ball and Damage Boost (Beginner)
           Flash Shift and Grapple Beam
 
 > Door to Transport to Cataris; Heals? False
