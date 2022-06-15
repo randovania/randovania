@@ -1,4 +1,5 @@
 FROM ubuntu:jammy
+ARG APPIMAGETOOL_APPIMAGE="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
 # The homedir for this user is required for nuget
 RUN	groupadd builder --gid 1000 && \
 	useradd builder --uid 1000 -g builder -d /home/builder -m
@@ -10,6 +11,7 @@ RUN	groupadd builder --gid 1000 && \
 RUN	apt-get -y update && \
 	apt-get -y install \
 		binutils \
+		curl \
 		fuse \
 		git \
 		liblzo2-2 \
@@ -28,6 +30,13 @@ RUN	apt-get -y install \
 		libqt6pdf6 \
 		libqt6virtualkeyboard6 \
 		qt6-tools-dev
+# Download and extract AppImageTool, linking it into /usr/local/bin
+# We extract it to facilitate usage without docker-in-docker setups
+RUN	curl -L "${APPIMAGETOOL_APPIMAGE}" -o ait.appimage && \
+	chmod +x ait.appimage && \
+	./ait.appimage --appimage-extract && \
+	mv squashfs-root /usr/local/lib/appimagetool && \
+	ln -s /usr/local/lib/appimagetool/AppRun /usr/local/bin/appimagetool
 # Run the build script on container start
 WORKDIR /opt
 CMD [ "/bin/bash", "./tools/appimage/build.sh" ]

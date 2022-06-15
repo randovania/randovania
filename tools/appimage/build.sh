@@ -19,8 +19,6 @@ set -e
 
 # The URL to the Python AppImage we'll bundle RDV in
 python_appimage="https://github.com/niess/python-appimage/releases/download/python3.9/python3.9.10-cp39-cp39-manylinux1_x86_64.AppImage"
-# The URL to appimagetool, used to build the final image
-appimagetool_appimage="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
 # The URL to nuget, which is used to fetch Mono libraries as needed
 nuget_url="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 # The string to feed to gh-releases-zsync, which is used for automatic AppImage
@@ -66,16 +64,6 @@ setup-activate-env() {
 	pushd "$workdir"
 }
 
-build-obtain-appimagetool() {
-	# Obtain the version of appiamgetool we need to build the AppImage
-	wget "$appimagetool_appimage"
-	chmod +x appimagetool*.AppImage
-	# Extract AIT
-	# We have to do this because Docker build systems won't let us use FUSE to
-	# actually run the appimage normally.
-	./appimagetool-x86_64.AppImage --appimage-extract
-	mv squashfs-root appimagetool
-}
 build-obtain-python() {
 	# Obtain the version of Python we need to build Randovania
 	# This extracst the image to ./squashfs-root
@@ -177,7 +165,7 @@ build-compile-image() {
 	# Build the squashfs-root into an AppImage
 	# This also automatically creates a .zsync file that we will want to bundle
 	# with the GitHub release.
-	./appimagetool/AppRun squashfs-root -u "$zsync_prod_string" ../"$outdir"/"Randovania-$(uname -m).AppImage"
+	appimagetool squashfs-root -u "$zsync_prod_string" ../"$outdir"/"Randovania-$(uname -m).AppImage"
 	mv *.zsync ../"$outdir"/
 }
 
@@ -188,7 +176,6 @@ main() {
 	setup-build-env
 	setup-activate-env
 
-	build-obtain-appimagetool
 	build-obtain-python
 	build-obtain-nuget
 
