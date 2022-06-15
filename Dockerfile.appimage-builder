@@ -1,4 +1,5 @@
 FROM ubuntu:focal
+# Install some packages to facilitate the build process
 RUN	apt-get -y update && \
 	apt-get -y install \
 		fuse \
@@ -7,9 +8,10 @@ RUN	apt-get -y update && \
 		mono-complete \
 		rsync \
 		wget \
-		zsync \
-		&& \
-	# The homedir for this user is required for nuget
-	groupadd builder --gid 1000 && \
+		zsync
+# The homedir for this user is required for nuget
+RUN	groupadd builder --gid 1000 && \
 	useradd builder --uid 1000 -g builder -d /home/builder -m
-CMD /bin/bash -c "cd /opt && ./tools/appimage/build.sh"
+# Run the build script on container start
+WORKDIR /opt
+CMD [ "/bin/bash", "./tools/appimage/build.sh" ]
