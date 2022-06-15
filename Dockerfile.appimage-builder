@@ -1,4 +1,7 @@
 FROM ubuntu:jammy
+# The homedir for this user is required for nuget
+RUN	groupadd builder --gid 1000 && \
+	useradd builder --uid 1000 -g builder -d /home/builder -m
 # Install some packages to facilitate the build process There are a few odd
 # requirements:
 #  * binutils - Required by PyInstaller, which is used in create_release.py
@@ -25,9 +28,6 @@ RUN	apt-get -y install \
 		libqt6pdf6 \
 		libqt6virtualkeyboard6 \
 		qt6-tools-dev
-# The homedir for this user is required for nuget
-RUN	groupadd builder --gid 1000 && \
-	useradd builder --uid 1000 -g builder -d /home/builder -m
 # Run the build script on container start
 WORKDIR /opt
 CMD [ "/bin/bash", "./tools/appimage/build.sh" ]
