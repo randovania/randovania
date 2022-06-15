@@ -28,7 +28,7 @@ fi
 	set -e -x
 	export PATH="${APPDIR}/usr/bin:${PATH}"
 	cd "$APPDIR/opt/randovania"
-	"$APPDIR/usr/bin/python3" -m randovania gui --preview main
+	"$APPDIR/opt/randovania/randovania" "$@"
 )
 exit "$?"
 
