@@ -1,14 +1,30 @@
-FROM ubuntu:focal
-# Install some packages to facilitate the build process
+FROM ubuntu:jammy
+# Install some packages to facilitate the build process There are a few odd
+# requirements:
+#  * binutils - Required by PyInstaller, which is used in create_release.py
+#  * python-is-python3 - Some scripts in the repo call python3.10, others just
+#    call python. prepare_virtual_env is particularly at fault here
 RUN	apt-get -y update && \
 	apt-get -y install \
+		binutils \
 		fuse \
 		git \
 		liblzo2-2 \
 		mono-complete \
+		python-is-python3 \
+		python3 \
+		python3-dev \
+		python3-venv \
 		rsync \
 		wget \
 		zsync
+# Install yet more packages that are required for create_release.py to ship
+# all the libraries we need to include.
+RUN	apt-get -y install \
+		ligblig-2.0-0 \
+		libqt6pdf6 \
+		libqt6virtualkeyboard6 \
+		qt6-tools-dev
 # The homedir for this user is required for nuget
 RUN	groupadd builder --gid 1000 && \
 	useradd builder --uid 1000 -g builder -d /home/builder -m
