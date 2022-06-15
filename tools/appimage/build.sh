@@ -19,8 +19,6 @@ set -e
 
 # The URL to the Python AppImage we'll bundle RDV in
 python_appimage="https://github.com/niess/python-appimage/releases/download/python3.9/python3.9.10-cp39-cp39-manylinux1_x86_64.AppImage"
-# The URL to nuget, which is used to fetch Mono libraries as needed
-nuget_url="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 # The string to feed to gh-releases-zsync, which is used for automatic AppImage
 # update delivery.
 # TODO: Add two of these and pick one based on whether this is a devel or
@@ -71,11 +69,6 @@ build-obtain-python() {
 	chmod +x python*-manylinux1_x86_64.AppImage
 	./python*-manylinux1_x86_64.AppImage --appimage-extract
 }
-build-obtain-nuget() {
-	# Obtain the version of nuget we need to grab Mono app dependencies
-	wget "$nuget_url"
-	mkdir -p nuget
-}
 build-copy-randovania-into-image() {
 	# Create a directory in the working squashfs-root and sync the source tree
 	# into it.
@@ -115,7 +108,7 @@ build-static-mono() {
 	# This one is slightly more complex, as we have to add several dependencies
 	# via nuget.exe since they're either third-party or just straight up not
 	# included in the cross-compile runtimes for some reason
-	mono nuget.exe install NewtonSoft.json -OutputDirectory nuget
+	mono /usr/local/lib/nuget.exe install NewtonSoft.json -OutputDirectory nuget
 	#mono nuget.exe install Novell.Directory.Ldap -OutputDirectory nuget
 	nugetdir="$PWD/nuget"
 	pushd squashfs-root/"$randovania_location"/randovania/data/ClarisPrimeRandomizer/
@@ -177,7 +170,6 @@ main() {
 	setup-activate-env
 
 	build-obtain-python
-	build-obtain-nuget
 
 	# We add squashfs-root to PATH here so we can leverage this particular python
 	# install instead of the system-wide one

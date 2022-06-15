@@ -1,6 +1,7 @@
 # vim:ft=dockerfile
 FROM ubuntu:jammy
 ARG APPIMAGETOOL_APPIMAGE="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+ARG NUGET_URL="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe"
 ARG DEBIAN_FRONTEND=noninteractive
 # The homedir for this user is required for nuget
 RUN	groupadd builder --gid 1000 && \
@@ -39,6 +40,10 @@ RUN	curl -L "${APPIMAGETOOL_APPIMAGE}" -o ait.appimage && \
 	./ait.appimage --appimage-extract && \
 	mv squashfs-root /usr/local/lib/appimagetool && \
 	ln -s /usr/local/lib/appimagetool/AppRun /usr/local/bin/appimagetool
+# Download and extract nuget, putting it in /usr/local/lib
+# I don't think binfmt works in containers, so we're not stuffing it in /bin
+RUN	curl -L "${NUGET_URL}" -o nuget.exe && \
+	mv nuget.exe /usr/local/lib/nuget.exe
 # Run the build script on container start
 WORKDIR /opt
 CMD [ "/bin/bash", "./tools/appimage/build.sh" ]
