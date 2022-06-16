@@ -60,18 +60,6 @@ setup-activate-env() {
 	pushd "$workdir"
 }
 
-build-create-release() {
-	# Invoke create_release.py to create a static Randovania binary plus or minus
-	# some bundled libraries
-	(
-	bash tools/prepare_virtual_env.sh
-	. venv/bin/activate
-	export PRODUCTION=true
-	# Have to manually install pyinstaller here
-	pip install pyinstaller
-	python tools/create_release.py
-	)
-}
 build-copy-randovania-into-image() {
 	# Create a directory in the working squashfs-root and sync the source tree
 	# into it.
@@ -137,14 +125,8 @@ main() {
 	# Set debugging mode from here on
 	set -x
 
-	build-create-release
-
 	setup-build-env
 	setup-activate-env
-
-	# We add squashfs-root to PATH here so we can leverage this particular python
-	# install instead of the system-wide one
-	export PATH="$PWD"/squashfs-root/usr/bin:"$PATH"
 
 	build-copy-overlay-into-image
 	build-copy-randovania-into-image

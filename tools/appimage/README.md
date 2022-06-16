@@ -10,6 +10,8 @@ See the main Randovania README for Docker-based usage. The output image will be 
 out/Randovania-x86_64.AppImage"
 ```
 
+You should have already built a binary with `create_release.py` per the repo-wide README, and it should be located in `$repo/dist/randovania/`. This script just packages it up into an AppImage.
+
 ## Non-Docker Usage
 
 Clone the Randovania repo, `cd` into it, and invoke `tools/appimage/build.sh`. See the Dockerfile for build-time dependencies (all of them are). The builder user is not a requirement in non-Docker invocation.
