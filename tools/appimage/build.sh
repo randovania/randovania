@@ -111,7 +111,12 @@ build-static-mono() {
 build-appimage-meta() {
 	# Build AppImage metainfo
 	# TODO: That
-	:
+	metadir="squashfs-root/usr/share/metainfo"
+	metainfo="$metadir/org.randovania.randovania.appdata.xml"
+	mkdir -p "$metadir"
+	cat ../tools/appimage/metainfo-head.xml > "$metainfo"
+	sed ../README.md -ne '/<!-- Begin WELCOME -->/, /<!-- End WELCOME -->/p' | head -n -1 | tail -n +2 | markdown >> "$metainfo"
+	cat ../tools/appimage/metainfo-tail.xml >> "$metainfo"
 }
 build-compile-image() {
 	# Build the squashfs-root into an AppImage
