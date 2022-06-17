@@ -31,7 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Patcher Changes
 
-- Nothing.
+- Fixed: Exporting with `QoL Cosmetic = False`
+- Changed: Patches now consume fewer layers on average
 
 #### Logic Database
 
