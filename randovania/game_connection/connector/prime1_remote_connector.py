@@ -103,7 +103,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
                 if item.extra["item_id"] > 29:
                     layer_id = item.extra["item_id"] - 28
                 else:
-                    layer_id = 24  # Truth layer
+                    layer_id = 23  # Truth layer
 
                 patches.append(all_prime_dol_patches.increment_item_capacity_patch(
                     self.version.powerup_functions, self.game.game, item.extra["item_id"], delta
