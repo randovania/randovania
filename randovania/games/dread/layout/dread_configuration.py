@@ -14,6 +14,8 @@ class DreadConfiguration(BaseConfiguration):
     hanubia_easier_path_to_itorash: bool
     extra_pickups_for_bosses: bool
     x_starts_released: bool
+    linear_damage_runs: bool
+    linear_dps: int = dataclasses.field(metadata={"min": 1, "max": 1000, "precision": 1})
 
     @classmethod
     def game_enum(cls) -> RandovaniaGame:

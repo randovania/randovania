@@ -20,6 +20,8 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
 
         self.energy_tank_capacity_spin_box.valueChanged.connect(self._persist_tank_capacity)
         signal_handling.on_checked(self.immediate_energy_parts_check, self._persist_immediate_energy_parts)
+        signal_handling.on_checked(self.linear_damage_runs_check, self._persist_linear_damage_runs)
+        self.linear_dps_spin_box.valueChanged.connect(self._persist_linear_dps)
 
     @classmethod
     def tab_title(cls) -> str:
@@ -35,6 +37,9 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
         self.energy_tank_capacity_spin_box.setEnabled(config.immediate_energy_parts)
         self.energy_tank_capacity_spin_box.setValue(config.energy_per_tank)
         self.immediate_energy_parts_check.setChecked(config.immediate_energy_parts)
+        self.linear_damage_runs_check.setChecked(config.linear_damage_runs)
+        self.linear_dps_spin_box.setEnabled(config.linear_damage_runs)
+        self.linear_dps_spin_box.setValue(config.linear_dps)
 
     def _persist_tank_capacity(self):
         with self._editor as editor:
@@ -43,3 +48,11 @@ class PresetDreadEnergy(PresetTab, Ui_PresetDreadEnergy):
     def _persist_immediate_energy_parts(self, checked: bool):
         with self._editor as editor:
             editor.set_configuration_field("immediate_energy_parts", checked)
+
+    def _persist_linear_dps(self):
+        with self._editor as editor:
+            editor.set_configuration_field("linear_dps", int(self.linear_dps_spin_box.value()))
+    
+    def _persist_linear_damage_runs(self, checked:bool):
+        with self._editor as editor:
+            editor.set_configuration_field("linear_damage_runs", checked)

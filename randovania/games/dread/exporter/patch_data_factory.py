@@ -338,6 +338,8 @@ class DreadPatchDataFactory(BasePatchDataFactory):
                 "remove_grapple_blocks_hanubia_shortcut": self.configuration.hanubia_shortcut_no_grapple,
                 "remove_grapple_block_path_to_itorash": self.configuration.hanubia_easier_path_to_itorash,
                 "default_x_released": self.configuration.x_starts_released,
+                "linear_damage_runs": self.configuration.linear_damage_runs,
+                "linear_dps": self.configuration.linear_dps
             },
             "door_patches": self._door_patches(),
         }
