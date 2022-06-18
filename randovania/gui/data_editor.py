@@ -52,6 +52,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     _connections_visualizer: Optional[ConnectionsVisualizer] = None
     _edit_popup: Optional[QDialog] = None
     _warning_dialogs_disabled = False
+    _collection_for_filtering: Optional[ResourceCollection] = None
 
     def __init__(self, data: dict, data_path: Optional[Path], is_internal: bool, edit_mode: bool):
         super().__init__()
@@ -504,6 +505,13 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
         requirement = self.current_area.connections[current_node].get(self.current_connection_node,
                                                                       Requirement.impossible())
+        if self._collection_for_filtering is not None:
+            requirement = requirement.patch_requirements(
+                self._collection_for_filtering,
+                1.0,
+                self.game_description.resource_database,
+            )
+
         self._connections_visualizer = ConnectionsVisualizer(
             self.other_node_alternatives_contents,
             self.alternatives_grid_layout,
@@ -741,11 +749,10 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
             resources = self.layers_editor.selected_tricks()
             if resources:
-                game = game.get_mutable()
-                game.patch_requirements(
-                    ResourceCollection.from_resource_gain(game.resource_database, resources.items()),
-                    1.0,
-                )
+                self._collection_for_filtering = ResourceCollection.from_resource_gain(game.resource_database,
+                                                                                       resources.items())
+            else:
+                self._collection_for_filtering = None
 
         self.update_game(game)
 
