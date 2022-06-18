@@ -1,7 +1,6 @@
 import asyncio
 from typing import Optional, Tuple, Callable, FrozenSet
 
-from randovania.game_description import derived_nodes
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.requirement_list import RequirementList
@@ -12,8 +11,9 @@ from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.resolver import debug, event_pickup
-from randovania.resolver.event_pickup import EventPickupNode
+from randovania.resolver import debug
+from randovania.game_description.world import event_pickup
+from randovania.game_description.world.event_pickup import EventPickupNode
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State
@@ -203,7 +203,6 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tu
     bootstrap = game.game.generator.bootstrap
 
     game.resource_database = bootstrap.patch_resource_database(game.resource_database, configuration)
-    event_pickup.replace_with_event_pickups(game)
 
     new_game, starting_state = bootstrap.logic_bootstrap(configuration, game, patches)
     logic = Logic(new_game, configuration)
