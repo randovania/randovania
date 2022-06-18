@@ -330,17 +330,18 @@ def list_paths_with_dangerous_command(sub_parsers):
 
 def list_paths_with_resource_logic(args):
     gd = load_game_description(args)
+    resource_name: str = args.resource
 
     resource = None
     for resource_type in gd.resource_database:
         try:
-            resource = find_resource_info_with_long_name(resource_type, args.resource)
+            resource = find_resource_info_with_long_name(resource_type, resource_name)
             break
         except MissingResource:
             continue
 
     if resource is None:
-        print(f"A resource named {args.resource} was not found.")
+        print(f"A resource named {resource_name} was not found.")
         raise SystemExit(1)
 
     _list_paths_with_resource(

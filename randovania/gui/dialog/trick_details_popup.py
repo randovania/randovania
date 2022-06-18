@@ -1,10 +1,11 @@
 import re
-from typing import List, Tuple
+from typing import List, Tuple, Callable
 
 from PySide6.QtWidgets import QDialog, QWidget
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
@@ -18,11 +19,14 @@ from randovania.layout.base.trick_level import LayoutTrickLevel
 
 
 def _requirement_at_value(resource: ResourceInfo, level: LayoutTrickLevel):
-    return lambda individual: individual.resource == resource and individual.amount == level.as_number
+    def criteria(individual: ResourceRequirement):
+        return individual.resource == resource and individual.amount == level.as_number
+
+    return criteria
 
 
 def _area_uses_resource(area: Area,
-                        criteria,
+                        criteria: Callable[[ResourceRequirement], bool],
                         database: ResourceDatabase,
                         ) -> bool:
     """
@@ -124,13 +128,15 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
                  game_description: GameDescription,
                  resource: ResourceInfo,
                  ):
+
+        def is_resource(individual: ResourceRequirement):
+            return individual.resource == resource
+
         areas_to_show = [
             (world, area)
             for world in game_description.world_list.worlds
             for area in world.areas
-            if _area_uses_resource(area,
-                                   lambda individual: individual.resource == resource,
-                                   game_description.resource_database)
+            if _area_uses_resource(area, is_resource, game_description.resource_database)
         ]
         super().__init__(parent, window_manager, game_description, areas_to_show)
 

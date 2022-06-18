@@ -37,7 +37,7 @@ def interesting_resources_for_reach(reach: GeneratorReach) -> FrozenSet[Resource
 
 def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
                                            state: State,
-                                           uncollected_resources: List[ResourceInfo]):
+                                           uncollected_resources: set[ResourceInfo]):
     possible = True
     items = []
     damage = []
@@ -75,7 +75,7 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
 
 def _requirement_lists_without_satisfied_resources(state: State,
                                                    possible_sets: List[RequirementSet],
-                                                   uncollected_resources: List[ResourceInfo],
+                                                   uncollected_resources: set[ResourceInfo],
                                                    ) -> Set[RequirementList]:
     seen_lists = set()
     result = set()
@@ -150,7 +150,11 @@ def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
     state = reach.state
     possible_sets = list(reach.unreachable_nodes_with_requirements().values())
     context = reach.node_context()
-    uncollected_resources = [node.resource(context) for node in uncollected_resource_nodes]
+
+    uncollected_resources = set()
+    for node in uncollected_resource_nodes:
+        for resource, _ in node.resource_gain_on_collect(context):
+            uncollected_resources.add(resource)
 
     all_lists = _requirement_lists_without_satisfied_resources(state, possible_sets, uncollected_resources)
 

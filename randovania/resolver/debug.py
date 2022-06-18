@@ -53,19 +53,19 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
     if _DEBUG_LEVEL > 0:
         world_list = state.world_list
 
+        resources = []
         if isinstance(state.node, ResourceNode):
-            resource = state.node.resource(state.node_context())
-            if isinstance(resource, PickupIndex):
-                resource = state.patches.pickup_assignment.get(resource)
-                if resource is not None:
-                    resource = resource.pickup
-        else:
-            resource = None
+            context_state = state.previous_state or state
+            for resource, quantity in state.node.resource_gain_on_collect(context_state.node_context()):
+                text = f"{resource.resource_type.name[0]}: {resource.long_name}"
+                if quantity > 1:
+                    text += f" x{quantity}"
+                resources.append(text)
 
         if _DEBUG_LEVEL >= 3:
             for node in state.path_from_previous_state[1:]:
                 print("{}: {}".format(_indent(1), n(node, world_list=world_list)))
-        print("{}> {} for {}".format(_indent(1), n(state.node, world_list=world_list), resource))
+        print("{}> {} for {}".format(_indent(1), n(state.node, world_list=world_list), resources))
 
 
 def log_checking_satisfiable_actions():
