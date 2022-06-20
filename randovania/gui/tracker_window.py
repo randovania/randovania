@@ -607,7 +607,11 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         def is_resource_node_present(node: Node, state: State):
             if node.is_resource_node:
                 assert isinstance(node, ResourceNode)
-                return self._initial_state.resources.is_resource_set(node.resource(state.node_context()))
+                is_resource_set = self._initial_state.resources.is_resource_set
+                return all(
+                    is_resource_set(resource)
+                    for resource, _ in node.resource_gain_on_collect(state.node_context())
+                )
             return False
 
         self._starting_nodes = {

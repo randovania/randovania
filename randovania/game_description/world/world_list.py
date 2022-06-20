@@ -209,6 +209,15 @@ class WorldList(NodeProvider):
             for _, area, node in self.all_worlds_areas_nodes
         }
 
+        # Remove connections to event nodes that have a combo node
+        from randovania.game_description.world.event_pickup import EventPickupNode
+        for node in self.iterate_nodes():
+            if isinstance(node, EventPickupNode):
+                area = self.nodes_to_area(node)
+                for source, connections in area.connections.items():
+                    if node.event_node in connections:
+                        self._patched_node_connections[source.node_index].pop(node.event_node.node_index, None)
+
         # Dock Weaknesses
         self._patches_dock_open_requirements = []
         self._patches_dock_lock_requirements = []

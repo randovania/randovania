@@ -91,6 +91,8 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     possible_set = MagicMock()
     reach.unreachable_nodes_with_requirements.return_value = {"foo": possible_set}
     uncollected_resource_nodes = [MagicMock()]
+    resource = MagicMock()
+    uncollected_resource_nodes[0].resource_gain_on_collect.return_value = [(resource, 1)]
 
     mock_req_lists.return_value = {
         RequirementList([
@@ -114,6 +116,5 @@ def test_get_pickups_that_solves_unreachable(echoes_game_description, mocker):
     result = pickup_list.get_pickups_that_solves_unreachable(pickups_left, reach, uncollected_resource_nodes)
 
     # Assert
-    mock_req_lists.assert_called_once_with(reach.state, [possible_set],
-                                           [uncollected_resource_nodes[0].resource.return_value])
+    mock_req_lists.assert_called_once_with(reach.state, [possible_set], {resource})
     assert result == tuple()

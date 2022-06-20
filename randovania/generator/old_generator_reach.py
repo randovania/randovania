@@ -18,9 +18,13 @@ def _extra_requirement_for_node(game: GameDescription, context: NodeContext, nod
 
     if node.is_resource_node:
         assert isinstance(node, ResourceNode)
-        node_resource = node.resource(context)
-        if node_resource in game.dangerous_resources:
-            extra_requirement = ResourceRequirement.simple(node_resource)
+        dangerous_extra = [
+            ResourceRequirement.simple(resource)
+            for resource, quantity in node.resource_gain_on_collect(context)
+            if resource in game.dangerous_resources
+        ]
+        if dangerous_extra:
+            extra_requirement = RequirementAnd(dangerous_extra)
 
     return extra_requirement
 

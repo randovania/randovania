@@ -38,7 +38,8 @@ def _filter_out_dangerous_actions(resource_nodes: Iterator[ResourceNode],
                                   context: NodeContext,
                                   ) -> Iterator[ResourceNode]:
     for resource_node in resource_nodes:
-        if resource_node.resource(context) not in game.dangerous_resources:
+        if all(resource not in game.dangerous_resources
+               for resource, _ in resource_node.resource_gain_on_collect(context)):
             yield resource_node
 
 

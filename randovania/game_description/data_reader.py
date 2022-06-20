@@ -1,3 +1,4 @@
+import copy
 import json
 from pathlib import Path
 from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashable, Any
@@ -21,6 +22,7 @@ from randovania.game_description.resources.search import (
 )
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
 from randovania.game_description.resources.trick_resource_info import TrickResourceInfo
+from randovania.game_description.world import event_pickup
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.configurable_node import ConfigurableNode
@@ -420,6 +422,15 @@ class WorldReader:
                 nodes.append(lock_node)
                 connections[lock_node] = {}
                 self.next_node_index += 1
+
+        for combo in event_pickup.find_nodes_to_combine(nodes, connections):
+            combo_node = event_pickup.EventPickupNode.create_from(self.next_node_index, *combo)
+            nodes.append(combo_node)
+            for existing_connections in connections.values():
+                if combo[0] in existing_connections:
+                    existing_connections[combo_node] = copy.copy(existing_connections[combo[0]])
+            connections[combo_node] = copy.copy(connections[combo[1]])
+            self.next_node_index += 1
 
         try:
             return Area(area_name, data["default_node"],
