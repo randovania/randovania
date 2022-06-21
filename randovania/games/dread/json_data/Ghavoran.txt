@@ -88,7 +88,9 @@ Extra - asset_id: collision_camera_001
   > Grapple Block Alcove
       All of the following:
           Morph Ball and After Ghavoran - Burenia Transport Grapple Box
-          Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+          Any of the following:
+              Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
+              Grapple Beam and Movement (Beginner)
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -110,13 +112,18 @@ Extra - asset_id: collision_camera_001
   > Tile Group (MISSILE)
       All of the following:
           Morph Ball
-          Gravity Suit or Space Jump or Speed Booster
+          Gravity Suit or Speed Booster or Perform WBJ or Use Spin Boost
   > Grapple Block Alcove
       All of the following:
           Morph Ball and Before Ghavoran - Burenia Transport Grapple Box
           Any of the following:
-              Spider Magnet or Space Jump
-              Flash Shift and Use Spin Boost
+              Spider Magnet or Space Jump or Speed Booster
+              Spin Boost and Movement (Beginner)
+              All of the following:
+                  Grapple Beam
+                  Any of the following:
+                      Movement (Advanced)
+                      Movement (Intermediate) and Walljump (Beginner)
 
 > Total Recharge; Heals? True
   * Layers: default
@@ -179,7 +186,11 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Left Entrance
-      Trivial
+      After Ghavoran - Gold Robot Fight
+  > Event - Gold Robot Fight
+      Any of the following:
+          After Elun - Release X Parasites
+          Before Elun - Release X Parasites and Fight Gold Robot
 
 > Door to Left Entrance; Heals? False
   * Layers: default
@@ -191,12 +202,24 @@ Extra - asset_id: collision_camera_002
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Right Entrance
-      Trivial
+      After Ghavoran - Gold Robot Fight
+  > Event - Gold Robot Fight
+      Any of the following:
+          After Elun - Release X Parasites
+          Before Elun - Release X Parasites and Fight Gold Robot
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Dead_ChozoRobotSoldier
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
+  > Door to Left Entrance
+      Trivial
+
+> Event - Gold Robot Fight; Heals? False
+  * Layers: default
+  * Event Ghavoran - Gold Robot Fight
+  > Door to Right Entrance
+      Trivial
   > Door to Left Entrance
       Trivial
 
@@ -250,6 +273,8 @@ Extra - asset_id: collision_camera_003
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
   > Tile Group (WEIGHT)
       Trivial
+  > Ledge Grab
+      Flash Shift
 
 > Tile Group (POWERBEAM) 1; Heals? False
   * Layers: default
@@ -287,6 +312,7 @@ Extra - asset_id: collision_camera_003
       Any of the following:
           Grapple Beam or Space Jump or Simple IBJ
           Spider Magnet and Use Spin Boost
+          Flash Shift and Walljump (Beginner)
 
 > Tile Group (POWERBEAM) 2; Heals? False
   * Layers: default
@@ -319,14 +345,16 @@ Extra - asset_id: collision_camera_003
   > Pickup (Missile Tank)
       All of the following:
           Morph Ball
-          Flash Shift or Grapple Beam or Speed Booster
+          Flash Shift or Grapple Beam or Space Jump or Speed Booster
   > Tile Group (POWERBEAM) 3
       Morph Ball
 
 > Floating Platform; Heals? False
   * Layers: default
   > Dock to Blue EMMI Introduction
-      Grapple Beam or Spider Magnet or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          Grapple Beam and Movement (Beginner)
   > Door to Robot Fight Arena
       Trivial
   > Tile Group (BOMB)
@@ -2186,7 +2214,7 @@ Extra - asset_id: collision_camera_026
                       Flash Shift and Walljump (Beginner)
           Any of the following:
               # Requirements for killing Golzuna
-              Screw Attack or Shoot Charge Beam
+              Shoot Charge Beam
               Speed Booster and Combat (Advanced)
               All of the following:
                   Combat (Intermediate)
