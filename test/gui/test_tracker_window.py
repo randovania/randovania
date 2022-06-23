@@ -9,7 +9,7 @@ import pytest
 
 from randovania.games.prime2.layout.echoes_configuration import EchoesConfiguration
 from randovania.games.prime2.layout.translator_configuration import LayoutTranslatorRequirement
-from randovania.gui import tracker_window
+from randovania.gui.tracker import tracker_core
 from randovania.layout.lib.teleporters import TeleporterShuffleMode
 from randovania.layout.versioned_preset import VersionedPreset
 
@@ -36,7 +36,7 @@ def _layout_config(request, default_echoes_configuration):
 
 def test_load_previous_state_no_previous_layout(tmp_path: Path, default_echoes_configuration):
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_echoes_configuration)
+    result = tracker_core._load_previous_state(tmp_path, default_echoes_configuration)
 
     # Assert
     assert result is None
@@ -47,7 +47,7 @@ def test_load_previous_state_previous_layout_not_json(tmp_path: Path, default_ec
     tmp_path.joinpath("preset.rdvpreset").write_text("this is not a json")
 
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_echoes_configuration)
+    result = tracker_core._load_previous_state(tmp_path, default_echoes_configuration)
 
     # Assert
     assert result is None
@@ -59,7 +59,7 @@ def test_load_previous_state_previous_layout_not_layout(tmp_path: Path, default_
     tmp_path.joinpath("state.json").write_text("[]")
 
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_echoes_configuration)
+    result = tracker_core._load_previous_state(tmp_path, default_echoes_configuration)
 
     # Assert
     assert result is None
@@ -70,7 +70,7 @@ def test_load_previous_state_missing_state(tmp_path: Path, default_preset):
     VersionedPreset.with_preset(default_preset).save_to_file(tmp_path.joinpath("preset.rdvpreset"))
 
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_preset.configuration)
+    result = tracker_core._load_previous_state(tmp_path, default_preset.configuration)
 
     # Assert
     assert result is None
@@ -82,7 +82,7 @@ def test_load_previous_state_invalid_state(tmp_path: Path, default_preset):
     tmp_path.joinpath("state.json").write_text("")
 
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_preset.configuration)
+    result = tracker_core._load_previous_state(tmp_path, default_preset.configuration)
 
     # Assert
     assert result is None
@@ -95,7 +95,7 @@ def test_load_previous_state_success(tmp_path: Path, default_preset):
     tmp_path.joinpath("state.json").write_text(json.dumps(data))
 
     # Run
-    result = tracker_window._load_previous_state(tmp_path, default_preset.configuration)
+    result = tracker_core._load_previous_state(tmp_path, default_preset.configuration)
 
     # Assert
     assert result == data
@@ -306,7 +306,7 @@ async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_p
     tmp_path.joinpath("state.json").write_text(json.dumps(state), "utf-8")
 
     # Run
-    window = await tracker_window.TrackerWindow.create_new(tmp_path, preset)
+    window = await tracker_core.TrackerWindow.create_new(tmp_path, preset)
     skip_qtbot.add_widget(window)
 
     # Assert

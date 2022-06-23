@@ -525,7 +525,7 @@ class MainWindow(WindowManager, BackgroundTaskMixin, Ui_MainWindow):
         self._data_editor.show()
 
     async def open_map_tracker(self, configuration: Preset):
-        from randovania.gui.tracker_window import InvalidLayoutForTracker, TrackerWindow
+        from randovania.gui.tracker.tracker_core import InvalidLayoutForTracker, TrackerWindow
 
         try:
             self._map_tracker = await TrackerWindow.create_new(self._options.tracker_files_path, configuration)
