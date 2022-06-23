@@ -62,7 +62,7 @@ Extra - asset_id: collision_camera_001
 
 > Door to Spider Magnet Elevator; Heals? False
   * Layers: default
-  * Power Beam Door to Spider Magnet Elevator/Door to Right Entrance
+  * Super Missile Door to Spider Magnet Elevator/Door to Right Entrance
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000
@@ -261,6 +261,8 @@ Extra - asset_id: collision_camera_003
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
+  > Dock to Blue EMMI Introduction
+      Speed Booster and After Ghavoran - Gold Robot Fight
   > Tile Group (BOMB)
       Can Slide
   > Floating Platform
@@ -401,14 +403,6 @@ Extra - asset_id: collision_camera_004
   > Right Alcove
       Morph Ball
 
-> Tile Group (POWERBEAM); Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_047
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('POWERBEAM',)
-
 > Tunnel to EMMI Zone Exit Southeast; Heals? False
   * Layers: default
   * Ghavoran EMMI Tunnel to EMMI Zone Exit Southeast/Tunnel to Blue EMMI Introduction
@@ -418,7 +412,13 @@ Extra - asset_id: collision_camera_004
 > Right Alcove; Heals? False
   * Layers: default
   > Door to EMMI Zone Exit Southeast
-      Grapple Beam or Spider Magnet or Space Jump or Speed Booster or Simple IBJ
+      Any of the following:
+          Spider Magnet or Space Jump or Speed Booster or Simple IBJ
+          Grapple Beam and Movement (Beginner)
+          All of the following:
+              Walljump (Beginner)
+              Flash Shift or Grapple Beam or Use Spin Boost
+          Morph Ball and Single-wall Wall Jump (Intermediate)
   > Dock to Navigation Station Access
       Can Slide
 
@@ -616,7 +616,7 @@ Extra - asset_id: collision_camera_008
   > Event - Breakable (grapplepulloff1x2_002)
       Grapple Beam
   > Tunnel to Super Missile Room Access
-      Simple IBJ or Use Spin Boost
+      Speed Booster or Simple IBJ or Use Spin Boost
 
 > Pickup (Missile Tank); Heals? False
   * Layers: default
@@ -682,13 +682,11 @@ Extra - asset_id: collision_camera_009
   * Extra - right_shield_def: actordef:actors/props/doorshieldmissile/charclasses/doorshieldmissile.bmsad
   > Bomb Ledge
       Any of the following:
-          Space Jump or Simple IBJ
+          Grapple Beam or Space Jump or Simple IBJ
+          Morph Ball and Single-wall Wall Jump (Intermediate)
           All of the following:
-              Spider Magnet
-              Flash Shift or Grapple Beam or Use Spin Boost
-          All of the following:
-              Grapple Beam
-              Flash Shift or Walljump (Beginner)
+              Flash Shift or Use Spin Boost
+              Spider Magnet or Walljump (Beginner)
 
 > Pickup (Missile+ Tank); Heals? False
   * Layers: default
@@ -755,7 +753,7 @@ Extra - asset_id: collision_camera_010
 
 > Door to Super Missile Room Access (Super Lock); Heals? False
   * Layers: default
-  * Power Beam Door to Super Missile Room Access/Door to Super Missile Room (Super Lock)
+  * Access Locked to Super Missile Room Access/Door to Super Missile Room (Super Lock)
   * Extra - actor_name: doorclosedpower_001
   * Extra - actor_def: actordef:actors/props/doorclosedpower/charclasses/doorclosedpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2388,7 +2386,9 @@ blast shields
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Center Platform
-      Flash Shift or Grapple Beam or Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      Any of the following:
+          Flash Shift or Spider Magnet or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          Grapple Beam and Movement (Beginner)
 
 > Door to Transport to Elun; Heals? False
   * Layers: default
@@ -2882,7 +2882,7 @@ Extra - polygon: [[-2900.0, -2000.0], [-5000.0, -2000.0], [-5000.0, -4000.0], [-
 Extra - asset_id: collision_camera_035
 > Door to Right Entrance; Heals? False
   * Layers: default
-  * Power Beam Door to Right Entrance/Door to Spider Magnet Elevator
+  * Access Locked to Right Entrance/Door to Spider Magnet Elevator
   * Extra - actor_name: doorpowerclosed_000
   * Extra - actor_def: actordef:actors/props/doorpowerclosed/charclasses/doorpowerclosed.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:doorshieldsupermissile_000
@@ -2892,7 +2892,9 @@ Extra - asset_id: collision_camera_035
   > Tunnel to Flipper Room (Tunnel)
       All of the following:
           Morph Ball and After Ghavoran - Super Missile Magnet Platform Lowered
-          Grapple Beam or Simple IBJ or Use Spin Boost
+          Any of the following:
+              Grapple Beam or Single-wall Wall Jump (Beginner) or Simple IBJ or Use Spin Boost
+              Flash Shift and Walljump (Beginner)
 
 > Tunnel to Super Missile Room Access; Heals? False
   * Layers: default
