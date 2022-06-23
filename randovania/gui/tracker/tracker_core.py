@@ -19,6 +19,8 @@ from randovania.gui.generated.tracker_window_ui import Ui_TrackerWindow
 from randovania.gui.lib import signal_handling
 from randovania.gui.lib.common_qt_lib import set_default_window_icon
 from randovania.gui.lib.scroll_protected import ScrollProtectedSpinBox
+from randovania.gui.tracker.tracker_elevators import TrackerElevatorsWidget
+from randovania.gui.tracker.tracker_translators import TrackerTranslatorsWidget
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import json_lib
 from randovania.resolver.logic import Logic
@@ -34,6 +36,7 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.db.region import Region
     from randovania.game_description.game_description import GameDescription
     from randovania.game_description.resources.pickup_entry import PickupEntry
+    from randovania.gui.tracker.tracker_component import TrackerComponent
     from randovania.layout.base.base_configuration import BaseConfiguration
     from randovania.layout.preset import Preset
 
@@ -75,6 +78,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     game_description: GameDescription
     game_configuration: BaseConfiguration
     persistence_path: Path
+    tracker_components: list[TrackerComponent]
     _initial_state: State
     _starting_nodes: set[ResourceNode]
 
@@ -105,6 +109,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self.preset = preset
         self.game_configuration = preset.configuration
         self.persistence_path = persistence_path
+        self.tracker_components = []
 
     async def configure(self):
         player_pool = await generator.create_player_pool(None, self.game_configuration, 0, 1, rng_required=False)
@@ -136,6 +141,15 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
         self.setup_pickups_box(player_pool.pickups)
         self.setup_possible_locations_tree()
+
+        for it in [TrackerElevatorsWidget, TrackerTranslatorsWidget]:
+            component = it.create_for(self.game_description, self.game_configuration)
+            if component is not None:
+                self.tracker_components.append(component)
+                self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea, component)
+
+        for first, second in zip(self.tracker_components[:-1], self.tracker_components[1:]):
+            self.tabifyDockWidget(first, second)
 
         # Map
         for region in sorted(self.game_description.region_list.regions, key=lambda x: x.name):
@@ -193,7 +207,17 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         except (KeyError, AttributeError):
             return False
 
+        restored_states = [
+            component.decode_persisted_state(previous_state)
+            for component in self.tracker_components
+        ]
+        if None in restored_states:
+            return False
+
         self.setup_starting_location(starting_location)
+
+        for component, restored_state in zip(self.tracker_components, restored_states):
+            component.apply_previous_state(restored_state)
 
         self.bulk_change_quantity(quantity_to_change)
         self._add_new_actions(previous_actions)
@@ -210,6 +234,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             pickup: 0
             for pickup in self._collected_pickups.keys()
         })
+
+        for component in self.tracker_components:
+            component.reset()
 
         while len(self._actions) > 1:
             self._actions.pop()
@@ -584,6 +611,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         state = self._initial_state.copy()
         if self._actions:
             state.node = self._actions[-1]
+
+        for component in self.tracker_components:
+            state = component.fill_into_state(state)
 
         for pickup, quantity in self._collected_pickups.items():
             for _ in range(quantity):

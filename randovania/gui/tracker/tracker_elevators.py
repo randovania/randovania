@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import collections
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from PySide6 import QtWidgets
 
@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from randovania.resolver.state import State
 
 
-class TrackerElevatorsWidget(QtWidgets.QDockWidget, TrackerComponent):
+class TrackerElevatorsWidget(TrackerComponent):
     _elevator_id_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
 
     @classmethod
@@ -109,9 +109,9 @@ class TrackerElevatorsWidget(QtWidgets.QDockWidget, TrackerComponent):
                 self._elevator_id_to_combo[region_list.identifier_for_node(node)] = combo
                 layout.addWidget(combo, i, 1)
 
-    def apply_previous_state(self, previous_state: dict) -> bool:
+    def decode_persisted_state(self, previous_state: dict) -> Any | None:
         try:
-            teleporters: dict[NodeIdentifier, AreaIdentifier | None] = {
+            return {
                 NodeIdentifier.from_json(item["teleporter"]): (
                     AreaIdentifier.from_json(item["data"])
                     if item["data"] is not None else None
@@ -119,8 +119,9 @@ class TrackerElevatorsWidget(QtWidgets.QDockWidget, TrackerComponent):
                 for item in previous_state["elevators"]
             }
         except (KeyError, AttributeError):
-            return False
+            return None
 
+    def apply_previous_state(self, teleporters: dict[NodeIdentifier, AreaIdentifier | None]) -> None:
         for teleporter, area_location in teleporters.items():
             combo = self._elevator_id_to_combo[teleporter]
             if area_location is None:
@@ -130,8 +131,6 @@ class TrackerElevatorsWidget(QtWidgets.QDockWidget, TrackerComponent):
                 if area_location == combo.itemData(i):
                     combo.setCurrentIndex(i)
                     break
-
-        return True
 
     def reset(self):
         for elevator in self._elevator_id_to_combo.values():

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from PySide6 import QtWidgets
 
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from randovania.resolver.state import State
 
 
-class TrackerTranslatorsWidget(QtWidgets.QDockWidget, TrackerComponent):
+class TrackerTranslatorsWidget(TrackerComponent):
     _translator_gate_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
 
     @classmethod
@@ -83,16 +83,19 @@ class TrackerTranslatorsWidget(QtWidgets.QDockWidget, TrackerComponent):
         for elevator in self._translator_gate_to_combo.values():
             elevator.setCurrentIndex(0)
 
-    def apply_previous_state(self, previous_state: dict) -> bool:
+    def decode_persisted_state(self, previous_state: dict) -> Any | None:
         try:
-            configurable_nodes = {
+            return {
                 NodeIdentifier.from_string(identifier): (LayoutTranslatorRequirement(item)
                                                          if item is not None
                                                          else None)
                 for identifier, item in previous_state["configurable_nodes"].items()
             }
         except (KeyError, AttributeError):
-            return False
+            return None
+
+    def apply_previous_state(self, configurable_nodes: dict[NodeIdentifier, LayoutTranslatorRequirement | None],
+                             ) -> None:
 
         for identifier, requirement in configurable_nodes.items():
             combo = self._translator_gate_to_combo[identifier]
@@ -100,8 +103,6 @@ class TrackerTranslatorsWidget(QtWidgets.QDockWidget, TrackerComponent):
                 if requirement == combo.itemData(i):
                     combo.setCurrentIndex(i)
                     break
-
-        return True
 
     def persist_current_state(self) -> dict:
         return {
