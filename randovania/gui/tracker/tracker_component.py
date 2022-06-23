@@ -1,9 +1,8 @@
-from abc import ABC
 
 from randovania.resolver.state import State
 
 
-class TrackerComponent(ABC):
+class TrackerComponent:
     def reset(self):
         raise NotImplementedError
 
