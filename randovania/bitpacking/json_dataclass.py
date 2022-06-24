@@ -3,13 +3,7 @@ import inspect
 import typing
 from enum import Enum
 
-
-def _handle_optional(type_):
-    if getattr(type_, "__origin__", None) is typing.Union and (
-            len(type_.__args__) == 2 and type_.__args__[1] is type(None)):
-        return type_.__args__[0]
-    return type_
-
+from randovania.lib import type_lib
 
 T = typing.TypeVar("T")
 
@@ -45,7 +39,7 @@ class JsonDataclass:
                 continue
             arg = json_dict[field.name]
             if arg is not None:
-                type_ = _handle_optional(field.type)
+                type_ = type_lib.resolve_optional(field.type)[0]
                 if issubclass(type_, Enum):
                     arg = type_(arg)
                 elif hasattr(type_, "from_json"):
