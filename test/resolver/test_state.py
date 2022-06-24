@@ -1,10 +1,6 @@
-from unittest.mock import Mock
-
 import pytest
 
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry, ResourceLock
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.pickup_node import PickupNode

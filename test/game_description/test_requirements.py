@@ -1,4 +1,3 @@
-import typing
 from typing import Tuple
 from unittest.mock import MagicMock
 

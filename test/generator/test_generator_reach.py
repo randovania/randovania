@@ -7,9 +7,8 @@ import pytest
 
 from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name

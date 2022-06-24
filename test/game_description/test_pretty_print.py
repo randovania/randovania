@@ -4,9 +4,9 @@ import pytest
 
 import randovania
 from randovania.game_description import pretty_print, default_database
+from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_template import RequirementTemplate
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.games.game import RandovaniaGame
 
 

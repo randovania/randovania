@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from randovania.exporter import pickup_exporter
 from randovania.game_description import default_database
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.item.ammo import AMMO_ITEM_CATEGORY
@@ -19,7 +20,6 @@ from randovania.generator.item_pool import pickup_creator
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
-from randovania.exporter import pickup_exporter
 
 
 def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resource_database):
@@ -102,7 +102,7 @@ def test_create_pickup_list(model_style: PickupModelStyle, empty_patches, generi
         name="EnergyTransferModule",
     )
 
-    useless_resource =  ItemResourceInfo(0, "Useless", "Useless", 10)
+    useless_resource = ItemResourceInfo(0, "Useless", "Useless", 10)
     resource_a = ItemResourceInfo(1, "A", "A", 10)
     resource_b = ItemResourceInfo(2, "B", "B", 10)
     pickup_a = PickupEntry("P-A", model_1, generic_item_category, generic_item_category,

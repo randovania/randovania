@@ -1,4 +1,3 @@
-import collections
 import dataclasses
 
 from PySide6 import QtWidgets, QtCore

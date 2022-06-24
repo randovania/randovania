@@ -5,7 +5,6 @@ import pytest
 from randovania.game_description import game_description
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import Node
 from randovania.game_description.world.world import World
 from randovania.game_description.world.world_list import WorldList
 

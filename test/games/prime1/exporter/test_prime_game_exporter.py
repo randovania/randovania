@@ -1,6 +1,6 @@
 import json
 import os
-from unittest.mock import MagicMock, ANY, patch
+from unittest.mock import MagicMock, ANY
 
 import pytest
 
@@ -15,7 +15,7 @@ def test_patch_game(mocker, tmp_path, use_echoes_models):
     mock_patch_iso_raw: MagicMock = mocker.patch("py_randomprime.patch_iso_raw")
     mock_asset_convert: MagicMock = mocker.patch("randovania.patching.prime.asset_conversion.convert_prime2_pickups")
     mocker.patch("randovania.games.prime1.exporter.game_exporter.adjust_model_names")
-    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode":"None"}
+    patch_data = {"patch": "data", 'gameConfig': {}, 'hasSpoiler': True, "preferences": {}, "roomRandoMode": "None"}
     progress_update = MagicMock()
 
     echoes_input_path = tmp_path.joinpath("echoes.iso")
@@ -48,7 +48,8 @@ def test_patch_game(mocker, tmp_path, use_echoes_models):
             "updateHintStateReplacement": [
                 148, 33, 255, 204, 124, 8, 2, 166, 144, 1, 0, 56, 191, 193, 0, 44, 124, 127, 27, 120, 136, 159, 0, 2,
                 44, 4, 0, 0, 64, 130, 0, 24, 187, 193, 0, 44, 128, 1, 0, 56, 124, 8, 3,
-                166, 56, 33, 0, 52, 78, 128, 0, 32, 63, 192, 128, 4, 99, 222, 77, 140, 56, 128, 1, 128, 124, 4, 247, 172,
+                166, 56, 33, 0, 52, 78, 128, 0, 32, 63, 192, 128, 4, 99, 222, 77, 140, 56, 128, 1, 128, 124, 4, 247,
+                172,
                 44, 4, 0, 0, 56, 132, 255, 224, 64, 130, 255, 244, 124, 0, 4, 172, 76, 0, 1, 44, 56, 192, 0, 0, 152,
                 223, 0, 2, 187, 193, 0, 44, 128, 1, 0, 56, 124, 8, 3, 166, 56, 33, 0, 52, 78, 128, 0, 32
             ]

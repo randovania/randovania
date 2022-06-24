@@ -1,7 +1,5 @@
 import pytest
-from frozendict import frozendict
 
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.games.prime2.generator.item_pool import sky_temple_keys
 from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode

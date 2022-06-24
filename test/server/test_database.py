@@ -1,5 +1,3 @@
-from unittest.mock import PropertyMock
-
 import pytest
 from peewee import SqliteDatabase
 

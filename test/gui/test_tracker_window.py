@@ -98,7 +98,7 @@ def test_load_previous_state_success(tmp_path: Path, default_preset):
 
 @pytest.mark.parametrize("shuffle_advanced", [False, True])
 async def test_apply_previous_state(skip_qtbot, tmp_path: Path, default_echoes_preset, shuffle_advanced,
-                              echoes_game_description):
+                                    echoes_game_description):
     configuration = default_echoes_preset.configuration
     assert isinstance(configuration, EchoesConfiguration)
 

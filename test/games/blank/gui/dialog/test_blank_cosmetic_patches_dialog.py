@@ -14,5 +14,3 @@ def test_reset(skip_qtbot):
 
     # Assert
     assert dialog.cosmetic_patches == patches
-
-

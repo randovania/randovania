@@ -37,6 +37,7 @@ def test_force_fusion(skip_qtbot):
 
     assert dialog.cosmetic_patches == PrimeCosmeticPatches(force_fusion=False)
 
+
 def test_custom_hud_color(skip_qtbot):
     cosmetic_patches = PrimeCosmeticPatches(use_hud_color=False)
 

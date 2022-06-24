@@ -10,8 +10,8 @@ from mock import AsyncMock, MagicMock, ANY
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_manager import PresetManager
-from randovania.layout.permalink import Permalink
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.permalink import Permalink
 
 
 def create_window(options: Union[Options, MagicMock],

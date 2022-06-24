@@ -3,7 +3,6 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description import derived_nodes
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.generator.filler import player_state
 from randovania.generator.filler.filler_configuration import FillerConfiguration
