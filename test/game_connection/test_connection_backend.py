@@ -1,8 +1,7 @@
 import contextlib
-from typing import Optional, List
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
-from unittest.mock import AsyncMock, MagicMock, call
 
 from randovania.game_connection.connection_backend import ConnectionBackend
 from randovania.game_connection.connection_base import GameConnectionStatus

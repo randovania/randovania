@@ -1,8 +1,8 @@
 from pathlib import Path
+from unittest.mock import MagicMock, AsyncMock, call
 
 import pytest
 import socketio.exceptions
-from unittest.mock import MagicMock, AsyncMock, call
 
 from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice

@@ -1,9 +1,8 @@
 from pathlib import Path
-from typing import Optional
-
-import pytest
 from unittest.mock import MagicMock, ANY, AsyncMock
 from unittest.mock import call
+
+import pytest
 
 import randovania.cli.commands.generate
 from randovania.games.game import RandovaniaGame

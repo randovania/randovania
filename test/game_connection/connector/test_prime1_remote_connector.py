@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import MagicMock
+
+import pytest
 
 from randovania.game_connection.connection_base import InventoryItem
 from randovania.game_connection.connector.prime1_remote_connector import Prime1RemoteConnector

@@ -1,6 +1,6 @@
 import contextlib
 from dataclasses import dataclass
-from typing import TypeVar, Type
+from typing import TypeVar
 from unittest.mock import patch, MagicMock
 
 import pytest

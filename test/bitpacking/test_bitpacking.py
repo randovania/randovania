@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Tuple, Iterator
+from typing import Iterator
 from unittest.mock import MagicMock, call
 
 import pytest

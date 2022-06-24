@@ -1,5 +1,4 @@
 from random import Random
-from typing import Tuple
 from unittest.mock import MagicMock
 
 import pytest

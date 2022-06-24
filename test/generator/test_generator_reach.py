@@ -1,7 +1,6 @@
 import dataclasses
 import functools
 from random import Random
-from typing import Tuple, List
 
 import pytest
 

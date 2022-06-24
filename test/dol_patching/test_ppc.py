@@ -1,5 +1,3 @@
-from typing import List
-
 from randovania.dol_patching.assembler import ppc
 
 

@@ -1,7 +1,7 @@
-from typing import Callable, Union
+from typing import Callable
+from unittest.mock import MagicMock, patch, call, AsyncMock
 
 import pytest
-from unittest.mock import MagicMock, patch, call, AsyncMock
 
 from randovania.generator import generator
 from randovania.generator.filler.runner import FillerPlayerResult, FillerResults

@@ -1,11 +1,10 @@
 import os
 import subprocess
 from pathlib import Path
-from typing import Union
+from unittest.mock import AsyncMock, MagicMock, ANY
 
 import pytest
 from PySide6.QtWidgets import QDialog
-from unittest.mock import AsyncMock, MagicMock, ANY
 
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
