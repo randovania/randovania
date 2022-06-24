@@ -5,6 +5,7 @@ from typing import Dict, Tuple, List
 
 from PySide6 import QtWidgets, QtCore
 
+from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
@@ -26,7 +27,6 @@ from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
-from randovania.exporter import item_names
 from randovania.resolver.exceptions import InvalidConfiguration
 
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (

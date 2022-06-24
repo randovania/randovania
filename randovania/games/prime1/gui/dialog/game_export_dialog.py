@@ -7,9 +7,6 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
-from randovania.games.prime2.gui.dialog.game_export_dialog import (
-    delete_internal_copy, check_extracted_game, echoes_input_validator
-)
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
     spoiler_path_for, add_field_validation, output_file_validator, is_file_validator, update_validation,

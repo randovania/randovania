@@ -2,8 +2,8 @@ from typing import Optional
 
 from randovania.interface_common import echoes
 from randovania.interface_common.options import Options
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.layout_description import LayoutDescription
 from randovania.lib.status_update_lib import ProgressUpdateCallable, ConstantPercentageCallback
 
 export_busy = False

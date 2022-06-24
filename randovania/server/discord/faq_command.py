@@ -1,8 +1,6 @@
 import functools
-import logging
 
 import discord
-from discord.ext import commands
 from discord_slash import SlashContext, SlashCommandOptionType, SlashCommand
 from discord_slash.utils import manage_commands
 

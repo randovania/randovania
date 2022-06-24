@@ -19,8 +19,7 @@ from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_library import (
-    UnableToGenerate, UncollectedState,
-    find_node_with_resource
+    UnableToGenerate, UncollectedState
 )
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.player_state import PlayerState, WeightedLocations

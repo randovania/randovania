@@ -2,6 +2,7 @@ import dataclasses
 from random import Random
 from typing import List, Dict
 
+from randovania.exporter import item_names
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -14,7 +15,6 @@ from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
-from randovania.exporter import item_names
 
 
 def _conditional_resources_for_pickup(pickup: PickupEntry) -> List[ConditionalResources]:

@@ -3,7 +3,6 @@ import uuid
 from typing import Optional, Callable
 
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime2.layout.echoes_configuration import LayoutSkyTempleKeyMode
 from randovania.layout.base.ammo_configuration import AmmoConfiguration
 from randovania.layout.base.available_locations import AvailableLocationsConfiguration
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -124,11 +123,11 @@ class PresetEditor:
     @ammo_configuration.setter
     def ammo_configuration(self, value: AmmoConfiguration):
         self.set_configuration_field("ammo_configuration", value)
-    
+
     @property
     def dock_rando_configuration(self) -> DockRandoConfiguration:
         return self.configuration.dock_rando
-    
+
     @dock_rando_configuration.setter
     def dock_rando_configuration(self, value: DockRandoConfiguration):
         self.set_configuration_field("dock_rando", value)

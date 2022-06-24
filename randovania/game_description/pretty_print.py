@@ -3,23 +3,23 @@ from pathlib import Path
 from typing import Iterator, Tuple, TextIO
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.requirement_template import RequirementTemplate
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.logbook_node import LoreType, LogbookNode
 from randovania.game_description.world.node import (
     Node
 )
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.player_ship_node import PlayerShipNode
-from randovania.game_description.world.logbook_node import LoreType, LogbookNode
-from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
@@ -189,7 +189,7 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             else:
                 output.write("      No lock\n")
             output.write("\n")
-        
+
         dock_rando = game.dock_weakness_database.dock_rando_params[dock_type]
         if dock_rando.locked is None or dock_rando.unlocked is None:
             output.write("  > Dock Rando: Disabled\n\n")
@@ -198,15 +198,15 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
 
             output.write(f"\n      Unlocked: {dock_rando.unlocked.name}")
             output.write(f"\n      Locked: {dock_rando.locked.name}")
-            
+
             output.write(f"\n      Change from:")
             for weakness in sorted(dock_rando.change_from):
                 output.write(f"\n          {weakness.name}")
-            
+
             output.write(f"\n      Change to:")
             for weakness in sorted(dock_rando.change_to):
                 output.write(f"\n          {weakness.name}")
-            
+
             output.write("\n\n")
 
 

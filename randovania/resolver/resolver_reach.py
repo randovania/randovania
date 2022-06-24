@@ -1,13 +1,13 @@
 import math
 import typing
 from collections import defaultdict
-from typing import Dict, Set, Iterator, Tuple, FrozenSet
+from typing import Dict, Set, Iterator, Tuple
 
 from randovania.game_description.game_description import calculate_interesting_resources
-from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_list import RequirementList, SatisfiableRequirements
+from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.resolver import debug
@@ -95,7 +95,7 @@ class ResolverReach:
                 target_node_index = target_node.node_index
 
                 if checked_nodes.get(target_node_index, math.inf) <= energy or nodes_to_check.get(target_node_index,
-                                                                                            math.inf) <= energy:
+                                                                                                  math.inf) <= energy:
                     continue
 
                 if requirement_to_leave != Requirement.trivial():
@@ -126,7 +126,8 @@ class ResolverReach:
 
         if requirements_by_node:
             satisfiable_requirements = frozenset.union(
-                *[RequirementSet(requirements).union(logic.get_additional_requirements(all_nodes[node_index])).alternatives
+                *[RequirementSet(requirements).union(
+                    logic.get_additional_requirements(all_nodes[node_index])).alternatives
                   for node_index, requirements in requirements_by_node.items()])
         else:
             satisfiable_requirements = frozenset()

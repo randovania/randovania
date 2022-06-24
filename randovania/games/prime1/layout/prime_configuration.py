@@ -15,6 +15,7 @@ class RoomRandoMode(BitPackEnum, Enum):
     ONE_WAY = "One-way"
     TWO_WAY = "Two-way"
 
+
 class LayoutCutsceneMode(BitPackEnum, Enum):
     ORIGINAL = "original"
     COMPETITIVE = "competitive"
@@ -40,8 +41,10 @@ class PrimeConfiguration(BaseConfiguration):
     items_every_room: bool
     random_boss_sizes: bool
     no_doors: bool
-    superheated_probability: int = dataclasses.field(metadata={"min": 0, "max": 1000}) # div 1000 to get coefficient, div 10 to get %
-    submerged_probability: int = dataclasses.field(metadata={"min": 0, "max": 1000})   # div 1000 to get coefficient, div 10 to get %
+    superheated_probability: int = dataclasses.field(
+        metadata={"min": 0, "max": 1000})  # div 1000 to get coefficient, div 10 to get %
+    submerged_probability: int = dataclasses.field(
+        metadata={"min": 0, "max": 1000})  # div 1000 to get coefficient, div 10 to get %
     room_rando: RoomRandoMode
     spring_ball: bool
     deterministic_idrone: bool
@@ -70,7 +73,7 @@ class PrimeConfiguration(BaseConfiguration):
 
         if not self.qol_game_breaking:
             result.append("Missing Game Breaking Fixes")
-        
+
         if self.room_rando != RoomRandoMode.NONE:
             result.append("Room Randomizer")
 
@@ -82,7 +85,7 @@ class PrimeConfiguration(BaseConfiguration):
 
         if self.submerged_probability > 0:
             result.append("Submerged Rooms")
-        
+
         if self.allow_underwater_movement_without_gravity:
             result.append("Dangerous Gravity Suit Logic")
 

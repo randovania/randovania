@@ -1,4 +1,4 @@
-from PySide6 import QtWidgets, QtCore
+from PySide6 import QtWidgets
 
 
 class ScrollMessageBox(QtWidgets.QMessageBox):
@@ -36,7 +36,7 @@ class ScrollMessageBox(QtWidgets.QMessageBox):
     def text(self) -> str:
         return self.label.text()
 
-    def setText(self, text:str) -> None:
+    def setText(self, text: str) -> None:
         self.label.setText(text)
 
     @classmethod

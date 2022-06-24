@@ -43,4 +43,3 @@ class SuperMetroidGameExporter(GameExporter):
             raise ValueError("Invalid input ROM")
 
         SuperDuperMetroid.ROM_Patcher.patch_rom_json(BytesIO(vanilla_bytes), export_params.output_path, patch_data)
-

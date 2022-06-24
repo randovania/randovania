@@ -1,6 +1,5 @@
-import re
 from distutils.version import StrictVersion
-from typing import NamedTuple, List, Tuple, Optional
+from typing import NamedTuple, List, Optional
 
 from randovania import VERSION
 

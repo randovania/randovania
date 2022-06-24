@@ -1,7 +1,6 @@
 import re
 from typing import Iterator, Optional
 
-from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement

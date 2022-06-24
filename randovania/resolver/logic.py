@@ -1,11 +1,8 @@
-from typing import Dict
-
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.world.node import Node
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.resolver.state import State
 
 
 class Logic:
@@ -25,7 +22,7 @@ class Logic:
 
     def set_additional_requirements(self, node: Node, req: RequirementSet):
         self.additional_requirements[node.node_index] = req
-    
+
     @property
     def victory_condition(self) -> Requirement:
         return self.game.victory_condition

@@ -16,7 +16,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
     from randovania.game_description.world.node_provider import NodeProvider
 
-
 NodeIndex = int
 
 

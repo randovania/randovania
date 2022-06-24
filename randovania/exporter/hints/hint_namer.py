@@ -1,6 +1,5 @@
 from typing import Optional, NamedTuple
 
-from randovania.exporter.hints.determiner import Determiner
 from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.game_description.hint import Hint
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo

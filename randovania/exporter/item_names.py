@@ -14,6 +14,7 @@ _ITEMS_TO_PLURALIZE = {
     "Power Bomb",
 }
 
+
 def add_quantity_to_resource(resource: str, quantity: int, always_add_quantity: bool = False) -> str:
     if always_add_quantity or quantity > 1:
         first_part = f"{quantity} "

@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import NamedTuple, Iterator
 
 import open_prime_rando.echoes.custom_assets
-from retro_data_structures.asset_manager import AssetManager, IsoFileProvider, PathFileProvider
+from retro_data_structures.asset_manager import AssetManager, IsoFileProvider
 from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
 from retro_data_structures.dependencies import all_converted_dependencies, Dependency

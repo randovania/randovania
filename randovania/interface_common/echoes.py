@@ -5,8 +5,8 @@ from multiprocessing.connection import Connection
 from typing import Callable, Optional
 
 from randovania.generator import generator
-from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.layout_description import LayoutDescription
 from randovania.resolver import debug
 
 

@@ -1,6 +1,6 @@
-from collections import defaultdict
 import copy
 import itertools
+from collections import defaultdict
 from heapq import heappush, heappop
 from typing import Dict, Iterator, Tuple, Set, Callable
 

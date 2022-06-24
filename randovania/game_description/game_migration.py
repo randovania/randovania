@@ -76,7 +76,7 @@ def _migrate_v10(data: dict) -> dict:
             "change_from": [],
             "change_to": []
         }
-    
+
     return data
 
 

@@ -14,8 +14,8 @@ from randovania import get_data_path
 from randovania.game_description.game_patches import GamePatches
 from randovania.games.game import RandovaniaGame
 from randovania.layout import game_patches_serializer, description_migration
-from randovania.layout.permalink import Permalink
 from randovania.layout.generator_parameters import GeneratorParameters
+from randovania.layout.permalink import Permalink
 from randovania.layout.preset import Preset
 from randovania.layout.versioned_preset import VersionedPreset
 
