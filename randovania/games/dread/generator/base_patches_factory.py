@@ -4,9 +4,9 @@ from typing import Iterator
 from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.world.configurable_node import ConfigurableNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.games.dread.layout.dread_configuration import DreadConfiguration

@@ -2,8 +2,8 @@ import itertools
 from typing import FrozenSet, List, Tuple, Set
 
 from randovania.game_description import game_description
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.requirement_list import RequirementList
+from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection

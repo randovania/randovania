@@ -8,8 +8,8 @@ from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
 

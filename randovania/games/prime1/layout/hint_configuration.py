@@ -15,6 +15,7 @@ class ArtifactHintMode(BitPackEnum, Enum):
     def default(cls) -> "ArtifactHintMode":
         return cls.PRECISE
 
+
 class PhazonSuitHintMode(BitPackEnum, Enum):
     DISABLED = "disabled"
     HIDE_AREA = "hide-area"
@@ -23,6 +24,7 @@ class PhazonSuitHintMode(BitPackEnum, Enum):
     @classmethod
     def default(cls) -> "PhazonSuitHintMode":
         return cls.PRECISE
+
 
 @dataclasses.dataclass(frozen=True)
 class HintConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCheck):

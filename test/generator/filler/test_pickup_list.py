@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.requirement_list import RequirementList
+from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_info import ResourceCollection

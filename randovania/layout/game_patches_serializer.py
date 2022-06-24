@@ -7,7 +7,7 @@ from typing import Dict, List, DefaultDict
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches, ElevatorConnection
+from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.hint import Hint
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceCollection
@@ -17,7 +17,6 @@ from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.pickup_node import PickupNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator.item_pool import pool_creator, PoolResults
 from randovania.layout import filtered_database

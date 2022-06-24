@@ -56,7 +56,8 @@ def _prime2_data(request):
     name="prime3_data")
 def _prime3_data(request):
     return (
-    request.param["encoded"], *_create_config_for(RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]))
+        request.param["encoded"],
+        *_create_config_for(RandovaniaGame.METROID_PRIME_CORRUPTION, request.param["replace"]))
 
 
 def test_decode_prime2(prime2_data):

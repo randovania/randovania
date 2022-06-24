@@ -1,6 +1,5 @@
 from PySide6 import QtWidgets, QtCore
 
-from randovania.gui.lib.vertical_tab_bar import VerticalTabBar
 from randovania.gui.widgets.delayed_text_label import DelayedTextLabel
 
 

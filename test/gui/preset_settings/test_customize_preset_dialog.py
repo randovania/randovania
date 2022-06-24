@@ -2,9 +2,6 @@ import dataclasses
 import uuid
 from unittest.mock import MagicMock
 
-import pytest
-
-from randovania.games.game import RandovaniaGame
 from randovania.gui.preset_settings.customize_preset_dialog import CustomizePresetDialog
 from randovania.interface_common.preset_editor import PresetEditor
 

@@ -6,7 +6,7 @@ from randovania.games.cave_story.exporter.game_exporter import CSGameExportParam
 from randovania.games.cave_story.exporter.options import CSPerGameOptions
 from randovania.games.game import RandovaniaGame
 from randovania.gui.dialog.game_export_dialog import (
-    GameExportDialog, add_field_validation, is_directory_validator, prompt_for_output_directory, spoiler_path_for,
+    GameExportDialog, add_field_validation, is_directory_validator, prompt_for_output_directory,
     spoiler_path_for_directory
 )
 from randovania.gui.generated.cs_game_export_dialog_ui import Ui_CSGameExportDialog

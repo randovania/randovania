@@ -4,18 +4,16 @@ from random import Random
 from typing import Callable, Dict, List, Optional
 
 import tenacity
-from randovania.game_description import derived_nodes
+
 from randovania.game_description.assignment import (PickupAssignment,
                                                     PickupTarget, PickupTargetAssociation)
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_library import (
     UnableToGenerate, filter_unassigned_pickup_nodes)
-from randovania.generator.filler.runner import (FillerPlayerResult,
-                                                FillerResults, PlayerPool,
+from randovania.generator.filler.runner import (FillerResults, PlayerPool,
                                                 run_filler)
 from randovania.generator.hint_distributor import PreFillParams
 from randovania.generator.item_pool import pool_creator

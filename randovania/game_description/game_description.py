@@ -3,12 +3,11 @@ import copy
 import dataclasses
 from typing import Iterator, FrozenSet, Dict, Optional, List
 
-from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_list import SatisfiableRequirements
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceCollection
 from randovania.game_description.resources.simple_resource_info import SimpleResourceInfo
-from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
 from randovania.game_description.world.dock import DockWeaknessDatabase
 from randovania.game_description.world.node_identifier import NodeIdentifier

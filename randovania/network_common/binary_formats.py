@@ -13,7 +13,6 @@ OldBinaryInventory = PrefixedArray(
     )
 )
 
-
 BinaryInventory = PrefixedArray(
     VarInt,
     Struct(

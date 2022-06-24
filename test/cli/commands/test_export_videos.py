@@ -1,9 +1,8 @@
 import os
-from unittest.mock import MagicMock, patch, ANY, call
-
-import pytest
+from unittest.mock import MagicMock
 
 from randovania.cli import database
+
 
 def test_export_videos(tmp_path):
     # Setup

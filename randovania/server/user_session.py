@@ -8,11 +8,12 @@ import flask
 import flask_socketio
 import peewee
 from oauthlib.oauth2.rfc6749.errors import InvalidTokenError
+from requests_oauthlib import OAuth2Session
+
 from randovania.network_common.error import InvalidSession, NotAuthorizedForAction, InvalidAction, UserNotAuthorized
 from randovania.server.database import User, GameSessionMembership
 from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
-from requests_oauthlib import OAuth2Session
 
 
 def _create_client_side_session(sio: ServerApp, user: Optional[User]) -> dict:

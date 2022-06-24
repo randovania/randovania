@@ -3,14 +3,13 @@ from __future__ import annotations
 import dataclasses
 import typing
 
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGain
 from randovania.game_description.world.node import NodeContext, Node
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 
 

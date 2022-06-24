@@ -2,8 +2,7 @@ from PySide6 import QtWidgets
 
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.games_help_cavestory_widget_ui import Ui_CaveStoryHelpWidget
-from randovania.gui.generated.games_help_echoes_widget_ui import Ui_EchoesHelpWidget
-from randovania.gui.lib import hints_text, faq_lib
+from randovania.gui.lib import hints_text
 
 
 class CSHelpWidget(QtWidgets.QTabWidget, Ui_CaveStoryHelpWidget):

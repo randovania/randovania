@@ -6,12 +6,12 @@ from typing import List, TypeVar, Callable, Dict, Tuple, Iterator, Optional
 
 from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData
-from randovania.game_description.requirements.requirement_template import RequirementTemplate
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
@@ -204,10 +204,11 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "lock": write_dock_lock(dock_weakness.lock),
     }
 
+
 def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
     def name_or_none(weak: DockWeakness):
         return weak.name if weak is not None else weak
-    
+
     return {
         "unlocked": name_or_none(dock_rando.unlocked),
         "locked": name_or_none(dock_rando.locked),

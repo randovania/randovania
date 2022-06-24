@@ -3,7 +3,6 @@ from typing import Set
 
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet
-from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.resource_node import ResourceNode
 

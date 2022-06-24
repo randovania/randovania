@@ -26,7 +26,7 @@ def test_toggle_immediate_parts(skip_qtbot, preset_manager):
 
     skip_qtbot.mouseClick(tab.immediate_energy_parts_check, QtCore.Qt.LeftButton)
     tab.on_preset_changed(editor.create_custom_preset_with())
-    
+
     configuration = editor.configuration
     assert isinstance(configuration, DreadConfiguration)
     assert configuration.immediate_energy_parts != base_configuration.immediate_energy_parts

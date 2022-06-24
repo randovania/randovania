@@ -1,6 +1,5 @@
 import datetime
 
-import pytest
 from PySide6.QtWidgets import QDialog
 from mock import patch, AsyncMock, MagicMock
 

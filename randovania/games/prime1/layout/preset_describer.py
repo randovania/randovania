@@ -1,5 +1,3 @@
-from attr import attr
-
 from randovania.games.prime1.layout.hint_configuration import PhazonSuitHintMode
 from randovania.games.prime1.layout.prime_configuration import PrimeConfiguration, LayoutCutsceneMode, RoomRandoMode
 from randovania.layout.base.base_configuration import BaseConfiguration
@@ -27,6 +25,7 @@ _PRIME1_ROOM_RANDO_MODE_DESCRIPTION = {
     RoomRandoMode.TWO_WAY: "Two-way Room Rando",
 }
 
+
 class PrimePresetDescriber(GamePresetDescriber):
     def format_params(self, configuration: BaseConfiguration) -> dict[str, list[str]]:
         assert isinstance(configuration, PrimeConfiguration)
@@ -39,9 +38,9 @@ class PrimePresetDescriber(GamePresetDescriber):
         def describe_probability(probability, attribute):
             if probability == 0:
                 return None
-            
-            return "%.1f%% chance of %s" % (probability/10, attribute)
-        
+
+            return "%.1f%% chance of %s" % (probability / 10, attribute)
+
         superheated_probability = describe_probability(configuration.superheated_probability, "superheated")
         submerged_probability = describe_probability(configuration.submerged_probability, "submerged")
 

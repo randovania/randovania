@@ -1,4 +1,3 @@
-import copy
 from distutils.version import StrictVersion
 
 import pytest

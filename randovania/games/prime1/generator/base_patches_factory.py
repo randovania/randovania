@@ -1,4 +1,5 @@
 from random import Random
+
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.world.node_identifier import NodeIdentifier
@@ -9,7 +10,7 @@ from randovania.layout.base.dock_rando_configuration import DockRandoMode
 
 
 class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
-    def create_base_patches(self, 
+    def create_base_patches(self,
                             configuration: BaseConfiguration,
                             rng: Random,
                             game: GameDescription,
@@ -28,7 +29,7 @@ class PrimeBasePatchesFactory(PrimeTrilogyBasePatchesFactory):
             dock_weakness.append(
                 (nic("Chozo Ruins", "Main Plaza", "Door from Plaza Access"), power_weak),
             )
-        
+
         return parent.assign_dock_weakness((
             (game.world_list.node_by_identifier(identifier), target)
             for identifier, target in dock_weakness

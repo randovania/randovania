@@ -128,7 +128,6 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
                  game_description: GameDescription,
                  resource: ResourceInfo,
                  ):
-
         def is_resource(individual: ResourceRequirement):
             return individual.resource == resource
 

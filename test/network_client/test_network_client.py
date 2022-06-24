@@ -2,7 +2,6 @@ from pathlib import Path
 
 import pytest
 import socketio.exceptions
-from frozendict import frozendict
 from mock import MagicMock, AsyncMock, call
 
 from randovania.game_connection.connection_base import GameConnectionStatus, Inventory, InventoryItem
