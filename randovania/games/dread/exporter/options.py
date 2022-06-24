@@ -9,10 +9,10 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 
 @dataclasses.dataclass(frozen=True)
 class DreadPerGameOptions(PerGameOptions):
-    input_directory: Optional[Path] = None
+    input_directory: Path | None = None
     target_platform: DreadModPlatform = DreadModPlatform.RYUJINX
     reduce_mod_size: bool = False
-    output_preference: Optional[str] = None
+    output_preference: str | None = None
 
     @property
     def as_json(self):

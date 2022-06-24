@@ -49,7 +49,7 @@ def check_extracted_game(input_file_edit: QLineEdit, input_file_button: QPushBut
     return prompt_input_file
 
 
-def echoes_input_validator(input_file: Optional[Path], prompt_input_file: bool, input_file_edit: QLineEdit) -> bool:
+def echoes_input_validator(input_file: Path | None, prompt_input_file: bool, input_file_edit: QLineEdit) -> bool:
     if prompt_input_file:
         return is_file_validator(input_file)
     else:
@@ -155,7 +155,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
 
     # Getters
     @property
-    def input_file(self) -> Optional[Path]:
+    def input_file(self) -> Path | None:
         if self._prompt_input_file:
             return Path(self.input_file_edit.text())
 
@@ -164,7 +164,7 @@ class EchoesGameExportDialog(GameExportDialog, Ui_EchoesGameExportDialog):
         return Path(self.output_file_edit.text())
 
     @property
-    def prime_file(self) -> Optional[Path]:
+    def prime_file(self) -> Path | None:
         return Path(self.prime_file_edit.text()) if self.prime_file_edit.text() else None
 
     @property

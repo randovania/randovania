@@ -14,7 +14,7 @@ from randovania.layout.preset import Preset
 
 
 class PresetEditor:
-    _on_changed: Optional[Callable[[], None]] = None
+    _on_changed: Callable[[], None] | None = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
 

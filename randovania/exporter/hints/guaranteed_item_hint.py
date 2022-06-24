@@ -8,8 +8,8 @@ from randovania.interface_common.players_configuration import PlayersConfigurati
 
 
 def find_locations_that_gives_items(
-        target_items: List[ItemResourceInfo],
-        all_patches: Dict[int, GamePatches],
+        target_items: list[ItemResourceInfo],
+        all_patches: dict[int, GamePatches],
         player: int,
 ) -> dict[ItemResourceInfo, list[tuple[int, PickupLocation]]]:
     result: dict[ItemResourceInfo, list[tuple[int, PickupLocation]]] = {item: [] for item in target_items}
@@ -45,8 +45,8 @@ def hint_text_if_items_are_starting(
     return result
 
 
-def create_guaranteed_hints_for_resources(all_patches: Dict[int, GamePatches], players_config: PlayersConfiguration,
-                                          namer: HintNamer, hide_area: bool, items: List[ItemResourceInfo],
+def create_guaranteed_hints_for_resources(all_patches: dict[int, GamePatches], players_config: PlayersConfiguration,
+                                          namer: HintNamer, hide_area: bool, items: list[ItemResourceInfo],
                                           with_color: bool,
                                           ) -> dict[ItemResourceInfo, str]:
     """
@@ -71,7 +71,7 @@ def create_guaranteed_hints_for_resources(all_patches: Dict[int, GamePatches], p
         if resource in resulting_hints:
             continue
 
-        location: Optional[Tuple[int, PickupLocation]] = None
+        location: tuple[int, PickupLocation] | None = None
         for option in locations:
             if option not in used_locations:
                 location = option

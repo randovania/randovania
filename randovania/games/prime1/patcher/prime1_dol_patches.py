@@ -49,7 +49,7 @@ class Prime1DolVersion(BasePrimeDolVersion):
 
 
 def set_artifact_layer_active_patch(addresses: Prime1DolVersion, layer_id: int, active: bool,
-                                    ) -> List[assembler.BaseInstruction]:
+                                    ) -> list[assembler.BaseInstruction]:
     # g_GameState->StateForWorld(0x39F2DE28)->GetLayerState()->SetLayerActive(templeAreaIndex, artifactLayer, true)
     result = []
 

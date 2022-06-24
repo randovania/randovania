@@ -127,7 +127,7 @@ def serialized_data_for_options(data_to_persist: dict) -> dict:
     }
 
 
-def _try_read_file(file_path: Path) -> Optional[str]:
+def _try_read_file(file_path: Path) -> str | None:
     try:
         contents = file_path.read_text("utf-8")
         if contents.strip() == "":

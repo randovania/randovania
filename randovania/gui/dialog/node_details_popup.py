@@ -255,7 +255,7 @@ class NodeDetailsPopup(QtWidgets.QDialog, Ui_NodeDetailsPopup):
             self.dock_connection_area_combo.addItem(area.name, userData=area)
 
     def on_dock_connection_area_combo(self, _):
-        area: Optional[Area] = self.dock_connection_area_combo.currentData()
+        area: Area | None = self.dock_connection_area_combo.currentData()
 
         self.dock_connection_node_combo.clear()
         empty = True

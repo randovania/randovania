@@ -37,12 +37,12 @@ def decode(binary_io: BinaryIO) -> dict:
     return result
 
 
-def decode_file_path(binary_file_path: Path) -> Dict:
+def decode_file_path(binary_file_path: Path) -> dict:
     with binary_file_path.open("rb") as binary_io:
         return decode(binary_io)
 
 
-def encode(original_data: Dict, x: BinaryIO) -> None:
+def encode(original_data: dict, x: BinaryIO) -> None:
     if unknown_keys := [key for key in original_data if key not in _EXPECTED_FIELDS]:
         raise ValueError(f"Unexpected fields in data to be encoded: {unknown_keys}")
 

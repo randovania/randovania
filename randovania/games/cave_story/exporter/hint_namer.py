@@ -70,7 +70,7 @@ class CSHintNamer(HintNamer):
         # TODO
         raise RuntimeError("Not implemented")
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: Optional[str],
+    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
                                    location: PickupLocation, hide_area: bool, with_color: bool) -> str:
         # TODO
         raise RuntimeError("Not implemented")

@@ -78,7 +78,7 @@ class EchoesConfiguration(BaseConfiguration):
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
 
-    def dangerous_settings(self) -> List[str]:
+    def dangerous_settings(self) -> list[str]:
         result = super().dangerous_settings()
 
         if self.dangerous_energy_tank:

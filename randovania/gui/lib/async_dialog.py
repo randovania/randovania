@@ -25,7 +25,7 @@ async def execute_dialog(dialog: QtWidgets.QDialog) -> QtWidgets.QDialog.DialogC
         dialog.finished.disconnect(set_result)
 
 
-async def message_box(parent: Optional[QtWidgets.QWidget],
+async def message_box(parent: QtWidgets.QWidget | None,
                       icon: QtWidgets.QMessageBox.Icon,
                       title: str, text: str,
                       buttons: QtWidgets.QMessageBox.StandardButtons = QtWidgets.QMessageBox.Ok,
@@ -37,7 +37,7 @@ async def message_box(parent: Optional[QtWidgets.QWidget],
     return await execute_dialog(box)
 
 
-async def warning(parent: Optional[QtWidgets.QWidget],
+async def warning(parent: QtWidgets.QWidget | None,
                   title: str, text: str,
                   buttons: QtWidgets.QMessageBox.StandardButtons = QtWidgets.QMessageBox.Ok,
                   default_button: QtWidgets.QMessageBox.StandardButton = QtWidgets.QMessageBox.NoButton,

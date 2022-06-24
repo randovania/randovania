@@ -22,9 +22,9 @@ from randovania.layout.preset import Preset
 
 
 class PresetLocationPool(PresetTab, Ui_PresetLocationPool, AreaListHelper):
-    _starting_location_for_world: Dict[str, QtWidgets.QCheckBox]
-    _starting_location_for_area: Dict[int, QtWidgets.QCheckBox]
-    _row_widget_for_node: Dict[Node, LocationPoolRowWidget]
+    _starting_location_for_world: dict[str, QtWidgets.QCheckBox]
+    _starting_location_for_area: dict[int, QtWidgets.QCheckBox]
+    _row_widget_for_node: dict[Node, LocationPoolRowWidget]
     _during_batch_update: bool
     _major_minor: bool
 

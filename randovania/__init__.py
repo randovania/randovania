@@ -6,7 +6,7 @@ from typing import Optional
 from randovania.version import version
 from randovania.version_hash import git_hash
 
-CONFIGURATION_FILE_PATH: Optional[Path] = None
+CONFIGURATION_FILE_PATH: Path | None = None
 
 
 def is_frozen() -> bool:
@@ -57,7 +57,7 @@ def get_configuration() -> dict:
             raise
 
 
-def setup_logging(default_level: str, log_to_file: Optional[Path]):
+def setup_logging(default_level: str, log_to_file: Path | None):
     import logging.config
     import logging.handlers
     import time

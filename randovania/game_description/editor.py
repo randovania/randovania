@@ -22,7 +22,7 @@ class Editor:
         self.next_node_index += 1
         return result
 
-    def edit_connections(self, area: Area, from_node: Node, target_node: Node, requirement: Optional[Requirement]):
+    def edit_connections(self, area: Area, from_node: Node, target_node: Node, requirement: Requirement | None):
         current_connections = area.connections[from_node]
         area.connections[from_node][target_node] = requirement
         if area.connections[from_node][target_node] is None:

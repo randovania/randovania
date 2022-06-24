@@ -12,7 +12,7 @@ from randovania.layout.preset import Preset
 
 
 class EchoesPresetItemPool(MetroidPresetItemPool):
-    _split_ammo_widgets: List[SplitAmmoWidget]
+    _split_ammo_widgets: list[SplitAmmoWidget]
 
     def __init__(self, editor: PresetEditor):
         super().__init__(editor)

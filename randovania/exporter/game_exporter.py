@@ -7,7 +7,7 @@ from randovania.lib import status_update_lib
 
 @dataclasses.dataclass(frozen=True)
 class GameExportParams:
-    spoiler_output: Optional[Path]
+    spoiler_output: Path | None
 
 
 class GameExporter:

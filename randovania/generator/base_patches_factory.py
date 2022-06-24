@@ -19,7 +19,7 @@ class MissingRng(Exception):
     pass
 
 
-HintTargetPrecision = Tuple[PickupIndex, HintLocationPrecision, HintItemPrecision]
+HintTargetPrecision = tuple[PickupIndex, HintLocationPrecision, HintItemPrecision]
 
 
 class BasePatchesFactory:

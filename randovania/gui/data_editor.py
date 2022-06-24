@@ -46,15 +46,15 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
 
     edit_mode: bool
     selected_node_button: QRadioButton = None
-    radio_button_to_node: Dict[QRadioButton, Node]
-    _area_with_displayed_connections: Optional[Area] = None
-    _previous_selected_node: Optional[Node] = None
-    _connections_visualizer: Optional[ConnectionsVisualizer] = None
-    _edit_popup: Optional[QDialog] = None
+    radio_button_to_node: dict[QRadioButton, Node]
+    _area_with_displayed_connections: Area | None = None
+    _previous_selected_node: Node | None = None
+    _connections_visualizer: ConnectionsVisualizer | None = None
+    _edit_popup: QDialog | None = None
     _warning_dialogs_disabled = False
-    _collection_for_filtering: Optional[ResourceCollection] = None
+    _collection_for_filtering: ResourceCollection | None = None
 
-    def __init__(self, data: dict, data_path: Optional[Path], is_internal: bool, edit_mode: bool):
+    def __init__(self, data: dict, data_path: Path | None, is_internal: bool, edit_mode: bool):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)
@@ -240,7 +240,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         w.extra["map_max_y"] = self.spin_max_y.value()
         self.area_view_canvas.select_world(w)
 
-    def on_select_area(self, select_node: Optional[Node] = None):
+    def on_select_area(self, select_node: Node | None = None):
         for node in self.radio_button_to_node.keys():
             node.deleteLater()
 
@@ -613,7 +613,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             dataclasses.replace(node, location=location)
         )
 
-    def _create_new_node(self, location: Optional[NodeLocation]):
+    def _create_new_node(self, location: NodeLocation | None):
         node_name, did_confirm = QInputDialog.getText(self, "New Node", "Insert node name:")
         if not did_confirm or node_name == "":
             return
@@ -622,7 +622,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
             if not self._warning_dialogs_disabled:
                 QMessageBox.warning(self,
                                     "New Node",
-                                    "A node named '{}' already exists.".format(node_name))
+                                    f"A node named '{node_name}' already exists.")
             return
 
         self._do_create_node(node_name, location)
@@ -633,7 +633,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
     def _create_identifier(self, node_name: str):
         return NodeIdentifier.create(self.current_world.name, self.current_area.name, node_name)
 
-    def _do_create_node(self, node_name: str, location: Optional[NodeLocation]):
+    def _do_create_node(self, node_name: str, location: NodeLocation | None):
         new_node = GenericNode(self._create_identifier(node_name), self.editor.new_node_index(),
                                False, location, "", ("default",), {})
         self.editor.add_node(self.current_area, new_node)
@@ -716,7 +716,7 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         user_response = QMessageBox.warning(
             self,
             "Delete Node",
-            "Are you sure you want to delete the node '{}'?".format(current_node.name),
+            f"Are you sure you want to delete the node '{current_node.name}'?",
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No
         )
@@ -778,9 +778,9 @@ class DataEditorWindow(QMainWindow, Ui_DataEditorWindow):
         return self.area_selector_box.currentData()
 
     @property
-    def current_node(self) -> Optional[Node]:
+    def current_node(self) -> Node | None:
         return self.radio_button_to_node.get(self.selected_node_button)
 
     @property
-    def current_connection_node(self) -> Optional[Node]:
+    def current_connection_node(self) -> Node | None:
         return self.other_node_connection_combo.currentData()

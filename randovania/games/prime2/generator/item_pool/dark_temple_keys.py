@@ -12,7 +12,7 @@ def add_dark_temple_keys(resource_database: ResourceDatabase,
     :param resource_database:
     :return:
     """
-    item_pool: List[PickupEntry] = []
+    item_pool: list[PickupEntry] = []
 
     for temple_index in range(3):
         for i in range(3):

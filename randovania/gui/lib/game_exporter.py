@@ -18,7 +18,7 @@ async def export_game(
         exporter: GameExporter,
         export_dialog: GameExportDialog,
         patch_data: dict,
-        layout_for_spoiler: Optional[LayoutDescription],
+        layout_for_spoiler: LayoutDescription | None,
         background: BackgroundTaskMixin,
         progress_update_signal: Signal(str, int),
 ):

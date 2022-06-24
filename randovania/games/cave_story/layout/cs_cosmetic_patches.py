@@ -24,7 +24,7 @@ class MyChar(BitPackEnum, Enum):
     RANDOM = "Random"
     CUSTOM = "Custom"
 
-    def mychar_bmp(self, rng: Random) -> Optional[Path]:
+    def mychar_bmp(self, rng: Random) -> Path | None:
         if self == MyChar.CUSTOM:
             return None
         if self == MyChar.RANDOM:
@@ -39,7 +39,7 @@ class MyChar(BitPackEnum, Enum):
         return RandovaniaGame.CAVE_STORY.data_path.joinpath(f"assets/icon/{self.value}.png")
 
     @property
-    def description(self) -> Optional[str]:
+    def description(self) -> str | None:
         if self == MyChar.RANDOM:
             return "Select a random MyChar for each seed."
         if self == MyChar.CUSTOM:

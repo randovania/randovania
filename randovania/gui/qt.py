@@ -337,7 +337,7 @@ def run(args):
     app = QtWidgets.QApplication(sys.argv)
 
     def main_done(done: asyncio.Task):
-        e: typing.Optional[Exception] = done.exception()
+        e: Exception | None = done.exception()
         if e is not None:
             display_exception(e)
             app.exit(1)

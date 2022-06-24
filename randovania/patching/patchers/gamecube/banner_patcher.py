@@ -4,11 +4,11 @@ from pathlib import Path
 def patch_game_name_and_id(game_files_path: Path, new_name: str, publisher_id: str):
     b = new_name.encode("ASCII")
     if len(b) > 40:
-        raise ValueError("Name '{}' is bigger than 40 bytes".format(new_name))
+        raise ValueError(f"Name '{new_name}' is bigger than 40 bytes")
 
     pid = publisher_id.encode("ASCII")
     if len(pid) != 2:
-        raise ValueError("Publisher ID '{}' is not exactly 2 bytes".format(publisher_id))
+        raise ValueError(f"Publisher ID '{publisher_id}' is not exactly 2 bytes")
 
     with game_files_path.joinpath("sys", "boot.bin").open("r+b") as boot_bin:
         boot_bin.seek(0x4)

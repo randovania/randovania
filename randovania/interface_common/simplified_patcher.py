@@ -12,7 +12,7 @@ export_busy = False
 def generate_layout(options: Options,
                     parameters: GeneratorParameters,
                     progress_update: ProgressUpdateCallable,
-                    retries: Optional[int] = None,
+                    retries: int | None = None,
                     ) -> LayoutDescription:
     """
     Creates a LayoutDescription for the configured permalink

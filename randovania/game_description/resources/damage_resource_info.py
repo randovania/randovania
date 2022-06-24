@@ -4,5 +4,5 @@ from randovania.game_description.resources.item_resource_info import ItemResourc
 
 
 class DamageReduction(NamedTuple):
-    inventory_item: Optional[ItemResourceInfo]
+    inventory_item: ItemResourceInfo | None
     damage_multiplier: float

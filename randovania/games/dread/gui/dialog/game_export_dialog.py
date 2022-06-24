@@ -33,13 +33,13 @@ def supports_ryujinx() -> bool:
     return platform.system() in {"Windows"}
 
 
-def serialize_path(path: Optional[Path]) -> Optional[str]:
+def serialize_path(path: Path | None) -> str | None:
     if path is None:
         return None
     return str(path)
 
 
-def decode_path(s: Optional[str]) -> Optional[Path]:
+def decode_path(s: str | None) -> Path | None:
     if s is None:
         return None
     return Path(s)

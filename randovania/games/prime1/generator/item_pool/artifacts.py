@@ -17,7 +17,7 @@ def add_artifacts(resource_database: ResourceDatabase,
     :param artifact_minimum_progression
     :return:
     """
-    item_pool: List[PickupEntry] = []
+    item_pool: list[PickupEntry] = []
     initial_resources = ResourceCollection.with_database(resource_database)
 
     artifacts_to_place = mode.value

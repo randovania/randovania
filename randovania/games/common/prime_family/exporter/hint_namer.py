@@ -86,7 +86,7 @@ class PrimeFamilyHintNamer(HintNamer):
             colorize_text(self.color_item, resource.long_name, with_color)
         )
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: Optional[str],
+    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
                                    location: PickupLocation, hide_area: bool, with_color: bool) -> str:
         determiner = ""
         if player_name is not None:

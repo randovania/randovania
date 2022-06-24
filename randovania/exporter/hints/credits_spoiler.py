@@ -10,7 +10,7 @@ from randovania.layout.base.major_items_configuration import MajorItemsConfigura
 
 
 class OwnedPickupLocation(NamedTuple):
-    player_name: Optional[str]
+    player_name: str | None
     location: PickupLocation
 
     def export(self, namer: HintNamer) -> str:
@@ -21,7 +21,7 @@ class OwnedPickupLocation(NamedTuple):
 
 
 def get_locations_for_major_pickups_and_keys(
-        all_patches: Dict[int, GamePatches],
+        all_patches: dict[int, GamePatches],
         players_config: PlayersConfiguration,
 ) -> dict[PickupEntry, list[OwnedPickupLocation]]:
     results: dict[PickupEntry, list[OwnedPickupLocation]] = collections.defaultdict(list)
@@ -46,7 +46,7 @@ def get_locations_for_major_pickups_and_keys(
 
 def prime_trilogy_credits(
         major_items_configuration: MajorItemsConfiguration,
-        all_patches: Dict[int, GamePatches],
+        all_patches: dict[int, GamePatches],
         players_config: PlayersConfiguration,
         namer: HintNamer,
         title: str,

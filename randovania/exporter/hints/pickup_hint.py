@@ -34,7 +34,7 @@ _DET_NULL.extend(f"Sky Temple Key {i}" for i in range(1, 10))
 @dataclasses.dataclass(frozen=True)
 class PickupHint:
     determiner: Determiner
-    player_name: Optional[str]
+    player_name: str | None
     pickup_name: str
 
 
@@ -63,7 +63,7 @@ def _calculate_determiner(pickup_assignment: PickupAssignment, pickup: PickupEnt
 def create_pickup_hint(pickup_assignment: PickupAssignment,
                        world_list: WorldList,
                        precision: HintItemPrecision,
-                       target: Optional[PickupTarget],
+                       target: PickupTarget | None,
                        players_config: PlayersConfiguration,
                        include_owner: bool,
                        ) -> PickupHint:

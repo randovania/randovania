@@ -113,7 +113,7 @@ def apply_game_options_patch(game_options_constructor_offset: int, user_preferen
     dol_file.write_instructions(game_options_constructor_offset + 8 * 4, patch)
 
 
-def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: List[Tuple[int, int]]):
+def _is_out_of_ammo_patch(symbols: Dict[str, int], ammo_types: list[Tuple[int, int]]):
     def get_beam_ammo_amount(index: int):
         label = f"_after_get_ammo_type_{index}"
 

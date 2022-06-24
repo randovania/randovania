@@ -12,7 +12,7 @@ class CustomDiscordOAuth2Session(flask_discord.DiscordOAuth2Session):
 
     def create_session(
             self, scope: list = None, *, data: dict = None, prompt: bool = True,
-            permissions: typing.Union[types.Permissions, int] = 0, **params
+            permissions: types.Permissions | int = 0, **params
     ):
         return super().create_session(self.scope, data=data, prompt=prompt, permissions=permissions, **params)
 

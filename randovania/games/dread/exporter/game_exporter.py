@@ -22,7 +22,7 @@ class DreadGameExportParams(GameExportParams):
     target_platform: DreadModPlatform
     use_exlaunch: bool
     clean_output_path: bool
-    post_export: Optional[Callable[[status_update_lib.ProgressUpdateCallable], None]]
+    post_export: Callable[[status_update_lib.ProgressUpdateCallable], None] | None
 
 
 class DreadGameExporter(GameExporter):

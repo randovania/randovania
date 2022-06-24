@@ -38,10 +38,10 @@ _LORE_TYPE_LONG_NAME = {
 @dataclasses.dataclass(frozen=True, slots=True)
 class LogbookNode(ResourceNode):
     string_asset_id: int
-    scan_visor: Optional[ItemResourceInfo]
+    scan_visor: ItemResourceInfo | None
     lore_type: LoreType
-    required_translator: Optional[ItemResourceInfo]
-    hint_index: Optional[int]
+    required_translator: ItemResourceInfo | None
+    hint_index: int | None
 
     def __repr__(self):
         extra = None

@@ -40,7 +40,7 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
                 if model.game == RandovaniaGame.METROID_PRIME:
                     converted_model_name = model.name
                 else:
-                    converted_model_name = "{}_{}".format(model.game.value, model.name)
+                    converted_model_name = f"{model.game.value}_{model.name}"
                     if converted_model_name not in model_list:
                         converted_model_name = _MODEL_MAPPING.get((model.game, model.name), "Nothing")
 

@@ -26,7 +26,7 @@ def generate_description(parameters: GeneratorParameters,
                          status_update: Callable[[str], None],
                          validate_after_generation: bool,
                          timeout_during_generation: bool,
-                         attempts: Optional[int],
+                         attempts: int | None,
                          ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 

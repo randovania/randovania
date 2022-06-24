@@ -22,7 +22,7 @@ class MultiFormatOutputMixin:
             self._selected_output_format,
         )
 
-    def setup_multi_format(self, output_format: Optional[str]):
+    def setup_multi_format(self, output_format: str | None):
         if output_format is not None:
             self._selected_output_format = output_format
         else:

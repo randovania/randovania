@@ -122,8 +122,8 @@ async def _query_server(race_url) -> dict:
 
 
 class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
-    races: List[RaceEntry]
-    permalink: Optional[Permalink] = None
+    races: list[RaceEntry]
+    permalink: Permalink | None = None
 
     def __init__(self):
         super().__init__()

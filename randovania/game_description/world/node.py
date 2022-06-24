@@ -41,12 +41,12 @@ class Node:
     identifier: NodeIdentifier
     node_index: NodeIndex = dataclasses.field(hash=False, compare=False)
     heal: bool
-    location: Optional[NodeLocation]
+    location: NodeLocation | None
     description: str
     layers: tuple[str, ...]
     extra: dict[str, typing.Any]
 
-    def __lt__(self, other: "Node"):
+    def __lt__(self, other: Node):
         return self.identifier < other.identifier
 
     def __hash__(self):

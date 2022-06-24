@@ -37,7 +37,7 @@ class LayoutTrickLevel(BitPackEnum, Enum):
         return self.as_number > LayoutTrickLevel.DISABLED.as_number
 
 
-_TRICK_LEVEL_ORDER: List[LayoutTrickLevel] = list(LayoutTrickLevel)
+_TRICK_LEVEL_ORDER: list[LayoutTrickLevel] = list(LayoutTrickLevel)
 _PRETTY_TRICK_LEVEL_NAME = {
     LayoutTrickLevel.DISABLED: "Disabled",
     LayoutTrickLevel.BEGINNER: "Beginner",

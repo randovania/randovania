@@ -4,7 +4,7 @@ from typing import Iterable, List, Dict
 from randovania.dol_patching.assembler.ppc import Instruction, BaseInstruction
 
 
-def assemble_instructions(address: int, instructions: List[BaseInstruction], symbols: Dict[str, int] = None) -> \
+def assemble_instructions(address: int, instructions: list[BaseInstruction], symbols: dict[str, int] = None) -> \
         Iterable[int]:
     if symbols is not None:
         symbols = copy.copy(symbols)

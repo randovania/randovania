@@ -16,7 +16,7 @@ from randovania.game_description.resources.resource_type import ResourceType
 
 def _create_resource_name_combo(resource_database: ResourceDatabase,
                                 resource_type: ResourceType,
-                                current_resource: Optional[ResourceInfo],
+                                current_resource: ResourceInfo | None,
                                 parent: QWidget,
                                 ) -> QComboBox:
     """
@@ -61,7 +61,7 @@ class ItemRow:
     def __init__(self,
                  parent: QWidget, parent_layout: QVBoxLayout,
                  resource_database: ResourceDatabase, item: ResourceRequirement,
-                 rows: List["ItemRow"]
+                 rows: list["ItemRow"]
                  ):
         self.parent = parent
         self.resource_database = resource_database
@@ -139,7 +139,7 @@ class ConnectionsVisualizer:
     parent: QWidget
     resource_database: ResourceDatabase
     grid_layout: QGridLayout
-    _elements: List[QWidget]
+    _elements: list[QWidget]
 
     def __init__(self,
                  parent: QWidget,
@@ -159,7 +159,7 @@ class ConnectionsVisualizer:
     def _add_widget_for_requirement_array(self, requirement: Requirement):
         self.grid_layout.setAlignment(Qt.AlignTop)
 
-        parents: List[Tuple[QGroupBox, QVBoxLayout]] = [(self.parent, self.grid_layout)]
+        parents: list[tuple[QGroupBox, QVBoxLayout]] = [(self.parent, self.grid_layout)]
 
         for depth, text in randovania.game_description.pretty_print.pretty_print_requirement(requirement):
             if "of the following" in text:

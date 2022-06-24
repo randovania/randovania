@@ -10,7 +10,7 @@ from randovania.layout.preset import Preset
 
 
 class WindowManager(QMainWindow):
-    tracked_windows: List[CloseEventWidget]
+    tracked_windows: list[CloseEventWidget]
 
     def __init__(self):
         super().__init__()
@@ -23,7 +23,7 @@ class WindowManager(QMainWindow):
     async def open_map_tracker(self, configuration: Preset):
         raise NotImplemented()
 
-    def open_data_visualizer_at(self, world_name: Optional[str], area_name: Optional[str],
+    def open_data_visualizer_at(self, world_name: str | None, area_name: str | None,
                                 game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES):
         raise NotImplemented()
 

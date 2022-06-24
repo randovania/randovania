@@ -19,7 +19,7 @@ def dark_world_flags(world: World):
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
-    _tabs: List[PresetTab]
+    _tabs: list[PresetTab]
     _editor: PresetEditor
 
     # _updated_tabs: set[PresetTab]

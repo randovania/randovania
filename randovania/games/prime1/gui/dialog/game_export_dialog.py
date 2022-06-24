@@ -125,7 +125,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         return Path(self.output_file_edit.text())
 
     @property
-    def echoes_file(self) -> Optional[Path]:
+    def echoes_file(self) -> Path | None:
         if self._use_echoes_models:
             return Path(self.echoes_file_edit.text())
 

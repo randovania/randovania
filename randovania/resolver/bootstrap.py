@@ -163,7 +163,7 @@ class Bootstrap:
                         configuration: BaseConfiguration,
                         game: GameDescription,
                         patches: GamePatches,
-                        ) -> Tuple[GameDescription, State]:
+                        ) -> tuple[GameDescription, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:

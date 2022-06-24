@@ -32,9 +32,9 @@ class GenerationFailureHandler(QtWidgets.QWidget):
         if isinstance(exception.source, UnableToGenerate):
             box.label.setTextInteractionFlags(QtCore.Qt.TextSelectableByMouse)
             box.setText(
-                "{0}\n\nClick 'Show Details' to see a report of where the failure occurred.\n"
+                "{}\n\nClick 'Show Details' to see a report of where the failure occurred.\n"
                 "Double check if your settings aren't impossible, or try again.\n\n"
-                "Details: {1}".format(
+                "Details: {}".format(
                     box.text(),
                     exception.source
                 ))

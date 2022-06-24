@@ -41,14 +41,14 @@ def _calculate_dangerous_resources_in_areas(
 @dataclasses.dataclass(frozen=True)
 class IndexWithReason:
     name: str
-    reason: Optional[str]
+    reason: str | None
 
 
 @dataclasses.dataclass(frozen=True)
 class MinimalLogicData:
-    items_to_exclude: List[IndexWithReason]
-    custom_item_amount: Dict[str, int]
-    events_to_exclude: List[IndexWithReason]
+    items_to_exclude: list[IndexWithReason]
+    custom_item_amount: dict[str, int]
+    events_to_exclude: list[IndexWithReason]
     description: str
 
 
@@ -60,9 +60,9 @@ class GameDescription:
     layers: tuple[str, ...]
     victory_condition: Requirement
     starting_location: AreaIdentifier
-    initial_states: Dict[str, ResourceGainTuple]
-    minimal_logic: Optional[MinimalLogicData]
-    _dangerous_resources: Optional[FrozenSet[ResourceInfo]] = None
+    initial_states: dict[str, ResourceGainTuple]
+    minimal_logic: MinimalLogicData | None
+    _dangerous_resources: frozenset[ResourceInfo] | None = None
     world_list: WorldList
     mutable: bool = False
 
@@ -89,8 +89,8 @@ class GameDescription:
                  layers: tuple[str, ...],
                  victory_condition: Requirement,
                  starting_location: AreaIdentifier,
-                 initial_states: Dict[str, ResourceGainTuple],
-                 minimal_logic: Optional[MinimalLogicData],
+                 initial_states: dict[str, ResourceGainTuple],
+                 minimal_logic: MinimalLogicData | None,
                  world_list: WorldList,
                  ):
         self.game = game
@@ -121,7 +121,7 @@ class GameDescription:
         }
 
     @property
-    def dangerous_resources(self) -> FrozenSet[ResourceInfo]:
+    def dangerous_resources(self) -> frozenset[ResourceInfo]:
         if self._dangerous_resources is None:
             first = _calculate_dangerous_resources_in_areas(self.world_list, self.resource_database)
             second = _calculate_dangerous_resources_in_db(
@@ -163,7 +163,7 @@ def _resources_for_damage(resource: SimpleResourceInfo, database: ResourceDataba
 def calculate_interesting_resources(satisfiable_requirements: SatisfiableRequirements,
                                     resources: ResourceCollection,
                                     energy: int,
-                                    database: ResourceDatabase) -> FrozenSet[ResourceInfo]:
+                                    database: ResourceDatabase) -> frozenset[ResourceInfo]:
     """A resource is considered interesting if it isn't satisfied and it belongs to any satisfiable RequirementList """
 
     def helper():

@@ -19,7 +19,7 @@ class PresetPrimeGeneration(PresetGeneration):
         super().__init__(editor, game_description)
 
     @property
-    def game_specific_widgets(self) -> Optional[Iterable[QWidget]]:
+    def game_specific_widgets(self) -> Iterable[QWidget] | None:
         yield self.min_progression_label
         yield self.min_progression_spin
 

@@ -72,7 +72,7 @@ class ResourceRequirement(Requirement):
         if self.amount == 1:
             negated_prefix = self.resource.resource_type.negated_prefix
             non_negated_prefix = self.resource.resource_type.non_negated_prefix
-            return "{}{}".format(negated_prefix if self.negate else non_negated_prefix, self.resource)
+            return f"{negated_prefix if self.negate else non_negated_prefix}{self.resource}"
         else:
             return str(self)
 

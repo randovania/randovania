@@ -69,12 +69,12 @@ def _get_vanilla_translator_configuration(extra_field: str) -> dict[NodeIdentifi
     }
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def _get_vanilla_actual_translator_configurations() -> dict[NodeIdentifier, LayoutTranslatorRequirement]:
     return _get_vanilla_translator_configuration("vanilla_actual")
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def _get_vanilla_colors_translator_configurations() -> dict[NodeIdentifier, LayoutTranslatorRequirement]:
     return _get_vanilla_translator_configuration("vanilla_color")
 
@@ -86,7 +86,7 @@ class TranslatorConfiguration(BitPackValue):
     fixed_torvus_temple: bool = True
     fixed_great_temple: bool = True
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         templates = [
             _get_vanilla_actual_translator_configurations(),
             _get_vanilla_colors_translator_configurations(),

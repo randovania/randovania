@@ -11,7 +11,7 @@ class FillerConfiguration:
     randomization_mode: RandomizationMode
     minimum_random_starting_items: int
     maximum_random_starting_items: int
-    indices_to_exclude: FrozenSet[PickupIndex]
+    indices_to_exclude: frozenset[PickupIndex]
     multi_pickup_placement: bool
     multi_pickup_new_weighting: bool
     logical_resource_action: LayoutLogicalResourceAction
