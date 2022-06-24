@@ -212,7 +212,7 @@ def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, d
 
 
 def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
-                                 instructions: list[BaseInstruction]) -> Tuple[int, bytes]:
+                                 instructions: list[BaseInstruction]) -> tuple[int, bytes]:
     """
     Return the address and the bytes for executing the given instructions via remote code execution.
     """

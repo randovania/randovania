@@ -474,7 +474,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 deadman_count -= 1
                                 if deadman_count == 0:
                                     raise Exception(
-                                        "Failed to find suitible destination for {}:{}".format(area.name, dock_num))
+                                        f"Failed to find suitible destination for {area.name}:{dock_num}")
 
                                 dst_name = self.rng.choice(world.areas).name
                                 dst_dock = None

@@ -39,7 +39,7 @@ class PrimePresetDescriber(GamePresetDescriber):
             if probability == 0:
                 return None
 
-            return "{:.1f}% chance of {}".format(probability / 10, attribute)
+            return f"{probability / 10:.1f}% chance of {attribute}"
 
         superheated_probability = describe_probability(configuration.superheated_probability, "superheated")
         submerged_probability = describe_probability(configuration.submerged_probability, "submerged")
