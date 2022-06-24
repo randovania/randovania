@@ -2,7 +2,7 @@ import asyncio
 import json
 import logging
 from pathlib import Path
-from typing import Set, Optional, AsyncContextManager
+from typing import AsyncContextManager
 
 import pid
 from PySide6.QtCore import QObject, Signal

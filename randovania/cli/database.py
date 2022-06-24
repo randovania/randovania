@@ -5,7 +5,7 @@ import logging
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
-from typing import Dict, BinaryIO, Optional, TextIO, List, Any
+from typing import BinaryIO, TextIO, Any
 
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_info import ResourceInfo

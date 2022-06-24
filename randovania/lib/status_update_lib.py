@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import Callable
 
 ProgressUpdateCallable = Callable[[str, float], None]
 

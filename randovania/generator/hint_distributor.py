@@ -2,7 +2,7 @@ import copy
 import dataclasses
 from abc import ABC
 from random import Random
-from typing import Iterator, Union, Optional, Callable
+from typing import Iterator, Optional, Callable
 
 from randovania.game_description import node_search
 from randovania.game_description.game_description import GameDescription

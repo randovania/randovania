@@ -1,5 +1,3 @@
-from typing import Dict
-
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.game_description import default_database

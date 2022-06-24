@@ -2,7 +2,7 @@ import asyncio
 import dataclasses
 import time
 from random import Random
-from typing import Callable, Tuple
+from typing import Callable
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription

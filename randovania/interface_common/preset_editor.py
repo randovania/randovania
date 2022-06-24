@@ -1,6 +1,6 @@
 import dataclasses
 import uuid
-from typing import Optional, Callable
+from typing import Callable
 
 from randovania.games.game import RandovaniaGame
 from randovania.layout.base.ammo_configuration import AmmoConfiguration

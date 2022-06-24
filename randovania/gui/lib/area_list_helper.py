@@ -1,5 +1,5 @@
 import functools
-from typing import List, Callable, Dict
+from typing import Callable
 
 from PySide6 import QtWidgets, QtCore
 

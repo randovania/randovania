@@ -1,7 +1,7 @@
 """Classes that describes the raw data of a game world."""
 import copy
 import dataclasses
-from typing import Iterator, FrozenSet, Dict, Optional, List
+from typing import Iterator
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_list import SatisfiableRequirements

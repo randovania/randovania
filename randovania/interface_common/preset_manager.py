@@ -4,7 +4,7 @@ import os
 import typing
 import uuid
 from pathlib import Path
-from typing import List, Optional, Iterator, Dict
+from typing import Iterator
 
 import dulwich.porcelain
 import dulwich.repo

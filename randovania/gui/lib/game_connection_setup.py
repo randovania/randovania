@@ -1,5 +1,3 @@
-from typing import Optional
-
 import wiiload
 from PySide6 import QtWidgets, QtGui
 from qasync import asyncSlot

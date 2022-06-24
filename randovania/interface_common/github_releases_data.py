@@ -2,7 +2,6 @@ import datetime
 import json
 import logging
 from pathlib import Path
-from typing import Optional, List
 
 import aiofiles
 import aiohttp

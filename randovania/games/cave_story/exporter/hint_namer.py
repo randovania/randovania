@@ -1,5 +1,3 @@
-from typing import Optional
-
 from randovania.exporter.hints.hint_formatters import TemplatedFormatter, RelativeAreaFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.pickup_hint import PickupHint

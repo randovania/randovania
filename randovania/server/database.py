@@ -1,7 +1,7 @@
 import datetime
 import functools
 import json
-from typing import Iterator, List, Optional, Callable, Any
+from typing import Iterator, Callable, Any
 
 import peewee
 

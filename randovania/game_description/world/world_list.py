@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 import typing
-from typing import List, Iterator, Tuple, Iterable, Optional, Type
+from typing import Iterator, Iterable
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement

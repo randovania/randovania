@@ -1,6 +1,5 @@
 import dataclasses
 import datetime
-from typing import List, Optional
 
 import aiohttp
 from PySide6.QtCore import Qt

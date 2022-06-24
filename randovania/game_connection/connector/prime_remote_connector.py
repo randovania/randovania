@@ -1,7 +1,6 @@
 import dataclasses
 import logging
 import struct
-from typing import List, Tuple, Set, Optional
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory

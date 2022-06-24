@@ -1,5 +1,4 @@
 from random import Random
-from typing import Dict
 
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter

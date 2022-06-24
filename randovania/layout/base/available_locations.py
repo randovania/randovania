@@ -1,6 +1,6 @@
 import dataclasses
 from enum import Enum
-from typing import Tuple, Iterator, FrozenSet, List
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum

@@ -5,7 +5,7 @@ import random
 import uuid
 from functools import partial
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Callable
 
 from PySide6 import QtWidgets, QtCore, QtGui
 from PySide6.QtCore import QTimer

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, TypeVar, Type, Callable
+from typing import TypeVar, Callable
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox

@@ -1,5 +1,3 @@
-from typing import List
-
 from PySide6 import QtWidgets
 
 from randovania.game_description.world.world import World

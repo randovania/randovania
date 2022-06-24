@@ -1,6 +1,5 @@
 import dataclasses
 from enum import Enum
-from typing import Optional
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd

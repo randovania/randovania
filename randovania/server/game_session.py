@@ -3,7 +3,6 @@ import hashlib
 import json
 import logging
 import typing
-from typing import Optional, List, Tuple
 
 import construct
 import flask

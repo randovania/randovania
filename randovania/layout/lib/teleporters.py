@@ -1,6 +1,5 @@
 import dataclasses
 from enum import Enum
-from typing import Dict, List
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass

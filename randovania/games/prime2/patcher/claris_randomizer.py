@@ -2,7 +2,7 @@ import json
 import logging
 import shutil
 from pathlib import Path
-from typing import Callable, List, Union
+from typing import Callable
 
 from randovania import get_data_path
 from randovania.games.prime2.patcher import csharp_subprocess, echoes_dol_patcher

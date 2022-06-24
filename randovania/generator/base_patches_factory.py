@@ -1,5 +1,5 @@
 from random import Random
-from typing import Tuple, Iterator
+from typing import Iterator
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.game_description import GameDescription

@@ -1,5 +1,4 @@
 import typing
-from typing import Optional, List, Union
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt

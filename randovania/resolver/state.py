@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Optional, Tuple, Iterator
+from typing import Optional, Iterator
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo

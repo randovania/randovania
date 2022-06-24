@@ -1,4 +1,4 @@
-from typing import TypeVar, List
+from typing import TypeVar
 
 from randovania.game_description.resources.resource_type import ResourceType
 

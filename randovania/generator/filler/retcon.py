@@ -4,8 +4,7 @@ import math
 import pprint
 from random import Random
 from typing import (
-    AbstractSet, Mapping, FrozenSet, Callable, Optional,
-)
+    AbstractSet, Mapping, Callable, )
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription

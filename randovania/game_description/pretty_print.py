@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Iterator, Tuple, TextIO
+from typing import Iterator, TextIO
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase

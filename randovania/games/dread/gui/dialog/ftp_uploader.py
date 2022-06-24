@@ -3,7 +3,7 @@ import ftplib
 from contextlib import contextmanager
 from ftplib import FTP
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Callable
 
 from randovania.lib import status_update_lib
 

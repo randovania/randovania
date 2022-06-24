@@ -1,6 +1,5 @@
 from distutils.version import StrictVersion
 from enum import Enum
-from typing import Dict
 
 import randovania
 

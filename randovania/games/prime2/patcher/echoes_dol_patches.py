@@ -1,7 +1,6 @@
 import dataclasses
 import struct
 from enum import Enum
-from typing import List
 
 from randovania.dol_patching.assembler import custom_ppc
 from randovania.dol_patching.assembler.ppc import *

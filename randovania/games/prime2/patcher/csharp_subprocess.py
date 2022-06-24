@@ -3,7 +3,7 @@ import platform
 import re
 from asyncio import StreamWriter, StreamReader, IncompleteReadError
 from pathlib import Path
-from typing import Callable, List, Optional
+from typing import Callable
 
 IO_LOOP: asyncio.AbstractEventLoop | None = None
 

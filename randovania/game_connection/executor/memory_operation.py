@@ -1,6 +1,5 @@
 import dataclasses
 import logging
-from typing import Optional, List, Dict
 
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 

@@ -1,7 +1,6 @@
 import collections
 import dataclasses
 from functools import partial
-from typing import Dict, Tuple, List
 
 from PySide6 import QtWidgets, QtCore
 

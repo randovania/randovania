@@ -1,6 +1,6 @@
 import copy
 from dataclasses import dataclass
-from typing import Dict, Iterator, Tuple
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database

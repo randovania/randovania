@@ -1,5 +1,5 @@
 import re
-from typing import Iterator, Dict
+from typing import Iterator
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QWidget

@@ -1,6 +1,5 @@
 import re
 import typing
-from typing import Dict
 
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame

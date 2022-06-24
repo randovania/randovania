@@ -1,5 +1,5 @@
 import copy
-from typing import Iterable, List, Dict
+from typing import Iterable
 
 from randovania.dol_patching.assembler.ppc import Instruction, BaseInstruction
 

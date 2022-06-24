@@ -1,4 +1,4 @@
-from typing import NamedTuple, Tuple
+from typing import NamedTuple
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription

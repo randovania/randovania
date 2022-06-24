@@ -1,5 +1,3 @@
-from typing import Dict, Optional
-
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area

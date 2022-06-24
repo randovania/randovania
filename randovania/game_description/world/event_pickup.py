@@ -1,5 +1,4 @@
 import dataclasses
-from typing import Tuple, List
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement

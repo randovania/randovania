@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional, Callable, Awaitable, List, NamedTuple, Dict, Tuple
+from typing import Callable, Awaitable, NamedTuple
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.pickup_entry import PickupEntry

@@ -6,7 +6,7 @@ from enum import Enum
 from functools import cached_property
 from pathlib import Path
 from random import Random
-from typing import Callable, Iterable, Optional, Type
+from typing import Callable, Iterable
 
 import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum

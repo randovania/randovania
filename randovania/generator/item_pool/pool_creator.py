@@ -1,5 +1,4 @@
 from random import Random
-from typing import Tuple
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase

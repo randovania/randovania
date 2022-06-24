@@ -1,6 +1,5 @@
 import dataclasses
 from pathlib import Path
-from typing import Optional
 
 from randovania.games.dread.exporter.game_exporter import DreadModPlatform
 from randovania.games.game import RandovaniaGame

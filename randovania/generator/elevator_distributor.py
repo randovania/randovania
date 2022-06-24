@@ -1,7 +1,7 @@
 import copy
 from collections import defaultdict
 from random import Random
-from typing import List, Dict, Optional, Tuple
+from typing import Optional
 
 from randovania.game_description.game_patches import ElevatorConnection
 from randovania.game_description.world.area_identifier import AreaIdentifier

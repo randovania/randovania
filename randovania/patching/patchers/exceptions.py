@@ -1,5 +1,4 @@
 import traceback
-from typing import Optional
 
 
 class ExportFailure(Exception):

@@ -1,6 +1,6 @@
 import dataclasses
 from random import Random
-from typing import Dict, Iterator, Callable
+from typing import Iterator, Callable
 
 import randovania
 import randovania.games.prime2.exporter.hints

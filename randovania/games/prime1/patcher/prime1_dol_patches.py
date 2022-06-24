@@ -1,5 +1,4 @@
 import dataclasses
-from typing import List
 
 import py_randomprime
 

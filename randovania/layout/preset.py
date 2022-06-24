@@ -1,6 +1,6 @@
 import dataclasses
 import uuid
-from typing import Optional, List, Iterator, Tuple
+from typing import Iterator
 
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame

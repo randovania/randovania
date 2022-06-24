@@ -1,6 +1,5 @@
 import typing
 from pathlib import Path
-from typing import Optional
 
 from PySide6 import QtWidgets
 

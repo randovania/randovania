@@ -5,7 +5,7 @@ import json
 import logging
 import random
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 from PySide6 import QtWidgets, QtGui
 from PySide6.QtCore import Qt, QTimer

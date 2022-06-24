@@ -1,7 +1,6 @@
 import copy
 import dataclasses
 import functools
-from typing import Dict, Optional
 
 from PySide6 import QtWidgets, QtCore
 

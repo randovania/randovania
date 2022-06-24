@@ -7,7 +7,6 @@ import ssl
 import time
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Tuple
 
 import aiofiles
 import aiohttp

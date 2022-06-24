@@ -1,5 +1,4 @@
 import dataclasses
-from typing import List, Tuple, Set, Optional
 
 from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor, MemoryOperation

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Iterator, Tuple, List, Callable, TypeVar, Type, Iterable
+from typing import Iterator, Callable, TypeVar, Iterable
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder

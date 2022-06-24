@@ -3,7 +3,6 @@ import asyncio.futures
 import concurrent.futures
 import threading
 import traceback
-from typing import Optional
 
 from PySide6.QtCore import Signal
 

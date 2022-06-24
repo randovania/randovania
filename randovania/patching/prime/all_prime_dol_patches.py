@@ -1,6 +1,5 @@
 import dataclasses
 import struct
-from typing import List
 
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.dol_patching import assembler

@@ -1,6 +1,5 @@
 import dataclasses
 from pathlib import Path
-from typing import Optional
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame

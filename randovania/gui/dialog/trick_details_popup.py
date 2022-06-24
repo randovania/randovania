@@ -1,5 +1,5 @@
 import re
-from typing import List, Tuple, Callable
+from typing import Callable
 
 from PySide6.QtWidgets import QDialog, QWidget
 

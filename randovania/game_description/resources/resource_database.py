@@ -1,5 +1,5 @@
 import dataclasses
-from typing import List, Dict, Optional, Callable
+from typing import Callable
 
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_resource_info import DamageReduction

@@ -1,5 +1,4 @@
 import logging
-from typing import Optional, List, Tuple
 
 from randovania.game_connection.connection_base import ConnectionBase, GameConnectionStatus, Inventory
 from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector

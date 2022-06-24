@@ -4,7 +4,7 @@ import re
 import subprocess
 import typing
 from pathlib import Path
-from typing import Iterator, Optional
+from typing import Iterator
 
 from PySide6 import QtWidgets, QtGui
 
@@ -148,7 +148,7 @@ def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Path | None:
 
 
 def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name: str | None = None) -> None | (
-    Path):
+        Path):
     """
     Shows an QFileDialog asking the user for a Randovania preset file
     :param window:

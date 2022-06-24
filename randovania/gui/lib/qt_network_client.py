@@ -2,7 +2,6 @@ import datetime
 import functools
 import json
 from pathlib import Path
-from typing import Optional, Set
 
 import pypresence
 from PySide6.QtCore import Signal

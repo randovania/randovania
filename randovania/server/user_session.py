@@ -1,7 +1,6 @@
 import base64
 import datetime
 import json
-from typing import Optional, Tuple
 
 import cryptography.fernet
 import flask

@@ -4,7 +4,7 @@ import os
 import platform
 import string
 from pathlib import Path
-from typing import Optional, Iterator, Callable
+from typing import Iterator, Callable
 
 from PySide6 import QtGui, QtWidgets
 

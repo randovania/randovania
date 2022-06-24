@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Iterator
+from typing import Iterator
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.item.item_category import ItemCategory

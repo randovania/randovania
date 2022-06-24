@@ -1,6 +1,5 @@
 import collections
 import dataclasses
-from typing import Optional
 
 from randovania.exporter.hints.determiner import Determiner
 from randovania.game_description.assignment import PickupAssignment, PickupTarget

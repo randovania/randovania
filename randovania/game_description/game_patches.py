@@ -4,7 +4,7 @@ import copy
 import dataclasses
 import typing
 from dataclasses import dataclass
-from typing import Iterator, Optional
+from typing import Iterator
 
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType

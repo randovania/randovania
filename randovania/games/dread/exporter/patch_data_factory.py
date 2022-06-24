@@ -1,6 +1,5 @@
 import logging
 import os
-from typing import Optional, Union
 
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints.hint_exporter import HintExporter

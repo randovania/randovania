@@ -1,5 +1,5 @@
 import asyncio
-from typing import Optional, Tuple, Callable, FrozenSet
+from typing import Callable
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.requirement_list import RequirementList

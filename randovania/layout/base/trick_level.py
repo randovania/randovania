@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackEnum
 

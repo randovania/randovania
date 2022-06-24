@@ -1,6 +1,6 @@
 import copy
 from pathlib import Path
-from typing import BinaryIO, Dict
+from typing import BinaryIO
 
 import construct
 from construct import (Struct, Int32ub, Const, Byte, Float32b, Flag,

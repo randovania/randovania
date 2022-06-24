@@ -2,7 +2,6 @@ import dataclasses
 import json
 import re
 from pathlib import Path
-from typing import Dict, Optional
 
 from PySide6 import QtGui, QtWidgets
 from PySide6.QtCore import Qt

@@ -1,5 +1,5 @@
 import copy
-from typing import List, Any, Tuple, Optional
+from typing import Any
 
 from PySide6.QtCore import QTimer, Signal, QObject
 from qasync import asyncSlot

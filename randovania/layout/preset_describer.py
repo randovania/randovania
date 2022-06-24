@@ -1,5 +1,5 @@
 import collections
-from typing import List, Iterable, Tuple, Dict, Sequence
+from typing import Iterable, Sequence
 
 from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem

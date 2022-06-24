@@ -1,6 +1,5 @@
 import dataclasses
 from pathlib import Path
-from typing import Optional
 
 from randovania.lib import status_update_lib
 

@@ -1,6 +1,5 @@
 import dataclasses
 import uuid
-from typing import Optional
 
 from PySide6 import QtWidgets, QtGui
 from PySide6.QtCore import Qt

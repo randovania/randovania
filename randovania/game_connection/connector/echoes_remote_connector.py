@@ -1,5 +1,4 @@
 import struct
-from typing import Optional, List, Tuple
 
 from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector

@@ -4,7 +4,7 @@ import uuid
 from distutils.version import StrictVersion
 from enum import Enum
 from pathlib import Path
-from typing import Optional, TypeVar, Callable, Any
+from typing import TypeVar, Callable, Any
 
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.games.game import RandovaniaGame

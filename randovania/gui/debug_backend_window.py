@@ -1,7 +1,6 @@
 import logging
 import random
 import struct
-from typing import List, Optional, Dict
 
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import QMainWindow

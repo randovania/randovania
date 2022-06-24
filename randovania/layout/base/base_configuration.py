@@ -1,5 +1,4 @@
 import dataclasses
-from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass

@@ -2,7 +2,7 @@ import copy
 import json
 import re
 from pathlib import Path
-from typing import List, TypeVar, Callable, Dict, Tuple, Iterator, Optional
+from typing import TypeVar, Callable, Iterator
 
 from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData

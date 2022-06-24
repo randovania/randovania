@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import typing
-from typing import Optional, Iterable, Union, Type
+from typing import Iterable
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase

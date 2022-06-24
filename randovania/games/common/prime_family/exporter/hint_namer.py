@@ -1,5 +1,4 @@
 import dataclasses
-from typing import Optional
 
 from randovania.exporter.hints.hint_formatters import LocationFormatter, TemplatedFormatter, RelativeAreaFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation

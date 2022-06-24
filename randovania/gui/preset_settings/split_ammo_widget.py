@@ -1,5 +1,5 @@
 import math
-from typing import Iterable, Dict, NamedTuple, Optional
+from typing import Iterable, NamedTuple
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt

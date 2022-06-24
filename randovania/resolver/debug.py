@@ -1,5 +1,4 @@
 import contextlib
-from typing import Set
 
 from randovania.game_description.requirements.requirement_list import RequirementList
 from randovania.game_description.requirements.requirement_set import RequirementSet

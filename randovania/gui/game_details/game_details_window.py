@@ -1,6 +1,5 @@
 import dataclasses
 import typing
-from typing import Dict, Optional
 
 from PySide6 import QtCore, QtWidgets, QtGui
 from qasync import asyncSlot

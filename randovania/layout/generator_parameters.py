@@ -1,7 +1,7 @@
 import functools
 import json
 from dataclasses import dataclass
-from typing import Iterator, Tuple, Optional
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder

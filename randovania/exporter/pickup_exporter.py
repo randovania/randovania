@@ -1,6 +1,5 @@
 import dataclasses
 from random import Random
-from typing import List, Dict
 
 from randovania.exporter import item_names
 from randovania.game_description.assignment import PickupTarget

@@ -1,7 +1,7 @@
 import copy
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, Tuple
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue

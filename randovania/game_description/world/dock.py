@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 from dataclasses import dataclass
 from enum import unique, Enum
-from typing import Iterator, Optional
+from typing import Iterator
 
 from frozendict import frozendict
 

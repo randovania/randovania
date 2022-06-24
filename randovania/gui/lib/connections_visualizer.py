@@ -1,5 +1,4 @@
 import re
-from typing import Optional, List, Tuple
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIntValidator

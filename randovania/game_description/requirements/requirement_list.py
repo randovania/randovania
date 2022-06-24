@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import itertools
 import typing
-from typing import FrozenSet, Optional, Iterable, Iterator
+from typing import Iterable, Iterator
 
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo

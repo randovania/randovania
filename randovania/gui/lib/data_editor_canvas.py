@@ -1,7 +1,7 @@
 import functools
 import math
 import os
-from typing import Optional, Type, NamedTuple, Union
+from typing import NamedTuple
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal

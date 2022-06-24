@@ -1,5 +1,4 @@
 import itertools
-from typing import FrozenSet, List, Tuple, Set
 
 from randovania.game_description import game_description
 from randovania.game_description.requirements.requirement_list import RequirementList

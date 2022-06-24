@@ -1,5 +1,5 @@
 import copy
-from typing import Iterator, List
+from typing import Iterator
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import Node, NodeContext

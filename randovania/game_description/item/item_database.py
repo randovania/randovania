@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Dict, Tuple, Union
 
 from randovania.game_description.item import migrations
 from randovania.game_description.item.ammo import Ammo

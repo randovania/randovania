@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Tuple
 
 from randovania.lib import frozen_lib
 

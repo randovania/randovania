@@ -1,7 +1,7 @@
 import asyncio
 import dataclasses
 from random import Random
-from typing import Callable, Dict, List, Optional
+from typing import Callable
 
 import tenacity
 

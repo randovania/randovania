@@ -4,7 +4,6 @@ import json
 import logging
 import re
 import subprocess
-from typing import Optional
 
 import discord
 from discord.ext import commands

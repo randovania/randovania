@@ -8,7 +8,6 @@ import os
 import typing
 from functools import partial
 from pathlib import Path
-from typing import Optional, List
 
 from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtCore import QUrl, Signal, Qt

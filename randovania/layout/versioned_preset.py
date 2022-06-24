@@ -3,7 +3,6 @@ import io
 import json
 import uuid
 from pathlib import Path
-from typing import Optional
 
 import aiofiles
 import slugify

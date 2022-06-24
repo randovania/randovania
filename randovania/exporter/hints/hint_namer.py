@@ -1,4 +1,4 @@
-from typing import Optional, NamedTuple
+from typing import NamedTuple
 
 from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.game_description.hint import Hint

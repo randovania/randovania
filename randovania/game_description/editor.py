@@ -1,5 +1,4 @@
 import dataclasses
-from typing import Optional
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.base import Requirement

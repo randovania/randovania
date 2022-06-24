@@ -1,7 +1,7 @@
 import dataclasses
 import struct
 from pathlib import Path
-from typing import Tuple, Optional, BinaryIO, Iterable, List, Dict, Union
+from typing import BinaryIO, Iterable, Union
 
 from randovania.dol_patching import assembler
 

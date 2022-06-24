@@ -2,7 +2,7 @@ import copy
 import itertools
 from collections import defaultdict
 from heapq import heappush, heappop
-from typing import Dict, Iterator, Tuple, Set, Callable
+from typing import Iterator, Callable
 
 from randovania.game_description.requirements.requirement_set import RequirementSet
 

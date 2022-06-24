@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Iterable, Optional
+from typing import Iterable
 
 from PySide6.QtWidgets import *
 

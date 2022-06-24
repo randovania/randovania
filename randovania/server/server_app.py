@@ -1,5 +1,5 @@
 import functools
-from typing import Optional, Mapping
+from typing import Mapping
 
 import flask
 import flask_discord

@@ -1,7 +1,7 @@
 import collections
 import copy
 import dataclasses
-from typing import Dict, Iterator, Tuple, List
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder

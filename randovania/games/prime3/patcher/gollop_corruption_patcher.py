@@ -1,5 +1,4 @@
 import hashlib
-from typing import List
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo

@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, Iterator
+from typing import Iterator
 
 from randovania.lib import migration_lib, json_lib
 

@@ -1,6 +1,5 @@
 import math
 import uuid
-from typing import Dict
 
 from randovania.game_description import migration_data, default_database
 from randovania.games.game import RandovaniaGame

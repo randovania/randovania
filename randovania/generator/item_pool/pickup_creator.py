@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Sequence
 
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory

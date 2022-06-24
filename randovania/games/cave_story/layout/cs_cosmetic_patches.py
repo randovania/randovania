@@ -2,7 +2,6 @@ import dataclasses
 from enum import Enum, unique
 from pathlib import Path
 from random import Random
-from typing import Optional
 
 from randovania.bitpacking.bitpacking import BitPackDataclass, BitPackEnum
 from randovania.bitpacking.json_dataclass import JsonDataclass

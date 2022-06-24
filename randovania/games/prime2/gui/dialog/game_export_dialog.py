@@ -1,7 +1,6 @@
 import dataclasses
 import shutil
 from pathlib import Path
-from typing import Optional
 
 from PySide6.QtWidgets import QLineEdit, QPushButton
 

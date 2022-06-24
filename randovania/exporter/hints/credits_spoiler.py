@@ -1,6 +1,6 @@
 import collections
 import math
-from typing import Dict, NamedTuple, Optional
+from typing import NamedTuple
 
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.game_description.game_patches import GamePatches

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import enum
-from typing import Tuple, Iterator, Optional
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder

@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import typing
 from functools import lru_cache
-from typing import FrozenSet, Optional, Iterable, Iterator
+from typing import Iterable, Iterator
 
 from randovania.game_description.requirements.requirement_list import RequirementList
 

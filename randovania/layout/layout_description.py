@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from random import Random
-from typing import Tuple, Dict
 
 import randovania
 from randovania import get_data_path

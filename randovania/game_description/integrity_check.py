@@ -1,5 +1,5 @@
 import re
-from typing import Iterator, Optional
+from typing import Iterator
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches

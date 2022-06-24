@@ -1,7 +1,6 @@
 import json
 import sys
 from pathlib import Path
-from typing import Optional
 
 from randovania.version import version
 from randovania.version_hash import git_hash

@@ -3,7 +3,7 @@ import json
 import shutil
 from enum import Enum
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Callable
 
 import randovania
 from randovania.exporter.game_exporter import GameExporter, GameExportParams

@@ -2,7 +2,6 @@ import asyncio
 import dataclasses
 import struct
 from asyncio import StreamReader, StreamWriter
-from typing import List, Optional, Dict
 
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor

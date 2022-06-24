@@ -1,6 +1,6 @@
 import dataclasses as _dataclasses
 import struct as _struct
-from typing import Optional, Callable, Tuple, Dict, Union
+from typing import Callable, Union
 
 
 def _pack(*args):

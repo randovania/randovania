@@ -1,5 +1,4 @@
 import struct
-from typing import Optional, List, Tuple
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import Inventory

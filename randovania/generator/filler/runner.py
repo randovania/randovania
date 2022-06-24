@@ -1,6 +1,6 @@
 import dataclasses
 from random import Random
-from typing import List, Tuple, Callable, Dict
+from typing import Callable
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches

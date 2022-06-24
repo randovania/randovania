@@ -2,7 +2,7 @@ import asyncio
 import multiprocessing
 from concurrent.futures.process import ProcessPoolExecutor
 from multiprocessing.connection import Connection
-from typing import Callable, Optional
+from typing import Callable
 
 from randovania.generator import generator
 from randovania.layout.generator_parameters import GeneratorParameters

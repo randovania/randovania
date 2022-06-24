@@ -1,5 +1,3 @@
-from typing import Tuple, Dict
-
 from randovania.dol_patching.assembler import ppc
 
 

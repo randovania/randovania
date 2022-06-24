@@ -1,7 +1,6 @@
 import dataclasses
 import datetime
 import json
-from typing import List, Dict, Optional, Tuple
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.resources.pickup_entry import PickupEntry

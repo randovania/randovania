@@ -1,7 +1,6 @@
 import json
 import logging
 import traceback
-from typing import Optional
 
 from PySide6 import QtWidgets
 from qasync import asyncSlot

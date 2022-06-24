@@ -2,7 +2,6 @@ import dataclasses
 import json
 import logging
 from enum import Enum
-from typing import Dict, List, Union, Optional
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from qasync import asyncSlot

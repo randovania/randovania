@@ -1,4 +1,4 @@
-from typing import Iterator, Dict
+from typing import Iterator
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.requirement_set import RequirementSet

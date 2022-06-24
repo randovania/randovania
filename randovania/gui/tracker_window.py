@@ -4,7 +4,7 @@ import json
 import math
 import typing
 from pathlib import Path
-from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
+from typing import Iterator
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt

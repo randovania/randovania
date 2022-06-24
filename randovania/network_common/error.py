@@ -1,6 +1,3 @@
-from typing import Optional, Type
-
-
 class BaseNetworkError(Exception):
 
     @classmethod

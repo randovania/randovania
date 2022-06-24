@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import typing
-from typing import Union, Tuple, Iterator, Optional
+from typing import Union, Iterator
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo

@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional, Tuple
 
 
 def discover_game(game_files_path: Path) -> tuple[str, str] | None:

@@ -1,5 +1,3 @@
-from typing import Optional, List
-
 from PySide6.QtWidgets import QMainWindow
 
 from randovania.games.game import RandovaniaGame

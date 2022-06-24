@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 import dataclasses
 import typing
-from typing import List, Dict, Optional, Iterator, Tuple
+from typing import Iterator
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex

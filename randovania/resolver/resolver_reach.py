@@ -1,7 +1,7 @@
 import math
 import typing
 from collections import defaultdict
-from typing import Dict, Set, Iterator, Tuple
+from typing import Iterator
 
 from randovania.game_description.game_description import calculate_interesting_resources
 from randovania.game_description.requirements.base import Requirement

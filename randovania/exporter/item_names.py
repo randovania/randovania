@@ -1,5 +1,3 @@
-from typing import List
-
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.generator.item_pool.pool_creator import calculate_pool_results

@@ -2,7 +2,6 @@ import collections
 import dataclasses
 import functools
 import re
-from typing import Dict
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QFrame, QGraphicsOpacityEffect, QSizePolicy, QSpacerItem
