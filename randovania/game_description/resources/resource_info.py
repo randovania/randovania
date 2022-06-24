@@ -158,3 +158,6 @@ class ResourceCollection:
         if self._damage_reduction_cache is None:
             self._damage_reduction_cache = {}
         self._damage_reduction_cache[resource] = multiplier
+
+    def __copy__(self):
+        return self.duplicate()

@@ -72,11 +72,8 @@ class State:
             energy = self.maximum_energy
         self.energy = min(energy, self.maximum_energy)
 
-    def has_resource(self, resource: ResourceInfo) -> bool:
-        return self.resources.get(resource, 0) > 0
-
     def copy(self) -> "State":
-        return State(copy.copy(self.resources),
+        return State(self.resources.duplicate(),
                      self.collected_resource_nodes,
                      self.energy,
                      self.node,
