@@ -1,5 +1,5 @@
 import pytest
-from mock import AsyncMock
+from unittest.mock import AsyncMock
 
 from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
 from randovania.game_connection.executor.memory_operation import MemoryOperation

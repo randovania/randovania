@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 from PySide6 import QtWidgets
-from mock import AsyncMock, patch, ANY, MagicMock
+from unittest.mock import AsyncMock, patch, ANY, MagicMock
 
 from randovania.game_description import data_reader, pretty_print
 from randovania.game_description.world.area_identifier import AreaIdentifier

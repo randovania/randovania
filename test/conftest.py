@@ -76,7 +76,7 @@ def blank_resource_db(blank_game_description) -> ResourceDatabase:
 @pytest.fixture(scope="session")
 def customized_preset(default_preset) -> Preset:
     return Preset(
-        name="{} Custom".format(default_preset.name),
+        name=f"{default_preset.name} Custom",
         description="A customized preset.",
         uuid=uuid.uuid4(),
         base_preset_uuid=default_preset.uuid,

@@ -1,7 +1,7 @@
 from typing import Callable, Union
 
 import pytest
-from mock import MagicMock, patch, call, AsyncMock
+from unittest.mock import MagicMock, patch, call, AsyncMock
 
 from randovania.generator import generator
 from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
@@ -30,7 +30,7 @@ async def test_create_patches(mock_random: MagicMock,
 
     num_players = 1
     rng = mock_random.return_value
-    status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
+    status_update: MagicMock | Callable[[str], None] = MagicMock()
     player_pools = [MagicMock() for _ in range(num_players)]
     presets = [MagicMock() for _ in range(num_players)]
 

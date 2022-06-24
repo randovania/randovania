@@ -1,7 +1,7 @@
 import subprocess
 
 import pytest
-from mock import MagicMock, AsyncMock, call
+from unittest.mock import MagicMock, AsyncMock, call
 
 import randovania
 from randovania.games.game import RandovaniaGame

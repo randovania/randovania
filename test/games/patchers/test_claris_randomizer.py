@@ -94,7 +94,7 @@ def test_run_with_args_failure(mock_process_command: MagicMock):
         call("line 2"),
         call("post line"),
     ])
-    assert str(error.value) == "External tool did not send '{}'.".format(finish_string)
+    assert str(error.value) == f"External tool did not send '{finish_string}'."
 
 
 @patch("randovania.games.prime2.patcher.claris_randomizer.validate_game_files_path", autospec=True)
@@ -152,7 +152,7 @@ def test_ensure_no_menu_mod(mock_copy: MagicMock,
     assert not mod_txt.exists()
 
     status_update.assert_has_calls([
-        call("Restoring {} from backup".format(pak_name), i / len(paks))
+        call(f"Restoring {pak_name} from backup", i / len(paks))
         for i, pak_name in enumerate(paks)
     ])
     mock_copy.assert_has_calls([
@@ -183,7 +183,7 @@ def test_create_pak_backups(mock_copy: MagicMock,
 
     # Assert
     status_update.assert_has_calls([
-        call("Backing up {}".format(pak), i / len(claris_randomizer._ECHOES_PAKS))
+        call(f"Backing up {pak}", i / len(claris_randomizer._ECHOES_PAKS))
         for i, pak in enumerate(claris_randomizer._ECHOES_PAKS)
     ])
     mock_copy.assert_has_calls([

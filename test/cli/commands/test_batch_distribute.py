@@ -1,4 +1,4 @@
-from mock import MagicMock, AsyncMock
+from unittest.mock import MagicMock, AsyncMock
 
 from randovania.cli.commands import batch_distribute
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -37,5 +37,5 @@ def test_batch_distribute_helper(mocker):
                                                        attempts=0)
 
     assert delta_time == 4000
-    output_dir.joinpath.assert_called_once_with("{}.rdvgame".format(seed_number))
+    output_dir.joinpath.assert_called_once_with(f"{seed_number}.rdvgame")
     description.save_to_file.assert_called_once_with(output_dir.joinpath.return_value)

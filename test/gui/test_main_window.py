@@ -5,7 +5,7 @@ from typing import Union
 
 import pytest
 from PySide6.QtWidgets import QDialog
-from mock import AsyncMock, MagicMock, ANY
+from unittest.mock import AsyncMock, MagicMock, ANY
 
 from randovania.gui.main_window import MainWindow
 from randovania.interface_common.options import Options
@@ -14,7 +14,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.permalink import Permalink
 
 
-def create_window(options: Union[Options, MagicMock],
+def create_window(options: Options | MagicMock,
                   preset_manager: PresetManager) -> MainWindow:
     return MainWindow(options, preset_manager, MagicMock(), False)
 

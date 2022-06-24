@@ -1,5 +1,5 @@
 import pytest
-from mock import MagicMock
+from unittest.mock import MagicMock
 
 from randovania.game_connection.connection_base import GameConnectionStatus, InventoryItem
 from randovania.gui.auto_tracker_window import AutoTrackerWindow

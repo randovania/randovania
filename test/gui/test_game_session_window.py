@@ -2,7 +2,7 @@ import datetime
 
 import pytest
 from PySide6 import QtWidgets
-from mock import MagicMock, AsyncMock, ANY
+from unittest.mock import MagicMock, AsyncMock, ANY
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.resources.pickup_index import PickupIndex
