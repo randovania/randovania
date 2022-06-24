@@ -318,7 +318,10 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         node: Optional[Node] = getattr(target, "node", None)
         if node is not None:
             reach = ResolverReach.calculate_reach(self.logic, self.state_for_current_configuration())
-            path = reach.path_to_node.get(node, [])
+            try:
+                path = reach.path_to_node(node)
+            except KeyError:
+                path = []
 
             wl = self.logic.game.world_list
             text = [f"<p><span style='font-weight:600;'>Path to {node.name}</span></p><ul>"]
