@@ -1,5 +1,5 @@
 import functools
-from typing import List, Callable, Dict
+from typing import Callable
 
 from PySide6 import QtWidgets, QtCore
 
@@ -20,7 +20,7 @@ class AreaListHelper:
     game_description: GameDescription
     during_batch_check_update: bool
 
-    def areas_by_world_from_locations(self, all_area_locations: List[AreaIdentifier]
+    def areas_by_world_from_locations(self, all_area_locations: list[AreaIdentifier]
                                       ) -> tuple[list[World], dict[str, list[Area]]]:
         world_list = self.game_description.world_list
         worlds = []
@@ -40,8 +40,8 @@ class AreaListHelper:
     def create_area_list_selection(
             self,
             parent: QtWidgets.QWidget, layout: QtWidgets.QGridLayout,
-            all_area_locations: List[AreaIdentifier],
-            on_check: Callable[[List[AreaIdentifier], bool], None],
+            all_area_locations: list[AreaIdentifier],
+            on_check: Callable[[list[AreaIdentifier], bool], None],
     ) -> tuple[dict[str, QtWidgets.QCheckBox], dict[AreaIdentifier, QtWidgets.QCheckBox]]:
         """"""
         world_to_group: dict[str, QtWidgets.QGroupBox] = {}
@@ -107,8 +107,8 @@ class AreaListHelper:
 
     def update_area_list(self, areas_to_check: list[AreaIdentifier],
                          invert_check: bool,
-                         location_for_world: Dict[str, QtWidgets.QCheckBox],
-                         location_for_area: Dict[AreaIdentifier, QtWidgets.QCheckBox],
+                         location_for_world: dict[str, QtWidgets.QCheckBox],
+                         location_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox],
                          ):
         self.during_batch_check_update = True
 

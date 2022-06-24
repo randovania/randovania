@@ -1,5 +1,4 @@
 import dataclasses
-from typing import List
 
 import pytest
 
@@ -18,7 +17,7 @@ def _create_hint_text(hide_area: bool,
                       multiworld: bool,
                       key_number: int,
                       key_location: str,
-                      ) -> List[str]:
+                      ) -> list[str]:
     if hide_area:
         key_location = key_location.split(" - ")[0]
 
@@ -32,12 +31,12 @@ def _create_hint_text(hide_area: bool,
     return [message, "", message]
 
 
-def make_starting_stk_hint(key_number: int) -> List[str]:
+def make_starting_stk_hint(key_number: int) -> list[str]:
     message = f"&push;&main-color=#FF6705B3;Sky Temple Key {key_number}&pop; has no need to be located."
     return [message, "", message]
 
 
-def make_useless_stk_hint(key_number: int) -> List[str]:
+def make_useless_stk_hint(key_number: int) -> list[str]:
     message = f"&push;&main-color=#FF6705B3;Sky Temple Key {key_number}&pop; is lost somewhere in Aether."
     return [message, "", message]
 

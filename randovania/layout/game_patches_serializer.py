@@ -2,7 +2,7 @@ import collections
 import dataclasses
 import re
 import typing
-from typing import Dict, List, DefaultDict
+from typing import DefaultDict
 
 from randovania.game_description import data_reader, data_writer
 from randovania.game_description.assignment import PickupAssignment, PickupTarget
@@ -28,8 +28,8 @@ _ETM_NAME = "Energy Transfer Module"
 def _pickup_assignment_to_item_locations(world_list: WorldList,
                                          pickup_assignment: PickupAssignment,
                                          num_players: int,
-                                         ) -> Dict[str, Dict[str, str]]:
-    items_locations: DefaultDict[str, Dict[str, str]] = collections.defaultdict(dict)
+                                         ) -> dict[str, dict[str, str]]:
+    items_locations: DefaultDict[str, dict[str, str]] = collections.defaultdict(dict)
 
     for world, area, node in world_list.all_worlds_areas_nodes:
         if not node.is_resource_node or not isinstance(node, PickupNode):
@@ -122,12 +122,12 @@ def _area_name_to_area_location(world_list: WorldList, area_name: str) -> AreaId
     return AreaIdentifier(world_name, area_name)
 
 
-def _find_pickup_with_name(item_pool: List[PickupEntry], pickup_name: str) -> PickupEntry:
+def _find_pickup_with_name(item_pool: list[PickupEntry], pickup_name: str) -> PickupEntry:
     for pickup in item_pool:
         if pickup.name == pickup_name:
             return pickup
 
-    names = set(pickup.name for pickup in item_pool)
+    names = {pickup.name for pickup in item_pool}
     raise ValueError(f"Unable to find a pickup with name {pickup_name}. Possible values: {sorted(names)}")
 
 
@@ -240,9 +240,9 @@ def decode_single(player_index: int, all_pools: dict[int, PoolResults], game: Ga
     )
 
 
-def decode(game_modifications: List[dict],
-           layout_configurations: Dict[int, BaseConfiguration],
-           ) -> Dict[int, GamePatches]:
+def decode(game_modifications: list[dict],
+           layout_configurations: dict[int, BaseConfiguration],
+           ) -> dict[int, GamePatches]:
     all_games = {index: filtered_database.game_description_for_layout(configuration)
                  for index, configuration in layout_configurations.items()}
     all_pools = {index: pool_creator.calculate_pool_results(configuration, all_games[index].resource_database)
@@ -253,7 +253,7 @@ def decode(game_modifications: List[dict],
     }
 
 
-def serialize(all_patches: Dict[int, GamePatches]) -> List[dict]:
+def serialize(all_patches: dict[int, GamePatches]) -> list[dict]:
     return [
         serialize_single(index, len(all_patches), patches)
         for index, patches in all_patches.items()

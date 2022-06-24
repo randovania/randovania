@@ -1,6 +1,5 @@
 import dataclasses
 import typing
-from typing import Dict, Optional
 
 from PySide6 import QtCore, QtWidgets, QtGui
 from qasync import asyncSlot
@@ -40,13 +39,13 @@ class GameDetailsWindow(CloseEventWidget, Ui_GameDetailsWindow, BackgroundTaskMi
     _on_bulk_change: bool = False
     layout_description: LayoutDescription
     _options: Options
-    _window_manager: Optional[WindowManager]
-    _player_names: Dict[int, str]
+    _window_manager: WindowManager | None
+    _player_names: dict[int, str]
     _last_percentage: float = 0
     _can_stop_background_process: bool = True
     _game_details_tabs: list[GameDetailsTab]
 
-    def __init__(self, window_manager: Optional[WindowManager], options: Options):
+    def __init__(self, window_manager: WindowManager | None, options: Options):
         super().__init__()
         self.setupUi(self)
         set_default_window_icon(self)

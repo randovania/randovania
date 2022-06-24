@@ -30,11 +30,11 @@ class AreaIdentifier:
 
     @property
     def as_string(self) -> str:
-        return "{}/{}".format(self.world_name, self.area_name)
+        return f"{self.world_name}/{self.area_name}"
 
     @classmethod
     def from_string(cls, value: str) -> "AreaIdentifier":
         return cls(*value.split("/", 1))
 
     def __repr__(self):
-        return "world {}/area {}".format(self.world_name, self.area_name)
+        return f"world {self.world_name}/area {self.area_name}"

@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
+from unittest.mock import MagicMock, AsyncMock, call
 
 import pytest
-from mock import MagicMock, AsyncMock, call
 
 from randovania.game_connection.game_connection import GameConnection
 from randovania.game_description.resources.pickup_index import PickupIndex

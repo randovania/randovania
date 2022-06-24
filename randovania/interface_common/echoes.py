@@ -2,7 +2,7 @@ import asyncio
 import multiprocessing
 from concurrent.futures.process import ProcessPoolExecutor
 from multiprocessing.connection import Connection
-from typing import Callable, Optional
+from typing import Callable
 
 from randovania.generator import generator
 from randovania.layout.generator_parameters import GeneratorParameters
@@ -26,7 +26,7 @@ def generate_description(parameters: GeneratorParameters,
                          status_update: Callable[[str], None],
                          validate_after_generation: bool,
                          timeout_during_generation: bool,
-                         attempts: Optional[int],
+                         attempts: int | None,
                          ) -> LayoutDescription:
     receiving_pipe, output_pipe = multiprocessing.Pipe(True)
 

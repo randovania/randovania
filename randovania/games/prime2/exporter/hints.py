@@ -1,5 +1,4 @@
 from random import Random
-from typing import Dict
 
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -23,7 +22,7 @@ def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:
     }
 
 
-def create_patches_hints(all_patches: Dict[int, GamePatches],
+def create_patches_hints(all_patches: dict[int, GamePatches],
                          players_config: PlayersConfiguration,
                          world_list: WorldList,
                          namer: HintNamer,
@@ -70,7 +69,7 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 ]
 
 
-def create_stk_hints(all_patches: Dict[int, GamePatches],
+def create_stk_hints(all_patches: dict[int, GamePatches],
                      players_config: PlayersConfiguration,
                      resource_database: ResourceDatabase,
                      namer: HintNamer,

@@ -1,7 +1,7 @@
 from asyncio import CancelledError
+from unittest.mock import MagicMock
 
 import pytest
-from mock import MagicMock
 
 from randovania.gui.lib.background_task_mixin import BackgroundTaskMixin, AbortBackgroundTask
 

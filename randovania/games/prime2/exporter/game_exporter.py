@@ -4,7 +4,6 @@ import functools
 import json
 import shutil
 from pathlib import Path
-from typing import Optional
 
 from mp2hudcolor import mp2hudcolor_c
 
@@ -18,12 +17,12 @@ from randovania.patching.patchers.gamecube import banner_patcher, iso_packager
 
 @dataclasses.dataclass(frozen=True)
 class EchoesGameExportParams(GameExportParams):
-    input_path: Optional[Path]
+    input_path: Path | None
     output_path: Path
     contents_files_path: Path
     asset_cache_path: Path
     backup_files_path: Path
-    prime_path: Optional[Path]
+    prime_path: Path | None
     use_prime_models: bool
 
 
@@ -149,7 +148,7 @@ def extract_and_backup_iso(input_path: Path, contents_files_path: Path, backup_f
                 "a clean game ISO.")
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def decode_randomizer_data() -> dict:
     randomizer_data_path = get_data_path().joinpath("ClarisPrimeRandomizer", "RandomizerData.json")
 

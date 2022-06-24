@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import typing
-from typing import Iterator, Optional
+from typing import Iterator
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
@@ -17,10 +17,10 @@ class World:
     extra: dict[str, typing.Any]
 
     def __repr__(self):
-        return "World[{}]".format(self.name)
+        return f"World[{self.name}]"
 
     @property
-    def dark_name(self) -> Optional[str]:
+    def dark_name(self) -> str | None:
         return self.extra.get("dark_name")
 
     @property
@@ -46,13 +46,13 @@ class World:
         for area in self.areas:
             yield from area.major_pickup_indices
 
-    def area_by_name(self, area_name: str, is_dark_aether: Optional[bool] = None) -> Area:
+    def area_by_name(self, area_name: str, is_dark_aether: bool | None = None) -> Area:
         for area in self.areas:
             if is_dark_aether is not None and area.in_dark_aether != is_dark_aether:
                 continue
             if area.name == area_name:
                 return area
-        raise KeyError("Unknown name: {}".format(area_name))
+        raise KeyError(f"Unknown name: {area_name}")
 
     def area_by_identifier(self, location: AreaIdentifier) -> Area:
         if self.name != location.world_name:

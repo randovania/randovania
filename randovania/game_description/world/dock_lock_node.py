@@ -32,7 +32,7 @@ class DockLockNode(ResourceNode):
         return result
 
     def __repr__(self):
-        return "DockLockNode({!r} -> {})".format(self.name, self.dock.name)
+        return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
     def resource(self, context: NodeContext) -> ResourceInfo:
         return NodeResourceInfo.from_node(self.dock, context)

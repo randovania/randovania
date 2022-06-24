@@ -1,5 +1,6 @@
+from unittest.mock import MagicMock, AsyncMock
+
 import pytest
-from mock import MagicMock, AsyncMock
 
 from randovania.gui.dialog.login_prompt_dialog import LoginPromptDialog
 

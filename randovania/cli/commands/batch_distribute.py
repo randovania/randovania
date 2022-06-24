@@ -37,7 +37,7 @@ def batch_distribute_helper(base_params: "GeneratorParameters",
     ))
     delta_time = time.perf_counter() - start_time
 
-    description.save_to_file(output_dir.joinpath("{}.{}".format(seed_number, description.file_extension())))
+    description.save_to_file(output_dir.joinpath(f"{seed_number}.{description.file_extension()}"))
     return delta_time
 
 

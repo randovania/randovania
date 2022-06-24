@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Tuple, Iterator
+from typing import Iterator
 from unittest.mock import MagicMock, call
 
 import pytest
@@ -21,7 +21,7 @@ from randovania.bitpacking.bitpacking import BitPackDecoder
     (3, 50, 150),
 ])
 def test_encode_int_with_limits_round_trip(value: int,
-                                           limits: Tuple[int, ...],
+                                           limits: tuple[int, ...],
                                            ):
     # Run
     data = bitpacking._pack_encode_results(list(bitpacking.encode_int_with_limits(value, limits)))
@@ -206,7 +206,7 @@ class BitPackValueUsingReference(bitpacking.BitPackValue):
     def __init__(self, x):
         self.value = x
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         reference: BitPackValueUsingReference = metadata["reference"]
         yield self.value - reference.value, 128
 

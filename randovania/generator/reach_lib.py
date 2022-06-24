@@ -1,5 +1,5 @@
 import copy
-from typing import Iterator, List
+from typing import Iterator
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.node import Node, NodeContext
@@ -57,7 +57,7 @@ def collectable_resource_nodes(nodes: Iterator[Node], reach: GeneratorReach) -> 
     return _filter_collectable(_filter_resource_nodes(nodes), reach)
 
 
-def get_collectable_resource_nodes_of_reach(reach: GeneratorReach) -> List[ResourceNode]:
+def get_collectable_resource_nodes_of_reach(reach: GeneratorReach) -> list[ResourceNode]:
     return list(collectable_resource_nodes(_filter_reachable(reach.nodes, reach), reach))
 
 

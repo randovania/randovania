@@ -5,7 +5,7 @@ import logging
 import typing
 from argparse import ArgumentParser
 from pathlib import Path
-from typing import Dict, BinaryIO, Optional, TextIO, List, Any
+from typing import BinaryIO, TextIO, Any
 
 from randovania.game_description import default_database
 from randovania.game_description.resources.resource_info import ResourceInfo
@@ -15,13 +15,13 @@ from randovania.games.game import RandovaniaGame
 from randovania.lib.enum_lib import iterate_enum
 
 
-def _get_sorted_list_of_names(input_list: List[Any], prefix: str = "") -> List[str]:
+def _get_sorted_list_of_names(input_list: list[Any], prefix: str = "") -> list[str]:
     for item in sorted(input_list, key=lambda x: x.name):
         yield prefix + item.name
 
 
-def decode_data_file(args) -> Dict:
-    json_database: Optional[Path] = args.json_database
+def decode_data_file(args) -> dict:
+    json_database: Path | None = args.json_database
     if json_database is not None:
         with json_database.open() as data_file:
             return json.load(data_file)
@@ -41,8 +41,8 @@ def convert_database_command_logic(args):
     if args.decode_to_game_description:
         data = data_writer.write_game_description(data_reader.decode_data(data))
 
-    output_binary: Optional[Path] = args.output_binary
-    output_json: Optional[Path] = args.output_json
+    output_binary: Path | None = args.output_binary
+    output_json: Path | None = args.output_json
 
     if output_binary is not None:
         export_as_binary(data, output_binary)
@@ -254,7 +254,7 @@ def refresh_all_command(sub_parsers):
 def _list_paths_with_resource(game,
                               print_only_area: bool,
                               resource: ResourceInfo,
-                              needed_quantity: Optional[int]):
+                              needed_quantity: int | None):
     from randovania.game_description.game_description import GameDescription
 
     count = 0
@@ -273,7 +273,7 @@ def _list_paths_with_resource(game,
                     if needed_quantity is None or needed_quantity == individual.amount:
                         area_had_resource = True
                         if not print_only_area:
-                            print("At {0}, from {1} to {2}:\n{3}\n".format(
+                            print("At {}, from {} to {}:\n{}\n".format(
                                 game.world_list.area_name(area),
                                 source.name,
                                 target.name,
@@ -285,7 +285,7 @@ def _list_paths_with_resource(game,
         if area_had_resource and print_only_area:
             print(game.world_list.area_name(area))
 
-    print("Total routes: {}".format(count))
+    print(f"Total routes: {count}")
 
 
 def list_paths_with_dangerous_logic(args):
@@ -314,7 +314,7 @@ def list_paths_with_dangerous_logic(args):
         if area_had_resource and print_only_area:
             print(game.world_list.area_name(area))
 
-    print("Total routes: {}".format(count))
+    print(f"Total routes: {count}")
 
 
 def list_paths_with_dangerous_command(sub_parsers):
@@ -479,7 +479,7 @@ def render_worlds_graph_logic(args):
                 shape = "polygon"
 
             c = (dark_colors if area.in_dark_aether else colors)[world.name]
-            fillcolor = "".join("{:02x}".format(max(0, int(c[i * 2 + 1:i * 2 + 3], 16) - 64))
+            fillcolor = "".join(f"{max(0, int(c[i * 2 + 1:i * 2 + 3], 16) - 64):02x}"
                                 for i in range(3))
             dot.node(
                 f"{world.name}-{area.name}", area.name,

@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import typing
 from functools import lru_cache
-from typing import FrozenSet, Optional, Iterable, Iterator
+from typing import Iterable, Iterator
 
 from randovania.game_description.requirements.requirement_list import RequirementList
 
@@ -18,8 +18,8 @@ class RequirementSet:
     Represents multiple alternatives of satisfying a requirement.
     For example, going from A to B may be possible by having Grapple+Space Jump or Screw Attack.
     """
-    alternatives: FrozenSet[RequirementList]
-    _cached_hash: Optional[int] = None
+    alternatives: frozenset[RequirementList]
+    _cached_hash: int | None = None
 
     def __init__(self, alternatives: Iterable[RequirementList]):
         """
@@ -73,14 +73,14 @@ class RequirementSet:
             return l[0]
 
     @classmethod
-    @lru_cache()
-    def trivial(cls) -> "RequirementSet":
+    @lru_cache
+    def trivial(cls) -> RequirementSet:
         # empty RequirementList.satisfied is True
         return cls([RequirementList([])])
 
     @classmethod
-    @lru_cache()
-    def impossible(cls) -> "RequirementSet":
+    @lru_cache
+    def impossible(cls) -> RequirementSet:
         # No alternatives makes satisfied always return False
         return cls([])
 
@@ -125,8 +125,7 @@ class RequirementSet:
         :return:
         """
         for alternative in self.alternatives:
-            for individual in alternative.values():
-                yield individual
+            yield from alternative.values()
 
     def patch_requirements(self, resources: ResourceCollection, database: ResourceDatabase) -> RequirementSet:
         from randovania.game_description.requirements.requirement_and import RequirementAnd

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import itertools
 import typing
-from typing import FrozenSet, Optional, Iterable, Iterator
+from typing import Iterable, Iterator
 
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
@@ -21,7 +21,7 @@ class RequirementList:
     _bitmask: int
     _items: dict[tuple[int, int, bool], ResourceRequirement]
     _extra: list[ResourceRequirement]
-    _cached_hash: Optional[int]
+    _cached_hash: int | None
 
     def __deepcopy__(self, memodict):
         return self
@@ -84,7 +84,7 @@ class RequirementList:
                 return False
         return True
 
-    def get(self, resource: ResourceInfo) -> Optional[ResourceRequirement]:
+    def get(self, resource: ResourceInfo) -> ResourceRequirement | None:
         """
         Gets an IndividualRequirement that uses the given resource
         :param resource:
@@ -117,4 +117,4 @@ class RequirementList:
         return all(key in requirement._items for key in self._items.keys())
 
 
-SatisfiableRequirements = FrozenSet[RequirementList]
+SatisfiableRequirements = frozenset[RequirementList]

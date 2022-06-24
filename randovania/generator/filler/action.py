@@ -15,7 +15,7 @@ class Action:
     @property
     def name(self) -> str:
         return "[{}]".format(", ".join(
-            "{}: {}".format(type(a).__name__[0], a.name)
+            f"{type(a).__name__[0]}: {a.name}"
             for a in self.steps
         ))
 

@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Iterator, Tuple, TextIO
+from typing import Iterator, TextIO
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.requirements.array_base import RequirementArrayBase
@@ -32,7 +32,7 @@ def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
 
 
 def pretty_print_requirement_array(requirement: RequirementArrayBase,
-                                   level: int) -> Iterator[Tuple[int, str]]:
+                                   level: int) -> Iterator[tuple[int, str]]:
     if len(requirement.items) == 1 and requirement.comment is None:
         yield from pretty_print_requirement(requirement.items[0], level)
         return
@@ -65,7 +65,7 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
             yield from pretty_print_requirement(item, level + 1)
 
 
-def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterator[Tuple[int, str]]:
+def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterator[tuple[int, str]]:
     if requirement == Requirement.impossible():
         yield level, "Impossible"
 
@@ -130,7 +130,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     if area.valid_starting_location:
         print_function("(Valid Starting Location)")
     for extra_name, extra_field in area.extra.items():
-        print_function("Extra - {}: {}".format(extra_name, extra_field))
+        print_function(f"Extra - {extra_name}: {extra_field}")
 
     for i, node in enumerate(area.nodes):
         if node.is_derived_node:
@@ -148,13 +148,13 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
         if node.description:
             print_function(f"  * {node.description}")
         for extra_name, extra_field in node.extra.items():
-            print_function("  * Extra - {}: {}".format(extra_name, extra_field))
+            print_function(f"  * Extra - {extra_name}: {extra_field}")
 
         for target_node, requirement in game.world_list.area_connections_from(node):
             if target_node.is_derived_node:
                 continue
 
-            print_function("  > {}".format(target_node.name))
+            print_function(f"  > {target_node.name}")
             for level, text in pretty_print_requirement(requirement.simplify(keep_comments=True)):
                 print_function("      {}{}".format("    " * level, text))
         print_function()
@@ -171,12 +171,12 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     for dock_type in game.dock_weakness_database.dock_types:
         output.write(f"\n> {dock_type.long_name}")
         for extra_name, extra_field in dock_type.extra.items():
-            output.write("\n* Extra - {}: {}".format(extra_name, extra_field))
+            output.write(f"\n* Extra - {extra_name}: {extra_field}")
 
         for weakness in game.dock_weakness_database.get_by_type(dock_type):
             output.write(f"\n  * {weakness.name}\n")
             for extra_name, extra_field in weakness.extra.items():
-                output.write("      Extra - {}: {}\n".format(extra_name, extra_field))
+                output.write(f"      Extra - {extra_name}: {extra_field}\n")
 
             output.write("      Open:\n")
             for level, text in pretty_print_requirement(weakness.requirement, level=1):
@@ -216,7 +216,7 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
 
     output.write("\n")
     for world in game.world_list.worlds:
-        output.write("====================\n{}\n".format(world.name))
+        output.write(f"====================\n{world.name}\n")
         for area in world.areas:
             output.write("----------------\n")
             pretty_print_area(game, area, print_function=print_to_file)

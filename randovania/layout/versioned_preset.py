@@ -3,7 +3,6 @@ import io
 import json
 import uuid
 from pathlib import Path
-from typing import Optional
 
 import aiofiles
 import slugify
@@ -20,8 +19,8 @@ class InvalidPreset(Exception):
 
 class VersionedPreset:
     data: dict
-    exception: Optional[InvalidPreset] = None
-    _preset: Optional[Preset] = None
+    exception: InvalidPreset | None = None
+    _preset: Preset | None = None
 
     def __init__(self, data):
         self.data = data
@@ -42,7 +41,7 @@ class VersionedPreset:
             return self.data["name"]
 
     @property
-    def base_preset_uuid(self) -> Optional[uuid.UUID]:
+    def base_preset_uuid(self) -> uuid.UUID | None:
         if self._preset is not None:
             return self._preset.base_preset_uuid
         elif self.data["base_preset_uuid"] is not None:

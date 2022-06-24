@@ -2,7 +2,7 @@ import json
 import logging
 import shutil
 from pathlib import Path
-from typing import Callable, List, Union
+from typing import Callable
 
 from randovania import get_data_path
 from randovania.games.prime2.patcher import csharp_subprocess, echoes_dol_patcher
@@ -48,7 +48,7 @@ def _get_menu_mod_path() -> Path:
     return get_data_path().joinpath("ClarisEchoesMenu", "EchoesMenu.exe")
 
 
-def _run_with_args(args: List[Union[str, Path]],
+def _run_with_args(args: list[str | Path],
                    input_data: str,
                    finish_string: str,
                    status_update: Callable[[str], None]):
@@ -70,13 +70,13 @@ def _run_with_args(args: List[Union[str, Path]],
 
     if not finished_updates:
         raise ExportFailure(
-            "External tool did not send '{}'.".format(finish_string),
+            f"External tool did not send '{finish_string}'.",
             "\n".join(all_lines),
         )
 
 
 def _base_args(game_root: Path,
-               ) -> List[Union[str, Path]]:
+               ) -> list[str | Path]:
     game_files = game_root / "files"
     validate_game_files_path(game_files)
 
@@ -95,7 +95,7 @@ _ECHOES_PAKS = tuple(
         "LogBook.pak",
         "Standard.ntwk",
     ]
-    + ["Metroid{}.pak".format(i) for i in range(1, 6)])
+    + [f"Metroid{i}.pak" for i in range(1, 6)])
 
 
 def restore_pak_backups(
@@ -113,7 +113,7 @@ def restore_pak_backups(
     pak_folder = backup_files_path.joinpath("paks")
     files_folder = game_root.joinpath("files")
     for i, pak in enumerate(_ECHOES_PAKS):
-        progress_update("Restoring {} from backup".format(pak), i / len(_ECHOES_PAKS))
+        progress_update(f"Restoring {pak} from backup", i / len(_ECHOES_PAKS))
         shutil.copy(pak_folder.joinpath(pak), files_folder.joinpath(pak))
 
     files_folder.joinpath("menu_mod.txt").unlink(missing_ok=True)
@@ -129,7 +129,7 @@ def create_pak_backups(
 
     files_folder = game_root.joinpath("files")
     for i, pak in enumerate(_ECHOES_PAKS):
-        progress_update("Backing up {}".format(pak), i / len(_ECHOES_PAKS))
+        progress_update(f"Backing up {pak}", i / len(_ECHOES_PAKS))
         shutil.copy(files_folder.joinpath(pak), pak_folder.joinpath(pak))
 
 

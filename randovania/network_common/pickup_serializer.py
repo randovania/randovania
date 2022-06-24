@@ -1,4 +1,4 @@
-from typing import Iterator, Tuple
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackFloat, BitPackDecoder
@@ -96,7 +96,7 @@ class BitPackPickupEntry:
         self.database = database
 
     # Main Methods
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         helper = DatabaseBitPackHelper(self.database)
 
         yield from bitpacking.encode_string(self.value.name)

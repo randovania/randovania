@@ -1,4 +1,4 @@
-from mock import AsyncMock
+from unittest.mock import AsyncMock
 
 from randovania.gui.dialog.background_process_dialog import BackgroundProcessDialog
 

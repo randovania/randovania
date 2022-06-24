@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Tuple
 
 from randovania.lib import frozen_lib
 
@@ -8,7 +7,7 @@ from randovania.lib import frozen_lib
 class ItemCategory:
     name: str
     long_name: str
-    hint_details: Tuple[str, str]
+    hint_details: tuple[str, str]
     is_major: bool
     is_key: bool = False
 
@@ -34,7 +33,7 @@ class ItemCategory:
         return result
 
     @property
-    def general_details(self) -> Tuple[str, str]:
+    def general_details(self) -> tuple[str, str]:
         if self.is_major:
             return "a ", "major upgrade"
         elif self.is_key:

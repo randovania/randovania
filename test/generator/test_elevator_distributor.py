@@ -1,6 +1,5 @@
 import random
 from random import Random
-from typing import List
 from unittest.mock import patch, MagicMock
 
 import pytest
@@ -21,7 +20,7 @@ from randovania.generator.elevator_distributor import ElevatorHelper
                   4260106, 3538975, 3342446, 1245332, 1966093, 524321, 2162826, 152, 1572998, 1245307])
 ])
 def test_try_randomize_elevators(seed_number: int,
-                                 expected_ids: List[int],
+                                 expected_ids: list[int],
                                  echoes_game_description):
     # Setup
     rng = Random(seed_number)

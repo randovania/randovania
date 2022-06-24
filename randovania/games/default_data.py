@@ -7,7 +7,7 @@ from randovania.games import binary_data
 from randovania.games.game import RandovaniaGame
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def read_json_then_binary(game: RandovaniaGame) -> tuple[Path, dict]:
     dir_path = game.data_path.joinpath("json_data")
     if dir_path.exists():

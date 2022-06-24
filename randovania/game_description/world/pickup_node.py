@@ -15,7 +15,7 @@ class PickupNode(ResourceNode):
     major_location: bool
 
     def __repr__(self):
-        return "PickupNode({!r} -> {})".format(self.name, self.pickup_index.index)
+        return f"PickupNode({self.name!r} -> {self.pickup_index.index})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         if context.current_resources.add_self_as_requirement_to_resources:

@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Dict, Tuple, Union
 
 from randovania.game_description.item import migrations
 from randovania.game_description.item.ammo import Ammo
@@ -10,16 +9,16 @@ from randovania.games.game import RandovaniaGame
 
 @dataclass(frozen=True)
 class ItemDatabase:
-    item_categories: Dict[str, ItemCategory]
-    major_items: Dict[str, MajorItem]
-    ammo: Dict[str, Ammo]
-    default_items: Dict[ItemCategory, Tuple[MajorItem, ...]]
+    item_categories: dict[str, ItemCategory]
+    major_items: dict[str, MajorItem]
+    ammo: dict[str, Ammo]
+    default_items: dict[ItemCategory, tuple[MajorItem, ...]]
 
-    def get_item_with_name(self, name: str) -> Union[MajorItem, Ammo]:
+    def get_item_with_name(self, name: str) -> MajorItem | Ammo:
         return self.major_items.get(name) or self.ammo.get(name)
 
 
-def read_database(database_data: Dict, game: RandovaniaGame) -> ItemDatabase:
+def read_database(database_data: dict, game: RandovaniaGame) -> ItemDatabase:
     """
     :param database_data:
     :param game:
@@ -50,7 +49,7 @@ def read_database(database_data: Dict, game: RandovaniaGame) -> ItemDatabase:
     return ItemDatabase(item_categories, major_items, ammo, default_items)
 
 
-def write_database(database: ItemDatabase) -> Dict:
+def write_database(database: ItemDatabase) -> dict:
     """
 
     :param database:

@@ -173,7 +173,7 @@ def generate_world_html(name, areas):
         for node in sorted(nodes):
             connections = nodes[node]
             for connection in sorted(connections):
-                connection_name = "%s -> %s" % (node, connection)
+                connection_name = f"{node} -> {connection}"
                 area_body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
                 for (id, start_time, highest_diff) in sorted(yt_ids, key=lambda x: x[2]):

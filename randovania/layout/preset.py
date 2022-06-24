@@ -1,6 +1,6 @@
 import dataclasses
 import uuid
-from typing import Optional, List, Iterator, Tuple
+from typing import Iterator
 
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackValue
 from randovania.games.game import RandovaniaGame
@@ -12,7 +12,7 @@ class Preset(BitPackValue):
     name: str
     uuid: uuid.UUID
     description: str
-    base_preset_uuid: Optional[uuid.UUID]
+    base_preset_uuid: uuid.UUID | None
     game: RandovaniaGame
     configuration: BaseConfiguration
 
@@ -39,13 +39,13 @@ class Preset(BitPackValue):
             configuration=game.data.layout.configuration.from_json(value["configuration"]),
         )
 
-    def dangerous_settings(self) -> List[str]:
+    def dangerous_settings(self) -> list[str]:
         return self.configuration.dangerous_settings()
 
     def is_same_configuration(self, other: "Preset") -> bool:
         return self.configuration == other.configuration
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         from randovania.interface_common.preset_manager import PresetManager
         manager: PresetManager = metadata["manager"]
 
@@ -61,7 +61,7 @@ class Preset(BitPackValue):
         reference = manager.reference_preset_for_game(game).get_preset()
 
         return Preset(
-            name="{} Custom".format(game.long_name),
+            name=f"{game.long_name} Custom",
             description="A customized preset.",
             uuid=uuid.uuid4(),
             base_preset_uuid=reference.uuid,

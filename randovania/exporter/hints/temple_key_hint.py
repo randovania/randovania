@@ -1,5 +1,3 @@
-from typing import Dict
-
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.game_description import default_database
@@ -9,7 +7,7 @@ from randovania.games.game import RandovaniaGame
 from randovania.games.prime2.patcher import echoes_items
 
 
-def create_temple_key_hint(all_patches: Dict[int, GamePatches],
+def create_temple_key_hint(all_patches: dict[int, GamePatches],
                            player_index: int,
                            temple: HintDarkTemple,
                            namer: HintNamer,

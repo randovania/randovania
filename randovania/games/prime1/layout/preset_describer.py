@@ -39,14 +39,14 @@ class PrimePresetDescriber(GamePresetDescriber):
             if probability == 0:
                 return None
 
-            return "%.1f%% chance of %s" % (probability / 10, attribute)
+            return f"{probability / 10:.1f}% chance of {attribute}"
 
         superheated_probability = describe_probability(configuration.superheated_probability, "superheated")
         submerged_probability = describe_probability(configuration.submerged_probability, "submerged")
 
         extra_message_tree = {
             "Difficulty": [
-                {"Heat Damage: {:.2f} dmg/s".format(configuration.heat_damage): configuration.heat_damage != 10.0},
+                {f"Heat Damage: {configuration.heat_damage:.2f} dmg/s": configuration.heat_damage != 10.0},
                 {f"Energy Tank: {configuration.energy_per_tank} energy": configuration.energy_per_tank != 100},
             ],
             "Gameplay": [

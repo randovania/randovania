@@ -1,5 +1,4 @@
 import hashlib
-from typing import List
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
@@ -193,7 +192,7 @@ STARTING_ITEMS_NAME_ALIAS = {
 _TWO_BYTE_VALUES = {STARTING_ITEMS_ORDER.index("MissileAmount"), STARTING_ITEMS_ORDER.index("MissileCapacity")}
 
 
-def layout_string_for_items(item_names: List[str]) -> str:
+def layout_string_for_items(item_names: list[str]) -> str:
     letters = [LAYOUT_LETTERS[0]] * 2
     for item in item_names:
         letters.append(ITEM_NAME_TO_LETTER_MAPPING[item])
@@ -225,6 +224,6 @@ def starting_items_for(resources: ResourceCollection, hypermode_original: int) -
         for item in STARTING_ITEMS_ORDER
     ]
     return "custom " + "".join([
-        "{:02x}".format(value) if index in _TWO_BYTE_VALUES else "{:x}".format(value)
+        f"{value:02x}" if index in _TWO_BYTE_VALUES else f"{value:x}"
         for index, value in enumerate(result_values)
     ])

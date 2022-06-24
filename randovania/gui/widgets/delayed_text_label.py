@@ -1,11 +1,9 @@
-from typing import Optional
-
 from PySide6 import QtWidgets, QtGui
 
 
 class DelayedTextLabel(QtWidgets.QLabel):
     _already_shown: bool = False
-    _delayed_text: Optional[str] = None
+    _delayed_text: str | None = None
 
     def showEvent(self, event: QtGui.QShowEvent) -> None:
         self._already_shown = True

@@ -1,6 +1,3 @@
-from typing import Optional, Type
-
-
 class BaseNetworkError(Exception):
 
     @classmethod
@@ -121,7 +118,7 @@ class UnsupportedClient(BaseNetworkError):
         return f"Unsupported client: {self.message}"
 
 
-def decode_error(data: dict) -> Optional[BaseNetworkError]:
+def decode_error(data: dict) -> BaseNetworkError | None:
     if "error" not in data:
         return None
 
@@ -129,7 +126,7 @@ def decode_error(data: dict) -> Optional[BaseNetworkError]:
     detail = data["error"]["detail"]
 
     for cls in BaseNetworkError.__subclasses__():
-        cls: Type[BaseNetworkError] = cls
+        cls: type[BaseNetworkError] = cls
         if code == cls.code():
             return cls.from_detail(detail)
 

@@ -1,9 +1,9 @@
 import asyncio
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
-from mock import AsyncMock, MagicMock, patch
 
 from randovania.gui.main_online_interaction import OnlineInteractions
 from randovania.interface_common.options import Options

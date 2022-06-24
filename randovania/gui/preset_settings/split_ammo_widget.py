@@ -1,5 +1,5 @@
 import math
-from typing import Iterable, Dict, NamedTuple, Optional
+from typing import Iterable, NamedTuple
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
@@ -14,7 +14,7 @@ class AmmoPickupWidgets(NamedTuple):
     pickup_spinbox: QtWidgets.QSpinBox
     expected_count: QtWidgets.QLabel
     pickup_box: QtWidgets.QGroupBox
-    require_major_item_check: Optional[QtWidgets.QCheckBox]
+    require_major_item_check: QtWidgets.QCheckBox | None
 
 
 class SplitAmmoWidget(QtWidgets.QCheckBox):
@@ -35,7 +35,7 @@ class SplitAmmoWidget(QtWidgets.QCheckBox):
         if len(unified_ammo.items) != len(self.split_ammo):
             raise ValueError("The unified ammo should have as many items as there are split ammo items.")
 
-    def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]):
+    def on_preset_changed(self, preset: Preset, ammo_pickup_widgets: dict[Ammo, AmmoPickupWidgets]):
         ammo_configuration = preset.configuration.ammo_configuration
 
         has_unified = ammo_configuration.items_state[self.unified_ammo].pickup_count > 0

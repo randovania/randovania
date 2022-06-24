@@ -1,5 +1,5 @@
 import re
-from typing import Iterator, Optional
+from typing import Iterator
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -40,7 +40,7 @@ def docks_with_same_base_name(area: Area, expected_name: str) -> list[DockNode]:
     ]
 
 
-def dock_has_correct_name(area: Area, node: DockNode) -> tuple[bool, Optional[str]]:
+def dock_has_correct_name(area: Area, node: DockNode) -> tuple[bool, str | None]:
     """
 
     :param area:
@@ -206,7 +206,7 @@ def find_invalid_strongly_connected_components(game: GameDescription) -> Iterato
             game.world_list.node_name(node, with_world=True)
             for node in strong_comp
         )
-        yield "Unknown strongly connected component detected containing {} nodes:\n{}".format(len(names), names)
+        yield f"Unknown strongly connected component detected containing {len(names)} nodes:\n{names}"
 
 
 def find_database_errors(game: GameDescription) -> list[str]:

@@ -1,7 +1,7 @@
 import asyncio
+from unittest.mock import MagicMock, AsyncMock, call
 
 import pytest
-from mock import MagicMock, AsyncMock, call
 
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation
 from randovania.game_connection.executor.nintendont_executor import NintendontExecutor, SocketHolder, RequestBatch

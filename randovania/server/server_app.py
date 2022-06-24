@@ -1,5 +1,5 @@
 import functools
-from typing import Optional, Mapping
+from typing import Mapping
 
 import flask
 import flask_discord
@@ -32,7 +32,7 @@ class EnforceDiscordRole:
         self.session.headers["Authorization"] = "Bot {}".format(config["token"])
 
     def verify_user(self, user_id: int) -> bool:
-        r = self.session.get("https://discordapp.com/api/guilds/{}/members/{}".format(self.guild_id, user_id))
+        r = self.session.get(f"https://discordapp.com/api/guilds/{self.guild_id}/members/{user_id}")
         try:
             result = r.json()
             if r.ok:
@@ -51,8 +51,8 @@ class ServerApp:
     discord: CustomDiscordOAuth2Session
     metrics: PrometheusMetrics
     fernet_encrypt: Fernet
-    guest_encrypt: Optional[Fernet] = None
-    enforce_role: Optional[EnforceDiscordRole] = None
+    guest_encrypt: Fernet | None = None
+    enforce_role: EnforceDiscordRole | None = None
     expected_headers: dict[str, str]
 
     def __init__(self, app: flask.Flask):

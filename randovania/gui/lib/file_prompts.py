@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional
 
 from PySide6 import QtWidgets
 
@@ -10,9 +9,9 @@ async def _prompt_user_for_file(
         parent: QtWidgets.QWidget,
         caption: str,
         file_filter: str,
-        current_dir: Optional[str] = None,
+        current_dir: str | None = None,
         new_file: bool = False,
-) -> Optional[Path]:
+) -> Path | None:
     """
     Helper function for all `prompt_user_for_*` functions.
     :param parent:
@@ -36,7 +35,7 @@ async def _prompt_user_for_file(
     return Path(file_dialog.selectedFiles()[0])
 
 
-async def prompt_input_layout(parent: QtWidgets.QWidget) -> Optional[Path]:
+async def prompt_input_layout(parent: QtWidgets.QWidget) -> Path | None:
     """
     Shows an QFileDialog asking the user for a Randovania LayoutDescription
     :param parent:
@@ -45,12 +44,12 @@ async def prompt_input_layout(parent: QtWidgets.QWidget) -> Optional[Path]:
     from randovania.layout.layout_description import LayoutDescription
     return await _prompt_user_for_file(
         parent, caption="Select a Randovania seed log.",
-        file_filter="Randovania Game, *.{}".format(LayoutDescription.file_extension()),
+        file_filter=f"Randovania Game, *.{LayoutDescription.file_extension()}",
         new_file=False,
     )
 
 
-async def prompt_preset(parent: QtWidgets.QWidget, new_file: bool) -> Optional[Path]:
+async def prompt_preset(parent: QtWidgets.QWidget, new_file: bool) -> Path | None:
     """
     Shows an QFileDialog asking the user for a Randovania preset file
     :param parent:

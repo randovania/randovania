@@ -2,7 +2,7 @@ import copy
 import dataclasses
 from abc import ABC
 from random import Random
-from typing import Iterator, Union, Optional, Callable
+from typing import Iterator, Optional, Callable
 
 from randovania.game_description import node_search
 from randovania.game_description.game_description import GameDescription
@@ -289,9 +289,9 @@ class HintDistributor(ABC):
                           target_precision: HintItemPrecision,
                           relative_type: HintLocationPrecision,
                           precise_distance: bool,
-                          precision: Union[HintItemPrecision, HintRelativeAreaName],
+                          precision: HintItemPrecision | HintRelativeAreaName,
                           max_distance: int,
-                          ) -> Optional[Hint]:
+                          ) -> Hint | None:
         """
         Creates a relative hint.
         :return: Might be None, if no hint could be created.
@@ -339,7 +339,7 @@ class HintDistributor(ABC):
     def _relative(self,
                   relative_type: HintLocationPrecision,
                   precise_distance: bool,
-                  precision: Union[HintItemPrecision, HintRelativeAreaName],
+                  precision: HintItemPrecision | HintRelativeAreaName,
                   max_distance: int,
                   ) -> HintProvider:
         def _wrapper(player_state: PlayerState, patches: GamePatches, rng: Random, target: PickupIndex):

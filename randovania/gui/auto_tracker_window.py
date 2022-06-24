@@ -2,7 +2,6 @@ import dataclasses
 import json
 import logging
 from enum import Enum
-from typing import Dict, List, Union, Optional
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from qasync import asyncSlot
@@ -35,8 +34,8 @@ class FieldToCheck(Enum):
 
 @dataclasses.dataclass(frozen=True)
 class Element:
-    labels: List[Union[QtWidgets.QLabel, ClickableLabel, ClickableLabel]]
-    resources: List[ItemResourceInfo]
+    labels: list[QtWidgets.QLabel | ClickableLabel | ClickableLabel]
+    resources: list[ItemResourceInfo]
     text_template: str
     minimum_to_check: int
     field_to_check: FieldToCheck
@@ -53,7 +52,7 @@ class Element:
 class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
     _hooked = False
     _base_address: int
-    trackers: Dict[str, str]
+    trackers: dict[str, str]
     _current_tracker_game: RandovaniaGame = None
     _current_tracker_name: str = None
     give_item_signal = QtCore.Signal(PickupEntry)
@@ -80,7 +79,7 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
             self._action_to_name[action] = name
             theme_group.addAction(action)
 
-        self._tracker_elements: List[Element] = []
+        self._tracker_elements: list[Element] = []
         self.create_tracker()
 
         self.game_connection_setup = GameConnectionSetup(self, self.connection_status_label,
@@ -105,12 +104,12 @@ class AutoTrackerWindow(QtWidgets.QMainWindow, Ui_AutoTrackerWindow):
         super().hideEvent(event)
 
     @property
-    def selected_tracker(self) -> Optional[str]:
+    def selected_tracker(self) -> str | None:
         for action, name in self._action_to_name.items():
             if action.isChecked():
                 return name
 
-    def _update_tracker_from_hook(self, inventory: Dict[ItemResourceInfo, InventoryItem]):
+    def _update_tracker_from_hook(self, inventory: dict[ItemResourceInfo, InventoryItem]):
         for element in self._tracker_elements:
             if len(element.labels) > 1:
                 satisfied = False

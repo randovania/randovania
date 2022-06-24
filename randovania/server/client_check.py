@@ -1,6 +1,5 @@
 from distutils.version import StrictVersion
 from enum import Enum
-from typing import Dict
 
 import randovania
 
@@ -25,7 +24,7 @@ def check_client_version(version_checking: ClientVersionCheck, client_version: s
             return f"Incompatible client version '{shorter_client}', expected '{shorter_server}'"
 
 
-def check_client_headers(expected_headers: Dict[str, str], environ: Dict[str, str]):
+def check_client_headers(expected_headers: dict[str, str], environ: dict[str, str]):
     wrong_headers = {}
     for name, expected in expected_headers.items():
         value = environ.get("HTTP_{}".format(name.upper().replace("-", "_")))

@@ -8,7 +8,6 @@ import os
 import typing
 from functools import partial
 from pathlib import Path
-from typing import Optional, List
 
 from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtCore import QUrl, Signal, Qt
@@ -42,7 +41,7 @@ Do <span style=" font-weight:600;">not</span> disable if you're uncomfortable wi
 """
 
 
-def _t(key: str, disambiguation: Optional[str] = None):
+def _t(key: str, disambiguation: str | None = None):
     return QtCore.QCoreApplication.translate("MainWindow", key, disambiguation)
 
 
@@ -61,10 +60,10 @@ class MainWindow(WindowManager, Ui_MainWindow):
     _is_preview_mode: bool = False
     _experimental_games_visible: bool = False
 
-    menu_new_version: Optional[QtGui.QAction] = None
-    _current_version_url: Optional[str] = None
+    menu_new_version: QtGui.QAction | None = None
+    _current_version_url: str | None = None
     _options: Options
-    _data_visualizer: Optional[QtWidgets.QWidget] = None
+    _data_visualizer: QtWidgets.QWidget | None = None
     _map_tracker: QtWidgets.QWidget
     _preset_manager: PresetManager
     generate_seed_tab = None
@@ -92,7 +91,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
                  network_client, preview: bool):
         super().__init__()
         self.setupUi(self)
-        self.setWindowTitle("Randovania {}".format(VERSION))
+        self.setWindowTitle(f"Randovania {VERSION}")
         self._is_preview_mode = preview
         self.setAcceptDrops(True)
         common_qt_lib.set_default_window_icon(self)
@@ -328,7 +327,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
         from randovania.interface_common import github_releases_data
         await self._on_releases_data(await github_releases_data.get_releases())
 
-    async def _on_releases_data(self, releases: Optional[List[dict]]):
+    async def _on_releases_data(self, releases: list[dict] | None):
         current_version = update_checker.strict_current_version()
         last_changelog = self._options.last_changelog_displayed
 
@@ -364,7 +363,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
             self.menu_new_version.triggered.connect(self.open_version_link)
             self.menu_bar.addAction(self.menu_new_version)
 
-        self.menu_new_version.setText("New version available: {}".format(version.tag_name))
+        self.menu_new_version.setText(f"New version available: {version.tag_name}")
         self._current_version_url = version.html_url
 
     def open_version_link(self):
@@ -391,8 +390,8 @@ class MainWindow(WindowManager, Ui_MainWindow):
         self.open_data_visualizer_at(None, None, game)
 
     def open_data_visualizer_at(self,
-                                world_name: Optional[str],
-                                area_name: Optional[str],
+                                world_name: str | None,
+                                area_name: str | None,
                                 game: RandovaniaGame = RandovaniaGame.METROID_PRIME_ECHOES,
                                 ):
         from randovania.gui.data_editor import DataEditorWindow
@@ -440,7 +439,7 @@ class MainWindow(WindowManager, Ui_MainWindow):
 
     # Difficulties stuff
 
-    def _exec_trick_details(self, popup: "TrickDetailsPopup"):
+    def _exec_trick_details(self, popup: TrickDetailsPopup):
         self._trick_details_popup = popup
         self._trick_details_popup.setWindowModality(Qt.WindowModal)
         self._trick_details_popup.open()

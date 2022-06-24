@@ -1,5 +1,4 @@
 import struct
-from typing import Optional, List, Tuple
 
 from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector
@@ -40,7 +39,7 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
     def _asset_id_format(self):
         return ">I"
 
-    async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
+    async def current_game_status(self, executor: MemoryOperationExecutor) -> tuple[bool, World | None]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
         :param executor:
@@ -65,8 +64,8 @@ class EchoesRemoteConnector(PrimeRemoteConnector):
         return has_pending_op, self._current_status_world(results.get(memory_ops[0]),
                                                           results.get(memory_ops[2]))
 
-    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
-                                   ) -> List[MemoryOperation]:
+    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: list[ItemResourceInfo],
+                                   ) -> list[MemoryOperation]:
         player_state_pointer = self.version.cstate_manager_global + 0x150c
         return [
             MemoryOperation(

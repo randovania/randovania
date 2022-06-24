@@ -1,5 +1,3 @@
-from typing import List, Optional, Dict
-
 import dolphin_memory_engine
 
 from randovania.game_connection.executor.memory_operation import (MemoryOperationException, MemoryOperation,
@@ -22,7 +20,7 @@ class DolphinExecutor(MemoryOperationExecutor):
         self.dolphin = dolphin_memory_engine
 
     @property
-    def lock_identifier(self) -> Optional[str]:
+    def lock_identifier(self) -> str | None:
         return "randovania-dolphin-backend"
 
     @property
@@ -53,7 +51,7 @@ class DolphinExecutor(MemoryOperationExecutor):
         return self.dolphin.is_hooked()
 
     # Game Backend Stuff
-    def _memory_operation(self, op: MemoryOperation, pointers: Dict[int, Optional[int]]) -> Optional[bytes]:
+    def _memory_operation(self, op: MemoryOperation, pointers: dict[int, int | None]) -> bytes | None:
         op.validate_byte_sizes()
 
         address = op.address
@@ -84,7 +82,7 @@ class DolphinExecutor(MemoryOperationExecutor):
 
         return result
 
-    async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
         pointers_to_read = set()
         for op in ops:
             if op.offset is not None:

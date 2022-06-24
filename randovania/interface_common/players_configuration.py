@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import Dict
 
 
 @dataclass(frozen=True)
 class PlayersConfiguration:
     player_index: int
-    player_names: Dict[int, str]
+    player_names: dict[int, str]
 
     @property
     def is_multiworld(self) -> int:

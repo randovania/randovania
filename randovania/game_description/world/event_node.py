@@ -12,7 +12,7 @@ class EventNode(ResourceNode):
     event: ResourceInfo
 
     def __repr__(self):
-        return "EventNode({!r} -> {})".format(self.name, self.event.long_name)
+        return f"EventNode({self.name!r} -> {self.event.long_name})"
 
     def requirement_to_leave(self, context: NodeContext) -> Requirement:
         if context.current_resources.add_self_as_requirement_to_resources:

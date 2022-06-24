@@ -2,7 +2,7 @@ import asyncio
 import json
 import logging
 from pathlib import Path
-from typing import Set, Optional, AsyncContextManager
+from typing import AsyncContextManager
 
 import pid
 from PySide6.QtCore import QObject, Signal
@@ -23,8 +23,8 @@ class BackendInUse(Exception):
 
 
 class Data(AsyncContextManager):
-    collected_locations: Set[int]
-    uploaded_locations: Set[int]
+    collected_locations: set[int]
+    uploaded_locations: set[int]
     latest_message_displayed: int
 
     def __init__(self, path: Path):
@@ -57,10 +57,10 @@ class Data(AsyncContextManager):
 
 
 class MultiworldClient(QObject):
-    _data: Optional[Data] = None
+    _data: Data | None = None
     _expected_game: RandovaniaGame = None
-    _notify_task: Optional[asyncio.Task] = None
-    _pid: Optional[pid.PidFile] = None
+    _notify_task: asyncio.Task | None = None
+    _pid: pid.PidFile | None = None
     PendingUploadCount = Signal(int)
 
     def __init__(self, network_client: QtNetworkClient, game_connection: GameConnection):

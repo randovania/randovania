@@ -1,6 +1,5 @@
 import dataclasses
 import datetime
-from typing import List, Optional
 
 import aiohttp
 from PySide6.QtCore import Qt
@@ -122,8 +121,8 @@ async def _query_server(race_url) -> dict:
 
 
 class RacetimeBrowserDialog(QDialog, Ui_RacetimeBrowserDialog):
-    races: List[RaceEntry]
-    permalink: Optional[Permalink] = None
+    races: list[RaceEntry]
+    permalink: Permalink | None = None
 
     def __init__(self):
         super().__init__()

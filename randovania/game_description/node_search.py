@@ -1,5 +1,3 @@
-from typing import Dict, Optional
-
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.world.area import Area
@@ -13,9 +11,9 @@ from randovania.game_description.world.world_list import WorldList
 def distances_to_node(world_list: WorldList, starting_node: Node,
                       *,
                       ignore_elevators: bool = True,
-                      cutoff: Optional[int] = None,
-                      patches: Optional[GamePatches] = None,
-                      ) -> Dict[Area, int]:
+                      cutoff: int | None = None,
+                      patches: GamePatches | None = None,
+                      ) -> dict[Area, int]:
     """
     Compute the shortest distance from a node to all reachable areas.
     :param world_list:

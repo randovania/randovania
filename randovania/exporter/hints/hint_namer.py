@@ -1,4 +1,4 @@
-from typing import Optional, NamedTuple
+from typing import NamedTuple
 
 from randovania.exporter.hints.pickup_hint import PickupHint
 from randovania.game_description.hint import Hint
@@ -32,7 +32,7 @@ class HintNamer:
         """Used when for when an item has a guaranteed hint, but is a starting item."""
         raise NotImplementedError()
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: Optional[str],
+    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
                                    location: PickupLocation, hide_area: bool, with_color: bool) -> str:
         """Used when for indicating where a given resource can be found."""
         raise NotImplementedError()

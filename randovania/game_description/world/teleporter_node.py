@@ -13,7 +13,7 @@ class TeleporterNode(Node):
     editable: bool
 
     def __repr__(self):
-        return "TeleporterNode({!r} -> {})".format(self.name, self.default_connection)
+        return f"TeleporterNode({self.name!r} -> {self.default_connection})"
 
     def connections_from(self, context: NodeContext) -> typing.Iterator[tuple[Node, Requirement]]:
         target_area_identifier = context.patches.get_elevator_connection_for(self)

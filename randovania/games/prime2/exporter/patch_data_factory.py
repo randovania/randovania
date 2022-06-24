@@ -1,6 +1,6 @@
 import dataclasses
 from random import Random
-from typing import Dict, Iterator, Callable
+from typing import Iterator, Callable
 
 import randovania
 import randovania.games.prime2.exporter.hints
@@ -132,7 +132,7 @@ def _pretty_name_for_elevator(game: RandovaniaGame,
         if original_teleporter_node.default_connection == connection:
             return world_list.nodes_to_area(original_teleporter_node).name
 
-    return "Transport to {}".format(elevators.get_elevator_or_area_name(game, world_list, connection, False))
+    return f"Transport to {elevators.get_elevator_or_area_name(game, world_list, connection, False)}"
 
 
 def _create_elevators_field(patches: GamePatches, game: GameDescription) -> list:
@@ -389,7 +389,7 @@ def _create_starting_popup(layout_configuration: EchoesConfiguration,
         return []
 
 
-def _simplified_memo_data() -> Dict[str, str]:
+def _simplified_memo_data() -> dict[str, str]:
     result = pickup_exporter.GenericAcquiredMemo()
     result["Locked Power Bomb Expansion"] = ("Power Bomb Expansion acquired, "
                                              "but the main Power Bomb is required to use it.")
@@ -641,9 +641,9 @@ def _add_header_data_to_result(description: LayoutDescription, result: dict) -> 
 
 @dataclasses.dataclass(frozen=True)
 class EchoesModelNameMapping:
-    index: Dict[str, int]
-    sound_index: Dict[str, int]  # 1 for keys, 0 otherwise
-    jingle_index: Dict[str, int]  # 2 for keys, 1 for major items, 0 otherwise
+    index: dict[str, int]
+    sound_index: dict[str, int]  # 1 for keys, 0 otherwise
+    jingle_index: dict[str, int]  # 2 for keys, 1 for major items, 0 otherwise
 
 
 def _create_pickup_resources_for(resources: ResourceGain):

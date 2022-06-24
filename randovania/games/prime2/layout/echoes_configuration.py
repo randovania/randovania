@@ -1,6 +1,5 @@
 import dataclasses
 from enum import Enum
-from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -78,7 +77,7 @@ class EchoesConfiguration(BaseConfiguration):
     def game_enum(cls) -> RandovaniaGame:
         return RandovaniaGame.METROID_PRIME_ECHOES
 
-    def dangerous_settings(self) -> List[str]:
+    def dangerous_settings(self) -> list[str]:
         result = super().dangerous_settings()
 
         if self.dangerous_energy_tank:

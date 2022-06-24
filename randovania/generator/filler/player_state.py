@@ -242,7 +242,7 @@ def world_indices_for_mode(world: World, randomization_mode: RandomizationMode) 
     elif randomization_mode is RandomizationMode.MAJOR_MINOR_SPLIT:
         yield from world.major_pickup_indices
     else:
-        raise RuntimeError("Unknown randomization_mode: {}".format(randomization_mode))
+        raise RuntimeError(f"Unknown randomization_mode: {randomization_mode}")
 
 
 def build_available_indices(world_list: WorldList, configuration: FillerConfiguration,

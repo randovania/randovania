@@ -4,7 +4,7 @@ import copy
 import dataclasses
 import typing
 from dataclasses import dataclass
-from typing import Iterator, Optional
+from typing import Iterator
 
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceGain
 from randovania.game_description.resources.resource_type import ResourceType
@@ -40,8 +40,8 @@ class GamePatches:
     configuration: BaseConfiguration
     pickup_assignment: dict[PickupIndex, PickupTarget]
     elevator_connection: ElevatorConnection
-    dock_connection: list[Optional[int]]
-    dock_weakness: list[Optional[DockWeakness]]
+    dock_connection: list[int | None]
+    dock_weakness: list[DockWeakness | None]
     configurable_nodes: dict[NodeIdentifier, Requirement]
     starting_items: ResourceCollection
     starting_location: AreaIdentifier
@@ -81,7 +81,7 @@ class GamePatches:
 
         return dataclasses.replace(self, pickup_assignment=new_pickup_assignment)
 
-    def assign_node_configuration(self, assignment: Iterator[NodeConfigurationAssociation]) -> "GamePatches":
+    def assign_node_configuration(self, assignment: Iterator[NodeConfigurationAssociation]) -> GamePatches:
         new_configurable = copy.copy(self.configurable_nodes)
 
         for identifier, requirement in assignment:
@@ -90,15 +90,15 @@ class GamePatches:
 
         return dataclasses.replace(self, configurable_nodes=new_configurable)
 
-    def assign_starting_location(self, location: AreaIdentifier) -> "GamePatches":
+    def assign_starting_location(self, location: AreaIdentifier) -> GamePatches:
         return dataclasses.replace(self, starting_location=location)
 
-    def assign_extra_initial_items(self, new_resources: ResourceGain) -> "GamePatches":
+    def assign_extra_initial_items(self, new_resources: ResourceGain) -> GamePatches:
         current = self.starting_items.duplicate()
         current.add_resource_gain(new_resources)
         return dataclasses.replace(self, starting_items=current)
 
-    def assign_hint(self, identifier: NodeIdentifier, hint: Hint) -> "GamePatches":
+    def assign_hint(self, identifier: NodeIdentifier, hint: Hint) -> GamePatches:
         current = copy.copy(self.hints)
         current[identifier] = hint
         return dataclasses.replace(self, hints=current)
@@ -112,7 +112,7 @@ class GamePatches:
 
         return dataclasses.replace(self, elevator_connection=elevator_connection)
 
-    def get_elevator_connection_for(self, node: TeleporterNode) -> Optional[AreaIdentifier]:
+    def get_elevator_connection_for(self, node: TeleporterNode) -> AreaIdentifier | None:
         return self.elevator_connection.get(node.identifier, node.default_connection)
 
     def all_elevator_connections(self) -> Iterator[TeleporterAssociation]:
@@ -147,7 +147,7 @@ class GamePatches:
                 yield node, nodes[target]
 
     # Dock Weakness
-    def assign_dock_weakness(self, weaknesses: Iterator[tuple[DockNode, DockWeakness]]) -> "GamePatches":
+    def assign_dock_weakness(self, weaknesses: Iterator[tuple[DockNode, DockWeakness]]) -> GamePatches:
         new_weakness = list(self.dock_weakness)
 
         for node, weakness in weaknesses:

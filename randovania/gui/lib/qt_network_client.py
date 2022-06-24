@@ -2,7 +2,6 @@ import datetime
 import functools
 import json
 from pathlib import Path
-from typing import Optional, Set
 
 import pypresence
 from PySide6.QtCore import Signal
@@ -29,7 +28,7 @@ class QtNetworkClient(QWidget, NetworkClient):
     GameSessionAuditLogUpdated = Signal(GameSessionAuditLog)
     GameUpdateNotification = Signal()
 
-    discord: Optional[pypresence.AioClient] = None
+    discord: pypresence.AioClient | None = None
 
     def __init__(self, user_data_dir: Path):
         super().__init__()
@@ -105,7 +104,7 @@ class QtNetworkClient(QWidget, NetworkClient):
         self.GameUpdateNotification.emit()
 
     @property
-    def available_login_methods(self) -> Set[str]:
+    def available_login_methods(self) -> set[str]:
         methods = []
         if "guest_secret" in self.configuration:
             methods.append("guest")

@@ -1,5 +1,3 @@
-from typing import List, Dict
-
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -20,8 +18,8 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
     :return:
     """
 
-    item_pool: List[PickupEntry] = []
-    new_assignment: Dict[PickupIndex, PickupEntry] = {}
+    item_pool: list[PickupEntry] = []
+    new_assignment: dict[PickupIndex, PickupEntry] = {}
     initial_resources = ResourceCollection.with_database(resource_database)
 
     if mode == LayoutSkyTempleKeyMode.ALL_BOSSES or mode == LayoutSkyTempleKeyMode.ALL_GUARDIANS:
@@ -36,7 +34,7 @@ def add_sky_temple_key_distribution_logic(resource_database: ResourceDatabase,
     else:
         keys_to_place = mode.value
         if not isinstance(keys_to_place, int):
-            raise InvalidConfiguration("Unknown Sky Temple Key mode: {}".format(mode))
+            raise InvalidConfiguration(f"Unknown Sky Temple Key mode: {mode}")
 
         for key_number in range(keys_to_place):
             item_pool.append(create_sky_temple_key(key_number, resource_database))

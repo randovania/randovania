@@ -1,5 +1,4 @@
 from random import Random
-from typing import Tuple
 from unittest.mock import MagicMock
 
 import pytest
@@ -44,7 +43,7 @@ def test_get_single_hud_text_all_major_items(echoes_item_database, echoes_resour
     ("Y", "X"),
     ("Y", "Z"),
 ])
-def test_calculate_hud_text(order: Tuple[str, str], generic_item_category):
+def test_calculate_hud_text(order: tuple[str, str], generic_item_category):
     # Setup
     resource_a = ItemResourceInfo(0, "A", "A", 10)
     resource_b = ItemResourceInfo(1, "B", "B", 10)
@@ -241,7 +240,7 @@ def test_create_pickup_list_random_data_source(has_memo_data: bool, empty_patche
         }
     else:
         memo_data = {
-            name: "{} acquired!".format(name)
+            name: f"{name} acquired!"
             for name in ("A", "B", "C", "Useless")
         }
 

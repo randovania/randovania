@@ -276,7 +276,7 @@ def test_create_hints_item_location(echoes_game_patches, blank_pickup, item, loc
                                         namer, rng)
 
     # Assert
-    message = "{} {} can be found in {}.".format(determiner, item_name, location[1])
+    message = f"{determiner} {item_name} can be found in {location[1]}."
     # message = "The Flying Ing Cache in {} contains {}.".format(location[1], item[1])
     assert result[0]['strings'][0] == message
     assert result == [{'asset_id': asset_id, 'strings': [message, '', message]}]

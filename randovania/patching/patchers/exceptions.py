@@ -1,9 +1,8 @@
 import traceback
-from typing import Optional
 
 
 class ExportFailure(Exception):
-    def __init__(self, reason: str, output: Optional[str]):
+    def __init__(self, reason: str, output: str | None):
         super().__init__(reason)
         self.output = output
 

@@ -1,7 +1,6 @@
 import base64
 import datetime
 import json
-from typing import Optional, Tuple
 
 import cryptography.fernet
 import flask
@@ -16,7 +15,7 @@ from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
 
-def _create_client_side_session(sio: ServerApp, user: Optional[User]) -> dict:
+def _create_client_side_session(sio: ServerApp, user: User | None) -> dict:
     """
 
     :param user: If the session's user was already retrieved, pass it along to avoid an extra query.
@@ -41,7 +40,7 @@ def _create_client_side_session(sio: ServerApp, user: Optional[User]) -> dict:
     }
 
 
-def _create_session_with_discord_token(sio: ServerApp, access_token: str) -> Tuple[User, dict]:
+def _create_session_with_discord_token(sio: ServerApp, access_token: str) -> tuple[User, dict]:
     flask.session["DISCORD_OAUTH2_TOKEN"] = access_token
     discord_user = sio.discord.fetch_user()
 
@@ -108,7 +107,7 @@ def login_with_guest(sio: ServerApp, encrypted_login_request: bytes):
     return _create_client_side_session(sio, user)
 
 
-def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: Optional[int]):
+def restore_user_session(sio: ServerApp, encrypted_session: bytes, session_id: int | None):
     try:
         decrypted_session: bytes = sio.fernet_encrypt.decrypt(encrypted_session)
         session = json.loads(decrypted_session.decode("utf-8"))

@@ -1,5 +1,3 @@
-from typing import List, Tuple, Optional, Dict
-
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -14,7 +12,7 @@ from randovania.resolver.exceptions import InvalidConfiguration
 
 def _find_ammo_for(ammo_index: tuple[str, ...],
                    ammo_configuration: AmmoConfiguration,
-                   ) -> Tuple[Optional[Ammo], bool]:
+                   ) -> tuple[Ammo | None, bool]:
     for ammo, ammo_state in ammo_configuration.items_state.items():
         if ammo.items == ammo_index:
             return ammo, ammo_state.requires_major_item
@@ -34,8 +32,8 @@ def add_major_items(resource_database: ResourceDatabase,
     :return:
     """
 
-    item_pool: List[PickupEntry] = []
-    new_assignment: Dict[PickupIndex, PickupEntry] = {}
+    item_pool: list[PickupEntry] = []
+    new_assignment: dict[PickupIndex, PickupEntry] = {}
     initial_resources = ResourceCollection.with_database(resource_database)
 
     for item, state in major_items_configuration.items_state.items():
@@ -49,7 +47,7 @@ def add_major_items(resource_database: ResourceDatabase,
         if state.include_copy_in_original_location:
             if item.original_index is None:
                 raise InvalidConfiguration(
-                    "Item {0.name} does not exist in the original game, cannot use state {1}".format(item, state),
+                    f"Item {item.name} does not exist in the original game, cannot use state {state}",
                 )
             new_assignment[item.original_index] = create_major_item(item, state, True,
                                                                     resource_database, ammo, locked_ammo)

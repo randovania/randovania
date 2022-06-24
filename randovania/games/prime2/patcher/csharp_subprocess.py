@@ -3,9 +3,9 @@ import platform
 import re
 from asyncio import StreamWriter, StreamReader, IncompleteReadError
 from pathlib import Path
-from typing import Callable, List, Optional
+from typing import Callable
 
-IO_LOOP: Optional[asyncio.AbstractEventLoop] = None
+IO_LOOP: asyncio.AbstractEventLoop | None = None
 
 
 def is_windows() -> bool:
@@ -35,7 +35,7 @@ async def _read_data(stream: StreamReader, read_callback: Callable[[str], None])
             break
 
 
-async def _process_command_async(args: List[str], input_data: str, read_callback: Callable[[str], None]):
+async def _process_command_async(args: list[str], input_data: str, read_callback: Callable[[str], None]):
     process = await asyncio.create_subprocess_exec(*args,
                                                    stdin=asyncio.subprocess.PIPE,
                                                    stdout=asyncio.subprocess.PIPE,
@@ -48,10 +48,10 @@ async def _process_command_async(args: List[str], input_data: str, read_callback
     await process.wait()
 
 
-def process_command(args: List[str], input_data: str, read_callback: Callable[[str], None],
+def process_command(args: list[str], input_data: str, read_callback: Callable[[str], None],
                     add_mono_if_needed: bool = True):
     if not Path(args[0]).is_file():
-        raise FileNotFoundError("{} not found".format(args[0]))
+        raise FileNotFoundError(f"{args[0]} not found")
 
     if add_mono_if_needed and not is_windows():
         args = ["mono", *args]

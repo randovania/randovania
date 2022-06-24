@@ -4,7 +4,7 @@ import dataclasses
 import hashlib
 import json
 import operator
-from typing import Iterator, Iterable, Optional
+from typing import Iterator, Iterable
 
 import bitstruct
 import construct
@@ -20,9 +20,9 @@ _PERMALINK_MAX_VERSION = 256
 
 
 class UnsupportedPermalink(Exception):
-    seed_hash: Optional[bytes]
+    seed_hash: bytes | None
     randovania_version: bytes
-    games: Optional[tuple[RandovaniaGame, ...]]
+    games: tuple[RandovaniaGame, ...] | None
 
     def __init__(self, msg, seed_hash, version, games):
         super().__init__(msg)
@@ -91,15 +91,15 @@ PermalinkBinary = construct.FocusedSeq(
 @dataclasses.dataclass(frozen=True)
 class Permalink:
     parameters: GeneratorParameters
-    seed_hash: Optional[bytes]
+    seed_hash: bytes | None
     randovania_version: bytes
 
     def __post_init__(self):
         if len(self.randovania_version) != 4:
-            raise ValueError("randovania_version must be 4 bytes long, got {}".format(len(self.randovania_version)))
+            raise ValueError(f"randovania_version must be 4 bytes long, got {len(self.randovania_version)}")
 
         if self.seed_hash is not None and len(self.seed_hash) != 5:
-            raise ValueError("seed_hash must be 5 bytes long if present, got {}".format(len(self.seed_hash)))
+            raise ValueError(f"seed_hash must be 5 bytes long if present, got {len(self.seed_hash)}")
 
     @classmethod
     def current_schema_version(cls) -> int:
@@ -121,7 +121,7 @@ class Permalink:
         return randovania.GIT_HASH
 
     @classmethod
-    def from_parameters(cls, parameters: GeneratorParameters, seed_hash: Optional[bytes] = None) -> "Permalink":
+    def from_parameters(cls, parameters: GeneratorParameters, seed_hash: bytes | None = None) -> "Permalink":
         return Permalink(
             parameters=parameters,
             seed_hash=seed_hash,
@@ -141,7 +141,7 @@ class Permalink:
             })
             return base64.b64encode(encoded, altchars=b'-_').decode("utf-8")
         except ValueError as e:
-            return "Unable to create Permalink: {}".format(e)
+            return f"Unable to create Permalink: {e}"
 
     @classmethod
     def from_str(cls, param: str) -> "Permalink":

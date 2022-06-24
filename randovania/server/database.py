@@ -1,7 +1,7 @@
 import datetime
 import functools
 import json
-from typing import Iterator, List, Optional, Callable, Any
+from typing import Iterator, Callable, Any
 
 import peewee
 
@@ -57,7 +57,7 @@ class User(BaseModel):
         }
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def _decode_layout_description(s):
     return LayoutDescription.from_json_dict(json.loads(s))
 
@@ -82,7 +82,7 @@ class GameSession(BaseModel):
         return cls.get(cls._meta.primary_key == pk)
 
     @property
-    def all_presets(self) -> List[Preset]:
+    def all_presets(self) -> list[Preset]:
         return [
             VersionedPreset(json.loads(preset.preset)).get_preset()
             for preset in sorted(self.presets, key=lambda it: it.row)
@@ -93,12 +93,12 @@ class GameSession(BaseModel):
         return len(self.presets)
 
     @property
-    def layout_description(self) -> Optional[LayoutDescription]:
+    def layout_description(self) -> LayoutDescription | None:
         # FIXME: a server can have an invalid layout description. Likely from an old version!
         return _decode_layout_description(self.layout_description_json) if self.layout_description_json else None
 
     @layout_description.setter
-    def layout_description(self, description: Optional[LayoutDescription]):
+    def layout_description(self, description: LayoutDescription | None):
         if description is not None:
             self.layout_description_json = json.dumps(description.as_json(force_spoiler=True))
         else:
@@ -120,7 +120,7 @@ class GameSession(BaseModel):
         }
 
     @property
-    def allowed_games(self) -> List[RandovaniaGame]:
+    def allowed_games(self) -> list[RandovaniaGame]:
         dev_features = self.dev_features or ""
         return [
             game for game in RandovaniaGame.sorted_all_games()

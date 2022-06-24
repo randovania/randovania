@@ -32,7 +32,7 @@ def test_round_trip(spoiler: bool,
     mocker.patch("uuid.uuid4", return_value=random_uuid)
 
     preset = Preset(
-        name="{} Custom".format(default_echoes_preset.game.long_name),
+        name=f"{default_echoes_preset.game.long_name} Custom",
         description="A customized preset.",
         uuid=random_uuid,
         base_preset_uuid=default_echoes_preset.uuid,
@@ -73,7 +73,7 @@ def test_decode(default_echoes_preset, mocker, extra_data):
         spoiler=True,
         presets=[dataclasses.replace(
             default_echoes_preset,
-            name="{} Custom".format(default_echoes_preset.game.long_name),
+            name=f"{default_echoes_preset.game.long_name} Custom",
             description="A customized preset.",
             uuid=random_uuid,
             base_preset_uuid=default_echoes_preset.uuid,

@@ -5,7 +5,7 @@ import json
 import logging
 import random
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 from PySide6 import QtWidgets, QtGui
 from PySide6.QtCore import Qt, QTimer
@@ -51,7 +51,7 @@ logger = logging.getLogger(__name__)
 @dataclasses.dataclass()
 class PlayerWidget:
     name: QtWidgets.QLabel
-    connection_state: Optional[QtWidgets.QLabel]
+    connection_state: QtWidgets.QLabel | None
     tool: QtWidgets.QToolButton
     kick: QtGui.QAction
     promote: QtGui.QAction
@@ -60,10 +60,10 @@ class PlayerWidget:
     move_up: QtGui.QAction
     move_down: QtGui.QAction
     switch_observer_action: QtGui.QAction
-    player: Optional[PlayerSessionEntry] = None
+    player: PlayerSessionEntry | None = None
 
     @property
-    def widgets(self) -> List[QtWidgets.QWidget]:
+    def widgets(self) -> list[QtWidgets.QWidget]:
         result = [self.name, self.tool]
         if self.connection_state is not None:
             result.append(self.connection_state)
@@ -77,7 +77,7 @@ class PlayerWidget:
         for widget in self.widgets:
             widget.setVisible(value)
 
-    def set_player(self, player: Optional[PlayerSessionEntry]):
+    def set_player(self, player: PlayerSessionEntry | None):
         self.player = player
         if player is not None:
             self.set_visible(True)
@@ -133,9 +133,9 @@ class RowWidget:
     view_summary: QtGui.QAction
     customize: QtGui.QAction
     import_menu: QtWidgets.QMenu
-    import_actions: List[QtGui.QAction]
+    import_actions: list[QtGui.QAction]
     export_menu: QtWidgets.QMenu
-    export_actions: List[QtGui.QAction]
+    export_actions: list[QtGui.QAction]
     delete: QtGui.QAction
 
     @property
@@ -163,12 +163,12 @@ _PRESET_COLUMNS = 3
 
 
 class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundTaskMixin):
-    team_players: List[PlayerWidget]
-    observers: List[PlayerWidget]
-    rows: List[RowWidget]
+    team_players: list[PlayerWidget]
+    observers: list[PlayerWidget]
+    rows: list[RowWidget]
     _game_session: GameSessionEntry
     has_closed = False
-    _logic_settings_window: Optional[CustomizePresetDialog] = None
+    _logic_settings_window: CustomizePresetDialog | None = None
     _window_manager: WindowManager
     _generating_game: bool = False
     _already_kicked = False
@@ -535,7 +535,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
                 self._window_manager,
                 QtWidgets.QMessageBox.Critical,
                 "Error loading preset",
-                "The file at '{}' contains an invalid preset.".format(path)
+                f"The file at '{path}' contains an invalid preset."
             )
             return
 
@@ -945,7 +945,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
 
         return True
 
-    async def generate_game(self, spoiler: bool, retries: Optional[int]):
+    async def generate_game(self, spoiler: bool, retries: int | None):
         await async_dialog.warning(
             self, "Multiworld Limitation",
             "Warning: Multiworld games doesn't have proper energy damage logic. "
@@ -962,7 +962,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
         ))
         return await self.generate_game_with_permalink(permalink, retries=retries)
 
-    async def generate_game_with_permalink(self, permalink: Permalink, retries: Optional[int]):
+    async def generate_game_with_permalink(self, permalink: Permalink, retries: int | None):
         if not await self._check_dangerous_presets(permalink):
             return
 
@@ -1124,7 +1124,7 @@ class GameSessionWindow(QtWidgets.QMainWindow, Ui_GameSessionWindow, BackgroundT
             raise RuntimeError(f"Unknown session state: {state}")
 
     @property
-    def current_player_game(self) -> Optional[RandovaniaGame]:
+    def current_player_game(self) -> RandovaniaGame | None:
         membership = self.current_player_membership
         if membership.is_observer:
             return None

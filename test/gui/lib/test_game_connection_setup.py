@@ -1,8 +1,8 @@
 from pathlib import Path
+from unittest.mock import MagicMock, AsyncMock
 
 import pytest
 from PySide6 import QtWidgets
-from mock import MagicMock, AsyncMock
 
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.game_connection import GameConnection

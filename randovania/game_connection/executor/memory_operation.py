@@ -1,6 +1,5 @@
 import dataclasses
 import logging
-from typing import Optional, List, Dict
 
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 
@@ -12,9 +11,9 @@ class MemoryOperationException(Exception):
 @dataclasses.dataclass(frozen=True)
 class MemoryOperation:
     address: int
-    offset: Optional[int] = None
-    read_byte_count: Optional[int] = None
-    write_bytes: Optional[bytes] = None
+    offset: int | None = None
+    read_byte_count: int | None = None
+    write_bytes: bytes | None = None
 
     @property
     def byte_count(self) -> int:
@@ -49,7 +48,7 @@ class MemoryOperationExecutor:
         self.logger = logging.getLogger(type(self).__name__)
 
     @property
-    def lock_identifier(self) -> Optional[str]:
+    def lock_identifier(self) -> str | None:
         raise NotImplementedError()
 
     @property
@@ -65,9 +64,9 @@ class MemoryOperationExecutor:
     def is_connected(self) -> bool:
         raise NotImplementedError()
 
-    async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
         raise NotImplementedError()
 
-    async def perform_single_memory_operation(self, op: MemoryOperation) -> Optional[bytes]:
+    async def perform_single_memory_operation(self, op: MemoryOperation) -> bytes | None:
         result = await self.perform_memory_operations([op])
         return result.get(op)

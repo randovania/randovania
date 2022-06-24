@@ -2,7 +2,6 @@ import datetime
 import json
 import logging
 from pathlib import Path
-from typing import Optional, List
 
 import aiofiles
 import aiohttp
@@ -21,7 +20,7 @@ def _is_recent(last_check) -> bool:
     return (datetime.datetime.now() - last_check_date) <= datetime.timedelta(days=1)
 
 
-async def _read_from_persisted() -> Optional[List[dict]]:
+async def _read_from_persisted() -> list[dict] | None:
     try:
         async with aiofiles.open(_last_check_file()) as open_file:
             last_check = json.loads(await open_file.read())
@@ -39,7 +38,7 @@ async def _read_from_persisted() -> Optional[List[dict]]:
         return None
 
 
-async def _download_from_github(page_size: int = 100) -> Optional[List[dict]]:
+async def _download_from_github(page_size: int = 100) -> list[dict] | None:
     async with aiohttp.ClientSession() as session:
         try:
             result = []
@@ -61,7 +60,7 @@ async def _download_from_github(page_size: int = 100) -> Optional[List[dict]]:
             return None
 
 
-async def _persist(data: List[dict]):
+async def _persist(data: list[dict]):
     _last_check_file().parent.mkdir(parents=True, exist_ok=True)
 
     async with aiofiles.open(_last_check_file(), "w") as open_file:
@@ -74,7 +73,7 @@ async def _persist(data: List[dict]):
                 default=str))
 
 
-async def get_releases() -> Optional[List[dict]]:
+async def get_releases() -> list[dict] | None:
     data = await _read_from_persisted()
 
     if data is None:

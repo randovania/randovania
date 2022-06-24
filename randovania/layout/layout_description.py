@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from random import Random
-from typing import Tuple, Dict
 
 import randovania
 from randovania import get_data_path
@@ -21,7 +20,7 @@ from randovania.layout.versioned_preset import VersionedPreset
 
 
 @lru_cache(maxsize=1)
-def _all_hash_words() -> Dict[RandovaniaGame, typing.List[str]]:
+def _all_hash_words() -> dict[RandovaniaGame, list[str]]:
     with (get_data_path() / "hash_words" / "hash_words.json").open() as hash_words_file:
         return {
             RandovaniaGame(key): words
@@ -30,7 +29,7 @@ def _all_hash_words() -> Dict[RandovaniaGame, typing.List[str]]:
 
 
 def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
-    rng = Random(sum([hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(hash_bytes)]))
+    rng = Random(sum(hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(hash_bytes)))
     words = _all_hash_words()
 
     games_left = []
@@ -54,8 +53,8 @@ class LayoutDescription:
     randovania_version_text: str
     randovania_version_git: bytes
     generator_parameters: GeneratorParameters
-    all_patches: Dict[int, GamePatches]
-    item_order: Tuple[str, ...]
+    all_patches: dict[int, GamePatches]
+    item_order: tuple[str, ...]
 
     def __post_init__(self):
         object.__setattr__(self, "__cached_serialized_patches", None)
@@ -67,8 +66,8 @@ class LayoutDescription:
     @classmethod
     def create_new(cls,
                    generator_parameters: GeneratorParameters,
-                   all_patches: Dict[int, GamePatches],
-                   item_order: Tuple[str, ...],
+                   all_patches: dict[int, GamePatches],
+                   item_order: tuple[str, ...],
                    ) -> "LayoutDescription":
         return cls(
             randovania_version_text=randovania.VERSION,
@@ -171,7 +170,7 @@ class LayoutDescription:
         return result
 
     @property
-    def all_games(self) -> typing.FrozenSet[RandovaniaGame]:
+    def all_games(self) -> frozenset[RandovaniaGame]:
         return frozenset(preset.game for preset in self.all_presets)
 
     @property

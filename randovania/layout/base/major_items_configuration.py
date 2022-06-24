@@ -1,6 +1,6 @@
 import copy
 import dataclasses
-from typing import Dict, Iterator, Tuple, List, TypeVar, Iterable
+from typing import Iterator, TypeVar, Iterable
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -23,8 +23,8 @@ def _check_matching_items(actual: Iterable[T], reference: Iterable[T]):
 @dataclasses.dataclass(frozen=True)
 class MajorItemsConfiguration(BitPackValue):
     game: RandovaniaGame
-    items_state: Dict[MajorItem, MajorItemState]
-    default_items: Dict[ItemCategory, MajorItem]
+    items_state: dict[MajorItem, MajorItemState]
+    default_items: dict[ItemCategory, MajorItem]
     minimum_random_starting_items: int
     maximum_random_starting_items: int
 
@@ -85,10 +85,10 @@ class MajorItemsConfiguration(BitPackValue):
             maximum_random_starting_items=value["maximum_random_starting_items"],
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         reference: MajorItemsConfiguration = metadata["reference"]
 
-        name_to_item: Dict[str, MajorItem] = {item.name: item for item in self.items_state.keys()}
+        name_to_item: dict[str, MajorItem] = {item.name: item for item in self.items_state.keys()}
 
         modified_items = sorted(
             item.name for item, state in self.items_state.items()
@@ -112,7 +112,7 @@ class MajorItemsConfiguration(BitPackValue):
     def bit_pack_unpack(cls, decoder: BitPackDecoder, metadata) -> "MajorItemsConfiguration":
         reference: MajorItemsConfiguration = metadata["reference"]
 
-        name_to_item: Dict[str, MajorItem] = {item.name: item for item in reference.items_state.keys()}
+        name_to_item: dict[str, MajorItem] = {item.name: item for item in reference.items_state.keys()}
         modified_items = bitpacking.decode_sorted_array_elements(decoder, sorted(name_to_item.keys()))
 
         items_state = copy.copy(reference.items_state)
@@ -150,7 +150,7 @@ class MajorItemsConfiguration(BitPackValue):
             item: state
         })
 
-    def replace_states(self, new_states: Dict[MajorItem, MajorItemState]) -> "MajorItemsConfiguration":
+    def replace_states(self, new_states: dict[MajorItem, MajorItemState]) -> "MajorItemsConfiguration":
         """
         Creates a copy of this MajorItemsConfiguration where the state of all given items are replaced by the given
         states.
@@ -176,8 +176,8 @@ class MajorItemsConfiguration(BitPackValue):
         default_items[category] = item
         return dataclasses.replace(self, default_items=default_items)
 
-    def calculate_provided_ammo(self) -> Dict[str, int]:
-        result: Dict[str, int] = {}
+    def calculate_provided_ammo(self) -> dict[str, int]:
+        result: dict[str, int] = {}
 
         for item, state in self.items_state.items():
             total_pickups = state.num_shuffled_pickups + state.num_included_in_starting_items
@@ -189,7 +189,7 @@ class MajorItemsConfiguration(BitPackValue):
 
         return result
 
-    def dangerous_settings(self) -> List[str]:
+    def dangerous_settings(self) -> list[str]:
         result = []
         for major_item, state in self.items_state.items():
             if (major_item.warning is not None and "EXPERIMENTAL" in major_item.warning

@@ -1,5 +1,4 @@
 import logging
-from typing import Optional, List, Tuple
 
 from randovania.game_connection.connection_base import ConnectionBase, GameConnectionStatus, Inventory
 from randovania.game_connection.connector.corruption_remote_connector import CorruptionRemoteConnector
@@ -17,26 +16,26 @@ from randovania.games.prime1.patcher import prime1_dol_versions
 from randovania.games.prime2.patcher import echoes_dol_versions
 from randovania.games.prime3.patcher import corruption_dol_versions
 
-PermanentPickups = Tuple[Tuple[str, PickupEntry], ...]
+PermanentPickups = tuple[tuple[str, PickupEntry], ...]
 
 
 class ConnectionBackend(ConnectionBase):
     executor: MemoryOperationExecutor
-    connector: Optional[RemoteConnector] = None
+    connector: RemoteConnector | None = None
 
     _checking_for_collected_index: bool = False
     _inventory: Inventory
     _enabled: bool = True
 
     # Detected Game
-    _world: Optional[World] = None
-    _last_world: Optional[World] = None
+    _world: World | None = None
+    _last_world: World | None = None
 
     # Messages
     message_cooldown: float = 0.0
 
     # Multiworld
-    _expected_game: Optional[RandovaniaGame]
+    _expected_game: RandovaniaGame | None
     _permanent_pickups: PermanentPickups
 
     def __init__(self, executor: MemoryOperationExecutor):
@@ -77,7 +76,7 @@ class ConnectionBackend(ConnectionBase):
         raise NotImplementedError()
 
     @property
-    def lock_identifier(self) -> Optional[str]:
+    def lock_identifier(self) -> str | None:
         return self.executor.lock_identifier
 
     @property
@@ -93,8 +92,8 @@ class ConnectionBackend(ConnectionBase):
         if not value:
             self.connector = None
 
-    async def _identify_game(self) -> Optional[RemoteConnector]:
-        all_connectors: List[PrimeRemoteConnector] = [
+    async def _identify_game(self) -> RemoteConnector | None:
+        all_connectors: list[PrimeRemoteConnector] = [
             Prime1RemoteConnector(version)
             for version in prime1_dol_versions.ALL_VERSIONS
         ]
@@ -136,7 +135,7 @@ class ConnectionBackend(ConnectionBase):
     def get_current_inventory(self) -> Inventory:
         return self._inventory
 
-    def set_expected_game(self, game: Optional[RandovaniaGame]):
+    def set_expected_game(self, game: RandovaniaGame | None):
         self._expected_game = game
 
     def set_permanent_pickups(self, pickups: PermanentPickups):

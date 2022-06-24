@@ -1,6 +1,6 @@
 import dataclasses
 from random import Random
-from typing import List, Tuple, Callable, Dict
+from typing import Callable
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -14,7 +14,7 @@ from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug
 
 
-def _split_expansions(item_pool: List[PickupEntry]) -> Tuple[List[PickupEntry], List[PickupEntry]]:
+def _split_expansions(item_pool: list[PickupEntry]) -> tuple[list[PickupEntry], list[PickupEntry]]:
     """
 
     :param item_pool:
@@ -38,20 +38,20 @@ class PlayerPool:
     game_generator: GameGenerator
     configuration: BaseConfiguration
     patches: GamePatches
-    pickups: List[PickupEntry]
+    pickups: list[PickupEntry]
 
 
 @dataclasses.dataclass(frozen=True)
 class FillerPlayerResult:
     game: GameDescription
     patches: GamePatches
-    unassigned_pickups: List[PickupEntry]
+    unassigned_pickups: list[PickupEntry]
 
 
 @dataclasses.dataclass(frozen=True)
 class FillerResults:
-    player_results: Dict[int, FillerPlayerResult]
-    action_log: Tuple[str, ...]
+    player_results: dict[int, FillerPlayerResult]
+    action_log: tuple[str, ...]
 
 
 async def run_filler(rng: Random,
@@ -111,7 +111,7 @@ async def run_filler(rng: Random,
         message = "{}\n\n{}".format(
             str(e),
             "\n\n".join(
-                "#### Player {}\n{}".format(player.index + 1, player.current_state_report())
+                f"#### Player {player.index + 1}\n{player.current_state_report()}"
                 for player in player_states
             ),
         )

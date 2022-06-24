@@ -1,5 +1,4 @@
 import dataclasses
-from typing import List
 
 from randovania.bitpacking.bitpacking import BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -59,7 +58,7 @@ class BaseConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInitTypeCh
     def active_layers(self) -> set[str]:
         return {"default"}
 
-    def dangerous_settings(self) -> List[str]:
+    def dangerous_settings(self) -> list[str]:
         result = []
 
         if self.first_progression_must_be_local:

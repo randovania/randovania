@@ -14,7 +14,7 @@ def resource_database_for(game: RandovaniaGame) -> ResourceDatabase:
     return game_description_for(game).resource_database
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def game_description_for(game: RandovaniaGame) -> GameDescription:
     result = data_reader.decode_data(default_data.read_json_then_binary(game)[1])
     if result.game != game:
@@ -35,7 +35,7 @@ def _write_item_database_in_path(item_db: item_database.ItemDatabase, path: Path
         json.dump(data, database_file, indent=4)
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def item_database_for_game(game: RandovaniaGame):
     return _read_item_database_in_path(game.data_path.joinpath("item_database"),
                                        game)
@@ -45,7 +45,7 @@ def write_item_database_for_game(item_db: item_database, game: RandovaniaGame):
     _write_item_database_in_path(item_db, game.data_path.joinpath("item_database"))
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def default_prime2_memo_data() -> dict:
     with RandovaniaGame.METROID_PRIME_ECHOES.data_path.joinpath("item_database", "memo_data.json").open(
             "r") as memo_data_file:
@@ -55,13 +55,13 @@ def default_prime2_memo_data() -> dict:
 
     for i in range(1, 4):
         for temple_key in temple_keys:
-            memo_data["{} {}".format(temple_key, i)] = memo_data[temple_key]
+            memo_data[f"{temple_key} {i}"] = memo_data[temple_key]
 
     for temple_key in temple_keys:
         memo_data.pop(temple_key)
 
     for i in range(1, 10):
-        memo_data["Sky Temple Key {}".format(i)] = memo_data["Sky Temple Key"]
+        memo_data[f"Sky Temple Key {i}"] = memo_data["Sky Temple Key"]
     memo_data.pop("Sky Temple Key")
 
     return memo_data

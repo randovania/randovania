@@ -1,7 +1,7 @@
 import copy
 import json
 from pathlib import Path
-from typing import List, Callable, TypeVar, Tuple, Dict, Type, Optional, Hashable, Any
+from typing import Callable, TypeVar, Hashable, Any
 
 from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData, IndexWithReason
@@ -50,11 +50,11 @@ X = TypeVar('X')
 Y = TypeVar('Y')
 
 
-def read_dict(data: Dict[str, Y], item_reader: Callable[[str, Y], X]) -> List[X]:
+def read_dict(data: dict[str, Y], item_reader: Callable[[str, Y], X]) -> list[X]:
     return [item_reader(name, item) for name, item in data.items()]
 
 
-def read_array(data: List[Y], item_reader: Callable[[Y], X]) -> List[X]:
+def read_array(data: list[Y], item_reader: Callable[[Y], X]) -> list[X]:
     return [item_reader(item) for item in data]
 
 
@@ -69,36 +69,36 @@ class ResourceReader:
         self.next_index += 1
         return result
 
-    def read_resource_info(self, name: str, data: Dict, resource_type: ResourceType) -> SimpleResourceInfo:
+    def read_resource_info(self, name: str, data: dict, resource_type: ResourceType) -> SimpleResourceInfo:
         return SimpleResourceInfo(self.make_index(), data["long_name"],
                                   name, resource_type, frozen_lib.wrap(data["extra"]))
 
-    def read_item_resource_info(self, name: str, data: Dict) -> ItemResourceInfo:
+    def read_item_resource_info(self, name: str, data: dict) -> ItemResourceInfo:
         return ItemResourceInfo(self.make_index(), data["long_name"],
                                 name, data["max_capacity"], frozen_lib.wrap(data["extra"]))
 
-    def read_trick_resource_info(self, name: str, data: Dict) -> TrickResourceInfo:
+    def read_trick_resource_info(self, name: str, data: dict) -> TrickResourceInfo:
         return TrickResourceInfo(self.make_index(), data["long_name"],
                                  name, data["description"], frozen_lib.wrap(data["extra"]))
 
-    def read_resource_info_array(self, data: Dict[str, Dict], resource_type: ResourceType) -> List[SimpleResourceInfo]:
+    def read_resource_info_array(self, data: dict[str, dict], resource_type: ResourceType) -> list[SimpleResourceInfo]:
         return read_dict(data, lambda name, info: self.read_resource_info(name, info, resource_type=resource_type))
 
 
 # Damage
 
-def read_damage_reduction(data: Dict, items: List[ItemResourceInfo]) -> DamageReduction:
+def read_damage_reduction(data: dict, items: list[ItemResourceInfo]) -> DamageReduction:
     return DamageReduction(find_resource_info_with_id(items, data["name"], ResourceType.ITEM)
                            if data["name"] is not None else None,
                            data["multiplier"])
 
 
-def read_damage_reductions(data: List[Dict], items: List[ItemResourceInfo]) -> Tuple[DamageReduction, ...]:
+def read_damage_reductions(data: list[dict], items: list[ItemResourceInfo]) -> tuple[DamageReduction, ...]:
     return tuple(read_damage_reduction(info, items) for info in data)
 
 
-def read_resource_reductions_dict(data: List[Dict], db: ResourceDatabase,
-                                  ) -> Dict[SimpleResourceInfo, List[DamageReduction]]:
+def read_resource_reductions_dict(data: list[dict], db: ResourceDatabase,
+                                  ) -> dict[SimpleResourceInfo, list[DamageReduction]]:
     return {
         db.get_by_type_and_index(ResourceType.DAMAGE, item["name"]): read_damage_reductions(item["reductions"],
                                                                                             db.item)
@@ -109,7 +109,7 @@ def read_resource_reductions_dict(data: List[Dict], db: ResourceDatabase,
 # Requirement
 
 
-def read_resource_requirement(data: Dict, resource_database: ResourceDatabase
+def read_resource_requirement(data: dict, resource_database: ResourceDatabase
                               ) -> ResourceRequirement:
     data = data["data"]
     return ResourceRequirement.with_data(
@@ -118,9 +118,9 @@ def read_resource_requirement(data: Dict, resource_database: ResourceDatabase
         data["amount"], data["negate"])
 
 
-def read_requirement_array(data: Dict,
+def read_requirement_array(data: dict,
                            resource_database: ResourceDatabase,
-                           cls: Type[X],
+                           cls: type[X],
                            ) -> X:
     # Old version
     if isinstance(data["data"], list):
@@ -141,7 +141,7 @@ def read_requirement_array(data: Dict,
     )
 
 
-def read_requirement_template(data: Dict, resource_database: ResourceDatabase) -> RequirementTemplate:
+def read_requirement_template(data: dict, resource_database: ResourceDatabase) -> RequirementTemplate:
     return RequirementTemplate(data["data"])
 
 
@@ -163,7 +163,7 @@ def read_requirement(data: dict, resource_database: ResourceDatabase) -> Require
         raise ValueError(f"Unknown requirement type: {req_type}")
 
 
-def read_optional_requirement(data: Optional[dict], resource_database: ResourceDatabase) -> Optional[Requirement]:
+def read_optional_requirement(data: dict | None, resource_database: ResourceDatabase) -> Requirement | None:
     if data is None:
         return None
     else:
@@ -172,7 +172,7 @@ def read_optional_requirement(data: Optional[dict], resource_database: ResourceD
 
 # Resource Gain
 
-def read_single_resource_gain(item: Dict, database: "ResourceDatabase") -> Tuple[ResourceInfo, int]:
+def read_single_resource_gain(item: dict, database: "ResourceDatabase") -> tuple[ResourceInfo, int]:
     resource = database.get_by_type_and_index(ResourceType.from_str(item["resource_type"]),
                                               item["resource_name"])
     amount = item["amount"]
@@ -180,14 +180,14 @@ def read_single_resource_gain(item: Dict, database: "ResourceDatabase") -> Tuple
     return resource, amount
 
 
-def read_resource_gain_tuple(data: List[Dict], database: "ResourceDatabase") -> ResourceGainTuple:
+def read_resource_gain_tuple(data: list[dict], database: "ResourceDatabase") -> ResourceGainTuple:
     return tuple(
         read_single_resource_gain(item, database)
         for item in data
     )
 
 
-def read_dock_lock(data: Optional[dict], resource_database: ResourceDatabase) -> Optional[DockLock]:
+def read_dock_lock(data: dict | None, resource_database: ResourceDatabase) -> DockLock | None:
     if data is None:
         return None
     return DockLock(
@@ -259,7 +259,7 @@ def read_dock_weakness_database(data: dict,
     )
 
 
-def location_from_json(location: Dict[str, float]) -> NodeLocation:
+def location_from_json(location: dict[str, float]) -> NodeLocation:
     return NodeLocation(location["x"], location["y"], location["z"])
 
 
@@ -296,7 +296,7 @@ class WorldReader:
         except MissingResource:
             return None
 
-    def read_node(self, name: str, data: Dict) -> Node:
+    def read_node(self, name: str, data: dict) -> Node:
         try:
             location = None
             if data["coordinates"] is not None:
@@ -439,10 +439,10 @@ class WorldReader:
         except KeyError as e:
             raise KeyError(f"Missing key `{e}` for area `{area_name}`")
 
-    def read_area_list(self, data: dict[str, dict]) -> List[Area]:
+    def read_area_list(self, data: dict[str, dict]) -> list[Area]:
         return [self.read_area(name, item) for name, item in data.items()]
 
-    def read_world(self, data: Dict) -> World:
+    def read_world(self, data: dict) -> World:
         self.current_world_name = data["name"]
         return World(
             data["name"],
@@ -450,18 +450,18 @@ class WorldReader:
             frozen_lib.wrap(data["extra"]),
         )
 
-    def read_world_list(self, data: List[Dict]) -> WorldList:
+    def read_world_list(self, data: list[dict]) -> WorldList:
         return WorldList(read_array(data, self.read_world))
 
 
-def read_requirement_templates(data: Dict, database: ResourceDatabase) -> Dict[str, Requirement]:
+def read_requirement_templates(data: dict, database: ResourceDatabase) -> dict[str, Requirement]:
     return {
         name: read_requirement(item, database)
         for name, item in data.items()
     }
 
 
-def read_resource_database(game: RandovaniaGame, data: Dict) -> ResourceDatabase:
+def read_resource_database(game: RandovaniaGame, data: dict) -> ResourceDatabase:
     reader = ResourceReader()
 
     item = read_dict(data["items"], reader.read_item_resource_info)
@@ -484,14 +484,14 @@ def read_resource_database(game: RandovaniaGame, data: Dict) -> ResourceDatabase
     return db
 
 
-def read_initial_states(data: Dict[str, List], resource_database: ResourceDatabase) -> Dict[str, ResourceGainTuple]:
+def read_initial_states(data: dict[str, list], resource_database: ResourceDatabase) -> dict[str, ResourceGainTuple]:
     return {
         name: read_resource_gain_tuple(item, resource_database)
         for name, item in data.items()
     }
 
 
-def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
+def read_minimal_logic_db(data: dict | None) -> MinimalLogicData | None:
     if data is None:
         return None
 
@@ -512,7 +512,7 @@ def read_minimal_logic_db(data: Optional[dict]) -> Optional[MinimalLogicData]:
     )
 
 
-def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescription]:
+def decode_data_with_world_reader(data: dict) -> tuple[WorldReader, GameDescription]:
     data = game_migration.migrate_to_current(data)
 
     game = RandovaniaGame(data["game"])
@@ -542,7 +542,7 @@ def decode_data_with_world_reader(data: Dict) -> Tuple[WorldReader, GameDescript
     )
 
 
-def decode_data(data: Dict) -> GameDescription:
+def decode_data(data: dict) -> GameDescription:
     return decode_data_with_world_reader(data)[1]
 
 

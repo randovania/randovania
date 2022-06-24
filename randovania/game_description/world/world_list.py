@@ -1,7 +1,7 @@
 import copy
 import dataclasses
 import typing
-from typing import List, Iterator, Tuple, Iterable, Optional, Type
+from typing import Iterator, Iterable
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.requirements.base import Requirement
@@ -24,23 +24,23 @@ NodeType = typing.TypeVar("NodeType", bound=Node)
 
 @dataclasses.dataclass(init=False, slots=True)
 class WorldList(NodeProvider):
-    worlds: List[World]
+    worlds: list[World]
 
     _nodes_to_area: dict[NodeIndex, Area]
     _nodes_to_world: dict[NodeIndex, World]
-    _nodes: Optional[Tuple[Optional[Node], ...]]
+    _nodes: tuple[Node | None, ...] | None
     _pickup_index_to_node: dict[PickupIndex, PickupNode]
     _identifier_to_node: dict[NodeIdentifier, Node]
-    _patched_node_connections: Optional[dict[NodeIndex, dict[NodeIndex, Requirement]]]
-    _patches_dock_open_requirements: Optional[list[Requirement]]
-    _patches_dock_lock_requirements: Optional[list[Optional[Requirement]]]
+    _patched_node_connections: dict[NodeIndex, dict[NodeIndex, Requirement]] | None
+    _patches_dock_open_requirements: list[Requirement] | None
+    _patches_dock_lock_requirements: list[Requirement | None] | None
 
     def __deepcopy__(self, memodict):
         return WorldList(
             worlds=copy.deepcopy(self.worlds, memodict),
         )
 
-    def __init__(self, worlds: List[World]):
+    def __init__(self, worlds: list[World]):
         self.worlds = worlds
         self._patched_node_connections = None
         self._patches_dock_open_requirements = None
@@ -51,7 +51,7 @@ class WorldList(NodeProvider):
         nodes = tuple(self._iterate_over_nodes())
 
         max_index: NodeIndex = max(node.node_index for node in nodes)
-        final_nodes: list[Optional[Node]] = [None] * (max_index + 1)
+        final_nodes: list[Node | None] = [None] * (max_index + 1)
         for node in nodes:
             assert final_nodes[node.node_index] is None
             final_nodes[node.node_index] = node
@@ -81,13 +81,13 @@ class WorldList(NodeProvider):
         for world in self.worlds:
             if world.name == world_name or world.dark_name == world_name:
                 return world
-        raise KeyError("Unknown name: {}".format(world_name))
+        raise KeyError(f"Unknown name: {world_name}")
 
     def world_with_area(self, area: Area) -> World:
         for world in self.worlds:
             if area in world.areas:
                 return world
-        raise KeyError("Unknown area: {}".format(area))
+        raise KeyError(f"Unknown area: {area}")
 
     @property
     def all_areas(self) -> Iterator[Area]:
@@ -95,7 +95,7 @@ class WorldList(NodeProvider):
             yield from world.areas
 
     @property
-    def all_nodes(self) -> tuple[Optional[Node], ...]:
+    def all_nodes(self) -> tuple[Node | None, ...]:
         self.ensure_has_node_cache()
         return self._nodes
 
@@ -109,7 +109,7 @@ class WorldList(NodeProvider):
         return sum(1 for node in self.iterate_nodes() if isinstance(node, PickupNode))
 
     @property
-    def all_worlds_areas_nodes(self) -> Iterable[Tuple[World, Area, Node]]:
+    def all_worlds_areas_nodes(self) -> Iterable[tuple[World, Area, Node]]:
         for world in self.worlds:
             for area in world.areas:
                 for node in area.nodes:
@@ -133,8 +133,8 @@ class WorldList(NodeProvider):
             area.name)
 
     def node_name(self, node: Node, with_world=False, distinguish_dark_aether: bool = False) -> str:
-        prefix = "{}/".format(self.world_name_from_node(node, distinguish_dark_aether)) if with_world else ""
-        return "{}{}/{}".format(prefix, self.nodes_to_area(node).name, node.name)
+        prefix = f"{self.world_name_from_node(node, distinguish_dark_aether)}/" if with_world else ""
+        return f"{prefix}{self.nodes_to_area(node).name}/{node.name}"
 
     def nodes_to_world(self, node: Node) -> World:
         self.ensure_has_node_cache()
@@ -147,7 +147,7 @@ class WorldList(NodeProvider):
     def resolve_dock_node(self, node: DockNode, patches: GamePatches) -> Node:
         return patches.get_dock_connection_for(node)
 
-    def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Optional[Node]:
+    def resolve_teleporter_node(self, node: TeleporterNode, patches: GamePatches) -> Node | None:
         connection = patches.get_elevator_connection_for(node)
         if connection is not None:
             return self.resolve_teleporter_connection(connection)
@@ -155,11 +155,11 @@ class WorldList(NodeProvider):
     def resolve_teleporter_connection(self, connection: AreaIdentifier) -> Node:
         area = self.area_by_area_location(connection)
         if area.default_node is None:
-            raise IndexError("Area '{}' does not have a default_node".format(area.name))
+            raise IndexError(f"Area '{area.name}' does not have a default_node")
 
         node = area.node_with_name(area.default_node)
         if node is None:
-            raise IndexError("Area '{}' default_node ({}) is missing".format(area.name, area.default_node))
+            raise IndexError(f"Area '{area.name}' default_node ({area.default_node}) is missing")
 
         return node
 
@@ -247,7 +247,7 @@ class WorldList(NodeProvider):
 
         raise ValueError(f"No node with name {identifier.node_name} found in {area}")
 
-    def typed_node_by_identifier(self, i: NodeIdentifier, t: Type[NodeType]) -> NodeType:
+    def typed_node_by_identifier(self, i: NodeIdentifier, t: type[NodeType]) -> NodeType:
         result = self.node_by_identifier(i)
         assert isinstance(result, t)
         return result

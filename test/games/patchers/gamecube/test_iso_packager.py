@@ -66,7 +66,7 @@ def test_unpack_iso_failure():
 
     # Assert
     game_files_path.mkdir.assert_called_once_with(parents=True, exist_ok=True)
-    assert str(exception.value) == "Unable to create files dir {}:\n{}".format(game_files_path, exception_message)
+    assert str(exception.value) == f"Unable to create files dir {game_files_path}:\n{exception_message}"
 
 
 @pytest.mark.parametrize("iso_too_big", [False, True])

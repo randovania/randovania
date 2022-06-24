@@ -1,5 +1,4 @@
 import dataclasses
-from typing import List, Tuple, Set, Optional
 
 from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.executor.memory_operation import MemoryOperationExecutor, MemoryOperation
@@ -12,7 +11,7 @@ from randovania.games.game import RandovaniaGame
 @dataclasses.dataclass(frozen=True)
 class RemotePatch:
     """Format of the contents depends exclusively on each implementation."""
-    memory_operations: List[MemoryOperation]
+    memory_operations: list[MemoryOperation]
 
 
 class RemoteConnector:
@@ -24,7 +23,7 @@ class RemoteConnector:
         """Returns True if the accessible memory matches the version of this connector."""
         raise NotImplementedError()
 
-    async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
+    async def current_game_status(self, executor: MemoryOperationExecutor) -> tuple[bool, World | None]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
         :param executor:
@@ -37,7 +36,7 @@ class RemoteConnector:
         raise NotImplementedError()
 
     async def known_collected_locations(self, executor: MemoryOperationExecutor,
-                                        ) -> Tuple[Set[PickupIndex], List[RemotePatch]]:
+                                        ) -> tuple[set[PickupIndex], list[RemotePatch]]:
         """Fetches pickup indices that have been collected.
         The list may return less than all collected locations, depending on implementation details.
         This function also returns a list of remote patches that must be performed via `execute_remote_patches`.
@@ -45,9 +44,9 @@ class RemoteConnector:
         raise NotImplementedError()
 
     async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
-                                          remote_pickups: Tuple[Tuple[str, PickupEntry], ...],
+                                          remote_pickups: tuple[tuple[str, PickupEntry], ...],
                                           in_cooldown: bool,
-                                          ) -> Tuple[List[RemotePatch], bool]:
+                                          ) -> tuple[list[RemotePatch], bool]:
         """
         Determines if any of the remote_pickups needs to be written to executor.
         :param executor:
@@ -58,7 +57,7 @@ class RemoteConnector:
         """
         raise NotImplementedError()
 
-    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: List[RemotePatch]) -> None:
+    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: list[RemotePatch]) -> None:
         """
         Executes a given set of patches on the given memory operator. Should only be called if the bool returned by
         `current_game_status` is False, but validation of this fact is implementation-dependant.

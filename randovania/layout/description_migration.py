@@ -1,6 +1,5 @@
 import re
 import typing
-from typing import Dict
 
 from randovania.game_description import migration_data
 from randovania.games.game import RandovaniaGame
@@ -36,7 +35,7 @@ def _migrate_v3(json_dict: dict) -> dict:
     if len(json_dict["game_modifications"]) > 1:
         for game in json_dict["game_modifications"]:
             for area in game["locations"].values():
-                for location_name, contents in typing.cast(Dict[str, str], area).items():
+                for location_name, contents in typing.cast(dict[str, str], area).items():
                     m = target_name_re.match(contents)
                     if m is not None:
                         part_one, part_two = m.group(1, 2)

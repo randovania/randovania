@@ -36,7 +36,7 @@ def common_generate_logic(args, permalink):
         after = time.perf_counter()
         total_times.append(after - before)
         shareable_hashes.append(layout_description.shareable_hash)
-        print("Took {:.3f} seconds. Hash: {}".format(total_times[-1], shareable_hashes[-1]))
+        print(f"Took {total_times[-1]:.3f} seconds. Hash: {shareable_hashes[-1]}")
 
     assert layout_description is not None
     layout_description.save_to_file(args.output_file)

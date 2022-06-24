@@ -1,5 +1,4 @@
 import dataclasses
-from typing import FrozenSet
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.layout.base.available_locations import RandomizationMode
@@ -11,7 +10,7 @@ class FillerConfiguration:
     randomization_mode: RandomizationMode
     minimum_random_starting_items: int
     maximum_random_starting_items: int
-    indices_to_exclude: FrozenSet[PickupIndex]
+    indices_to_exclude: frozenset[PickupIndex]
     multi_pickup_placement: bool
     multi_pickup_new_weighting: bool
     logical_resource_action: LayoutLogicalResourceAction

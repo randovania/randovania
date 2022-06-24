@@ -1,9 +1,8 @@
 from pathlib import Path
-from typing import Optional
+from unittest.mock import MagicMock, ANY, AsyncMock
+from unittest.mock import call
 
 import pytest
-from mock import MagicMock, ANY, AsyncMock
-from mock.mock import call
 
 import randovania.cli.commands.generate
 from randovania.games.game import RandovaniaGame
@@ -13,7 +12,7 @@ from randovania.layout.generator_parameters import GeneratorParameters
 @pytest.mark.parametrize("repeat", [1, 2])
 @pytest.mark.parametrize("preset_name", [None, "Starter Preset"])
 @pytest.mark.parametrize("no_retry", [False, True])
-def test_generate_logic(no_retry: bool, preset_name: Optional[str], repeat: int, mocker, preset_manager):
+def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mocker, preset_manager):
     # Setup
     mock_generate: AsyncMock = mocker.patch("randovania.generator.generator.generate_and_validate_description",
                                             new_callable=AsyncMock)

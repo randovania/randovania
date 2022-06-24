@@ -1,5 +1,3 @@
-from typing import List
-
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
 from randovania.generator.item_pool.pool_creator import calculate_pool_results
@@ -34,7 +32,7 @@ def resource_user_friendly_name(resource: ResourceInfo) -> str:
 
 def additional_starting_items(layout_configuration: BaseConfiguration,
                               resource_database: ResourceDatabase,
-                              starting_items: ResourceCollection) -> List[str]:
+                              starting_items: ResourceCollection) -> list[str]:
     initial_items = calculate_pool_results(layout_configuration, resource_database).initial_resources
 
     return [

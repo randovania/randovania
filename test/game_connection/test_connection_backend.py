@@ -1,8 +1,7 @@
 import contextlib
-from typing import Optional, List
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
-from mock import AsyncMock, MagicMock, call
 
 from randovania.game_connection.connection_backend import ConnectionBackend
 from randovania.game_connection.connection_base import GameConnectionStatus
@@ -22,7 +21,7 @@ def dolphin_backend():
 
 async def test_identify_game_ntsc(backend: ConnectionBackend):
     # Setup
-    def side_effect(ops: List[MemoryOperation]):
+    def side_effect(ops: list[MemoryOperation]):
         if len(ops) > 1:
             return {
                 op: b"!#$M"
@@ -66,7 +65,7 @@ async def test_identify_game_already_known(backend: ConnectionBackend):
 
 @pytest.mark.parametrize("failure_at", [None, 1, 2])
 @pytest.mark.parametrize("depth", [0, 1, 2])
-async def test_interact_with_game(backend: ConnectionBackend, depth: int, failure_at: Optional[int]):
+async def test_interact_with_game(backend: ConnectionBackend, depth: int, failure_at: int | None):
     # Setup
     backend.message_cooldown = 2
     backend.connector = AsyncMock()

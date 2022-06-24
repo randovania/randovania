@@ -1,6 +1,6 @@
 import copy
 from dataclasses import dataclass
-from typing import Dict, Iterator, Tuple
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.game_description import default_database
@@ -11,13 +11,13 @@ from randovania.layout.base.ammo_state import AmmoState
 
 @dataclass(frozen=True)
 class AmmoConfiguration(bitpacking.BitPackValue):
-    items_state: Dict[Ammo, AmmoState]
+    items_state: dict[Ammo, AmmoState]
 
     def __post_init__(self):
         for ammo, state in self.items_state.items():
             state.check_consistency(ammo)
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         default: AmmoConfiguration = metadata["reference"]
 
         assert list(self.items_state.keys()) == list(default.items_state.keys())
@@ -67,7 +67,7 @@ class AmmoConfiguration(bitpacking.BitPackValue):
     def replace_state_for_ammo(self, ammo: Ammo, state: AmmoState) -> "AmmoConfiguration":
         return self.replace_states({ammo: state})
 
-    def replace_states(self, new_states: Dict[Ammo, AmmoState]) -> "AmmoConfiguration":
+    def replace_states(self, new_states: dict[Ammo, AmmoState]) -> "AmmoConfiguration":
         """
         Creates a copy of this AmmoConfiguration where the state of all given items are replaced by the given
         states.

@@ -1,7 +1,7 @@
 import collections
 import copy
 import dataclasses
-from typing import Dict, Iterator, Tuple, List
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -20,7 +20,7 @@ def _all_tricks(resource_database: ResourceDatabase):
 @dataclasses.dataclass(frozen=True)
 class TrickLevelConfiguration(BitPackValue):
     minimal_logic: bool
-    specific_levels: Dict[str, LayoutTrickLevel]
+    specific_levels: dict[str, LayoutTrickLevel]
     game: RandovaniaGame
 
     def __post_init__(self):
@@ -29,7 +29,7 @@ class TrickLevelConfiguration(BitPackValue):
                 raise ValueError(f"Invalid level `{level}` for trick {trick}, "
                                  f"expected a LayoutTrickLevel that isn't NO_TRICKS")
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         resource_database = default_database.resource_database_for(self.game)
 
         yield from bitpacking.encode_bool(self.minimal_logic)
@@ -78,7 +78,7 @@ class TrickLevelConfiguration(BitPackValue):
                     return "All tricks disabled"
                 return f"All tricks enabled at {level.long_name}"
 
-        def tricks_at_level(tricks: List[str]) -> str:
+        def tricks_at_level(tricks: list[str]) -> str:
             if len(tricks) != 1:
                 return f"{len(tricks)}"
             else:
@@ -140,7 +140,7 @@ class TrickLevelConfiguration(BitPackValue):
 
         return dataclasses.replace(self, specific_levels=new_levels)
 
-    def dangerous_settings(self) -> List[str]:
+    def dangerous_settings(self) -> list[str]:
         if self.minimal_logic:
             return ["Minimal Logic"]
         return []

@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Iterable, Optional
+from typing import Iterable
 
 from PySide6.QtWidgets import *
 
@@ -86,7 +86,7 @@ class PresetGeneration(PresetTab, Ui_PresetGeneration):
         return self._editor._game
 
     @property
-    def game_specific_widgets(self) -> Optional[Iterable[QWidget]]:
+    def game_specific_widgets(self) -> Iterable[QWidget] | None:
         return None
 
     def _persist_multi_pickup_placement(self, value: bool):

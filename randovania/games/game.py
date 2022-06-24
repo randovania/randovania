@@ -6,7 +6,7 @@ from enum import Enum
 from functools import cached_property
 from pathlib import Path
 from random import Random
-from typing import Callable, Iterable, Optional, Type
+from typing import Callable, Iterable
 
 import randovania
 from randovania.bitpacking.bitpacking import BitPackEnum
@@ -36,16 +36,16 @@ if typing.TYPE_CHECKING:
 
 @dataclass(frozen=True)
 class GameLayout:
-    configuration: Type[BaseConfiguration]
+    configuration: type[BaseConfiguration]
     """Logic and gameplay settings such as elevator shuffling."""
 
-    cosmetic_patches: Type[BaseCosmeticPatches]
+    cosmetic_patches: type[BaseCosmeticPatches]
     """Cosmetic settings such as item icons on maps."""
 
     preset_describer: GamePresetDescriber
     """Contains game-specific preset descriptions, used by the preset screen and Discord bot."""
 
-    get_ingame_hash: Callable[[bytes], Optional[str]] = lambda h: None
+    get_ingame_hash: Callable[[bytes], str | None] = lambda h: None
     """(Optional) Takes a layout hash bytes and produces a string representing how the game 
     will represent the hash in-game. Only override if the game cannot display arbitrary text on the title screen."""
 
@@ -55,20 +55,20 @@ class GameGui:
     tab_provider: Callable[[PresetEditor, WindowManager], Iterable[PresetTab]]
     """Provides a set of tabs for configuring the game's logic and gameplay settings."""
 
-    cosmetic_dialog: Type[BaseCosmeticPatchesDialog]
+    cosmetic_dialog: type[BaseCosmeticPatchesDialog]
     """Dialog box for editing the game's cosmetic settings."""
 
-    export_dialog: Type[GameExportDialog]
+    export_dialog: type[GameExportDialog]
     """Dialog box for asking the user for whatever is needed to modify the game, like input and output paths."""
 
     progressive_item_gui_tuples: Iterable[tuple[str, tuple[str, ...]]] = frozenset()
     """(Optional) A list of tuples mapping a progressive item's long name to a tuple of item long
     names replaced by the progressive item."""
 
-    spoiler_visualizer: tuple[Type[GameDetailsTab], ...] = tuple()
+    spoiler_visualizer: tuple[type[GameDetailsTab], ...] = tuple()
     """Tuple of specializations of GameDetailsTab for providing extra details when visualizing a LayoutDescription."""
 
-    help_widget: Optional[Callable[[], QtWidgets.QWidget]] = None
+    help_widget: Callable[[], QtWidgets.QWidget] | None = None
     """(Optional) Provides a widget used by the main window to display help, faq and other details about this game."""
 
 
@@ -83,7 +83,7 @@ class GameGenerator:
     base_patches_factory: BasePatchesFactory
     """Creates base patches, such as elevator or configurable node assignments."""
 
-    hint_distributor: Optional[HintDistributor] = None
+    hint_distributor: HintDistributor | None = None
     """(Optional) """
 
 
@@ -130,7 +130,7 @@ class GameData:
     layout: GameLayout
     """Contains game-specific settings available for presets."""
 
-    options: Callable[[], Type[PerGameOptions]]
+    options: Callable[[], type[PerGameOptions]]
     """Contains game-specific persisted values."""
 
     gui: Callable[[], GameGui]
@@ -139,7 +139,7 @@ class GameData:
     generator: Callable[[], GameGenerator]
     """Contains game-specific generation data."""
 
-    patch_data_factory: Callable[[], Type[BasePatchDataFactory]]
+    patch_data_factory: Callable[[], type[BasePatchDataFactory]]
 
     exporter: Callable[[], GameExporter]
     """Capable of exporting everything needed to play the randomized game."""
@@ -147,7 +147,7 @@ class GameData:
     defaults_available_in_game_sessions: bool = False
     """If this game is allowed by default in online game sessions."""
 
-    permalink_reference_preset: Optional[str] = None
+    permalink_reference_preset: str | None = None
     """(Optional) Name of the preset used as reference to encode permalinks of this game.
     If unset, the first of the list is used."""
 
@@ -202,7 +202,7 @@ class RandovaniaGame(BitPackEnum, Enum):
         return sorted(cls.all_games(), key=lambda g: g.long_name)
 
     @cached_property
-    def options(self) -> Type[PerGameOptions]:
+    def options(self) -> type[PerGameOptions]:
         return self.data.options()
 
     @cached_property
@@ -214,7 +214,7 @@ class RandovaniaGame(BitPackEnum, Enum):
         return self.data.generator()
 
     @cached_property
-    def patch_data_factory(self) -> Type[BasePatchDataFactory]:
+    def patch_data_factory(self) -> type[BasePatchDataFactory]:
         return self.data.patch_data_factory()
 
     @cached_property

@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import Callable
 
 ProgressUpdateCallable = Callable[[str, float], None]
 
@@ -53,7 +53,7 @@ def create_progress_update_from_successive_messages(
     return SuccessiveCallback(status_update, max_calls)
 
 
-def split_progress_update(status_update: ProgressUpdateCallable, parts: int) -> List[ProgressUpdateCallable]:
+def split_progress_update(status_update: ProgressUpdateCallable, parts: int) -> list[ProgressUpdateCallable]:
     """
     Creates a list of ProgressUpdateCallable that when called progress successively,
     progresses a given ProgressUpdateCallable.

@@ -1,7 +1,7 @@
 import copy
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, Tuple
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder, BitPackEnum, BitPackValue
@@ -63,8 +63,8 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
     @property
     def as_json(self) -> dict:
         return {
-            "can_change_from": sorted((weakness.name for weakness in self.can_change_from)),
-            "can_change_to": sorted((weakness.name for weakness in self.can_change_to)),
+            "can_change_from": sorted(weakness.name for weakness in self.can_change_from),
+            "can_change_to": sorted(weakness.name for weakness in self.can_change_to),
         }
 
     @classmethod
@@ -83,7 +83,7 @@ class DockTypeState(BitPackValue, DataclassPostInitTypeCheck):
             },
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         yield from bitpacking.pack_sorted_array_elements(
             sorted(self.can_change_from), sorted(self.possible_change_from),
         )
@@ -168,7 +168,7 @@ class DockRandoConfiguration(BitPackValue, DataclassPostInitTypeCheck):
             }
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         reference: DockRandoConfiguration = metadata["reference"]
 
         yield from self.mode.bit_pack_encode(None)

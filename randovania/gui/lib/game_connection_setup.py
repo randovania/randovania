@@ -1,5 +1,3 @@
-from typing import Optional
-
 import wiiload
 from PySide6 import QtWidgets, QtGui
 from qasync import asyncSlot
@@ -30,7 +28,7 @@ class GameConnectionSetup:
         self.on_game_connection_updated()
 
     def create_backend_entries(self, menu: QtWidgets.QMenu):
-        def _create_check(text: str, on_triggered, default: Optional[bool] = None):
+        def _create_check(text: str, on_triggered, default: bool | None = None):
             action = QtGui.QAction(menu)
             action.setText(text)
             action.setCheckable(True)
@@ -68,7 +66,7 @@ class GameConnectionSetup:
         s = self.game_connection.pretty_current_status
         game_name = self.game_connection.current_game_name
         if game_name is not None:
-            s = "{} ({})".format(s, game_name)
+            s = f"{s} ({game_name})"
 
         self.label.setText(s)
 

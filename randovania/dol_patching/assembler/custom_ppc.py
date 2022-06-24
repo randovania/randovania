@@ -1,14 +1,12 @@
-from typing import Tuple, Dict
-
 from randovania.dol_patching.assembler import ppc
 
 
 class CompositeInstruction(ppc.BaseInstruction):
-    def __init__(self, instructions: Tuple[ppc.BaseInstruction, ...]):
+    def __init__(self, instructions: tuple[ppc.BaseInstruction, ...]):
         super().__init__()
         self.instructions = instructions
 
-    def bytes_for(self, address: int, symbols: Dict[str, int]):
+    def bytes_for(self, address: int, symbols: dict[str, int]):
         for instruction in self.instructions:
             yield from instruction.bytes_for(address, symbols=symbols)
             address += instruction.byte_count
@@ -27,7 +25,7 @@ class CurrentAddressInstruction(ppc.BaseInstruction):
         self.output_register = output_register
         self.offset = offset
 
-    def bytes_for(self, address: int, symbols: Dict[str, int]):
+    def bytes_for(self, address: int, symbols: dict[str, int]):
         return load_unsigned_32bit(self.output_register, address + self.offset).bytes_for(address, symbols=symbols)
 
     def __eq__(self, other):

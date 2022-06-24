@@ -4,7 +4,7 @@ import os
 import typing
 import uuid
 from pathlib import Path
-from typing import List, Optional, Iterator, Dict
+from typing import Iterator
 
 import dulwich.porcelain
 import dulwich.repo
@@ -15,7 +15,7 @@ from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib import enum_lib
 
 
-def read_preset_list() -> List[Path]:
+def read_preset_list() -> list[Path]:
     preset_list = []
     for game in enum_lib.iterate_enum(RandovaniaGame):
         base_path = game.data_path.joinpath("presets")
@@ -45,12 +45,12 @@ def _commit(message: str, file_path: Path, repository: Path, remove: bool):
 
 
 class PresetManager:
-    included_presets: Dict[uuid.UUID, VersionedPreset]
-    custom_presets: Dict[uuid.UUID, VersionedPreset]
-    _data_dir: Optional[Path]
-    _fallback_dir: Optional[Path]
+    included_presets: dict[uuid.UUID, VersionedPreset]
+    custom_presets: dict[uuid.UUID, VersionedPreset]
+    _data_dir: Path | None
+    _fallback_dir: Path | None
 
-    def __init__(self, data_dir: Optional[Path]):
+    def __init__(self, data_dir: Path | None):
         self.logger = logging.getLogger("PresetManager")
         self.included_presets = {
             preset.uuid: preset
@@ -66,7 +66,7 @@ class PresetManager:
     async def load_user_presets(self):
         all_files = self._data_dir.glob(f"*.{VersionedPreset.file_extension()}")
         user_presets = await asyncio.gather(*[VersionedPreset.from_file(f) for f in all_files])
-        for preset in typing.cast(List[VersionedPreset], user_presets):
+        for preset in typing.cast(list[VersionedPreset], user_presets):
             if preset.is_for_known_game():
                 self.custom_presets[preset.uuid] = preset
 
@@ -123,7 +123,7 @@ class PresetManager:
         os.remove(path)
         self._commit(f"Remove preset '{preset.name}'", path, True)
 
-    def included_preset_with(self, game: RandovaniaGame, name: str) -> Optional[VersionedPreset]:
+    def included_preset_with(self, game: RandovaniaGame, name: str) -> VersionedPreset | None:
         for preset in self.included_presets.values():
             if preset.game == game and preset.name == name:
                 return preset
@@ -137,11 +137,11 @@ class PresetManager:
         else:
             return self.included_preset_with(game, reference_name)
 
-    def preset_for_uuid(self, the_uid: uuid.UUID) -> Optional[VersionedPreset]:
+    def preset_for_uuid(self, the_uid: uuid.UUID) -> VersionedPreset | None:
         return self.included_presets.get(the_uid, self.custom_presets.get(the_uid))
 
     def _file_name_for_preset(self, preset: VersionedPreset) -> Path:
-        return self._data_dir.joinpath("{}.{}".format(preset.uuid, preset.file_extension()))
+        return self._data_dir.joinpath(f"{preset.uuid}.{preset.file_extension()}")
 
     def should_do_migration(self):
         if not self.custom_presets:

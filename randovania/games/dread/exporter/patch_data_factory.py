@@ -1,6 +1,5 @@
 import logging
 import os
-from typing import Optional, Union
 
 from randovania.exporter import pickup_exporter, item_names
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -78,7 +77,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         result.extend(items)
         return result
 
-    def _node_for(self, identifier: Union[AreaIdentifier, NodeIdentifier]) -> Node:
+    def _node_for(self, identifier: AreaIdentifier | NodeIdentifier) -> Node:
         if isinstance(identifier, NodeIdentifier):
             return self.game.world_list.node_by_identifier(identifier)
         else:
@@ -126,7 +125,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
         except KeyError as e:
             raise KeyError(f"{node} has no extra {e}")
 
-    def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> Optional[dict]:
+    def _pickup_detail_for_target(self, detail: ExportedPickupDetails) -> dict | None:
         # target.
 
         if detail.model.game != RandovaniaGame.METROID_DREAD:
@@ -346,7 +345,7 @@ class DreadPatchDataFactory(BasePatchDataFactory):
 
 class DreadAcquiredMemo(dict):
     def __missing__(self, key):
-        return "{} acquired.".format(key)
+        return f"{key} acquired."
 
     @classmethod
     def with_expansion_text(cls):
