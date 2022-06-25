@@ -195,18 +195,12 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
     start_time = time.perf_counter()
 
-    resolver_setup: dict[int, tuple[State, Logic]] = {
-        player: resolver.setup_resolver(patches.configuration, patches)
-        for player, patches in new_patches.items()
-    }
-
     for player, patches in new_patches.items():
         if patches.configuration.dock_rando.mode == DockRandoMode.VANILLA:
             continue
 
         status_update(f"Preparing dock randomizer for player {player + 1}.")
-        resolver_setup[player] = resolver.setup_resolver(patches.configuration, patches)
-        state, logic = resolver_setup[player]
+        state, logic = resolver.setup_resolver(patches.configuration, patches)
 
         try:
             new_state = await _run_resolver(state, logic, RESOLVER_ATTEMPTS * 2)
@@ -239,7 +233,10 @@ async def distribute_post_fill_weaknesses(rng: Random,
         dock_type_state = patches.configuration.dock_rando.types_state[dock.dock_type]
 
         # Determine the reach and possible weaknesses given that reach
-        new_state, logic = await _run_dock_resolver(dock, target, dock_type_params, resolver_setup[player])
+        new_state, logic = await _run_dock_resolver(
+            dock, target, dock_type_params,
+            resolver.setup_resolver(patches.configuration, patches),
+        )
         weighted_weaknesses = _determine_valid_weaknesses(dock, target, dock_type_params, dock_type_state, new_state,
                                                           logic)
 
