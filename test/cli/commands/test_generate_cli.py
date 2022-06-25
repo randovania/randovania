@@ -27,6 +27,7 @@ def test_generate_logic(no_retry: bool, preset_name: str | None, repeat: int, mo
     if preset_name is None:
         # Permalink
         args.permalink = "<the permalink>"
+        mock_from_str.return_value.seed_hash = b"12345"
     else:
         args.game = RandovaniaGame.METROID_PRIME_ECHOES.value
         args.preset_name = [preset_name]

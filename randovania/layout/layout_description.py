@@ -28,6 +28,10 @@ def _all_hash_words() -> dict[RandovaniaGame, list[str]]:
         }
 
 
+def shareable_hash(hash_bytes: bytes) -> str:
+    return base64.b32encode(hash_bytes).decode()
+
+
 def shareable_word_hash(hash_bytes: bytes, all_games: list[RandovaniaGame]):
     rng = Random(sum(hash_byte * (2 ** 8) ** i for i, hash_byte in enumerate(hash_bytes)))
     words = _all_hash_words()
@@ -180,7 +184,7 @@ class LayoutDescription:
 
     @property
     def shareable_hash(self) -> str:
-        return base64.b32encode(self.shareable_hash_bytes).decode()
+        return shareable_hash(self.shareable_hash_bytes)
 
     @property
     def shareable_word_hash(self) -> str:
