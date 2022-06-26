@@ -396,8 +396,8 @@ Extra - asset_id: collision_camera_003
               # https://youtu.be/m4FANVI7eOU
               Before Elun - Release X Parasites and Shoot Ice Missile
               Any of the following:
-                  Stand on Frozen Enemy (Advanced)
                   Spin Boost and Stand on Frozen Enemy (Beginner)
+                  Missiles ≥ 2 and Stand on Frozen Enemy (Advanced)
 
 > Event - Proto EMMI Blob (West Side); Heals? False
   * Layers: default
@@ -3435,13 +3435,13 @@ Extra - asset_id: collision_camera_054
       Any of the following:
           Speed Booster or Simple IBJ or Use Spin Boost
           Flash Shift and Walljump (Beginner)
-          Morph Ball and Single-wall Wall Jump (Intermediate)
+          Morph Ball and Single-wall Wall Jump (Beginner)
   > Pickup (Missile Tank)
       Any of the following:
           Spider Magnet or Speed Booster or Simple IBJ or Use Spin Boost
           Grapple Beam and Movement (Beginner)
           Flash Shift and Walljump (Beginner)
-          Morph Ball and Single-wall Wall Jump (Intermediate)
+          Morph Ball and Single-wall Wall Jump (Beginner)
   > Dock to Charge Beam Access
       Trivial
 
@@ -4764,7 +4764,7 @@ Extra - asset_id: collision_camera_077
   * Extra - right_shield_def: None
   > Elevator to Cataris - Transport to Artaria
       Any of the following:
-          Spider Magnet or Space Jump or Walljump (Beginner) or Simple IBJ
+          Spider Magnet or Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
           Grapple Beam and Movement (Beginner)
 
 > Elevator to Cataris - Transport to Artaria; Heals? False; Spawn Point
@@ -4875,7 +4875,11 @@ Extra - asset_id: collision_camera_079
       Any of the following:
           Spider Magnet or Simple IBJ or Use Spin Boost
           Morph Ball and Damage Boost (Beginner)
-          Flash Shift and Grapple Beam
+          Missiles ≥ 2 and Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
+          Speed Booster and Movement (Intermediate)
+          All of the following:
+              Flash Shift
+              Grapple Beam or Walljump (Beginner)
 
 > Door to Transport to Cataris; Heals? False
   * Layers: default
@@ -4887,7 +4891,9 @@ Extra - asset_id: collision_camera_079
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Hot Room Hub
-      Flash Shift or Can Slide or Use Spin Boost
+      Any of the following:
+          Flash Shift or Speed Booster or Can Slide or Use Spin Boost
+          Stand on Frozen Enemy (Beginner) and Shoot Ice Missile
 
 ----------------
 Transport to Burenia
@@ -4896,7 +4902,7 @@ Extra - polygon: [[-24100.0, -758.0], [-27800.0, -758.0], [-27800.0, -1900.0], [
 Extra - asset_id: collision_camera_080
 > Door to Screw Attack Room; Heals? False
   * Layers: default
-  * Missile Door to Screw Attack Room/Door from Transport to Burenia
+  * Missile Door to Screw Attack Room/Door to Transport to Burenia
   * Extra - actor_name: Door070
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door070_missileShield
@@ -4970,7 +4976,7 @@ Screw Attack Room
 Extra - total_boundings: {'x1': -24200.0, 'x2': -19100.0, 'y1': -5200.0, 'y2': -1200.0}
 Extra - polygon: [[-19100.0, -1200.0], [-24200.0, -1200.0], [-24200.0, -5200.0], [-19100.0, -5200.0]]
 Extra - asset_id: collision_camera_081
-> Door to Freezer (doorgrapplegrapple); Heals? False
+> Door to Freezer (Grapple); Heals? False
   * Layers: default
   * Grapple Beam Door to Freezer/Door to Screw Attack Room (Grapple)
   * Extra - actor_name: doorgrapplegrapple
@@ -4990,9 +4996,9 @@ Extra - asset_id: collision_camera_081
   > Next to Upper Tank
       Trivial
 
-> Door from Transport to Burenia; Heals? False
+> Door to Transport to Burenia; Heals? False
   * Layers: default
-  * Access Closed to Transport to Burenia/Door to Screw Attack Room
+  * Missile Door to Transport to Burenia/Door to Screw Attack Room
   * Extra - actor_name: Door070
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: Root:pScenario:rEntitiesLayer:dctSublayers:default:dctActors:Door070_missileShield
@@ -5001,12 +5007,12 @@ Extra - asset_id: collision_camera_081
   * Extra - right_shield_def: None
   > Tile Group (SCREWATTACK) 2
       After Artaria - Screw Attack Rotatable
-  > Tile Group (WEIGHT) 3
-      Morph Ball and After Artaria - Screw Attack Rotatable
   > Next to Upper Tank
       All of the following:
-          # TODO: Check other options for avoiding flipping the rotatable
-          Flash Shift and Before Artaria - Screw Attack Rotatable
+          Before Artaria - Screw Attack Rotatable
+          Any of the following:
+              Flash Shift or Movement (Beginner) or Lay Cross Comb
+              Speed Booster and Shoot Missile
   > Event - Screw Attack Rotatable
       Before Artaria - Screw Attack Rotatable
 
@@ -5027,9 +5033,9 @@ Extra - asset_id: collision_camera_081
   > Start Point - Screw Attack
       Trivial
 
-> Door to Freezer (Door075); Heals? False
+> Door to Freezer (Power); Heals? False
   * Layers: default
-  * Power Beam Door to Freezer/Door to Screw Attack Room (Door075)
+  * Power Beam Door to Freezer/Door to Screw Attack Room (Power)
   * Extra - actor_name: Door075
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -5079,16 +5085,34 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_def: actordef:actors/props/totalrechargestation/charclasses/totalrechargestation.bmsad
   * Extra - start_point_actor_name: PRP_TotalR_Platform_000
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_total/charclasses/weightactivatedplatform_total.bmsad
+  > Tile Group (SCREWATTACK) 2
+      All of the following:
+          Before Artaria - Screw Attack Rotatable
+          Any of the following:
+              Space Jump or Simple IBJ
+              Walljump (Beginner) and Use Spin Boost
   > Next to Upper Tank
       All of the following:
           After Artaria - Screw Attack Rotatable
           Any of the following:
               Space Jump or Simple IBJ
               Walljump (Beginner) and Use Spin Boost
+  > Event - Screw Attack Rotatable
+      Any of the following:
+          Space Jump or Simple IBJ
+          Walljump (Beginner) and Use Spin Boost
   > Under left side blocks
-      All of the following:
-          Gravity Suit
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
+      Any of the following:
+          All of the following:
+              Gravity Suit
+              Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          All of the following:
+              Perform WBJ
+              Any of the following:
+                  Lay Cross Comb
+                  All of the following:
+                      Water Bomb Jump (Intermediate)
+                      Space Jump or Walljump (Beginner)
 
 > Start Point - Screw Attack; Heals? False
   * Layers: default
@@ -5097,7 +5121,7 @@ Extra - asset_id: collision_camera_081
   > Pickup (Screw Attack)
       Trivial
   > Tile Group (SCREWATTACK) 3
-      Simple IBJ or Use Spin Boost
+      Walljump (Beginner) or Simple IBJ or Use Spin Boost
 
 > Teleporter to Cataris; Heals? False; Spawn Point
   * Layers: default
@@ -5117,8 +5141,10 @@ Extra - asset_id: collision_camera_081
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_Cooldown
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Freezer (Door075)
-      Morph Ball
+  > Door to Freezer (Power)
+      All of the following:
+          Morph Ball
+          Walljump (Beginner) or Simple IBJ or Use Spin Boost
   > Blob - Left
       Trivial
 
@@ -5129,7 +5155,7 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
-  > Door to Freezer (Door075)
+  > Door to Freezer (Power)
       Trivial
   > Door to Shortcut to Screw Attack
       Trivial
@@ -5141,8 +5167,10 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
-  > Door from Transport to Burenia
+  > Door to Transport to Burenia
       After Artaria - Screw Attack Rotatable
+  > Tile Group (WEIGHT) 3
+      Morph Ball
   > Under left side blocks
       Trivial
 
@@ -5165,7 +5193,9 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
   > Start Point - Screw Attack
-      Gravity Suit and Morph Ball
+      All of the following:
+          Morph Ball
+          Gravity Suit or Perform WBJ
 
 > Tile Group (WEIGHT) Upper; Heals? False
   * Layers: default
@@ -5176,7 +5206,7 @@ Extra - asset_id: collision_camera_081
   > Start Point - Screw Attack
       Morph Ball
   > Tile Group (SCREWATTACK) 3
-      Morph Ball
+      Morph Ball and Movement (Intermediate)
 
 > Tile Group (BOMB); Heals? False
   * Layers: default
@@ -5185,7 +5215,7 @@ Extra - asset_id: collision_camera_081
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('BOMB',)
-  > Door to Freezer (doorgrapplegrapple)
+  > Door to Freezer (Grapple)
       Trivial
   > Blob - Right
       Can Slide Underwater
@@ -5204,7 +5234,9 @@ Extra - asset_id: collision_camera_081
   > Pickup (Missile Tank, Underwater)
       Morph Ball and After Artaria - Screw Attack Water Blob
   > Event - Screw Attack Water Blob
-      Wave Beam or Shoot Diffusion Beam
+      Any of the following:
+          Wave Beam or Shoot Diffusion Beam
+          Pseudo-Wave Beam (Advanced) and Shoot Beam
   > Tile Group (BOMB)
       Morph Ball
   > Blob - Left
@@ -5215,26 +5247,34 @@ Extra - asset_id: collision_camera_081
   > Event - Screw Attack Water Blob
       Any of the following:
           Wave Beam
-          All of the following:
-              # TODO: difficulty of pseudo
-              Pseudo-Wave Beam (Beginner) and Shoot Beam
+          Pseudo-Wave Beam (Intermediate) and Shoot Beam
   > Start Point 2
-      Gravity Suit and Use Spin Boost
+      Any of the following:
+          All of the following:
+              Gravity Suit
+              Any of the following:
+                  Before Artaria - Screw Attack Water Blob
+                  All of the following:
+                      After Artaria - Screw Attack Water Blob
+                      Simple IBJ or Use Spin Boost
+          Before Artaria - Screw Attack Water Blob and Perform WBJ
   > Blob - Right
       After Artaria - Screw Attack Water Blob
-  > Under left side blocks
-      All of the following:
-          Gravity Suit
-          Space Jump or Walljump (Beginner) or Simple IBJ
+  > Early SA Platform
+      Any of the following:
+          Gravity Suit or Perform WBJ
+          Before Artaria - Screw Attack Water Blob and Use Spin Boost
 
 > Next to Upper Tank; Heals? False
   * Layers: default
   > Pickup (Missile Tank, Top)
       Trivial
-  > Door from Transport to Burenia
+  > Door to Transport to Burenia
       All of the following:
-          # TODO: Check other options for avoiding flipping the rotatable
-          Flash Shift and Before Artaria - Screw Attack Rotatable
+          Before Artaria - Screw Attack Rotatable
+          Any of the following:
+              Flash Shift or Movement (Beginner) or Lay Cross Comb
+              Speed Booster and Shoot Missile
   > Total Recharge
       After Artaria - Screw Attack Rotatable
   > Tile Group (SCREWATTACK) 3
@@ -5251,10 +5291,10 @@ Extra - asset_id: collision_camera_081
 > Under left side blocks; Heals? False
   * Layers: default
   > Total Recharge
-      Gravity Suit
+      Gravity Suit or Perform WBJ
   > Tile Group (SCREWATTACK) 2
       Trivial
-  > Blob - Left
+  > Early SA Platform
       Trivial
 
 > Tunnel to Shortcut to Screw Attack; Heals? False
@@ -5262,6 +5302,15 @@ Extra - asset_id: collision_camera_081
   * Morph Ball Tunnel to Shortcut to Screw Attack/Tunnel to Screw Attack Room
   > Teleporter to Cataris
       After Artaria - Screw Attack Grapple Block
+
+> Early SA Platform; Heals? False
+  * Layers: default
+  > Start Point 2
+      Space Jump and Water Space Jump (Intermediate)
+  > Blob - Left
+      Trivial
+  > Under left side blocks
+      Space Jump or Walljump (Beginner) or Simple IBJ
 
 ----------------
 Freezer
@@ -5271,7 +5320,7 @@ Extra - polygon: [[-17100.0, -2200.0], [-19200.0, -2200.0], [-19200.0, -6400.0],
 Extra - asset_id: collision_camera_082
 > Door to Screw Attack Room (Grapple); Heals? False
   * Layers: default
-  * Grapple Beam Door to Screw Attack Room/Door to Freezer (doorgrapplegrapple)
+  * Grapple Beam Door to Screw Attack Room/Door to Freezer (Grapple)
   * Extra - actor_name: doorgrapplegrapple
   * Extra - actor_def: actordef:actors/props/doorgrapplegrapple/charclasses/doorgrapplegrapple.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -5283,15 +5332,18 @@ Extra - asset_id: collision_camera_082
           Any of the following:
               Gravity Suit
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
+          Any of the following:
+              Walljump (Beginner) or Simple IBJ or Use Spin Boost
+              Flash Shift and Speed Booster
+              After Elun - Release X Parasites and Damage Boost (Intermediate)
   > Door to Red Chozo Arena
       Any of the following:
           Gravity Suit
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
-> Door to Screw Attack Room (Door075); Heals? False
+> Door to Screw Attack Room (Power); Heals? False
   * Layers: default
-  * Power Beam Door to Screw Attack Room/Door to Freezer (Door075)
+  * Power Beam Door to Screw Attack Room/Door to Freezer (Power)
   * Extra - actor_name: Door075
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -5324,8 +5376,10 @@ Extra - asset_id: collision_camera_082
       All of the following:
           Any of the following:
               Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-          Walljump (Beginner) or Simple IBJ or Use Spin Boost
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 350
+          Any of the following:
+              Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
+              After Elun - Release X Parasites and Damage Boost (Intermediate)
 
 > Door to Waterfall; Heals? False
   * Layers: default
@@ -5343,7 +5397,7 @@ Extra - asset_id: collision_camera_082
   * Layers: default
   * Extra - start_point_actor_name: SP_Checkpoint_ChozoWarriorCave
   * Extra - start_point_actor_def: actordef:actors/logic/startpoint/charclasses/startpoint.bmsad
-  > Door to Screw Attack Room (Door075)
+  > Door to Screw Attack Room (Power)
       Trivial
   > Door to Waterfall
       Trivial
@@ -5381,7 +5435,9 @@ Extra - asset_id: collision_camera_085
   > Door to Waterfall
       Trivial
   > Tunnel to Screw Attack Room
-      Trivial
+      After Artaria - Screw Attack Grapple Block
+  > Event - Screw Attack Grapple Block
+      Break/Move Grapple Block from Behind
 
 > Door to Waterfall; Heals? False
   * Layers: default
@@ -5399,10 +5455,16 @@ Extra - asset_id: collision_camera_085
   * Layers: default
   * Morph Ball Tunnel to Screw Attack Room/Tunnel to Shortcut to Screw Attack
   > Door to Screw Attack Room
-      Trivial
+      After Artaria - Screw Attack Grapple Block
 
 > Start Point; Heals? False; Spawn Point
   * Layers: default
+  > Door to Screw Attack Room
+      Trivial
+
+> Event - Screw Attack Grapple Block; Heals? False
+  * Layers: default
+  * Event Artaria - Screw Attack Grapple Block
   > Door to Screw Attack Room
       Trivial
 
