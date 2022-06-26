@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import asyncio
 import time
+import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -7,9 +10,13 @@ from randovania.cli import cli_lib
 from randovania.cli.commands import permalink as permalink_command
 from randovania.resolver import debug
 
+if typing.TYPE_CHECKING:
+    from randovania.layout.permalink import Permalink
 
-def common_generate_logic(args, permalink):
+
+def common_generate_logic(args, permalink: Permalink):
     from randovania.generator import generator
+    from randovania.layout.layout_description import LayoutDescription, shareable_hash
 
     def status_update(s):
         if args.status_update:
@@ -25,7 +32,7 @@ def common_generate_logic(args, permalink):
     shareable_hashes = []
     total_times = []
 
-    layout_description = None
+    layout_description: LayoutDescription | None = None
     for _ in range(args.repeat):
         before = time.perf_counter()
         layout_description = asyncio.run(
@@ -36,12 +43,15 @@ def common_generate_logic(args, permalink):
         after = time.perf_counter()
         total_times.append(after - before)
         shareable_hashes.append(layout_description.shareable_hash)
-        print("Took {:.3f} seconds. Hash: {}".format(total_times[-1], shareable_hashes[-1]))
+        print(f"Took {total_times[-1]:.3f} seconds. Hash: {shareable_hashes[-1]}")
 
     assert layout_description is not None
     layout_description.save_to_file(args.output_file)
     if args.repeat > 1:
         cli_lib.print_report_multiple_times(total_times)
+
+    if permalink.seed_hash is not None and permalink.seed_hash != layout_description.shareable_hash_bytes:
+        print(f"!WARNING! Expected {shareable_hash(permalink.seed_hash)}.")
 
 
 def generate_from_permalink_logic(args):

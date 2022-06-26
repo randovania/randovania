@@ -1,10 +1,10 @@
 from random import Random
-from typing import Iterator, List, TypeVar, Dict, Any, Callable
+from typing import Iterator, TypeVar, Any, Callable
 
 T = TypeVar('T')
 
 
-def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
+def shuffle(rng: Random, x: Iterator[T]) -> list[T]:
     """
     Shuffles a copy of the given iterator.
     :param rng:
@@ -17,7 +17,7 @@ def shuffle(rng: Random, x: Iterator[T]) -> List[T]:
 
 
 def iterate_with_weights(items: Iterator[T],
-                         item_weights: Dict[T, float],
+                         item_weights: dict[T, float],
                          rng: Random,
                          ) -> Iterator[T]:
     """
@@ -42,20 +42,20 @@ def iterate_with_weights(items: Iterator[T],
         yield pickup_node
 
 
-def select_element_with_weight(weighted_items: Dict[T, float], rng: Random) -> T:
+def select_element_with_weight(weighted_items: dict[T, float], rng: Random) -> T:
     return next(iterate_with_weights(items=list(weighted_items.keys()),
                                      item_weights=weighted_items,
                                      rng=rng))
 
 
-def random_key(d: Dict[T, Any], rng: Random) -> T:
+def random_key(d: dict[T, Any], rng: Random) -> T:
     return rng.choice(list(d.keys()))
 
 
 def create_weighted_list(rng: Random,
-                         current: List[T],
-                         factory: Callable[[], List[T]],
-                         ) -> List[T]:
+                         current: list[T],
+                         factory: Callable[[], list[T]],
+                         ) -> list[T]:
     """
     Ensures we always have a non-empty list.
     :param rng:

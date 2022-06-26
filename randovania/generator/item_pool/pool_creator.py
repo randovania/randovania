@@ -1,5 +1,4 @@
 from random import Random
-from typing import Tuple
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -52,7 +51,7 @@ def calculate_pool_results(layout_configuration: BaseConfiguration,
     return base_results
 
 
-def calculate_pool_item_count(layout: BaseConfiguration) -> Tuple[int, int]:
+def calculate_pool_item_count(layout: BaseConfiguration) -> tuple[int, int]:
     """
     Calculate how many pickups are needed for given layout, with how many spots are there.
     :param layout:

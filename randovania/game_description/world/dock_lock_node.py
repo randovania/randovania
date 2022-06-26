@@ -8,7 +8,6 @@ from randovania.game_description.resources.node_resource_info import NodeResourc
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGain
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.node import NodeContext, Node
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.resource_node import ResourceNode
 
 
@@ -33,7 +32,7 @@ class DockLockNode(ResourceNode):
         return result
 
     def __repr__(self):
-        return "DockLockNode({!r} -> {})".format(self.name, self.dock.name)
+        return f"DockLockNode({self.name!r} -> {self.dock.name})"
 
     def resource(self, context: NodeContext) -> ResourceInfo:
         return NodeResourceInfo.from_node(self.dock, context)
@@ -65,7 +64,8 @@ class DockLockNode(ResourceNode):
         if not context.has_resource(dock_resource) and front_weak.lock is not None:
             yield dock_resource, 1
 
-        if not context.has_resource(target_resource) and front_weak.can_unlock_from_back(dock.get_back_weakness(context)):
+        if not context.has_resource(target_resource) and front_weak.can_unlock_from_back(
+                dock.get_back_weakness(context)):
             yield target_resource, 1
 
     def connections_from(self, context: NodeContext) -> Iterator[tuple[Node, Requirement]]:

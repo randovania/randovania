@@ -1,4 +1,3 @@
-import copy
 import dataclasses
 
 from PySide6.QtGui import QPixmap

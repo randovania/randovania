@@ -4,8 +4,8 @@ from typing import Iterator
 
 from randovania.game_description.assignment import NodeConfigurationAssociation
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources import search
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.configurable_node import ConfigurableNode

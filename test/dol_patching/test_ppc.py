@@ -1,9 +1,7 @@
-from typing import List
-
 from randovania.dol_patching.assembler import ppc
 
 
-def _b(instruction: ppc.BaseInstruction, address: int = 0, symbols=None) -> List[int]:
+def _b(instruction: ppc.BaseInstruction, address: int = 0, symbols=None) -> list[int]:
     if symbols is None:
         symbols = {}
     return list(instruction.bytes_for(address, symbols=symbols))

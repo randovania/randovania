@@ -1,9 +1,8 @@
 import itertools
-from typing import FrozenSet, List, Tuple, Set
 
 from randovania.game_description import game_description
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.requirement_list import RequirementList
+from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
@@ -13,17 +12,17 @@ from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver import debug
 from randovania.resolver.state import State
 
-PickupCombination = Tuple[PickupEntry, ...]
-PickupCombinations = Tuple[PickupCombination, ...]
+PickupCombination = tuple[PickupEntry, ...]
+PickupCombinations = tuple[PickupCombination, ...]
 
 
-def _resources_in_pickup(pickup: PickupEntry, current_resources: ResourceCollection) -> FrozenSet[ResourceInfo]:
+def _resources_in_pickup(pickup: PickupEntry, current_resources: ResourceCollection) -> frozenset[ResourceInfo]:
     resource_gain = pickup.resource_gain(current_resources, force_lock=True)
     return frozenset(resource for resource, _ in resource_gain)
 
 
-def interesting_resources_for_reach(reach: GeneratorReach) -> FrozenSet[ResourceInfo]:
-    satisfiable_requirements: FrozenSet[RequirementList] = frozenset(itertools.chain.from_iterable(
+def interesting_resources_for_reach(reach: GeneratorReach) -> frozenset[ResourceInfo]:
+    satisfiable_requirements: frozenset[RequirementList] = frozenset(itertools.chain.from_iterable(
         requirements.alternatives
         for requirements in reach.unreachable_nodes_with_requirements().values()
     ))
@@ -74,9 +73,9 @@ def _unsatisfied_item_requirements_in_list(alternative: RequirementList,
 
 
 def _requirement_lists_without_satisfied_resources(state: State,
-                                                   possible_sets: List[RequirementSet],
+                                                   possible_sets: list[RequirementSet],
                                                    uncollected_resources: set[ResourceInfo],
-                                                   ) -> Set[RequirementList]:
+                                                   ) -> set[RequirementList]:
     seen_lists = set()
     result = set()
 
@@ -141,9 +140,9 @@ def pickups_to_solve_list(pickup_pool: list[PickupEntry],
     return pickups
 
 
-def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
+def get_pickups_that_solves_unreachable(pickups_left: list[PickupEntry],
                                         reach: GeneratorReach,
-                                        uncollected_resource_nodes: List[ResourceNode],
+                                        uncollected_resource_nodes: list[ResourceNode],
                                         ) -> PickupCombinations:
     """New logic. Given pickup list and a reach, checks the combination of pickups
     that satisfies on unreachable nodes"""
@@ -173,9 +172,9 @@ def get_pickups_that_solves_unreachable(pickups_left: List[PickupEntry],
     return tuple(result)
 
 
-def get_pickups_with_interesting_resources(pickup_pool: List[PickupEntry],
+def get_pickups_with_interesting_resources(pickup_pool: list[PickupEntry],
                                            reach: GeneratorReach,
-                                           uncollected_resource_nodes: List[ResourceNode],
+                                           uncollected_resource_nodes: list[ResourceNode],
                                            ) -> PickupCombinations:
     """Old logic. Given pickup list and a reach, gets these that gives at least one of the interesting resources."""
     interesting_resources = interesting_resources_for_reach(reach)

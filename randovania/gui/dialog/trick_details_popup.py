@@ -1,5 +1,5 @@
 import re
-from typing import List, Tuple, Callable
+from typing import Callable
 
 from PySide6.QtWidgets import QDialog, QWidget
 
@@ -60,7 +60,7 @@ class BaseResourceDetailsPopup(QDialog, Ui_TrickDetailsPopup):
                  parent: QWidget,
                  window_manager: WindowManager,
                  game_description: GameDescription,
-                 areas_to_show: List[Tuple[World, Area]],
+                 areas_to_show: list[tuple[World, Area]],
                  ):
         super().__init__(parent)
         self.setupUi(self)
@@ -128,7 +128,6 @@ class ResourceDetailsPopup(BaseResourceDetailsPopup):
                  game_description: GameDescription,
                  resource: ResourceInfo,
                  ):
-
         def is_resource(individual: ResourceRequirement):
             return individual.resource == resource
 

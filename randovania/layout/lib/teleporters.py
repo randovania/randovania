@@ -1,6 +1,5 @@
 import dataclasses
 from enum import Enum
-from typing import Dict, List
 
 from randovania.bitpacking.bitpacking import BitPackEnum, BitPackDataclass
 from randovania.bitpacking.json_dataclass import JsonDataclass
@@ -8,8 +7,8 @@ from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.game_description import default_database
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.layout.lib import location_list
 
@@ -50,7 +49,7 @@ def _has_editable_teleporter(area: Area) -> bool:
 
 class TeleporterList(location_list.LocationList):
     @classmethod
-    def areas_list(cls, game: RandovaniaGame) -> List[NodeIdentifier]:
+    def areas_list(cls, game: RandovaniaGame) -> list[NodeIdentifier]:
         world_list = default_database.game_description_for(game).world_list
         areas = [
             world_list.identifier_for_node(node)
@@ -69,7 +68,7 @@ class TeleporterList(location_list.LocationList):
     def ensure_has_location(self, area_location: NodeIdentifier, enabled: bool) -> "TeleporterList":
         return super().ensure_has_location(area_location, enabled)
 
-    def ensure_has_locations(self, area_locations: List[NodeIdentifier], enabled: bool) -> "TeleporterList":
+    def ensure_has_locations(self, area_locations: list[NodeIdentifier], enabled: bool) -> "TeleporterList":
         return super().ensure_has_locations(area_locations, enabled)
 
 
@@ -112,12 +111,12 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING
 
     @property
-    def editable_teleporters(self) -> List[NodeIdentifier]:
+    def editable_teleporters(self) -> list[NodeIdentifier]:
         return [teleporter for teleporter in self.excluded_teleporters.areas_list(self.game)
                 if teleporter not in self.excluded_teleporters.locations]
 
     @property
-    def static_teleporters(self) -> Dict[NodeIdentifier, AreaIdentifier]:
+    def static_teleporters(self) -> dict[NodeIdentifier, AreaIdentifier]:
         static = {}
         if self.skip_final_bosses:
             if self.game == RandovaniaGame.METROID_PRIME:
@@ -134,7 +133,7 @@ class TeleporterConfiguration(BitPackDataclass, JsonDataclass, DataclassPostInit
         return static
 
     @property
-    def valid_targets(self) -> List[AreaIdentifier]:
+    def valid_targets(self) -> list[AreaIdentifier]:
         if self.mode == TeleporterShuffleMode.ONE_WAY_ANYTHING:
             return [location for location in self.excluded_targets.areas_list(self.game)
                     if location not in self.excluded_targets.locations]

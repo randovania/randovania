@@ -1,5 +1,5 @@
 import dataclasses
-from typing import Iterator, Tuple
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -9,7 +9,7 @@ from randovania.game_description.item.ammo import Ammo
 
 @dataclasses.dataclass(frozen=True)
 class AmmoState(BitPackValue):
-    ammo_count: Tuple[int, ...] = (0,)
+    ammo_count: tuple[int, ...] = (0,)
     pickup_count: int = 0
     requires_major_item: bool = True
 
@@ -28,7 +28,7 @@ class AmmoState(BitPackValue):
         if self.pickup_count < 0:
             raise ValueError(f"Pickup count must be at least 0, got {self.pickup_count}")
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         ammo: Ammo = metadata["ammo"]
         db = default_database.resource_database_for(ammo.game)
 

@@ -1,15 +1,14 @@
 import copy
 import dataclasses
 import functools
-from typing import Dict, Optional
 
 from PySide6 import QtWidgets, QtCore
 
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.world.area import Area
 from randovania.game_description.world.area_identifier import AreaIdentifier
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.node_identifier import NodeIdentifier
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.games.game import RandovaniaGame
 from randovania.gui.generated.preset_elevators_ui import Ui_PresetElevators
 from randovania.gui.lib import common_qt_lib, signal_handling
@@ -24,8 +23,8 @@ from randovania.patching.prime import elevators
 
 
 class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
-    _elevator_source_for_location: Dict[NodeIdentifier, QtWidgets.QCheckBox]
-    _elevator_source_destination: Dict[NodeIdentifier, Optional[NodeIdentifier]]
+    _elevator_source_for_location: dict[NodeIdentifier, QtWidgets.QCheckBox]
+    _elevator_source_destination: dict[NodeIdentifier, NodeIdentifier | None]
     _elevator_target_for_world: dict[str, QtWidgets.QCheckBox]
     _elevator_target_for_area: dict[AreaIdentifier, QtWidgets.QCheckBox]
 
@@ -111,11 +110,11 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
                 "Temple Grounds": 5,  # Temple Grounds
             }
         locations = TeleporterList.areas_list(self.game_enum)
-        areas: Dict[NodeIdentifier, Area] = {
+        areas: dict[NodeIdentifier, Area] = {
             loc: world_list.area_by_area_location(loc.area_location)
             for loc in locations
         }
-        checks: Dict[NodeIdentifier, QtWidgets.QCheckBox] = {
+        checks: dict[NodeIdentifier, QtWidgets.QCheckBox] = {
             loc: self._create_check_for_source_elevator(loc) for loc in locations
         }
         self._elevator_source_for_location = copy.copy(checks)
@@ -197,10 +196,10 @@ class PresetElevators(PresetTab, Ui_PresetElevators, AreaListHelper):
         can_shuffle_target = config_elevators.mode not in (TeleporterShuffleMode.VANILLA,
                                                            TeleporterShuffleMode.TWO_WAY_RANDOMIZED,
                                                            TeleporterShuffleMode.TWO_WAY_UNCHECKED)
-        static_areas = set(
+        static_areas = {
             teleporter
             for teleporter in config_elevators.static_teleporters.keys()
-        )
+        }
 
         for origin, destination in self._elevator_source_destination.items():
             origin_check = self._elevator_source_for_location[origin]

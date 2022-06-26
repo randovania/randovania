@@ -1,8 +1,7 @@
 import datetime
+from unittest.mock import patch, AsyncMock, MagicMock
 
-import pytest
 from PySide6.QtWidgets import QDialog
-from mock import patch, AsyncMock, MagicMock
 
 from randovania.gui.online_game_list_window import GameSessionBrowserDialog
 from randovania.network_client.game_session import GameSessionListEntry

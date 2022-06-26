@@ -1,7 +1,7 @@
+from unittest.mock import AsyncMock
 from unittest.mock import MagicMock
 
 import pytest
-from mock import AsyncMock
 
 from randovania.game_connection.executor.dolphin_executor import DolphinExecutor
 from randovania.game_connection.game_connection import GameConnection

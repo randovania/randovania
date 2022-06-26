@@ -1,5 +1,3 @@
-from typing import Tuple
-
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QGraphicsOpacityEffect, QWidget
 
@@ -66,7 +64,7 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
             ammo_names = " and ".join(
                 resources_database.get_item(ammo_index).long_name for ammo_index in item.ammo_index)
             self.provided_ammo_label.setText(
-                "<html><head/><body><p>{} provided by {}</p></body></html>".format(ammo_names, item.name)
+                f"<html><head/><body><p>{ammo_names} provided by {item.name}</p></body></html>"
             )
             self.provided_ammo_spinbox.setMaximum(min(
                 resources_database.get_item(ammo_index).max_capacity
@@ -156,7 +154,7 @@ class ItemConfigurationWidget(QWidget, Ui_ItemConfigurationPopup):
         self._update_for_state(self.state)
 
     @property
-    def included_ammo(self) -> Tuple[int, ...]:
+    def included_ammo(self) -> tuple[int, ...]:
         return tuple(
             self.provided_ammo_spinbox.value()
             for _ in self._item.ammo_index

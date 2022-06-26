@@ -4,7 +4,7 @@ import re
 import subprocess
 import typing
 from pathlib import Path
-from typing import Iterator, Optional
+from typing import Iterator
 
 from PySide6 import QtWidgets, QtGui
 
@@ -23,8 +23,8 @@ def lock_application(value: bool):
 def _prompt_user_for_file(window: QtWidgets.QWidget,
                           caption: str,
                           filter: str,
-                          dir: Optional[str] = None,
-                          new_file: bool = False) -> Optional[Path]:
+                          dir: str | None = None,
+                          new_file: bool = False) -> Path | None:
     """
     Helper function for all `prompt_user_for_*` functions.
     :param window:
@@ -45,8 +45,8 @@ def _prompt_user_for_file(window: QtWidgets.QWidget,
 
 def _prompt_user_for_directory(window: QtWidgets.QWidget,
                                caption: str,
-                               dir: Optional[str] = None,
-                               new_file: bool = False) -> Optional[Path]:
+                               dir: str | None = None,
+                               new_file: bool = False) -> Path | None:
     if new_file:
         dialog = QtWidgets.QFileDialog(window)
         dialog.setFileMode(QtWidgets.QFileDialog.FileMode.DirectoryOnly)
@@ -68,8 +68,8 @@ def _prompt_user_for_directory(window: QtWidgets.QWidget,
         return Path(open_result)
 
 
-def prompt_user_for_vanilla_input_file(window: QtWidgets.QWidget, extensions: typing.List[str],
-                                       existing_file: Optional[Path] = None) -> Optional[Path]:
+def prompt_user_for_vanilla_input_file(window: QtWidgets.QWidget, extensions: list[str],
+                                       existing_file: Path | None = None) -> Path | None:
     """
     Shows an QFileDialog asking the user for a vanilla game file
     :param window:
@@ -90,7 +90,7 @@ def prompt_user_for_vanilla_input_file(window: QtWidgets.QWidget, extensions: ty
 
 def prompt_user_for_output_file(window: QtWidgets.QWidget,
                                 default_name: str,
-                                extensions: typing.List[str]) -> Optional[Path]:
+                                extensions: list[str]) -> Path | None:
     """
     Shows an QFileDialog asking the user where to place the output file
     :param window:
@@ -112,7 +112,7 @@ def prompt_user_for_output_file(window: QtWidgets.QWidget,
     )
 
 
-def prompt_user_for_output_game_log(window: QtWidgets.QWidget, default_name: str) -> Optional[Path]:
+def prompt_user_for_output_game_log(window: QtWidgets.QWidget, default_name: str) -> Path | None:
     """
     Shows an QFileDialog asking the user for a Randovania seed log
     :param window:
@@ -122,11 +122,11 @@ def prompt_user_for_output_game_log(window: QtWidgets.QWidget, default_name: str
     from randovania.layout.layout_description import LayoutDescription
     return _prompt_user_for_file(window, caption="Select a Randovania seed log.",
                                  dir=default_name,
-                                 filter="Randovania Game, *.{}".format(LayoutDescription.file_extension()),
+                                 filter=f"Randovania Game, *.{LayoutDescription.file_extension()}",
                                  new_file=True)
 
 
-def prompt_user_for_input_game_log(window: QtWidgets.QWidget) -> Optional[Path]:
+def prompt_user_for_input_game_log(window: QtWidgets.QWidget) -> Path | None:
     """
     Shows an QFileDialog asking the user for a Randovania seed log
     :param window:
@@ -134,11 +134,11 @@ def prompt_user_for_input_game_log(window: QtWidgets.QWidget) -> Optional[Path]:
     """
     from randovania.layout.layout_description import LayoutDescription
     return _prompt_user_for_file(window, caption="Select a Randovania seed log.",
-                                 filter="Randovania Game, *.{}".format(LayoutDescription.file_extension()),
+                                 filter=f"Randovania Game, *.{LayoutDescription.file_extension()}",
                                  new_file=False)
 
 
-def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Optional[Path]:
+def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Path | None:
     """
     Shows an QFileDialog asking the user for a Randovania database file
     :param window:
@@ -147,7 +147,8 @@ def prompt_user_for_database_file(window: QtWidgets.QWidget) -> Optional[Path]:
     return _prompt_user_for_file(window, caption="Select a Randovania database file.", filter="*.json")
 
 
-def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name: Optional[str] = None) -> Optional[Path]:
+def prompt_user_for_preset_file(window: QtWidgets.QWidget, new_file: bool, name: str | None = None) -> None | (
+        Path):
     """
     Shows an QFileDialog asking the user for a Randovania preset file
     :param window:
@@ -248,6 +249,6 @@ def open_directory_in_explorer(path: Path):
 def set_icon_data_paths(label: QtWidgets.QLabel):
     image_pattern = re.compile('<img src="data/(.*?)"/>')
 
-    repl = f'<img src="{get_data_path().as_posix()}/\g<1>"/>'
+    repl = fr'<img src="{get_data_path().as_posix()}/\g<1>"/>'
     new_text = image_pattern.sub(repl, label.text())
     label.setText(new_text)

@@ -1,5 +1,4 @@
 import datetime
-from typing import List
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QPushButton, QDialogButtonBox, QDialog, QTableWidgetItem, QInputDialog, QLineEdit
@@ -15,8 +14,8 @@ from randovania.network_common.session_state import GameSessionState
 
 
 class GameSessionBrowserDialog(QDialog, Ui_GameSessionBrowserDialog):
-    sessions: List[GameSessionListEntry]
-    visible_sessions: List[GameSessionListEntry]
+    sessions: list[GameSessionListEntry]
+    visible_sessions: list[GameSessionListEntry]
 
     def __init__(self, network_client: QtNetworkClient):
         super().__init__()

@@ -1,6 +1,5 @@
-import copy
 import dataclasses
-from typing import Optional, Tuple, Iterator
+from typing import Optional, Iterator
 
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
@@ -34,12 +33,12 @@ class StateGameData:
 
 class State:
     resources: ResourceCollection
-    collected_resource_nodes: Tuple[ResourceNode, ...]
+    collected_resource_nodes: tuple[ResourceNode, ...]
     energy: int
     node: Node
     patches: GamePatches
     previous_state: Optional["State"]
-    path_from_previous_state: Tuple[Node, ...]
+    path_from_previous_state: tuple[Node, ...]
     game_data: StateGameData
 
     @property
@@ -52,8 +51,8 @@ class State:
 
     def __init__(self,
                  resources: ResourceCollection,
-                 collected_resource_nodes: Tuple[ResourceNode, ...],
-                 energy: Optional[int],
+                 collected_resource_nodes: tuple[ResourceNode, ...],
+                 energy: int | None,
                  node: Node,
                  patches: GamePatches,
                  previous: Optional["State"],
@@ -72,11 +71,8 @@ class State:
             energy = self.maximum_energy
         self.energy = min(energy, self.maximum_energy)
 
-    def has_resource(self, resource: ResourceInfo) -> bool:
-        return self.resources.get(resource, 0) > 0
-
     def copy(self) -> "State":
-        return State(copy.copy(self.resources),
+        return State(self.resources.duplicate(),
                      self.collected_resource_nodes,
                      self.energy,
                      self.node,
@@ -132,7 +128,7 @@ class State:
 
         if not node.can_collect(self.node_context()):
             raise ValueError(
-                "Trying to collect an uncollectable node'{}'".format(node))
+                f"Trying to collect an uncollectable node'{node}'")
 
         new_resources = self.resources.duplicate()
         new_resources.add_resource_gain(node.resource_gain_on_collect(self.node_context()))
@@ -144,7 +140,7 @@ class State:
         return State(new_resources, self.collected_resource_nodes + (node,), energy, self.node, self.patches, self,
                      self.game_data)
 
-    def act_on_node(self, node: ResourceNode, path: Tuple[Node, ...] = (), new_energy: Optional[int] = None) -> "State":
+    def act_on_node(self, node: ResourceNode, path: tuple[Node, ...] = (), new_energy: int | None = None) -> "State":
         if new_energy is None:
             new_energy = self.energy
         new_state = self.collect_resource_node(node, new_energy)

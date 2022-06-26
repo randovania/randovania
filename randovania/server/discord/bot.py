@@ -1,5 +1,3 @@
-import logging
-
 import discord.ext.commands
 from discord_slash import SlashCommand
 

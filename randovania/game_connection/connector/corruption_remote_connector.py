@@ -1,5 +1,4 @@
 import struct
-from typing import Optional, List, Tuple
 
 from randovania.game_connection.connection_base import Inventory
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector, DolRemotePatch
@@ -40,7 +39,7 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
     def _asset_id_format(self):
         return ">Q"
 
-    async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
+    async def current_game_status(self, executor: MemoryOperationExecutor) -> tuple[bool, World | None]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
         :param executor:
@@ -73,8 +72,8 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         has_pending_op = pending_op_byte != b"\x00"
         return has_pending_op, self._current_status_world(results.get(memory_ops[0]), player_vtable)
 
-    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
-                                   ) -> List[MemoryOperation]:
+    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: list[ItemResourceInfo],
+                                   ) -> list[MemoryOperation]:
         player_state_pointer = int.from_bytes(await executor.perform_single_memory_operation(MemoryOperation(
             address=self.version.game_state_pointer,
             read_byte_count=4,
@@ -106,11 +105,11 @@ class CorruptionRemoteConnector(PrimeRemoteConnector):
         raise RuntimeError("Unable to prepare dol patches for hud display in Corruption")
 
     async def find_missing_remote_pickups(self, executor: MemoryOperationExecutor, inventory: Inventory,
-                                          remote_pickups: Tuple[Tuple[str, PickupEntry], ...],
+                                          remote_pickups: tuple[tuple[str, PickupEntry], ...],
                                           in_cooldown: bool,
-                                          ) -> Tuple[List[DolRemotePatch], bool]:
+                                          ) -> tuple[list[DolRemotePatch], bool]:
         # Not yet implemented
         return [], False
 
-    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: List[DolRemotePatch]) -> None:
+    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: list[DolRemotePatch]) -> None:
         raise RuntimeError("Unable to execute remote patches in Corruption")

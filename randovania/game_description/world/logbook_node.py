@@ -1,10 +1,9 @@
 import dataclasses
 from enum import Enum
-from typing import Optional
 
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
 from randovania.game_description.resources.resource_info import ResourceGain
@@ -38,10 +37,10 @@ _LORE_TYPE_LONG_NAME = {
 @dataclasses.dataclass(frozen=True, slots=True)
 class LogbookNode(ResourceNode):
     string_asset_id: int
-    scan_visor: Optional[ItemResourceInfo]
+    scan_visor: ItemResourceInfo | None
     lore_type: LoreType
-    required_translator: Optional[ItemResourceInfo]
-    hint_index: Optional[int]
+    required_translator: ItemResourceInfo | None
+    hint_index: int | None
 
     def __repr__(self):
         extra = None

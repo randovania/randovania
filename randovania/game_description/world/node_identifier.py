@@ -24,7 +24,7 @@ class NodeIdentifier:
 
     @property
     def as_string(self) -> str:
-        return "{}/{}/{}".format(self.world_name, self.area_name, self.node_name)
+        return f"{self.world_name}/{self.area_name}/{self.node_name}"
 
     @classmethod
     def from_string(cls, value: str) -> "NodeIdentifier":

@@ -1,25 +1,25 @@
 import re
 from pathlib import Path
-from typing import Iterator, Tuple, TextIO
+from typing import Iterator, TextIO
 
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.requirement_template import RequirementTemplate
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_or import RequirementOr
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.world.area import Area
+from randovania.game_description.world.configurable_node import ConfigurableNode
+from randovania.game_description.world.dock_node import DockNode
+from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.logbook_node import LoreType, LogbookNode
 from randovania.game_description.world.node import (
     Node
 )
-from randovania.game_description.world.configurable_node import ConfigurableNode
-from randovania.game_description.world.teleporter_node import TeleporterNode
-from randovania.game_description.world.dock_node import DockNode
-from randovania.game_description.world.player_ship_node import PlayerShipNode
-from randovania.game_description.world.logbook_node import LoreType, LogbookNode
-from randovania.game_description.world.event_node import EventNode
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.player_ship_node import PlayerShipNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.layout.base.trick_level import LayoutTrickLevel
 
@@ -32,7 +32,7 @@ def pretty_print_resource_requirement(requirement: ResourceRequirement) -> str:
 
 
 def pretty_print_requirement_array(requirement: RequirementArrayBase,
-                                   level: int) -> Iterator[Tuple[int, str]]:
+                                   level: int) -> Iterator[tuple[int, str]]:
     if len(requirement.items) == 1 and requirement.comment is None:
         yield from pretty_print_requirement(requirement.items[0], level)
         return
@@ -65,7 +65,7 @@ def pretty_print_requirement_array(requirement: RequirementArrayBase,
             yield from pretty_print_requirement(item, level + 1)
 
 
-def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterator[Tuple[int, str]]:
+def pretty_print_requirement(requirement: Requirement, level: int = 0) -> Iterator[tuple[int, str]]:
     if requirement == Requirement.impossible():
         yield level, "Impossible"
 
@@ -130,7 +130,7 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
     if area.valid_starting_location:
         print_function("(Valid Starting Location)")
     for extra_name, extra_field in area.extra.items():
-        print_function("Extra - {}: {}".format(extra_name, extra_field))
+        print_function(f"Extra - {extra_name}: {extra_field}")
 
     for i, node in enumerate(area.nodes):
         if node.is_derived_node:
@@ -148,13 +148,13 @@ def pretty_print_area(game: GameDescription, area: Area, print_function=print):
         if node.description:
             print_function(f"  * {node.description}")
         for extra_name, extra_field in node.extra.items():
-            print_function("  * Extra - {}: {}".format(extra_name, extra_field))
+            print_function(f"  * Extra - {extra_name}: {extra_field}")
 
         for target_node, requirement in game.world_list.area_connections_from(node):
             if target_node.is_derived_node:
                 continue
 
-            print_function("  > {}".format(target_node.name))
+            print_function(f"  > {target_node.name}")
             for level, text in pretty_print_requirement(requirement.simplify(keep_comments=True)):
                 print_function("      {}{}".format("    " * level, text))
         print_function()
@@ -171,12 +171,12 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
     for dock_type in game.dock_weakness_database.dock_types:
         output.write(f"\n> {dock_type.long_name}")
         for extra_name, extra_field in dock_type.extra.items():
-            output.write("\n* Extra - {}: {}".format(extra_name, extra_field))
+            output.write(f"\n* Extra - {extra_name}: {extra_field}")
 
         for weakness in game.dock_weakness_database.get_by_type(dock_type):
             output.write(f"\n  * {weakness.name}\n")
             for extra_name, extra_field in weakness.extra.items():
-                output.write("      Extra - {}: {}\n".format(extra_name, extra_field))
+                output.write(f"      Extra - {extra_name}: {extra_field}\n")
 
             output.write("      Open:\n")
             for level, text in pretty_print_requirement(weakness.requirement, level=1):
@@ -189,7 +189,7 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
             else:
                 output.write("      No lock\n")
             output.write("\n")
-        
+
         dock_rando = game.dock_weakness_database.dock_rando_params[dock_type]
         if dock_rando.locked is None or dock_rando.unlocked is None:
             output.write("  > Dock Rando: Disabled\n\n")
@@ -198,15 +198,15 @@ def write_human_readable_meta(game: GameDescription, output: TextIO) -> None:
 
             output.write(f"\n      Unlocked: {dock_rando.unlocked.name}")
             output.write(f"\n      Locked: {dock_rando.locked.name}")
-            
+
             output.write(f"\n      Change from:")
             for weakness in sorted(dock_rando.change_from):
                 output.write(f"\n          {weakness.name}")
-            
+
             output.write(f"\n      Change to:")
             for weakness in sorted(dock_rando.change_to):
                 output.write(f"\n          {weakness.name}")
-            
+
             output.write("\n\n")
 
 
@@ -216,7 +216,7 @@ def write_human_readable_world_list(game: GameDescription, output: TextIO) -> No
 
     output.write("\n")
     for world in game.world_list.worlds:
-        output.write("====================\n{}\n".format(world.name))
+        output.write(f"====================\n{world.name}\n")
         for area in world.areas:
             output.write("----------------\n")
             pretty_print_area(game, area, print_function=print_to_file)

@@ -1,15 +1,13 @@
 import dataclasses
 import functools
 from random import Random
-from typing import Tuple, List
 
 import pytest
 
 from randovania.game_description import derived_nodes
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.requirements.base import Requirement
-from randovania.game_description.resources.pickup_index import PickupIndex
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.game_description.resources.resource_type import ResourceType
 from randovania.game_description.resources.search import find_resource_info_with_long_name
@@ -62,7 +60,7 @@ def _create_reach_with_unsafe(game: GameDescription, state: State) -> GeneratorR
     return reach_lib.advance_reach_with_possible_unsafe_resources(reach_lib.reach_with_all_safe_resources(game, state))
 
 
-def _create_reaches_and_compare(game: GameDescription, state: State) -> Tuple[GeneratorReach, GeneratorReach]:
+def _create_reaches_and_compare(game: GameDescription, state: State) -> tuple[GeneratorReach, GeneratorReach]:
     first_reach = _create_reach_with_unsafe(game, state)
     second_reach = _create_reach_with_unsafe(game, first_reach.state)
 
@@ -79,7 +77,7 @@ def _create_reaches_and_compare(game: GameDescription, state: State) -> Tuple[Ge
 
 def _compare_actions(first_reach: GeneratorReach,
                      second_reach: GeneratorReach,
-                     ) -> Tuple[List[ResourceNode], List[ResourceNode]]:
+                     ) -> tuple[list[ResourceNode], list[ResourceNode]]:
     first_actions = reach_lib.get_collectable_resource_nodes_of_reach(first_reach)
     second_actions = reach_lib.get_collectable_resource_nodes_of_reach(second_reach)
     assert set(first_actions) == set(second_actions)
@@ -131,7 +129,7 @@ def test_database_collectable(preset_manager, game_enum: RandovaniaGame,
     for trick in game.resource_database.trick:
         initial_state.resources.set_resource(trick, LayoutTrickLevel.maximum().as_number)
 
-    expected_events = sorted([event for event in game.resource_database.event if event.short_name not in ignore_events],
+    expected_events = sorted((event for event in game.resource_database.event if event.short_name not in ignore_events),
                              key=lambda it: it.short_name)
     expected_pickups = sorted(it.pickup_index for it in all_pickups if it.pickup_index.index not in ignore_pickups)
 

@@ -3,13 +3,13 @@ import ftplib
 from contextlib import contextmanager
 from ftplib import FTP
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Callable
 
 from randovania.lib import status_update_lib
 
 
 @contextmanager
-def ftp_cd(ftp: FTP, pathname: Optional[str] = None):
+def ftp_cd(ftp: FTP, pathname: str | None = None):
     """ftp server change folder with statement"""
     original_path = ftp.pwd()
     try:
@@ -55,7 +55,7 @@ def delete_path(ftp: FTP, path: str, progress_update: Callable[[str], None]):
 
 @dataclasses.dataclass(frozen=True)
 class FtpUploader:
-    auth: Optional[tuple[str, str]]
+    auth: tuple[str, str] | None
     ip: str
     port: int
     local_path: Path

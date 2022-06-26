@@ -1,5 +1,5 @@
 import re
-from typing import Iterator, Dict
+from typing import Iterator
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QWidget
@@ -43,7 +43,7 @@ def _check_used_tricks(area: Area, trick_resources: ResourceCollection, database
 
     for s in _area_requirement_sets(area, database):
         for alternative in s.alternatives:
-            tricks: Dict[TrickResourceInfo, ResourceRequirement] = {
+            tricks: dict[TrickResourceInfo, ResourceRequirement] = {
                 req.resource: req
                 for req in alternative.values()
                 if req.resource.resource_type == ResourceType.TRICK
@@ -85,7 +85,7 @@ class TrickUsagePopup(QtWidgets.QDialog, Ui_TrickUsagePopup):
 
         # setup
         self.area_list_label.linkActivated.connect(self._on_click_link_to_data_editor)
-        self.setWindowTitle("{} for preset {}".format(self.windowTitle(), preset.name))
+        self.setWindowTitle(f"{self.windowTitle()} for preset {preset.name}")
         self.title_label.setText(self.title_label.text().format(
             trick_levels=trick_usage_description
         ))

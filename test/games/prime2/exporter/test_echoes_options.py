@@ -1,5 +1,4 @@
 from randovania.games.game import RandovaniaGame
-from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
 
 

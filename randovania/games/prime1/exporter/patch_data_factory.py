@@ -1,6 +1,4 @@
-import typing
 from random import Random
-from typing import List, Union
 
 import randovania
 from randovania.exporter import pickup_exporter, item_names
@@ -139,7 +137,7 @@ def prime1_pickup_details_to_patcher(detail: pickup_exporter.ExportedPickupDetai
     return result
 
 
-def _create_locations_with_modal_hud_memo(pickups: List[pickup_exporter.ExportedPickupDetails]) -> typing.Set[int]:
+def _create_locations_with_modal_hud_memo(pickups: list[pickup_exporter.ExportedPickupDetails]) -> set[int]:
     result = set()
 
     for index in _LOCATIONS_WITH_MODAL_ALERT:
@@ -160,7 +158,7 @@ def _create_locations_with_modal_hud_memo(pickups: List[pickup_exporter.Exported
 
 
 def _starting_items_value_for(resource_database: ResourceDatabase,
-                              starting_items: ResourceCollection, index: str) -> Union[bool, int]:
+                              starting_items: ResourceCollection, index: str) -> bool | int:
     item = resource_database.get_item(index)
     value = starting_items[item]
     if item.max_capacity > 1:
@@ -178,7 +176,7 @@ def _name_for_location(world_list: WorldList, location: AreaIdentifier) -> str:
 
 
 def _create_results_screen_text(description: LayoutDescription) -> str:
-    return "%s | Seed Hash - %s (%s)" % (
+    return "{} | Seed Hash - {} ({})".format(
         randovania.VERSION, description.shareable_word_hash, description.shareable_hash)
 
 
@@ -476,7 +474,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
                                 deadman_count -= 1
                                 if deadman_count == 0:
                                     raise Exception(
-                                        "Failed to find suitible destination for %s:%s" % (area.name, dock_num))
+                                        f"Failed to find suitible destination for {area.name}:{dock_num}")
 
                                 dst_name = self.rng.choice(world.areas).name
                                 dst_dock = None
@@ -728,7 +726,7 @@ class PrimePatchDataFactory(BasePatchDataFactory):
         ]
         hint_config = self.configuration.hints
         if hint_config.artifacts == ArtifactHintMode.DISABLED:
-            resulting_hints = {art: "{} is lost somewhere on Tallon IV.".format(art.long_name) for art in artifacts}
+            resulting_hints = {art: f"{art.long_name} is lost somewhere on Tallon IV." for art in artifacts}
         else:
             resulting_hints = guaranteed_item_hint.create_guaranteed_hints_for_resources(
                 self.description.all_patches,
@@ -878,8 +876,8 @@ class PrimePatchDataFactory(BasePatchDataFactory):
 
                 "gameBanner": {
                     "gameName": "Metroid Prime: Randomizer",
-                    "gameNameFull": "Metroid Prime: Randomizer - {}".format(self.description.shareable_hash),
-                    "description": "Seed Hash: {}".format(self.description.shareable_word_hash),
+                    "gameNameFull": f"Metroid Prime: Randomizer - {self.description.shareable_hash}",
+                    "description": f"Seed Hash: {self.description.shareable_word_hash}",
                 },
                 "mainMenuMessage": "Randovania v{}\n{}".format(
                     randovania.VERSION,

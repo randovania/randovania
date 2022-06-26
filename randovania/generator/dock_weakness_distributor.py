@@ -2,7 +2,7 @@ import asyncio
 import dataclasses
 import time
 from random import Random
-from typing import Callable, Tuple
+from typing import Callable
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
@@ -67,16 +67,16 @@ class DockRandoLogic(Logic):
 TO_SHUFFLE_PROPORTION = 0.6
 
 
-def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[Tuple[int, DockNode]]:
+def _get_docks_to_assign(rng: Random, filler_results: FillerResults) -> list[tuple[int, DockNode]]:
     """
     Collects all docks to be assigned from each player, returning them in a random order
     """
 
-    unassigned_docks: list[Tuple[int, DockNode]] = []
+    unassigned_docks: list[tuple[int, DockNode]] = []
 
     for player, results in filler_results.player_results.items():
         patches = results.patches
-        player_docks: list[Tuple[int, DockNode]] = []
+        player_docks: list[tuple[int, DockNode]] = []
 
         if patches.configuration.dock_rando.mode == DockRandoMode.ONE_WAY:
             player_docks.extend((player, node) for node, _ in patches.all_dock_weaknesses())
@@ -119,8 +119,8 @@ async def _run_resolver(state: State, logic: Logic, max_attempts: int):
 async def _run_dock_resolver(dock: DockNode,
                              target: DockNode,
                              dock_type_params: DockRandoParams,
-                             setup: Tuple[State, Logic]
-                             ) -> Tuple[State, Logic]:
+                             setup: tuple[State, Logic]
+                             ) -> tuple[State, Logic]:
     """
     Run the resolver with the objective of reaching the dock, assuming the dock is locked.
     """
@@ -195,18 +195,12 @@ async def distribute_post_fill_weaknesses(rng: Random,
 
     start_time = time.perf_counter()
 
-    resolver_setup: dict[int, tuple[State, Logic]] = {
-        player: resolver.setup_resolver(patches.configuration, patches)
-        for player, patches in new_patches.items()
-    }
-
     for player, patches in new_patches.items():
         if patches.configuration.dock_rando.mode == DockRandoMode.VANILLA:
             continue
 
         status_update(f"Preparing dock randomizer for player {player + 1}.")
-        resolver_setup[player] = resolver.setup_resolver(patches.configuration, patches)
-        state, logic = resolver_setup[player]
+        state, logic = resolver.setup_resolver(patches.configuration, patches)
 
         try:
             new_state = await _run_resolver(state, logic, RESOLVER_ATTEMPTS * 2)
@@ -239,7 +233,10 @@ async def distribute_post_fill_weaknesses(rng: Random,
         dock_type_state = patches.configuration.dock_rando.types_state[dock.dock_type]
 
         # Determine the reach and possible weaknesses given that reach
-        new_state, logic = await _run_dock_resolver(dock, target, dock_type_params, resolver_setup[player])
+        new_state, logic = await _run_dock_resolver(
+            dock, target, dock_type_params,
+            resolver.setup_resolver(patches.configuration, patches),
+        )
         weighted_weaknesses = _determine_valid_weaknesses(dock, target, dock_type_params, dock_type_state, new_state,
                                                           logic)
 

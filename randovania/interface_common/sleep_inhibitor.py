@@ -77,7 +77,7 @@ def _get_inhibitor_source() -> InhibitorSource:
         try:
             return WindowsInhibitorSource()
         except Exception as e:
-            logging.getLogger().warning("Unable to create WindowsInhibitor: {}".format(e))
+            logging.getLogger().warning(f"Unable to create WindowsInhibitor: {e}")
 
     return DummyInhibitorSource()
 

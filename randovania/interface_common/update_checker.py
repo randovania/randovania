@@ -1,6 +1,5 @@
-import re
 from distutils.version import StrictVersion
-from typing import NamedTuple, List, Tuple, Optional
+from typing import NamedTuple
 
 from randovania import VERSION
 
@@ -61,8 +60,8 @@ def _get_major_entries(log: str) -> str:
 
 def versions_to_display_for_releases(current_version: StrictVersion,
                                      last_changelog_version: StrictVersion,
-                                     releases: List[dict],
-                                     ) -> tuple[dict[str, str], list[str], Optional[VersionDescription]]:
+                                     releases: list[dict],
+                                     ) -> tuple[dict[str, str], list[str], VersionDescription | None]:
     all_change_logs = {}
     new_change_logs = []
     displayed_new_version = False
@@ -78,7 +77,7 @@ def versions_to_display_for_releases(current_version: StrictVersion,
                 displayed_new_version = True
 
         else:
-            log = "## {}\n\n{}".format(version.tag_name, version.change_log)
+            log = f"## {version.tag_name}\n\n{version.change_log}"
             all_change_logs[version.tag_name] = log
 
             if strict_version > last_changelog_version:

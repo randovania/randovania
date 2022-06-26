@@ -1,16 +1,13 @@
-from typing import List, Dict, Tuple, Optional
-
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.resources import resource_info
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceCollection
 from randovania.interface_common.players_configuration import PlayersConfiguration
 
 
 def find_locations_that_gives_items(
-        target_items: List[ItemResourceInfo],
-        all_patches: Dict[int, GamePatches],
+        target_items: list[ItemResourceInfo],
+        all_patches: dict[int, GamePatches],
         player: int,
 ) -> dict[ItemResourceInfo, list[tuple[int, PickupLocation]]]:
     result: dict[ItemResourceInfo, list[tuple[int, PickupLocation]]] = {item: [] for item in target_items}
@@ -46,8 +43,8 @@ def hint_text_if_items_are_starting(
     return result
 
 
-def create_guaranteed_hints_for_resources(all_patches: Dict[int, GamePatches], players_config: PlayersConfiguration,
-                                          namer: HintNamer, hide_area: bool, items: List[ItemResourceInfo],
+def create_guaranteed_hints_for_resources(all_patches: dict[int, GamePatches], players_config: PlayersConfiguration,
+                                          namer: HintNamer, hide_area: bool, items: list[ItemResourceInfo],
                                           with_color: bool,
                                           ) -> dict[ItemResourceInfo, str]:
     """
@@ -72,7 +69,7 @@ def create_guaranteed_hints_for_resources(all_patches: Dict[int, GamePatches], p
         if resource in resulting_hints:
             continue
 
-        location: Optional[Tuple[int, PickupLocation]] = None
+        location: tuple[int, PickupLocation] | None = None
         for option in locations:
             if option not in used_locations:
                 location = option

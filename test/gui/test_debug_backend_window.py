@@ -1,6 +1,7 @@
+from unittest.mock import patch, MagicMock, AsyncMock
+
 import pytest
 from PySide6.QtCore import Qt
-from mock import patch, MagicMock, AsyncMock
 
 from randovania.game_connection.connector.prime_remote_connector import PrimeRemoteConnector, DolRemotePatch
 from randovania.gui.debug_backend_window import DebugExecutorWindow

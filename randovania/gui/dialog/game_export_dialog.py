@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Optional, TypeVar, Type, Callable
+from typing import TypeVar, Callable
 
 from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMessageBox
@@ -13,7 +13,7 @@ from randovania.layout.layout_description import LayoutDescription
 T = TypeVar("T")
 
 
-def _try_get_field(obj, field_name: str, cls: Type[T]) -> Optional[T]:
+def _try_get_field(obj, field_name: str, cls: type[T]) -> T | None:
     return getattr(obj, field_name, None)
 
 
@@ -58,7 +58,7 @@ class GameExportDialog(QtWidgets.QDialog):
 
 
 def _prompt_for_output_common(parent: QtWidgets.QWidget, suggested_name: str,
-                              valid_output_file_types: list[str]) -> Optional[Path]:
+                              valid_output_file_types: list[str]) -> Path | None:
     output_file = common_qt_lib.prompt_user_for_output_file(
         parent, suggested_name, valid_output_file_types
     )
@@ -73,7 +73,7 @@ def _prompt_for_output_common(parent: QtWidgets.QWidget, suggested_name: str,
         QMessageBox.warning(
             parent,
             "Invalid output file",
-            "Unable to use '{}' as output file: {}".format(output_file, error),
+            f"Unable to use '{output_file}' as output file: {error}",
         )
         return None
 
@@ -81,7 +81,7 @@ def _prompt_for_output_common(parent: QtWidgets.QWidget, suggested_name: str,
 
 
 def prompt_for_output_file(parent: QtWidgets.QWidget, valid_output_file_types: list[str], suggested_name: str,
-                           output_file_edit: QtWidgets.QLineEdit) -> Optional[Path]:
+                           output_file_edit: QtWidgets.QLineEdit) -> Path | None:
     if output_file_edit.text() and (previous_output := Path(output_file_edit.text()).parent).is_dir():
         suggested_name = str(previous_output.joinpath(suggested_name))
 
@@ -91,7 +91,7 @@ def prompt_for_output_file(parent: QtWidgets.QWidget, valid_output_file_types: l
 
 
 def prompt_for_output_directory(parent: QtWidgets.QWidget, suggested_name: str,
-                                output_file_edit: QtWidgets.QLineEdit) -> Optional[Path]:
+                                output_file_edit: QtWidgets.QLineEdit) -> Path | None:
     if output_file_edit.text():
         suggested_name = output_file_edit.text()
 
@@ -101,7 +101,7 @@ def prompt_for_output_directory(parent: QtWidgets.QWidget, suggested_name: str,
 
 
 def prompt_for_input_file(parent: QtWidgets.QWidget, input_file_edit: QtWidgets.QLineEdit,
-                          valid_input_file_types: list[str]) -> Optional[Path]:
+                          valid_input_file_types: list[str]) -> Path | None:
     existing_file = None
     if input_file_edit.text():
         input_file = Path(input_file_edit.text())
@@ -114,7 +114,7 @@ def prompt_for_input_file(parent: QtWidgets.QWidget, input_file_edit: QtWidgets.
                                                             existing_file=existing_file)
 
 
-def prompt_for_input_directory(parent: QtWidgets.QWidget, input_file_edit: QtWidgets.QLineEdit) -> Optional[Path]:
+def prompt_for_input_directory(parent: QtWidgets.QWidget, input_file_edit: QtWidgets.QLineEdit) -> Path | None:
     existing_file = None
     if input_file_edit.text():
         input_file = Path(input_file_edit.text())
@@ -124,14 +124,14 @@ def prompt_for_input_directory(parent: QtWidgets.QWidget, input_file_edit: QtWid
     return common_qt_lib.prompt_user_for_vanilla_input_file(parent, [""], existing_file=existing_file)
 
 
-def spoiler_path_for(save_spoiler: bool, output_file: Path) -> Optional[Path]:
+def spoiler_path_for(save_spoiler: bool, output_file: Path) -> Path | None:
     if save_spoiler:
         return output_file.with_suffix(f".{LayoutDescription.file_extension()}")
     else:
         return None
 
 
-def spoiler_path_for_directory(save_spoiler: bool, output_dir: Path) -> Optional[Path]:
+def spoiler_path_for_directory(save_spoiler: bool, output_dir: Path) -> Path | None:
     if save_spoiler:
         return output_dir.joinpath(f"spoiler.{LayoutDescription.file_extension()}")
     else:
@@ -158,7 +158,7 @@ def add_field_validation(accept_button: QtWidgets.QPushButton, fields: dict[QtWi
     accept_validation()
 
 
-def path_in_edit(line: QtWidgets.QLineEdit) -> Optional[Path]:
+def path_in_edit(line: QtWidgets.QLineEdit) -> Path | None:
     if line.text():
         return Path(line.text())
     else:
@@ -178,7 +178,7 @@ def is_directory_validator(line: QtWidgets.QLineEdit) -> bool:
     return not line.text() or not Path(line.text()).is_dir()
 
 
-def is_file_validator(file: Optional[Path]) -> bool:
+def is_file_validator(file: Path | None) -> bool:
     """Returns False when the given path is not None and is a file, True otherwise"""
     if file is None:
         return True

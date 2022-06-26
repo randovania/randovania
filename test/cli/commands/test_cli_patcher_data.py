@@ -1,4 +1,4 @@
-from mock import MagicMock
+from unittest.mock import MagicMock
 
 from randovania.cli.commands import patcher_data
 from randovania.interface_common.players_configuration import PlayersConfiguration

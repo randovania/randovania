@@ -1,12 +1,11 @@
 import asyncio
-from typing import Optional
 
 from PySide6 import QtWidgets
 
 from randovania.gui.lib import common_qt_lib
 
 
-async def cancellable_wait(parent: Optional[QtWidgets.QWidget], task: asyncio.Task,
+async def cancellable_wait(parent: QtWidgets.QWidget | None, task: asyncio.Task,
                            title: str, message: str):
     message_box = QtWidgets.QMessageBox(
         QtWidgets.QMessageBox.NoIcon, title,

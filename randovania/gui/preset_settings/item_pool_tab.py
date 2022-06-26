@@ -1,10 +1,10 @@
 import collections
 import dataclasses
 from functools import partial
-from typing import Dict, Tuple, List
 
 from PySide6 import QtWidgets, QtCore
 
+from randovania.exporter import item_names
 from randovania.game_description import default_database
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import ItemCategory
@@ -26,7 +26,6 @@ from randovania.gui.preset_settings.split_ammo_widget import AmmoPickupWidgets
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout.base.major_item_state import MajorItemState
 from randovania.layout.preset import Preset
-from randovania.exporter import item_names
 from randovania.resolver.exceptions import InvalidConfiguration
 
 _EXPECTED_COUNT_TEXT_TEMPLATE_EXACT = (
@@ -49,14 +48,14 @@ def _create_separator(parent: QtWidgets.QWidget) -> QtWidgets.QFrame:
 
 class PresetItemPool(PresetTab, Ui_PresetItemPool):
     game: RandovaniaGame
-    _boxes_for_category: Dict[str, Tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout,
-                                         Dict[MajorItem, ItemConfigurationWidget]]]
-    _default_items: Dict[ItemCategory, QtWidgets.QComboBox]
+    _boxes_for_category: dict[str, tuple[QtWidgets.QGroupBox, QtWidgets.QGridLayout,
+                                         dict[MajorItem, ItemConfigurationWidget]]]
+    _default_items: dict[ItemCategory, QtWidgets.QComboBox]
 
-    _ammo_item_count_spinboxes: Dict[str, List[QtWidgets.QSpinBox]]
-    _ammo_pickup_widgets: Dict[Ammo, AmmoPickupWidgets]
+    _ammo_item_count_spinboxes: dict[str, list[QtWidgets.QSpinBox]]
+    _ammo_pickup_widgets: dict[Ammo, AmmoPickupWidgets]
 
-    _progressive_widgets: List[ProgressiveItemWidget]
+    _progressive_widgets: list[ProgressiveItemWidget]
 
     def __init__(self, editor: PresetEditor):
         super().__init__(editor)
@@ -123,7 +122,7 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
 
         resource_database = self.game_description.resource_database
 
-        item_for_index: Dict[str, ItemResourceInfo] = {
+        item_for_index: dict[str, ItemResourceInfo] = {
             ammo_index: resource_database.get_item(ammo_index)
             for ammo_index in ammo_provided.keys()
         }
@@ -176,11 +175,11 @@ class PresetItemPool(PresetTab, Ui_PresetItemPool):
         # Item pool count
         try:
             pool_items, maximum_size = pool_creator.calculate_pool_item_count(layout)
-            self.item_pool_count_label.setText("Items in pool: {}/{}".format(pool_items, maximum_size))
+            self.item_pool_count_label.setText(f"Items in pool: {pool_items}/{maximum_size}")
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, pool_items > maximum_size)
 
         except InvalidConfiguration as invalid_config:
-            self.item_pool_count_label.setText("Invalid Configuration: {}".format(invalid_config))
+            self.item_pool_count_label.setText(f"Invalid Configuration: {invalid_config}")
             common_qt_lib.set_error_border_stylesheet(self.item_pool_count_label, True)
 
     # Random Starting

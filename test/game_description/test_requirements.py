@@ -1,5 +1,3 @@
-import typing
-from typing import Tuple
 from unittest.mock import MagicMock
 
 import pytest
@@ -71,7 +69,7 @@ def make_req_c(db: ResourceDatabase):
     return res, ResourceRequirement.simple(res)
 
 
-def make_single_set(id_req: Tuple[ResourceInfo, ResourceRequirement]) -> RequirementSet:
+def make_single_set(id_req: tuple[ResourceInfo, ResourceRequirement]) -> RequirementSet:
     return RequirementSet([RequirementList([id_req[1]])])
 
 
@@ -180,10 +178,10 @@ def test_expand_alternatives_4(blank_resource_db):
 ])
 def test_list_dangerous_resources(database, input_data, output_data):
     # setup
-    req_list = RequirementList((
+    req_list = RequirementList(
         ResourceRequirement.create(database.resource_by_index[item[0]], 1, item[1])
         for item in input_data
-    ))
+    )
 
     expected_result = {
         database.resource_by_index[item]

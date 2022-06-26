@@ -3,7 +3,6 @@ import asyncio.futures
 import concurrent.futures
 import threading
 import traceback
-from typing import Optional
 
 from PySide6.QtCore import Signal
 
@@ -14,7 +13,7 @@ class BackgroundTaskMixin:
     progress_update_signal = Signal(str, int)
     background_tasks_button_lock_signal = Signal(bool)
     abort_background_task_requested: bool = False
-    _background_thread: Optional[threading.Thread] = None
+    _background_thread: threading.Thread | None = None
 
     def _start_thread_for(self, target):
         randovania.games.prime2.patcher.csharp_subprocess.IO_LOOP = asyncio.get_event_loop()
@@ -25,7 +24,7 @@ class BackgroundTaskMixin:
 
         last_progress = 0
 
-        def progress_update(message: str, progress: Optional[float]):
+        def progress_update(message: str, progress: float | None):
             nonlocal last_progress
             if progress is None:
                 progress = last_progress
@@ -33,7 +32,7 @@ class BackgroundTaskMixin:
                 last_progress = progress
 
             if self.abort_background_task_requested:
-                self.progress_update_signal.emit("{} - Aborted".format(message), int(progress * 100))
+                self.progress_update_signal.emit(f"{message} - Aborted", int(progress * 100))
                 raise AbortBackgroundTask()
             else:
                 self.progress_update_signal.emit(message, int(progress * 100))
@@ -45,7 +44,7 @@ class BackgroundTaskMixin:
                 pass
             except Exception as e:
                 traceback.print_exc()
-                progress_update("Error: {}".format(e), None)
+                progress_update(f"Error: {e}", None)
             finally:
                 self._background_thread = None
                 self.background_tasks_button_lock_signal.emit(True)

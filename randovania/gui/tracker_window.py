@@ -4,7 +4,7 @@ import json
 import math
 import typing
 from pathlib import Path
-from typing import Optional, Dict, Set, List, Tuple, Iterator, Union
+from typing import Iterator
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import Qt
@@ -51,7 +51,7 @@ def _persisted_preset_path(persistence_path: Path) -> Path:
 
 def _load_previous_state(persistence_path: Path,
                          game_configuration: BaseConfiguration,
-                         ) -> Optional[dict]:
+                         ) -> dict | None:
     previous_layout_path = _persisted_preset_path(persistence_path)
     try:
         previous_configuration = VersionedPreset.from_file_sync(previous_layout_path).get_preset().configuration
@@ -71,8 +71,8 @@ def _load_previous_state(persistence_path: Path,
 
 class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     # Tracker state
-    _collected_pickups: Dict[PickupEntry, int]
-    _actions: List[Node]
+    _collected_pickups: dict[PickupEntry, int]
+    _actions: list[Node]
 
     # Tracker configuration
     logic: Logic
@@ -80,15 +80,15 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
     game_configuration: BaseConfiguration
     persistence_path: Path
     _initial_state: State
-    _elevator_id_to_combo: Dict[NodeIdentifier, QtWidgets.QComboBox]
-    _translator_gate_to_combo: Dict[NodeIdentifier, QtWidgets.QComboBox]
-    _starting_nodes: Set[ResourceNode]
+    _elevator_id_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
+    _translator_gate_to_combo: dict[NodeIdentifier, QtWidgets.QComboBox]
+    _starting_nodes: set[ResourceNode]
 
     # UI tools
-    _world_name_to_item: Dict[str, QtWidgets.QTreeWidgetItem]
-    _area_name_to_item: Dict[tuple[str, str], QtWidgets.QTreeWidgetItem]
-    _node_to_item: Dict[Node, QtWidgets.QTreeWidgetItem]
-    _widget_for_pickup: Dict[PickupEntry, Union[QtWidgets.QCheckBox, QtWidgets.QComboBox]]
+    _world_name_to_item: dict[str, QtWidgets.QTreeWidgetItem]
+    _area_name_to_item: dict[tuple[str, str], QtWidgets.QTreeWidgetItem]
+    _node_to_item: dict[Node, QtWidgets.QTreeWidgetItem]
+    _widget_for_pickup: dict[PickupEntry, QtWidgets.QCheckBox | QtWidgets.QComboBox]
     _during_setup = False
 
     @classmethod
@@ -176,7 +176,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             )
             self._add_new_action(self._initial_state.node)
 
-    def apply_previous_state(self, previous_state: Optional[dict]) -> bool:
+    def apply_previous_state(self, previous_state: dict | None) -> bool:
         if previous_state is None:
             return False
 
@@ -199,7 +199,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             if needs_starting_location:
                 starting_location = AreaIdentifier.from_json(previous_state["starting_location"])
 
-            teleporters: Dict[NodeIdentifier, Optional[AreaIdentifier]] = {
+            teleporters: dict[NodeIdentifier, AreaIdentifier | None] = {
                 NodeIdentifier.from_json(item["teleporter"]): (
                     AreaIdentifier.from_json(item["data"])
                     if item["data"] is not None else None
@@ -279,16 +279,16 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         return self.hide_collected_resources_check.isChecked()
 
     @property
-    def _collected_nodes(self) -> Set[ResourceNode]:
-        return self._starting_nodes | set(action for action in self._actions if action.is_resource_node)
+    def _collected_nodes(self) -> set[ResourceNode]:
+        return self._starting_nodes | {action for action in self._actions if action.is_resource_node}
 
     def _pretty_node_name(self, node: Node) -> str:
         world_list = self.game_description.world_list
-        return "{} / {}".format(world_list.area_name(world_list.nodes_to_area(node)), node.name)
+        return f"{world_list.area_name(world_list.nodes_to_area(node))} / {node.name}"
 
     def _refresh_for_new_action(self):
         self.undo_last_action_button.setEnabled(len(self._actions) > 1)
-        self.current_location_label.setText("Current location: {}".format(self._pretty_node_name(self._actions[-1])))
+        self.current_location_label.setText(f"Current location: {self._pretty_node_name(self._actions[-1])}")
         self.update_locations_tree_for_reachable_nodes()
 
     def _add_new_action(self, node: Node):
@@ -306,7 +306,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self._refresh_for_new_action()
 
     def _on_tree_node_double_clicked(self, item: QtWidgets.QTreeWidgetItem, _):
-        node: Optional[Node] = getattr(item, "node", None)
+        node: Node | None = getattr(item, "node", None)
 
         if not item.isDisabled() and node is not None and node != self._actions[-1]:
             self._add_new_action(node)
@@ -315,22 +315,25 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         target: QtWidgets.QTreeWidgetItem = self.possible_locations_tree.currentItem()
         if target is None:
             return
-        node: Optional[Node] = getattr(target, "node", None)
+        node: Node | None = getattr(target, "node", None)
         if node is not None:
             reach = ResolverReach.calculate_reach(self.logic, self.state_for_current_configuration())
-            path = reach.path_to_node.get(node, [])
+            try:
+                path = reach.path_to_node(node)
+            except KeyError:
+                path = []
 
             wl = self.logic.game.world_list
             text = [f"<p><span style='font-weight:600;'>Path to {node.name}</span></p><ul>"]
             for p in path:
-                text.append("<li>{}</li>".format(wl.node_name(p, with_world=True, distinguish_dark_aether=True)))
+                text.append(f"<li>{wl.node_name(p, with_world=True, distinguish_dark_aether=True)}</li>")
             text.append("</ul>")
 
             dialog = ScrollLabelDialog("".join(text), "Path to node", self)
             dialog.exec_()
         else:
             QtWidgets.QMessageBox.warning(self, "Invalid target",
-                                          "Can't find a path to {}. Please select a node.".format(target.text(0)))
+                                          f"Can't find a path to {target.text(0)}. Please select a node.")
 
     # Map
 
@@ -349,7 +352,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
 
     # Graph Map
 
-    def update_matplot_widget(self, nodes_in_reach: Set[Node]):
+    def update_matplot_widget(self, nodes_in_reach: set[Node]):
         self.matplot_widget.update_for(
             self.graph_map_world_combo.currentData(),
             self.state_for_current_configuration(),
@@ -360,7 +363,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         nodes_in_reach = self.current_nodes_in_reach(self.state_for_current_configuration())
         self.update_matplot_widget(nodes_in_reach)
 
-    def current_nodes_in_reach(self, state: Optional[State]):
+    def current_nodes_in_reach(self, state: State | None):
         if state is None:
             nodes_in_reach = set()
         else:
@@ -487,7 +490,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         elevators_config: TeleporterConfiguration = getattr(self.game_configuration, "elevators")
 
         world_list = self.game_description.world_list
-        nodes_by_world: Dict[str, List[TeleporterNode]] = collections.defaultdict(list)
+        nodes_by_world: dict[str, list[TeleporterNode]] = collections.defaultdict(list)
 
         areas_to_not_change = {
             "Sky Temple Gateway",
@@ -588,7 +591,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             self._translator_gate_to_combo[gate] = combo
             self.translator_gate_scroll_layout.addWidget(combo, i, 1)
 
-    def setup_starting_location(self, area_location: Optional[AreaIdentifier]):
+    def setup_starting_location(self, area_location: AreaIdentifier | None):
         world_list = self.game_description.world_list
 
         if len(self.game_configuration.starting_location.locations) > 1:
@@ -631,7 +634,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         if not self._during_setup:
             self.update_locations_tree_for_reachable_nodes()
 
-    def bulk_change_quantity(self, new_quantity: Dict[PickupEntry, int]):
+    def bulk_change_quantity(self, new_quantity: dict[PickupEntry, int]):
         self._during_setup = True
         for pickup, quantity in new_quantity.items():
             widget = self._widget_for_pickup[pickup]
@@ -659,9 +662,9 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         self._widget_for_pickup[pickup] = spin_bix
         parent_layout.addWidget(spin_bix, row, 1)
 
-    def setup_pickups_box(self, item_pool: List[PickupEntry]):
+    def setup_pickups_box(self, item_pool: list[PickupEntry]):
 
-        parent_widgets: Dict[str, Tuple[QtWidgets.QWidget, QtWidgets.QGridLayout]] = {
+        parent_widgets: dict[str, tuple[QtWidgets.QWidget, QtWidgets.QGridLayout]] = {
             "expansion": (self.expansions_box, self.expansions_layout),
             "energy_tank": (self.expansions_box, self.expansions_layout),
             "translator": (self.translators_box, self.translators_layout),
@@ -746,7 +749,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
             if row_for_parent[parent_widget] == column_for_parent.get(parent_widget) == 0:
                 parent_widget.setVisible(False)
 
-    def state_for_current_configuration(self) -> Optional[State]:
+    def state_for_current_configuration(self) -> State | None:
         state = self._initial_state.copy()
         if self._actions:
             state.node = self._actions[-1]
@@ -759,7 +762,7 @@ class TrackerWindow(QtWidgets.QMainWindow, Ui_TrackerWindow):
         for gate, item in self._translator_gate_to_combo.items():
             scan_visor = self.game_description.resource_database.get_item("Scan")
 
-            requirement: Optional[LayoutTranslatorRequirement] = item.currentData()
+            requirement: LayoutTranslatorRequirement | None = item.currentData()
             if requirement is None:
                 translator_req = Requirement.impossible()
             else:

@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
@@ -77,7 +76,7 @@ class HintRelativeAreaName(Enum):
 
 @dataclass(frozen=True)
 class RelativeData:
-    distance_offset: Optional[int]
+    distance_offset: int | None
 
     @classmethod
     def from_json(cls, param: dict) -> "RelativeData":
@@ -104,15 +103,15 @@ class PrecisionPair(JsonDataclass, DataclassPostInitTypeCheck):
     location: HintLocationPrecision
     item: HintItemPrecision
     include_owner: bool
-    relative: Optional[RelativeData] = None
+    relative: RelativeData | None = None
 
 
 @dataclass(frozen=True)
 class Hint(JsonDataclass):
     hint_type: HintType
-    precision: Optional[PrecisionPair]
-    target: Optional[PickupIndex] = None
-    dark_temple: Optional[HintDarkTemple] = None
+    precision: PrecisionPair | None
+    target: PickupIndex | None = None
+    dark_temple: HintDarkTemple | None = None
 
     def __post_init__(self):
         if self.hint_type is HintType.JOKE:

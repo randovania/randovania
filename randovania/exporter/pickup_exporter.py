@@ -1,7 +1,7 @@
 import dataclasses
 from random import Random
-from typing import List, Dict
 
+from randovania.exporter import item_names
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
@@ -14,10 +14,9 @@ from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.world_list import WorldList
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout.base.pickup_model import PickupModelStyle, PickupModelDataSource
-from randovania.exporter import item_names
 
 
-def _conditional_resources_for_pickup(pickup: PickupEntry) -> List[ConditionalResources]:
+def _conditional_resources_for_pickup(pickup: PickupEntry) -> list[ConditionalResources]:
     if len(pickup.progression) > 1:
         assert pickup.resource_lock is None, pickup.name
         return list(pickup.conditional_resources)
@@ -78,7 +77,7 @@ def _pickup_scan(pickup: PickupEntry) -> str:
 
 
 def _get_single_hud_text(pickup_name: str,
-                         memo_data: Dict[str, str],
+                         memo_data: dict[str, str],
                          resources: ResourceGainTuple,
                          ) -> str:
     return memo_data[pickup_name].format(**{
@@ -87,9 +86,9 @@ def _get_single_hud_text(pickup_name: str,
     })
 
 
-def _get_all_hud_text(conditionals: List[ConditionalResources],
-                      memo_data: Dict[str, str],
-                      ) -> List[str]:
+def _get_all_hud_text(conditionals: list[ConditionalResources],
+                      memo_data: dict[str, str],
+                      ) -> list[str]:
     return [
         _get_single_hud_text(conditional.name, memo_data, conditional.resources)
         for conditional in conditionals
@@ -99,8 +98,8 @@ def _get_all_hud_text(conditionals: List[ConditionalResources],
 def _calculate_hud_text(pickup: PickupEntry,
                         visual_pickup: PickupEntry,
                         model_style: PickupModelStyle,
-                        memo_data: Dict[str, str],
-                        ) -> List[str]:
+                        memo_data: dict[str, str],
+                        ) -> list[str]:
     """
     Calculates what the hud_text for a pickup should be
     :param pickup:
@@ -126,9 +125,9 @@ def _calculate_hud_text(pickup: PickupEntry,
 class ExportedPickupDetails:
     index: PickupIndex
     scan_text: str
-    hud_text: List[str]
-    conditional_resources: List[ConditionalResources]
-    conversion: List[ResourceConversion]
+    hud_text: list[str]
+    conditional_resources: list[ConditionalResources]
+    conversion: list[ResourceConversion]
     model: PickupModel
     other_player: bool
     original_pickup: PickupEntry
@@ -162,7 +161,7 @@ class PickupExporter:
 
 
 class PickupExporterSolo(PickupExporter):
-    def __init__(self, memo_data: Dict[str, str]):
+    def __init__(self, memo_data: dict[str, str]):
         self.memo_data = memo_data
 
     def create_details(self,
@@ -224,7 +223,7 @@ class PickupExporterMulti(PickupExporter):
 
 
 def _get_visual_model(original_index: int,
-                      pickup_list: List[PickupTarget],
+                      pickup_list: list[PickupTarget],
                       data_source: PickupModelDataSource,
                       visual_etm: PickupEntry,
                       ) -> PickupEntry:
@@ -246,7 +245,7 @@ def export_all_indices(patches: GamePatches,
                        data_source: PickupModelDataSource,
                        exporter: PickupExporter,
                        visual_etm: PickupEntry,
-                       ) -> List[ExportedPickupDetails]:
+                       ) -> list[ExportedPickupDetails]:
     """
     Creates the patcher data for all pickups in the game
     :param patches:
@@ -284,7 +283,7 @@ def export_all_indices(patches: GamePatches,
 
 class GenericAcquiredMemo(dict):
     def __missing__(self, key):
-        return "{} acquired!".format(key)
+        return f"{key} acquired!"
 
 
 def create_pickup_exporter(game: GameDescription, memo_data: dict, players_config: PlayersConfiguration):

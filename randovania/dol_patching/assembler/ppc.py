@@ -1,6 +1,6 @@
 import dataclasses as _dataclasses
 import struct as _struct
-from typing import Optional, Callable, Tuple, Dict, Union
+from typing import Callable, Union
 
 
 def _pack(*args):
@@ -26,8 +26,8 @@ class FloatRegister(Register):
 
 
 class BaseInstruction:
-    label: Optional[str]
-    name: Optional[str] = None
+    label: str | None
+    name: str | None = None
 
     def __init__(self):
         self.label = None
@@ -40,7 +40,7 @@ class BaseInstruction:
         self.name = name
         return self
 
-    def bytes_for(self, address: int, symbols: Dict[str, int]):
+    def bytes_for(self, address: int, symbols: dict[str, int]):
         raise NotImplementedError()
 
     def __eq__(self, other):
@@ -58,7 +58,7 @@ class Instruction(BaseInstruction):
         super().__init__()
         self.value = value
 
-    def bytes_for(self, address: int, symbols: Dict[str, int]):
+    def bytes_for(self, address: int, symbols: dict[str, int]):
         return iter(_pack(">I", self.value))
 
     def __eq__(self, other):
@@ -74,7 +74,7 @@ class Instruction(BaseInstruction):
         return 4
 
     @classmethod
-    def compose(cls, data: Tuple[Tuple[int, int, bool], ...]):
+    def compose(cls, data: tuple[tuple[int, int, bool], ...]):
         value = 0
         bits_left = 32
         for item, bit_size, signed in data:
@@ -92,11 +92,11 @@ class Instruction(BaseInstruction):
 
 
 class AddressDependantInstruction(BaseInstruction):
-    def __init__(self, factory: Callable[[int], Tuple[Tuple[int, int, bool], ...]]):
+    def __init__(self, factory: Callable[[int], tuple[tuple[int, int, bool], ...]]):
         super().__init__()
         self.factory = factory
 
-    def bytes_for(self, address: int, symbols: Dict[str, int]):
+    def bytes_for(self, address: int, symbols: dict[str, int]):
         yield from Instruction.compose(self.factory(address)).bytes_for(address, symbols=symbols)
 
     def __eq__(self, other):
@@ -110,19 +110,19 @@ class AddressDependantInstruction(BaseInstruction):
 class RelativeAddressInstruction(BaseInstruction):
     def __init__(self,
                  address_or_symbol: JumpTarget,
-                 factory: Callable[[int, int], Tuple[Tuple[int, int, bool], ...]]):
+                 factory: Callable[[int, int], tuple[tuple[int, int, bool], ...]]):
         super().__init__()
         self.address_or_symbol = address_or_symbol
         self.factory = factory
 
-    def concrete_instruction(self, instruction_address: int, symbols: Dict[str, int]) -> Instruction:
+    def concrete_instruction(self, instruction_address: int, symbols: dict[str, int]) -> Instruction:
         if isinstance(self.address_or_symbol, str):
             address = symbols[self.address_or_symbol]
         else:
             address = self.address_or_symbol
         return Instruction.compose(self.factory(address, instruction_address))
 
-    def bytes_for(self, instruction_address: int, symbols: Dict[str, int]):
+    def bytes_for(self, instruction_address: int, symbols: dict[str, int]):
         instruction = self.concrete_instruction(instruction_address, symbols=symbols)
         yield from instruction.bytes_for(instruction_address, symbols=symbols)
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import enum
-from typing import Tuple, Iterator, Optional
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackDecoder
@@ -47,7 +47,7 @@ class MajorItemState:
     num_shuffled_pickups: int = 0
     num_included_in_starting_items: int = 0
     priority: float = 1.0
-    included_ammo: Tuple[int, ...] = tuple()
+    included_ammo: tuple[int, ...] = tuple()
 
     def check_consistency(self, item: MajorItem):
         db = default_database.resource_database_for(item.game)
@@ -86,7 +86,7 @@ class MajorItemState:
                     f"Including more than maximum capacity for ammo {ammo_index}. Included: {ammo}; Max: {db.get_item(ammo_index).max_capacity}")
 
     @classmethod
-    def from_case(cls, case: MajorItemStateCase, included_ammo: Tuple[int, ...]) -> Optional[MajorItemState]:
+    def from_case(cls, case: MajorItemStateCase, included_ammo: tuple[int, ...]) -> MajorItemState | None:
         if case == MajorItemStateCase.MISSING:
             return MajorItemState(included_ammo=included_ammo)
 
@@ -125,7 +125,7 @@ class MajorItemState:
         return result
 
     @classmethod
-    def from_json(cls, value: dict) -> "MajorItemState":
+    def from_json(cls, value: dict) -> MajorItemState:
         kwargs: dict = {}
 
         for field in dataclasses.fields(cls):
@@ -137,7 +137,7 @@ class MajorItemState:
 
         return cls(**kwargs)
 
-    def bit_pack_encode(self, item: MajorItem, reference: "MajorItemState") -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, item: MajorItem, reference: MajorItemState) -> Iterator[tuple[int, int]]:
         db = default_database.resource_database_for(item.game)
         if item.progression:
             main_index = item.progression[0]
@@ -178,7 +178,7 @@ class MajorItemState:
                         break
 
     @classmethod
-    def bit_pack_unpack(cls, decoder: BitPackDecoder, item: MajorItem, reference: "MajorItemState") -> "MajorItemState":
+    def bit_pack_unpack(cls, decoder: BitPackDecoder, item: MajorItem, reference: MajorItemState) -> MajorItemState:
         db = default_database.resource_database_for(item.game)
         if item.progression:
             main_index = item.progression[0]

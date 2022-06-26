@@ -2,16 +2,16 @@ import copy
 import json
 import re
 from pathlib import Path
-from typing import List, TypeVar, Callable, Dict, Tuple, Iterator, Optional
+from typing import TypeVar, Callable, Iterator
 
 from randovania.game_description import game_migration
 from randovania.game_description.game_description import GameDescription, MinimalLogicData
-from randovania.game_description.requirements.requirement_template import RequirementTemplate
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo, ResourceGainTuple, ResourceGain
@@ -81,7 +81,7 @@ def write_requirement(requirement: Requirement) -> dict:
         raise ValueError(f"Unknown requirement type: {type(requirement)}")
 
 
-def write_optional_requirement(requirement: Optional[Requirement]) -> Optional[dict]:
+def write_optional_requirement(requirement: Requirement | None) -> dict | None:
     if requirement is None:
         return None
     else:
@@ -91,7 +91,7 @@ def write_optional_requirement(requirement: Optional[Requirement]) -> Optional[d
 # Resource
 
 def write_resource_gain(resource_gain: ResourceGain) -> list:
-    def sorter(item: Tuple[ResourceInfo, int]):
+    def sorter(item: tuple[ResourceInfo, int]):
         return item[0].resource_type, item[0].short_name, item[1]
 
     return [
@@ -130,14 +130,14 @@ def write_trick_resource(resource: TrickResourceInfo) -> dict:
 X = TypeVar('X')
 
 
-def write_array(array: List[X], writer: Callable[[X], dict]) -> dict:
+def write_array(array: list[X], writer: Callable[[X], dict]) -> dict:
     return {
         item.short_name: writer(item)
         for item in array
     }
 
 
-def check_for_duplicated_index(array: List, field: str) -> Iterator[str]:
+def check_for_duplicated_index(array: list, field: str) -> Iterator[str]:
     indices_seen = set()
     for item in array:
         if getattr(item, field) in indices_seen:
@@ -187,7 +187,7 @@ def write_resource_database(resource_database: ResourceDatabase):
 
 # Dock Weakness Database
 
-def write_dock_lock(dock_lock: Optional[DockLock]) -> Optional[dict]:
+def write_dock_lock(dock_lock: DockLock | None) -> dict | None:
     if dock_lock is None:
         return None
 
@@ -204,15 +204,16 @@ def write_dock_weakness(dock_weakness: DockWeakness) -> dict:
         "lock": write_dock_lock(dock_weakness.lock),
     }
 
+
 def write_dock_rando_params(dock_rando: DockRandoParams) -> dict:
     def name_or_none(weak: DockWeakness):
         return weak.name if weak is not None else weak
-    
+
     return {
         "unlocked": name_or_none(dock_rando.unlocked),
         "locked": name_or_none(dock_rando.locked),
-        "change_from": sorted((weakness.name for weakness in dock_rando.change_from)),
-        "change_to": sorted((weakness.name for weakness in dock_rando.change_to)),
+        "change_from": sorted(weakness.name for weakness in dock_rando.change_from),
+        "change_to": sorted(weakness.name for weakness in dock_rando.change_to),
     }
 
 
@@ -308,7 +309,7 @@ def write_node(node: Node) -> dict:
         data["is_unlocked"] = write_requirement(node.is_unlocked)
 
     else:
-        raise ValueError("Unknown node class: {}".format(node))
+        raise ValueError(f"Unknown node class: {node}")
 
     return data
 
@@ -397,14 +398,14 @@ def write_world_list(world_list: WorldList) -> list:
 
 # Game Description
 
-def write_initial_states(initial_states: Dict[str, ResourceGainTuple]) -> dict:
+def write_initial_states(initial_states: dict[str, ResourceGainTuple]) -> dict:
     return {
         name: write_resource_gain(initial_state)
         for name, initial_state in initial_states.items()
     }
 
 
-def write_minimal_logic_db(db: Optional[MinimalLogicData]) -> Optional[dict]:
+def write_minimal_logic_db(db: MinimalLogicData | None) -> dict | None:
     if db is None:
         return None
 

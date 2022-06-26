@@ -3,7 +3,6 @@ import hashlib
 import json
 import logging
 import typing
-from typing import Optional, List, Tuple
 
 import construct
 import flask
@@ -34,14 +33,14 @@ from randovania.server.lib import logger
 from randovania.server.server_app import ServerApp
 
 
-def _describe_session(session: GameSession, membership: Optional[GameSessionMembership] = None) -> str:
+def _describe_session(session: GameSession, membership: GameSessionMembership | None = None) -> str:
     if membership is not None:
         return f"Session {session.id} ({session.name}), Row {membership.row} ({membership.effective_name})"
     else:
         return f"Session {session.id} ({session.name})"
 
 
-def list_game_sessions(sio: ServerApp, limit: Optional[int]):
+def list_game_sessions(sio: ServerApp, limit: int | None):
     return [
         session.create_list_entry()
         for session in GameSession.select().order_by(GameSession.id.desc()).limit(limit)
@@ -67,7 +66,7 @@ def create_game_session(sio: ServerApp, session_name: str):
     return new_session.create_session_entry()
 
 
-def join_game_session(sio: ServerApp, session_id: int, password: Optional[str]):
+def join_game_session(sio: ServerApp, session_id: int, password: str | None):
     session: GameSession = GameSession.get_by_id(session_id)
 
     if session.password is not None:
@@ -98,7 +97,7 @@ def disconnect_game_session(sio: ServerApp, session_id: int):
     sio.leave_game_session()
 
 
-def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: Optional[int],
+def _verify_has_admin(sio: ServerApp, session_id: int, admin_user_id: int | None,
                       *, allow_when_no_admins: bool = False) -> None:
     """
     Checks if the logged user can do admin operations to the given session,
@@ -191,7 +190,7 @@ def _create_row(sio: ServerApp, session: GameSession, preset_json: dict):
                                  preset=json.dumps(preset.as_json))
 
 
-def _change_row(sio: ServerApp, session: GameSession, arg: Tuple[int, dict]):
+def _change_row(sio: ServerApp, session: GameSession, arg: tuple[int, dict]):
     if len(arg) != 2:
         raise InvalidAction("Missing arguments.")
     row_id, preset_json = arg
@@ -252,7 +251,7 @@ def _update_layout_generation(sio: ServerApp, session: GameSession, active: bool
     session.save()
 
 
-def _change_layout_description(sio: ServerApp, session: GameSession, description_json: Optional[dict]):
+def _change_layout_description(sio: ServerApp, session: GameSession, description_json: dict | None):
     _verify_has_admin(sio, session.id, None)
     _verify_in_setup(session)
     rows_to_update = []
@@ -583,7 +582,7 @@ def _base64_encode_pickup(pickup: PickupEntry, resource_database: ResourceDataba
 
 def _collect_location(session: GameSession, membership: GameSessionMembership,
                       description: LayoutDescription,
-                      pickup_location: int) -> Optional[int]:
+                      pickup_location: int) -> int | None:
     """
     Collects the pickup in the given location. Returns
     :param session:
@@ -622,7 +621,7 @@ def _collect_location(session: GameSession, membership: GameSessionMembership,
     return pickup_target.player
 
 
-def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locations: Tuple[int, ...]):
+def game_session_collect_locations(sio: ServerApp, session_id: int, pickup_locations: tuple[int, ...]):
     current_user = sio.get_current_user()
     session: GameSession = database.GameSession.get_by_id(session_id)
     membership = GameSessionMembership.get_by_ids(current_user.id, session_id)
@@ -658,7 +657,7 @@ def _get_resource_database(description: LayoutDescription, player: int) -> Resou
     return default_database.resource_database_for(description.get_preset(player).game)
 
 
-def _get_pickup_target(description: LayoutDescription, provider: int, location: int) -> Optional[PickupTarget]:
+def _get_pickup_target(description: LayoutDescription, provider: int, location: int) -> PickupTarget | None:
     pickup_assignment = description.all_patches[provider].pickup_assignment
     return pickup_assignment.get(PickupIndex(location))
 
@@ -681,7 +680,7 @@ def _emit_game_session_pickups_update(sio: ServerApp, membership: GameSessionMem
     resource_database = _get_resource_database(description, membership.row)
 
     result = []
-    actions: List[GameSessionTeamAction] = list(_query_for_actions(membership))
+    actions: list[GameSessionTeamAction] = list(_query_for_actions(membership))
     for action in actions:
         pickup_target = _get_pickup_target(description, action.provider_row, action.provider_location_index)
 
@@ -720,7 +719,7 @@ def game_session_self_update(sio: ServerApp, session_id: int, inventory: bytes, 
 
 
 def report_user_disconnected(sio: ServerApp, user_id: int, log):
-    memberships: List[GameSessionMembership] = list(GameSessionMembership.select().where(
+    memberships: list[GameSessionMembership] = list(GameSessionMembership.select().where(
         GameSessionMembership.user == user_id))
 
     log.info(f"User {user_id} is disconnected, disconnecting from sessions: {memberships}")

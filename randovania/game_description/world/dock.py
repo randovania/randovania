@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 from dataclasses import dataclass
 from enum import unique, Enum
-from typing import Iterator, Optional
+from typing import Iterator
 
 from frozendict import frozendict
 
@@ -59,7 +59,7 @@ class DockWeakness:
     name: str
     extra: frozendict
     requirement: Requirement
-    lock: Optional[DockLock]
+    lock: DockLock | None
 
     def __hash__(self):
         return hash((self.name, self.extra))
@@ -71,7 +71,7 @@ class DockWeakness:
     def long_name(self):
         return self.extra.get("display_name", self.name)
 
-    def can_unlock_from_back(self: DockWeakness, back_weak: Optional[DockWeakness]) -> bool:
+    def can_unlock_from_back(self: DockWeakness, back_weak: DockWeakness | None) -> bool:
         if back_weak is not None and back_weak.lock is not None:
             opens_from_back = {DockLockType.FRONT_BLAST_BACK_FREE_UNLOCK,
                                DockLockType.FRONT_BLAST_BACK_BLAST}

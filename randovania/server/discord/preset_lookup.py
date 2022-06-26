@@ -4,7 +4,6 @@ import json
 import logging
 import re
 import subprocess
-from typing import Optional
 
 import discord
 from discord.ext import commands
@@ -28,7 +27,7 @@ def _add_preset_description_to_embed(embed: discord.Embed, preset: Preset):
         embed.add_field(name=category, value="\n".join(items), inline=True)
 
 
-def get_version(original_permalink: str, randovania_version: bytes) -> Optional[str]:
+def get_version(original_permalink: str, randovania_version: bytes) -> str | None:
     try:
         version_raw = subprocess.run(
             ["git", "describe", "--tags", randovania_version.hex()],
@@ -99,10 +98,10 @@ async def look_for_permalinks(message: discord.Message):
 
         player_count = len(games)
         embed = discord.Embed(title=f"`{word.group(1)}`",
-                              description="{} player multiworld permalink".format(player_count))
+                              description=f"{player_count} player multiworld permalink")
 
         if player_count == 1:
-            embed.description = "{} permalink".format(games[0].long_name)
+            embed.description = f"{games[0].long_name} permalink"
             if permalink is not None:
                 _add_preset_description_to_embed(embed, permalink.parameters.get_preset(0))
 
@@ -145,7 +144,7 @@ async def reply_for_preset(message: discord.Message, versioned_preset: Versioned
 
 async def reply_for_layout_description(message: discord.Message, description: LayoutDescription):
     embed = discord.Embed(
-        title="Spoiler file for Randovania {}".format(description.randovania_version_text),
+        title=f"Spoiler file for Randovania {description.randovania_version_text}",
     )
 
     if description.player_count == 1:

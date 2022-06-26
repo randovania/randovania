@@ -2,7 +2,6 @@ import copy
 import dataclasses
 import json
 import os
-import shutil
 from pathlib import Path
 from textwrap import wrap
 
@@ -12,10 +11,10 @@ from randovania.dol_patching import assembler
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
 from randovania.game_description.resources.pickup_entry import PickupModel
 from randovania.games.game import RandovaniaGame
+from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 from randovania.games.prime1.layout.prime_configuration import RoomRandoMode
 from randovania.lib import status_update_lib
 from randovania.patching.prime import all_prime_dol_patches, asset_conversion
-from randovania.games.prime1.exporter.patch_data_factory import _MODEL_MAPPING
 
 
 @dataclasses.dataclass(frozen=True)
@@ -29,7 +28,6 @@ class PrimeGameExportParams(GameExportParams):
 
 
 def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets: bool):
-
     model_list = []
     if use_external_assets:
         bad_models = {"prime2_MissileLauncher", "prime2_MissileExpansionPrime1"}
@@ -42,7 +40,7 @@ def adjust_model_names(patch_data: dict, assets_meta: dict, use_external_assets:
                 if model.game == RandovaniaGame.METROID_PRIME:
                     converted_model_name = model.name
                 else:
-                    converted_model_name = "{}_{}".format(model.game.value, model.name)
+                    converted_model_name = f"{model.game.value}_{model.name}"
                     if converted_model_name not in model_list:
                         converted_model_name = _MODEL_MAPPING.get((model.game, model.name), "Nothing")
 
@@ -79,7 +77,7 @@ class PrimeGameExporter(GameExporter):
                 logger = logging.getLogger(name)
                 logger.setLevel(logging.CRITICAL)
                 logger.disabled = True
-            
+
             import matplotlib
             matplotlib._log.disabled = True
             from matplotlib import pyplot
@@ -92,13 +90,14 @@ class PrimeGameExporter(GameExporter):
 
             # add edges which were not shuffled
             disabled_doors = set()
-            world = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list.world_with_name(world_name)
+            world = default_database.game_description_for(RandovaniaGame.METROID_PRIME).world_list.world_with_name(
+                world_name)
             for area in world.areas:
                 for node in area.nodes:
                     if not isinstance(node, DockNode):
                         continue
 
-                    src_name = area.name                    
+                    src_name = area.name
                     src_dock_num = node.extra["dock_index"]
 
                     if node.default_dock_weakness.name == "Permanently Locked":
@@ -128,7 +127,7 @@ class PrimeGameExporter(GameExporter):
             graph.add_edges_from(room_connections)
 
             # render the graph to png
-            pos = networkx.spring_layout(graph, k=1.2/numpy.sqrt(len(graph.nodes())), iterations=100, seed=0)
+            pos = networkx.spring_layout(graph, k=1.2 / numpy.sqrt(len(graph.nodes())), iterations=100, seed=0)
             pyplot.figure(3, figsize=(22, 22))
             networkx.draw(graph, pos=pos, node_size=800)
             networkx.draw_networkx_labels(graph, pos=pos, font_weight='bold', font_size=4)

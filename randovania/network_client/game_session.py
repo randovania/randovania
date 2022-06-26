@@ -1,14 +1,13 @@
 import dataclasses
 import datetime
 import json
-from typing import List, Dict, Optional, Tuple
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.pickup_index import PickupIndex
-from randovania.lib.construct_lib import convert_to_raw_python
 from randovania.games.game import RandovaniaGame
 from randovania.layout.versioned_preset import VersionedPreset
+from randovania.lib.construct_lib import convert_to_raw_python
 from randovania.network_common.binary_formats import BinaryGameSessionEntry
 from randovania.network_common.session_state import GameSessionState
 
@@ -38,7 +37,7 @@ class GameSessionListEntry:
 class PlayerSessionEntry:
     id: int
     name: str
-    row: Optional[int]
+    row: int | None
     admin: bool
     connection_state: str
 
@@ -89,12 +88,12 @@ class GameDetails(JsonDataclass):
 class GameSessionEntry:
     id: int
     name: str
-    presets: List[VersionedPreset]
-    players: Dict[int, PlayerSessionEntry]
-    game_details: Optional[GameDetails]
+    presets: list[VersionedPreset]
+    players: dict[int, PlayerSessionEntry]
+    game_details: GameDetails | None
     state: GameSessionState
-    generation_in_progress: Optional[int]
-    allowed_games: List[RandovaniaGame]
+    generation_in_progress: int | None
+    allowed_games: list[RandovaniaGame]
 
     @property
     def num_admins(self) -> int:
@@ -129,13 +128,13 @@ class GameSessionEntry:
 
 @dataclasses.dataclass(frozen=True)
 class GameSessionActions:
-    actions: Tuple[GameSessionAction, ...]
+    actions: tuple[GameSessionAction, ...]
 
 
 @dataclasses.dataclass(frozen=True)
 class GameSessionPickups:
     game: RandovaniaGame
-    pickups: Tuple[Tuple[str, PickupEntry], ...]
+    pickups: tuple[tuple[str, PickupEntry], ...]
 
 
 @dataclasses.dataclass(frozen=True)
@@ -155,7 +154,7 @@ class GameSessionAuditEntry:
 
 @dataclasses.dataclass(frozen=True)
 class GameSessionAuditLog:
-    entries: Tuple[GameSessionAuditEntry, ...]
+    entries: tuple[GameSessionAuditEntry, ...]
 
 
 @dataclasses.dataclass(frozen=True)

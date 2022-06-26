@@ -1,9 +1,8 @@
 import dataclasses
 import hashlib
 import math
-import typing
 from enum import Enum
-from typing import Iterator, Tuple, TypeVar, List, Optional, Callable
+from typing import Iterator, TypeVar, Callable
 
 import bitstruct
 
@@ -21,7 +20,7 @@ def single_byte_hash(data: bytes) -> int:
 
 
 def _compile_format(*args):
-    return bitstruct.CompiledFormat("".join("u{}".format(_bits_for_number(v)) for v in args))
+    return bitstruct.CompiledFormat("".join(f"u{_bits_for_number(v)}" for v in args))
 
 
 class BitPackDecoder:
@@ -32,7 +31,7 @@ class BitPackDecoder:
         self._data = data
         self._offset = 0
 
-    def decode(self, *args) -> Tuple[int, ...]:
+    def decode(self, *args) -> tuple[int, ...]:
         """Decodes values from the current buffer, advancing the current pointer"""
         compiled = _compile_format(*args)
         offset = self._offset
@@ -42,12 +41,12 @@ class BitPackDecoder:
     def decode_single(self, value: int) -> int:
         return self.decode(value)[0]
 
-    def decode_element(self, array: List[T]) -> T:
+    def decode_element(self, array: list[T]) -> T:
         if len(array) == 1:
             return array[0]
         return array[self.decode_single(len(array))]
 
-    def peek(self, *args) -> Tuple[int, ...]:
+    def peek(self, *args) -> tuple[int, ...]:
         """Decodes values from the current buffer, *NOT* advancing the current pointer"""
         compiled = _compile_format(*args)
         return compiled.unpack_from(self._data, self._offset)
@@ -61,7 +60,7 @@ class BitPackDecoder:
 
 
 class BitPackValue:
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         raise NotImplementedError()
 
     @classmethod
@@ -79,7 +78,7 @@ class BitPackBool(BitPackValue):
     def __init__(self, value: bool):
         self.value = value
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         yield from encode_bool(self.value)
 
     @classmethod
@@ -97,7 +96,7 @@ class BitPackFloat(BitPackValue):
     def __init__(self, value: float):
         self.value = value
 
-    def bit_pack_encode(self, metadata: dict) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         if "if_different" in metadata:
             same = self.value == metadata["if_different"]
             yield from encode_bool(same)
@@ -125,7 +124,7 @@ class BitPackInt(BitPackValue):
     def __init__(self, value: int):
         self.value = value
 
-    def bit_pack_encode(self, metadata: dict) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata: dict) -> Iterator[tuple[int, int]]:
         if "if_different" in metadata:
             same = self.value == metadata["if_different"]
             yield from encode_bool(same)
@@ -151,13 +150,13 @@ class BitPackEnum(BitPackValue):
     def __reduce__(self):
         return None
 
-    def bit_pack_encode(self: Enum, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self: Enum, metadata) -> Iterator[tuple[int, int]]:
         cls = self.__class__
         values = list(cls.__members__.values())
         yield from pack_array_element(self, values)
 
     @classmethod
-    def bit_pack_unpack(cls: typing.Type[T], decoder: BitPackDecoder, metadata) -> T:
+    def bit_pack_unpack(cls: type[T], decoder: BitPackDecoder, metadata) -> T:
         assert issubclass(cls, Enum)
         items = list(cls.__members__.values())
         return decoder.decode_element(items)
@@ -178,7 +177,7 @@ def _get_bit_pack_value_for_type(value_type):
         return _default_bit_pack_classes[value_type]
 
     else:
-        raise NotImplementedError("Unsupported bit packing for type {}".format(value_type))
+        raise NotImplementedError(f"Unsupported bit packing for type {value_type}")
 
 
 def _get_bit_pack_value_for(value, dataclass_type: type):
@@ -189,7 +188,7 @@ def _get_bit_pack_value_for(value, dataclass_type: type):
 
 
 class BitPackDataclass(BitPackValue):
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         reference = metadata.get("reference")
 
         for field in dataclasses.fields(self):
@@ -252,7 +251,7 @@ class BitPackDataclass(BitPackValue):
         return cls(**args)
 
 
-def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
+def pack_array_element(element: T, array: list[T]) -> Iterator[tuple[int, int]]:
     if len(array) > 1:
         yield array.index(element), len(array)
     else:
@@ -260,11 +259,11 @@ def pack_array_element(element: T, array: List[T]) -> Iterator[Tuple[int, int]]:
             raise ValueError(f"given element {element} is not in array of {len(array)}")
 
 
-def _is_sorted(array: List[T]) -> bool:
+def _is_sorted(array: list[T]) -> bool:
     return array == list(sorted(array))
 
 
-def _limits_for_size(remaining_size: int) -> Tuple[int, ...]:
+def _limits_for_size(remaining_size: int) -> tuple[int, ...]:
     if remaining_size > 4:
         return 4, remaining_size
     elif remaining_size > 0:
@@ -273,7 +272,7 @@ def _limits_for_size(remaining_size: int) -> Tuple[int, ...]:
         return ()
 
 
-def _aux_pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
+def _aux_pack_sorted_array_elements(elements: list[T], array: list[T]) -> Iterator[tuple[int, int]]:
     yield len(elements), len(array) + 1
 
     previous_index = 0
@@ -286,7 +285,7 @@ def _aux_pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterat
         previous_index = index
 
 
-def pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tuple[int, int]]:
+def pack_sorted_array_elements(elements: list[T], array: list[T]) -> Iterator[tuple[int, int]]:
     # elements must be sorted so the N-th element is smaller than N+1-th
     assert _is_sorted(elements)
     assert _is_sorted(array)
@@ -311,7 +310,7 @@ def pack_sorted_array_elements(elements: List[T], array: List[T]) -> Iterator[Tu
         yield from normal_results
 
 
-def decode_sorted_array_elements(decoder: BitPackDecoder, array: List[T]) -> List[T]:
+def decode_sorted_array_elements(decoder: BitPackDecoder, array: list[T]) -> list[T]:
     result = []
 
     if not array:
@@ -334,7 +333,7 @@ def decode_sorted_array_elements(decoder: BitPackDecoder, array: List[T]) -> Lis
         return result
 
 
-def encode_int_with_limits(value: int, limits: Tuple[int, ...]) -> Iterator[Tuple[int, int]]:
+def encode_int_with_limits(value: int, limits: tuple[int, ...]) -> Iterator[tuple[int, int]]:
     previous_limit_sum = 0
 
     for i, limit in enumerate(limits):
@@ -349,7 +348,7 @@ def encode_int_with_limits(value: int, limits: Tuple[int, ...]) -> Iterator[Tupl
         value -= limit
 
 
-def decode_int_with_limits(decoder: BitPackDecoder, limits: Tuple[int, ...]) -> int:
+def decode_int_with_limits(decoder: BitPackDecoder, limits: tuple[int, ...]) -> int:
     value = 0
     previous_limit_sum = 0
 
@@ -392,7 +391,7 @@ def decode_string(decoder: BitPackDecoder) -> str:
     return decode_bytes(decoder).decode("utf-8")
 
 
-def encode_bool(value: bool) -> Iterator[Tuple[int, int]]:
+def encode_bool(value: bool) -> Iterator[tuple[int, int]]:
     yield int(bool(value)), 2
 
 
@@ -400,13 +399,13 @@ def decode_bool(decoder: BitPackDecoder) -> bool:
     return bool(decoder.decode_single(2))
 
 
-def encode_tuple(value: Tuple[T, ...], encoder: Callable[[T], Iterator[Tuple[int, int]]]):
+def encode_tuple(value: tuple[T, ...], encoder: Callable[[T], Iterator[tuple[int, int]]]):
     yield from encode_big_int(len(value))
     for it in value:
         yield from encoder(it)
 
 
-def decode_tuple(decoder: BitPackDecoder, item_decoder: Callable[[BitPackDecoder], T]) -> Tuple[T, ...]:
+def decode_tuple(decoder: BitPackDecoder, item_decoder: Callable[[BitPackDecoder], T]) -> tuple[T, ...]:
     size = decode_big_int(decoder)
     return tuple(
         item_decoder(decoder)
@@ -414,19 +413,19 @@ def decode_tuple(decoder: BitPackDecoder, item_decoder: Callable[[BitPackDecoder
     )
 
 
-def _format_string_for(values: List[Tuple[int, int]]) -> str:
+def _format_string_for(values: list[tuple[int, int]]) -> str:
     return "".join(
-        "u{}".format(_bits_for_number(v))
+        f"u{_bits_for_number(v)}"
         for _, v in values
     )
 
 
-def _pack_encode_results(values: List[Tuple[int, int]]):
+def _pack_encode_results(values: list[tuple[int, int]]):
     f = _format_string_for(values)
     return bitstruct.compile(f).pack(*[argument for argument, _ in values])
 
 
-def pack_results_and_bit_count(it: Iterator[Tuple[int, int]]):
+def pack_results_and_bit_count(it: Iterator[tuple[int, int]]):
     values = [
         (value_argument, value_format)
         for value_argument, value_format in it
@@ -438,7 +437,7 @@ def pack_results_and_bit_count(it: Iterator[Tuple[int, int]]):
     return _pack_encode_results(values), bit_count
 
 
-def pack_value(value: BitPackValue, metadata: Optional[dict] = None) -> bytes:
+def pack_value(value: BitPackValue, metadata: dict | None = None) -> bytes:
     if metadata is None:
         metadata = {}
 
@@ -454,7 +453,7 @@ def pack_value(value: BitPackValue, metadata: Optional[dict] = None) -> bytes:
 
 
 def round_trip(value: T,
-               metadata: Optional[dict] = None) -> T:
+               metadata: dict | None = None) -> T:
     """
     Encodes the given value and then recreates it using the encoded value
     :param value:

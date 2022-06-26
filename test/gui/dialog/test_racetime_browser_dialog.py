@@ -1,5 +1,6 @@
+from unittest.mock import AsyncMock, ANY, MagicMock
+
 import pytest
-from mock import AsyncMock, ANY, MagicMock
 
 from randovania.gui.dialog.racetime_browser_dialog import RacetimeBrowserDialog
 

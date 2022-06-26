@@ -1,24 +1,24 @@
 import functools
 import math
 import os
-from typing import Optional, Type, NamedTuple, Union
+from typing import NamedTuple
 
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtCore import QPointF, QRectF, QSizeF, Signal
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.area import Area
-from randovania.game_description.world.node import GenericNode, Node, \
-    NodeLocation
-from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.dock_node import DockNode
 from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.node import GenericNode, Node, \
+    NodeLocation
 from randovania.game_description.world.pickup_node import PickupNode
+from randovania.game_description.world.teleporter_node import TeleporterNode
 from randovania.game_description.world.world import World
 from randovania.games.game import RandovaniaGame
 from randovania.resolver.state import State
 
-_color_for_node: dict[Type[Node], int] = {
+_color_for_node: dict[type[Node], int] = {
     GenericNode: QtGui.Qt.red,
     DockNode: QtGui.Qt.green,
     TeleporterNode: QtGui.Qt.blue,
@@ -56,11 +56,11 @@ def centered_text(painter: QtGui.QPainter, pos: QPointF, text: str):
 
 
 class DataEditorCanvas(QtWidgets.QWidget):
-    game: Optional[RandovaniaGame] = None
-    world: Optional[World] = None
-    area: Optional[Area] = None
-    highlighted_node: Optional[Node] = None
-    _background_image: Optional[QtGui.QImage] = None
+    game: RandovaniaGame | None = None
+    world: World | None = None
+    area: Area | None = None
+    highlighted_node: Node | None = None
+    _background_image: QtGui.QImage | None = None
     world_bounds: BoundsFloat
     area_bounds: BoundsFloat
     area_size: QSizeF
@@ -82,10 +82,10 @@ class DataEditorCanvas(QtWidgets.QWidget):
     CreateDockRequest = Signal(NodeLocation, Area)
     MoveNodeToAreaRequest = Signal(Node, Area)
 
-    state: Optional[State] = None
-    visible_nodes: Optional[set[Node]] = None
+    state: State | None = None
+    visible_nodes: set[Node] | None = None
 
-    def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
+    def __init__(self, parent: QtWidgets.QWidget | None = None):
         super().__init__(parent)
 
         self._show_all_connections_action = QtGui.QAction("Show all node connections", self)
@@ -157,13 +157,13 @@ class DataEditorCanvas(QtWidgets.QWidget):
         return QPointF(bounds.min_x + (bounds.max_x - bounds.min_x) * x,
                        bounds.min_y + (bounds.max_y - bounds.min_y) * y)
 
-    def select_area(self, area: Optional[Area]):
+    def select_area(self, area: Area | None):
         self.area = area
         if area is None:
             return
 
         if "total_boundings" in area.extra:
-            min_x, max_x, min_y, max_y = [area.extra["total_boundings"][k] for k in ["x1", "x2", "y1", "y2"]]
+            min_x, max_x, min_y, max_y = (area.extra["total_boundings"][k] for k in ["x1", "x2", "y1", "y2"])
         else:
             min_x, min_y = math.inf, math.inf
             max_x, max_y = -math.inf, -math.inf
@@ -204,12 +204,12 @@ class DataEditorCanvas(QtWidgets.QWidget):
         self.highlighted_node = node
         self.update()
 
-    def set_state(self, state: Optional[State]):
+    def set_state(self, state: State | None):
         self.state = state
         self.highlighted_node = state.node
         self.update()
 
-    def set_visible_nodes(self, visible_nodes: Optional[set[Node]]):
+    def set_visible_nodes(self, visible_nodes: set[Node] | None):
         self.visible_nodes = visible_nodes
         self.update()
 
@@ -357,7 +357,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
 
         menu.exec_(event.globalPos())
 
-    def game_loc_to_qt_local(self, pos: Union[NodeLocation, list[float]]) -> QPointF:
+    def game_loc_to_qt_local(self, pos: NodeLocation | list[float]) -> QPointF:
         if isinstance(pos, NodeLocation):
             x = pos.x
             y = pos.y

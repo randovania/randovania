@@ -4,8 +4,7 @@ import math
 import pprint
 from random import Random
 from typing import (
-    AbstractSet, Mapping, FrozenSet, Callable, Optional,
-)
+    AbstractSet, Mapping, Callable, )
 
 from randovania.game_description.assignment import PickupTarget
 from randovania.game_description.game_description import GameDescription
@@ -19,8 +18,7 @@ from randovania.generator import reach_lib
 from randovania.generator.filler import filler_logging
 from randovania.generator.filler.action import Action
 from randovania.generator.filler.filler_library import (
-    UnableToGenerate, UncollectedState,
-    find_node_with_resource
+    UnableToGenerate, UncollectedState
 )
 from randovania.generator.filler.filler_logging import debug_print_collect_event
 from randovania.generator.filler.player_state import PlayerState, WeightedLocations
@@ -54,7 +52,7 @@ def _calculate_uncollected_index_weights(uncollected_indices: AbstractSet[Pickup
 
 
 def _get_next_player(rng: Random, player_states: list[PlayerState],
-                     locations_weighted: WeightedLocations) -> Optional[PlayerState]:
+                     locations_weighted: WeightedLocations) -> PlayerState | None:
     """
     Gets the next player a pickup should be placed for.
     :param rng:
@@ -115,7 +113,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
     def update_for_option():
         nonlocal options_considered
         options_considered += 1
-        status_update("Checked {} of {} options.".format(options_considered, len(actions)))
+        status_update(f"Checked {options_considered} of {len(actions)} options.")
 
     for action in actions:
         state = player_state.reach.state
@@ -141,7 +139,7 @@ def weighted_potential_actions(player_state: PlayerState, status_update: Callabl
 
     if debug.debug_level() > 1:
         for action, weight in actions_weights.items():
-            print("{} - {}".format(action.name, weight))
+            print(f"{action.name} - {weight}")
 
     return actions_weights
 
@@ -193,7 +191,7 @@ def retcon_playthrough_filler(rng: Random,
     last_message = "Starting."
 
     def action_report(message: str):
-        status_update("{} {}".format(last_message, message))
+        status_update(f"{last_message} {message}")
 
     for player_state in player_states:
         player_state.update_for_new_state()
@@ -238,7 +236,7 @@ def retcon_playthrough_filler(rng: Random,
             if not current_player.configuration.multi_pickup_new_weighting:
                 increment_considered_count(all_locations_weighted)
 
-        last_message = "{} actions performed.".format(sum(player.num_actions for player in player_states))
+        last_message = f"{sum(player.num_actions for player in player_states)} actions performed."
         status_update(last_message)
         current_player.reach = reach_lib.advance_reach_with_possible_unsafe_resources(current_player.reach)
         current_player.update_for_new_state()
@@ -359,8 +357,8 @@ def _calculate_hint_location_for_action(action: PickupEntry,
                                         current_uncollected: UncollectedState,
                                         pickup_index: PickupIndex,
                                         rng: Random,
-                                        hint_initial_pickups: dict[NodeIdentifier, FrozenSet[PickupIndex]],
-                                        ) -> Optional[NodeIdentifier]:
+                                        hint_initial_pickups: dict[NodeIdentifier, frozenset[PickupIndex]],
+                                        ) -> NodeIdentifier | None:
     """
     Calculates where a hint for the given action should be placed.
     :return: A LogbookAsset to use, or None if no hint should be placed.
@@ -391,7 +389,7 @@ def _calculate_weights_for(potential_reach: GeneratorReach,
 
 
 def pickup_placement_spoiler_entry(owner_index: int, action: PickupEntry, game: GameDescription,
-                                   pickup_index: PickupIndex, hint_identifier: Optional[NodeIdentifier],
+                                   pickup_index: PickupIndex, hint_identifier: NodeIdentifier | None,
                                    player_index: int, add_indices: bool, node_context: NodeContext) -> str:
     world_list = game.world_list
     if hint_identifier is not None:

@@ -1,6 +1,5 @@
 import dataclasses
 from dataclasses import dataclass
-from typing import Dict, Tuple, Optional
 
 from frozendict import frozendict
 
@@ -16,10 +15,10 @@ class Ammo:
     game: RandovaniaGame
     name: str
     model_name: str
-    items: Tuple[str, ...]
+    items: tuple[str, ...]
     broad_category: ItemCategory
-    unlocked_by: Optional[str] = None
-    temporary: Optional[str] = None
+    unlocked_by: str | None = None
+    temporary: str | None = None
     extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
@@ -27,7 +26,7 @@ class Ammo:
             if self.unlocked_by is None:
                 raise ValueError("If temporaries is set, unlocked_by must be set.")
             if len(self.items) != 1:
-                raise ValueError("If temporaries is set, only one item is supported. Got {0} instead".format(
+                raise ValueError("If temporaries is set, only one item is supported. Got {} instead".format(
                     len(self.items)
                 ))
         elif self.unlocked_by is not None:
@@ -35,7 +34,7 @@ class Ammo:
 
     @classmethod
     def from_json(cls, name: str, value: dict, game: RandovaniaGame,
-                  item_categories: Dict[str, ItemCategory]) -> "Ammo":
+                  item_categories: dict[str, ItemCategory]) -> "Ammo":
         return cls(
             game=game,
             name=name,
@@ -64,7 +63,7 @@ class Ammo:
     def item_category(self) -> ItemCategory:
         return AMMO_ITEM_CATEGORY
 
-    def create_resource_lock(self, resource_database: ResourceDatabase) -> Optional[ResourceLock]:
+    def create_resource_lock(self, resource_database: ResourceDatabase) -> ResourceLock | None:
         if self.unlocked_by is not None:
             return ResourceLock(
                 locked_by=resource_database.get_item(self.unlocked_by),

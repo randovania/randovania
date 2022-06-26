@@ -1,4 +1,4 @@
-from typing import Iterable, Dict
+from typing import Iterable
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
@@ -25,7 +25,7 @@ class ProgressiveItemWidget(QtWidgets.QCheckBox):
         self.setTristate(True)
         self.clicked.connect(self.change_progressive)
 
-    def on_preset_changed(self, preset: Preset, elements: Dict[MajorItem, QtWidgets.QWidget]):
+    def on_preset_changed(self, preset: Preset, elements: dict[MajorItem, QtWidgets.QWidget]):
         major_configuration = preset.configuration.major_items_configuration
 
         has_progressive = _state_has_item(major_configuration.items_state[self.progressive_item])

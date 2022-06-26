@@ -1,8 +1,9 @@
 from __future__ import annotations
+
 import copy
 import dataclasses
 import typing
-from typing import List, Dict, Optional, Iterator, Tuple
+from typing import Iterator
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.pickup_index import PickupIndex
@@ -13,14 +14,14 @@ from randovania.game_description.world.pickup_node import PickupNode
 @dataclasses.dataclass(frozen=True, slots=True)
 class Area:
     name: str
-    default_node: Optional[str]
+    default_node: str | None
     valid_starting_location: bool
-    nodes: List[Node]
-    connections: Dict[Node, Dict[Node, Requirement]]
-    extra: Dict[str, typing.Any]
+    nodes: list[Node]
+    connections: dict[Node, dict[Node, Requirement]]
+    extra: dict[str, typing.Any]
 
     def __repr__(self):
-        return "Area[{}]".format(self.name)
+        return f"Area[{self.name}]"
 
     def __hash__(self):
         return hash(("area", self.name))
@@ -29,7 +30,7 @@ class Area:
     def in_dark_aether(self) -> bool:
         return self.extra.get("in_dark_aether", False)
 
-    def node_with_name(self, node_name: str) -> Optional[Node]:
+    def node_with_name(self, node_name: str) -> Node | None:
         """
         Searches this area for a node with the given name.
         :param node_name:
@@ -43,7 +44,7 @@ class Area:
         return None
 
     @property
-    def all_connections(self) -> Iterator[Tuple[Node, Node, Requirement]]:
+    def all_connections(self) -> Iterator[tuple[Node, Node, Requirement]]:
         """
         Iterates over all paths there are in this area.
         :return: source, target and the requirements for it

@@ -1,7 +1,6 @@
 import dataclasses
 import logging
 import struct
-from typing import List, Tuple, Set, Optional
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import InventoryItem, Inventory
@@ -24,7 +23,7 @@ from randovania.patching.prime import (all_prime_dol_patches)
 
 @dataclasses.dataclass(frozen=True)
 class DolRemotePatch(RemotePatch):
-    instructions: List[assembler.BaseInstruction]
+    instructions: list[assembler.BaseInstruction]
 
 
 class PrimeRemoteConnector(RemoteConnector):
@@ -53,12 +52,12 @@ class PrimeRemoteConnector(RemoteConnector):
         """struct.unpack format string for decoding an asset id"""
         raise NotImplementedError()
 
-    def world_by_asset_id(self, asset_id: int) -> Optional[World]:
+    def world_by_asset_id(self, asset_id: int) -> World | None:
         for world in self.game.world_list.worlds:
             if world.extra["asset_id"] == asset_id:
                 return world
 
-    def _current_status_world(self, world_asset_id: Optional[bytes], vtable_bytes: Optional[bytes]) -> Optional[World]:
+    def _current_status_world(self, world_asset_id: bytes | None, vtable_bytes: bytes | None) -> World | None:
         """
         Helper for `current_game_status`. Calculates the current World based on raw world_asset_id and vtable pointer.
         :param world_asset_id: Bytes for the current world asset id. Might be None.
@@ -83,8 +82,8 @@ class PrimeRemoteConnector(RemoteConnector):
     async def current_game_status(self, executor: MemoryOperationExecutor):
         raise NotImplementedError()
 
-    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
-                                   ) -> List[MemoryOperation]:
+    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: list[ItemResourceInfo],
+                                   ) -> list[MemoryOperation]:
         raise NotImplementedError()
 
     async def get_inventory(self, executor: MemoryOperationExecutor) -> Inventory:
@@ -108,7 +107,7 @@ class PrimeRemoteConnector(RemoteConnector):
         return inventory
 
     async def known_collected_locations(self, executor: MemoryOperationExecutor,
-                                        ) -> Tuple[Set[PickupIndex], List[DolRemotePatch]]:
+                                        ) -> tuple[set[PickupIndex], list[DolRemotePatch]]:
         """Fetches pickup indices that have been collected.
         The list may return less than all collected locations, depending on implementation details.
         This function also returns a list of remote patches that must be performed via `execute_remote_patches`.
@@ -166,7 +165,7 @@ class PrimeRemoteConnector(RemoteConnector):
 
         return patches, True
 
-    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: List[DolRemotePatch]) -> None:
+    async def execute_remote_patches(self, executor: MemoryOperationExecutor, patches: list[DolRemotePatch]) -> None:
         """
         Executes a given set of patches on the given memory operator. Should only be called if the bool returned by
         `current_game_status` is False, but validation of this fact is implementation-dependant.
@@ -224,7 +223,7 @@ class PrimeRemoteConnector(RemoteConnector):
         return item_name, resources_to_give
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
-                                  ) -> Tuple[List[List[assembler.BaseInstruction]], str]:
+                                  ) -> tuple[list[list[assembler.BaseInstruction]], str]:
         raise NotImplementedError()
 
     def _write_string_to_game_buffer(self, message: str) -> MemoryOperation:

@@ -85,7 +85,8 @@ def test_save_options(skip_qtbot, tmp_path, is_prime_multi):
     assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).output_directory == Path("somewhere")
     if is_prime_multi:
         assert options.options_for_game(RandovaniaGame.METROID_PRIME).input_path == Path("somewhere/prime.iso")
-        assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).use_external_models == {RandovaniaGame.METROID_PRIME}
+        assert options.options_for_game(RandovaniaGame.METROID_PRIME_ECHOES).use_external_models == {
+            RandovaniaGame.METROID_PRIME}
 
 
 def test_on_input_file_button(skip_qtbot, tmp_path, mocker):
@@ -193,4 +194,3 @@ def test_get_game_export_params(skip_qtbot, tmp_path, is_prime_multi, use_extern
         prime_path=prime_path,
         use_prime_models=is_prime_multi and use_external_models,
     )
-

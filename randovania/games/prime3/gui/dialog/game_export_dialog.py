@@ -10,4 +10,3 @@ class CorruptionGameExportDialog(GameExportDialog):
         return GameExportParams(
             spoiler_output=None,
         )
-

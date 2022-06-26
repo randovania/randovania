@@ -1,8 +1,7 @@
 from pathlib import Path
-from typing import Optional, Tuple
 
 
-def discover_game(game_files_path: Path) -> Optional[Tuple[str, str]]:
+def discover_game(game_files_path: Path) -> tuple[str, str] | None:
     if not game_files_path.is_dir():
         return None
 

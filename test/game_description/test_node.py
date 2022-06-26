@@ -2,9 +2,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.resource_info import ResourceCollection, ResourceInfo
-from randovania.game_description.world.logbook_node import LoreType, LogbookNode
+from randovania.game_description.world.logbook_node import LogbookNode
 from randovania.game_description.world.node import NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
 

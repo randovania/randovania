@@ -12,7 +12,7 @@ from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.node_identifier import NodeIdentifier
 
 
-def _requirement_from_back(context: NodeContext, target_node: Node) -> typing.Optional[ResourceRequirement]:
+def _requirement_from_back(context: NodeContext, target_node: Node) -> ResourceRequirement | None:
     if isinstance(target_node, DockNode):
         weak = context.patches.get_dock_weakness_for(target_node)
         if weak.lock is not None:
@@ -37,18 +37,18 @@ class DockNode(Node):
     dock_type: DockType
     default_connection: NodeIdentifier
     default_dock_weakness: DockWeakness
-    override_default_open_requirement: typing.Optional[Requirement]
-    override_default_lock_requirement: typing.Optional[Requirement]
+    override_default_open_requirement: Requirement | None
+    override_default_lock_requirement: Requirement | None
     lock_node: Node | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
     cache_default_connection: int | None = dataclasses.field(init=False, hash=False, compare=False, default=None)
 
     def __repr__(self):
-        return "DockNode({!r} -> {})".format(self.name, self.default_connection)
+        return f"DockNode({self.name!r} -> {self.default_connection})"
 
     def get_front_weakness(self, context: NodeContext) -> DockWeakness:
         return context.patches.get_dock_weakness_for(self)
 
-    def get_back_weakness(self, context: NodeContext) -> typing.Optional[DockWeakness]:
+    def get_back_weakness(self, context: NodeContext) -> DockWeakness | None:
         target_node = self.get_target_identifier(context)
         if isinstance(target_node, DockNode):
             return context.patches.get_dock_weakness_for(target_node)
@@ -85,7 +85,7 @@ class DockNode(Node):
         requirement = RequirementAnd(reqs).simplify() if len(reqs) != 1 else reqs[0]
         return target_node, requirement
 
-    def _lock_connection(self, context: NodeContext) -> typing.Optional[tuple[Node, Requirement]]:
+    def _lock_connection(self, context: NodeContext) -> tuple[Node, Requirement] | None:
         requirement = Requirement.trivial()
 
         forward_weakness = self.get_front_weakness(context)

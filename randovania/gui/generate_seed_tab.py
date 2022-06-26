@@ -5,7 +5,7 @@ import random
 import uuid
 from functools import partial
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Callable
 
 from PySide6 import QtWidgets, QtCore, QtGui
 from PySide6.QtCore import QTimer
@@ -21,9 +21,9 @@ from randovania.interface_common import simplified_patcher
 from randovania.interface_common.options import Options
 from randovania.interface_common.preset_editor import PresetEditor
 from randovania.layout import preset_describer
+from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.layout_description import LayoutDescription
 from randovania.layout.permalink import Permalink
-from randovania.layout.generator_parameters import GeneratorParameters
 from randovania.layout.versioned_preset import InvalidPreset, VersionedPreset
 from randovania.lib.status_update_lib import ProgressUpdateCallable
 from randovania.resolver.exceptions import GenerationFailure
@@ -52,7 +52,7 @@ class PresetMenu(QtWidgets.QMenu):
     action_import: QtGui.QAction
     action_view_deleted: QtGui.QAction
 
-    preset: Optional[VersionedPreset]
+    preset: VersionedPreset | None
 
     def __init__(self, parent: QtWidgets.QWidget):
         super().__init__(parent)
@@ -91,7 +91,7 @@ class PresetMenu(QtWidgets.QMenu):
         self.action_history.setVisible(False)
         self.action_view_deleted.setVisible(False)
 
-    def set_preset(self, preset: Optional[VersionedPreset]):
+    def set_preset(self, preset: VersionedPreset | None):
         self.preset = preset
 
         for p in [self.action_delete, self.action_history, self.action_export]:
@@ -102,7 +102,7 @@ class PresetMenu(QtWidgets.QMenu):
 
 
 class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
-    _logic_settings_window: Optional[CustomizePresetDialog] = None
+    _logic_settings_window: CustomizePresetDialog | None = None
     _has_set_from_last_selected: bool = False
     _preset_menu: PresetMenu
     _action_delete: QtGui.QAction
@@ -185,7 +185,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         return self._original_show_event(event)
 
     @property
-    def _current_preset_data(self) -> Optional[VersionedPreset]:
+    def _current_preset_data(self) -> VersionedPreset | None:
         return self.window.create_preset_tree.current_preset_data
 
     def enable_buttons_with_background_tasks(self, value: bool):
@@ -231,7 +231,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
         pass
 
     def _on_export_preset(self):
-        default_name = "{}.rdvpreset".format(self._current_preset_data.slug_name)
+        default_name = f"{self._current_preset_data.slug_name}.rdvpreset"
         path = common_qt_lib.prompt_user_for_preset_file(self._window_manager, new_file=True, name=default_name)
         if path is not None:
             self._current_preset_data.save_to_file(path)
@@ -263,7 +263,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
             QtWidgets.QMessageBox.critical(
                 self._window_manager,
                 "Error loading preset",
-                "The file at '{}' contains an invalid preset.".format(path)
+                f"The file at '{path}' contains an invalid preset."
             )
             return
 
@@ -305,7 +305,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
 
     # Generate seed
 
-    def _generate_new_seed(self, spoiler: bool, retries: Optional[int] = None):
+    def _generate_new_seed(self, spoiler: bool, retries: int | None = None):
         preset = self._current_preset_data
         num_players = self.window.num_players_spin_box.value()
 
@@ -315,7 +315,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
             presets=[preset.get_preset()] * num_players,
         )), retries=retries)
 
-    def generate_seed_from_permalink(self, permalink: Permalink, retries: Optional[int] = None):
+    def generate_seed_from_permalink(self, permalink: Permalink, retries: int | None = None):
         def work(progress_update: ProgressUpdateCallable):
             try:
                 layout = simplified_patcher.generate_layout(progress_update=progress_update,
@@ -328,7 +328,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
 
             except GenerationFailure as generate_exception:
                 self.failure_handler.handle_failure(generate_exception)
-                progress_update("Generation Failure: {}".format(generate_exception), -1)
+                progress_update(f"Generation Failure: {generate_exception}", -1)
 
         if self._window_manager.is_preview_mode:
             logging.info(f"Permalink: {permalink.as_base64_str}")
@@ -344,7 +344,7 @@ class GenerateSeedTab(QtWidgets.QWidget, BackgroundTaskMixin):
                 preset = self._window_manager.preset_manager.default_preset
             self.window.create_preset_tree.select_preset(preset)
 
-    def on_preset_changed(self, preset: Optional[VersionedPreset]):
+    def on_preset_changed(self, preset: VersionedPreset | None):
         can_generate = False
         if preset is None:
             description = "Please select a preset from the list, not a game."

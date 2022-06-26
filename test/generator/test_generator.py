@@ -1,9 +1,8 @@
-from typing import Callable, Union
+from typing import Callable
+from unittest.mock import MagicMock, patch, call, AsyncMock
 
 import pytest
-from mock import MagicMock, patch, call, AsyncMock
 
-import randovania
 from randovania.generator import generator
 from randovania.generator.filler.runner import FillerPlayerResult, FillerResults
 from randovania.layout.layout_description import LayoutDescription
@@ -24,13 +23,14 @@ async def test_create_patches(mock_random: MagicMock,
     filler_result = MagicMock()
     mock_run_filler: AsyncMock = mocker.patch("randovania.generator.generator.run_filler", new_callable=AsyncMock,
                                               return_value=filler_result)
-    mock_dock_weakness_distributor: AsyncMock = mocker.patch("randovania.generator.dock_weakness_distributor.distribute_post_fill_weaknesses",
-                                                            new_callable=AsyncMock, return_value=filler_result)
+    mock_dock_weakness_distributor: AsyncMock = mocker.patch(
+        "randovania.generator.dock_weakness_distributor.distribute_post_fill_weaknesses",
+        new_callable=AsyncMock, return_value=filler_result)
     mock_distribute_remaining_items.return_value = filler_result
 
     num_players = 1
     rng = mock_random.return_value
-    status_update: Union[MagicMock, Callable[[str], None]] = MagicMock()
+    status_update: MagicMock | Callable[[str], None] = MagicMock()
     player_pools = [MagicMock() for _ in range(num_players)]
     presets = [MagicMock() for _ in range(num_players)]
 

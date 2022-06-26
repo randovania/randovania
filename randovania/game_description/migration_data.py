@@ -5,7 +5,7 @@ from randovania import get_data_path
 from randovania.games.game import RandovaniaGame
 
 
-@functools.lru_cache()
+@functools.lru_cache
 def get_raw_data():
     p = get_data_path().joinpath("migration_data.json")
     with p.open() as f:

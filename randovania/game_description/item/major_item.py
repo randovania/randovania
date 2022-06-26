@@ -1,6 +1,5 @@
 import dataclasses
 from dataclasses import dataclass
-from typing import Dict, Optional, Tuple
 
 from frozendict import frozendict
 
@@ -17,17 +16,17 @@ class MajorItem:
     item_category: ItemCategory
     broad_category: ItemCategory
     model_name: str
-    progression: Tuple[str, ...]
+    progression: tuple[str, ...]
     default_shuffled_count: int
     default_starting_count: int
-    ammo_index: Tuple[str, ...] = tuple()
+    ammo_index: tuple[str, ...] = tuple()
     unlocks_ammo: bool = False
     hide_from_gui: bool = False
     must_be_starting: bool = False
-    original_index: Optional[PickupIndex] = None
+    original_index: PickupIndex | None = None
     probability_offset: int = 0
     probability_multiplier: float = 1
-    warning: Optional[str] = None
+    warning: str | None = None
     extra: frozendict = dataclasses.field(default_factory=frozendict)
 
     def __post_init__(self):
@@ -36,7 +35,7 @@ class MajorItem:
 
     @classmethod
     def from_json(cls, name: str, value: dict, game: RandovaniaGame,
-                  item_categories: Dict[str, ItemCategory]) -> "MajorItem":
+                  item_categories: dict[str, ItemCategory]) -> "MajorItem":
         return cls(
             game=game,
             name=name,

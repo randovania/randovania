@@ -1,4 +1,4 @@
-from typing import NamedTuple, Tuple
+from typing import NamedTuple
 
 from randovania.game_description import default_database
 from randovania.game_description.game_description import GameDescription
@@ -163,7 +163,7 @@ class Bootstrap:
                         configuration: BaseConfiguration,
                         game: GameDescription,
                         patches: GamePatches,
-                        ) -> Tuple[GameDescription, State]:
+                        ) -> tuple[GameDescription, State]:
         """
         Core code for starting a new Logic/State.
         :param configuration:

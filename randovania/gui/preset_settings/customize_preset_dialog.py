@@ -1,5 +1,3 @@
-from typing import List
-
 from PySide6 import QtWidgets
 
 from randovania.game_description.world.world import World
@@ -19,8 +17,9 @@ def dark_world_flags(world: World):
 
 
 class CustomizePresetDialog(QtWidgets.QDialog, Ui_CustomizePresetDialog):
-    _tabs: List[PresetTab]
+    _tabs: list[PresetTab]
     _editor: PresetEditor
+
     # _updated_tabs: set[PresetTab]
     # _last_preset: Preset
 

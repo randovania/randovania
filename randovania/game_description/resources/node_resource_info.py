@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import dataclasses
 import typing
-from typing import Optional
 
 from randovania.game_description.resources.resource_type import ResourceType
 

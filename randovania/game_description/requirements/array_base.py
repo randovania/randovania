@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import typing
-from typing import Optional, Iterable, Union, Type
+from typing import Iterable
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
@@ -16,10 +16,10 @@ if typing.TYPE_CHECKING:
 class RequirementArrayBase(Requirement):
     __slots__ = ("items", "comment", "_cached_hash")
     items: tuple[Requirement, ...]
-    comment: Optional[str]
-    _cached_hash: Optional[int]
+    comment: str | None
+    _cached_hash: int | None
 
-    def __init__(self, items: Iterable[Requirement], comment: Optional[str] = None):
+    def __init__(self, items: Iterable[Requirement], comment: str | None = None):
         self.items = tuple(items)
         self.comment = comment
         self._cached_hash = None
@@ -64,7 +64,7 @@ class RequirementArrayBase(Requirement):
     def __str__(self) -> str:
         if self.items:
             visual_items = [str(item) for item in self.items]
-            return "({})".format(self.combinator().join(sorted(visual_items)))
+            return f"({self.combinator().join(sorted(visual_items))})"
         else:
             return self._str_no_items()
 
@@ -77,7 +77,7 @@ class RequirementArrayBase(Requirement):
         raise NotImplementedError()
 
 
-def mergeable_array(req: Union[RequirementAnd, RequirementOr], keep_comments: bool) -> bool:
+def mergeable_array(req: RequirementAnd | RequirementOr, keep_comments: bool) -> bool:
     if keep_comments:
         return req.comment is None
     else:
@@ -85,7 +85,7 @@ def mergeable_array(req: Union[RequirementAnd, RequirementOr], keep_comments: bo
 
 
 def expand_items(items: tuple[Requirement, ...],
-                 cls: Type[Union[RequirementAnd, RequirementOr]],
+                 cls: type[RequirementAnd | RequirementOr],
                  exclude: Requirement,
                  keep_comments: bool) -> list[Requirement]:
     expanded = []

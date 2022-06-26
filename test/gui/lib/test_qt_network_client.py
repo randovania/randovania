@@ -1,7 +1,7 @@
 from pathlib import Path
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from mock import AsyncMock, MagicMock
 
 from randovania.gui.lib import qt_network_client
 from randovania.network_common.error import InvalidAction, ServerError, NotAuthorizedForAction, NotLoggedIn, \

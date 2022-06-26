@@ -121,6 +121,3 @@ def test_prime_thing(default_prime_configuration):
     decoded = DockRandoConfiguration.bit_pack_unpack(decoder, ref)
 
     assert dc == decoded
-
-
-

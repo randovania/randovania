@@ -1,5 +1,4 @@
 from random import Random
-from typing import Dict
 
 from randovania.exporter.hints import guaranteed_item_hint
 from randovania.exporter.hints.hint_exporter import HintExporter
@@ -7,8 +6,8 @@ from randovania.exporter.hints.hint_namer import HintNamer
 from randovania.exporter.hints.joke_hints import JOKE_HINTS
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.resource_database import ResourceDatabase
-from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.logbook_node import LogbookNode
+from randovania.game_description.world.node_identifier import NodeIdentifier
 from randovania.game_description.world.world_list import WorldList
 from randovania.games.common.prime_family.exporter.hint_namer import colorize_text
 from randovania.games.prime2.exporter.hint_namer import EchoesHintNamer
@@ -23,7 +22,7 @@ def create_simple_logbook_hint(asset_id: int, hint: str) -> dict:
     }
 
 
-def create_patches_hints(all_patches: Dict[int, GamePatches],
+def create_patches_hints(all_patches: dict[int, GamePatches],
                          players_config: PlayersConfiguration,
                          world_list: WorldList,
                          namer: HintNamer,
@@ -70,7 +69,7 @@ _SKY_TEMPLE_KEY_SCAN_ASSETS = [
 ]
 
 
-def create_stk_hints(all_patches: Dict[int, GamePatches],
+def create_stk_hints(all_patches: dict[int, GamePatches],
                      players_config: PlayersConfiguration,
                      resource_database: ResourceDatabase,
                      namer: HintNamer,

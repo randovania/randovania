@@ -1,7 +1,7 @@
 import functools
 import json
 from dataclasses import dataclass
-from typing import Iterator, Tuple, Optional
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -35,7 +35,7 @@ def decode_game_list(decoder: BitPackDecoder) -> tuple[RandovaniaGame, ...]:
     return bitpacking.decode_tuple(decoder, functools.partial(RandovaniaGame.bit_pack_unpack, metadata={}))
 
 
-def try_decode_game_list(data: bytes) -> Optional[tuple[RandovaniaGame, ...]]:
+def try_decode_game_list(data: bytes) -> tuple[RandovaniaGame, ...] | None:
     try:
         return decode_game_list(BitPackDecoder(data))
     except (ValueError, IndexError):
@@ -52,14 +52,14 @@ class GeneratorParameters(BitPackValue):
         if self.seed_number is None:
             raise ValueError("Missing seed number")
         if not (0 <= self.seed_number < _PERMALINK_MAX_SEED):
-            raise ValueError("Invalid seed number: {}".format(self.seed_number))
+            raise ValueError(f"Invalid seed number: {self.seed_number}")
 
         if not isinstance(self.presets, list):
             raise ValueError("presets must be a list")
 
         object.__setattr__(self, "__cached_as_bytes", None)
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         yield from encode_game_list(tuple(preset.game for preset in self.presets))
         yield self.seed_number, _PERMALINK_MAX_SEED
         yield from bitpacking.encode_bool(self.spoiler)

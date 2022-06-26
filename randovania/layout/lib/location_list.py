@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Iterator, Tuple, List, Callable, TypeVar, Type, Iterable
+from typing import Iterator, Callable, TypeVar, Iterable
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder
@@ -38,26 +38,26 @@ class LocationList(BitPackValue):
 
     def __post_init__(self):
         if not isinstance(self.locations, tuple):
-            raise ValueError("locations must be tuple, got {}".format(type(self.locations)))
+            raise ValueError(f"locations must be tuple, got {type(self.locations)}")
 
         if list(self.locations) != sorted(self.locations):
-            raise ValueError("locations aren't sorted: {}".format(self.locations))
+            raise ValueError(f"locations aren't sorted: {self.locations}")
 
     @classmethod
-    def areas_list(cls, game: RandovaniaGame) -> List[AreaIdentifier]:
+    def areas_list(cls, game: RandovaniaGame) -> list[AreaIdentifier]:
         return area_locations_with_filter(game, lambda area: True)
 
     @classmethod
-    def element_type(cls) -> Type[AreaIdentifier]:
+    def element_type(cls) -> type[AreaIdentifier]:
         return AreaIdentifier
 
     @classmethod
-    def with_elements(cls: Type[SelfType], elements: Iterable[AreaIdentifier], game: RandovaniaGame) -> SelfType:
+    def with_elements(cls: type[SelfType], elements: Iterable[AreaIdentifier], game: RandovaniaGame) -> SelfType:
         elements_set = frozenset(elements)
         all_locations = frozenset(cls.areas_list(game))
         return cls(tuple(_sorted_area_identifiers(elements_set & all_locations)), game)
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         areas = self.areas_list(self.game)
         yield from bitpacking.pack_sorted_array_elements(list(self.locations), areas)
 
@@ -67,13 +67,13 @@ class LocationList(BitPackValue):
         return cls.with_elements(bitpacking.decode_sorted_array_elements(decoder, cls.areas_list(game)), game)
 
     @property
-    def as_json(self) -> List[dict]:
+    def as_json(self) -> list[dict]:
         return [location.as_json for location in self.locations]
 
     @classmethod
-    def from_json(cls, value: List[dict], game: RandovaniaGame) -> "LocationList":
+    def from_json(cls, value: list[dict], game: RandovaniaGame) -> "LocationList":
         if not isinstance(value, list):
-            raise ValueError("StartingLocation from_json must receive a list, got {}".format(type(value)))
+            raise ValueError(f"StartingLocation from_json must receive a list, got {type(value)}")
 
         elements = [cls.element_type().from_json(location) for location in value]
         return cls.with_elements(elements, game)
@@ -88,7 +88,7 @@ class LocationList(BitPackValue):
 
         return self.with_elements(iter(new_locations), self.game)
 
-    def ensure_has_locations(self: SelfType, area_locations: List[AreaIdentifier], enabled: bool) -> SelfType:
+    def ensure_has_locations(self: SelfType, area_locations: list[AreaIdentifier], enabled: bool) -> SelfType:
         new_locations = set(self.locations)
 
         for area_location in area_locations:

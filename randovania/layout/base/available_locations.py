@@ -1,6 +1,6 @@
 import dataclasses
 from enum import Enum
-from typing import Tuple, Iterator, FrozenSet, List
+from typing import Iterator
 
 from randovania.bitpacking import bitpacking
 from randovania.bitpacking.bitpacking import BitPackValue, BitPackDecoder, BitPackEnum
@@ -31,11 +31,11 @@ class RandomizationMode(BitPackEnum, Enum):
 @dataclasses.dataclass(frozen=True)
 class AvailableLocationsConfiguration(BitPackValue):
     randomization_mode: RandomizationMode
-    excluded_indices: FrozenSet[PickupIndex]
+    excluded_indices: frozenset[PickupIndex]
     game: RandovaniaGame
 
     @property
-    def _sorted_indices(self) -> List[int]:
+    def _sorted_indices(self) -> list[int]:
         return list(sorted(item.index for item in self.excluded_indices))
 
     @property
@@ -53,7 +53,7 @@ class AvailableLocationsConfiguration(BitPackValue):
             game=game,
         )
 
-    def bit_pack_encode(self, metadata) -> Iterator[Tuple[int, int]]:
+    def bit_pack_encode(self, metadata) -> Iterator[tuple[int, int]]:
         db = default_database.game_description_for(self.game)
 
         yield from self.randomization_mode.bit_pack_encode(metadata)

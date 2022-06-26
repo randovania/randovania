@@ -1,5 +1,5 @@
 import collections
-from typing import List, Iterable, Tuple, Dict, Sequence
+from typing import Iterable, Sequence
 
 from randovania.game_description import default_database
 from randovania.game_description.item.major_item import MajorItem
@@ -20,7 +20,7 @@ def _bool_to_str(b: bool) -> str:
         return "No"
 
 
-PresetDescription = Tuple[str, List[str]]
+PresetDescription = tuple[str, list[str]]
 
 
 class GamePresetDescriber:
@@ -78,7 +78,7 @@ class GamePresetDescriber:
         randomization_mode = configuration.available_locations.randomization_mode
 
         if major_items.minimum_random_starting_items == major_items.maximum_random_starting_items:
-            random_starting_items = "{}".format(major_items.minimum_random_starting_items)
+            random_starting_items = f"{major_items.minimum_random_starting_items}"
         else:
             random_starting_items = "{} to {}".format(
                 major_items.minimum_random_starting_items,
@@ -124,7 +124,7 @@ class GamePresetDescriber:
             area = game_description.world_list.area_by_area_location(starting_locations[0])
             starting_location = game_description.world_list.area_name(area)
         else:
-            starting_location = "{} locations".format(len(starting_locations))
+            starting_location = f"{len(starting_locations)} locations"
 
         template_strings["Gameplay"].append(f"Starting Location: {starting_location}")
 
@@ -152,7 +152,7 @@ class GamePresetDescriber:
         }
 
 
-def _require_majors_check(ammo_configuration: AmmoConfiguration, ammo_names: List[str]) -> List[bool]:
+def _require_majors_check(ammo_configuration: AmmoConfiguration, ammo_names: list[str]) -> list[bool]:
     result = [False] * len(ammo_names)
 
     name_index_mapping = {name: i for i, name in enumerate(ammo_names)}
@@ -164,7 +164,7 @@ def _require_majors_check(ammo_configuration: AmmoConfiguration, ammo_names: Lis
     return result
 
 
-def message_for_required_mains(ammo_configuration: AmmoConfiguration, message_to_item: Dict[str, str]):
+def message_for_required_mains(ammo_configuration: AmmoConfiguration, message_to_item: dict[str, str]):
     item_names = [item for item in message_to_item.values()]
     main_required = _require_majors_check(ammo_configuration, item_names)
     return dict(zip(message_to_item.keys(), main_required))
@@ -184,7 +184,7 @@ def has_vanilla_item(configuration: MajorItemsConfiguration, item_name: str) -> 
     return False
 
 
-def fill_template_strings_from_tree(template_strings: Dict[str, List[str]], tree: Dict[str, List[Dict[str, bool]]]):
+def fill_template_strings_from_tree(template_strings: dict[str, list[str]], tree: dict[str, list[dict[str, bool]]]):
     for category, entries in tree.items():
         if category not in template_strings:
             template_strings[category] = []

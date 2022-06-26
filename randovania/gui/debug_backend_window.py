@@ -1,7 +1,6 @@
 import logging
 import random
 import struct
-from typing import List, Optional, Dict
 
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import QMainWindow
@@ -38,7 +37,7 @@ def _echoes_powerup_address(item_index: int) -> int:
 class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
     _connected: bool = False
     _timer: QtCore.QTimer
-    pickups: List[PickupEntry]
+    pickups: list[PickupEntry]
 
     def __init__(self):
         super().__init__()
@@ -186,7 +185,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         self.messages_list.clear()
         self.pickups.clear()
 
-    def _memory_operation(self, op: MemoryOperation) -> Optional[bytes]:
+    def _memory_operation(self, op: MemoryOperation) -> bytes | None:
         op.validate_byte_sizes()
 
         address = op.address
@@ -201,7 +200,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
             self._write_memory(address, op.write_bytes)
         return result
 
-    def _add_power_up(self, registers: Dict[int, int]):
+    def _add_power_up(self, registers: dict[int, int]):
         item_id = registers[4]
         delta = registers[5]
         item = next(item for item in self.game.resource_database.item if item.extra.get("item_id") == item_id)
@@ -212,7 +211,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         amount = min(amount, capacity)
         self._write_memory(address, struct.pack(">II", amount, capacity))
 
-    def _incr_pickup(self, registers: Dict[int, int]):
+    def _incr_pickup(self, registers: dict[int, int]):
         item_id = registers[4]
         delta = registers[5]
         address = _echoes_powerup_address(item_id)
@@ -221,7 +220,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
         amount = max(0, min(amount + delta, capacity))
         self._write_memory(address, struct.pack(">I", amount))
 
-    def _decr_pickup(self, registers: Dict[int, int]):
+    def _decr_pickup(self, registers: dict[int, int]):
         item_id = registers[4]
         delta = registers[5]
         address = _echoes_powerup_address(item_id)
@@ -242,7 +241,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
             return
 
         self.logger.debug("has code to execute, start parsing ppc")
-        registers: Dict[int, int] = {i: 0 for i in range(32)}
+        registers: dict[int, int] = {i: 0 for i in range(32)}
         registers[3] = self._used_version.sda2_base
 
         functions = {
@@ -357,7 +356,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
     # MemoryOperationExecutor
 
     @property
-    def lock_identifier(self) -> Optional[str]:
+    def lock_identifier(self) -> str | None:
         return None
 
     @property
@@ -377,7 +376,7 @@ class DebugExecutorWindow(MemoryOperationExecutor, Ui_DebugBackendWindow):
     def is_connected(self) -> bool:
         return self._connected
 
-    async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
         result = {}
         for op in ops:
             op_result = self._memory_operation(op)

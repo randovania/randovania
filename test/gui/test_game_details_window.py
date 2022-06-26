@@ -1,8 +1,7 @@
-import collections
 import dataclasses
+from unittest.mock import MagicMock, AsyncMock, call, ANY
 
 from PySide6 import QtWidgets, QtCore
-from mock import MagicMock, AsyncMock, call, ANY
 
 from randovania.game_description.resources.pickup_index import PickupIndex
 from randovania.games.prime3.layout.corruption_cosmetic_patches import CorruptionCosmeticPatches

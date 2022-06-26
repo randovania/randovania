@@ -1,5 +1,5 @@
 import dataclasses
-from typing import List, Dict, Optional, Callable
+from typing import Callable
 
 from randovania.game_description.resources import search
 from randovania.game_description.resources.damage_resource_info import DamageReduction
@@ -24,19 +24,19 @@ _ALL_TYPES = (
 @dataclasses.dataclass(frozen=True)
 class ResourceDatabase:
     game_enum: RandovaniaGame
-    item: List[ItemResourceInfo]
-    event: List[SimpleResourceInfo]
-    trick: List[TrickResourceInfo]
-    damage: List[SimpleResourceInfo]
-    version: List[SimpleResourceInfo]
-    misc: List[SimpleResourceInfo]
-    requirement_template: Dict[str, "Requirement"]
-    damage_reductions: Dict[SimpleResourceInfo, List[DamageReduction]]
+    item: list[ItemResourceInfo]
+    event: list[SimpleResourceInfo]
+    trick: list[TrickResourceInfo]
+    damage: list[SimpleResourceInfo]
+    version: list[SimpleResourceInfo]
+    misc: list[SimpleResourceInfo]
+    requirement_template: dict[str, "Requirement"]
+    damage_reductions: dict[SimpleResourceInfo, list[DamageReduction]]
     energy_tank_item_index: str
-    item_percentage_index: Optional[str]
-    multiworld_magic_item_index: Optional[str]
+    item_percentage_index: str | None
+    multiworld_magic_item_index: str | None
     base_damage_reduction: Callable[["ResourceDatabase", ResourceCollection], float] = default_base_damage_reduction
-    resource_by_index: list[Optional[ResourceInfo]] = dataclasses.field(default_factory=list)
+    resource_by_index: list[ResourceInfo | None] = dataclasses.field(default_factory=list)
 
     def __post_init__(self):
         # Reserve index 0 as a placeholder for things without index
@@ -53,7 +53,7 @@ class ResourceDatabase:
                 assert self.resource_by_index[resource.resource_index] is None
                 self.resource_by_index[resource.resource_index] = resource
 
-    def get_by_type(self, resource_type: ResourceType) -> List[ResourceInfo]:
+    def get_by_type(self, resource_type: ResourceType) -> list[ResourceInfo]:
         if resource_type == ResourceType.ITEM:
             return self.item
         elif resource_type == ResourceType.EVENT:
@@ -68,7 +68,7 @@ class ResourceDatabase:
             return self.misc
         else:
             raise ValueError(
-                "Invalid resource_type: {}".format(resource_type))
+                f"Invalid resource_type: {resource_type}")
 
     def get_by_type_and_index(self, resource_type: ResourceType,
                               name: str) -> ResourceInfo:
@@ -84,7 +84,7 @@ class ResourceDatabase:
         return search.find_resource_info_with_long_name(self.item, name)
 
     @property
-    def item_percentage(self) -> Optional[ItemResourceInfo]:
+    def item_percentage(self) -> ItemResourceInfo | None:
         if self.item_percentage_index is not None:
             return self.get_by_type_and_index(ResourceType.ITEM, self.item_percentage_index)
 
@@ -93,7 +93,7 @@ class ResourceDatabase:
         return self.get_by_type_and_index(ResourceType.ITEM, self.energy_tank_item_index)
 
     @property
-    def multiworld_magic_item(self) -> Optional[ItemResourceInfo]:
+    def multiworld_magic_item(self) -> ItemResourceInfo | None:
         if self.multiworld_magic_item_index is not None:
             return self.get_item(self.multiworld_magic_item_index)
 

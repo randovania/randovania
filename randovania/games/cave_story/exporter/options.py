@@ -1,6 +1,5 @@
 import dataclasses
 from pathlib import Path
-from typing import Optional
 
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
@@ -8,7 +7,7 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 
 @dataclasses.dataclass(frozen=True)
 class CSPerGameOptions(PerGameOptions):
-    output_directory: Optional[Path] = None
+    output_directory: Path | None = None
 
     @property
     def as_json(self):

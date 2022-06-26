@@ -1,5 +1,4 @@
 import typing
-from typing import Optional, List, Union
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
@@ -8,12 +7,12 @@ from PySide6.QtWidgets import QDialog
 from PySide6.QtWidgets import QPushButton, QWidget, QGroupBox, QVBoxLayout, QHBoxLayout, QComboBox, \
     QLineEdit
 
-from randovania.game_description.requirements.requirement_template import RequirementTemplate
-from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_or import RequirementOr
-from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.array_base import RequirementArrayBase
 from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
+from randovania.game_description.requirements.requirement_or import RequirementOr
+from randovania.game_description.requirements.requirement_template import RequirementTemplate
+from randovania.game_description.requirements.resource_requirement import ResourceRequirement
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.resources.resource_type import ResourceType
@@ -26,7 +25,7 @@ from randovania.lib.enum_lib import iterate_enum
 
 def _create_resource_name_combo(resource_database: ResourceDatabase,
                                 resource_type: ResourceType,
-                                current_resource: Optional[ResourceInfo],
+                                current_resource: ResourceInfo | None,
                                 parent: QWidget,
                                 ) -> QComboBox:
     """
@@ -295,7 +294,7 @@ class TemplateRequirementEditor:
 
 
 class RequirementEditor:
-    _editor: Union[None, ResourceRequirementEditor, ArrayRequirementEditor, TemplateRequirementEditor]
+    _editor: None | ResourceRequirementEditor | ArrayRequirementEditor | TemplateRequirementEditor
 
     def __init__(self,
                  parent: QWidget,
@@ -401,7 +400,7 @@ class RequirementEditor:
 class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
     parent: QWidget
     resource_database: ResourceDatabase
-    _elements: List[QWidget]
+    _elements: list[QWidget]
 
     def __init__(self, parent: QWidget, resource_database: ResourceDatabase, requirement: Requirement):
         super().__init__(parent)
@@ -423,7 +422,7 @@ class ConnectionsEditor(QDialog, Ui_ConnectionEditor):
         return self._root_editor.current_requirement
 
     @property
-    def final_requirement(self) -> Optional[Requirement]:
+    def final_requirement(self) -> Requirement | None:
         result = self.build_requirement()
         if result == Requirement.impossible():
             return None

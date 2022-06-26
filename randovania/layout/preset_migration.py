@@ -1,6 +1,5 @@
 import math
 import uuid
-from typing import Dict
 
 from randovania.game_description import migration_data, default_database
 from randovania.games.game import RandovaniaGame
@@ -178,7 +177,7 @@ def _migrate_v5(preset: dict) -> dict:
     preset["layout_configuration"]["major_items_configuration"].pop("progressive_grapple")
     preset["layout_configuration"].pop("split_beam_ammo")
 
-    specific_levels: Dict[str, str] = preset["layout_configuration"]["trick_level"]["specific_levels"]
+    specific_levels: dict[str, str] = preset["layout_configuration"]["trick_level"]["specific_levels"]
     tricks_to_remove = [trick_name for trick_name, level in specific_levels.items() if level == "no-tricks"]
     for trick in tricks_to_remove:
         specific_levels.pop(trick)

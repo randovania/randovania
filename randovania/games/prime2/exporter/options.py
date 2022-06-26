@@ -1,7 +1,5 @@
 import dataclasses
-from enum import Enum
 from pathlib import Path
-from typing import Optional
 
 from randovania.games.game import RandovaniaGame
 from randovania.interface_common.options import PerGameOptions, decode_if_not_none
@@ -9,8 +7,8 @@ from randovania.interface_common.options import PerGameOptions, decode_if_not_no
 
 @dataclasses.dataclass(frozen=True)
 class EchoesPerGameOptions(PerGameOptions):
-    input_path: Optional[Path] = None
-    output_directory: Optional[Path] = None
+    input_path: Path | None = None
+    output_directory: Path | None = None
     use_external_models: set[RandovaniaGame] = dataclasses.field(default_factory=set)
 
     @property

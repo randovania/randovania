@@ -1,8 +1,8 @@
 import re
 import struct
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from mock import AsyncMock, MagicMock
 
 from randovania.dol_patching.assembler import BaseInstruction
 from randovania.game_connection.connection_base import InventoryItem

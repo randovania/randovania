@@ -1,6 +1,5 @@
-from collections import defaultdict
 import dataclasses
-from email.policy import default
+from collections import defaultdict
 from typing import Callable
 
 from PySide6 import QtWidgets
@@ -33,20 +32,20 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
         self.type_checks = {}
         for dock_type, type_params in game_description.dock_weakness_database.dock_rando_params.items():
             if (
-                type_params.locked is None or type_params.unlocked is None
-                or not type_params.change_from or not type_params.change_to
-                ):
+                    type_params.locked is None or type_params.unlocked is None
+                    or not type_params.change_from or not type_params.change_to
+            ):
                 continue
             self._add_dock_type(dock_type, type_params)
 
     @classmethod
     def tab_title(cls) -> str:
         return "Door Rando"
-    
+
     @classmethod
     def uses_patches_tab(cls) -> bool:
         return True
-    
+
     def on_preset_changed(self, preset: Preset):
         dock_rando = preset.configuration.dock_rando
         common_qt_lib.set_combo_with_value(self.mode_combo, dock_rando.mode)
@@ -88,20 +87,22 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
                 ))
                 layout.addWidget(check)
                 self.type_checks[dock_type][weakness][name] = check
-            
+
             type_layout.addWidget(group)
-        
+
         def keyfunc(weakness: DockWeakness):
             if weakness == type_params.unlocked:
                 return 0
             return len(weakness.long_name)
 
         change_from = {weakness: True for weakness in sorted(type_params.change_from, key=keyfunc)}
-        change_to = {weakness: weakness != type_params.unlocked for weakness in sorted(type_params.change_to, key=keyfunc)}
+        change_to = {weakness: weakness != type_params.unlocked for weakness in
+                     sorted(type_params.change_to, key=keyfunc)}
         add_group("can_change_from", "Doors to Change", change_from)
         add_group("can_change_to", "Change Doors To", change_to)
-        
-    def _persist_weakness_setting(self, field: str, dock_type: DockType, dock_weakness: DockWeakness) -> Callable[[bool], None]:
+
+    def _persist_weakness_setting(self, field: str, dock_type: DockType, dock_weakness: DockWeakness) -> Callable[
+        [bool], None]:
         def _persist(value: bool):
             with self._editor as editor:
                 state = editor.dock_rando_configuration.types_state[dock_type]
@@ -112,8 +113,9 @@ class PresetDockRando(PresetTab, Ui_PresetDockRando):
                     can_change.remove(dock_weakness)
                 state = dataclasses.replace(state, **{field: can_change})
                 editor.dock_rando_configuration.types_state[dock_type] = state
+
         return _persist
-    
+
     def _on_mode_changed(self, value: DockRandoMode):
         with self._editor as editor:
             editor.dock_rando_configuration = dataclasses.replace(

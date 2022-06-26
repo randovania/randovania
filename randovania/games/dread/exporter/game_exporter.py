@@ -3,7 +3,7 @@ import json
 import shutil
 from enum import Enum
 from pathlib import Path
-from typing import Optional, Callable
+from typing import Callable
 
 import randovania
 from randovania.exporter.game_exporter import GameExporter, GameExportParams
@@ -22,7 +22,7 @@ class DreadGameExportParams(GameExportParams):
     target_platform: DreadModPlatform
     use_exlaunch: bool
     clean_output_path: bool
-    post_export: Optional[Callable[[status_update_lib.ProgressUpdateCallable], None]]
+    post_export: Callable[[status_update_lib.ProgressUpdateCallable], None] | None
 
 
 class DreadGameExporter(GameExporter):

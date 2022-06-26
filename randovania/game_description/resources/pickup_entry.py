@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Iterator
+from typing import Iterator
 
 from randovania.bitpacking.json_dataclass import JsonDataclass
 from randovania.game_description.item.item_category import ItemCategory
@@ -38,8 +38,8 @@ class ResourceLock:
 
 @dataclass(frozen=True)
 class ConditionalResources:
-    name: Optional[str]
-    item: Optional[ItemResourceInfo]
+    name: str | None
+    item: ItemResourceInfo | None
     resources: ResourceGainTuple
 
 
@@ -58,7 +58,7 @@ class PickupEntry:
     progression: ResourceGainTuple
     extra_resources: ResourceGainTuple = tuple()
     unlocks_resource: bool = False
-    resource_lock: Optional[ResourceLock] = None
+    resource_lock: ResourceLock | None = None
     respects_lock: bool = True
     probability_offset: float = 0
     probability_multiplier: float = 1
@@ -66,7 +66,7 @@ class PickupEntry:
 
     def __post_init__(self):
         if not isinstance(self.progression, tuple):
-            raise ValueError("resources should be a tuple, got {}".format(self.progression))
+            raise ValueError(f"resources should be a tuple, got {self.progression}")
 
         for i, progression in enumerate(self.progression):
             if not isinstance(progression, tuple):
@@ -95,7 +95,7 @@ class PickupEntry:
 
     @property
     def conditional_resources(self):
-        previous: Optional[ItemResourceInfo] = None
+        previous: ItemResourceInfo | None = None
         for progression in self.progression:
             yield ConditionalResources(
                 name=progression[0].long_name,
@@ -119,7 +119,7 @@ class PickupEntry:
             return tuple()
 
     def conditional_for_resources(self, current_resources: ResourceCollection) -> ConditionalResources:
-        last_conditional: Optional[ConditionalResources] = None
+        last_conditional: ConditionalResources | None = None
 
         for conditional in self.conditional_resources:
             if conditional.item is None or current_resources[conditional.item] > 0:
@@ -148,7 +148,7 @@ class PickupEntry:
         yield from self.conversion_resource_gain(current_resources)
 
     def __str__(self):
-        return "Pickup {}".format(self.name)
+        return f"Pickup {self.name}"
 
     @property
     def all_resources(self) -> Iterator[ResourceQuantity]:

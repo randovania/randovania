@@ -1,6 +1,5 @@
 import dataclasses
 import uuid
-from typing import Optional
 
 from PySide6 import QtWidgets, QtGui
 from PySide6.QtCore import Qt
@@ -44,11 +43,11 @@ class PresetTreeWidget(QtWidgets.QTreeWidget):
 
         return super().dropEvent(event)
 
-    def preset_for_item(self, item: QtWidgets.QTreeWidgetItem) -> Optional[VersionedPreset]:
+    def preset_for_item(self, item: QtWidgets.QTreeWidgetItem) -> VersionedPreset | None:
         return self.window_manager.preset_manager.preset_for_uuid(item.data(0, Qt.UserRole))
 
     @property
-    def current_preset_data(self) -> Optional[VersionedPreset]:
+    def current_preset_data(self) -> VersionedPreset | None:
         for item in self.selectedItems():
             return self.preset_for_item(item)
 

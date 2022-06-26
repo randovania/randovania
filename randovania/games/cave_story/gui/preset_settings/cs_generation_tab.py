@@ -1,4 +1,4 @@
-from typing import Iterable, Optional
+from typing import Iterable
 
 from PySide6.QtWidgets import *
 
@@ -14,7 +14,7 @@ class PresetCSGeneration(PresetGeneration):
         super().__init__(editor, game_description)
 
     @property
-    def game_specific_widgets(self) -> Optional[Iterable[QWidget]]:
+    def game_specific_widgets(self) -> Iterable[QWidget] | None:
         yield self._puppy_widget
 
     def on_preset_changed(self, preset: Preset):

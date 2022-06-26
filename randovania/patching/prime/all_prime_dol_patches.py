@@ -1,6 +1,5 @@
 import dataclasses
 import struct
-from typing import List
 
 from randovania.bitpacking.type_enforcement import DataclassPostInitTypeCheck
 from randovania.dol_patching import assembler
@@ -59,7 +58,7 @@ _remote_execution_stack_size = 0x30 + (_registers_to_save * 4)
 _remote_execution_max_byte_count = 420  # Prime 1 0-00 is 444, Echoes NTSC is 464
 
 
-def remote_execution_patch_start() -> List[BaseInstruction]:
+def remote_execution_patch_start() -> list[BaseInstruction]:
     return_code = remote_execution_cleanup_and_return()
 
     intro = [
@@ -100,7 +99,7 @@ def remote_execution_patch_start() -> List[BaseInstruction]:
     ]
 
 
-def remote_execution_clear_pending_op() -> List[BaseInstruction]:
+def remote_execution_clear_pending_op() -> list[BaseInstruction]:
     return [
         # set no pending op
         li(r6, 0x0),
@@ -108,7 +107,7 @@ def remote_execution_clear_pending_op() -> List[BaseInstruction]:
     ]
 
 
-def remote_execution_cleanup_and_return() -> List[BaseInstruction]:
+def remote_execution_cleanup_and_return() -> list[BaseInstruction]:
     return [
         # restore value of top registers
         lmw(GeneralRegister(32 - _registers_to_save), _remote_execution_stack_size - 4 - _registers_to_save * 4, r1),
@@ -119,7 +118,7 @@ def remote_execution_cleanup_and_return() -> List[BaseInstruction]:
     ]
 
 
-def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> List[BaseInstruction]:
+def call_display_hud_patch(patch_addresses: StringDisplayPatchAddresses) -> list[BaseInstruction]:
     # r31 = CStateManager
     return [
         # setup CHUDMemoParms
@@ -161,7 +160,7 @@ def _load_player_state(game: RandovaniaGame, target_register: GeneralRegister, s
 
 def adjust_item_amount_and_capacity_patch(
         patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
-) -> List[BaseInstruction]:
+) -> list[BaseInstruction]:
     # r31 = CStateManager
     if game == RandovaniaGame.METROID_PRIME and item_id in prime_items.ARTIFACT_ITEMS:
         return increment_item_capacity_patch(patch_addresses, game, item_id, delta)
@@ -180,7 +179,7 @@ def adjust_item_amount_and_capacity_patch(
 
 def increment_item_capacity_patch(
         patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int = 1,
-) -> List[BaseInstruction]:
+) -> list[BaseInstruction]:
     return [
         *_load_player_state(game, r3, r31),
         li(r4, item_id),
@@ -191,7 +190,7 @@ def increment_item_capacity_patch(
 
 def adjust_item_amount_patch(
         patch_addresses: PowerupFunctionsAddresses, game: RandovaniaGame, item_id: int, delta: int,
-) -> List[BaseInstruction]:
+) -> list[BaseInstruction]:
     return [
         *_load_player_state(game, r3, r31),
         li(r4, item_id),
@@ -213,7 +212,7 @@ def apply_remote_execution_patch(patch_addresses: StringDisplayPatchAddresses, d
 
 
 def create_remote_execution_body(patch_addresses: StringDisplayPatchAddresses,
-                                 instructions: List[BaseInstruction]) -> Tuple[int, bytes]:
+                                 instructions: list[BaseInstruction]) -> tuple[int, bytes]:
     """
     Return the address and the bytes for executing the given instructions via remote code execution.
     """

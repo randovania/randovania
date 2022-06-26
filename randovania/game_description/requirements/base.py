@@ -46,14 +46,14 @@ class Requirement:
         raise NotImplementedError()
 
     @classmethod
-    @lru_cache()
+    @lru_cache
     def trivial(cls) -> Requirement:
         # empty RequirementAnd.satisfied is True
         from randovania.game_description.requirements.requirement_and import RequirementAnd
         return RequirementAnd([])
 
     @classmethod
-    @lru_cache()
+    @lru_cache
     def impossible(cls) -> Requirement:
         # empty RequirementOr.satisfied is False
         from randovania.game_description.requirements.requirement_or import RequirementOr

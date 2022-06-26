@@ -1,27 +1,26 @@
 import asyncio
-from typing import Optional, Tuple, Callable, FrozenSet
+from typing import Callable
 
 from randovania.game_description.game_patches import GamePatches
-from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.requirement_list import RequirementList
+from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.resources.resource_info import ResourceInfo
 from randovania.game_description.world.event_node import EventNode
+from randovania.game_description.world.event_pickup import EventPickupNode
 from randovania.game_description.world.node import Node
 from randovania.game_description.world.pickup_node import PickupNode
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
 from randovania.resolver import debug
-from randovania.game_description.world import event_pickup
-from randovania.game_description.world.event_pickup import EventPickupNode
 from randovania.resolver.logic import Logic
 from randovania.resolver.resolver_reach import ResolverReach
 from randovania.resolver.state import State
 
 
 def _simplify_requirement_list(self: RequirementList, state: State,
-                               dangerous_resources: FrozenSet[ResourceInfo],
-                               ) -> Optional[RequirementList]:
+                               dangerous_resources: frozenset[ResourceInfo],
+                               ) -> RequirementList | None:
     items = []
     for item in self.values():
         if item.negate:
@@ -39,7 +38,7 @@ def _simplify_requirement_list(self: RequirementList, state: State,
 
 def _simplify_additional_requirement_set(requirements: RequirementSet,
                                          state: State,
-                                         dangerous_resources: FrozenSet[ResourceInfo],
+                                         dangerous_resources: frozenset[ResourceInfo],
                                          ) -> RequirementSet:
     new_alternatives = [
         _simplify_requirement_list(alternative, state, dangerous_resources)
@@ -54,8 +53,8 @@ def _simplify_additional_requirement_set(requirements: RequirementSet,
 
 def _should_check_if_action_is_safe(state: State,
                                     action: ResourceNode,
-                                    dangerous_resources: FrozenSet[ResourceInfo],
-                                    all_nodes: Tuple[Node, ...]) -> bool:
+                                    dangerous_resources: frozenset[ResourceInfo],
+                                    all_nodes: tuple[Node, ...]) -> bool:
     """
     Determines if we should _check_ if the given action is safe that state
     :param state:
@@ -85,29 +84,34 @@ def _should_check_if_action_is_safe(state: State,
 class ResolverTimeout(Exception):
     pass
 
+
 attempts = 0
+
 
 def set_attempts(value: int):
     global attempts
     attempts = value
 
+
 def get_attempts() -> int:
     global attempts
     return attempts
 
-def _check_attempts(max_attempts: Optional[int]):
+
+def _check_attempts(max_attempts: int | None):
     global attempts
     if max_attempts is not None and attempts >= max_attempts:
         raise ResolverTimeout(f"Timed out after {max_attempts} attempts")
     attempts += 1
 
+
 async def _inner_advance_depth(state: State,
                                logic: Logic,
                                status_update: Callable[[str], None],
                                *,
-                               reach: Optional[ResolverReach] = None,
-                               max_attempts: Optional[int] = None,
-                               ) -> Tuple[Optional[State], bool]:
+                               reach: ResolverReach | None = None,
+                               max_attempts: int | None = None,
+                               ) -> tuple[State | None, bool]:
     """
 
     :param state:
@@ -126,10 +130,9 @@ async def _inner_advance_depth(state: State,
     if reach is None:
         reach = ResolverReach.calculate_reach(logic, state)
 
-
     _check_attempts(max_attempts)
     debug.log_new_advance(state, reach)
-    status_update("Resolving... {} total resources".format(state.resources.num_resources))
+    status_update(f"Resolving... {state.resources.num_resources} total resources")
 
     for action, energy in reach.possible_actions(state):
         if _should_check_if_action_is_safe(state, action, logic.game.dangerous_resources,
@@ -188,7 +191,8 @@ async def _inner_advance_depth(state: State,
     return None, has_action
 
 
-async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None], max_attempts: Optional[int] = None) -> Optional[State]:
+async def advance_depth(state: State, logic: Logic, status_update: Callable[[str], None],
+                        max_attempts: int | None = None) -> State | None:
     return (await _inner_advance_depth(state, logic, status_update, max_attempts=max_attempts))[0]
 
 
@@ -196,7 +200,7 @@ def _quiet_print(s):
     pass
 
 
-def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tuple[State, Logic]:
+def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> tuple[State, Logic]:
     set_attempts(0)
 
     game = filtered_database.game_description_for_layout(configuration).get_mutable()
@@ -213,8 +217,8 @@ def setup_resolver(configuration: BaseConfiguration, patches: GamePatches) -> Tu
 
 async def resolve(configuration: BaseConfiguration,
                   patches: GamePatches,
-                  status_update: Optional[Callable[[str], None]] = None
-                  ) -> Optional[State]:
+                  status_update: Callable[[str], None] | None = None
+                  ) -> State | None:
     if status_update is None:
         status_update = _quiet_print
 

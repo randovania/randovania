@@ -1,5 +1,5 @@
 import copy
-from typing import List, Any, Tuple, Optional
+from typing import Any
 
 from PySide6.QtCore import QTimer, Signal, QObject
 from qasync import asyncSlot
@@ -15,7 +15,7 @@ class GameConnection(QObject, ConnectionBackend):
 
     _dt: float = 2.5
     _last_status: Any = None
-    _permanent_pickups: List[Tuple[str, PickupEntry]]
+    _permanent_pickups: list[tuple[str, PickupEntry]]
 
     def __init__(self, executor: MemoryOperationExecutor):
         super().__init__()
@@ -59,7 +59,7 @@ class GameConnection(QObject, ConnectionBackend):
         return f"{self.backend_choice.pretty_text}: {self.current_status.pretty_text}"
 
     @property
-    def current_game_name(self) -> Optional[str]:
+    def current_game_name(self) -> str | None:
         if self.connector is not None:
             return self.connector.game_enum.long_name
 
@@ -67,6 +67,6 @@ class GameConnection(QObject, ConnectionBackend):
     def name(self) -> str:
         raise ValueError("bleh")
 
-    def set_location_collected_listener(self, listener: Optional[LocationListener]):
+    def set_location_collected_listener(self, listener: LocationListener | None):
         super(ConnectionBackend, self).set_location_collected_listener(listener)
         self.checking_for_collected_index = listener is not None

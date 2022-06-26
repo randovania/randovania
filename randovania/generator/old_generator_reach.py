@@ -1,11 +1,11 @@
 import copy
-from typing import Iterator, Optional, Set, Dict, List, NamedTuple, Tuple
+from typing import Iterator, NamedTuple
 
 from randovania.game_description.game_description import GameDescription
+from randovania.game_description.requirements.base import Requirement
+from randovania.game_description.requirements.requirement_and import RequirementAnd
 from randovania.game_description.requirements.requirement_set import RequirementSet
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
-from randovania.game_description.requirements.requirement_and import RequirementAnd
-from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.world.node import Node, NodeContext
 from randovania.game_description.world.resource_node import ResourceNode
 from randovania.generator import graph as graph_module
@@ -13,7 +13,7 @@ from randovania.generator.generator_reach import GeneratorReach
 from randovania.resolver.state import State
 
 
-def _extra_requirement_for_node(game: GameDescription, context: NodeContext, node: Node) -> Optional[Requirement]:
+def _extra_requirement_for_node(game: GameDescription, context: NodeContext, node: Node) -> Requirement | None:
     extra_requirement = None
 
     if node.is_resource_node:
@@ -30,7 +30,7 @@ def _extra_requirement_for_node(game: GameDescription, context: NodeContext, nod
 
 
 class GraphPath(NamedTuple):
-    previous_node: Optional[Node]
+    previous_node: Node | None
     node: Node
     requirement: RequirementSet
 
@@ -50,12 +50,12 @@ class OldGeneratorReach(GeneratorReach):
     _digraph: graph_module.BaseGraph
     _state: State
     _game: GameDescription
-    _reachable_paths: Optional[Dict[int, List[Node]]]
-    _reachable_costs: Optional[Dict[int, int]]
-    _node_reachable_cache: Dict[int, bool]
-    _unreachable_paths: Dict[Tuple[int, int], RequirementSet]
-    _safe_nodes: Optional[Set[int]]
-    _is_node_safe_cache: Dict[int, bool]
+    _reachable_paths: dict[int, list[Node]] | None
+    _reachable_costs: dict[int, int] | None
+    _node_reachable_cache: dict[int, bool]
+    _unreachable_paths: dict[tuple[int, int], RequirementSet]
+    _safe_nodes: set[int] | None
+    _is_node_safe_cache: dict[int, bool]
 
     def __deepcopy__(self, memodict):
         reach = OldGeneratorReach(
@@ -97,7 +97,7 @@ class OldGeneratorReach(GeneratorReach):
         reach._expand_graph([GraphPath(None, initial_state.node, RequirementSet.trivial())])
         return reach
 
-    def _potential_nodes_from(self, node: Node) -> Iterator[Tuple[Node, RequirementSet]]:
+    def _potential_nodes_from(self, node: Node) -> Iterator[tuple[Node, RequirementSet]]:
         extra_requirement = _extra_requirement_for_node(self._game, self.node_context(), node)
         requirement_to_leave = node.requirement_to_leave(self._state.node_context())
 
@@ -113,7 +113,7 @@ class OldGeneratorReach(GeneratorReach):
 
             yield target_node, requirement.as_set(self._state.resource_database)
 
-    def _expand_graph(self, paths_to_check: List[GraphPath]):
+    def _expand_graph(self, paths_to_check: list[GraphPath]):
         # print("!! _expand_graph", len(paths_to_check))
         self._reachable_paths = None
         while paths_to_check:
@@ -224,7 +224,7 @@ class OldGeneratorReach(GeneratorReach):
         return self._game
 
     @property
-    def all_nodes(self) -> tuple[Optional[Node], ...]:
+    def all_nodes(self) -> tuple[Node | None, ...]:
         return self.game.world_list.all_nodes
 
     @property
@@ -270,7 +270,7 @@ class OldGeneratorReach(GeneratorReach):
         self._state = new_state
 
         all_nodes = self.all_nodes
-        paths_to_check: List[GraphPath] = []
+        paths_to_check: list[GraphPath] = []
 
         edges_to_remove = []
         # Check if we can expand the corners of our graph
@@ -287,11 +287,11 @@ class OldGeneratorReach(GeneratorReach):
         self._expand_graph(paths_to_check)
 
     def act_on(self, node: ResourceNode) -> None:
-        new_dangerous_resources = set(
+        new_dangerous_resources = {
             resource
             for resource, quantity in node.resource_gain_on_collect(self.state.node_context())
             if resource in self.game.dangerous_resources
-        )
+        }
         new_state = self.state.act_on_node(node)
 
         if new_dangerous_resources:
@@ -306,7 +306,7 @@ class OldGeneratorReach(GeneratorReach):
 
         self.advance_to(new_state)
 
-    def unreachable_nodes_with_requirements(self) -> Dict[Node, RequirementSet]:
+    def unreachable_nodes_with_requirements(self) -> dict[Node, RequirementSet]:
         results = {}
         for (_, node_index), requirement in self._unreachable_paths.items():
             node = self.all_nodes[node_index]

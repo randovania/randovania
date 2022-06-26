@@ -1,5 +1,4 @@
 import asyncio
-from typing import Optional
 
 from PySide6 import QtWidgets
 from qasync import asyncSlot
@@ -16,7 +15,7 @@ from randovania.interface_common.preset_manager import PresetManager
 from randovania.network_client.network_client import ConnectionState
 
 
-async def ensure_logged_in(parent: Optional[QtWidgets.QWidget], network_client: QtNetworkClient):
+async def ensure_logged_in(parent: QtWidgets.QWidget | None, network_client: QtNetworkClient):
     if network_client.connection_state == ConnectionState.Connected:
         return True
 
@@ -39,8 +38,8 @@ async def ensure_logged_in(parent: Optional[QtWidgets.QWidget], network_client: 
 
 class OnlineInteractions(QtWidgets.QWidget):
     network_client: QtNetworkClient
-    game_session_window: Optional[GameSessionWindow] = None
-    _login_window: Optional[QtWidgets.QDialog] = None
+    game_session_window: GameSessionWindow | None = None
+    _login_window: QtWidgets.QDialog | None = None
 
     def __init__(self, window_manager: WindowManager, preset_manager: PresetManager, network_client: QtNetworkClient,
                  main_window: Ui_MainWindow, options: Options):

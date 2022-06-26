@@ -175,8 +175,8 @@ class TemplateEditor:
     foldable: Foldable
     edit_button: QtWidgets.QPushButton
     template_layout: QtWidgets.QVBoxLayout
-    visualizer: typing.Optional[ConnectionsVisualizer]
-    connections_layout: typing.Optional[QtWidgets.QGridLayout]
+    visualizer: ConnectionsVisualizer | None
+    connections_layout: QtWidgets.QGridLayout | None
 
     def create_visualizer(self, db: ResourceDatabase):
         for it in [self.connections_layout, self.visualizer]:

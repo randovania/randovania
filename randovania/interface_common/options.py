@@ -4,7 +4,7 @@ import uuid
 from distutils.version import StrictVersion
 from enum import Enum
 from pathlib import Path
-from typing import Optional, TypeVar, Callable, Any
+from typing import TypeVar, Callable, Any
 
 from randovania.game_connection.memory_executor_choice import MemoryExecutorChoice
 from randovania.games.game import RandovaniaGame
@@ -119,7 +119,7 @@ def add_per_game_serializer():
 add_per_game_serializer()
 
 
-def _return_with_default(value: Optional[T], default_factory: Callable[[], T]) -> T:
+def _return_with_default(value: T | None, default_factory: Callable[[], T]) -> T:
     """
     Returns the given value is if it's not None, otherwise call default_factory
     :param value:
@@ -139,24 +139,24 @@ class DecodeFailedException(ValueError):
 class Options:
     _data_dir: Path
     _user_dir: Path
-    _on_options_changed: Optional[Callable[[], None]] = None
+    _on_options_changed: Callable[[], None] | None = None
     _nested_autosave_level: int = 0
     _is_dirty: bool = False
 
     _last_changelog_displayed: str
-    _advanced_validate_seed_after: Optional[bool] = None
-    _advanced_timeout_during_generation: Optional[bool] = None
-    _auto_save_spoiler: Optional[bool] = None
-    _dark_mode: Optional[bool] = None
-    _experimental_games: Optional[bool] = None
-    _selected_preset_uuid: Optional[uuid.UUID] = None
-    _displayed_alerts: Optional[set[InfoAlert]] = None
-    _hidden_preset_uuids: Optional[set[uuid.UUID]] = None
-    _game_backend: Optional[MemoryExecutorChoice] = None
-    _nintendont_ip: Optional[str] = None
-    _selected_tracker: Optional[str] = None
+    _advanced_validate_seed_after: bool | None = None
+    _advanced_timeout_during_generation: bool | None = None
+    _auto_save_spoiler: bool | None = None
+    _dark_mode: bool | None = None
+    _experimental_games: bool | None = None
+    _selected_preset_uuid: uuid.UUID | None = None
+    _displayed_alerts: set[InfoAlert] | None = None
+    _hidden_preset_uuids: set[uuid.UUID] | None = None
+    _game_backend: MemoryExecutorChoice | None = None
+    _nintendont_ip: str | None = None
+    _selected_tracker: str | None = None
 
-    def __init__(self, data_dir: Path, user_dir: Optional[Path] = None):
+    def __init__(self, data_dir: Path, user_dir: Path | None = None):
         self._data_dir = data_dir
         self._user_dir = user_dir or data_dir
         self._last_changelog_displayed = str(update_checker.strict_current_version())
@@ -362,7 +362,7 @@ class Options:
         self._edit_field("experimental_games", value)
 
     @property
-    def selected_preset_uuid(self) -> Optional[uuid.UUID]:
+    def selected_preset_uuid(self) -> uuid.UUID | None:
         return self._selected_preset_uuid
 
     @selected_preset_uuid.setter
@@ -378,11 +378,11 @@ class Options:
         self._edit_field("game_backend", value)
 
     @property
-    def nintendont_ip(self) -> Optional[str]:
+    def nintendont_ip(self) -> str | None:
         return self._nintendont_ip
 
     @nintendont_ip.setter
-    def nintendont_ip(self, value: Optional[str]):
+    def nintendont_ip(self, value: str | None):
         self._edit_field("nintendont_ip", value)
 
     @property

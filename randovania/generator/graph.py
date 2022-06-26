@@ -1,8 +1,8 @@
-from collections import defaultdict
 import copy
 import itertools
+from collections import defaultdict
 from heapq import heappush, heappop
-from typing import Dict, Iterator, Tuple, Set, Callable
+from typing import Iterator, Callable
 
 from randovania.game_description.requirements.requirement_set import RequirementSet
 
@@ -26,24 +26,24 @@ class BaseGraph:
     def __contains__(self, item: int):
         raise NotImplementedError()
 
-    def edges_data(self) -> Iterator[Tuple[int, int, RequirementSet]]:
+    def edges_data(self) -> Iterator[tuple[int, int, RequirementSet]]:
         raise NotImplementedError()
 
-    def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, RequirementSet], float]):
+    def multi_source_dijkstra(self, sources: set[int], weight: Callable[[int, int, RequirementSet], float]):
         raise NotImplementedError()
 
-    def strongly_connected_components(self) -> Iterator[Set[int]]:
+    def strongly_connected_components(self) -> Iterator[set[int]]:
         raise NotImplementedError()
 
 
 class RandovaniaGraph(BaseGraph):
-    edges: Dict[int, Dict[int, RequirementSet]]
+    edges: dict[int, dict[int, RequirementSet]]
 
     @classmethod
     def new(cls):
         return cls(defaultdict(dict))
 
-    def __init__(self, edges: Dict[int, Dict[int, RequirementSet]]):
+    def __init__(self, edges: dict[int, dict[int, RequirementSet]]):
         import networkx
         self.networkx = networkx
         self.edges = edges
@@ -77,7 +77,7 @@ class RandovaniaGraph(BaseGraph):
             for target, requirement in data.items():
                 yield source, target, requirement
 
-    def multi_source_dijkstra(self, sources: Set[int], weight: Callable[[int, int, RequirementSet], float]):
+    def multi_source_dijkstra(self, sources: set[int], weight: Callable[[int, int, RequirementSet], float]):
         paths = {source: [source] for source in sources}  # dictionary of paths
         edges = self.edges
 
@@ -115,7 +115,7 @@ class RandovaniaGraph(BaseGraph):
 
         return dist, paths
 
-    def strongly_connected_components(self) -> Iterator[Set[int]]:
+    def strongly_connected_components(self) -> Iterator[set[int]]:
         preorder = {}
         lowlink = {}
         scc_found = set()

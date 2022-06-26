@@ -1,21 +1,19 @@
 import asyncio
 import dataclasses
 from random import Random
-from typing import Callable, Dict, List, Optional
+from typing import Callable
 
 import tenacity
-from randovania.game_description import derived_nodes
+
 from randovania.game_description.assignment import (PickupAssignment,
                                                     PickupTarget, PickupTargetAssociation)
 from randovania.game_description.game_description import GameDescription
-from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.world.world_list import WorldList
 from randovania.generator import dock_weakness_distributor
 from randovania.generator.filler.filler_library import (
     UnableToGenerate, filter_unassigned_pickup_nodes)
-from randovania.generator.filler.runner import (FillerPlayerResult,
-                                                FillerResults, PlayerPool,
+from randovania.generator.filler.runner import (FillerResults, PlayerPool,
                                                 run_filler)
 from randovania.generator.hint_distributor import PreFillParams
 from randovania.generator.item_pool import pool_creator
@@ -31,7 +29,7 @@ from randovania.resolver.exceptions import (GenerationFailure,
                                             InvalidConfiguration)
 
 
-def _validate_item_pool_size(item_pool: List[PickupEntry], game: GameDescription,
+def _validate_item_pool_size(item_pool: list[PickupEntry], game: GameDescription,
                              configuration: BaseConfiguration) -> None:
     min_starting_items = configuration.major_items_configuration.minimum_random_starting_items
     if len(item_pool) > game.world_list.num_pickup_nodes + min_starting_items:
@@ -90,7 +88,7 @@ async def create_player_pool(rng: Random, configuration: BaseConfiguration,
 def _assign_remaining_items(rng: Random,
                             world_list: WorldList,
                             pickup_assignment: PickupAssignment,
-                            remaining_items: List[PickupEntry],
+                            remaining_items: list[PickupEntry],
                             randomization_mode: RandomizationMode,
                             ) -> PickupAssignment:
     """
@@ -162,7 +160,7 @@ def _distribute_remaining_items(rng: Random,
                                 ) -> FillerResults:
     unassigned_pickup_nodes = []
     all_remaining_pickups = []
-    assignments: Dict[int, list[PickupTargetAssociation]] = {}
+    assignments: dict[int, list[PickupTargetAssociation]] = {}
 
     for player, filler_result in filler_results.player_results.items():
         for pickup_node in filter_unassigned_pickup_nodes(filler_result.game.world_list.iterate_nodes(),
@@ -245,9 +243,9 @@ async def _create_description(generator_params: GeneratorParameters,
 
 
 async def generate_and_validate_description(generator_params: GeneratorParameters,
-                                            status_update: Optional[Callable[[str], None]],
+                                            status_update: Callable[[str], None] | None,
                                             validate_after_generation: bool,
-                                            timeout: Optional[int] = 600,
+                                            timeout: int | None = 600,
                                             attempts: int = 15,
                                             ) -> LayoutDescription:
     """

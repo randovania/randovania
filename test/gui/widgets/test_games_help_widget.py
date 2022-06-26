@@ -1,6 +1,5 @@
 from unittest.mock import MagicMock
 
-import pytest
 from PySide6 import QtGui
 
 from randovania.games.game import RandovaniaGame

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 import typing
-from typing import Union, Tuple, Iterator, Optional
+from typing import Union, Iterator
 
 from randovania.game_description.resources.item_resource_info import ItemResourceInfo
 from randovania.game_description.resources.node_resource_info import NodeResourceInfo
@@ -13,8 +13,8 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
 
 ResourceInfo = Union[SimpleResourceInfo, ItemResourceInfo, TrickResourceInfo, NodeResourceInfo]
-ResourceQuantity = Tuple[ResourceInfo, int]
-ResourceGainTuple = Tuple[ResourceQuantity, ...]
+ResourceQuantity = tuple[ResourceInfo, int]
+ResourceGainTuple = tuple[ResourceQuantity, ...]
 ResourceGain = Union[Iterator[ResourceQuantity], typing.ItemsView[ResourceInfo, int]]
 
 
@@ -25,7 +25,7 @@ class ResourceCollection:
     _resource_array: list[int]
     _existing_resources: dict[int, ResourceInfo]
     add_self_as_requirement_to_resources: bool
-    _damage_reduction_cache: Optional[dict[ResourceInfo, float]]
+    _damage_reduction_cache: dict[ResourceInfo, float] | None
 
     def __init__(self):
         self.resource_bitmask = 0
@@ -141,7 +141,7 @@ class ResourceCollection:
         if self.resource_bitmask & mask:
             self.resource_bitmask -= mask
 
-    def duplicate(self) -> "ResourceCollection":
+    def duplicate(self) -> ResourceCollection:
         result = ResourceCollection()
         result._existing_resources.update(self._existing_resources)
         result._resource_array = copy.copy(self._resource_array)
@@ -149,7 +149,7 @@ class ResourceCollection:
         result.add_self_as_requirement_to_resources = self.add_self_as_requirement_to_resources
         return result
 
-    def get_damage_reduction_cache(self, resource: ResourceInfo) -> Optional[float]:
+    def get_damage_reduction_cache(self, resource: ResourceInfo) -> float | None:
         if self._damage_reduction_cache is not None:
             return self._damage_reduction_cache.get(resource)
         return None
@@ -158,3 +158,6 @@ class ResourceCollection:
         if self._damage_reduction_cache is None:
             self._damage_reduction_cache = {}
         self._damage_reduction_cache[resource] = multiplier
+
+    def __copy__(self):
+        return self.duplicate()

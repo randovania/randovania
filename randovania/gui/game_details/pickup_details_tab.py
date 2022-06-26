@@ -3,7 +3,7 @@ import functools
 
 from PySide6 import QtWidgets, QtCore
 
-from randovania.game_description import default_database
+from randovania.exporter import item_names
 from randovania.game_description.game_description import GameDescription
 from randovania.game_description.game_patches import GamePatches
 from randovania.game_description.world.pickup_node import PickupNode
@@ -13,7 +13,6 @@ from randovania.gui.generated.pickup_details_tab_ui import Ui_PickupDetailsTab
 from randovania.interface_common.players_configuration import PlayersConfiguration
 from randovania.layout import filtered_database
 from randovania.layout.base.base_configuration import BaseConfiguration
-from randovania.exporter import item_names
 
 
 def _show_pickup_spoiler(button: QtWidgets.QPushButton):

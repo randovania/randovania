@@ -1,5 +1,3 @@
-from typing import Optional
-
 from randovania.exporter.hints.hint_formatters import TemplatedFormatter, RelativeAreaFormatter
 from randovania.exporter.hints.hint_namer import HintNamer, PickupLocation
 from randovania.exporter.hints.pickup_hint import PickupHint
@@ -70,7 +68,7 @@ class CSHintNamer(HintNamer):
         # TODO
         raise RuntimeError("Not implemented")
 
-    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: Optional[str],
+    def format_guaranteed_resource(self, resource: ItemResourceInfo, player_name: str | None,
                                    location: PickupLocation, hide_area: bool, with_color: bool) -> str:
         # TODO
         raise RuntimeError("Not implemented")

@@ -2,7 +2,6 @@ import asyncio
 import dataclasses
 import struct
 from asyncio import StreamReader, StreamWriter
-from typing import List, Optional, Dict
 
 from randovania.game_connection.executor.memory_operation import MemoryOperationException, MemoryOperation, \
     MemoryOperationExecutor
@@ -92,8 +91,8 @@ def _was_invalid_address(response: bytes, i: int) -> bool:
 
 class NintendontExecutor(MemoryOperationExecutor):
     _port = 43673
-    _socket: Optional[SocketHolder] = None
-    _socket_error: Optional[Exception] = None
+    _socket: SocketHolder | None = None
+    _socket_error: Exception | None = None
 
     def __init__(self, ip: str):
         super().__init__()
@@ -104,7 +103,7 @@ class NintendontExecutor(MemoryOperationExecutor):
         return self._ip
 
     @property
-    def lock_identifier(self) -> Optional[str]:
+    def lock_identifier(self) -> str | None:
         return None
 
     @property
@@ -150,8 +149,8 @@ class NintendontExecutor(MemoryOperationExecutor):
     def is_connected(self) -> bool:
         return self._socket is not None
 
-    def _prepare_requests_for(self, ops: List[MemoryOperation]) -> List[RequestBatch]:
-        requests: List[RequestBatch] = []
+    def _prepare_requests_for(self, ops: list[MemoryOperation]) -> list[RequestBatch]:
+        requests: list[RequestBatch] = []
         current_batch = RequestBatch()
 
         def _new_request():
@@ -201,7 +200,7 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         return requests
 
-    async def _send_requests_to_socket(self, requests: List[RequestBatch]) -> List[bytes]:
+    async def _send_requests_to_socket(self, requests: list[RequestBatch]) -> list[bytes]:
         all_responses = []
         try:
             for request in requests:
@@ -227,7 +226,7 @@ class NintendontExecutor(MemoryOperationExecutor):
 
         return all_responses
 
-    async def perform_memory_operations(self, ops: List[MemoryOperation]) -> Dict[MemoryOperation, bytes]:
+    async def perform_memory_operations(self, ops: list[MemoryOperation]) -> dict[MemoryOperation, bytes]:
         if self._socket is None:
             raise MemoryOperationException("Not connected")
 

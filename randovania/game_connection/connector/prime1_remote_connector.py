@@ -1,5 +1,4 @@
 import struct
-from typing import Optional, List, Tuple
 
 from randovania.dol_patching import assembler
 from randovania.game_connection.connection_base import Inventory
@@ -42,7 +41,7 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
     def _asset_id_format(self):
         return ">I"
 
-    async def current_game_status(self, executor: MemoryOperationExecutor) -> Tuple[bool, Optional[World]]:
+    async def current_game_status(self, executor: MemoryOperationExecutor) -> tuple[bool, World | None]:
         """
         Fetches the world the player's currently at, or None if they're not in-game.
         :param executor:
@@ -68,8 +67,8 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         return has_pending_op, self._current_status_world(results.get(memory_ops[0]),
                                                           results.get(memory_ops[2]))
 
-    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: List[ItemResourceInfo],
-                                   ) -> List[MemoryOperation]:
+    async def _memory_op_for_items(self, executor: MemoryOperationExecutor, items: list[ItemResourceInfo],
+                                   ) -> list[MemoryOperation]:
         player_state_pointer = int.from_bytes(await executor.perform_single_memory_operation(MemoryOperation(
             address=self.version.cstate_manager_global + 0x8b8,
             read_byte_count=4,
@@ -84,12 +83,12 @@ class Prime1RemoteConnector(PrimeRemoteConnector):
         ]
 
     async def _patches_for_pickup(self, provider_name: str, pickup: PickupEntry, inventory: Inventory
-                                  ) -> Tuple[List[List[assembler.BaseInstruction]], str]:
+                                  ) -> tuple[list[list[assembler.BaseInstruction]], str]:
         item_name, resources_to_give = self._resources_to_give_for_pickup(pickup, inventory)
 
         self.logger.debug(f"Resource changes for {pickup.name} from {provider_name}: {resources_to_give}")
 
-        patches: List[List[assembler.BaseInstruction]] = []
+        patches: list[list[assembler.BaseInstruction]] = []
 
         for item, delta in resources_to_give.as_resource_gain():
             if delta == 0:

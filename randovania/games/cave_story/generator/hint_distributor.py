@@ -18,6 +18,7 @@ class CSHintDistributor(HintDistributor):
                                                            ) -> dict[NodeIdentifier, PrecisionPair]:
         def p(loc):
             return PrecisionPair(loc, HintItemPrecision.DETAILED, False)
+
         c = NodeIdentifier.create
 
         return {

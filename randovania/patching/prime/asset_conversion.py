@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import NamedTuple, Iterator
 
 import open_prime_rando.echoes.custom_assets
-from retro_data_structures.asset_manager import AssetManager, IsoFileProvider, PathFileProvider
+from retro_data_structures.asset_manager import AssetManager, IsoFileProvider
 from retro_data_structures.conversion import conversions
 from retro_data_structures.conversion.asset_converter import AssetConverter, ConvertedAsset
 from retro_data_structures.dependencies import all_converted_dependencies, Dependency
@@ -311,7 +311,7 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
         for asset in item["Assets"]:
             asset_type = asset["Type"]
             asset_id = asset["AssetID"]
-            asset_path = assets_path.joinpath("{}.{}".format(asset_id, asset_type))
+            asset_path = assets_path.joinpath(f"{asset_id}.{asset_type}")
             construct_class = format_for(asset_type)
 
             raw = asset_path.read_bytes()
@@ -328,7 +328,7 @@ def _read_prime1_from_cache(assets_path: Path, updaters):
 def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: ProgressUpdateCallable):
     metafile = output_path.joinpath("meta.json")
     if get_asset_cache_version(output_path) >= ECHOES_MODELS_VERSION:
-        with open(metafile, "r") as md:
+        with open(metafile) as md:
             return json.load(md)
 
     delete_converted_assets(output_path)
@@ -394,7 +394,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
 
     end = time.time()
     logging.info(f"Time took to convert assets: {end - start}")
-    status_update("Finished converting assets from Prime 2 in {:.3f}.".format(end - start), 1.0)
+    status_update(f"Finished converting assets from Prime 2 in {end - start:.3f}.", 1.0)
 
     start = time.time()
     converted_dependencies = all_converted_dependencies(converter)
@@ -477,7 +477,7 @@ def convert_prime2_pickups(input_path: Path, output_path: Path, status_update: P
         )
 
     logging.info(f"Time took to write files: {time.time() - start}")
-    status_update("Finished writing the converted assets in {:.3f}.".format(end - start), 1.0)
+    status_update(f"Finished writing the converted assets in {end - start:.3f}.", 1.0)
     return metadata
 
 

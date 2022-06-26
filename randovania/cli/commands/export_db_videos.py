@@ -67,9 +67,9 @@ def get_date():
 
 def get_difficulty(item):
     data = item["data"]
-    
+
     # if, trick, return max(this_diff, curr_diff)
-    if item["type"] == "resource" and data["type"] == "tricks": 
+    if item["type"] == "resource" and data["type"] == "tricks":
         return data["amount"]
 
     # return the highest diff of all "and" paths
@@ -94,7 +94,7 @@ def get_difficulty(item):
 def get_yt_ids(item, ids, highest_diff):
     if item["type"] != "and" and item["type"] != "or":
         return
-    
+
     diff = get_difficulty(item)
     if diff is not None and diff > highest_diff:
         highest_diff = diff
@@ -104,7 +104,7 @@ def get_yt_ids(item, ids, highest_diff):
     if data["comment"] is not None:
         comment = data["comment"]
         if "youtu" in comment:
-            for word in comment.split(" "):    
+            for word in comment.split(" "):
                 if "youtu" not in word:
                     continue
 
@@ -173,13 +173,14 @@ def generate_world_html(name, areas):
         for node in sorted(nodes):
             connections = nodes[node]
             for connection in sorted(connections):
-                connection_name = "%s -> %s" % (node, connection)
+                connection_name = f"{node} -> {connection}"
                 area_body += HTML_CONNECTION_FORMAT % (connection_name, connection_name)
                 yt_ids = connections[connection]
                 for (id, start_time, highest_diff) in sorted(yt_ids, key=lambda x: x[2]):
                     if "https://www.youtube.com/embed/%s?start=%d" % (id, start_time) in area_body:
                         continue
-                    area_body += HTML_VIDEO_FORMAT % (LayoutTrickLevel.from_number(highest_diff).long_name, id, start_time)
+                    area_body += HTML_VIDEO_FORMAT % (
+                        LayoutTrickLevel.from_number(highest_diff).long_name, id, start_time)
                 toc_connections += TOC_CONNECTION_FORMAT % (connection_name, connection_name)
         toc += TOC_AREA_FORMAT % (area, toc_connections)
         body += area_body

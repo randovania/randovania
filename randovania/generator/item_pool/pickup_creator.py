@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Sequence
 
 from randovania.game_description.item.ammo import Ammo
 from randovania.game_description.item.item_category import GENERIC_KEY_CATEGORY, USELESS_ITEM_CATEGORY, ItemCategory
@@ -17,7 +17,7 @@ def create_major_item(item: MajorItem,
                       state: MajorItemState,
                       include_percentage: bool,
                       resource_database: ResourceDatabase,
-                      ammo: Optional[Ammo],
+                      ammo: Ammo | None,
                       ammo_requires_major_item: bool,
 
                       ) -> PickupEntry:
@@ -39,7 +39,7 @@ def create_major_item(item: MajorItem,
     if include_percentage and resource_database.item_percentage is not None:
         extra_resources.append((resource_database.item_percentage, 1))
 
-    def _create_resources(base_resource: Optional[str]) -> ResourceQuantity:
+    def _create_resources(base_resource: str | None) -> ResourceQuantity:
         # FIXME: hacky quantity for Hazard Shield
         quantity = 5 if item.name == "Hazard Shield" else 1
         return resource_database.get_item(base_resource), quantity
@@ -150,7 +150,7 @@ def create_sky_temple_key(key_number: int,
     )
 
     return PickupEntry(
-        name="Sky Temple Key {}".format(key_number + 1),
+        name=f"Sky Temple Key {key_number + 1}",
         progression=((resource_database.get_item(echoes_items.SKY_TEMPLE_KEY_ITEMS[key_number]), 1),),
         model=PickupModel(
             game=resource_database.game_enum,

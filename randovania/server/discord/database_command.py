@@ -2,9 +2,8 @@ import functools
 import io
 import logging
 import math
-import typing
 from pathlib import Path
-from typing import List, Dict, Optional, NamedTuple
+from typing import NamedTuple
 
 import PIL.Image
 import discord
@@ -28,10 +27,10 @@ from randovania.server.discord.randovania_cog import RandovaniaCog
 class SplitWorld(NamedTuple):
     world: World
     name: str
-    areas: List[Area]
+    areas: list[Area]
 
 
-def render_area_with_graphviz(area: Area) -> Optional[io.BytesIO]:
+def render_area_with_graphviz(area: Area) -> io.BytesIO | None:
     dot = graphviz.Digraph(comment=area.name)
     for node in area.nodes:
         if node.is_derived_node:
@@ -65,7 +64,7 @@ def render_area_with_graphviz(area: Area) -> Optional[io.BytesIO]:
         p.unlink()
 
 
-def render_area_with_pillow(area: Area, data_path: Path) -> Optional[io.BytesIO]:
+def render_area_with_pillow(area: Area, data_path: Path) -> io.BytesIO | None:
     image_path = data_path.joinpath("assets", "maps", f"{area.map_name}.png")
     if not image_path.exists():
         return None
@@ -112,7 +111,7 @@ def render_area_with_pillow(area: Area, data_path: Path) -> Optional[io.BytesIO]
     return result
 
 
-async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
+async def create_split_worlds(db: GameDescription) -> list[SplitWorld]:
     world_options = []
 
     for world in db.world_list.worlds:
@@ -120,7 +119,7 @@ async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
             if is_dark_world and world.dark_name is None:
                 continue
 
-            areas = sorted([area for area in world.areas if area.in_dark_aether == is_dark_world],
+            areas = sorted((area for area in world.areas if area.in_dark_aether == is_dark_world),
                            key=lambda it: it.name)
             name = world.correct_name(is_dark_world)
             if len(areas) > 25:
@@ -140,7 +139,7 @@ async def create_split_worlds(db: GameDescription) -> List[SplitWorld]:
 
 
 class DatabaseCommandCog(RandovaniaCog):
-    _split_worlds: Dict[RandovaniaGame, List[SplitWorld]]
+    _split_worlds: dict[RandovaniaGame, list[SplitWorld]]
 
     def __init__(self, configuration: dict, bot: RandovaniaBot):
         self.configuration = configuration
@@ -275,7 +274,7 @@ class DatabaseCommandCog(RandovaniaCog):
         area = valid_items[0]
         db = default_database.game_description_for(game)
 
-        title = "{}: {}".format(game.long_name, db.world_list.area_name(area))
+        title = f"{game.long_name}: {db.world_list.area_name(area)}"
         valid_nodes = [node for node in sorted(area.nodes, key=lambda it: it.name)
                        if not node.is_derived_node]
 

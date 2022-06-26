@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import typing
-from typing import Optional, NamedTuple
+from typing import NamedTuple
 
 from frozendict import frozendict
 
@@ -15,7 +15,6 @@ if typing.TYPE_CHECKING:
     from randovania.game_description.resources.resource_database import ResourceDatabase
     from randovania.game_description.resources.resource_info import ResourceInfo, ResourceCollection
     from randovania.game_description.world.node_provider import NodeProvider
-
 
 NodeIndex = int
 
@@ -42,12 +41,12 @@ class Node:
     identifier: NodeIdentifier
     node_index: NodeIndex = dataclasses.field(hash=False, compare=False)
     heal: bool
-    location: Optional[NodeLocation]
+    location: NodeLocation | None
     description: str
     layers: tuple[str, ...]
     extra: dict[str, typing.Any]
 
-    def __lt__(self, other: "Node"):
+    def __lt__(self, other: Node):
         return self.identifier < other.identifier
 
     def __hash__(self):

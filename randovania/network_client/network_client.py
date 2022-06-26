@@ -7,7 +7,6 @@ import ssl
 import time
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Tuple
 
 import aiofiles
 import aiohttp
@@ -94,20 +93,20 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 
 class NetworkClient:
     sio: socketio.AsyncClient
-    _current_user: Optional[User] = None
+    _current_user: User | None = None
     _connection_state: ConnectionState
     _call_lock: asyncio.Lock
-    _connect_task: Optional[asyncio.Task] = None
-    _waiting_for_on_connect: Optional[asyncio.Future] = None
-    _restore_session_task: Optional[asyncio.Task] = None
-    _connect_error: Optional[str] = None
+    _connect_task: asyncio.Task | None = None
+    _waiting_for_on_connect: asyncio.Future | None = None
+    _restore_session_task: asyncio.Task | None = None
+    _connect_error: str | None = None
     _num_emit_failures: int = 0
 
     # Game Session
-    _current_game_session_meta: Optional[GameSessionEntry] = None
-    _current_game_session_actions: Optional[GameSessionActions] = None
-    _current_game_session_pickups: Optional[GameSessionPickups] = None
-    _current_game_session_audit_log: Optional[GameSessionAuditLog] = None
+    _current_game_session_meta: GameSessionEntry | None = None
+    _current_game_session_actions: GameSessionActions | None = None
+    _current_game_session_pickups: GameSessionPickups | None = None
+    _current_game_session_audit_log: GameSessionAuditLog | None = None
 
     def __init__(self, user_data_dir: Path, configuration: dict):
         self.logger = logging.getLogger(__name__)
@@ -150,7 +149,7 @@ class NetworkClient:
         self.logger.debug(f"updated connection_state: {value.value}")
         self._connection_state = value
 
-    async def read_persisted_session(self) -> Optional[bytes]:
+    async def read_persisted_session(self) -> bytes | None:
         try:
             async with aiofiles.open(self.session_data_path, "rb") as open_file:
                 return await open_file.read()
@@ -212,7 +211,7 @@ class NetworkClient:
             await self.sio.disconnect()
             raise UnableToConnect(error)
 
-    def notify_on_connect(self, error_message: Optional[Exception]):
+    def notify_on_connect(self, error_message: Exception | None):
         if self._waiting_for_on_connect is not None:
             if error_message is None:
                 self._waiting_for_on_connect.set_result(None)
@@ -418,11 +417,11 @@ class NetworkClient:
     async def game_session_request_update(self):
         await self._emit_with_result("game_session_request_update", self._current_game_session_meta.id)
 
-    async def game_session_collect_locations(self, locations: Tuple[int, ...]):
+    async def game_session_collect_locations(self, locations: tuple[int, ...]):
         await self._emit_with_result("game_session_collect_locations",
                                      (self._current_game_session_meta.id, locations))
 
-    async def get_game_session_list(self, ignore_limit: bool) -> List[GameSessionListEntry]:
+    async def get_game_session_list(self, ignore_limit: bool) -> list[GameSessionListEntry]:
         return [
             GameSessionListEntry.from_json(item)
             for item in await self._emit_with_result("list_game_sessions", (None if ignore_limit else 100,))
@@ -433,7 +432,7 @@ class NetworkClient:
         self._current_game_session_meta = GameSessionEntry.from_json(result)
         return self._current_game_session_meta
 
-    async def join_game_session(self, session: GameSessionListEntry, password: Optional[str]):
+    async def join_game_session(self, session: GameSessionListEntry, password: str | None):
         result = await self._emit_with_result("join_game_session", (session.id, password))
         self._current_game_session_meta = GameSessionEntry.from_json(result)
 
@@ -464,7 +463,7 @@ class NetworkClient:
                                      (self._current_game_session_meta.id, inventory_binary, state_string))
 
     @property
-    def current_user(self) -> Optional[User]:
+    def current_user(self) -> User | None:
         return self._current_user
 
     async def logout(self):
@@ -478,5 +477,5 @@ class NetworkClient:
         await self._emit_with_result("logout")
 
     @property
-    def current_game_session(self) -> Optional[GameSessionEntry]:
+    def current_game_session(self) -> GameSessionEntry | None:
         return self._current_game_session_meta

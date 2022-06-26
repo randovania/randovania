@@ -1,5 +1,3 @@
-from typing import List
-
 from randovania.game_description.resources.pickup_entry import PickupEntry
 from randovania.game_description.resources.resource_database import ResourceDatabase
 from randovania.game_description.resources.resource_info import ResourceCollection
@@ -12,7 +10,7 @@ def add_dark_temple_keys(resource_database: ResourceDatabase,
     :param resource_database:
     :return:
     """
-    item_pool: List[PickupEntry] = []
+    item_pool: list[PickupEntry] = []
 
     for temple_index in range(3):
         for i in range(3):

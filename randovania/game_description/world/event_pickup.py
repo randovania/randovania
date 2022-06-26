@@ -1,5 +1,4 @@
 import dataclasses
-from typing import Tuple, List
 
 from randovania.game_description.requirements.base import Requirement
 from randovania.game_description.requirements.resource_requirement import ResourceRequirement
@@ -19,7 +18,7 @@ class EventPickupNode(ResourceNode):
     def create_from(cls, index: int, event_node: EventNode, next_node: PickupNode) -> "EventPickupNode":
         return cls(
             event_node.identifier.renamed(
-                "EventPickup - {} + {}".format(event_node.event.long_name, next_node.name),
+                f"EventPickup - {event_node.event.long_name} + {next_node.name}",
             ),
             index,
             event_node.heal or next_node.heal,
@@ -70,7 +69,7 @@ class EventPickupNode(ResourceNode):
 def find_nodes_to_combine(nodes: list[Node], connections: dict[Node, dict[Node, Requirement]]
                           ) -> list[tuple[EventNode, PickupNode]]:
     """Searches for pairs of Event+Pickup nodes that match the necessary rules for combination"""
-    result: List[Tuple[EventNode, PickupNode]] = []
+    result: list[tuple[EventNode, PickupNode]] = []
 
     for event_node in nodes:
         if not isinstance(event_node, EventNode):

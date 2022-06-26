@@ -1,33 +1,41 @@
+from __future__ import annotations
+
 import asyncio
+import functools
 import math
-import multiprocessing
 import time
 import typing
 from argparse import ArgumentParser
+from concurrent.futures import ProcessPoolExecutor, Future, CancelledError
 from pathlib import Path
 
 from randovania.cli import cli_lib
 from randovania.interface_common import sleep_inhibitor
+from randovania.resolver.exceptions import GenerationFailure
 
 if typing.TYPE_CHECKING:
     from randovania.layout.generator_parameters import GeneratorParameters
 
 
-def batch_distribute_helper(base_params: "GeneratorParameters",
+def get_generator_params(base_params: GeneratorParameters, seed_number: int) -> GeneratorParameters:
+    from randovania.layout.permalink import GeneratorParameters
+    assert isinstance(base_params, GeneratorParameters)
+
+    return GeneratorParameters(
+        seed_number=seed_number,
+        spoiler=True,
+        presets=base_params.presets,
+    )
+
+
+def batch_distribute_helper(base_params: GeneratorParameters,
                             seed_number: int,
                             timeout: int,
                             validate: bool,
                             output_dir: Path,
                             ) -> float:
     from randovania.generator import generator
-    from randovania.layout.permalink import GeneratorParameters
-    assert isinstance(base_params, GeneratorParameters)
-
-    permalink = GeneratorParameters(
-        seed_number=seed_number,
-        spoiler=True,
-        presets=base_params.presets,
-    )
+    permalink = get_generator_params(base_params, seed_number)
 
     start_time = time.perf_counter()
     description = asyncio.run(generator.generate_and_validate_description(
@@ -37,7 +45,7 @@ def batch_distribute_helper(base_params: "GeneratorParameters",
     ))
     delta_time = time.perf_counter() - start_time
 
-    description.save_to_file(output_dir.joinpath("{}.{}".format(seed_number, description.file_extension())))
+    description.save_to_file(output_dir.joinpath(f"{seed_number}.{description.file_extension()}"))
     return delta_time
 
 
@@ -58,27 +66,43 @@ def batch_distribute_command_logic(args):
     base_permalink = Permalink.from_str(args.permalink)
     base_params = base_permalink.parameters
 
-    def report_update(msg: str):
+    def get_permalink_text(seed: int) -> str:
+        return Permalink.from_parameters(get_generator_params(base_params, seed)).as_base64_str
+
+    def report_update(seed: int, msg: str):
         nonlocal finished_count
         finished_count += 1
-        print(number_format.format(finished_count, seed_count) + msg)
+        front = number_format.format(finished_count, seed_count)
+        print(f"{front} [ {get_permalink_text(seed)} ] {msg}")
 
-    def callback(result):
-        report_update(f"Finished seed in {result} seconds.")
+    all_futures: list[Future] = []
 
-    def error_callback(e):
-        report_update(f"Failed to generate seed: {e}")
+    def with_result(seed: int, r: Future):
+        try:
+            report_update(seed, f"Finished seed in {r.result()} seconds.")
+        except GenerationFailure as e:
+            report_update(seed, f"Failed to generate seed: {e}\nReason: {e.source}")
+        except CancelledError:
+            nonlocal finished_count
+            finished_count += 1
+        except Exception as e:
+            report_update(seed, f"Failed to generate seed: {e} ({type(e)})")
+        except KeyboardInterrupt:
+            report_update(seed, f"Interrupt requested.")
+            for f in all_futures:
+                f.cancel()
 
-    with multiprocessing.Pool(processes=args.process_count) as pool, sleep_inhibitor.get_inhibitor():
-        for seed_number in range(base_params.seed_number, base_params.seed_number + args.seed_count):
-            pool.apply_async(
-                func=batch_distribute_helper,
-                args=(base_params, seed_number, timeout, validate, output_dir),
-                callback=callback,
-                error_callback=error_callback,
-            )
-        pool.close()
-        pool.join()
+    try:
+        with ProcessPoolExecutor(max_workers=args.process_count) as pool, sleep_inhibitor.get_inhibitor():
+            for seed_number in range(base_params.seed_number, base_params.seed_number + args.seed_count):
+                result = pool.submit(
+                    batch_distribute_helper,
+                    base_params, seed_number, timeout, validate, output_dir,
+                )
+                result.add_done_callback(functools.partial(with_result, seed_number))
+                all_futures.append(result)
+    except KeyboardInterrupt:
+        pass
 
 
 def add_batch_distribute_command(sub_parsers):

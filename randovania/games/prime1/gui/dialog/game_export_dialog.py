@@ -1,15 +1,11 @@
 import dataclasses
 from pathlib import Path
-from typing import Optional
 
 from randovania.exporter.game_exporter import GameExportParams
 from randovania.games.game import RandovaniaGame
 from randovania.games.prime1.exporter.game_exporter import PrimeGameExportParams
 from randovania.games.prime1.exporter.options import PrimePerGameOptions
 from randovania.games.prime2.exporter.options import EchoesPerGameOptions
-from randovania.games.prime2.gui.dialog.game_export_dialog import (
-    delete_internal_copy, check_extracted_game, echoes_input_validator
-)
 from randovania.gui.dialog.game_export_dialog import (
     GameExportDialog, prompt_for_output_file, prompt_for_input_file,
     spoiler_path_for, add_field_validation, output_file_validator, is_file_validator, update_validation,
@@ -128,7 +124,7 @@ class PrimeGameExportDialog(GameExportDialog, MultiFormatOutputMixin, Ui_PrimeGa
         return Path(self.output_file_edit.text())
 
     @property
-    def echoes_file(self) -> Optional[Path]:
+    def echoes_file(self) -> Path | None:
         if self._use_echoes_models:
             return Path(self.echoes_file_edit.text())
 

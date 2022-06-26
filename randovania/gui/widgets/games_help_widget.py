@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PySide6 import QtWidgets, QtGui
 
 from randovania.games.game import RandovaniaGame
@@ -8,9 +6,9 @@ from randovania.games.game import RandovaniaGame
 class GamesHelpWidget(QtWidgets.QTabWidget):
     _first_show: bool = True
     _experimental_visible: bool = False
-    _index_for_game: Optional[dict[RandovaniaGame, int]] = None
-    _layout_for_index: Optional[dict[int, QtWidgets.QVBoxLayout]] = None
-    _games_with_widget: Optional[set[RandovaniaGame]] = None
+    _index_for_game: dict[RandovaniaGame, int] | None = None
+    _layout_for_index: dict[int, QtWidgets.QVBoxLayout] | None = None
+    _games_with_widget: set[RandovaniaGame] | None = None
 
     def _on_first_show(self):
         self._index_for_game = {}
@@ -34,7 +32,7 @@ class GamesHelpWidget(QtWidgets.QTabWidget):
         self.currentChanged.connect(self.ensure_current_game_has_widget)
         self.ensure_current_game_has_widget()
 
-    def current_game(self) -> Optional[RandovaniaGame]:
+    def current_game(self) -> RandovaniaGame | None:
         for game, index in self._index_for_game.items():
             if index == self.currentIndex():
                 return game

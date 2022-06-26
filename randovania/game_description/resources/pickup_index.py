@@ -4,7 +4,7 @@ class PickupIndex:
 
     @property
     def long_name(self) -> str:
-        return "PickupIndex {}".format(self._index)
+        return f"PickupIndex {self._index}"
 
     @property
     def short_name(self):
