@@ -2041,7 +2041,7 @@ Extra - asset_id: collision_camera_022
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Door to Bomb Room
-      Morph Ball
+      Morph Ball and After Dairon - powergenerator_002
   > Center
       Trivial
 
@@ -2094,7 +2094,7 @@ Extra - asset_id: collision_camera_023
   > Door to Freezer
       Trivial
   > Map Station
-      Trivial
+      After Dairon - powergenerator_002
 
 > Door to Freezer; Heals? False
   * Layers: default
@@ -2181,24 +2181,24 @@ Extra - asset_id: collision_camera_025
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Door to Power Switch 2
-      All of the following:
-          After Dairon - db_dif_b1_002 and Can Slide
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
   > Freezer Center
       Any of the following:
-          Gravity Suit
+          Gravity Suit or Before Dairon - powergenerator_002
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
   > Beside the Blob
       All of the following:
           After Dairon - db_reg_b1_002
           Any of the following:
-              Gravity Suit
+              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
   > Event - Right Blob from above (db_reg_b1_002)
-      Wave Beam
+      All of the following:
+          Any of the following:
+              Wave Beam
+              Pseudo-Wave Beam (Beginner) and Shoot Diffusion Beam
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
 > Door to Power Switch 2; Heals? False
   * Layers: default
@@ -2211,32 +2211,38 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_def: None
   > Freezer Center
       Any of the following:
-          Gravity Suit
+          Gravity Suit or Before Dairon - powergenerator_002
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
   > Beside the Blob
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit
+              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
 
-> Door to Energy Recharge Station West (doorpowerpower_028); Heals? False
+> Door to Energy Recharge Station West (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Energy Recharge Station West/Door to Freezer (doorpowerpower_028)
+  * Power Beam Door to Energy Recharge Station West/Door to Freezer (Upper)
   * Extra - actor_name: doorpowerpower_028
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
   * Extra - left_shield_def: None
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
-  > Tile Group (SPEEDBOOST) 4
+  > Door to Energy Recharge Station West (Lower)
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 120
+  > Freezer Center
       Any of the following:
-          Gravity Suit
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 20
+          Gravity Suit or Before Dairon - powergenerator_002
+          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
 
-> Door to Energy Recharge Station West (doorpowerpower_030); Heals? False
+> Door to Energy Recharge Station West (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to Energy Recharge Station West/Door to Freezer (doorpowerpower_030)
+  * Power Beam Door to Energy Recharge Station West/Door to Freezer (Lower)
   * Extra - actor_name: doorpowerpower_030
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -2244,16 +2250,20 @@ Extra - asset_id: collision_camera_025
   * Extra - right_shield_entity: {EMPTY}
   * Extra - right_shield_def: None
   > Pickup (Missile Tank - Upper)
-      Any of the following:
-          Gravity Suit
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 20
+      All of the following:
+          After Dairon - Freezer Hidden Left Blob or Can Slide
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
   > Event - Hidden Blob from left (db_reg_b1_001)
-      Lay Bomb or Shoot Beam
+      Any of the following:
+          Gravity Suit or Before Dairon - powergenerator_002 or Lay Bomb or Shoot Beam
+          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
   > Freezer Center
       All of the following:
           Morph Ball and After Dairon - Freezer Hidden Left Blob
           Any of the following:
-              Gravity Suit
+              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
 
 > Pickup (Missile Tank - Lower); Heals? False
@@ -2265,7 +2275,7 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit
+              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
 > Pickup (Missile Tank - Upper); Heals? False
@@ -2273,9 +2283,9 @@ Extra - asset_id: collision_camera_025
   * Pickup 76; Major Location? False
   * Extra - actor_name: item_missiletank_006
   * Extra - actor_def: actordef:actors/items/item_missiletank/charclasses/item_missiletank.bmsad
-  > Door to Energy Recharge Station West (doorpowerpower_030)
+  > Door to Energy Recharge Station West (Lower)
       Any of the following:
-          Gravity Suit
+          Gravity Suit or Before Dairon - powergenerator_002
           Heat/Cold Runs (Intermediate) and Cold Damage ≥ 20
 
 > Event - Hidden Blob from left (db_reg_b1_001); Heals? False
@@ -2283,7 +2293,7 @@ Extra - asset_id: collision_camera_025
   * Event Dairon - Freezer Hidden Left Blob
   * Extra - actor_name: db_reg_b1_001
   * Extra - actor_def: actordef:actors/props/db_reg_b1_001/charclasses/db_reg_b1_001.bmsad
-  > Door to Energy Recharge Station West (doorpowerpower_030)
+  > Door to Energy Recharge Station West (Lower)
       Trivial
 
 > Event - Right Blob from right (db_reg_b1_002); Heals? False
@@ -2294,68 +2304,6 @@ Extra - asset_id: collision_camera_025
   > Beside the Blob
       Trivial
 
-> Tile Group (SPEEDBOOST) 1; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_015
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Bottom-Left Corner
-      Trivial
-
-> Tile Group (SPEEDBOOST) 2; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_016
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (SCREWATTACK)
-      All of the following:
-          Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-  > Tile Group (WEIGHT)
-      All of the following:
-          Morph Ball
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-  > Bottom-Left Corner
-      Trivial
-
-> Tile Group (SPEEDBOOST) 3; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_017
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Tile Group (SCREWATTACK)
-      Trivial
-  > Freezer Center
-      Gravity Suit
-
-> Tile Group (SPEEDBOOST) 4; Heals? False
-  * Layers: default
-  * Configurable Node
-  * Extra - actor_name: breakabletilegroup_018
-  * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
-  * Extra - actor_layer: breakables
-  * Extra - tile_types: ('SPEEDBOOST',)
-  > Door to Energy Recharge Station West (doorpowerpower_028)
-      Any of the following:
-          Gravity Suit
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 20
-  > Door to Energy Recharge Station West (doorpowerpower_030)
-      All of the following:
-          Morph Ball and After Dairon - db_dif_b1_001
-          Any of the following:
-              Gravity Suit
-              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
-
 > Tile Group (SCREWATTACK); Heals? False
   * Layers: default
   * Configurable Node
@@ -2363,14 +2311,16 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('SCREWATTACK',)
-  > Tile Group (SPEEDBOOST) 2
-      Any of the following:
-          Gravity Suit
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 10
-  > Tile Group (SPEEDBOOST) 3
-      Trivial
   > Tile Group (WEIGHT)
-      Morph Ball
+      All of the following:
+          Morph Ball
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 70
+  > Freezer Center
+      Any of the following:
+          Gravity Suit or Before Dairon - powergenerator_002
+          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
 
 > Tile Group (WEIGHT); Heals? False
   * Layers: default
@@ -2378,10 +2328,12 @@ Extra - asset_id: collision_camera_025
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Tile Group (SPEEDBOOST) 1
-      Any of the following:
-          Gravity Suit
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
+  > Bottom-Left Corner
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
 
 > Bottom-Left Corner; Heals? False
   * Layers: default
@@ -2389,10 +2341,21 @@ Extra - asset_id: collision_camera_025
       All of the following:
           Morph Ball
           Any of the following:
-              Gravity Suit
+              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
-  > Tile Group (SPEEDBOOST) 2
-      Trivial
+  > Tile Group (SCREWATTACK)
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 100
+          Space Jump or Walljump (Beginner) or Simple IBJ
+  > Tile Group (WEIGHT)
+      All of the following:
+          Ballspark
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 70
 
 > Event - Hidden Blob through wall (db_reg_b1_001); Heals? False
   * Layers: default
@@ -2405,38 +2368,69 @@ Extra - asset_id: collision_camera_025
   > Door to Map Station
       All of the following:
           Any of the following:
-              Gravity Suit
+              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 150
           Space Jump or Speed Booster or Walljump (Beginner) or Simple IBJ
   > Door to Power Switch 2
       Any of the following:
-          # TODO: Implement logic for un-frozen freezer, which adds a few extra requirements for jumping around the pond
-          Gravity Suit
-          Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
-  > Door to Energy Recharge Station West (doorpowerpower_030)
+          All of the following:
+              After Dairon - powergenerator_002
+              Any of the following:
+                  Gravity Suit
+                  Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
+          All of the following:
+              Before Dairon - powergenerator_002
+              Any of the following:
+                  Grapple Beam or Spider Magnet or Space Jump or Speed Booster
+                  All of the following:
+                      Gravity Suit
+                      Spin Boost or Walljump (Beginner) or Simple IBJ
+                  Flash Shift and Walljump (Beginner)
+  > Door to Energy Recharge Station West (Upper)
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
+          Any of the following:
+              Space Jump
+              Movement (Intermediate) and Walljump (Beginner)
+  > Door to Energy Recharge Station West (Lower)
       All of the following:
           Morph Ball and After Dairon - Freezer Hidden Left Blob
           Any of the following:
-              Gravity Suit
+              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
           Speed Booster or Walljump (Beginner) or Simple IBJ or Use Spin Boost
-  > Tile Group (SPEEDBOOST) 3
-      Gravity Suit
-  > Tile Group (SPEEDBOOST) 4
-      Gravity Suit and Space Jump
+  > Tile Group (SCREWATTACK)
+      All of the following:
+          Speed Booster
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 50
   > Event - Hidden Blob through wall (db_reg_b1_001)
       Wave Beam
 
 > Beside the Blob; Heals? False
   * Layers: default
+  > Door to Map Station
+      All of the following:
+          After Dairon - db_reg_b1_002
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
   > Door to Power Switch 2
       All of the following:
           Can Slide
           Any of the following:
-              Gravity Suit
+              Gravity Suit or Before Dairon - powergenerator_002
               Heat/Cold Runs (Intermediate) and Cold Damage ≥ 200
   > Event - Right Blob from right (db_reg_b1_002)
-      Shoot Beam
+      All of the following:
+          Shoot Beam
+          Any of the following:
+              Gravity Suit or Before Dairon - powergenerator_002
+              Heat/Cold Runs (Intermediate) and Cold Damage ≥ 30
 
 > Event - Right Blob from above (db_reg_b1_002); Heals? False
   * Layers: default
@@ -3349,9 +3343,9 @@ Energy Recharge Station West
 Extra - total_boundings: {'x1': -16100.0, 'x2': -13900.0, 'y1': 5000.0, 'y2': 7700.0}
 Extra - polygon: [[-13900.0, 7700.0], [-16100.0, 7700.0], [-16100.0, 5000.0], [-13900.0, 5000.0]]
 Extra - asset_id: collision_camera_042
-> Door to Freezer (doorpowerpower_028); Heals? False
+> Door to Freezer (Upper); Heals? False
   * Layers: default
-  * Power Beam Door to Freezer/Door to Energy Recharge Station West (doorpowerpower_028)
+  * Power Beam Door to Freezer/Door to Energy Recharge Station West (Upper)
   * Extra - actor_name: doorpowerpower_028
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3363,9 +3357,9 @@ Extra - asset_id: collision_camera_042
   > Tile Group (WEIGHT)
       Trivial
 
-> Door to Freezer (doorpowerpower_030); Heals? False
+> Door to Freezer (Lower); Heals? False
   * Layers: default
-  * Power Beam Door to Freezer/Door to Energy Recharge Station West (doorpowerpower_030)
+  * Power Beam Door to Freezer/Door to Energy Recharge Station West (Lower)
   * Extra - actor_name: doorpowerpower_030
   * Extra - actor_def: actordef:actors/props/doorpowerpower/charclasses/doorpowerpower.bmsad
   * Extra - left_shield_entity: {EMPTY}
@@ -3374,15 +3368,13 @@ Extra - asset_id: collision_camera_042
   * Extra - right_shield_def: None
   > Life Recharge
       Trivial
-  > Dock to Transport to Ghavoran
-      Can Slide
 
 > Pickup (Energy Part); Heals? False
   * Layers: default
   * Pickup 70; Major Location? True
   * Extra - actor_name: item_energyfragment_002
   * Extra - actor_def: actordef:actors/items/item_energyfragment/charclasses/item_energyfragment.bmsad
-  > Door to Freezer (doorpowerpower_028)
+  > Door to Freezer (Upper)
       Trivial
 
 > Life Recharge; Heals? True; Spawn Point
@@ -3391,8 +3383,10 @@ Extra - asset_id: collision_camera_042
   * Extra - actor_def: actordef:actors/props/energyrecharge/charclasses/energyrecharge.bmsad
   * Extra - start_point_actor_name: energyrecharge_001_platform
   * Extra - start_point_actor_def: actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad
-  > Door to Freezer (doorpowerpower_030)
-      Trivial
+  > Door to Freezer (Lower)
+      After Dairon - powergenerator_002
+  > Dock to Transport to Ghavoran
+      Can Slide
 
 > Tile Group (WEIGHT); Heals? False
   * Layers: default
@@ -3400,14 +3394,16 @@ Extra - asset_id: collision_camera_042
   * Extra - actor_def: actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad
   * Extra - actor_layer: breakables
   * Extra - tile_types: ('WEIGHT',)
-  > Door to Freezer (doorpowerpower_030)
+  > Door to Freezer (Lower)
       Trivial
 
 > Dock to Transport to Ghavoran; Heals? False
   * Layers: default
   * Open Passage to Transport to Ghavoran/Dock to Energy Recharge Station West
-  > Door to Freezer (doorpowerpower_030)
+  > Door to Freezer (Lower)
       Morph Ball and After Dairon - powergenerator_002
+  > Life Recharge
+      Morph Ball
 
 ----------------
 Transport to Cataris

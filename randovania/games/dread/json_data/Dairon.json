@@ -9837,12 +9837,29 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Door to Bomb Room": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Center": {
@@ -10089,10 +10106,12 @@
                             }
                         },
                         "Map Station": {
-                            "type": "and",
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "s030_baselab:default:powergenerator_002",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -10454,70 +10473,6 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Power Switch 2": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:db_dif_b1_002",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Can Slide"
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 200,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
                         "Freezer Center": {
                             "type": "or",
                             "data": {
@@ -10556,6 +10511,15 @@
                                                     }
                                                 }
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": true
                                         }
                                     }
                                 ]
@@ -10614,6 +10578,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -10622,12 +10595,101 @@
                             }
                         },
                         "Event - Right Blob from above (db_reg_b1_002)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Wave",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Shoot Diffusion Beam"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Pseudo",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -10701,6 +10763,15 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -10758,6 +10829,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -10767,7 +10847,7 @@
                         }
                     }
                 },
-                "Door to Energy Recharge Station West (doorpowerpower_028)": {
+                "Door to Energy Recharge Station West (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10791,13 +10871,82 @@
                     "default_connection": {
                         "world_name": "Dairon",
                         "area_name": "Energy Recharge Station West",
-                        "node_name": "Door to Freezer (doorpowerpower_028)"
+                        "node_name": "Door to Freezer (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (SPEEDBOOST) 4": {
+                        "Door to Energy Recharge Station West (Lower)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 120,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Freezer Center": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -10812,6 +10961,15 @@
                                         }
                                     },
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
@@ -10819,18 +10977,18 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Cold",
-                                                        "amount": 20,
+                                                        "type": "tricks",
+                                                        "name": "Suitless",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 2,
+                                                        "type": "damage",
+                                                        "name": "Cold",
+                                                        "amount": 30,
                                                         "negate": false
                                                     }
                                                 }
@@ -10842,7 +11000,7 @@
                         }
                     }
                 },
-                "Door to Energy Recharge Station West (doorpowerpower_030)": {
+                "Door to Energy Recharge Station West (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -10866,47 +11024,85 @@
                     "default_connection": {
                         "world_name": "Dairon",
                         "area_name": "Energy Recharge Station West",
-                        "node_name": "Door to Freezer (doorpowerpower_030)"
+                        "node_name": "Door to Freezer (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Pickup (Missile Tank - Upper)": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Cold",
-                                                        "amount": 20,
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:db_reg_b1_001",
+                                                        "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Slide"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -10927,6 +11123,58 @@
                                     {
                                         "type": "template",
                                         "data": "Lay Bomb"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -10983,6 +11231,15 @@
                                                                 }
                                                             }
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -11074,6 +11331,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -11102,7 +11368,7 @@
                     "pickup_index": 76,
                     "major_location": false,
                     "connections": {
-                        "Door to Energy Recharge Station West (doorpowerpower_030)": {
+                        "Door to Energy Recharge Station West (Lower)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11141,6 +11407,15 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
                                     }
                                 ]
                             }
@@ -11165,7 +11440,7 @@
                     },
                     "event_name": "s030_baselab:default:db_reg_b1_001",
                     "connections": {
-                        "Door to Energy Recharge Station West (doorpowerpower_030)": {
+                        "Door to Energy Recharge Station West (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -11201,390 +11476,6 @@
                         }
                     }
                 },
-                "Tile Group (SPEEDBOOST) 1": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -12900.0,
-                        "y": 2000.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_015",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Bottom-Left Corner": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST) 2": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -13500.0,
-                        "y": 2600.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_016",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (SCREWATTACK)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Simple IBJ"
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Walljump",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Tile Group (WEIGHT)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 50,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Bottom-Left Corner": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST) 3": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -13100.0,
-                        "y": 4200.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_017",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Tile Group (SCREWATTACK)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Freezer Center": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST) 4": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -13100.0,
-                        "y": 7100.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_018",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "actor_layer": "breakables",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Door to Energy Recharge Station West (doorpowerpower_028)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Cold",
-                                                        "amount": 20,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 2,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Door to Energy Recharge Station West (doorpowerpower_030)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "items",
-                                            "name": "Morph",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "events",
-                                            "name": "s030_baselab:default:db_dif_b1_001",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "damage",
-                                                                    "name": "Cold",
-                                                                    "amount": 100,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "tricks",
-                                                                    "name": "Suitless",
-                                                                    "amount": 2,
-                                                                    "negate": false
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "Tile Group (SCREWATTACK)": {
                     "node_type": "configurable_node",
                     "heal": false,
@@ -11606,7 +11497,76 @@
                         ]
                     },
                     "connections": {
-                        "Tile Group (SPEEDBOOST) 2": {
+                        "Tile Group (WEIGHT)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 70,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Freezer Center": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -11621,19 +11581,19 @@
                                         }
                                     },
                                     {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:powergenerator_002",
+                                            "amount": 1,
+                                            "negate": true
+                                        }
+                                    },
+                                    {
                                         "type": "and",
                                         "data": {
                                             "comment": null,
                                             "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "damage",
-                                                        "name": "Cold",
-                                                        "amount": 10,
-                                                        "negate": false
-                                                    }
-                                                },
                                                 {
                                                     "type": "resource",
                                                     "data": {
@@ -11642,27 +11602,20 @@
                                                         "amount": 2,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "damage",
+                                                        "name": "Cold",
+                                                        "amount": 30,
+                                                        "negate": false
+                                                    }
                                                 }
                                             ]
                                         }
                                     }
                                 ]
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST) 3": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (WEIGHT)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -11688,8 +11641,8 @@
                         ]
                     },
                     "connections": {
-                        "Tile Group (SPEEDBOOST) 1": {
-                            "type": "or",
+                        "Bottom-Left Corner": {
+                            "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
@@ -11697,32 +11650,58 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Gravity",
+                                            "name": "Speed",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "or",
                                         "data": {
                                             "comment": null,
                                             "items": [
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Cold",
-                                                        "amount": 50,
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
                                                         "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 }
                                             ]
@@ -11800,6 +11779,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -11807,11 +11795,167 @@
                                 ]
                             }
                         },
-                        "Tile Group (SPEEDBOOST) 2": {
+                        "Tile Group (SCREWATTACK)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": []
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 100,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (WEIGHT)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 70,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
@@ -11898,6 +12042,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -11947,15 +12100,66 @@
                         "Door to Power Switch 2": {
                             "type": "or",
                             "data": {
-                                "comment": "TODO: Implement logic for un-frozen freezer, which adds a few extra requirements for jumping around the pond",
+                                "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Gravity",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Suitless",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "damage",
+                                                                                "name": "Cold",
+                                                                                "amount": 200,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -11966,19 +12170,127 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "damage",
-                                                        "name": "Cold",
-                                                        "amount": 200,
-                                                        "negate": false
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "tricks",
-                                                        "name": "Suitless",
-                                                        "amount": 2,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Space",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Magnet",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Speed",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Grapple",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Gravity",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "or",
+                                                                            "data": {
+                                                                                "comment": null,
+                                                                                "items": [
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "items",
+                                                                                            "name": "Spin",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "resource",
+                                                                                        "data": {
+                                                                                            "type": "tricks",
+                                                                                            "name": "Walljump",
+                                                                                            "amount": 1,
+                                                                                            "negate": false
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "template",
+                                                                                        "data": "Simple IBJ"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Flash",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Walljump",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -11987,7 +12299,119 @@
                                 ]
                             }
                         },
-                        "Door to Energy Recharge Station West (doorpowerpower_030)": {
+                        "Door to Energy Recharge Station West (Upper)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 200,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to Energy Recharge Station West (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12049,6 +12473,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -12090,16 +12523,7 @@
                                 ]
                             }
                         },
-                        "Tile Group (SPEEDBOOST) 3": {
-                            "type": "resource",
-                            "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST) 4": {
+                        "Tile Group (SCREWATTACK)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -12108,18 +12532,61 @@
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Gravity",
+                                            "name": "Speed",
                                             "amount": 1,
                                             "negate": false
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "or",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Space",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 50,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -12150,6 +12617,75 @@
                     ],
                     "extra": {},
                     "connections": {
+                        "Door to Map Station": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s030_baselab:default:db_reg_b1_002",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Door to Power Switch 2": {
                             "type": "and",
                             "data": {
@@ -12198,6 +12734,15 @@
                                                             }
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
                                                 }
                                             ]
                                         }
@@ -12206,8 +12751,68 @@
                             }
                         },
                         "Event - Right Blob from right (db_reg_b1_002)": {
-                            "type": "template",
-                            "data": "Shoot Beam"
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Beam"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "s030_baselab:default:powergenerator_002",
+                                                        "amount": 1,
+                                                        "negate": true
+                                                    }
+                                                },
+                                                {
+                                                    "type": "and",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Suitless",
+                                                                    "amount": 2,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "damage",
+                                                                    "name": "Cold",
+                                                                    "amount": 30,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
@@ -16427,7 +17032,7 @@
                 "asset_id": "collision_camera_042"
             },
             "nodes": {
-                "Door to Freezer (doorpowerpower_028)": {
+                "Door to Freezer (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -16451,7 +17056,7 @@
                     "default_connection": {
                         "world_name": "Dairon",
                         "area_name": "Freezer",
-                        "node_name": "Door to Energy Recharge Station West (doorpowerpower_028)"
+                        "node_name": "Door to Energy Recharge Station West (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -16473,7 +17078,7 @@
                         }
                     }
                 },
-                "Door to Freezer (doorpowerpower_030)": {
+                "Door to Freezer (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -16497,7 +17102,7 @@
                     "default_connection": {
                         "world_name": "Dairon",
                         "area_name": "Freezer",
-                        "node_name": "Door to Energy Recharge Station West (doorpowerpower_030)"
+                        "node_name": "Door to Energy Recharge Station West (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -16509,10 +17114,6 @@
                                 "comment": null,
                                 "items": []
                             }
-                        },
-                        "Dock to Transport to Ghavoran": {
-                            "type": "template",
-                            "data": "Can Slide"
                         }
                     }
                 },
@@ -16535,7 +17136,7 @@
                     "pickup_index": 70,
                     "major_location": true,
                     "connections": {
-                        "Door to Freezer (doorpowerpower_028)": {
+                        "Door to Freezer (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16563,12 +17164,18 @@
                         "start_point_actor_def": "actordef:actors/props/weightactivatedplatform_energy/charclasses/weightactivatedplatform_energy.bmsad"
                     },
                     "connections": {
-                        "Door to Freezer (doorpowerpower_030)": {
-                            "type": "and",
+                        "Door to Freezer (Lower)": {
+                            "type": "resource",
                             "data": {
-                                "comment": null,
-                                "items": []
+                                "type": "events",
+                                "name": "s030_baselab:default:powergenerator_002",
+                                "amount": 1,
+                                "negate": false
                             }
+                        },
+                        "Dock to Transport to Ghavoran": {
+                            "type": "template",
+                            "data": "Can Slide"
                         }
                     }
                 },
@@ -16593,7 +17200,7 @@
                         ]
                     },
                     "connections": {
-                        "Door to Freezer (doorpowerpower_030)": {
+                        "Door to Freezer (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16625,7 +17232,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Freezer (doorpowerpower_030)": {
+                        "Door to Freezer (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -16649,6 +17256,15 @@
                                         }
                                     }
                                 ]
+                            }
+                        },
+                        "Life Recharge": {
+                            "type": "resource",
+                            "data": {
+                                "type": "items",
+                                "name": "Morph",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
