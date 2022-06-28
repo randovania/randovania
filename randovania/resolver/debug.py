@@ -9,6 +9,7 @@ _DEBUG_LEVEL = 0
 count = 0
 _current_indent = 0
 _last_printed_additional: dict = None
+print_function = print
 
 
 def n(node: Node, world_list, with_world=False) -> str:
@@ -19,7 +20,7 @@ def sorted_requirementset_print(new_requirements: set[RequirementList]):
     to_print = []
     for requirement in new_requirements:
         to_print.append(", ".join(str(item) for item in sorted(requirement.values())))
-    print("\n".join(x for x in sorted(to_print)))
+    print_function("\n".join(x for x in sorted(to_print)))
 
 
 def increment_attempts():
@@ -62,19 +63,19 @@ def log_new_advance(state: "State", reach: "ResolverReach"):
 
         if _DEBUG_LEVEL >= 3:
             for node in state.path_from_previous_state[1:]:
-                print(f"{_indent(1)}: {n(node, world_list=world_list)}")
-        print(f"{_indent(1)}> {n(state.node, world_list=world_list)} for {resources}")
+                print_function(f"{_indent(1)}: {n(node, world_list=world_list)}")
+        print_function(f"{_indent(1)}> {n(state.node, world_list=world_list)} for {resources}")
 
 
 def log_checking_satisfiable_actions():
     if _DEBUG_LEVEL > 1:
-        print(f"{_indent()}# Satisfiable Actions")
+        print_function(f"{_indent()}# Satisfiable Actions")
 
 
 def log_rollback(state: "State", has_action, possible_action: bool):
     global _current_indent
     if _DEBUG_LEVEL > 0:
-        print("{}* Rollback {}; Had action? {}; Possible Action? {}".format(
+        print_function("{}* Rollback {}; Had action? {}; Possible Action? {}".format(
             _indent(),
             n(state.node, world_list=state.world_list),
             has_action, possible_action))
@@ -84,10 +85,10 @@ def log_rollback(state: "State", has_action, possible_action: bool):
 def log_skip_action_missing_requirement(node: Node, game: "GameDescription", requirement_set: RequirementSet):
     if _DEBUG_LEVEL > 1:
         if node in _last_printed_additional and _last_printed_additional[node] == requirement_set:
-            print(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, same additional")
+            print_function(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, same additional")
         else:
-            print(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, missing additional:")
-            requirement_set.pretty_print(_indent(-1), print_function=print)
+            print_function(f"{_indent()}* Skip {n(node, world_list=game.world_list)}, missing additional:")
+            requirement_set.pretty_print(_indent(-1))
             _last_printed_additional[node] = requirement_set
 
 
@@ -115,4 +116,4 @@ def with_level(level: int):
 
 def debug_print(message: str):
     if _DEBUG_LEVEL > 0:
-        print(message)
+        print_function(message)
