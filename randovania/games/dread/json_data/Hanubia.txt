@@ -318,10 +318,18 @@ Extra - asset_id: collision_camera_004
   * Layers: default
   * Open Passage to Escape Room 3/Dock to Entrance Tall Room
   > Event - Breakable (Glass Tube)
-      Space Jump and After Escape Sequence and Lay Bomb
+      Any of the following:
+          All of the following:
+              After Escape Sequence
+              Space Jump or Speed Booster or Simple IBJ
+          All of the following:
+              Before Escape Sequence and Lay Power Bomb
+              Any of the following:
+                  Infinite Bomb Jump (Beginner) and Lay Cross Comb
+                  Infinite Bomb Jump (Advanced) and Lay Bomb
   > Under Tile Groups at room top
       All of the following:
-          After Escape Sequence
+          After Escape Sequence or After Hanubia - block_pbtube
           Space Jump or Speed Booster
 
 > Under Tile Groups at room top; Heals? False
@@ -869,7 +877,9 @@ Extra - asset_id: collision_camera_012
   > Tunnel to EMMI Zone Exit West
       Any of the following:
           Space Jump or Simple IBJ
-          Speed Booster and Speedbooster Conservation (Beginner)
+          All of the following:
+              Speed Booster
+              Spin Boost or Speedbooster Conservation (Intermediate)
 
 ----------------
 EMMI Zone Exit East
@@ -1016,7 +1026,7 @@ Extra - asset_id: collision_camera_015
   > Dock to EMMI Zone Exit East (dooremmy_003)
       Before Escape Sequence
   > Tile Group (POWERBOMB) 2
-      Trivial
+      Simple IBJ or Use Spin Boost
   > Tile Group (POWERBOMB) 3
       After Escape Sequence
 
@@ -1183,6 +1193,7 @@ Extra - asset_id: collision_camera_016
       Any of the following:
           Use Spin Boost
           Walljump (Beginner) and Simple IBJ
+          Morph Ball and Single-wall Wall Jump (Beginner)
 
 > Tile Group (SCREWATTACK) 6; Heals? False
   * Layers: default
@@ -1266,7 +1277,7 @@ Extra - asset_id: collision_camera_018
   > Dock to Escape Room 1
       Trivial
   > Tile Group (SCREWATTACK) 1
-      Use Spin Boost
+      Trivial
 
 > Tile Group (SCREWATTACK) 1; Heals? False
   * Layers: default
@@ -1387,7 +1398,9 @@ Extra - asset_id: collision_camera_020
   > Raven Beak X Checkpoint
       Trivial
   > Tile Group (POWERBOMB)
-      Space Jump or Speed Booster or Simple IBJ
+      Any of the following:
+          Space Jump or Simple IBJ
+          Speed Booster and Use Spin Boost
 
 > Raven Beak X Checkpoint; Heals? False; Spawn Point
   * Layers: default
