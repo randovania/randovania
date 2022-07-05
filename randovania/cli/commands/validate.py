@@ -1,5 +1,6 @@
 import asyncio
 import time
+import typing
 from argparse import ArgumentParser
 from pathlib import Path
 
@@ -15,6 +16,15 @@ def validate_command_logic(args):
     description = LayoutDescription.from_file(args.layout_file)
     if description.player_count != 1:
         raise ValueError(f"Validator does not support layouts with more than 1 player.")
+
+    output_file = None
+    if args.write_to is not None:
+        output_file = typing.cast(Path, args.write_to).open("w")
+
+        def write_to_log(*a):
+            output_file.write("    ".join(str(t) for t in a) + "\n")
+
+        debug.print_function = write_to_log
 
     configuration = description.get_preset(0).configuration
     patches = description.all_patches[0]
@@ -38,6 +48,8 @@ def validate_command_logic(args):
 
     if args.repeat < 1:
         raise ValueError("Expected at least 1 repeat")
+    if output_file is not None:
+        output_file.close()
     return 0 if final_state_by_resolve is not None else 1
 
 
@@ -52,4 +64,6 @@ def add_validate_command(sub_parsers):
         "layout_file",
         type=Path,
         help="The rdvgame file to validate.")
+    parser.add_argument("--write-to", type=Path, help="Write debug output to")
+
     parser.set_defaults(func=validate_command_logic)
