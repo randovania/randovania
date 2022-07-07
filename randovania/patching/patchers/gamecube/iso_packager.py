@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import nod
+import os
 
 from randovania.interface_common.game_workdir import validate_game_files_path
 from randovania.lib.status_update_lib import ProgressUpdateCallable
@@ -25,7 +26,7 @@ def unpack_iso(iso: Path,
 
     context = nod.ExtractionContext()
     context.set_progress_callback(progress_update)
-    data_partition.extract_to_directory(game_files_path, context)
+    data_partition.extract_to_directory(os.fspath(game_files_path), context)
 
     progress_update("Finished extracting ISO", 1)
 
