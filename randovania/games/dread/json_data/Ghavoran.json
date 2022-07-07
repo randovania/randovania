@@ -4069,16 +4069,55 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Map Station Access (dooremmy_002)": {
+                        "Dock to Map Station Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Dock to EMMI Zone Exit West": {
+                            "type": "and",
+                            "data": {
+                                "comment": "If you start in the room direclty below this one, you can carry a speed boost all the way to here",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Morph",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Shoot Plasma Beam"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Speedbooster",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
-                "Dock to Map Station Access (dooremmy_002)": {
+                "Dock to Map Station Access (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4098,7 +4137,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "Map Station Access",
-                        "node_name": "Dock to EMMI Zone Exit Southeast (dooremmy_002)"
+                        "node_name": "Dock to EMMI Zone Exit Southeast (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -4111,14 +4150,40 @@
                                 "items": []
                             }
                         },
-                        "Dock to Map Station Access (dooremmy_003)": {
+                        "Dock to Map Station Access (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "resource",
@@ -4127,6 +4192,41 @@
                                             "name": "Grapple",
                                             "amount": 1,
                                             "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Flash",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -4149,13 +4249,91 @@
                                                 }
                                             ]
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Cross Comb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "This room allows for a bomb jump out of the water without a WBJ",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Bomb",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "IBJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": "If you start in the room directly below this one, you can carry a speed boost all the way here",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Plasma Beam"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Speedbooster",
+                                                        "amount": 3,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
                         }
                     }
                 },
-                "Dock to Map Station Access (dooremmy_003)": {
+                "Dock to Map Station Access (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4175,13 +4353,13 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "Map Station Access",
-                        "node_name": "Dock to EMMI Zone Exit Southeast (dooremmy_003)"
+                        "node_name": "Dock to EMMI Zone Exit Southeast (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Map Station Access (dooremmy_002)": {
+                        "Dock to Map Station Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4225,12 +4403,62 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Slide",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Bomb"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Lay Power Bomb"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4268,7 +4496,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Map Station Access (dooremmy_003)": {
+                        "Dock to Map Station Access (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -4305,12 +4533,29 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "tricks",
-                                            "name": "Slide",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     }
                                 ]
@@ -4390,7 +4635,7 @@
                 "asset_id": "collision_camera_012"
             },
             "nodes": {
-                "Dock to EMMI Zone Exit Southeast (dooremmy_002)": {
+                "Dock to EMMI Zone Exit Southeast (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4410,7 +4655,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit Southeast",
-                        "node_name": "Dock to Map Station Access (dooremmy_002)"
+                        "node_name": "Dock to Map Station Access (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -4445,12 +4690,51 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Magnet",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 }
                                             ]
@@ -4459,15 +4743,31 @@
                                     {
                                         "type": "and",
                                         "data": {
-                                            "comment": null,
+                                            "comment": "You can bomb jump out of this water without a WBJ",
                                             "items": [
                                                 {
-                                                    "type": "resource",
+                                                    "type": "or",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Simple IBJ"
+                                                            }
+                                                        ]
                                                     }
                                                 },
                                                 {
@@ -4477,77 +4777,30 @@
                                                         "items": [
                                                             {
                                                                 "type": "template",
-                                                                "data": "Simple IBJ"
+                                                                "data": "Lay Bomb"
                                                             },
                                                             {
-                                                                "type": "template",
-                                                                "data": "Use Spin Boost"
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Gravity",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
                                                             }
                                                         ]
                                                     }
                                                 }
                                             ]
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        "Stick to Spider Magnet Wall": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": [
+                                    },
                                     {
                                         "type": "resource",
                                         "data": {
                                             "type": "items",
-                                            "name": "Magnet",
+                                            "name": "Space",
                                             "amount": 1,
                                             "negate": false
-                                        }
-                                    },
-                                    {
-                                        "type": "or",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Flash",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Grapple",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Gravity",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Space",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
                                         }
                                     }
                                 ]
@@ -4555,7 +4808,7 @@
                         }
                     }
                 },
-                "Dock to EMMI Zone Exit Southeast (dooremmy_003)": {
+                "Dock to EMMI Zone Exit Southeast (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -4575,7 +4828,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit Southeast",
-                        "node_name": "Dock to Map Station Access (dooremmy_003)"
+                        "node_name": "Dock to Map Station Access (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -4658,7 +4911,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exit Southeast (dooremmy_002)": {
+                        "Dock to EMMI Zone Exit Southeast (Lower)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -4699,7 +4952,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exit Southeast (dooremmy_002)": {
+                        "Dock to EMMI Zone Exit Southeast (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4770,7 +5023,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to EMMI Zone Exit Southeast (dooremmy_003)": {
+                        "Dock to EMMI Zone Exit Southeast (Upper)": {
                             "type": "template",
                             "data": "Can Slide"
                         },
@@ -4833,7 +5086,7 @@
                     ],
                     "extra": {},
                     "connections": {
-                        "Dock to EMMI Zone Exit Southeast (dooremmy_002)": {
+                        "Dock to EMMI Zone Exit Southeast (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -4856,29 +5109,6 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
-                            }
-                        }
-                    }
-                },
-                "Stick to Spider Magnet Wall": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3129.45,
-                        "y": -189.39,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Ledge Grab": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -5016,7 +5246,7 @@
                 "asset_id": "collision_camera_014"
             },
             "nodes": {
-                "Door to EMMI Zone Middle Path (doorgrapplegrapple_006)": {
+                "Door to EMMI Zone Middle Path (Grapple)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5040,7 +5270,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Middle Path",
-                        "node_name": "Door to EMMI Zone Exit West (doorgrapplegrapple_006)"
+                        "node_name": "Door to EMMI Zone Exit West (Grapple)"
                     },
                     "default_dock_weakness": "Grapple Beam Door",
                     "override_default_open_requirement": null,
@@ -5116,14 +5346,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Middle Path (doorgrapplegrapple_006)": {
+                        "Door to EMMI Zone Middle Path (Grapple)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Door to EMMI Zone Middle Path (doorpowerpower_009)": {
+                        "Door to EMMI Zone Middle Path (Power)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5132,7 +5362,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Middle Path (doorpowerpower_009)": {
+                "Door to EMMI Zone Middle Path (Power)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5156,7 +5386,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Middle Path",
-                        "node_name": "Door to EMMI Zone Exit West (doorpowerpower_009)"
+                        "node_name": "Door to EMMI Zone Exit West (Power)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -5211,17 +5441,129 @@
                                         "data": "Use Spin Boost"
                                     },
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Grapple",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Grapple",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Movement",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Magnet",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "tricks",
+                                                                    "name": "Walljump",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "and",
+                                                                "data": {
+                                                                    "comment": null,
+                                                                    "items": [
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "items",
+                                                                                "name": "Slide",
+                                                                                "amount": 1,
+                                                                                "negate": false
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "type": "resource",
+                                                                            "data": {
+                                                                                "type": "tricks",
+                                                                                "name": "Slide",
+                                                                                "amount": 2,
+                                                                                "negate": false
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "type": "and",
@@ -5240,9 +5582,35 @@
                                                 {
                                                     "type": "resource",
                                                     "data": {
-                                                        "type": "items",
-                                                        "name": "Magnet",
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
                                                         "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
                                                         "negate": false
                                                     }
                                                 }
@@ -5408,13 +5776,8 @@
                                         }
                                     },
                                     {
-                                        "type": "resource",
-                                        "data": {
-                                            "type": "tricks",
-                                            "name": "WBJ",
-                                            "amount": 1,
-                                            "negate": false
-                                        }
+                                        "type": "template",
+                                        "data": "Perform WBJ"
                                     }
                                 ]
                             }
@@ -5524,6 +5887,36 @@
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Shoot Ice Missile"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "MissileAmmo",
+                                                        "amount": 5,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "tricks",
+                                            "name": "Movement",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
                                     }
                                 ]
                             }
@@ -5845,7 +6238,7 @@
                 "asset_id": "collision_camera_018"
             },
             "nodes": {
-                "Door to EMMI Zone Exit West (doorgrapplegrapple_006)": {
+                "Door to EMMI Zone Exit West (Grapple)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5869,13 +6262,13 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit West",
-                        "node_name": "Door to EMMI Zone Middle Path (doorgrapplegrapple_006)"
+                        "node_name": "Door to EMMI Zone Middle Path (Grapple)"
                     },
                     "default_dock_weakness": "Grapple Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Exit West (doorpowerpower_009)": {
+                        "Door to EMMI Zone Exit West (Power)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5891,7 +6284,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Exit West (doorpowerpower_009)": {
+                "Door to EMMI Zone Exit West (Power)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -5915,13 +6308,13 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit West",
-                        "node_name": "Door to EMMI Zone Middle Path (doorpowerpower_009)"
+                        "node_name": "Door to EMMI Zone Middle Path (Power)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Exit West (doorgrapplegrapple_006)": {
+                        "Door to EMMI Zone Exit West (Grapple)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -5968,6 +6361,10 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Use Spin Boost"
                                     }
                                 ]
                             }
@@ -6004,7 +6401,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Exit West (doorpowerpower_009)": {
+                        "Door to EMMI Zone Exit West (Power)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6036,7 +6433,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Exit West (doorgrapplegrapple_006)": {
+                        "Door to EMMI Zone Exit West (Grapple)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6078,7 +6475,7 @@
                 "asset_id": "collision_camera_019"
             },
             "nodes": {
-                "Door to EMMI Zone Exit Northeast (doorpowerpower_010)": {
+                "Door to EMMI Zone Exit Northeast (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6102,7 +6499,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit Northeast",
-                        "node_name": "Door to Central Unit Access (doorpowerpower_010)"
+                        "node_name": "Door to Central Unit Access (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -6152,7 +6549,7 @@
                         }
                     }
                 },
-                "Door to EMMI Zone Exit Northeast (doorpowerpower_011)": {
+                "Door to EMMI Zone Exit Northeast (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6176,7 +6573,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit Northeast",
-                        "node_name": "Door to Central Unit Access (doorpowerpower_011)"
+                        "node_name": "Door to Central Unit Access (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
@@ -6221,7 +6618,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to EMMI Zone Exit Northeast (doorpowerpower_010)": {
+                        "Door to EMMI Zone Exit Northeast (Upper)": {
                             "type": "or",
                             "data": {
                                 "comment": null,
@@ -6243,6 +6640,36 @@
                                             "amount": 1,
                                             "negate": false
                                         }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Slide",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -6252,6 +6679,15 @@
                             "data": {
                                 "comment": null,
                                 "items": []
+                            }
+                        },
+                        "Pickup (Ice Missile)": {
+                            "type": "resource",
+                            "data": {
+                                "type": "events",
+                                "name": "GhavoranCU",
+                                "amount": 1,
+                                "negate": false
                             }
                         }
                     }
@@ -6312,25 +6748,238 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door to EMMI Zone Exit Northeast (doorpowerpower_011)": {
+                        "Door to EMMI Zone Exit Northeast (Upper)": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Grapple",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            },
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranCU",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Slide"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Door to EMMI Zone Exit Northeast (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
+                        "Door to EMMI Zone Exit Northwest": {
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Space",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Morph",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "SWJ",
+                                                        "amount": 2,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "template",
+                                                    "data": "Can Slide"
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranCU",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Dock to Central Unit": {
                             "type": "template",
                             "data": "Can Slide"
-                        },
-                        "Pickup (Ice Missile)": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "GhavoranCU",
-                                "amount": 1,
-                                "negate": false
-                            }
                         }
                     }
                 },
@@ -6363,12 +7012,29 @@
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "resource",
+                                        "type": "and",
                                         "data": {
-                                            "type": "items",
-                                            "name": "Speed",
-                                            "amount": 1,
-                                            "negate": false
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Speed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "GhavoranCU",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -6383,6 +7049,27 @@
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Walljump",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Use Spin Boost"
+                                                }
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -6486,7 +7173,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Spin Boost Tower (dooremmy)": {
+                        "Dock to Spin Boost Tower (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6542,7 +7229,7 @@
                         }
                     }
                 },
-                "Dock to Spin Boost Tower (dooremmy)": {
+                "Dock to Spin Boost Tower (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6577,7 +7264,7 @@
                         }
                     }
                 },
-                "Dock to Spin Boost Tower (dooremmy_007)": {
+                "Dock to Spin Boost Tower (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6603,7 +7290,7 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Unit Access (doorpowerpower_011)": {
+                        "Door to Central Unit Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6631,7 +7318,7 @@
                         }
                     }
                 },
-                "Door to Central Unit Access (doorpowerpower_010)": {
+                "Door to Central Unit Access (Upper)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6655,13 +7342,13 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "Central Unit Access",
-                        "node_name": "Door to EMMI Zone Exit Northeast (doorpowerpower_010)"
+                        "node_name": "Door to EMMI Zone Exit Northeast (Upper)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Door to Central Unit Access (doorpowerpower_011)": {
+                        "Door to Central Unit Access (Lower)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6670,7 +7357,7 @@
                         }
                     }
                 },
-                "Door to Central Unit Access (doorpowerpower_011)": {
+                "Door to Central Unit Access (Lower)": {
                     "node_type": "dock",
                     "heal": false,
                     "coordinates": {
@@ -6694,13 +7381,13 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "Central Unit Access",
-                        "node_name": "Door to EMMI Zone Exit Northeast (doorpowerpower_011)"
+                        "node_name": "Door to EMMI Zone Exit Northeast (Lower)"
                     },
                     "default_dock_weakness": "Power Beam Door",
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Dock to Spin Boost Tower (dooremmy_007)": {
+                        "Dock to Spin Boost Tower (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6721,7 +7408,7 @@
                                 ]
                             }
                         },
-                        "Door to Central Unit Access (doorpowerpower_010)": {
+                        "Door to Central Unit Access (Upper)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -6751,7 +7438,7 @@
                         ]
                     },
                     "connections": {
-                        "Dock to Spin Boost Tower (dooremmy_007)": {
+                        "Dock to Spin Boost Tower (Upper)": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -6964,7 +7651,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit Northeast",
-                        "node_name": "Dock to Spin Boost Tower (dooremmy)"
+                        "node_name": "Dock to Spin Boost Tower (Lower)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -7013,7 +7700,7 @@
                     "default_connection": {
                         "world_name": "Ghavoran",
                         "area_name": "EMMI Zone Exit Northeast",
-                        "node_name": "Dock to Spin Boost Tower (dooremmy_007)"
+                        "node_name": "Dock to Spin Boost Tower (Upper)"
                     },
                     "default_dock_weakness": "EMMI Door",
                     "override_default_open_requirement": null,
@@ -11057,10 +11744,6 @@
                                 "amount": 1,
                                 "negate": false
                             }
-                        },
-                        "Tile Group (BOMB) 1": {
-                            "type": "template",
-                            "data": "Lay Cross Comb"
                         }
                     }
                 },
@@ -11116,8 +11799,77 @@
                     },
                     "connections": {
                         "Pickup (Missile Tank)": {
-                            "type": "template",
-                            "data": "Lay Cross Comb"
+                            "type": "or",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Cross Comb"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Gravity",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "Movement",
+                                                        "amount": 4,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "or",
+                                                    "data": {
+                                                        "comment": null,
+                                                        "items": [
+                                                            {
+                                                                "type": "resource",
+                                                                "data": {
+                                                                    "type": "items",
+                                                                    "name": "Flash",
+                                                                    "amount": 1,
+                                                                    "negate": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "type": "template",
+                                                                "data": "Use Spin Boost"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (WEIGHT)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Bomb Ledge": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -11141,7 +11893,15 @@
                             "BOMB"
                         ]
                     },
-                    "connections": {}
+                    "connections": {
+                        "Tunnel to Map Station Access": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
                 },
                 "Tunnel to Map Station Access": {
                     "node_type": "dock",
@@ -11166,18 +11926,56 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Get on Bomb Block": {
-                            "type": "resource",
+                        "Bomb Ledge": {
+                            "type": "or",
                             "data": {
-                                "type": "items",
-                                "name": "Gravity",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Gravity",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Perform WBJ"
+                                    },
+                                    {
+                                        "type": "and",
+                                        "data": {
+                                            "comment": null,
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Space",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "tricks",
+                                                        "name": "WSJ",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     }
                 },
-                "Get on Bomb Block": {
+                "Bomb Ledge": {
                     "node_type": "generic",
                     "heal": false,
                     "coordinates": {
@@ -11198,6 +11996,13 @@
                                 "name": "Morph",
                                 "amount": 1,
                                 "negate": false
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
                             }
                         },
                         "Tunnel to Map Station Access": {
