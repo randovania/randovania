@@ -1101,9 +1101,12 @@
                                 "items": []
                             }
                         },
-                        "Event - Breakable (Glass Tube)": {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
+                        "Inside breakable tube": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         },
                         "Ammo Recharge": {
                             "type": "and",
@@ -1210,169 +1213,18 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Event - Breakable (Glass Tube)": {
-                            "type": "or",
-                            "data": {
-                                "comment": null,
-                                "items": [
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Escape",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "or",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Speed",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "resource",
-                                                                "data": {
-                                                                    "type": "items",
-                                                                    "name": "Space",
-                                                                    "amount": 1,
-                                                                    "negate": false
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Simple IBJ"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Escape",
-                                                        "amount": 1,
-                                                        "negate": true
-                                                    }
-                                                },
-                                                {
-                                                    "type": "and",
-                                                    "data": {
-                                                        "comment": null,
-                                                        "items": [
-                                                            {
-                                                                "type": "or",
-                                                                "data": {
-                                                                    "comment": null,
-                                                                    "items": [
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Lay Cross Comb"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "IBJ",
-                                                                                            "amount": 1,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "type": "and",
-                                                                            "data": {
-                                                                                "comment": null,
-                                                                                "items": [
-                                                                                    {
-                                                                                        "type": "template",
-                                                                                        "data": "Lay Bomb"
-                                                                                    },
-                                                                                    {
-                                                                                        "type": "resource",
-                                                                                        "data": {
-                                                                                            "type": "tricks",
-                                                                                            "name": "IBJ",
-                                                                                            "amount": 3,
-                                                                                            "negate": false
-                                                                                        }
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "template",
-                                                                "data": "Lay Power Bomb"
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        "Under Tile Groups at room top": {
+                        "Inside breakable tube": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": [
                                     {
-                                        "type": "or",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "Escape",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "events",
-                                                        "name": "s080_shipyard:default:block_pbtube",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
+                                            "type": "events",
+                                            "name": "Escape",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
@@ -1397,41 +1249,15 @@
                                                         "amount": 1,
                                                         "negate": false
                                                     }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
                                                 }
                                             ]
                                         }
                                     }
                                 ]
-                            }
-                        }
-                    }
-                },
-                "Under Tile Groups at room top": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3352.155887230514,
-                        "y": 2024.5992260917633,
-                        "z": 0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Tile Group (SCREWATTACK)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
                             }
                         }
                     }
@@ -1459,6 +1285,27 @@
                                 "negate": true
                             }
                         },
+                        "Event - Breakable (Glass Tube)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
                         "Dock to Ship Room": {
                             "type": "resource",
                             "data": {
@@ -1469,13 +1316,6 @@
                             }
                         },
                         "Tile Group (SCREWATTACK)": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Tile Group (SPEEDBOOST)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1507,6 +1347,10 @@
                                 "negate": true
                             }
                         },
+                        "Event - Breakable (Glass Tube)": {
+                            "type": "template",
+                            "data": "Lay Power Bomb"
+                        },
                         "Dock to Escape Room 3": {
                             "type": "resource",
                             "data": {
@@ -1516,7 +1360,33 @@
                                 "negate": false
                             }
                         },
-                        "Under Tile Groups at room top": {
+                        "Next to Hyper Block": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "events",
+                                            "name": "s080_shipyard:default:block_pbtube",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    },
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (SCREWATTACK)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -1545,13 +1415,8 @@
                                                     }
                                                 },
                                                 {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
+                                                    "type": "template",
+                                                    "data": "Simple IBJ"
                                                 }
                                             ]
                                         }
@@ -1678,57 +1543,6 @@
                             "data": {
                                 "comment": null,
                                 "items": []
-                            }
-                        },
-                        "Inside breakable tube": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s080_shipyard:default:block_pbtube",
-                                "amount": 1,
-                                "negate": false
-                            }
-                        }
-                    }
-                },
-                "Tile Group (SPEEDBOOST)": {
-                    "node_type": "configurable_node",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -3800.0,
-                        "y": 2400.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {
-                        "actor_name": "breakabletilegroup_032",
-                        "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
-                        "tile_types": [
-                            "SPEEDBOOST"
-                        ]
-                    },
-                    "connections": {
-                        "Event - Breakable (Glass Tube)": {
-                            "type": "template",
-                            "data": "Lay Power Bomb"
-                        },
-                        "Next to Hyper Block": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
-                        "Inside breakable tube": {
-                            "type": "resource",
-                            "data": {
-                                "type": "events",
-                                "name": "s080_shipyard:default:block_pbtube",
-                                "amount": 1,
-                                "negate": false
                             }
                         }
                     }
@@ -2503,7 +2317,24 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB)": {
+                        "Door to Navigation Station (Top)": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Temporary. Will likely need removed with door rando",
+                                "items": [
+                                    {
+                                        "type": "resource",
+                                        "data": {
+                                            "type": "items",
+                                            "name": "Wave",
+                                            "amount": 1,
+                                            "negate": false
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "Tile Group (BOMB) 1": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2570,13 +2401,11 @@
                     "pickup_index": 135,
                     "major_location": false,
                     "connections": {
-                        "Tile Group (BOMB SPEEDBOOST)": {
-                            "type": "resource",
+                        "Tile Group (BOMB) 2": {
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": []
                             }
                         }
                     }
@@ -2611,14 +2440,14 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Start Point 2": {
+                        "Door to Navigation Station (Top)": {
                             "type": "and",
                             "data": {
                                 "comment": null,
                                 "items": []
                             }
                         },
-                        "Tile Group (BOMB SPEEDBOOST)": {
+                        "Tile Group (BOMB) 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2658,6 +2487,13 @@
                     "override_default_lock_requirement": null,
                     "connections": {
                         "Start Point 2": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        },
+                        "Tile Group (BOMB) 2": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -2803,7 +2639,7 @@
                                 "negate": false
                             }
                         },
-                        "Tile Group (BOMB)": {
+                        "Tile Group (BOMB) 1": {
                             "type": "resource",
                             "data": {
                                 "type": "items",
@@ -2831,13 +2667,6 @@
                         "start_point_actor_def": "actordef:actors/logic/startpoint/charclasses/startpoint.bmsad"
                     },
                     "connections": {
-                        "Door from Tank Room": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
-                        },
                         "Door to Navigation Station (Top)": {
                             "type": "and",
                             "data": {
@@ -2847,7 +2676,7 @@
                         }
                     }
                 },
-                "Tile Group (BOMB)": {
+                "Tile Group (BOMB) 1": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
@@ -2880,12 +2709,12 @@
                         }
                     }
                 },
-                "Tile Group (BOMB SPEEDBOOST)": {
+                "Tile Group (BOMB) 2": {
                     "node_type": "configurable_node",
                     "heal": false,
                     "coordinates": {
-                        "x": 3100.0,
-                        "y": -500.0,
+                        "x": 3400.0,
+                        "y": -250.0,
                         "z": 0.0
                     },
                     "description": "",
@@ -2896,18 +2725,46 @@
                         "actor_name": "breakabletilegroup_046",
                         "actor_def": "actordef:actors/logic/breakabletilegroup/charclasses/breakabletilegroup.bmsad",
                         "tile_types": [
-                            "BOMB",
-                            "SPEEDBOOST"
+                            "BOMB"
                         ]
                     },
                     "connections": {
                         "Pickup (Power Bomb Tank)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": null,
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Ballspark"
+                                    },
+                                    {
+                                        "type": "or",
+                                        "data": {
+                                            "comment": "Temporary until door rando. Wave likely removed at that point",
+                                            "items": [
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "items",
+                                                        "name": "Wave",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                },
+                                                {
+                                                    "type": "resource",
+                                                    "data": {
+                                                        "type": "events",
+                                                        "name": "HanubiaTankSpeed",
+                                                        "amount": 1,
+                                                        "negate": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         },
                         "Door from Tank Room": {
@@ -3124,6 +2981,13 @@
                                 "comment": null,
                                 "items": []
                             }
+                        },
+                        "Event - Prepare Speedboost": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
                         }
                     }
                 },
@@ -3191,6 +3055,30 @@
                             }
                         },
                         "Tile Group (BOMB)": {
+                            "type": "and",
+                            "data": {
+                                "comment": null,
+                                "items": []
+                            }
+                        }
+                    }
+                },
+                "Event - Prepare Speedboost": {
+                    "node_type": "event",
+                    "heal": false,
+                    "coordinates": {
+                        "x": 4800.0,
+                        "y": -100.0,
+                        "z": 0.0
+                    },
+                    "description": "",
+                    "layers": [
+                        "default"
+                    ],
+                    "extra": {},
+                    "event_name": "HanubiaTankSpeed",
+                    "connections": {
+                        "Door to Speedboost Puzzle Room": {
                             "type": "and",
                             "data": {
                                 "comment": null,
@@ -3687,7 +3575,7 @@
                                                     "data": {
                                                         "type": "tricks",
                                                         "name": "Speedbooster",
-                                                        "amount": 2,
+                                                        "amount": 1,
                                                         "negate": false
                                                     }
                                                 },
@@ -3706,32 +3594,6 @@
                                     {
                                         "type": "template",
                                         "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Spin",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -4365,19 +4227,10 @@
                             }
                         },
                         "Tile Group (POWERBOMB) 2": {
-                            "type": "or",
+                            "type": "and",
                             "data": {
                                 "comment": null,
-                                "items": [
-                                    {
-                                        "type": "template",
-                                        "data": "Simple IBJ"
-                                    },
-                                    {
-                                        "type": "template",
-                                        "data": "Use Spin Boost"
-                                    }
-                                ]
+                                "items": []
                             }
                         },
                         "Tile Group (POWERBOMB) 3": {
@@ -5020,32 +4873,6 @@
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "type": "and",
-                                        "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "tricks",
-                                                        "name": "SWJ",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Morph",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 ]
                             }
@@ -5364,11 +5191,8 @@
                             }
                         },
                         "Tile Group (SCREWATTACK) 1": {
-                            "type": "and",
-                            "data": {
-                                "comment": null,
-                                "items": []
-                            }
+                            "type": "template",
+                            "data": "Use Spin Boost"
                         }
                     }
                 },
@@ -5838,24 +5662,12 @@
                                         }
                                     },
                                     {
-                                        "type": "and",
+                                        "type": "resource",
                                         "data": {
-                                            "comment": null,
-                                            "items": [
-                                                {
-                                                    "type": "resource",
-                                                    "data": {
-                                                        "type": "items",
-                                                        "name": "Speed",
-                                                        "amount": 1,
-                                                        "negate": false
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "data": "Use Spin Boost"
-                                                }
-                                            ]
+                                            "type": "items",
+                                            "name": "Speed",
+                                            "amount": 1,
+                                            "negate": false
                                         }
                                     },
                                     {
