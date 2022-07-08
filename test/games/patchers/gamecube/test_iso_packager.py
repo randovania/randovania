@@ -1,6 +1,7 @@
 from unittest.mock import patch, MagicMock, ANY, call
 
 import pytest
+import os
 
 from randovania.patching.patchers.gamecube import iso_packager
 
@@ -46,7 +47,7 @@ def test_unpack_iso_success(mocker):
     mock_nod.open_disc_from_image.assert_called_once_with(iso)
     mock_disc.get_data_partition.assert_called_once_with()
     mock_disc.get_data_partition.return_value.extract_to_directory.assert_called_once_with(
-        game_files_path, mock_nod.ExtractionContext.return_value,
+        os.fspath(game_files_path), mock_nod.ExtractionContext.return_value,
     )
     mock_nod.ExtractionContext.return_value.set_progress_callback.assert_called_once_with(progress_update)
 
