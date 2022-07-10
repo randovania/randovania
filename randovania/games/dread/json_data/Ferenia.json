@@ -8658,12 +8658,10 @@
                             }
                         },
                         "Tile Group (WEIGHT)": {
-                            "type": "resource",
+                            "type": "and",
                             "data": {
-                                "type": "items",
-                                "name": "Morph",
-                                "amount": 1,
-                                "negate": false
+                                "comment": "The left side of the wall (between SA and bomb blocks) also has also has a tile wight group, no requirement needed to drop down there",
+                                "items": []
                             }
                         },
                         "Tunnel to Energy Recharge Station Secret": {
@@ -8896,6 +8894,18 @@
                         "Tile Group (BOMB WEIGHT)": {
                             "type": "template",
                             "data": "Lay Bomb"
+                        },
+                        "Corner": {
+                            "type": "and",
+                            "data": {
+                                "comment": "Only 1 PB needed to get to Corner",
+                                "items": [
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Power Bomb"
+                                    }
+                                ]
+                            }
                         }
                     }
                 },
