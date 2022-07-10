@@ -8848,26 +8848,6 @@
                         }
                     }
                 },
-                "Tile Group (BOMB WEIGHT)": {
-                    "node_type": "generic",
-                    "heal": false,
-                    "coordinates": {
-                        "x": -1600.0,
-                        "y": 2300.0,
-                        "z": 0.0
-                    },
-                    "description": "",
-                    "layers": [
-                        "default"
-                    ],
-                    "extra": {},
-                    "connections": {
-                        "Corner": {
-                            "type": "template",
-                            "data": "Lay Bomb"
-                        }
-                    }
-                },
                 "Tunnel to Energy Recharge Station (Gate)": {
                     "node_type": "dock",
                     "heal": false,
@@ -8891,18 +8871,18 @@
                     "override_default_open_requirement": null,
                     "override_default_lock_requirement": null,
                     "connections": {
-                        "Tile Group (BOMB WEIGHT)": {
-                            "type": "template",
-                            "data": "Lay Bomb"
-                        },
                         "Corner": {
-                            "type": "and",
+                            "type": "or",
                             "data": {
                                 "comment": "Only 1 PB needed to get to Corner",
                                 "items": [
                                     {
                                         "type": "template",
                                         "data": "Lay Power Bomb"
+                                    },
+                                    {
+                                        "type": "template",
+                                        "data": "Lay Bomb"
                                     }
                                 ]
                             }
