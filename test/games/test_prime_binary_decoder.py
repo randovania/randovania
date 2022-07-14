@@ -8,6 +8,7 @@ import randovania.lib.construct_lib
 from randovania import get_data_path
 from randovania.game_description import data_reader, game_migration
 from randovania.games import binary_data
+from randovania.layout.generator_parameters import raw_database_hash
 
 sample_data = {
     "schema_version": game_migration.CURRENT_VERSION,
@@ -110,7 +111,6 @@ def _comparable_dict(value):
 def test_full_data_encode_is_equal(game_enum):
     # The json data may be missing if we're running using a Pyinstaller binary
     # Setup
-
     data_dir = game_enum.data_path.joinpath("json_data")
     if not data_dir.is_dir() and get_data_path().joinpath("binary_data", f"{game_enum.value}.bin").is_file():
         pytest.skip("Missing json-based data")
@@ -132,6 +132,7 @@ def test_full_data_encode_is_equal(game_enum):
         assert a == b
 
     assert comparable_binary == comparable_json
+    assert raw_database_hash(decoded_database) == raw_database_hash(json_database)
 
 
 reqs_to_test = [
