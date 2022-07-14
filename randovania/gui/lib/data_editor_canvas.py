@@ -369,7 +369,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     def qt_local_to_game_loc(self, pos: QPointF) -> NodeLocation:
         return NodeLocation((pos.x() / self.scale) + self.area_bounds.min_x,
                             self.area_bounds.max_y - (pos.y() / self.scale),
-                            0)
+                            0.0)
 
     def get_area_canvas_offset(self):
         return QPointF(
