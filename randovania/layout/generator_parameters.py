@@ -90,10 +90,9 @@ class GeneratorParameters(BitPackValue):
             included_data_hash = decoder.decode_single(256)
             expected_data_hash = game_db_hash(game)
             if included_data_hash != expected_data_hash:
-                raise ValueError("Given permalink is for a Randovania {} database with hash '{}', "
-                                 "but current database has hash '{}'.".format(game.long_name,
-                                                                              included_data_hash,
-                                                                              expected_data_hash))
+                raise ValueError("Expected {} database with hash {}, but found {} instead.".format(
+                    game.long_name, included_data_hash, expected_data_hash,
+                ))
 
         return GeneratorParameters(seed_number, spoiler, presets)
 
