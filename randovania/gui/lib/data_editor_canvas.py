@@ -72,7 +72,7 @@ class DataEditorCanvas(QtWidgets.QWidget):
     border_y: float = 75
     canvas_size: QSizeF
 
-    _next_node_location: NodeLocation = NodeLocation(0, 0, 0)
+    _next_node_location: NodeLocation = NodeLocation(0.0, 0.0, 0.0)
     CreateNodeRequest = Signal(NodeLocation)
     MoveNodeRequest = Signal(Node, NodeLocation)
     SelectNodeRequest = Signal(Node)
